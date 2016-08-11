@@ -1,0 +1,37 @@
+PODS:
+  - AGAudioPlayer (0.8.0):
+    - HysteriaPlayer
+  - HysteriaPlayer (2.1.9)
+  - ScrubberBar (1.0.1)
+  - Siesta (1.0-beta.8):
+    - Siesta/Core (= 1.0-beta.8)
+  - Siesta/Core (1.0-beta.8)
+  - Unbox (1.9)
+
+DEPENDENCIES:
+  - AGAudioPlayer (from `../AGAudioPlayer`)
+  - ScrubberBar
+  - Siesta (from `https://github.com/bustoutsolutions/siesta.git`)
+  - Unbox
+
+EXTERNAL SOURCES:
+  AGAudioPlayer:
+    :path: ../AGAudioPlayer
+  Siesta:
+    :git: https://github.com/bustoutsolutions/siesta.git
+
+CHECKOUT OPTIONS:
+  Siesta:
+    :commit: 062e3a67cc34a9078330461381ae2b80e95d4178
+    :git: https://github.com/bustoutsolutions/siesta.git
+
+SPEC CHECKSUMS:
+  AGAudioPlayer: 356be857859b28e293f3cb4ecf493f42aa2cfba5
+  HysteriaPlayer: 583c4cdfdd8e9016d1edffb3c1b945f8e1f1ecc5
+  ScrubberBar: c9dfa4c97252d300d6a680326626ecdf9049e394
+  Siesta: 2c1e487b36d88060477eb0458d43a38d8b0bd959
+  Unbox: a6f56a1682b5fd2ba6aea96d7b1ec17599db4f05
+
+PODFILE CHECKSUM: b3bca177c7fdc9dced8452def6604e602e88e2b3
+
+COCOAPODS: 1.1.0.beta.1

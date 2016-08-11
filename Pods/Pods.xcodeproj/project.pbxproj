@@ -1,0 +1,1916 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04A65048485DE5B6B95C81F9C06F94D8 /* AGAudioItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C384122288B95F3BD9DC005185BAA6A /* AGAudioItem.m */; };
+		0C3C13DD0F69FFE226EA9F3B37501E78 /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B296BACD45D59FFA0E09C4C7C7525 /* Progress.swift */; };
+		0C7D83CAC1A1C95A0151CE164F9D6AB1 /* Pods-PhishOD-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C297C7264E8F171ED35427825854ECCD /* Pods-PhishOD-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F1DCE40BCA60C36AD16FD07A57BE7E8 /* Pods-PhishOD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D762BB8FAADA204D421D9CA1B81A047C /* Pods-PhishOD-dummy.m */; };
+		102A72C9802B732AE394BF96419DDE89 /* AGDurationHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 931DAE35A882A266E00BC6D24E0D30DB /* AGDurationHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		165C0F0788630B8965A7CF8D8FF1EF17 /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D75593E02F68769A3CDC2D398647E0B /* Pipeline.swift */; };
+		17E71771301B42F005FBAAE872F5B1EB /* Collection+Siesta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114E4EB2AFD81D2376EDE78F991A985D /* Collection+Siesta.swift */; };
+		1CD9B0B042F79FAF40482CE167F9A0F2 /* Unbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B8B6D35BB8951F71B2D7D67BD1DF08 /* Unbox.swift */; };
+		1FFB02EFBD5300EF0ED5C212575C2761 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8C1A45B1AC422890AA9ADB89973860 /* AudioToolbox.framework */; };
+		21594E69EF502B76E03C7C7CC1A0B22A /* Siesta.h in Headers */ = {isa = PBXBuildFile; fileRef = F053638108B73775CB850A008465A124 /* Siesta.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2685AF006D23E7218DE5BA8BFD598C49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */; };
+		26B4352D77F334DE8DF62505CDF89F8E /* ResponseTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CE4267D3C7C30B4680DFA91BD6385 /* ResponseTransformer.swift */; };
+		2890945DC230C1C3ECD29772D78CC9BE /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155E96D0188D076CD9EE1734BB65D580 /* Networking.swift */; };
+		29CF332DCF1BFC3657CBF3D9E9679072 /* RequestCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F1F3D8FC1CA2A5D9DD740AC1F05317 /* RequestCreation.swift */; };
+		2ADBBF095550C253DE912B469525CD69 /* ScrubberBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9521B8479294CC720A7ACA1BCF4C321C /* ScrubberBar.swift */; };
+		2BCBCAED75ED2C3C0B63797D9A1B9462 /* Unbox-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD74732D4C88C867F9AFDB4B4B2856E /* Unbox-dummy.m */; };
+		2BE9660D1DD8774FC4D480FAFC1C0009 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */; };
+		2F7F1D36FC96B088D1E2553495487528 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */; };
+		2FD14E3E7132134185CABBD92741922C /* ScrubberBar-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B1E543A75ABBD0D3C7C3D93CCA791 /* ScrubberBar-dummy.m */; };
+		348264026E0013513D7C8D5B7168A48C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85A69146E1332ED1EE939999EEF427BA /* UIKit.framework */; };
+		34CF819DD4477BA2622DC2F562FD62D8 /* AGAudioPlayer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B3396062CCE8FA73800FA65354A3A15 /* AGAudioPlayer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		368F1C82197DDF66BC70AD240118D483 /* ResourceStatusOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A34E76FB07A8478FFA244445BA53708 /* ResourceStatusOverlay.xib */; };
+		3843E14664C3433534724A1EA88A3DBF /* HysteriaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EF99DFA9C94C05F501184BE7BFFEA1C /* HysteriaPlayer.m */; };
+		3E3FB29400AF8FF5FB66D5E63F6D34F3 /* point1sec.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5A576AA39026BEAD4BD498135FDDF558 /* point1sec.mp3 */; };
+		3F332B8D9A7E13854D200539DA4E6F40 /* RemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBB704774046B32640EAF61D71DD97C /* RemoteImageView.swift */; };
+		403848C811B533D4948E366DB6B55DE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */; };
+		46B153CB39876CD4FCE204144B18C211 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5623743DEE5F36F9CBA91B7FF0C18D /* CoreMedia.framework */; };
+		4D70170C8FB3609818316CC3B9088AEA /* AGAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B05CB897029AEE474F8CFEB83A8DEC /* AGAudioPlayer.m */; };
+		53FB2439EF4569514A7F7F8A84250AB6 /* AGAudioItemCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F5F0A0B086DA6C131B124AF6D18FAC /* AGAudioItemCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		54DF0A2A7C97D00BBB0573B7454080F3 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAED98E76D1C545CE2C03267CC86450 /* Entity.swift */; };
+		560F6BACF022421CC77BF3BEC4A6E838 /* EntityCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F619B8E59AEEF34CD6FBE0E89197FE /* EntityCache.swift */; };
+		58D5EF702997D3E12210388591379209 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */; };
+		5A66E306E079AEB98B2E94155DFB64D1 /* NSURL+Siesta.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8DD7A60C29C1677A8D7C40C2B14CA7 /* NSURL+Siesta.swift */; };
+		5DDEEBC4768F7C49B89B2A4A8316B5E7 /* Pods-PhishODUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E066A9D3F6ED3AB6C04C348C1C4ED57 /* Pods-PhishODUITests-dummy.m */; };
+		673D261992DF10FC5BEB3A6C71BB1460 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150589D5CE86F6E723ED8984F25CB60D /* Error.swift */; };
+		68D764553ECFC0A41C87904EC33EB4CC /* ResourceStatusOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF898A1BB86A1E079BA62A890175A33 /* ResourceStatusOverlay.swift */; };
+		6D3BB8B806342D902FA7011B84646700 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */; };
+		72738B26CC04A3E3F1C2AAC30E8370D2 /* Unbox-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E6DEEBC7D69668A476A426438874AE4 /* Unbox-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		72E10960553989670E080D52B4BD72FA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */; };
+		7539061E02127F703AB419D1EAA05158 /* AGAudioPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBE579D8CAF6EAF9C89F1460EDC7948 /* AGAudioPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		78926EFBCAD97BCE0B72C76F75451119 /* Pods-RelistenUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 075986721AE883E2FEB4667C5FA48CDF /* Pods-RelistenUITests-dummy.m */; };
+		79FA59076466CB0D1AAD0D19FD8D7170 /* GCD+Siesta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB741901172766ED8C6E7B7A341F862 /* GCD+Siesta.swift */; };
+		7CDE64E285998A11F0428C37E281B6B7 /* ARC+Siesta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00641DE35C36A9B65BF2B9F35F6E106C /* ARC+Siesta.swift */; };
+		7F59050AE658995BF08577CE80D4407C /* Regex+Siesta.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CE1E6E11C15A6D36C153771E18C3BD /* Regex+Siesta.swift */; };
+		7F8D55FB6975CA46931E194EA04EF1DA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D0B7C79DBE67C8820038FA65FCE2F06 /* MediaPlayer.framework */; };
+		8225689DE993E042F27A6EE249F54245 /* RequestCallbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6FF92D839A859A6A777159799A6C21 /* RequestCallbacks.swift */; };
+		8677F6D936711D5E1CBB4B659D2E175B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */; };
+		8763CEE028A039EC7C96000121FE4D64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */; };
+		879C2602A62E9B3B7E0CB7C66EA6052D /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712DB88D49A35557EC8AAC5D9101F4D4 /* Request.swift */; };
+		8A7F23EEA7F597F94A687D51DCF302BC /* HysteriaPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = A92C0306BEDFDB53AB9E0CBA28C84BC8 /* HysteriaPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8E2FD2A00AAB0A1285CFCDF68614F1CA /* AGAudioItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FFAB5B8D65977C25CF51C97889EEEDB /* AGAudioItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9145C59147A8E29F72499640D70744CC /* Siesta-ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BD47331BC44EE95DF648DB3EC51387 /* Siesta-ObjC.swift */; };
+		91B814A08BF350FE574196C0515CCAE2 /* AGAudioPlayerUpNextQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D0C6CAB3DFAB1FDD02C659D46FD50BA /* AGAudioPlayerUpNextQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		93717888C02C5AAE7B84A021C69B32D5 /* Pods-PhishODUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 65FA908D7EB249EEDE58B888BEB6DAEB /* Pods-PhishODUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		96602D0F0D6E5F1AFCB809C6D6565FF0 /* Siesta-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DBCC74AAF98681B9D387E519062C797 /* Siesta-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		996F63B0A55FF29E274A446D4A601C3B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE62E3FB3F53C711FA987EB65D0E550 /* AVFoundation.framework */; };
+		A134EA725E6A6143D4712544E2F1C9ED /* String+Siesta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D3BE13ED8B2729783ABB16273BC42 /* String+Siesta.swift */; };
+		A53F7D77E35AD0874F427DC4A403B06C /* ScrubberBar-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 766D38E000C4CA9E8A78CCE5B6E6D523 /* ScrubberBar-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA259B28BCC3FC486954BB206820CDD0 /* HysteriaPlayer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DED241EF022AC392C7B2B79BBC8A681F /* HysteriaPlayer-dummy.m */; };
+		AAC37E98777B8A6D23B2D4F5729CB9AF /* AGAudioPlayerUpNextQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8E995153C1DB695961B0A78AF5BB07 /* AGAudioPlayerUpNextQueue.m */; };
+		B1A6A4A010F7B57A601A4E8E86EEA05F /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9F91C65EDEC39706187EE90F83A5E2 /* Logging.swift */; };
+		B1DFF4AC6FC2C5F37482FFF5BD88FC3E /* Pods-Relisten-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E9C36B3C5A111DD729AB20A6F14376 /* Pods-Relisten-dummy.m */; };
+		B5A1E17721A48FFAF11C95C7C83E6A70 /* AGCachable.h in Headers */ = {isa = PBXBuildFile; fileRef = E3099862F9AD8A48A7C80FD22C093C3B /* AGCachable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C789356CA52BB4EC0F3DB41A2878F411 /* AGAudioItemCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACBCA5374CD47ADC20B813C2E758CDD /* AGAudioItemCollection.m */; };
+		CD2DE2A20B2B5B0525EA623D8DB296FD /* WeakCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C108BB82A83411BBF2B4B31A00E087 /* WeakCache.swift */; };
+		CEF19466E530A9835212AE68BE1C0D7C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 189BDF60CFA2304C95192D1FDE7DB145 /* CoreGraphics.framework */; };
+		D005E48647B6555625425FD5B2EC5CA9 /* HysteriaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D49CA036F25741AD59283170BF7CD9F /* HysteriaPlayer.framework */; };
+		D1321C7BEF147D4B9F6E0B23B76E11B1 /* ConfigurationPatternConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E817BEB850EDF2771334DD743AB91A3D /* ConfigurationPatternConvertible.swift */; };
+		D152FA9C727DF9515417A132BC64394E /* Deprecations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7885D35EC2571B508F43102990D21EC8 /* Deprecations.swift */; };
+		DD92FADDF2C77939AC6846B16DA52E15 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2C55DAE256BE266441B6F0C3C043F1 /* Configuration.swift */; };
+		E0EA85F585620ABA113CD7DE2432BE90 /* AGAudioPlayer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E94D2F390859112BFFB86F62BD1D63B0 /* AGAudioPlayer-dummy.m */; };
+		E119CA04317795164FD19E5C4A3197BD /* Pods-Relisten-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E5FDCDA1201F2ED111B8AA678B564911 /* Pods-Relisten-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E173C1CFCC8DE0400758B437BC38B96B /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279FFAE5985543F517C0B715BADFE066 /* NetworkRequest.swift */; };
+		E8B34547F9F8B30E30C075012E281551 /* DebugFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50330142F52CE00D4914554CFE2C39B /* DebugFormatting.swift */; };
+		EB7FB48F6271465DC287762B40B0C161 /* AGDurationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 69769478B73104FA8617DEAC2391613E /* AGDurationHelper.m */; };
+		F27BFF4CC5274AE1C7209C683433811A /* HysteriaPlayer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8717B7AA808B8B85CF3AFFCFA7AAF2CE /* HysteriaPlayer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F2E691E081A9C302C0AF754586C52505 /* OpenEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78A3F51649F260419F8FBB7A05E19C5 /* OpenEnum.swift */; };
+		F4198E26DB12F8EBE45C26C6FAC47FE8 /* Siesta-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 88AB0C7FB67832FEF52860051C5F3AE9 /* Siesta-dummy.m */; };
+		F438A036766627D39EE644A680CD42CB /* Pods-RelistenUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 247FB638F6E12101C83F4DE3054D545E /* Pods-RelistenUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F468DB5539648CC45609B315903A3D4F /* ResourceStatusOverlay.xib in Sources */ = {isa = PBXBuildFile; fileRef = 7A34E76FB07A8478FFA244445BA53708 /* ResourceStatusOverlay.xib */; };
+		F4E73382F1D57AA0751A7ED797D9EF6D /* ResourceObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762A988946051FBAD3F4901A324BC9BA /* ResourceObserver.swift */; };
+		F6DEE3D87CD79F4CB46FBA2763E57FFD /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843329D27CCBF11075158BC236957E4E /* Service.swift */; };
+		F727E25E8C969ADBBABFF25DF4034FFE /* Networking-NSURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEBF6FEF4F8ED52A28E4C9D0744E89C /* Networking-NSURLSession.swift */; };
+		F72BE912CEEEEA09C8355FFA79EFBCB5 /* ProgressTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AA801E0EBB7CCAC1CD3B720EA2F7B3 /* ProgressTracker.swift */; };
+		FCA4A60678D11014339FCE2AFBD0A551 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC5EF09AD37F49F285C8092C5DECAB2 /* Resource.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4B6B369927E32C942F0E9E8891E6BEA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BE102DDBD13B4DEC52457643A885EA0F;
+			remoteInfo = HysteriaPlayer;
+		};
+		5D7EE39C6982739B049EAA52FCF68835 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 706A36E848074B28168D0F4809300FD3;
+			remoteInfo = ScrubberBar;
+		};
+		7C2B72893F484DB953701326159C881E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BE102DDBD13B4DEC52457643A885EA0F;
+			remoteInfo = HysteriaPlayer;
+		};
+		8430776B5A3A61FEA570A981BC2816EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C32A8FEFE1DCA8ACAE948F564884A258;
+			remoteInfo = Siesta;
+		};
+		B6F757107639E1F877F5A5C200497AF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 759B70A12AC71A97C92A8A1CFB91E97B;
+			remoteInfo = Unbox;
+		};
+		BCB0399C85D0A3682F8781F6E5DEB2A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 34EA5FCDA1BE7159FF48472C52AEC290;
+			remoteInfo = AGAudioPlayer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00641DE35C36A9B65BF2B9F35F6E106C /* ARC+Siesta.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ARC+Siesta.swift"; path = "Source/Support/ARC+Siesta.swift"; sourceTree = "<group>"; };
+		02F619B8E59AEEF34CD6FBE0E89197FE /* EntityCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EntityCache.swift; path = Source/EntityCache.swift; sourceTree = "<group>"; };
+		075986721AE883E2FEB4667C5FA48CDF /* Pods-RelistenUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RelistenUITests-dummy.m"; sourceTree = "<group>"; };
+		09FFFCFCC13C0B976E084A62E1FCD1B3 /* HysteriaPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HysteriaPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B634D93FD2A95BA1253A6CEB7BCEC99 /* ScrubberBar.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ScrubberBar.xcconfig; sourceTree = "<group>"; };
+		114E4EB2AFD81D2376EDE78F991A985D /* Collection+Siesta.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Collection+Siesta.swift"; path = "Source/Support/Collection+Siesta.swift"; sourceTree = "<group>"; };
+		150589D5CE86F6E723ED8984F25CB60D /* Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Error.swift; path = Source/Error.swift; sourceTree = "<group>"; };
+		155E96D0188D076CD9EE1734BB65D580 /* Networking.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Networking.swift; path = Source/Networking.swift; sourceTree = "<group>"; };
+		189BDF60CFA2304C95192D1FDE7DB145 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		19EDF3B7580CA88973402ACDB62ACFE3 /* Pods_Relisten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Relisten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B7E8F6757D53BDBD1DCF02D25BFBB49 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D0B7C79DBE67C8820038FA65FCE2F06 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
+		1D49CA036F25741AD59283170BF7CD9F /* HysteriaPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HysteriaPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		247FB638F6E12101C83F4DE3054D545E /* Pods-RelistenUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RelistenUITests-umbrella.h"; sourceTree = "<group>"; };
+		24C108BB82A83411BBF2B4B31A00E087 /* WeakCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WeakCache.swift; path = Source/Support/WeakCache.swift; sourceTree = "<group>"; };
+		279FFAE5985543F517C0B715BADFE066 /* NetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkRequest.swift; path = Source/Request/NetworkRequest.swift; sourceTree = "<group>"; };
+		2AB88AC07574EF02075F928F92626361 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2AE62E3FB3F53C711FA987EB65D0E550 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		2BC5EF09AD37F49F285C8092C5DECAB2 /* Resource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = Source/Resource.swift; sourceTree = "<group>"; };
+		2D0C6CAB3DFAB1FDD02C659D46FD50BA /* AGAudioPlayerUpNextQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AGAudioPlayerUpNextQueue.h; sourceTree = "<group>"; };
+		2EDD1DDC4A2E5A0446EAFB1E0A754F51 /* ScrubberBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScrubberBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FEBF6FEF4F8ED52A28E4C9D0744E89C /* Networking-NSURLSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Networking-NSURLSession.swift"; path = "Source/Networking-NSURLSession.swift"; sourceTree = "<group>"; };
+		32C33DCAB03311B14B665D9F3D713A3A /* Unbox-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Unbox-prefix.pch"; sourceTree = "<group>"; };
+		36CE874DAD35B2E775D706604286D066 /* Pods_RelistenUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RelistenUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3955B7E369911FF86FE76CB7CB72793A /* Pods-PhishODUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PhishODUITests-resources.sh"; sourceTree = "<group>"; };
+		39BD47331BC44EE95DF648DB3EC51387 /* Siesta-ObjC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Siesta-ObjC.swift"; path = "Source/Support/Siesta-ObjC.swift"; sourceTree = "<group>"; };
+		3D8B296BACD45D59FFA0E09C4C7C7525 /* Progress.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Progress.swift; path = Source/Support/Progress.swift; sourceTree = "<group>"; };
+		412D3BE13ED8B2729783ABB16273BC42 /* String+Siesta.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+Siesta.swift"; path = "Source/Support/String+Siesta.swift"; sourceTree = "<group>"; };
+		478D2D450DC2EC09958F1CC90CD50BD1 /* Pods-PhishODUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PhishODUITests-frameworks.sh"; sourceTree = "<group>"; };
+		4996D802328F1DD79BEAEE13957593BB /* Pods-RelistenUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-RelistenUITests.modulemap"; sourceTree = "<group>"; };
+		4A6FF92D839A859A6A777159799A6C21 /* RequestCallbacks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestCallbacks.swift; path = Source/Request/RequestCallbacks.swift; sourceTree = "<group>"; };
+		4ADE296325FBBB144BEB9DC3A8472D61 /* Pods-RelistenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RelistenUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		4AF898A1BB86A1E079BA62A890175A33 /* ResourceStatusOverlay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResourceStatusOverlay.swift; path = Source/UI/ResourceStatusOverlay.swift; sourceTree = "<group>"; };
+		4B3396062CCE8FA73800FA65354A3A15 /* AGAudioPlayer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AGAudioPlayer-umbrella.h"; sourceTree = "<group>"; };
+		4D75593E02F68769A3CDC2D398647E0B /* Pipeline.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Pipeline.swift; path = Source/Pipeline.swift; sourceTree = "<group>"; };
+		5A576AA39026BEAD4BD498135FDDF558 /* point1sec.mp3 */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = audio.mp3; name = point1sec.mp3; path = HysteriaPlayer/point1sec.mp3; sourceTree = "<group>"; };
+		5BD74732D4C88C867F9AFDB4B4B2856E /* Unbox-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Unbox-dummy.m"; sourceTree = "<group>"; };
+		5D68B842ADE93C7E5C30092871BEAEC0 /* Pods-PhishOD-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PhishOD-acknowledgements.plist"; sourceTree = "<group>"; };
+		5E066A9D3F6ED3AB6C04C348C1C4ED57 /* Pods-PhishODUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PhishODUITests-dummy.m"; sourceTree = "<group>"; };
+		62E9C36B3C5A111DD729AB20A6F14376 /* Pods-Relisten-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Relisten-dummy.m"; sourceTree = "<group>"; };
+		65FA908D7EB249EEDE58B888BEB6DAEB /* Pods-PhishODUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PhishODUITests-umbrella.h"; sourceTree = "<group>"; };
+		69769478B73104FA8617DEAC2391613E /* AGDurationHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AGDurationHelper.m; sourceTree = "<group>"; };
+		6CD51D70A545FB9FF1799966E49C378C /* Pods-Relisten-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Relisten-acknowledgements.plist"; sourceTree = "<group>"; };
+		6F3ABDD620A00A9095CD35060796C4D1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		712DB88D49A35557EC8AAC5D9101F4D4 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request/Request.swift; sourceTree = "<group>"; };
+		74092BC4AC6320803140EF5F0B087EB7 /* Pods-Relisten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Relisten.release.xcconfig"; sourceTree = "<group>"; };
+		742A87441D00DA5E1C9376357BC5D090 /* AGAudioPlayer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = AGAudioPlayer.modulemap; sourceTree = "<group>"; };
+		762A988946051FBAD3F4901A324BC9BA /* ResourceObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResourceObserver.swift; path = Source/ResourceObserver.swift; sourceTree = "<group>"; };
+		763766C5BE8543675F1F7785ECECDD76 /* Pods-Relisten.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Relisten.modulemap"; sourceTree = "<group>"; };
+		766D38E000C4CA9E8A78CCE5B6E6D523 /* ScrubberBar-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ScrubberBar-umbrella.h"; sourceTree = "<group>"; };
+		7885D35EC2571B508F43102990D21EC8 /* Deprecations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Deprecations.swift; path = Source/Support/Deprecations.swift; sourceTree = "<group>"; };
+		78C9933B6547D97EF03715130A861D22 /* Pods-RelistenUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RelistenUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		79F1F3D8FC1CA2A5D9DD740AC1F05317 /* RequestCreation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestCreation.swift; path = Source/Request/RequestCreation.swift; sourceTree = "<group>"; };
+		7A34E76FB07A8478FFA244445BA53708 /* ResourceStatusOverlay.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = ResourceStatusOverlay.xib; path = Source/UI/ResourceStatusOverlay.xib; sourceTree = "<group>"; };
+		7B9C2369E6D54E59C53035FF7B488A89 /* Pods-RelistenUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RelistenUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7C0884E0C5C17F500B1887BC902419AF /* Unbox.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Unbox.modulemap; sourceTree = "<group>"; };
+		7C384122288B95F3BD9DC005185BAA6A /* AGAudioItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AGAudioItem.m; sourceTree = "<group>"; };
+		7D0E67244BD7C600A0E28F49F34407AF /* Pods-PhishODUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PhishODUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7DAED98E76D1C545CE2C03267CC86450 /* Entity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Source/Entity.swift; sourceTree = "<group>"; };
+		7EF99DFA9C94C05F501184BE7BFFEA1C /* HysteriaPlayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HysteriaPlayer.m; path = HysteriaPlayer/HysteriaPlayer.m; sourceTree = "<group>"; };
+		7F8C1A45B1AC422890AA9ADB89973860 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		8125B055E3C7651C7B125A31A4F173AB /* Pods-PhishOD.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-PhishOD.modulemap"; sourceTree = "<group>"; };
+		838FF329D3D4914524223E318551A347 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		843329D27CCBF11075158BC236957E4E /* Service.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Service.swift; path = Source/Service.swift; sourceTree = "<group>"; };
+		8483A557E28C0DB60F73B0A7ED753FB9 /* Siesta.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Siesta.modulemap; sourceTree = "<group>"; };
+		85A69146E1332ED1EE939999EEF427BA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		8717B7AA808B8B85CF3AFFCFA7AAF2CE /* HysteriaPlayer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HysteriaPlayer-umbrella.h"; sourceTree = "<group>"; };
+		88AB0C7FB67832FEF52860051C5F3AE9 /* Siesta-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Siesta-dummy.m"; sourceTree = "<group>"; };
+		890518335E4AA70592906E87C9046E7B /* Siesta-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Siesta-prefix.pch"; sourceTree = "<group>"; };
+		8DBCC74AAF98681B9D387E519062C797 /* Siesta-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Siesta-umbrella.h"; sourceTree = "<group>"; };
+		8F3FAC50C146226FA08FEB05A46FCE60 /* Pods-RelistenUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RelistenUITests-frameworks.sh"; sourceTree = "<group>"; };
+		91A342BCEB27E2E6264141E05F918987 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		931DAE35A882A266E00BC6D24E0D30DB /* AGDurationHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AGDurationHelper.h; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9521B8479294CC720A7ACA1BCF4C321C /* ScrubberBar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScrubberBar.swift; path = ScrubberBar/ScrubberBar.swift; sourceTree = "<group>"; };
+		95B8B6D35BB8951F71B2D7D67BD1DF08 /* Unbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Unbox.swift; path = Sources/Unbox.swift; sourceTree = "<group>"; };
+		974A294A6B2D043ED69EB5491EFB5426 /* Pods-Relisten.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Relisten.debug.xcconfig"; sourceTree = "<group>"; };
+		9A1DDF1AE4017B3AC20E6B95511DD9B0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9ACBCA5374CD47ADC20B813C2E758CDD /* AGAudioItemCollection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AGAudioItemCollection.m; sourceTree = "<group>"; };
+		9C8E995153C1DB695961B0A78AF5BB07 /* AGAudioPlayerUpNextQueue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AGAudioPlayerUpNextQueue.m; sourceTree = "<group>"; };
+		9D29D6EF1F50BE515C1634CEB460A460 /* AGAudioPlayer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AGAudioPlayer-prefix.pch"; sourceTree = "<group>"; };
+		9D6BE16A72120FFDFE2C8A059EAB8441 /* Pods-PhishOD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PhishOD.release.xcconfig"; sourceTree = "<group>"; };
+		9DB741901172766ED8C6E7B7A341F862 /* GCD+Siesta.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "GCD+Siesta.swift"; path = "Source/Support/GCD+Siesta.swift"; sourceTree = "<group>"; };
+		9E6DEEBC7D69668A476A426438874AE4 /* Unbox-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Unbox-umbrella.h"; sourceTree = "<group>"; };
+		9F3432C03052D37D97FCC4AC7C4D6ADE /* Unbox.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Unbox.xcconfig; sourceTree = "<group>"; };
+		9FFAB5B8D65977C25CF51C97889EEEDB /* AGAudioItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AGAudioItem.h; sourceTree = "<group>"; };
+		A2020E8AD70DA938EBD9C9351B4E02A3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A6126AB0461886EA3B75B89DDB8204F1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A92C0306BEDFDB53AB9E0CBA28C84BC8 /* HysteriaPlayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HysteriaPlayer.h; path = HysteriaPlayer/HysteriaPlayer.h; sourceTree = "<group>"; };
+		AB5623743DEE5F36F9CBA91B7FF0C18D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		ACBB704774046B32640EAF61D71DD97C /* RemoteImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RemoteImageView.swift; path = Source/UI/RemoteImageView.swift; sourceTree = "<group>"; };
+		AD6C8EAE207E95BA31FA221F3FDFAF08 /* Pods-PhishOD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PhishOD.debug.xcconfig"; sourceTree = "<group>"; };
+		B2C8019B615EE60A38B707EF106B9638 /* HysteriaPlayer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HysteriaPlayer.xcconfig; sourceTree = "<group>"; };
+		BD3CE4267D3C7C30B4680DFA91BD6385 /* ResponseTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResponseTransformer.swift; path = Source/ResponseTransformer.swift; sourceTree = "<group>"; };
+		BE9CC6095C5B66AEACC123CE61039987 /* AGAudioPlayer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AGAudioPlayer.xcconfig; sourceTree = "<group>"; };
+		C297C7264E8F171ED35427825854ECCD /* Pods-PhishOD-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PhishOD-umbrella.h"; sourceTree = "<group>"; };
+		C50330142F52CE00D4914554CFE2C39B /* DebugFormatting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DebugFormatting.swift; path = Source/Support/DebugFormatting.swift; sourceTree = "<group>"; };
+		C5283E0310D46BBF2F525C5C1E051C72 /* Pods-PhishOD-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PhishOD-acknowledgements.markdown"; sourceTree = "<group>"; };
+		C7334EFA25CB8563B37E318BEA9E8944 /* Siesta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Siesta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C78A3F51649F260419F8FBB7A05E19C5 /* OpenEnum.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OpenEnum.swift; path = Source/Support/OpenEnum.swift; sourceTree = "<group>"; };
+		C9B05CB897029AEE474F8CFEB83A8DEC /* AGAudioPlayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AGAudioPlayer.m; sourceTree = "<group>"; };
+		CB05FAA0AEC094A2A1720D17C517EFBF /* HysteriaPlayer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = HysteriaPlayer.modulemap; sourceTree = "<group>"; };
+		D0E4D6C15629F82508CD21522C2BF32B /* Pods-PhishODUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PhishODUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		D37D02A3B463CACABA1A9D48F7EBC5FA /* Siesta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Siesta.xcconfig; sourceTree = "<group>"; };
+		D4AA801E0EBB7CCAC1CD3B720EA2F7B3 /* ProgressTracker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressTracker.swift; path = Source/Request/ProgressTracker.swift; sourceTree = "<group>"; };
+		D537612539B3E3323BEBC18737B6144D /* Pods-Relisten-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Relisten-acknowledgements.markdown"; sourceTree = "<group>"; };
+		D762BB8FAADA204D421D9CA1B81A047C /* Pods-PhishOD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PhishOD-dummy.m"; sourceTree = "<group>"; };
+		D7BF110D7C860CFD7C93B8A3C224C1F1 /* Pods-PhishOD-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PhishOD-frameworks.sh"; sourceTree = "<group>"; };
+		D8653FFAC4ED38F11389301BFBD47A9C /* HysteriaPlayer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HysteriaPlayer-prefix.pch"; sourceTree = "<group>"; };
+		D8CE1E6E11C15A6D36C153771E18C3BD /* Regex+Siesta.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Regex+Siesta.swift"; path = "Source/Support/Regex+Siesta.swift"; sourceTree = "<group>"; };
+		DE2C55DAE256BE266441B6F0C3C043F1 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = Source/Configuration.swift; sourceTree = "<group>"; };
+		DEB598F30D92397D2E87620F95255B12 /* Pods-RelistenUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RelistenUITests-resources.sh"; sourceTree = "<group>"; };
+		DED241EF022AC392C7B2B79BBC8A681F /* HysteriaPlayer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HysteriaPlayer-dummy.m"; sourceTree = "<group>"; };
+		E3099862F9AD8A48A7C80FD22C093C3B /* AGCachable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AGCachable.h; sourceTree = "<group>"; };
+		E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		E5FDCDA1201F2ED111B8AA678B564911 /* Pods-Relisten-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Relisten-umbrella.h"; sourceTree = "<group>"; };
+		E7369CA9C58392F314169B2E54ACEBD5 /* Pods-Relisten-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Relisten-resources.sh"; sourceTree = "<group>"; };
+		E817BEB850EDF2771334DD743AB91A3D /* ConfigurationPatternConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConfigurationPatternConvertible.swift; path = Source/ConfigurationPatternConvertible.swift; sourceTree = "<group>"; };
+		E81A27BB72E78F8C31C46D5C82BE0203 /* ScrubberBar-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ScrubberBar-prefix.pch"; sourceTree = "<group>"; };
+		E94D2F390859112BFFB86F62BD1D63B0 /* AGAudioPlayer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AGAudioPlayer-dummy.m"; sourceTree = "<group>"; };
+		E94EEAC087B9D9414720A1F3210A0603 /* Pods_PhishODUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishODUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDCBAE18425537ED36D4116ED9B67CFB /* Pods-Relisten-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Relisten-frameworks.sh"; sourceTree = "<group>"; };
+		EE7B1E543A75ABBD0D3C7C3D93CCA791 /* ScrubberBar-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ScrubberBar-dummy.m"; sourceTree = "<group>"; };
+		EE9F91C65EDEC39706187EE90F83A5E2 /* Logging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Logging.swift; path = Source/Support/Logging.swift; sourceTree = "<group>"; };
+		F0310ECBEC6E08D4FEF0F94C11D3027D /* Pods-PhishODUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PhishODUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F053638108B73775CB850A008465A124 /* Siesta.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Siesta.h; path = Source/Support/Siesta.h; sourceTree = "<group>"; };
+		F05647BDA42F1D9FE66B9B051A41FA4A /* Pods-PhishOD-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PhishOD-resources.sh"; sourceTree = "<group>"; };
+		F08967A33740FC2FF2ABCE324A4C4F37 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4D6B68966A440CD83B0804CCC0EAD6F /* ScrubberBar.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = ScrubberBar.modulemap; sourceTree = "<group>"; };
+		F521A2FA8B0BDD2F599227652227FD2B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5DA2496AABF14A5300AD875509E2B9D /* AGAudioPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AGAudioPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5F5F0A0B086DA6C131B124AF6D18FAC /* AGAudioItemCollection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AGAudioItemCollection.h; sourceTree = "<group>"; };
+		F62081C18CC741ED913973CE46C20CD0 /* Pods-PhishODUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-PhishODUITests.modulemap"; sourceTree = "<group>"; };
+		F96F8420D568004BD06AEA3D61641800 /* Pods-PhishODUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PhishODUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		F9DF5476F8307178B318DACE59A77AE4 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA8DD7A60C29C1677A8D7C40C2B14CA7 /* NSURL+Siesta.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSURL+Siesta.swift"; path = "Source/Support/NSURL+Siesta.swift"; sourceTree = "<group>"; };
+		FA946553AD1A4FAAC7AD169B8AA8C3EF /* Unbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Unbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFBE579D8CAF6EAF9C89F1460EDC7948 /* AGAudioPlayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AGAudioPlayer.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4396F20C3671E1F82EAE7B61868192E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FFB02EFBD5300EF0ED5C212575C2761 /* AudioToolbox.framework in Frameworks */,
+				996F63B0A55FF29E274A446D4A601C3B /* AVFoundation.framework in Frameworks */,
+				46B153CB39876CD4FCE204144B18C211 /* CoreMedia.framework in Frameworks */,
+				6D3BB8B806342D902FA7011B84646700 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DE38D4460C6823BD41DF566CF86231D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEF19466E530A9835212AE68BE1C0D7C /* CoreGraphics.framework in Frameworks */,
+				2685AF006D23E7218DE5BA8BFD598C49 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74AFE26EEA4A187AC989F35626FC9C3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72E10960553989670E080D52B4BD72FA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75F0A21E30620219DBD88AEDAC2A87AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8677F6D936711D5E1CBB4B659D2E175B /* Foundation.framework in Frameworks */,
+				D005E48647B6555625425FD5B2EC5CA9 /* HysteriaPlayer.framework in Frameworks */,
+				7F8D55FB6975CA46931E194EA04EF1DA /* MediaPlayer.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		874AD9AB2B05D162A332CC16B173E750 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8763CEE028A039EC7C96000121FE4D64 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F8EA497D3C9C302343A236E4D9C74D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F7F1D36FC96B088D1E2553495487528 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF9834B0D26042E5983D723E9674AE82 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58D5EF702997D3E12210388591379209 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B18EB7B8B003E3A563B43F89B4D44CD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BE9660D1DD8774FC4D480FAFC1C0009 /* Foundation.framework in Frameworks */,
+				348264026E0013513D7C8D5B7168A48C /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1D7E4CD252E016BD65AA3695E8EC2DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				403848C811B533D4948E366DB6B55DE9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		037132554E1A45940F35427870141018 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8ACF268AF9D893244F41BEC869C58BC0 /* Pods-PhishOD */,
+				898811D08E901AD065410394A6964F7C /* Pods-PhishODUITests */,
+				2D57DA5D4B8F2879B8F882FC154D8D6A /* Pods-Relisten */,
+				8CC2400085C2C562FEF29952973A9BF8 /* Pods-RelistenUITests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		13C867FC58A2BFE5E6A6988FB44953BE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		15855B3AF767073CCCE39948CB204559 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1D49CA036F25741AD59283170BF7CD9F /* HysteriaPlayer.framework */,
+				29D37AC9704F7AD7DE2A75A3626395A3 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		29D37AC9704F7AD7DE2A75A3626395A3 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				7F8C1A45B1AC422890AA9ADB89973860 /* AudioToolbox.framework */,
+				2AE62E3FB3F53C711FA987EB65D0E550 /* AVFoundation.framework */,
+				189BDF60CFA2304C95192D1FDE7DB145 /* CoreGraphics.framework */,
+				AB5623743DEE5F36F9CBA91B7FF0C18D /* CoreMedia.framework */,
+				E35D65788CFFEF5A1B3E903D72458A25 /* Foundation.framework */,
+				1D0B7C79DBE67C8820038FA65FCE2F06 /* MediaPlayer.framework */,
+				85A69146E1332ED1EE939999EEF427BA /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		2D57DA5D4B8F2879B8F882FC154D8D6A /* Pods-Relisten */ = {
+			isa = PBXGroup;
+			children = (
+				A2020E8AD70DA938EBD9C9351B4E02A3 /* Info.plist */,
+				763766C5BE8543675F1F7785ECECDD76 /* Pods-Relisten.modulemap */,
+				D537612539B3E3323BEBC18737B6144D /* Pods-Relisten-acknowledgements.markdown */,
+				6CD51D70A545FB9FF1799966E49C378C /* Pods-Relisten-acknowledgements.plist */,
+				62E9C36B3C5A111DD729AB20A6F14376 /* Pods-Relisten-dummy.m */,
+				EDCBAE18425537ED36D4116ED9B67CFB /* Pods-Relisten-frameworks.sh */,
+				E7369CA9C58392F314169B2E54ACEBD5 /* Pods-Relisten-resources.sh */,
+				E5FDCDA1201F2ED111B8AA678B564911 /* Pods-Relisten-umbrella.h */,
+				974A294A6B2D043ED69EB5491EFB5426 /* Pods-Relisten.debug.xcconfig */,
+				74092BC4AC6320803140EF5F0B087EB7 /* Pods-Relisten.release.xcconfig */,
+			);
+			name = "Pods-Relisten";
+			path = "Target Support Files/Pods-Relisten";
+			sourceTree = "<group>";
+		};
+		2EB986E2B3A98B92F93183BECFCA610C /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				CB05FAA0AEC094A2A1720D17C517EFBF /* HysteriaPlayer.modulemap */,
+				B2C8019B615EE60A38B707EF106B9638 /* HysteriaPlayer.xcconfig */,
+				DED241EF022AC392C7B2B79BBC8A681F /* HysteriaPlayer-dummy.m */,
+				D8653FFAC4ED38F11389301BFBD47A9C /* HysteriaPlayer-prefix.pch */,
+				8717B7AA808B8B85CF3AFFCFA7AAF2CE /* HysteriaPlayer-umbrella.h */,
+				9A1DDF1AE4017B3AC20E6B95511DD9B0 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/HysteriaPlayer";
+			sourceTree = "<group>";
+		};
+		3FD017B330D81B7D7FEA06ECB3CF83AC /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				A6126AB0461886EA3B75B89DDB8204F1 /* Info.plist */,
+				7C0884E0C5C17F500B1887BC902419AF /* Unbox.modulemap */,
+				9F3432C03052D37D97FCC4AC7C4D6ADE /* Unbox.xcconfig */,
+				5BD74732D4C88C867F9AFDB4B4B2856E /* Unbox-dummy.m */,
+				32C33DCAB03311B14B665D9F3D713A3A /* Unbox-prefix.pch */,
+				9E6DEEBC7D69668A476A426438874AE4 /* Unbox-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Unbox";
+			sourceTree = "<group>";
+		};
+		435E424214CF0723D34E6AC584ACDF7A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DB2FF1D19BF8197AFFAA13F4AE24BF38 /* HysteriaPlayer */,
+				67A2F4A17F64FDF1D45B3D35572CD41D /* ScrubberBar */,
+				A7A24FED11D07D417A9410F33CE79C8A /* Siesta */,
+				A647CE76D8FDA2A7754ED4416FC8446C /* Unbox */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5EB4DF0E0EF9BC464BD94096C62A4763 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5DA2496AABF14A5300AD875509E2B9D /* AGAudioPlayer.framework */,
+				09FFFCFCC13C0B976E084A62E1FCD1B3 /* HysteriaPlayer.framework */,
+				91A342BCEB27E2E6264141E05F918987 /* Pods_PhishOD.framework */,
+				E94EEAC087B9D9414720A1F3210A0603 /* Pods_PhishODUITests.framework */,
+				19EDF3B7580CA88973402ACDB62ACFE3 /* Pods_Relisten.framework */,
+				36CE874DAD35B2E775D706604286D066 /* Pods_RelistenUITests.framework */,
+				2EDD1DDC4A2E5A0446EAFB1E0A754F51 /* ScrubberBar.framework */,
+				C7334EFA25CB8563B37E318BEA9E8944 /* Siesta.framework */,
+				FA946553AD1A4FAAC7AD169B8AA8C3EF /* Unbox.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		63DB09C49B186E9C4AF0F254B35733F0 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				6F3ABDD620A00A9095CD35060796C4D1 /* Info.plist */,
+				8483A557E28C0DB60F73B0A7ED753FB9 /* Siesta.modulemap */,
+				D37D02A3B463CACABA1A9D48F7EBC5FA /* Siesta.xcconfig */,
+				88AB0C7FB67832FEF52860051C5F3AE9 /* Siesta-dummy.m */,
+				890518335E4AA70592906E87C9046E7B /* Siesta-prefix.pch */,
+				8DBCC74AAF98681B9D387E519062C797 /* Siesta-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Siesta";
+			sourceTree = "<group>";
+		};
+		67A2F4A17F64FDF1D45B3D35572CD41D /* ScrubberBar */ = {
+			isa = PBXGroup;
+			children = (
+				9521B8479294CC720A7ACA1BCF4C321C /* ScrubberBar.swift */,
+				98E299C4A2A330CDCC792499DA453F92 /* Support Files */,
+			);
+			path = ScrubberBar;
+			sourceTree = "<group>";
+		};
+		7B1245040752F26A2B24D0FAAC090D76 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E0B1581BF5C4C19886E59E5F2FCF8C76 /* AGAudioPlayer */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				7B1245040752F26A2B24D0FAAC090D76 /* Development Pods */,
+				15855B3AF767073CCCE39948CB204559 /* Frameworks */,
+				435E424214CF0723D34E6AC584ACDF7A /* Pods */,
+				5EB4DF0E0EF9BC464BD94096C62A4763 /* Products */,
+				037132554E1A45940F35427870141018 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		8506FB3507D0D4ED3DD2C6C2DD9BACB9 /* AGAudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				9FFAB5B8D65977C25CF51C97889EEEDB /* AGAudioItem.h */,
+				7C384122288B95F3BD9DC005185BAA6A /* AGAudioItem.m */,
+				F5F5F0A0B086DA6C131B124AF6D18FAC /* AGAudioItemCollection.h */,
+				9ACBCA5374CD47ADC20B813C2E758CDD /* AGAudioItemCollection.m */,
+				FFBE579D8CAF6EAF9C89F1460EDC7948 /* AGAudioPlayer.h */,
+				C9B05CB897029AEE474F8CFEB83A8DEC /* AGAudioPlayer.m */,
+				2D0C6CAB3DFAB1FDD02C659D46FD50BA /* AGAudioPlayerUpNextQueue.h */,
+				9C8E995153C1DB695961B0A78AF5BB07 /* AGAudioPlayerUpNextQueue.m */,
+				E3099862F9AD8A48A7C80FD22C093C3B /* AGCachable.h */,
+				931DAE35A882A266E00BC6D24E0D30DB /* AGDurationHelper.h */,
+				69769478B73104FA8617DEAC2391613E /* AGDurationHelper.m */,
+			);
+			path = AGAudioPlayer;
+			sourceTree = "<group>";
+		};
+		898811D08E901AD065410394A6964F7C /* Pods-PhishODUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F08967A33740FC2FF2ABCE324A4C4F37 /* Info.plist */,
+				F62081C18CC741ED913973CE46C20CD0 /* Pods-PhishODUITests.modulemap */,
+				F96F8420D568004BD06AEA3D61641800 /* Pods-PhishODUITests-acknowledgements.markdown */,
+				D0E4D6C15629F82508CD21522C2BF32B /* Pods-PhishODUITests-acknowledgements.plist */,
+				5E066A9D3F6ED3AB6C04C348C1C4ED57 /* Pods-PhishODUITests-dummy.m */,
+				478D2D450DC2EC09958F1CC90CD50BD1 /* Pods-PhishODUITests-frameworks.sh */,
+				3955B7E369911FF86FE76CB7CB72793A /* Pods-PhishODUITests-resources.sh */,
+				65FA908D7EB249EEDE58B888BEB6DAEB /* Pods-PhishODUITests-umbrella.h */,
+				F0310ECBEC6E08D4FEF0F94C11D3027D /* Pods-PhishODUITests.debug.xcconfig */,
+				7D0E67244BD7C600A0E28F49F34407AF /* Pods-PhishODUITests.release.xcconfig */,
+			);
+			name = "Pods-PhishODUITests";
+			path = "Target Support Files/Pods-PhishODUITests";
+			sourceTree = "<group>";
+		};
+		8ACF268AF9D893244F41BEC869C58BC0 /* Pods-PhishOD */ = {
+			isa = PBXGroup;
+			children = (
+				F521A2FA8B0BDD2F599227652227FD2B /* Info.plist */,
+				8125B055E3C7651C7B125A31A4F173AB /* Pods-PhishOD.modulemap */,
+				C5283E0310D46BBF2F525C5C1E051C72 /* Pods-PhishOD-acknowledgements.markdown */,
+				5D68B842ADE93C7E5C30092871BEAEC0 /* Pods-PhishOD-acknowledgements.plist */,
+				D762BB8FAADA204D421D9CA1B81A047C /* Pods-PhishOD-dummy.m */,
+				D7BF110D7C860CFD7C93B8A3C224C1F1 /* Pods-PhishOD-frameworks.sh */,
+				F05647BDA42F1D9FE66B9B051A41FA4A /* Pods-PhishOD-resources.sh */,
+				C297C7264E8F171ED35427825854ECCD /* Pods-PhishOD-umbrella.h */,
+				AD6C8EAE207E95BA31FA221F3FDFAF08 /* Pods-PhishOD.debug.xcconfig */,
+				9D6BE16A72120FFDFE2C8A059EAB8441 /* Pods-PhishOD.release.xcconfig */,
+			);
+			name = "Pods-PhishOD";
+			path = "Target Support Files/Pods-PhishOD";
+			sourceTree = "<group>";
+		};
+		8C1F149AC178BC6D8DAEFA359DAFD64A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				742A87441D00DA5E1C9376357BC5D090 /* AGAudioPlayer.modulemap */,
+				BE9CC6095C5B66AEACC123CE61039987 /* AGAudioPlayer.xcconfig */,
+				E94D2F390859112BFFB86F62BD1D63B0 /* AGAudioPlayer-dummy.m */,
+				9D29D6EF1F50BE515C1634CEB460A460 /* AGAudioPlayer-prefix.pch */,
+				4B3396062CCE8FA73800FA65354A3A15 /* AGAudioPlayer-umbrella.h */,
+				1B7E8F6757D53BDBD1DCF02D25BFBB49 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Relisten-iOS/Pods/Target Support Files/AGAudioPlayer";
+			sourceTree = "<group>";
+		};
+		8CC2400085C2C562FEF29952973A9BF8 /* Pods-RelistenUITests */ = {
+			isa = PBXGroup;
+			children = (
+				838FF329D3D4914524223E318551A347 /* Info.plist */,
+				4996D802328F1DD79BEAEE13957593BB /* Pods-RelistenUITests.modulemap */,
+				7B9C2369E6D54E59C53035FF7B488A89 /* Pods-RelistenUITests-acknowledgements.markdown */,
+				78C9933B6547D97EF03715130A861D22 /* Pods-RelistenUITests-acknowledgements.plist */,
+				075986721AE883E2FEB4667C5FA48CDF /* Pods-RelistenUITests-dummy.m */,
+				8F3FAC50C146226FA08FEB05A46FCE60 /* Pods-RelistenUITests-frameworks.sh */,
+				DEB598F30D92397D2E87620F95255B12 /* Pods-RelistenUITests-resources.sh */,
+				247FB638F6E12101C83F4DE3054D545E /* Pods-RelistenUITests-umbrella.h */,
+				4ADE296325FBBB144BEB9DC3A8472D61 /* Pods-RelistenUITests.debug.xcconfig */,
+				2AB88AC07574EF02075F928F92626361 /* Pods-RelistenUITests.release.xcconfig */,
+			);
+			name = "Pods-RelistenUITests";
+			path = "Target Support Files/Pods-RelistenUITests";
+			sourceTree = "<group>";
+		};
+		95E384CEE7A93E0B8C25734496A06684 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5A576AA39026BEAD4BD498135FDDF558 /* point1sec.mp3 */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		98E299C4A2A330CDCC792499DA453F92 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				F9DF5476F8307178B318DACE59A77AE4 /* Info.plist */,
+				F4D6B68966A440CD83B0804CCC0EAD6F /* ScrubberBar.modulemap */,
+				0B634D93FD2A95BA1253A6CEB7BCEC99 /* ScrubberBar.xcconfig */,
+				EE7B1E543A75ABBD0D3C7C3D93CCA791 /* ScrubberBar-dummy.m */,
+				E81A27BB72E78F8C31C46D5C82BE0203 /* ScrubberBar-prefix.pch */,
+				766D38E000C4CA9E8A78CCE5B6E6D523 /* ScrubberBar-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/ScrubberBar";
+			sourceTree = "<group>";
+		};
+		A647CE76D8FDA2A7754ED4416FC8446C /* Unbox */ = {
+			isa = PBXGroup;
+			children = (
+				95B8B6D35BB8951F71B2D7D67BD1DF08 /* Unbox.swift */,
+				3FD017B330D81B7D7FEA06ECB3CF83AC /* Support Files */,
+			);
+			path = Unbox;
+			sourceTree = "<group>";
+		};
+		A7A24FED11D07D417A9410F33CE79C8A /* Siesta */ = {
+			isa = PBXGroup;
+			children = (
+				B92E246C262E47002642D69263266B3C /* Core */,
+				63DB09C49B186E9C4AF0F254B35733F0 /* Support Files */,
+			);
+			path = Siesta;
+			sourceTree = "<group>";
+		};
+		B92E246C262E47002642D69263266B3C /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				00641DE35C36A9B65BF2B9F35F6E106C /* ARC+Siesta.swift */,
+				114E4EB2AFD81D2376EDE78F991A985D /* Collection+Siesta.swift */,
+				DE2C55DAE256BE266441B6F0C3C043F1 /* Configuration.swift */,
+				E817BEB850EDF2771334DD743AB91A3D /* ConfigurationPatternConvertible.swift */,
+				C50330142F52CE00D4914554CFE2C39B /* DebugFormatting.swift */,
+				7885D35EC2571B508F43102990D21EC8 /* Deprecations.swift */,
+				7DAED98E76D1C545CE2C03267CC86450 /* Entity.swift */,
+				02F619B8E59AEEF34CD6FBE0E89197FE /* EntityCache.swift */,
+				150589D5CE86F6E723ED8984F25CB60D /* Error.swift */,
+				9DB741901172766ED8C6E7B7A341F862 /* GCD+Siesta.swift */,
+				EE9F91C65EDEC39706187EE90F83A5E2 /* Logging.swift */,
+				155E96D0188D076CD9EE1734BB65D580 /* Networking.swift */,
+				2FEBF6FEF4F8ED52A28E4C9D0744E89C /* Networking-NSURLSession.swift */,
+				279FFAE5985543F517C0B715BADFE066 /* NetworkRequest.swift */,
+				FA8DD7A60C29C1677A8D7C40C2B14CA7 /* NSURL+Siesta.swift */,
+				C78A3F51649F260419F8FBB7A05E19C5 /* OpenEnum.swift */,
+				4D75593E02F68769A3CDC2D398647E0B /* Pipeline.swift */,
+				3D8B296BACD45D59FFA0E09C4C7C7525 /* Progress.swift */,
+				D4AA801E0EBB7CCAC1CD3B720EA2F7B3 /* ProgressTracker.swift */,
+				D8CE1E6E11C15A6D36C153771E18C3BD /* Regex+Siesta.swift */,
+				ACBB704774046B32640EAF61D71DD97C /* RemoteImageView.swift */,
+				712DB88D49A35557EC8AAC5D9101F4D4 /* Request.swift */,
+				4A6FF92D839A859A6A777159799A6C21 /* RequestCallbacks.swift */,
+				79F1F3D8FC1CA2A5D9DD740AC1F05317 /* RequestCreation.swift */,
+				2BC5EF09AD37F49F285C8092C5DECAB2 /* Resource.swift */,
+				762A988946051FBAD3F4901A324BC9BA /* ResourceObserver.swift */,
+				4AF898A1BB86A1E079BA62A890175A33 /* ResourceStatusOverlay.swift */,
+				7A34E76FB07A8478FFA244445BA53708 /* ResourceStatusOverlay.xib */,
+				BD3CE4267D3C7C30B4680DFA91BD6385 /* ResponseTransformer.swift */,
+				843329D27CCBF11075158BC236957E4E /* Service.swift */,
+				F053638108B73775CB850A008465A124 /* Siesta.h */,
+				39BD47331BC44EE95DF648DB3EC51387 /* Siesta-ObjC.swift */,
+				412D3BE13ED8B2729783ABB16273BC42 /* String+Siesta.swift */,
+				24C108BB82A83411BBF2B4B31A00E087 /* WeakCache.swift */,
+				13C867FC58A2BFE5E6A6988FB44953BE /* Resources */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		DB2FF1D19BF8197AFFAA13F4AE24BF38 /* HysteriaPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				A92C0306BEDFDB53AB9E0CBA28C84BC8 /* HysteriaPlayer.h */,
+				7EF99DFA9C94C05F501184BE7BFFEA1C /* HysteriaPlayer.m */,
+				95E384CEE7A93E0B8C25734496A06684 /* Resources */,
+				2EB986E2B3A98B92F93183BECFCA610C /* Support Files */,
+			);
+			path = HysteriaPlayer;
+			sourceTree = "<group>";
+		};
+		E0B1581BF5C4C19886E59E5F2FCF8C76 /* AGAudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				8506FB3507D0D4ED3DD2C6C2DD9BACB9 /* AGAudioPlayer */,
+				8C1F149AC178BC6D8DAEFA359DAFD64A /* Support Files */,
+			);
+			name = AGAudioPlayer;
+			path = ../../AGAudioPlayer;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		02AEB951E0D0A9D8275BB81D42DA416D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93717888C02C5AAE7B84A021C69B32D5 /* Pods-PhishODUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		079FD0845814B19CDDEA83090BD9BC81 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96602D0F0D6E5F1AFCB809C6D6565FF0 /* Siesta-umbrella.h in Headers */,
+				21594E69EF502B76E03C7C7CC1A0B22A /* Siesta.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		082AA97F6AE7F75F3B31F72AE182CA93 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F438A036766627D39EE644A680CD42CB /* Pods-RelistenUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25C88DF93062FDADA627D47C2BAAC5EF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E2FD2A00AAB0A1285CFCDF68614F1CA /* AGAudioItem.h in Headers */,
+				53FB2439EF4569514A7F7F8A84250AB6 /* AGAudioItemCollection.h in Headers */,
+				34CF819DD4477BA2622DC2F562FD62D8 /* AGAudioPlayer-umbrella.h in Headers */,
+				7539061E02127F703AB419D1EAA05158 /* AGAudioPlayer.h in Headers */,
+				91B814A08BF350FE574196C0515CCAE2 /* AGAudioPlayerUpNextQueue.h in Headers */,
+				B5A1E17721A48FFAF11C95C7C83E6A70 /* AGCachable.h in Headers */,
+				102A72C9802B732AE394BF96419DDE89 /* AGDurationHelper.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D5A2D739C727328C06FA23BCBB4F923 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F27BFF4CC5274AE1C7209C683433811A /* HysteriaPlayer-umbrella.h in Headers */,
+				8A7F23EEA7F597F94A687D51DCF302BC /* HysteriaPlayer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69DF05279623F4C81566FEDB9B726B48 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A53F7D77E35AD0874F427DC4A403B06C /* ScrubberBar-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AA0ACE19148983D7D0EC7BB9FE734FE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72738B26CC04A3E3F1C2AAC30E8370D2 /* Unbox-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5C84BACD2857B6037745853F29AA675 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E119CA04317795164FD19E5C4A3197BD /* Pods-Relisten-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8205A46DA6B469A725A273D50A8A522 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C7D83CAC1A1C95A0151CE164F9D6AB1 /* Pods-PhishOD-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0709CFB6BA0F895D545F97BAD829146D /* Pods-Relisten */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7788878AE5437BD6BEF10E74F446E524 /* Build configuration list for PBXNativeTarget "Pods-Relisten" */;
+			buildPhases = (
+				7670050A7F5738CAB908529ED7E00CA3 /* Sources */,
+				C1D7E4CD252E016BD65AA3695E8EC2DC /* Frameworks */,
+				E5C84BACD2857B6037745853F29AA675 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AE667706202352904150E434992BE974 /* PBXTargetDependency */,
+				540757D0677BCB0D7C913D6E633DF374 /* PBXTargetDependency */,
+				8BF85836AD434894DC062E6DD620679A /* PBXTargetDependency */,
+				8B9798F8ECBD77008D57C0207DC90F90 /* PBXTargetDependency */,
+				87CC07BC849471EDB0B9CB66A39D5625 /* PBXTargetDependency */,
+			);
+			name = "Pods-Relisten";
+			productName = "Pods-Relisten";
+			productReference = 19EDF3B7580CA88973402ACDB62ACFE3 /* Pods_Relisten.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		090B30C39792CA981D96F2C5AB46918F /* Pods-PhishODUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C40588D39C7F4A1D2068BB0BD5181FD3 /* Build configuration list for PBXNativeTarget "Pods-PhishODUITests" */;
+			buildPhases = (
+				DB701B669A708A1E61368A16A0A27A89 /* Sources */,
+				74AFE26EEA4A187AC989F35626FC9C3B /* Frameworks */,
+				02AEB951E0D0A9D8275BB81D42DA416D /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-PhishODUITests";
+			productName = "Pods-PhishODUITests";
+			productReference = E94EEAC087B9D9414720A1F3210A0603 /* Pods_PhishODUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		34EA5FCDA1BE7159FF48472C52AEC290 /* AGAudioPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6BD4645CBE5506C17B19AD066B61570 /* Build configuration list for PBXNativeTarget "AGAudioPlayer" */;
+			buildPhases = (
+				1083851AFE3152B05726781B36CBCCE9 /* Sources */,
+				75F0A21E30620219DBD88AEDAC2A87AD /* Frameworks */,
+				25C88DF93062FDADA627D47C2BAAC5EF /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CB1783D822BA29EB8F171D429FEEA98C /* PBXTargetDependency */,
+			);
+			name = AGAudioPlayer;
+			productName = AGAudioPlayer;
+			productReference = F5DA2496AABF14A5300AD875509E2B9D /* AGAudioPlayer.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		4124808FD3EB46FB4B44C2EEC9092CEE /* Pods-RelistenUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6691FE74E3AF26121FC567F25367440 /* Build configuration list for PBXNativeTarget "Pods-RelistenUITests" */;
+			buildPhases = (
+				11CF04519C3350CE794B608872FFF2C8 /* Sources */,
+				9F8EA497D3C9C302343A236E4D9C74D9 /* Frameworks */,
+				082AA97F6AE7F75F3B31F72AE182CA93 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-RelistenUITests";
+			productName = "Pods-RelistenUITests";
+			productReference = 36CE874DAD35B2E775D706604286D066 /* Pods_RelistenUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5901B0B9EC0887F2040134A5FADCB508 /* Pods-PhishOD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 41167740049E58F3915377ACA5C4D72E /* Build configuration list for PBXNativeTarget "Pods-PhishOD" */;
+			buildPhases = (
+				CA1BD0C4CF5944E85D20B48F55E2D535 /* Sources */,
+				AF9834B0D26042E5983D723E9674AE82 /* Frameworks */,
+				E8205A46DA6B469A725A273D50A8A522 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-PhishOD";
+			productName = "Pods-PhishOD";
+			productReference = 91A342BCEB27E2E6264141E05F918987 /* Pods_PhishOD.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		706A36E848074B28168D0F4809300FD3 /* ScrubberBar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7FA405EB9324050424A06B2E3135663F /* Build configuration list for PBXNativeTarget "ScrubberBar" */;
+			buildPhases = (
+				9C7684CFCAC5A60A6A98BD045648C805 /* Sources */,
+				B18EB7B8B003E3A563B43F89B4D44CD3 /* Frameworks */,
+				69DF05279623F4C81566FEDB9B726B48 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScrubberBar;
+			productName = ScrubberBar;
+			productReference = 2EDD1DDC4A2E5A0446EAFB1E0A754F51 /* ScrubberBar.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		759B70A12AC71A97C92A8A1CFB91E97B /* Unbox */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4ABC52BAC41ABAACC7AA6429BC7576B /* Build configuration list for PBXNativeTarget "Unbox" */;
+			buildPhases = (
+				FFCF2A82A25A82AB14CECC356D8A58F6 /* Sources */,
+				5DE38D4460C6823BD41DF566CF86231D /* Frameworks */,
+				8AA0ACE19148983D7D0EC7BB9FE734FE /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Unbox;
+			productName = Unbox;
+			productReference = FA946553AD1A4FAAC7AD169B8AA8C3EF /* Unbox.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BE102DDBD13B4DEC52457643A885EA0F /* HysteriaPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 071D53C12EA5B17DDA29C2FE3F53A326 /* Build configuration list for PBXNativeTarget "HysteriaPlayer" */;
+			buildPhases = (
+				A86C5A9906DAC2E8AED855A9F4EE5315 /* Sources */,
+				4396F20C3671E1F82EAE7B61868192E7 /* Frameworks */,
+				4D5A2D739C727328C06FA23BCBB4F923 /* Headers */,
+				F6470D91F10CD616BFE82921E1ADF791 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HysteriaPlayer;
+			productName = HysteriaPlayer;
+			productReference = 09FFFCFCC13C0B976E084A62E1FCD1B3 /* HysteriaPlayer.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C32A8FEFE1DCA8ACAE948F564884A258 /* Siesta */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5DF9C1F9FD770C87A0D9DAEE400EB30C /* Build configuration list for PBXNativeTarget "Siesta" */;
+			buildPhases = (
+				6D107390D62C6FE8580D7BC6C21492C4 /* Sources */,
+				874AD9AB2B05D162A332CC16B173E750 /* Frameworks */,
+				079FD0845814B19CDDEA83090BD9BC81 /* Headers */,
+				1E768D1F7E0C9E518CB58746E0D4CC47 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Siesta;
+			productName = Siesta;
+			productReference = C7334EFA25CB8563B37E318BEA9E8944 /* Siesta.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 5EB4DF0E0EF9BC464BD94096C62A4763 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				34EA5FCDA1BE7159FF48472C52AEC290 /* AGAudioPlayer */,
+				BE102DDBD13B4DEC52457643A885EA0F /* HysteriaPlayer */,
+				5901B0B9EC0887F2040134A5FADCB508 /* Pods-PhishOD */,
+				090B30C39792CA981D96F2C5AB46918F /* Pods-PhishODUITests */,
+				0709CFB6BA0F895D545F97BAD829146D /* Pods-Relisten */,
+				4124808FD3EB46FB4B44C2EEC9092CEE /* Pods-RelistenUITests */,
+				706A36E848074B28168D0F4809300FD3 /* ScrubberBar */,
+				C32A8FEFE1DCA8ACAE948F564884A258 /* Siesta */,
+				759B70A12AC71A97C92A8A1CFB91E97B /* Unbox */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1E768D1F7E0C9E518CB58746E0D4CC47 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				368F1C82197DDF66BC70AD240118D483 /* ResourceStatusOverlay.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6470D91F10CD616BFE82921E1ADF791 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E3FB29400AF8FF5FB66D5E63F6D34F3 /* point1sec.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1083851AFE3152B05726781B36CBCCE9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04A65048485DE5B6B95C81F9C06F94D8 /* AGAudioItem.m in Sources */,
+				C789356CA52BB4EC0F3DB41A2878F411 /* AGAudioItemCollection.m in Sources */,
+				E0EA85F585620ABA113CD7DE2432BE90 /* AGAudioPlayer-dummy.m in Sources */,
+				4D70170C8FB3609818316CC3B9088AEA /* AGAudioPlayer.m in Sources */,
+				AAC37E98777B8A6D23B2D4F5729CB9AF /* AGAudioPlayerUpNextQueue.m in Sources */,
+				EB7FB48F6271465DC287762B40B0C161 /* AGDurationHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		11CF04519C3350CE794B608872FFF2C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78926EFBCAD97BCE0B72C76F75451119 /* Pods-RelistenUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D107390D62C6FE8580D7BC6C21492C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CDE64E285998A11F0428C37E281B6B7 /* ARC+Siesta.swift in Sources */,
+				17E71771301B42F005FBAAE872F5B1EB /* Collection+Siesta.swift in Sources */,
+				DD92FADDF2C77939AC6846B16DA52E15 /* Configuration.swift in Sources */,
+				D1321C7BEF147D4B9F6E0B23B76E11B1 /* ConfigurationPatternConvertible.swift in Sources */,
+				E8B34547F9F8B30E30C075012E281551 /* DebugFormatting.swift in Sources */,
+				D152FA9C727DF9515417A132BC64394E /* Deprecations.swift in Sources */,
+				54DF0A2A7C97D00BBB0573B7454080F3 /* Entity.swift in Sources */,
+				560F6BACF022421CC77BF3BEC4A6E838 /* EntityCache.swift in Sources */,
+				673D261992DF10FC5BEB3A6C71BB1460 /* Error.swift in Sources */,
+				79FA59076466CB0D1AAD0D19FD8D7170 /* GCD+Siesta.swift in Sources */,
+				B1A6A4A010F7B57A601A4E8E86EEA05F /* Logging.swift in Sources */,
+				F727E25E8C969ADBBABFF25DF4034FFE /* Networking-NSURLSession.swift in Sources */,
+				2890945DC230C1C3ECD29772D78CC9BE /* Networking.swift in Sources */,
+				E173C1CFCC8DE0400758B437BC38B96B /* NetworkRequest.swift in Sources */,
+				5A66E306E079AEB98B2E94155DFB64D1 /* NSURL+Siesta.swift in Sources */,
+				F2E691E081A9C302C0AF754586C52505 /* OpenEnum.swift in Sources */,
+				165C0F0788630B8965A7CF8D8FF1EF17 /* Pipeline.swift in Sources */,
+				0C3C13DD0F69FFE226EA9F3B37501E78 /* Progress.swift in Sources */,
+				F72BE912CEEEEA09C8355FFA79EFBCB5 /* ProgressTracker.swift in Sources */,
+				7F59050AE658995BF08577CE80D4407C /* Regex+Siesta.swift in Sources */,
+				3F332B8D9A7E13854D200539DA4E6F40 /* RemoteImageView.swift in Sources */,
+				879C2602A62E9B3B7E0CB7C66EA6052D /* Request.swift in Sources */,
+				8225689DE993E042F27A6EE249F54245 /* RequestCallbacks.swift in Sources */,
+				29CF332DCF1BFC3657CBF3D9E9679072 /* RequestCreation.swift in Sources */,
+				FCA4A60678D11014339FCE2AFBD0A551 /* Resource.swift in Sources */,
+				F4E73382F1D57AA0751A7ED797D9EF6D /* ResourceObserver.swift in Sources */,
+				68D764553ECFC0A41C87904EC33EB4CC /* ResourceStatusOverlay.swift in Sources */,
+				F468DB5539648CC45609B315903A3D4F /* ResourceStatusOverlay.xib in Sources */,
+				26B4352D77F334DE8DF62505CDF89F8E /* ResponseTransformer.swift in Sources */,
+				F6DEE3D87CD79F4CB46FBA2763E57FFD /* Service.swift in Sources */,
+				F4198E26DB12F8EBE45C26C6FAC47FE8 /* Siesta-dummy.m in Sources */,
+				9145C59147A8E29F72499640D70744CC /* Siesta-ObjC.swift in Sources */,
+				A134EA725E6A6143D4712544E2F1C9ED /* String+Siesta.swift in Sources */,
+				CD2DE2A20B2B5B0525EA623D8DB296FD /* WeakCache.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7670050A7F5738CAB908529ED7E00CA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1DFF4AC6FC2C5F37482FFF5BD88FC3E /* Pods-Relisten-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C7684CFCAC5A60A6A98BD045648C805 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FD14E3E7132134185CABBD92741922C /* ScrubberBar-dummy.m in Sources */,
+				2ADBBF095550C253DE912B469525CD69 /* ScrubberBar.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A86C5A9906DAC2E8AED855A9F4EE5315 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA259B28BCC3FC486954BB206820CDD0 /* HysteriaPlayer-dummy.m in Sources */,
+				3843E14664C3433534724A1EA88A3DBF /* HysteriaPlayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA1BD0C4CF5944E85D20B48F55E2D535 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F1DCE40BCA60C36AD16FD07A57BE7E8 /* Pods-PhishOD-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB701B669A708A1E61368A16A0A27A89 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DDEEBC4768F7C49B89B2A4A8316B5E7 /* Pods-PhishODUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFCF2A82A25A82AB14CECC356D8A58F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BCBCAED75ED2C3C0B63797D9A1B9462 /* Unbox-dummy.m in Sources */,
+				1CD9B0B042F79FAF40482CE167F9A0F2 /* Unbox.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		540757D0677BCB0D7C913D6E633DF374 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HysteriaPlayer;
+			target = BE102DDBD13B4DEC52457643A885EA0F /* HysteriaPlayer */;
+			targetProxy = 4B6B369927E32C942F0E9E8891E6BEA2 /* PBXContainerItemProxy */;
+		};
+		87CC07BC849471EDB0B9CB66A39D5625 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Unbox;
+			target = 759B70A12AC71A97C92A8A1CFB91E97B /* Unbox */;
+			targetProxy = B6F757107639E1F877F5A5C200497AF3 /* PBXContainerItemProxy */;
+		};
+		8B9798F8ECBD77008D57C0207DC90F90 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Siesta;
+			target = C32A8FEFE1DCA8ACAE948F564884A258 /* Siesta */;
+			targetProxy = 8430776B5A3A61FEA570A981BC2816EE /* PBXContainerItemProxy */;
+		};
+		8BF85836AD434894DC062E6DD620679A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ScrubberBar;
+			target = 706A36E848074B28168D0F4809300FD3 /* ScrubberBar */;
+			targetProxy = 5D7EE39C6982739B049EAA52FCF68835 /* PBXContainerItemProxy */;
+		};
+		AE667706202352904150E434992BE974 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AGAudioPlayer;
+			target = 34EA5FCDA1BE7159FF48472C52AEC290 /* AGAudioPlayer */;
+			targetProxy = BCB0399C85D0A3682F8781F6E5DEB2A4 /* PBXContainerItemProxy */;
+		};
+		CB1783D822BA29EB8F171D429FEEA98C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HysteriaPlayer;
+			target = BE102DDBD13B4DEC52457643A885EA0F /* HysteriaPlayer */;
+			targetProxy = 7C2B72893F484DB953701326159C881E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		183173803885D1A8A00F56313D628F7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F3432C03052D37D97FCC4AC7C4D6ADE /* Unbox.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Unbox/Unbox-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Unbox/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Unbox/Unbox.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Unbox;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		1D71B2A97128DB72C1B6BF129BE0295C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2AB88AC07574EF02075F928F92626361 /* Pods-RelistenUITests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-RelistenUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_RelistenUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		51C9A7B6488A737EDB39018460798F49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 974A294A6B2D043ED69EB5491EFB5426 /* Pods-Relisten.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Relisten/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Relisten/Pods-Relisten.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Relisten;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		59B042A655B7C20CBAB90E385BF4E4C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		5FF34B454A341BBBA5936FE01CA4C694 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B634D93FD2A95BA1253A6CEB7BCEC99 /* ScrubberBar.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/ScrubberBar/ScrubberBar-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ScrubberBar/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ScrubberBar/ScrubberBar.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = ScrubberBar;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		723857C475CA5A55547AD1B000A371AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD6C8EAE207E95BA31FA221F3FDFAF08 /* Pods-PhishOD.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-PhishOD/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PhishOD/Pods-PhishOD.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PhishOD;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7E6ACCE0D024176D837FEA3125E687D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F3432C03052D37D97FCC4AC7C4D6ADE /* Unbox.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Unbox/Unbox-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Unbox/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Unbox/Unbox.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = Unbox;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7FD1715AF192D5ABCB1F98CA634C68EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D6BE16A72120FFDFE2C8A059EAB8441 /* Pods-PhishOD.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-PhishOD/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PhishOD/Pods-PhishOD.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PhishOD;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		910B6B0A12B86C76368A4342EF113C0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74092BC4AC6320803140EF5F0B087EB7 /* Pods-Relisten.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Relisten/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Relisten/Pods-Relisten.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Relisten;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		9BE3B24ABE480EFEB73C56D4FA6426C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D37D02A3B463CACABA1A9D48F7EBC5FA /* Siesta.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Siesta/Siesta-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Siesta/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Siesta/Siesta.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = Siesta;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A294784BE043E7E7FAE479EC0B0BD2A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B634D93FD2A95BA1253A6CEB7BCEC99 /* ScrubberBar.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/ScrubberBar/ScrubberBar-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ScrubberBar/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ScrubberBar/ScrubberBar.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = ScrubberBar;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AA5BC94E9B8651D27F3D78336752218E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2C8019B615EE60A38B707EF106B9638 /* HysteriaPlayer.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/HysteriaPlayer/HysteriaPlayer-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HysteriaPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/HysteriaPlayer/HysteriaPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = HysteriaPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		AB4CD34CEE5614621D521E4FF8DB73DD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D37D02A3B463CACABA1A9D48F7EBC5FA /* Siesta.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Siesta/Siesta-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Siesta/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Siesta/Siesta.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Siesta;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B7324857C38B065FEB1EEE3105C2367A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D30CF8DEF3F33EEFBE9399B145E795F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0310ECBEC6E08D4FEF0F94C11D3027D /* Pods-PhishODUITests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-PhishODUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PhishODUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D367C49655D733354DA067AD004378C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2C8019B615EE60A38B707EF106B9638 /* HysteriaPlayer.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/HysteriaPlayer/HysteriaPlayer-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HysteriaPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/HysteriaPlayer/HysteriaPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = HysteriaPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E0E64324485B01B5FDFB68350BA6B381 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D0E67244BD7C600A0E28F49F34407AF /* Pods-PhishODUITests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-PhishODUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PhishODUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E84F23EE2FEC23B4740E021A7BCB90C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE9CC6095C5B66AEACC123CE61039987 /* AGAudioPlayer.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/AGAudioPlayer/AGAudioPlayer-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/AGAudioPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/AGAudioPlayer/AGAudioPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = AGAudioPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F9EE12770F42001F31744D2431C595A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE9CC6095C5B66AEACC123CE61039987 /* AGAudioPlayer.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/AGAudioPlayer/AGAudioPlayer-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/AGAudioPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/AGAudioPlayer/AGAudioPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = AGAudioPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FA7B935BBA7CAE1FC043ABA91E5C47B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4ADE296325FBBB144BEB9DC3A8472D61 /* Pods-RelistenUITests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-RelistenUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_RelistenUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		071D53C12EA5B17DDA29C2FE3F53A326 /* Build configuration list for PBXNativeTarget "HysteriaPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D367C49655D733354DA067AD004378C9 /* Debug */,
+				AA5BC94E9B8651D27F3D78336752218E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59B042A655B7C20CBAB90E385BF4E4C7 /* Debug */,
+				B7324857C38B065FEB1EEE3105C2367A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		41167740049E58F3915377ACA5C4D72E /* Build configuration list for PBXNativeTarget "Pods-PhishOD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				723857C475CA5A55547AD1B000A371AE /* Debug */,
+				7FD1715AF192D5ABCB1F98CA634C68EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5DF9C1F9FD770C87A0D9DAEE400EB30C /* Build configuration list for PBXNativeTarget "Siesta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9BE3B24ABE480EFEB73C56D4FA6426C5 /* Debug */,
+				AB4CD34CEE5614621D521E4FF8DB73DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7788878AE5437BD6BEF10E74F446E524 /* Build configuration list for PBXNativeTarget "Pods-Relisten" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51C9A7B6488A737EDB39018460798F49 /* Debug */,
+				910B6B0A12B86C76368A4342EF113C0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7FA405EB9324050424A06B2E3135663F /* Build configuration list for PBXNativeTarget "ScrubberBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A294784BE043E7E7FAE479EC0B0BD2A9 /* Debug */,
+				5FF34B454A341BBBA5936FE01CA4C694 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6BD4645CBE5506C17B19AD066B61570 /* Build configuration list for PBXNativeTarget "AGAudioPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E84F23EE2FEC23B4740E021A7BCB90C9 /* Debug */,
+				F9EE12770F42001F31744D2431C595A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C40588D39C7F4A1D2068BB0BD5181FD3 /* Build configuration list for PBXNativeTarget "Pods-PhishODUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D30CF8DEF3F33EEFBE9399B145E795F2 /* Debug */,
+				E0E64324485B01B5FDFB68350BA6B381 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4ABC52BAC41ABAACC7AA6429BC7576B /* Build configuration list for PBXNativeTarget "Unbox" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E6ACCE0D024176D837FEA3125E687D9 /* Debug */,
+				183173803885D1A8A00F56313D628F7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6691FE74E3AF26121FC567F25367440 /* Build configuration list for PBXNativeTarget "Pods-RelistenUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA7B935BBA7CAE1FC043ABA91E5C47B6 /* Debug */,
+				1D71B2A97128DB72C1B6BF129BE0295C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

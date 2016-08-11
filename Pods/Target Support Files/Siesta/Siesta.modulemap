@@ -1,0 +1,6 @@
+framework module Siesta {
+  umbrella header "Siesta-umbrella.h"
+
+  export *
+  module * { export * }
+}

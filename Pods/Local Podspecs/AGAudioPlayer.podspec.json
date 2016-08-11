@@ -1,0 +1,29 @@
+{
+  "name": "AGAudioPlayer",
+  "version": "0.8.0",
+  "summary": "Gapless-playback + UI",
+  "homepage": "https://github.com/alecgorge/AGAudioPlayer",
+  "license": "MIT",
+  "authors": {
+    "alecgorge": "alecgorge@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/alecgorge/AGAudioPlayer.git",
+    "tag": "0.8.0"
+  },
+  "social_media_url": "https://twitter.com/alecgorge",
+  "platforms": {
+    "ios": "8.0",
+    "osx": "10.9"
+  },
+  "requires_arc": true,
+  "source_files": "AGAudioPlayer/*.{h,m}",
+  "ios": {
+    "frameworks": "MediaPlayer"
+  },
+  "dependencies": {
+    "HysteriaPlayer": [
+
+    ]
+  }
+}

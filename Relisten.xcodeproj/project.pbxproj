@@ -109,10 +109,10 @@
 			isa = PBXGroup;
 			children = (
 				7C449EB21D5A4F4300750D54 /* PhishODUITests */,
+				7C449EAA1D5A4F4300750D54 /* Info.plist */,
 				7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */,
 				7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */,
 				7C449EA71D5A4F4300750D54 /* PHODLaunchScreen.storyboard */,
-				7C449EAA1D5A4F4300750D54 /* Info.plist */,
 			);
 			path = PhishOD;
 			sourceTree = "<group>";
@@ -120,19 +120,19 @@
 		7C449EB21D5A4F4300750D54 /* PhishODUITests */ = {
 			isa = PBXGroup;
 			children = (
-				7C449EB31D5A4F4300750D54 /* PhishODUITests.swift */,
 				7C449EB51D5A4F4300750D54 /* Info.plist */,
+				7C449EB31D5A4F4300750D54 /* PhishODUITests.swift */,
 			);
 			path = PhishODUITests;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		7C449EBC1D5A511C00750D54 /* Apps */ = {
 			isa = PBXGroup;
 			children = (
-				7C8EF10F1D5A49C300004B5C /* Relisten */,
 				7C449E9D1D5A4F4200750D54 /* PhishOD */,
+				7C8EF10F1D5A49C300004B5C /* Relisten */,
 			);
-			name = Apps;
+			path = Apps;
 			sourceTree = "<group>";
 		};
 		7C449EBD1D5A513300750D54 /* Shared */ = {
@@ -140,24 +140,24 @@
 			children = (
 				7C449EBE1D5A513800750D54 /* API */,
 			);
-			name = Shared;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		7C449EBE1D5A513800750D54 /* API */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = API;
+			path = API;
 			sourceTree = "<group>";
 		};
 		7C8EF1041D5A49C200004B5C = {
 			isa = PBXGroup;
 			children = (
-				7C449EBD1D5A513300750D54 /* Shared */,
 				7C449EBC1D5A511C00750D54 /* Apps */,
-				7C8EF10E1D5A49C300004B5C /* Products */,
-				C4F5A2683057A5DAFFCCFB82 /* Pods */,
 				FBC463F999487576B5C823F4 /* Frameworks */,
+				C4F5A2683057A5DAFFCCFB82 /* Pods */,
+				7C8EF10E1D5A49C300004B5C /* Products */,
+				7C449EBD1D5A513300750D54 /* Shared */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,10 +176,10 @@
 			isa = PBXGroup;
 			children = (
 				7C8EF1241D5A49C300004B5C /* RelistenUITests */,
+				7C8EF11C1D5A49C300004B5C /* Info.plist */,
 				7C8EF1101D5A49C300004B5C /* RLAppDelegate.swift */,
 				7C8EF1171D5A49C300004B5C /* RLAssets.xcassets */,
 				7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */,
-				7C8EF11C1D5A49C300004B5C /* Info.plist */,
 			);
 			path = Relisten;
 			sourceTree = "<group>";
@@ -187,11 +187,11 @@
 		7C8EF1241D5A49C300004B5C /* RelistenUITests */ = {
 			isa = PBXGroup;
 			children = (
-				7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */,
 				7C8EF1271D5A49C300004B5C /* Info.plist */,
+				7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */,
 			);
 			path = RelistenUITests;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		C4F5A2683057A5DAFFCCFB82 /* Pods */ = {
 			isa = PBXGroup;
@@ -632,6 +632,7 @@
 				7C449EA81D5A4F4300750D54 /* Base */,
 			);
 			name = PHODLaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */ = {
@@ -640,6 +641,7 @@
 				7C8EF11A1D5A49C300004B5C /* Base */,
 			);
 			name = RLLaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -651,7 +653,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
-				INFOPLIST_FILE = PhishOD/Info.plist;
+				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.Phish-Tracks";
@@ -669,7 +671,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
-				INFOPLIST_FILE = PhishOD/Info.plist;
+				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.Phish-Tracks";
@@ -685,7 +687,7 @@
 			baseConfigurationReference = 5B3DAE0BE91F9DD1D3300EE2 /* Pods-PhishODUITests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 6F33NM6S7U;
-				INFOPLIST_FILE = PhishODUITests/Info.plist;
+				INFOPLIST_FILE = Apps/PhishOD/PhishODUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xnotused.com.alecgorge.PhishODUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -699,7 +701,7 @@
 			baseConfigurationReference = 74ABE39157492B09F7AB0CDB /* Pods-PhishODUITests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 6F33NM6S7U;
-				INFOPLIST_FILE = PhishODUITests/Info.plist;
+				INFOPLIST_FILE = Apps/PhishOD/PhishODUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xnotused.com.alecgorge.PhishODUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -808,7 +810,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Relisten App Icon";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
-				INFOPLIST_FILE = Relisten/Info.plist;
+				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
@@ -826,7 +828,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Relisten App Icon";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = Relisten/Info.plist;
+				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
@@ -842,7 +844,7 @@
 			baseConfigurationReference = E0263F8B06570DBB1399A78F /* Pods-RelistenUITests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 6F33NM6S7U;
-				INFOPLIST_FILE = RelistenUITests/Info.plist;
+				INFOPLIST_FILE = Apps/Relisten/RelistenUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xnotused.com.alecgorge.RelistenUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -856,7 +858,7 @@
 			baseConfigurationReference = 862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 6F33NM6S7U;
-				INFOPLIST_FILE = RelistenUITests/Info.plist;
+				INFOPLIST_FILE = Apps/Relisten/RelistenUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xnotused.com.alecgorge.RelistenUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

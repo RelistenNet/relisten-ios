@@ -1,25 +1,23 @@
 PODS:
-  - Realm (2.4.3):
-    - Realm/Headers (= 2.4.3)
-  - Realm/Headers (2.4.3)
-  - RealmSwift (2.4.3):
-    - Realm (= 2.4.3)
+  - Cache (2.2.1):
+    - CryptoSwift
+  - CryptoSwift (0.6.7)
   - Siesta (1.1.0):
     - Siesta/Core (= 1.1.0)
   - Siesta/Core (1.1.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
-  - RealmSwift
+  - Cache
   - Siesta
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Realm: e08d60b0048ccccd3949c8c28a92c4db5712d7e9
-  RealmSwift: 30d49739ccb3385d201242736ca4dda56aec9dfc
+  Cache: 5b2d2d68477bd9c5b8e539d673cc217ed1284814
+  CryptoSwift: 685ae257941e5447474348a2b545583e1a16b573
   Siesta: ada9f35255e4eb16fad45cc3080927f6c6cba9cc
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 7cd65202282c3cc695f66a1abafb6a7184064be7
+PODFILE CHECKSUM: 998c9b65b0154d6c8d3acb766e72c2bc5daadb86
 
 COCOAPODS: 1.2.0

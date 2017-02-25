@@ -9,6 +9,18 @@
 /* Begin PBXBuildFile section */
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
+		7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */; };
+		7C03A4B71E60E8B7006F2912 /* RelistenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */; };
+		7C03A4BA1E60FB66006F2912 /* RelistenModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B91E60FB66006F2912 /* RelistenModels.swift */; };
+		7C03A4BC1E60FFD2006F2912 /* RelistenJsonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */; };
+		7C03A4BE1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */; };
+		7C03A4BF1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */; };
+		7C03A4C11E61CD70006F2912 /* RelistenSourceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */; };
+		7C03A4C21E61CD70006F2912 /* RelistenSourceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */; };
+		7C03A4C41E621836006F2912 /* ApiCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C31E621836006F2912 /* ApiCache.swift */; };
+		7C03A4C51E621836006F2912 /* ApiCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C31E621836006F2912 /* ApiCache.swift */; };
+		7C03A4C71E6218CF006F2912 /* RelistenModelCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */; };
+		7C03A4C81E6218CF006F2912 /* RelistenModelCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */; };
 		7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */; };
 		7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */; };
 		7C449EA91D5A4F4300750D54 /* PHODLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA71D5A4F4300750D54 /* PHODLaunchScreen.storyboard */; };
@@ -43,6 +55,13 @@
 		598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Relisten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3DAE0BE91F9DD1D3300EE2 /* Pods-PhishODUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		74ABE39157492B09F7AB0CDB /* Pods-PhishODUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenApi.swift; path = Apps/Shared/RelistenApi.swift; sourceTree = SOURCE_ROOT; };
+		7C03A4B91E60FB66006F2912 /* RelistenModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenModels.swift; path = Apps/Shared/RelistenModels.swift; sourceTree = SOURCE_ROOT; };
+		7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenJsonUtils.swift; path = Apps/Shared/RelistenJsonUtils.swift; sourceTree = SOURCE_ROOT; };
+		7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenShowModels.swift; path = Apps/Shared/RelistenShowModels.swift; sourceTree = SOURCE_ROOT; };
+		7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenSourceModels.swift; path = Apps/Shared/RelistenSourceModels.swift; sourceTree = SOURCE_ROOT; };
+		7C03A4C31E621836006F2912 /* ApiCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiCache.swift; path = Apps/Shared/ApiCache.swift; sourceTree = SOURCE_ROOT; };
+		7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenModelCachable.swift; path = Apps/Shared/RelistenModelCachable.swift; sourceTree = SOURCE_ROOT; };
 		7C449E9C1D5A4F4200750D54 /* PhishOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhishOD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHODAppDelegate.swift; sourceTree = "<group>"; };
 		7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PHODAssets.xcassets; sourceTree = "<group>"; };
@@ -105,6 +124,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C03A4B81E60FB52006F2912 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7C03A4B91E60FB66006F2912 /* RelistenModels.swift */,
+				7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */,
+				7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */,
+				7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */,
+				7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		7C449E9D1D5A4F4200750D54 /* PhishOD */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +177,9 @@
 		7C449EBE1D5A513800750D54 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				7C03A4B81E60FB52006F2912 /* Models */,
+				7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */,
+				7C03A4C31E621836006F2912 /* ApiCache.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -311,7 +345,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Alec Gorge";
 				TargetAttributes = {
 					7C449E9B1D5A4F4200750D54 = {
@@ -328,7 +362,7 @@
 					7C8EF10C1D5A49C200004B5C = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HT7ELV3Q35;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					7C8EF1201D5A49C300004B5C = {
 						CreatedOnToolsVersion = 8.0;
@@ -582,6 +616,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C03A4C81E6218CF006F2912 /* RelistenModelCachable.swift in Sources */,
+				7C03A4C21E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
+				7C03A4C51E621836006F2912 /* ApiCache.swift in Sources */,
+				7C03A4B71E60E8B7006F2912 /* RelistenApi.swift in Sources */,
+				7C03A4BF1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
 				7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,7 +637,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C03A4C71E6218CF006F2912 /* RelistenModelCachable.swift in Sources */,
+				7C03A4C41E621836006F2912 /* ApiCache.swift in Sources */,
+				7C03A4BA1E60FB66006F2912 /* RelistenModels.swift in Sources */,
+				7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */,
+				7C03A4C11E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
+				7C03A4BE1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
 				7C8EF1111D5A49C300004B5C /* RLAppDelegate.swift in Sources */,
+				7C03A4BC1E60FFD2006F2912 /* RelistenJsonUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,6 +774,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -778,6 +825,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -809,14 +857,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Relisten App Icon";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = HT7ELV3Q35;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3b02fd4e-ee99-4de3-aff4-54698437e0b6";
-				PROVISIONING_PROFILE_SPECIFIER = "2016-08-09 Relisten Dev";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;

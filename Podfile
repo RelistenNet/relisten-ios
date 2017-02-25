@@ -5,10 +5,10 @@ target 'Relisten' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'Siesta', :git => 'https://github.com/bustoutsolutions/siesta.git'
-  pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
-  pod 'ScrubberBar'
-  pod 'Unbox'
+  pod 'Siesta'
+  # pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
+  pod 'SwiftyJSON'
+  pod 'Cache'
 
   # pod 'BFNavigationBarDrawer'
   target 'PhishOD' do

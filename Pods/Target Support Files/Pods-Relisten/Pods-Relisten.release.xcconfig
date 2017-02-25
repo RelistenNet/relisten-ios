@@ -1,9 +1,9 @@
-EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AGAudioPlayer" "$PODS_CONFIGURATION_BUILD_DIR/HysteriaPlayer" "$PODS_CONFIGURATION_BUILD_DIR/ScrubberBar" "$PODS_CONFIGURATION_BUILD_DIR/Siesta" "$PODS_CONFIGURATION_BUILD_DIR/Unbox"
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/Realm" "$PODS_CONFIGURATION_BUILD_DIR/RealmSwift" "$PODS_CONFIGURATION_BUILD_DIR/Siesta" "$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AGAudioPlayer/AGAudioPlayer.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/HysteriaPlayer/HysteriaPlayer.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/ScrubberBar/ScrubberBar.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Siesta/Siesta.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Unbox/Unbox.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "AGAudioPlayer" -framework "HysteriaPlayer" -framework "ScrubberBar" -framework "Siesta" -framework "Unbox"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/Realm/Realm.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/RealmSwift/RealmSwift.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Siesta/Siesta.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON/SwiftyJSON.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -ObjC -framework "Realm" -framework "RealmSwift" -framework "Siesta" -framework "SwiftyJSON"
 OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

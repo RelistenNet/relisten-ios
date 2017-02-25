@@ -1,6 +1,0 @@
-framework module AGAudioPlayer {
-  umbrella header "AGAudioPlayer-umbrella.h"
-
-  export *
-  module * { export * }
-}

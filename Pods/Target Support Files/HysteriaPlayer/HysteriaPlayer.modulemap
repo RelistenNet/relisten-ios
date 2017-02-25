@@ -1,6 +1,0 @@
-framework module HysteriaPlayer {
-  umbrella header "HysteriaPlayer-umbrella.h"
-
-  export *
-  module * { export * }
-}

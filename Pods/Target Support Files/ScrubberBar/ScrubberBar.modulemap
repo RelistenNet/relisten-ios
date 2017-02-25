@@ -1,6 +1,0 @@
-framework module ScrubberBar {
-  umbrella header "ScrubberBar-umbrella.h"
-
-  export *
-  module * { export * }
-}

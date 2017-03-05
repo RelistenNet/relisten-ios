@@ -8,14 +8,48 @@
 
 import UIKit
 
+import Siesta
+
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, ResourceObserver {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        let res = RelistenApi.artists()
+        let latestData: [Artist]? = res.latestData?.typedContent()
+        
+        print("[relisten][test] before load, latest data: \(latestData)")
+        
+        res
+            .addObserver(self)
+            .loadFromCacheThenUpdate()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            print("[relisten][test] attempting load after 5 seconds")
+            RelistenApi.artists().loadFromCacheThenUpdate()
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            print("[relisten][test] attempting load after 10 seconds")
+            RelistenApi.artists().loadFromCacheThenUpdate()
+        }
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+
         return true
+    }
+    
+    func resourceChanged(_ resource: Resource, event: ResourceEvent) {
+        print("[relisten][test] Resource changed with event: \(event)")
+        
+        if let artists: [Artist] = resource.latestData?.typedContent() {
+            print("[relisten][test] got data: \(artists)")
+        }
+        else {
+            print("[relisten][test] no artist data")
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

@@ -12,14 +12,28 @@ import Siesta
 import SwiftyJSON
 
 /// Add to a reponse pipeline to wrap JSON responses with SwiftyJSON
-let SwiftyJSONTransformer =
-    ResponseContentTransformer(transformErrors: true)
-    { JSON($0.content as AnyObject) }
+let SwiftyJSONTransformer = ResponseContentTransformer(transformErrors: true) { JSON($0.content as AnyObject) }
+
+let RelistenJSONTransformer = ResponseContentTransformer(transformErrors: true) { ($0.content as JSON)["data"] }
 
 /// Provides a .json convenience accessor to get raw JSON from resources
 extension TypedContentAccessors {
     var json: JSON {
         return typedContent(ifNone: JSON.null)
+    }
+}
+
+extension Resource {
+    // desired functionality: always send a request but
+    // get an immediate result from the cache
+    @discardableResult
+    public func loadFromCacheThenUpdate() -> Request? {
+        if isLoading {
+            return loadIfNeeded()
+        }
+        else {
+            return load()
+        }
     }
 }
 
@@ -37,7 +51,7 @@ class _RelistenApi {
     fileprivate init() {
         #if DEBUG
             // Bare-bones logging of which network calls Siesta makes:
-            LogCategory.enabled = [.network]
+            LogCategory.enabled = [] // [.network]
             
             // For more info about how Siesta decides whether to make a network call,
             // and when it broadcasts state updates to the app:
@@ -53,8 +67,9 @@ class _RelistenApi {
             $0.expirationTime = 60 * 60 * 24 * 365 * 10 as TimeInterval
             
             $0.pipeline[.parsing].add(SwiftyJSONTransformer, contentTypes: ["*/json"])
+            $0.pipeline[.parsing].add(RelistenJSONTransformer, contentTypes: ["*/json"])
             
-            $0.pipeline[.rawData].cacheUsing(RelistenJsonCache())
+            $0.pipeline[.parsing].cacheUsing(RelistenJsonCache())
             // $0.pipeline[.model].cacheUsing(RelistenRealmCache())
             
             // Custom transformers can change any response into any other — in this case, replacing the default error

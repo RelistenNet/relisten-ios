@@ -14,6 +14,8 @@ import Cache
 class RelistenJsonCache : EntityCache {
     typealias Key = String
     
+    static let cacheName = "RelistenApiCache"
+    
     let cacheConfig = Config(
         frontKind: .memory,
         backKind: .disk,
@@ -23,13 +25,17 @@ class RelistenJsonCache : EntityCache {
         maxSize: 1024 * 1024 * 100,
         
         // max objects to hold in cache at once
-        maxObjects: 1_000_000
+        maxObjects: 100,
+        
+        cacheDirectory: NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                            FileManager.SearchPathDomainMask.userDomainMask,
+                                                            true).first! + "/" + cacheName
     )
     
     let backingCache: SyncCache<Entity<Any>>
     
     init() {
-        let cache = Cache<Entity<Any>>(name: "relisten json cache", config: self.cacheConfig)
+        let cache = Cache<Entity<Any>>(name: RelistenJsonCache.cacheName, config: self.cacheConfig)
         backingCache = SyncCache(cache)
     }
     
@@ -38,12 +44,19 @@ class RelistenJsonCache : EntityCache {
     }
     
     func readEntity(forKey key: String) -> Entity<Any>? {
-        return backingCache.object(key)
+        let val = backingCache.object(key)
+        
+        print("[cache] readEntity(forKey \(key)) = \(val)")
+        
+        return val
     }
     
     func writeEntity(_ entity: Entity<Any>, forKey key: String) {
+        print("[cache] writeEntity(forKey \(key)) = \(entity)")
+        
         // lets not cache non-json responses for now
         guard entity.content is SwJSON else {
+            print("trying to cache non json response!")
             return
         }
         
@@ -51,6 +64,8 @@ class RelistenJsonCache : EntityCache {
     }
     
     func removeEntity(forKey key: String) {
+        print("[cache] removeEntity(forKey \(key))")
+        
         backingCache.remove(key)
     }
 }

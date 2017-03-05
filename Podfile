@@ -8,7 +8,13 @@ target 'Relisten' do
   pod 'Siesta'
   # pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
   pod 'SwiftyJSON'
-  pod 'Cache'
+  pod 'Cache', :git => 'https://github.com/alecgorge/Cache.git'
+  pod 'SQLite.swift'
+  pod 'Firebase/Database'
+  pod 'Firebase/RemoteConfig'
+  pod 'Firebase/DynamicLinks'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 
   # pod 'BFNavigationBarDrawer'
   target 'PhishOD' do

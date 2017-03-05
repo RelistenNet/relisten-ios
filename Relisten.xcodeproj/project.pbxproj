@@ -29,6 +29,8 @@
 		7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1171D5A49C300004B5C /* RLAssets.xcassets */; };
 		7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */; };
 		7C8EF1261D5A49C300004B5C /* RelistenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */; };
+		7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
+		7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
 		AC66B4F5C4BD9C01138EEBB8 /* Pods_PhishOD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */; };
 		CC04E2FFA276A84027E27D73 /* Pods_RelistenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD98604195220F1A82FB9F0 /* Pods_RelistenUITests.framework */; };
 /* End PBXBuildFile section */
@@ -78,6 +80,7 @@
 		7C8EF1211D5A49C300004B5C /* RelistenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenUITests.swift; sourceTree = "<group>"; };
 		7C8EF1271D5A49C300004B5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Apps/Shared/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishOD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.debug.xcconfig"; sourceTree = "<group>"; };
 		A82930F25AEEDCD2C5F101AD /* Pods-Relisten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Relisten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Relisten/Pods-Relisten.release.xcconfig"; sourceTree = "<group>"; };
@@ -169,6 +172,7 @@
 		7C449EBD1D5A513300750D54 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */,
 				7C449EBE1D5A513800750D54 /* API */,
 			);
 			path = Shared;
@@ -400,6 +404,7 @@
 			files = (
 				7C449EA91D5A4F4300750D54 /* PHODLaunchScreen.storyboard in Resources */,
 				7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */,
+				7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +421,7 @@
 			files = (
 				7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */,
 				7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */,
+				7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

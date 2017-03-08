@@ -25,10 +25,22 @@
 		7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */; };
 		7C449EA91D5A4F4300750D54 /* PHODLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA71D5A4F4300750D54 /* PHODLaunchScreen.storyboard */; };
 		7C449EB41D5A4F4300750D54 /* PhishODUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C449EB31D5A4F4300750D54 /* PhishODUITests.swift */; };
+		7C8044071E6E582000BA946E /* ArtistLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044061E6E582000BA946E /* ArtistLayout.swift */; };
+		7C8044091E6F29A800BA946E /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
+		7C80440A1E6F29A800BA946E /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
+		7C80440E1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */; };
+		7C80440F1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */; };
+		7C8044121E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044111E6F456000BA946E /* UIFont+ChangeWeight.swift */; };
+		7C8044131E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044111E6F456000BA946E /* UIFont+ChangeWeight.swift */; };
+		7C8044151E6F4B1F00BA946E /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044141E6F4B1E00BA946E /* AppColors.swift */; };
+		7C8044161E6F4B1F00BA946E /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044141E6F4B1E00BA946E /* AppColors.swift */; };
 		7C8EF1111D5A49C300004B5C /* RLAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8EF1101D5A49C300004B5C /* RLAppDelegate.swift */; };
 		7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1171D5A49C300004B5C /* RLAssets.xcassets */; };
 		7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */; };
 		7C8EF1261D5A49C300004B5C /* RelistenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */; };
+		7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */; };
+		7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */; };
+		7CC095411E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */; };
 		7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
 		7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
 		AC66B4F5C4BD9C01138EEBB8 /* Pods_PhishOD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */; };
@@ -57,13 +69,13 @@
 		598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Relisten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3DAE0BE91F9DD1D3300EE2 /* Pods-PhishODUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		74ABE39157492B09F7AB0CDB /* Pods-PhishODUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.release.xcconfig"; sourceTree = "<group>"; };
-		7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenApi.swift; path = RelistenApi.swift; sourceTree = "<group>"; };
-		7C03A4B91E60FB66006F2912 /* RelistenModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenModels.swift; path = RelistenModels.swift; sourceTree = "<group>"; };
-		7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenJsonUtils.swift; path = RelistenJsonUtils.swift; sourceTree = "<group>"; };
-		7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenShowModels.swift; path = RelistenShowModels.swift; sourceTree = "<group>"; };
-		7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenSourceModels.swift; path = RelistenSourceModels.swift; sourceTree = "<group>"; };
-		7C03A4C31E621836006F2912 /* ApiCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiCache.swift; path = ApiCache.swift; sourceTree = "<group>"; };
-		7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenModelCachable.swift; path = RelistenModelCachable.swift; sourceTree = "<group>"; };
+		7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenApi.swift; sourceTree = "<group>"; };
+		7C03A4B91E60FB66006F2912 /* RelistenModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenModels.swift; sourceTree = "<group>"; };
+		7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenJsonUtils.swift; sourceTree = "<group>"; };
+		7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenShowModels.swift; sourceTree = "<group>"; };
+		7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenSourceModels.swift; sourceTree = "<group>"; };
+		7C03A4C31E621836006F2912 /* ApiCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCache.swift; sourceTree = "<group>"; };
+		7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenModelCachable.swift; sourceTree = "<group>"; };
 		7C449E9C1D5A4F4200750D54 /* PhishOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhishOD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHODAppDelegate.swift; sourceTree = "<group>"; };
 		7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PHODAssets.xcassets; sourceTree = "<group>"; };
@@ -72,6 +84,11 @@
 		7C449EAF1D5A4F4300750D54 /* PhishODUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhishODUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C449EB31D5A4F4300750D54 /* PhishODUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishODUITests.swift; sourceTree = "<group>"; };
 		7C449EB51D5A4F4300750D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C8044061E6E582000BA946E /* ArtistLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistLayout.swift; path = Layouts/ArtistLayout.swift; sourceTree = "<group>"; };
+		7C8044081E6F29A800BA946E /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistViewController.swift; path = "View Controllers/ArtistViewController.swift"; sourceTree = "<group>"; };
+		7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenMenuView.swift; path = Views/RelistenMenuView.swift; sourceTree = "<group>"; };
+		7C8044111E6F456000BA946E /* UIFont+ChangeWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIFont+ChangeWeight.swift"; path = "Extensions/UIFont+ChangeWeight.swift"; sourceTree = "<group>"; };
+		7C8044141E6F4B1E00BA946E /* AppColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		7C8EF10D1D5A49C300004B5C /* Relisten.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Relisten.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C8EF1101D5A49C300004B5C /* RLAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLAppDelegate.swift; sourceTree = "<group>"; };
 		7C8EF1171D5A49C300004B5C /* RLAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = RLAssets.xcassets; sourceTree = "<group>"; };
@@ -80,7 +97,9 @@
 		7C8EF1211D5A49C300004B5C /* RelistenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenUITests.swift; sourceTree = "<group>"; };
 		7C8EF1271D5A49C300004B5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistsViewController.swift; path = "View Controllers/ArtistsViewController.swift"; sourceTree = "<group>"; };
+		7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenTableViewController.swift; path = "View Controllers/RelistenTableViewController.swift"; sourceTree = "<group>"; };
+		7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishOD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.debug.xcconfig"; sourceTree = "<group>"; };
 		A82930F25AEEDCD2C5F101AD /* Pods-Relisten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Relisten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Relisten/Pods-Relisten.release.xcconfig"; sourceTree = "<group>"; };
@@ -136,7 +155,6 @@
 				7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */,
 				7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */,
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -173,8 +191,13 @@
 		7C449EBD1D5A513300750D54 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				7C8044101E6F454A00BA946E /* Extensions */,
+				7C80440C1E6F29AF00BA946E /* Views */,
+				7C80440B1E6F29AB00BA946E /* Layouts */,
+				7CC0953E1E6C6D370067FD39 /* View Controllers */,
 				7C449EBE1D5A513800750D54 /* API */,
 				7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */,
+				7C8044141E6F4B1E00BA946E /* AppColors.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -187,6 +210,37 @@
 				7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		7C8044051E6E57F800BA946E /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				7C8044061E6E582000BA946E /* ArtistLayout.swift */,
+			);
+			name = Layouts;
+			sourceTree = "<group>";
+		};
+		7C80440B1E6F29AB00BA946E /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Layouts;
+			sourceTree = "<group>";
+		};
+		7C80440C1E6F29AF00BA946E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		7C8044101E6F454A00BA946E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7C8044111E6F456000BA946E /* UIFont+ChangeWeight.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		7C8EF1041D5A49C200004B5C = {
@@ -214,6 +268,8 @@
 		7C8EF10F1D5A49C300004B5C /* Relisten */ = {
 			isa = PBXGroup;
 			children = (
+				7C8044051E6E57F800BA946E /* Layouts */,
+				7CD78D181E6C6BDD001D097D /* View Controllers */,
 				7C8EF1241D5A49C300004B5C /* RelistenUITests */,
 				7C8EF11C1D5A49C300004B5C /* Info.plist */,
 				7C8EF1101D5A49C300004B5C /* RLAppDelegate.swift */,
@@ -230,6 +286,23 @@
 				7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */,
 			);
 			path = RelistenUITests;
+			sourceTree = "<group>";
+		};
+		7CC0953E1E6C6D370067FD39 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */,
+				7C8044081E6F29A800BA946E /* ArtistViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		7CD78D181E6C6BDD001D097D /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		C4F5A2683057A5DAFFCCFB82 /* Pods */ = {
@@ -624,8 +697,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C03A4C81E6218CF006F2912 /* RelistenModelCachable.swift in Sources */,
+				7CC095411E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
 				7C03A4C21E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
+				7C80440A1E6F29A800BA946E /* ArtistViewController.swift in Sources */,
+				7C8044161E6F4B1F00BA946E /* AppColors.swift in Sources */,
+				7C80440F1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */,
 				7C03A4C51E621836006F2912 /* ApiCache.swift in Sources */,
+				7C8044131E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */,
 				7C03A4B71E60E8B7006F2912 /* RelistenApi.swift in Sources */,
 				7C03A4BF1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
 				7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */,
@@ -644,14 +722,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */,
 				7C03A4C71E6218CF006F2912 /* RelistenModelCachable.swift in Sources */,
 				7C03A4C41E621836006F2912 /* ApiCache.swift in Sources */,
+				7C8044151E6F4B1F00BA946E /* AppColors.swift in Sources */,
 				7C03A4BA1E60FB66006F2912 /* RelistenModels.swift in Sources */,
 				7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */,
+				7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
 				7C03A4C11E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
 				7C03A4BE1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
 				7C8EF1111D5A49C300004B5C /* RLAppDelegate.swift in Sources */,
 				7C03A4BC1E60FFD2006F2912 /* RelistenJsonUtils.swift in Sources */,
+				7C8044071E6E582000BA946E /* ArtistLayout.swift in Sources */,
+				7C80440E1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */,
+				7C8044121E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */,
+				7C8044091E6F29A800BA946E /* ArtistViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

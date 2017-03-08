@@ -5,16 +5,20 @@ target 'Relisten' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'Siesta'
+  pod 'Siesta/Core'
+  pod 'Siesta/UI'
   # pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
   pod 'SwiftyJSON'
   pod 'Cache', :git => 'https://github.com/alecgorge/Cache.git'
-  pod 'SQLite.swift'
   pod 'Firebase/Database'
   pod 'Firebase/RemoteConfig'
   pod 'Firebase/DynamicLinks'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod "DownloadButton"
+  pod 'ReachabilitySwift', '~> 3'
+  pod 'LayoutKit'
+  pod 'DWURecyclingAlert'
 
   # pod 'BFNavigationBarDrawer'
   target 'PhishOD' do

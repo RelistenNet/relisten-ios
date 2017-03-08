@@ -9,47 +9,40 @@
 import UIKit
 
 import Siesta
+import Firebase
+import DWURecyclingAlert
+
+public var FirebaseRemoteConfig: FIRRemoteConfig! = nil
+
+public let AppColors = _AppColors(
+    primary: UIColor.blue,
+    textOnPrimary: UIColor.white
+)
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, ResourceObserver {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    func setupThirdPartyDependencies() {
+//        Inject_DWURecyclingAlert()
+        
+        FIRApp.configure()
+
+        FirebaseRemoteConfig = FIRRemoteConfig.remoteConfig()
+        FirebaseRemoteConfig.setDefaults(["api_base": "https://relistenapi.alecgorge.com" as NSObject])
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        
-        let res = RelistenApi.artists()
-        let latestData: [Artist]? = res.latestData?.typedContent()
-        
-        print("[relisten][test] before load, latest data: \(latestData)")
-        
-        res
-            .addObserver(self)
-            .loadFromCacheThenUpdate()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            print("[relisten][test] attempting load after 5 seconds")
-            RelistenApi.artists().loadFromCacheThenUpdate()
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-            print("[relisten][test] attempting load after 10 seconds")
-            RelistenApi.artists().loadFromCacheThenUpdate()
-        }
+        setupThirdPartyDependencies()
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        return true
-    }
-    
-    func resourceChanged(_ resource: Resource, event: ResourceEvent) {
-        print("[relisten][test] Resource changed with event: \(event)")
+        window?.rootViewController = UINavigationController(rootViewController: ArtistsViewController())
         
-        if let artists: [Artist] = resource.latestData?.typedContent() {
-            print("[relisten][test] got data: \(artists)")
-        }
-        else {
-            print("[relisten][test] no artist data")
-        }
+        window?.makeKeyAndVisible()
+        
+        return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

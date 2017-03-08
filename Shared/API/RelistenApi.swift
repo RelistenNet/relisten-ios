@@ -46,7 +46,7 @@ class _RelistenApi {
     
     // MARK: Configuration
     
-    private let service = Service(baseURL: "https://relistenapi.alecgorge.com/api/v2")
+    private let service = Service(baseURL: (FirebaseRemoteConfig["api_base"].stringValue as String!) + "/api/v2")
     
     fileprivate init() {
         #if DEBUG
@@ -203,6 +203,17 @@ class _RelistenApi {
         return artistResource(byArtist)
             .child("shows")
             .child("top")
+    }
+    
+    public func onThisDay(byArtist: Artist) -> Resource {
+        let date = Date()
+        let calendar = Calendar.current
+        
+        return artistResource(byArtist)
+            .child("shows")
+            .child("on-date")
+            .withParam("month", String(calendar.component(.month, from: date)))
+            .withParam("day", String(calendar.component(.day, from: date)))
     }
 
     /*

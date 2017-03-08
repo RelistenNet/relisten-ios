@@ -2,6 +2,8 @@ PODS:
   - Cache (2.2.1):
     - CryptoSwift
   - CryptoSwift (0.6.7)
+  - DownloadButton (0.1.0)
+  - DWURecyclingAlert (1.0.2)
   - Firebase/Core (3.14.0):
     - FirebaseAnalytics (= 3.7.0)
     - FirebaseCore (= 3.5.1)
@@ -43,24 +45,27 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+  - LayoutKit (4.0.1)
   - Protobuf (3.2.0)
-  - Siesta (1.1.0):
-    - Siesta/Core (= 1.1.0)
+  - ReachabilitySwift (3)
   - Siesta/Core (1.1.0)
-  - SQLite.swift (0.11.2):
-    - SQLite.swift/standard (= 0.11.2)
-  - SQLite.swift/standard (0.11.2)
+  - Siesta/UI (1.1.0):
+    - Siesta/Core
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Cache (from `https://github.com/alecgorge/Cache.git`)
+  - DownloadButton
+  - DWURecyclingAlert
   - Firebase/Core
   - Firebase/Database
   - Firebase/DynamicLinks
   - Firebase/Messaging
   - Firebase/RemoteConfig
-  - Siesta
-  - SQLite.swift
+  - LayoutKit
+  - ReachabilitySwift (~> 3)
+  - Siesta/Core
+  - Siesta/UI
   - SwiftyJSON
 
 EXTERNAL SOURCES:
@@ -75,6 +80,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Cache: 0ff2b36ad992d1bee4ce2aa39a2684f792662f91
   CryptoSwift: 685ae257941e5447474348a2b545583e1a16b573
+  DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
+  DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   Firebase: 85a581fb04e44f63ae9f4fbc8d6dabf4a4c18653
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseCore: 225d40532489835a034b8f4e2c9c87fbf4f615a2
@@ -84,11 +91,12 @@ SPEC CHECKSUMS:
   FirebaseMessaging: df8267f378580a24174ce7861233aa11d5c90109
   FirebaseRemoteConfig: af3003f4e8daa2bd1d5cf90d3cccc1fe224f8ed9
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  LayoutKit: 9aeea4600d623c47d843f545a779d02a6bcabaf9
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
+  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   Siesta: ada9f35255e4eb16fad45cc3080927f6c6cba9cc
-  SQLite.swift: 670c3e9e0a806bbfd56a3de5d530768dc0e6fe7c
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 5b12df44993ab3e0e5a11d6b9bfa5d654b26ed1c
+PODFILE CHECKSUM: 6a573cedeaa7954a5a49eedd975aa04c3c30c225
 
 COCOAPODS: 1.2.0

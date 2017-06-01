@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+#import "FIRDynamicLinksSwiftNameSupport.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -8,7 +10,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 /**
- * @enum FIRDynamicLinkMatchConfidence
  * @abstract The confidence level of the matched Dynamic Link.
  */
 typedef NS_ENUM(NSUInteger, FIRDynamicLinkMatchConfidence) {
@@ -22,12 +23,13 @@ typedef NS_ENUM(NSUInteger, FIRDynamicLinkMatchConfidence) {
    *     information related to the Dynamic Link.
    */
   FIRDynamicLinkMatchConfidenceStrong
-};
+} FIR_SWIFT_NAME(DynamicLinkMatchConfidence);
 
 /**
  * @class FIRDynamicLink
  * @abstract A received Dynamic Link.
  */
+FIR_SWIFT_NAME(DynamicLink)
 @interface FIRDynamicLink : NSObject
 
 /**
@@ -41,6 +43,16 @@ typedef NS_ENUM(NSUInteger, FIRDynamicLinkMatchConfidence) {
  * @abstract The match confidence of the received Dynamic Link.
  */
 @property(nonatomic, assign, readonly) FIRDynamicLinkMatchConfidence matchConfidence;
+
+/**
+ * @property minimumAppVersion
+ * @abstract The minimum iOS application version that supports the Dynamic Link. This is retrieved
+ *     from the imv= parameter of the Dynamic Link URL. Note: This is not the minimum iOS system
+ *     version, but the minimum app version. If app version of the opening app is less than the
+ *     value of this property, than app expected to open AppStore to allow user to download most
+ *     recent version. App can notify or ask user before opening AppStore.
+ */
+@property(nonatomic, copy, readonly, nullable) NSString *minimumAppVersion;
 
 @end
 

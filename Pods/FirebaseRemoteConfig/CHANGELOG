@@ -1,3 +1,8 @@
+Version 2.0.0
+==================================
+- Change Swift API names to better align with Swift convention.
+- Change Error message to debug message when getting InstanceID operation is in progress as this is an expected behavior.
+
 Version 1.3.4
 ==================================
 - Fix the issue with Remote Config getting an incorrect configuration when user configured multiple projects.

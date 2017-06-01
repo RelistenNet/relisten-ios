@@ -19,10 +19,7 @@ public final class DiskStorage: StorageAware {
   public fileprivate(set) var readQueue: DispatchQueue
 
   /// File manager to read/write to the disk
-  fileprivate lazy var fileManager: FileManager = {
-    let fileManager = FileManager()
-    return fileManager
-  }()
+  fileprivate let fileManager = FileManager()
 
   // MARK: - Initialization
 
@@ -31,25 +28,27 @@ public final class DiskStorage: StorageAware {
 
    - Parameter name: A name of the storage
    - Parameter maxSize: Maximum size of the cache storage
+   - Parameter cacheDirectory: Path to custom directory to be used as a storage
    */
     public required init(name: String, maxSize: UInt = 0, cacheDirectory: String? = nil) {
-    self.maxSize = maxSize
-    let cacheName = name.capitalized
+      self.maxSize = maxSize
 
-    if let storageLocation = cacheDirectory {
-      path = storageLocation
-    }
-    else {
-      let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
-                                                      FileManager.SearchPathDomainMask.userDomainMask, true)
-        
-      path = "\(paths.first!)/\(DiskStorage.prefix).\(cacheName)"
-    }
+      let fullName = [DiskStorage.prefix, name.capitalized].joined(separator: ".")
 
-    writeQueue = DispatchQueue(label: "\(DiskStorage.prefix).\(cacheName).WriteQueue",
-      attributes: [])
-    readQueue = DispatchQueue(label: "\(DiskStorage.prefix).\(cacheName).ReadQueue",
-      attributes: [])
+      if let cacheDirectory = cacheDirectory {
+        path = cacheDirectory
+      } else {
+        do {
+          let url = try fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+
+          path = url.appendingPathComponent(fullName, isDirectory: true).path
+        } catch {
+          fatalError("Failed to find or get acces to caches directory: \(error)")
+        }
+      }
+
+      writeQueue = DispatchQueue(label: "\(fullName).WriteQueue")
+      readQueue = DispatchQueue(label: "\(fullName).ReadQueue")
   }
 
   // MARK: - CacheAware
@@ -81,36 +80,68 @@ public final class DiskStorage: StorageAware {
         weakSelf.fileManager.createFile(atPath: filePath,
           contents: object.encode() as Data?, attributes: nil)
         try weakSelf.fileManager.setAttributes(
-          [FileAttributeKey.modificationDate : expiry.date],
+          [FileAttributeKey.modificationDate: expiry.date],
           ofItemAtPath: filePath)
       } catch {}
 
       completion?()
     }
   }
-
+  
   /**
-   Tries to retrieve the object from the disk storage.
-
+   Gets information about the cached object.
+   
    - Parameter key: Unique key to identify the object in the cache
    - Parameter completion: Completion closure returns object or nil
    */
   public func object<T: Cachable>(_ key: String, completion: @escaping (_ object: T?) -> Void) {
+    cacheEntry(key) { (entry: CacheEntry<T>?) in
+      completion(entry?.object)
+    }
+  }
+
+  /**
+   Get cache entry which includes object with metadata.
+   
+   - Parameter key: Unique key to identify the object in the cache
+   - Parameter completion: Completion closure returns object wrapper with metadata or nil
+   */
+  public func cacheEntry<T: Cachable>(_ key: String, completion: @escaping (_ object: CacheEntry<T>?) -> Void) {
     readQueue.async { [weak self] in
       guard let weakSelf = self else {
         completion(nil)
         return
       }
-
+      
       let filePath = weakSelf.filePath(key)
       var cachedObject: T?
-
+      
       if let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) {
         cachedObject = T.decode(data) as? T
       }
-
-      completion(cachedObject)
+      
+      if let cachedObject = cachedObject,
+        let expiry = weakSelf.cachedObjectExpiry(path: filePath) {
+        
+        completion(CacheEntry(object: cachedObject, expiry: expiry))
+        return
+      }
+      
+      completion(nil)
     }
+  }
+  
+  private func cachedObjectExpiry(path: String) -> Expiry? {
+    do {
+      let attributes = try fileManager.attributesOfItem(atPath: path)
+      
+      guard let modificationDate = attributes[FileAttributeKey.modificationDate] as? Date else {
+        return nil
+      }
+      return Expiry.date(modificationDate)
+    } catch {}
+    
+    return nil
   }
 
   /**

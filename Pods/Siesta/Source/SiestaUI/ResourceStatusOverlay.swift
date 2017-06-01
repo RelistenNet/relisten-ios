@@ -180,7 +180,7 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
 
       …and call `trackManualLoad(_:)` with your user-initiated request.
     */
-    public var displayPriority: [StateRule] = [.loading, .error, .anyData]
+    public var displayPriority: [StateRule] = [.anyData, .loading, .error]
 
     /**
       Arbitrarily prioritizable rules for governing the behavior of `ResourceStatusOverlay`.

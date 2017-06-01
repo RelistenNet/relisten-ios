@@ -1,7 +1,7 @@
 {
   "name": "Cache",
   "summary": "Nothing but cache.",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "homepage": "https://github.com/hyperoslo/Cache",
   "license": "MIT",
   "authors": {
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/hyperoslo/Cache.git",
-    "tag": "2.2.1"
+    "tag": "2.2.2"
   },
   "social_media_url": "https://twitter.com/hyperoslo",
   "platforms": {

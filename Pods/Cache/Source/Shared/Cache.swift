@@ -5,19 +5,7 @@ import Foundation
  Cachable protocol. It's two layered cache (with front and back storages).
  Subscribes to system notifications to clear expired cached objects.
  */
-public final class Cache<T: Cachable>: HybridCache {
-
-  // MARK: - Initialization
-
-  /**
-   Creates a new instance of Cache.
-
-   - Parameter name: A name of the cache
-   - Parameter config: Cache configuration
-   */
-  public override init(name: String, config: Config = Config.defaultConfig) {
-    super.init(name: name, config: config)
-  }
+public final class Cache<T: Cachable>: BasicHybridCache {
 
   // MARK: - Caching
 
@@ -29,8 +17,8 @@ public final class Cache<T: Cachable>: HybridCache {
    - Parameter expiry: Expiration date for the cached object
    - Parameter completion: Completion closure to be called when the task is done
    */
-  public override func add(_ key: String, object: T, expiry: Expiry? = nil, completion: (() -> Void)? = nil) {
-    super.add(key, object: object, expiry: expiry, completion: completion)
+  public func add(_ key: String, object: T, expiry: Expiry? = nil, completion: (() -> Void)? = nil) {
+    super.add(object, forKey: key, expiry: expiry, completion: completion)
   }
 
   /**
@@ -39,7 +27,17 @@ public final class Cache<T: Cachable>: HybridCache {
    - Parameter key: Unique key to identify the object in the cache
    - Parameter completion: Completion closure returns object or nil
    */
-  public override func object(_ key: String, completion: @escaping (_ object: T?) -> Void) {
-    super.object(key, completion: completion)
+  public func object(_ key: String, completion: @escaping (_ object: T?) -> Void) {
+    super.object(forKey: key, completion: completion)
+  }
+  
+  /**
+   Tries to retrieve the cache entry from to the front and back cache storages.
+   
+   - Parameter key: Unique key to identify the cache entry in the cache
+   - Parameter completion: Completion closure returns cache entry or nil
+   */
+  public func cacheEntry(_ key: String, completion: @escaping (_ object: CacheEntry<T>?) -> Void) {
+    super.cacheEntry(forKey: key, completion: completion)
   }
 }

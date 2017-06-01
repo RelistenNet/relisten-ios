@@ -50,7 +50,6 @@ extension ReloadableViewLayoutAdapter: UITableViewDelegate {
     }
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
     }
 }
 

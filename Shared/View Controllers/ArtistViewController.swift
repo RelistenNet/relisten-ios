@@ -12,39 +12,45 @@ import Siesta
 import LayoutKit
 
 public class ArtistViewController : RelistenBaseTableViewController {
-    public let artist: Artist
+    public let artist: ArtistWithCounts
     
-    public required init(artist: Artist) {
+    let resourceToday: Resource
+    var resourceTodayData: [Show]? = nil
+    
+    public required init(artist: ArtistWithCounts) {
         self.artist = artist
         
         resourceToday = RelistenApi.onThisDay(byArtist: artist)
         
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("NSCoding not supported...like at all.")
     }
-    
+
+    private var av: RelistenMenuView! = nil
     public override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.separatorStyle = .none
         
         title = artist.name
         
         resourceTodayData = resourceToday.latestData?.typedContent()
         
         layout(width: tableView.bounds.size.width, synchronous: false) { self.buildLayout() }
-    }
-    
-    private var av: RelistenMenuView! = nil
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        av = RelistenMenuView(artist: artist)
+
+        av = RelistenMenuView(artist: artist, inViewController: self)
         av.frame.origin = CGPoint(x: 0, y: 60)
         av.frame.size = av.sizeThatFits(CGSize(width: tableView.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
-        
+
         tableView.addSubview(av)
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
     }
     
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -57,9 +63,6 @@ public class ArtistViewController : RelistenBaseTableViewController {
         return [
         ]
     }
-    
-    let resourceToday: Resource
-    var resourceTodayData: [Show]? = nil
     
     // recently played by band
     // recently played by user

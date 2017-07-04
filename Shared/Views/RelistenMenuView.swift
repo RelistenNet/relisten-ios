@@ -34,6 +34,7 @@ public enum RelistenMenuItem: Int {
 
 public class RelistenMenuView : UIView {
     public let artist: Artist
+    public let viewController: UIViewController
     
     private let size_MenuLineSpacing: CGFloat = 16.0 as CGFloat
     private let size_ButtonVerticalPadding: CGFloat = 8.0 as CGFloat
@@ -44,8 +45,9 @@ public class RelistenMenuView : UIView {
     private let menuCategories: [RelistenMenuCategory]
     private let menu: [[RelistenMenuItem]]
     
-    public required init(artist: Artist) {
+    public required init(artist: Artist, inViewController vc: UIViewController) {
         self.artist = artist
+        self.viewController = vc
         
         var everything: [RelistenMenuItem] = []
         var discover: [RelistenMenuItem] = []
@@ -166,6 +168,8 @@ public class RelistenMenuView : UIView {
         
         switch item {
         case .EverythingYears: print(item)
+            viewController.navigationController?.pushViewController(YearsViewController(artist: artist), animated: true)
+
         case .EverythingSongs: print(item)
         case .EverythingVenues: print(item)
         case .EverythingTours: print(item)

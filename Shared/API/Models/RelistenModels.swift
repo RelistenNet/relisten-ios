@@ -36,32 +36,52 @@ public class RelistenObject {
     }
 }
 
-public class Artist : RelistenObject {
-    public let show_count: Int
-    public let source_count: Int
-    
+public class SlimArtist : RelistenObject {
     public let musicbrainz_id: String
     public let featured: Int
     
     public let name: String
     public let slug: String
     
-    public let features: Features
-    public let upstream_sources: [UpstreamSource]
-    
     public required init(json: JSON) throws {
-        show_count = try json["show_count"].int.required()
-        source_count = try json["source_count"].int.required()
-        
         musicbrainz_id = try json["musicbrainz_id"].string.required()
         featured = try json["featured"].int.required()
         
         name = try json["name"].string.required()
         slug = try json["slug"].string.required()
         
-        features = try Features(json: json["features"])
-        upstream_sources = try json["upstream_sources"].arrayValue.map({ return try UpstreamSource(json: $0) })
+        try super.init(json: json)
+    }
+}
 
+public class SlimArtistWithFeatures : SlimArtist {
+    public let features: Features
+    
+    public required init(json: JSON) throws {
+        features = try Features(json: json["features"])
+        
+        try super.init(json: json)
+    }
+}
+
+public class Artist : SlimArtistWithFeatures {
+    public let upstream_sources: [ArtistUpstreamSource]
+    
+    public required init(json: JSON) throws {
+        upstream_sources = try json["upstream_sources"].arrayValue.map({ return try ArtistUpstreamSource(json: $0) })
+
+        try super.init(json: json)
+    }
+}
+
+public class ArtistWithCounts : Artist {
+    public let show_count: Int
+    public let source_count: Int
+    
+    public required init(json: JSON) throws {
+        show_count = try json["show_count"].int.required()
+        source_count = try json["source_count"].int.required()
+        
         try super.init(json: json)
     }
 }
@@ -91,6 +111,7 @@ public struct Features {
     public let venue_past_names : Bool
     public let reviews_have_ratings : Bool
     public let track_durations : Bool
+    public let can_have_flac : Bool
 
     public init(json: JSON) throws {
         id = try json["id"].int.required()
@@ -117,17 +138,45 @@ public struct Features {
         venue_past_names = try json["venue_past_names"].bool.required()
         reviews_have_ratings = try json["reviews_have_ratings"].bool.required()
         track_durations = try json["track_durations"].bool.required()
+        can_have_flac = try json["can_have_flac"].bool.required()
+    }
+}
+
+public class SlimArtistUpstreamSource {
+    public let upstream_source_id: Int
+    public let upstream_identifier: String?
+    
+    public required init(json: JSON) throws {
+        upstream_source_id = try json["upstream_source_id"].int.required()
+        upstream_identifier = json["upstream_identifier"].string
+    }
+}
+
+public class ArtistUpstreamSource : SlimArtistUpstreamSource {
+    public let artist_id: Int
+    public let upstream_source: UpstreamSource?
+    
+    public required init(json: JSON) throws {
+        artist_id = try json["artist_id"].int.required()
+        
+        upstream_source = !json["upstream_source"].isEmpty ? try UpstreamSource(json: json["upstream_source"]) : nil
+        
+        try super.init(json: json)
     }
 }
 
 public struct UpstreamSource {
-    public let upstream_source_id: Int
-    public let artist_id: Int
-    public let upstream_identifier: String?
+    public let id : Int
+    public let name : String
+    public let url : String
+    public let description : String
+    public let credit_line : String
     
     public init(json: JSON) throws {
-        upstream_source_id = try json["upstream_source_id"].int.required()
-        artist_id = try json["artist_id"].int.required()
-        upstream_identifier = json["upstream_identifier"].string
+        id = try json["id"].int.required()
+        name = try json["name"].string.required()
+        url = try json["url"].string.required()
+        description = try json["description"].string.required()
+        credit_line = try json["credit_line"].string.required()
     }
 }

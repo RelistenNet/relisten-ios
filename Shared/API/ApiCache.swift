@@ -46,13 +46,13 @@ class RelistenJsonCache : EntityCache {
     func readEntity(forKey key: String) -> Entity<Any>? {
         let val = backingCache.object(key)
         
-        print("[cache] readEntity(forKey \(key)) = \(val)")
+        print("[cache] readEntity(forKey \(key)) = *snip*")//\(String(describing: val))")
         
         return val
     }
     
     func writeEntity(_ entity: Entity<Any>, forKey key: String) {
-        print("[cache] writeEntity(forKey \(key)) = \(entity)")
+        print("[cache] writeEntity(forKey \(key)) = *snip*")//\(entity)")
         
         // lets not cache non-json responses for now
         guard entity.content is SwJSON else {

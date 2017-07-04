@@ -28,6 +28,10 @@ public enum FontWeight {
 
 public extension UIFont {
     public func font(scaledBy: CGFloat = 1.0, withDifferentWeight: FontWeight? = nil) -> UIFont {
+        if let newWeight = withDifferentWeight, newWeight == .Bold, let fd = fontDescriptor.withSymbolicTraits(.traitBold) {
+            return UIFont(descriptor: fd, size: fontDescriptor.pointSize * scaledBy)
+        }
+        
         var attributes = fontDescriptor.fontAttributes
 
         if let newWeight = withDifferentWeight {

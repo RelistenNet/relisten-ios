@@ -1,0 +1,6 @@
+framework module BASSGaplessAudioPlayer {
+  umbrella header "BASSGaplessAudioPlayer-umbrella.h"
+
+  export *
+  module * { export * }
+}

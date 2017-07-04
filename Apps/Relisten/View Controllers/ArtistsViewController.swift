@@ -11,7 +11,7 @@ import UIKit
 import Siesta
 import LayoutKit
 
-class ArtistsViewController: RelistenTableViewController<[Artist]> {
+class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,15 +21,13 @@ class ArtistsViewController: RelistenTableViewController<[Artist]> {
 
     override var resource: Resource? { get { return api.artists() } }
     
-    override func render(forData: [Artist]) {
+    override func render(forData: [ArtistWithCounts]) {
         layout {
-            let sorted = forData.sorted(by: { $0.name.compare($1.name) == .orderedAscending })
-            
-            let toLayout : (Artist) -> ArtistLayout = { ArtistLayout(artist: $0) }
+            let toLayout : (ArtistWithCounts) -> ArtistLayout = { ArtistLayout(artist: $0) }
             
             return [
-                sorted.filter({ $0.featured > 0 }).map(toLayout).asSection("Featured"),
-                sorted.map(toLayout).asSection("All \(forData.count) Artists")
+                forData.filter({ $0.featured > 0 }).map(toLayout).asSection("Featured"),
+                forData.map(toLayout).asSection("All \(forData.count) Artists")
             ]
         }
     }

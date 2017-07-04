@@ -7,7 +7,7 @@
 		<key>PhishOD.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>1</integer>
 		</dict>
 		<key>Relisten.xcscheme</key>
 		<dict>
@@ -20,22 +20,22 @@
 		<key>7C449E9B1D5A4F4200750D54</key>
 		<dict>
 			<key>primary</key>
-			<true/>
+			<true />
 		</dict>
 		<key>7C449EAE1D5A4F4300750D54</key>
 		<dict>
 			<key>primary</key>
-			<true/>
+			<true />
 		</dict>
 		<key>7C8EF10C1D5A49C200004B5C</key>
 		<dict>
 			<key>primary</key>
-			<true/>
+			<true />
 		</dict>
 		<key>7C8EF1201D5A49C300004B5C</key>
 		<dict>
 			<key>primary</key>
-			<true/>
+			<true />
 		</dict>
 	</dict>
 </dict>

@@ -14,8 +14,6 @@ import SwiftyJSON
 /// Add to a reponse pipeline to wrap JSON responses with SwiftyJSON
 let SwiftyJSONTransformer = ResponseContentTransformer(transformErrors: true) { JSON($0.content as AnyObject) }
 
-let RelistenJSONTransformer = ResponseContentTransformer(transformErrors: true) { ($0.content as JSON)["data"] }
-
 /// Provides a .json convenience accessor to get raw JSON from resources
 extension TypedContentAccessors {
     var json: JSON {
@@ -67,7 +65,6 @@ class _RelistenApi {
             $0.expirationTime = 60 * 60 * 24 * 365 * 10 as TimeInterval
             
             $0.pipeline[.parsing].add(SwiftyJSONTransformer, contentTypes: ["*/json"])
-            $0.pipeline[.parsing].add(RelistenJSONTransformer, contentTypes: ["*/json"])
             
             $0.pipeline[.parsing].cacheUsing(RelistenJsonCache())
             // $0.pipeline[.model].cacheUsing(RelistenRealmCache())
@@ -81,7 +78,7 @@ class _RelistenApi {
         // Resource-specific configuration
         
         service.configureTransformer("/artists") {
-            return try ($0.content as JSON).arrayValue.map(Artist.init)
+            return try ($0.content as JSON).arrayValue.map(ArtistWithCounts.init)
         }
         
         service.configureTransformer("/artists/*/years") {
@@ -101,19 +98,19 @@ class _RelistenApi {
         }
         
         service.configureTransformer("/artists/*/shows/on-date") {
-            return try ($0.content as JSON).arrayValue.map(Show.init)
+            return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
         }
         
         service.configureTransformer("/artists/shows/on-date") {
-            return try ($0.content as JSON).arrayValue.map(Show.init)
+            return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
         }
         
         service.configureTransformer("/artists/*/shows/today") {
-            return try ($0.content as JSON).arrayValue.map(Show.init)
+            return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
         }
         
         service.configureTransformer("/artists/shows/on-date") {
-            return try ($0.content as JSON).arrayValue.map(Show.init)
+            return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
         }
         
         service.configureTransformer("/artists/*/venues") {
@@ -166,46 +163,46 @@ class _RelistenApi {
         return service.resource("/artists")
     }
     
-    private func artistResource(_ forArtist: Artist) -> Resource {
+    private func artistResource(_ forArtist: SlimArtist) -> Resource {
         return service
             .resource("/artists")
             .child(forArtist.slug)
     }
     
-    public func years(byArtist: Artist) -> Resource {
+    public func years(byArtist: SlimArtist) -> Resource {
         return artistResource(byArtist).child("years")
     }
     
-    public func shows(inYear: Year, byArtist: Artist) -> Resource {
+    public func shows(inYear: Year, byArtist: SlimArtist) -> Resource {
         return artistResource(byArtist)
             .child("years")
             .child(inYear.year)
     }
     
-    public func showWithSources(forShow: Show, byArtist: Artist) -> Resource {
+    public func showWithSources(forShow: Show, byArtist: SlimArtist) -> Resource {
         return artistResource(byArtist)
             .child("shows")
             .child(forShow.display_date)
     }
     
-    public func venues(forArtist: Artist) -> Resource {
+    public func venues(forArtist: SlimArtist) -> Resource {
         return artistResource(forArtist)
             .child("venues")
     }
     
-    public func shows(atVenue: Venue, byArtist: Artist) -> Resource {
+    public func shows(atVenue: Venue, byArtist: SlimArtist) -> Resource {
         return artistResource(byArtist)
             .child("venues")
             .child(String(atVenue.id))
     }
     
-    public func topShows(byArtist: Artist) -> Resource {
+    public func topShows(byArtist: SlimArtist) -> Resource {
         return artistResource(byArtist)
             .child("shows")
             .child("top")
     }
     
-    public func onThisDay(byArtist: Artist) -> Resource {
+    public func onThisDay(byArtist: SlimArtist) -> Resource {
         let date = Date()
         let calendar = Calendar.current
         
@@ -259,30 +256,11 @@ private struct RelistenErrorMessageExtractor: ResponseTransformer {
             
         case .failure(var error):
             // Note: the .json property here is defined in Siesta+SwiftyJSON.swift
-            error.userMessage = error.json["error_code"].string ?? error.userMessage
-            return .failure(error)
-        }
-    }
-}
-
-/// Special handling for detecting whether repo is starred; see "/user/starred/*/*" config above
-private struct TrueIfResourceFoundTransformer: ResponseTransformer {
-    func process(_ response: Response) -> Response {
-        switch response {
-        case .success(var entity):
-            entity.content = true         // Any success → true
-            return logTransformation(
-                .success(entity))
+            if let str: String = error.typedContent() {
+                error.userMessage = str
+            }
             
-        case .failure(let error):
-            if var entity = error.entity, error.httpStatusCode == 404 {
-                entity.content = false    // 404 → false
-                return logTransformation(
-                    .success(entity))
-            }
-            else {
-                return response           // Any other error remains unchanged
-            }
+            return .failure(error)
         }
     }
 }

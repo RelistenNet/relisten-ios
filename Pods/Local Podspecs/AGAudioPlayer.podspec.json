@@ -21,8 +21,26 @@
   "ios": {
     "frameworks": "MediaPlayer"
   },
+  "resource_bundles": {
+    "AGAudioPlayer": [
+      "AGAudioPlayer/UI/Icons.xcassets",
+      "AGAudioPlayer/**/*.xib"
+    ]
+  },
   "dependencies": {
-    "HysteriaPlayer": [
+    "Interpolate": [
+
+    ],
+    "BASSGaplessAudioPlayer": [
+
+    ],
+    "MarqueeLabel": [
+
+    ],
+    "NapySlider": [
+
+    ],
+    "BCColor": [
 
     ]
   }

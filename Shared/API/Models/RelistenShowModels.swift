@@ -69,21 +69,25 @@ public class Show : RelistenObject {
     public let avg_rating: Float
     
     public let avg_duration: TimeInterval?
-    public let sources_count: Int
+    public let source_count: Int
+    
+    public let most_recent_source_updated_at: Date
+    public let has_soundboard_source: Bool
+    public let has_streamable_flac_source: Bool
     
     public required init(json: JSON) throws {
         artist_id = try json["artist_id"].int.required()
         
         venue_id = json["venue_id"].int
-        venue = !json["venue"].isEmpty ? try Venue(json: json) : nil
+        venue = !json["venue"].isEmpty ? try Venue(json: json["venue"]) : nil
         
         tour_id = json["tour_id"].int
-        tour = !json["tour"].isEmpty ? try Tour(json: json) : nil
+        tour = !json["tour"].isEmpty ? try Tour(json: json["tour"]) : nil
         
         year_id = try json["year_id"].int.required()
         
         era_id = json["era_id"].int
-        era = !json["era"].isEmpty ? try Era(json: json) : nil
+        era = !json["era"].isEmpty ? try Era(json: json["era"]) : nil
         
         date = try json["date"].dateTime.required()
         display_date = try json["display_date"].string.required()
@@ -91,7 +95,21 @@ public class Show : RelistenObject {
         avg_rating = try json["avg_rating"].float.required()
         
         avg_duration = json["avg_duration"].double as TimeInterval?
-        sources_count = try json["sources_count"].int.required()
+        source_count = try json["source_count"].int.required()
+
+        most_recent_source_updated_at = try json["most_recent_source_updated_at"].dateTime.required()
+        has_soundboard_source = try json["has_soundboard_source"].bool.required()
+        has_streamable_flac_source = try json["has_soundboard_source"].bool.required()
+        
+        try super.init(json: json)
+    }
+}
+
+public class ShowWithArtist : Show {
+    public let artist: Artist
+    
+    public required init(json: JSON) throws {
+        artist = try Artist(json: json["artist"])
         
         try super.init(json: json)
     }

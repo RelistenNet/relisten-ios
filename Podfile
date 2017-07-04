@@ -8,7 +8,7 @@ target 'Relisten' do
 
   pod 'Siesta/Core'
   pod 'Siesta/UI'
-  # pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
+  pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
   pod 'SwiftyJSON'
   pod 'Cache', :git => 'https://github.com/hyperoslo/Cache.git'
   pod 'Firebase/Database'
@@ -23,6 +23,9 @@ target 'Relisten' do
   pod 'SINQ'
   pod 'AXRatingView'
   pod 'Reveal-SDK', :configurations => ['Debug']
+  pod 'NAKPlaybackIndicatorView'
+  pod 'BASSGaplessAudioPlayer', :path => '../gapless-audio-bass-ios'
+  pod 'NapySlider', :path => '../NapySlider'
 
   # pod 'BFNavigationBarDrawer'
   target 'PhishOD' do

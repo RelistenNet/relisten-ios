@@ -40,6 +40,14 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     
     internal let api = RelistenApi
     
+    public init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,9 +91,17 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
 }
 
 public class RelistenTableViewController<TData> : RelistenBaseTableViewController {
-    internal let statusOverlay = ResourceStatusOverlay()
+    internal let statusOverlay = RelistenResourceStatusOverlay()
     
     internal var resource: Resource? { get { return nil } }
+    
+    public override init() {
+        super.init()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,6 +140,8 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
     public var latestData: TData? = nil
     
     public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
+        print("event: \(event)")
+        
         if let data: TData = resource.latestData?.typedContent() {
             latestData = data
         }
@@ -151,15 +169,23 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
             return [Section(header: nil, items: [], footer: nil)]
         }
     }
+
+}
+
+public func LayoutsAsSingleSection(items: Array<Layout>, title: String? = nil) -> Section<[Layout]> {
+    return Section(
+        header: title != nil ? InsetLayout(
+            insets: EdgeInsets(top: 8, left: 16, bottom: 8, right: 16),
+            sublayout: LabelLayout(text: title!, font: UIFont.preferredFont(forTextStyle: .subheadline))
+            ) : nil,
+        items: items,
+        footer: nil
+    )
 }
 
 extension Array where Element : Layout {
     func asSection(_ title: String? = nil) -> Section<[Layout]> {
-        return Section(
-            header: title != nil ? InsetLayout(inset: 8, sublayout: LabelLayout(text: title!, font: UIFont.preferredFont(forTextStyle: .subheadline))) : nil,
-            items: self,
-            footer: nil
-        )
+        return LayoutsAsSingleSection(items: self, title: title)
     }
     
     func asTable() -> [Section<[Layout]>] {

@@ -10,11 +10,15 @@ import Foundation
 
 import SwiftyJSON
 
-public class Source : RelistenObject {
+public enum FlacType : String {
+    case NoFlac = "NoFlac"
+    case Flac16Bit = "Flac16Bit"
+    case Flac24Bit = "Flac24Bit"
+    case NoPlayableFlac = "NoPlayableFlac"
+}
+
+public class SlimSource : RelistenObject {
     public let artist_id: Int
-    
-    public let show_id: Int
-    public let show: Show?
     
     // only for per-source venues
     public let venue_id: Int?
@@ -35,18 +39,8 @@ public class Source : RelistenObject {
     
     public let upstream_identifier: String
     
-    public let description: String?
-    public let taper_notes: String?
-    public let source: String?
-    public let taper: String?
-    public let transferrer: String?
-    public let lineage: String?
-    
     public required init(json: JSON) throws {
         artist_id = try json["artist_id"].int.required()
-        
-        show_id = try json["show_id"].int.required()
-        show = json["show"].isEmpty ? nil : try Show(json: json["show"])
         
         venue_id = json["venue_id"].int
         venue = json["venue"].isEmpty ? nil : try Venue(json: json["venue"])
@@ -66,12 +60,59 @@ public class Source : RelistenObject {
         
         upstream_identifier = try json["upstream_identifier"].string.required()
         
+        try super.init(json: json)
+    }
+}
+
+public class SlimSourceWithShowAndArtist : SlimSource {
+    public let artist: Artist
+    
+    public let show_id: Int
+    public let show: Show
+    
+    public required init(json: JSON) throws {
+        artist = try Artist(json: json["artist"])
+
+        show_id = try json["show_id"].int.required()
+        show = try Show(json: json["show"])
+        
+        try super.init(json: json)
+    }
+}
+
+enum FlacTypeError: Error {
+    case invalid(attempted: String?)
+}
+
+public class Source : SlimSource {
+    public let show_id: Int
+    public let show: Show?
+    
+    public let description: String?
+    public let taper_notes: String?
+    public let source: String?
+    public let taper: String?
+    public let transferrer: String?
+    public let lineage: String?
+    
+    public let flac_type: FlacType
+    
+    public required init(json: JSON) throws {
+        show_id = try json["show_id"].int.required()
+        show = json["show"].isEmpty ? nil : try Show(json: json["show"])
+        
         description = json["description"].string
         taper_notes = json["taper_notes"].string
         source = json["source"].string
         taper = json["taper"].string
         transferrer = json["transferrer"].string
         lineage = json["lineage"].string
+        
+        guard let f = FlacType(rawValue: try json["flac_type"].string.required()) else {
+            throw FlacTypeError.invalid(attempted: json["flac_type"].string)
+        }
+        
+        flac_type = f
 
         try super.init(json: json)
     }
@@ -80,10 +121,36 @@ public class Source : RelistenObject {
 public class SourceFull : Source {
     public let reviews: [SourceReview]
     public let sets: [SourceSet]
+    public let links: [Link]
     
     public required init(json: JSON) throws {
         reviews = try json["reviews"].arrayValue.map(SourceReview.init)
         sets = try json["sets"].arrayValue.map(SourceSet.init)
+        links = try json["links"].arrayValue.map(Link.init)
+        
+        try super.init(json: json)
+    }
+}
+
+public class Link : RelistenObject {
+    public let source_id: Int
+    public let upstream_source_id: Int
+    public let for_reviews: Bool
+    public let for_ratings: Bool
+    public let for_source: Bool
+    public let url: String
+    public let label: String
+    
+    public required init(json: JSON) throws {
+        source_id = try json["source_id"].int.required()
+        upstream_source_id = try json["upstream_source_id"].int.required()
+        
+        for_reviews = try json["for_reviews"].bool.required()
+        for_ratings = try json["for_ratings"].bool.required()
+        for_source = try json["for_source"].bool.required()
+        
+        url = try json["url"].string.required()
+        label = try json["label"].string.required()
         
         try super.init(json: json)
     }
@@ -134,7 +201,9 @@ public class SourceTrack : RelistenObject {
         title = try json["title"].string.required()
         slug = try json["slug"].string.required()
         
-        mp3_url = try json["mp3_url"].toURL.required()
+        let m = try json["mp3_url"].string.required()
+        mp3_url = URL(string: m.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        
         md5 = json["md5"].string
         
         try super.init(json: json)

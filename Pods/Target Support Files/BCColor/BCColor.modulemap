@@ -1,0 +1,6 @@
+framework module BCColor {
+  umbrella header "BCColor-umbrella.h"
+
+  export *
+  module * { export * }
+}

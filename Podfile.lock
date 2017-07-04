@@ -1,5 +1,13 @@
 PODS:
+  - AGAudioPlayer (0.8.0):
+    - BASSGaplessAudioPlayer
+    - BCColor
+    - Interpolate
+    - MarqueeLabel
+    - NapySlider
   - AXRatingView (1.0.6)
+  - BASSGaplessAudioPlayer (0.0.1)
+  - BCColor (0.2)
   - Cache (2.2.2):
     - CryptoSwift
   - CryptoSwift (0.6.9)
@@ -48,7 +56,13 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+  - Interpolate (0.4.0)
   - LayoutKit (4.0.2)
+  - MarqueeLabel (3.1.0):
+    - MarqueeLabel/ObjC (= 3.1.0)
+  - MarqueeLabel/ObjC (3.1.0)
+  - NAKPlaybackIndicatorView (0.0.3)
+  - NapySlider (0.3)
   - Protobuf (3.3.0)
   - ReachabilitySwift (3)
   - Reveal-SDK (8)
@@ -59,7 +73,9 @@ PODS:
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
+  - AGAudioPlayer (from `../AGAudioPlayer`)
   - AXRatingView
+  - BASSGaplessAudioPlayer (from `../gapless-audio-bass-ios`)
   - Cache (from `https://github.com/hyperoslo/Cache.git`)
   - DownloadButton
   - DWURecyclingAlert
@@ -69,6 +85,8 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/RemoteConfig
   - LayoutKit
+  - NAKPlaybackIndicatorView
+  - NapySlider (from `../NapySlider`)
   - ReachabilitySwift (~> 3)
   - Reveal-SDK
   - Siesta/Core
@@ -77,8 +95,14 @@ DEPENDENCIES:
   - SwiftyJSON
 
 EXTERNAL SOURCES:
+  AGAudioPlayer:
+    :path: "../AGAudioPlayer"
+  BASSGaplessAudioPlayer:
+    :path: "../gapless-audio-bass-ios"
   Cache:
     :git: https://github.com/hyperoslo/Cache.git
+  NapySlider:
+    :path: "../NapySlider"
 
 CHECKOUT OPTIONS:
   Cache:
@@ -86,7 +110,10 @@ CHECKOUT OPTIONS:
     :git: https://github.com/hyperoslo/Cache.git
 
 SPEC CHECKSUMS:
+  AGAudioPlayer: 89ced7596fd7f143064881471d8690c168268013
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
+  BASSGaplessAudioPlayer: 30b7984efd16d9f40ff14b9e9df3ec74a3ace4b5
+  BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
   Cache: 6d217a16102dacda48ac25eb142b800e0d7b86b5
   CryptoSwift: a22f6ba238e9ce4d26ee7bf45b9ed82e7122d4a0
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
@@ -100,7 +127,11 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
   FirebaseRemoteConfig: b1bde8c572a1ca13558b5b179f4563cb877aa34b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  Interpolate: 682895f1a2fc091da0ba53ccb018520daf51f8fd
   LayoutKit: 7a7b20acc03d815ff444d44cf4d982aed6839688
+  MarqueeLabel: 061d04687ee5485ac035b45c8e292274a87afe01
+  NAKPlaybackIndicatorView: 794dd97576fe074bb1844c19ebcbf7509384a47f
+  NapySlider: 6565f73f715414b44cda40ff178a319aeae38b14
   Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   Reveal-SDK: 43be4e662864e937960d0d04d005135e29c4e53b
@@ -108,6 +139,6 @@ SPEC CHECKSUMS:
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 81eb6379c669dd02502acc098ca953b6ba95755e
+PODFILE CHECKSUM: 5a83168fc8d1d019a4352595180aa9c287361527
 
 COCOAPODS: 1.2.1

@@ -11,7 +11,7 @@ import UIKit
 import LayoutKit
 
 public class ArtistLayout : InsetLayout<UIView> {
-    public init(artist: Artist) {
+    public init(artist: ArtistWithCounts) {
         let artistName = LabelLayout(
             text: artist.name,
             font: UIFont.preferredFont(forTextStyle: .headline),
@@ -45,7 +45,7 @@ public class ArtistLayout : InsetLayout<UIView> {
         )
         
         super.init(
-            insets: EdgeInsets(top: 8, left: 8, bottom: 8, right: 32),
+            insets: EdgeInsets(top: 8, left: 16, bottom: 12, right: 16 + 8 + 8),
             viewReuseId: "artistLayout",
             sublayout: StackLayout(
                 axis: .vertical,

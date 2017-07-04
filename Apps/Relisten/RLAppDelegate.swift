@@ -12,11 +12,13 @@ import Siesta
 import Firebase
 import DWURecyclingAlert
 
-public var FirebaseRemoteConfig: FIRRemoteConfig! = nil
+public var FirebaseRemoteConfig: RemoteConfig! = nil
 
 public let AppColors = _AppColors(
     primary: UIColor.blue,
-    textOnPrimary: UIColor.white
+    textOnPrimary: UIColor.white,
+    soundboard: UIColor.green,
+    remaster: UIColor.blue
 )
 
 @UIApplicationMain
@@ -27,9 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupThirdPartyDependencies() {
 //        Inject_DWURecyclingAlert()
         
-        FIRApp.configure()
+        FirebaseApp.configure()
 
-        FirebaseRemoteConfig = FIRRemoteConfig.remoteConfig()
+        FirebaseRemoteConfig = RemoteConfig.remoteConfig()
         FirebaseRemoteConfig.setDefaults(["api_base": "https://relistenapi.alecgorge.com" as NSObject])
     }
 

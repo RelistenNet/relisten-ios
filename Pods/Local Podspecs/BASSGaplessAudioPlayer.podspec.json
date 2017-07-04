@@ -1,0 +1,41 @@
+{
+  "name": "BASSGaplessAudioPlayer",
+  "version": "0.0.1",
+  "summary": "A short description of BASSGaplessAudioPlayer.",
+  "description": "BASS Gapless",
+  "homepage": "https://github.com/alecgorge/gapless-audio-bass-ios",
+  "license": "MIT",
+  "authors": {
+    "Alec Gorge": "alecgorge@gmail.com"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source": {
+    "git": "https://github.com/alecgorge/gapless-audio-bass-ios.git",
+    "tag": "0.0.1"
+  },
+  "source_files": [
+    "BASS Audio Test/ObjectiveBASS.{h,m}",
+    "BASS Audio Test/bass.h",
+    "BASS Audio Test/bassmix.h",
+    "BASS Audio Test/bass_fx.h"
+  ],
+  "frameworks": [
+    "AVFoundation",
+    "Accelerate",
+    "CFNetwork",
+    "SystemConfiguration",
+    "AudioToolbox"
+  ],
+  "ios": {
+    "vendored_libraries": [
+      "BASS Audio Test/libbass.a",
+      "BASS Audio Test/libbassmix.a",
+      "BASS Audio Test/libbass_fx.a"
+    ]
+  },
+  "xcconfig": {
+    "OTHER_LDFLAGS": "$(inherited) -lstdc++"
+  }
+}

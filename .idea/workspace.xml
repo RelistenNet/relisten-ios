@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4ae6d7cc-ec60-49ef-aa75-36e54230479d" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCoreDiagnostics.framework/FirebaseCoreDiagnostics" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseNanoPB.framework/FirebaseNanoPB" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/Cache/Source/Shared/HybridCache.swift" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Storage/CacheEntry.swift" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BatchedCollection.swift" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRAnalyticsSwiftNameSupport.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIRCoreSwiftNameSupport.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCoreDiagnostics.framework/Modules/module.modulemap" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDatabaseSwiftNameSupport.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FDLURLComponents.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FIRDynamicLinksSwiftNameSupport.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Shared/View Controllers/YearsViewController.swift" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Pods/Cache/Source/iOS/HybridCache.swift" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BytesSequence.swift" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Info.plist" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/NOTICE" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Pods/Cache/Source/iOS/Extensions/UIImage+Cache.swift" afterPath="$PROJECT_DIR$/Pods/Cache/Source/iOS/UIImage+Cache.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/FirebaseAnalytics" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/FirebaseAnalytics" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/FirebaseCore" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/FirebaseCore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/FirebaseDatabase" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/FirebaseDatabase" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/FirebaseDynamicLinks" afterPath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/FirebaseDynamicLinks" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework/FirebaseInstanceID" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework/FirebaseInstanceID" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseMessaging/Frameworks/FirebaseMessaging.framework/FirebaseMessaging" afterPath="$PROJECT_DIR$/Pods/FirebaseMessaging/Frameworks/FirebaseMessaging.framework/FirebaseMessaging" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseRemoteConfig/Frameworks/FirebaseRemoteConfig.framework/FirebaseRemoteConfig" afterPath="$PROJECT_DIR$/Pods/FirebaseRemoteConfig/Frameworks/FirebaseRemoteConfig.framework/FirebaseRemoteConfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Apps/Relisten/Info.plist" afterPath="$PROJECT_DIR$/Apps/Relisten/Info.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Apps/Relisten/Layouts/ArtistLayout.swift" afterPath="$PROJECT_DIR$/Apps/Relisten/Layouts/ArtistLayout.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Apps/Relisten/RLAppDelegate.swift" afterPath="$PROJECT_DIR$/Apps/Relisten/RLAppDelegate.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Apps/Relisten/View Controllers/ArtistsViewController.swift" afterPath="$PROJECT_DIR$/Apps/Relisten/View Controllers/ArtistsViewController.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Podfile" afterPath="$PROJECT_DIR$/Podfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Podfile.lock" afterPath="$PROJECT_DIR$/Podfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Cache/Source/Shared/BasicHybridCache.swift" afterPath="$PROJECT_DIR$/Pods/Cache/Source/Shared/BasicHybridCache.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Cache.swift" afterPath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Cache.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Library/SyncHybridCache.swift" afterPath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Library/SyncHybridCache.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Storage/DiskStorage.swift" afterPath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Storage/DiskStorage.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Storage/MemoryStorage.swift" afterPath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Storage/MemoryStorage.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Storage/StorageAware.swift" afterPath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Storage/StorageAware.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Storage/StorageFactory.swift" afterPath="$PROJECT_DIR$/Pods/Cache/Source/Shared/Storage/StorageFactory.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/README.md" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/AES.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/AES.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Array+Extension.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Array+Extension.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockCipher.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockCipher.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/BlockModeWorker.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/BlockModeWorker.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/CBC.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/CBC.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/CFB.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/CFB.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/CTR.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/CTR.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/ECB.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/ECB.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/OFB.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/OFB.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/PCBC.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/BlockMode/PCBC.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Blowfish.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Blowfish.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/ChaCha20.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/ChaCha20.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Checksum.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Checksum.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Cipher.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Cipher.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Collection+Extension.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Collection+Extension.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/MD5.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/MD5.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/SHA1.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/SHA1.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/SHA2.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/SHA2.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/SHA3.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/SHA3.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/String+Extension.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/String+Extension.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/UInt64+Extension.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/UInt64+Extension.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Updatable.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Updatable.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Utils.swift" afterPath="$PROJECT_DIR$/Pods/CryptoSwift/Sources/CryptoSwift/Utils.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRAnalytics+AppDelegate.h" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRAnalytics+AppDelegate.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRAnalytics.h" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRAnalytics.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIREventNames.h" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIREventNames.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRParameterNames.h" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRParameterNames.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRUserPropertyNames.h" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRUserPropertyNames.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FirebaseAnalytics.h" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FirebaseAnalytics.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Modules/module.modulemap" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Modules/module.modulemap" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIRAnalyticsConfiguration.h" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIRAnalyticsConfiguration.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIRApp.h" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIRApp.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIRConfiguration.h" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIRConfiguration.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIRLoggerLevel.h" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIRLoggerLevel.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIROptions.h" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FIROptions.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FirebaseCore.h" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Headers/FirebaseCore.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Modules/module.modulemap" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Frameworks/FirebaseCore.framework/Modules/module.modulemap" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDataEventType.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDataEventType.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDataSnapshot.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDataSnapshot.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDatabase.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDatabase.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDatabaseQuery.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDatabaseQuery.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDatabaseReference.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRDatabaseReference.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRMutableData.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRMutableData.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRServerValue.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRServerValue.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRTransactionResult.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FIRTransactionResult.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FirebaseDatabase.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Headers/FirebaseDatabase.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Modules/module.modulemap" afterPath="$PROJECT_DIR$/Pods/FirebaseDatabase/Frameworks/FirebaseDatabase.framework/Modules/module.modulemap" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FIRDynamicLink.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FIRDynamicLink.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FIRDynamicLinks.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FIRDynamicLinks.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FIRDynamicLinksCommon.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FIRDynamicLinksCommon.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FirebaseDynamicLinks.h" afterPath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Headers/FirebaseDynamicLinks.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Modules/module.modulemap" afterPath="$PROJECT_DIR$/Pods/FirebaseDynamicLinks/Frameworks/FirebaseDynamicLinks.framework/Modules/module.modulemap" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/CHANGELOG.md" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/CHANGELOG.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework/Headers/FIRInstanceID.h" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework/Headers/FIRInstanceID.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework/Modules/module.modulemap" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework/Modules/module.modulemap" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseMessaging/Frameworks/FirebaseMessaging.framework/Headers/FIRMessaging.h" afterPath="$PROJECT_DIR$/Pods/FirebaseMessaging/Frameworks/FirebaseMessaging.framework/Headers/FIRMessaging.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseMessaging/Frameworks/FirebaseMessaging.framework/Modules/module.modulemap" afterPath="$PROJECT_DIR$/Pods/FirebaseMessaging/Frameworks/FirebaseMessaging.framework/Modules/module.modulemap" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseRemoteConfig/CHANGELOG" afterPath="$PROJECT_DIR$/Pods/FirebaseRemoteConfig/CHANGELOG" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseRemoteConfig/Frameworks/FirebaseRemoteConfig.framework/Headers/FIRRemoteConfig.h" afterPath="$PROJECT_DIR$/Pods/FirebaseRemoteConfig/Frameworks/FirebaseRemoteConfig.framework/Headers/FIRRemoteConfig.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/FirebaseRemoteConfig/Frameworks/FirebaseRemoteConfig.framework/Modules/module.modulemap" afterPath="$PROJECT_DIR$/Pods/FirebaseRemoteConfig/Frameworks/FirebaseRemoteConfig.framework/Modules/module.modulemap" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/LayoutKit/LayoutKit/LayoutArrangement.swift" afterPath="$PROJECT_DIR$/Pods/LayoutKit/LayoutKit/LayoutArrangement.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/LayoutKit/LayoutKit/Views/ReloadableViewLayoutAdapter+UITableView.swift" afterPath="$PROJECT_DIR$/Pods/LayoutKit/LayoutKit/Views/ReloadableViewLayoutAdapter+UITableView.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/LayoutKit/LayoutKit/Views/ReloadableViewLayoutAdapter.swift" afterPath="$PROJECT_DIR$/Pods/LayoutKit/LayoutKit/Views/ReloadableViewLayoutAdapter.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Local Podspecs/Cache.podspec.json" afterPath="$PROJECT_DIR$/Pods/Local Podspecs/Cache.podspec.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Manifest.lock" afterPath="$PROJECT_DIR$/Pods/Manifest.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/README.md" afterPath="$PROJECT_DIR$/Pods/Protobuf/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBArray.h" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBArray.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBCodedInputStream.m" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBCodedInputStream.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBDictionary.h" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBDictionary.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBMessage.h" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBMessage.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBMessage.m" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBMessage.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBMessage_PackagePrivate.h" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBMessage_PackagePrivate.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBRootObject.m" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBRootObject.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBUtilities.h" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBUtilities.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBUtilities.m" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBUtilities.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBUtilities_PackagePrivate.h" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBUtilities_PackagePrivate.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBWellKnownTypes.h" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBWellKnownTypes.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBWellKnownTypes.m" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/GPBWellKnownTypes.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/google/protobuf/Duration.pbobjc.h" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/google/protobuf/Duration.pbobjc.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Protobuf/objectivec/google/protobuf/Timestamp.pbobjc.h" afterPath="$PROJECT_DIR$/Pods/Protobuf/objectivec/google/protobuf/Timestamp.pbobjc.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Siesta/Source/Siesta/Support/Siesta-ObjC.swift" afterPath="$PROJECT_DIR$/Pods/Siesta/Source/Siesta/Support/Siesta-ObjC.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Siesta/Source/SiestaUI/ResourceStatusOverlay.swift" afterPath="$PROJECT_DIR$/Pods/Siesta/Source/SiestaUI/ResourceStatusOverlay.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Cache/Cache.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Cache/Cache.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Cache/Info.plist" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Cache/Info.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/CryptoSwift/CryptoSwift.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/CryptoSwift/CryptoSwift.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/CryptoSwift/Info.plist" afterPath="$PROJECT_DIR$/Pods/Target Support Files/CryptoSwift/Info.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/DWURecyclingAlert/DWURecyclingAlert.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/DWURecyclingAlert/DWURecyclingAlert.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/DownloadButton/DownloadButton.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/DownloadButton/DownloadButton.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/LayoutKit/Info.plist" afterPath="$PROJECT_DIR$/Pods/Target Support Files/LayoutKit/Info.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/LayoutKit/LayoutKit.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/LayoutKit/LayoutKit.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD-resources.sh" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD-resources.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.debug.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.debug.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.release.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.release.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests-resources.sh" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests-resources.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.release.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.release.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-acknowledgements.markdown" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-acknowledgements.markdown" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-acknowledgements.plist" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-acknowledgements.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-frameworks.sh" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-frameworks.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-resources.sh" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-resources.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten.debug.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten.debug.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten.release.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-Relisten/Pods-Relisten.release.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests-resources.sh" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests-resources.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.debug.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.debug.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Protobuf/Info.plist" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Protobuf/Info.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Protobuf/Protobuf.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Protobuf/Protobuf.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/ReachabilitySwift/ReachabilitySwift.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/ReachabilitySwift/ReachabilitySwift.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Siesta/Info.plist" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Siesta/Info.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/Siesta/Siesta.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Siesta/Siesta.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Target Support Files/SwiftyJSON/SwiftyJSON.xcconfig" afterPath="$PROJECT_DIR$/Pods/Target Support Files/SwiftyJSON/SwiftyJSON.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Relisten.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Relisten.xcodeproj/project.pbxproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Relisten.xcodeproj/xcuserdata/alecgorge.xcuserdatad/xcschemes/xcschememanagement.plist" afterPath="$PROJECT_DIR$/Relisten.xcodeproj/xcuserdata/alecgorge.xcuserdatad/xcschemes/xcschememanagement.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shared/API/ApiCache.swift" afterPath="$PROJECT_DIR$/Shared/API/ApiCache.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shared/API/Models/RelistenModels.swift" afterPath="$PROJECT_DIR$/Shared/API/Models/RelistenModels.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shared/API/Models/RelistenShowModels.swift" afterPath="$PROJECT_DIR$/Shared/API/Models/RelistenShowModels.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shared/API/Models/RelistenSourceModels.swift" afterPath="$PROJECT_DIR$/Shared/API/Models/RelistenSourceModels.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shared/API/RelistenApi.swift" afterPath="$PROJECT_DIR$/Shared/API/RelistenApi.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shared/View Controllers/ArtistViewController.swift" afterPath="$PROJECT_DIR$/Shared/View Controllers/ArtistViewController.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shared/View Controllers/RelistenTableViewController.swift" afterPath="$PROJECT_DIR$/Shared/View Controllers/RelistenTableViewController.swift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shared/Views/RelistenMenuView.swift" afterPath="$PROJECT_DIR$/Shared/Views/RelistenMenuView.swift" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphoneos_746e3b4ea03bdf873bfde4d66efadbaea98c6144" />
+  <component name="FavoritesManager">
+    <favorites_list name="Relisten" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="YearsViewController.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/View Controllers/YearsViewController.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="384">
+              <caret line="32" column="8" lean-forward="false" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArtistViewController.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/View Controllers/ArtistViewController.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RelistenMenuView.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/Views/RelistenMenuView.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2575">
+              <caret line="171" column="0" lean-forward="false" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RelistenTableViewController.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/View Controllers/RelistenTableViewController.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="246">
+              <caret line="104" column="4" lean-forward="false" selection-start-line="104" selection-start-column="4" selection-end-line="104" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="YearLayout.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/Layouts/YearLayout.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="592">
+              <caret line="71" column="29" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="YearShowLayout.swift" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Shared/YearShowLayout.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="683">
+              <caret line="74" column="39" lean-forward="false" selection-start-line="74" selection-start-column="39" selection-end-line="74" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArtistLayout.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Apps/Relisten/Layouts/ArtistLayout.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="262">
+              <caret line="42" column="39" lean-forward="false" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResourceStatusOverlay.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pods/Siesta/Source/SiestaUI/ResourceStatusOverlay.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="233" column="43" lean-forward="false" selection-start-line="233" selection-start-column="43" selection-end-line="233" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Collection+Siesta.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pods/Siesta/Source/Siesta/Support/Collection+Siesta.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="24" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RelistenShowModels.swift" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/API/Models/RelistenShowModels.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>resourcestatusov</find>
+      <find>displayPriority</find>
+      <find>any</find>
+      <find>all(</find>
+      <find>.any</find>
+      <find />
+    </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Podfile" />
+        <option value="$PROJECT_DIR$/Shared/View Controllers/YearsViewController.swift" />
+        <option value="$PROJECT_DIR$/Shared/Views/RelistenMenuView.swift" />
+        <option value="$PROJECT_DIR$/Pods/Siesta/Source/SiestaUI/ResourceStatusOverlay.swift" />
+        <option value="$PROJECT_DIR$/Shared/View Controllers/RelistenTableViewController.swift" />
+        <option value="$PROJECT_DIR$/Shared/API/RelistenResourceStatusOverlay.swift" />
+        <option value="$PROJECT_DIR$/Shared/View Controllers/ArtistViewController.swift" />
+        <option value="$PROJECT_DIR$/Apps/Relisten/Layouts/ArtistLayout.swift" />
+        <option value="$PROJECT_DIR$/Shared/Layouts/YearLayout.swift" />
+        <option value="$PROJECT_DIR$/Shared/YearShowLayout.swift" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="54" />
+    <option name="y" value="42" />
+    <option name="width" value="2452" />
+    <option name="height" value="1375" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Cidr.FilesView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Apps" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Apps" type="fcab9f18:XcodeViewNode" />
+              <item name="Relisten" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Apps" type="fcab9f18:XcodeViewNode" />
+              <item name="Relisten" type="fcab9f18:XcodeViewNode" />
+              <item name="Layouts" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Apps" type="fcab9f18:XcodeViewNode" />
+              <item name="Relisten" type="fcab9f18:XcodeViewNode" />
+              <item name="View Controllers" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Shared" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Shared" type="fcab9f18:XcodeViewNode" />
+              <item name="API" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Shared" type="fcab9f18:XcodeViewNode" />
+              <item name="API" type="fcab9f18:XcodeViewNode" />
+              <item name="Models" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Shared" type="fcab9f18:XcodeViewNode" />
+              <item name="Layouts" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Shared" type="fcab9f18:XcodeViewNode" />
+              <item name="View Controllers" type="fcab9f18:XcodeViewNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="Relisten" type="1d218c8b:XcodeProjectNode" />
+              <item name="Shared" type="fcab9f18:XcodeViewNode" />
+              <item name="Views" type="fcab9f18:XcodeViewNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="OBJC.PRESERVED_TARGET_SELECTION" value="Relisten,,,PhishOD" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Relisten">
+    <configuration name="Relisten" type="AppleRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Relisten" TARGET_NAME="Relisten" CONFIG_NAME="Debug" SCHEME_NAME="Relisten" RUN_TARGET_PROJECT_NAME="Relisten" RUN_TARGET_NAME="Relisten" MAKE_ACTIVE="TRUE">
+      <envs />
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4ae6d7cc-ec60-49ef-aa75-36e54230479d" name="Default" comment="" />
+      <created>1496226866171</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1496226866171</updated>
+      <workItem from="1496226869615" duration="3261000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="3261000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="2560" height="1413" extended-state="6" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960477" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960477" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13671875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997017" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Shared/Layouts/YearLayout.swift</url>
+          <line>48</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Podfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="23" lean-forward="true" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Apps/Relisten/View Controllers/ArtistsViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="29" column="40" lean-forward="false" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/View Controllers/YearsViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="32" column="8" lean-forward="false" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/API/Models/RelistenShowModels.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/View Controllers/RelistenTableViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="104" column="4" lean-forward="false" selection-start-line="104" selection-start-column="4" selection-end-line="104" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pods/Siesta/Source/Siesta/Support/Collection+Siesta.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="24" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/API/RelistenResourceStatusOverlay.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="27" column="1" lean-forward="false" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pods/Siesta/Source/Siesta/Resource/Resource.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="300" column="6" lean-forward="false" selection-start-line="300" selection-start-column="6" selection-end-line="300" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/Views/RelistenMenuView.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2575">
+          <caret line="171" column="0" lean-forward="false" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/View Controllers/ArtistViewController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pods/Siesta/Source/SiestaUI/ResourceStatusOverlay.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="233" column="43" lean-forward="false" selection-start-line="233" selection-start-column="43" selection-end-line="233" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Apps/Relisten/Layouts/ArtistLayout.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="42" column="39" lean-forward="false" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/Layouts/YearLayout.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="592">
+          <caret line="71" column="29" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/YearShowLayout.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="683">
+          <caret line="74" column="39" lean-forward="false" selection-start-line="74" selection-start-column="39" selection-end-line="74" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

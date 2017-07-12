@@ -61,6 +61,8 @@
 		7CC095411E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */; };
 		7CC4EDC21F0AC2F0004CB615 /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */; };
 		7CC4EDC31F0AC2F0004CB615 /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */; };
+		7CC4EDC51F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */; };
+		7CC4EDC61F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */; };
 		7CD270F21EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD270F11EE6B27A005888E3 /* SourceDetailsLayout.swift */; };
 		7CD270F31EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD270F11EE6B27A005888E3 /* SourceDetailsLayout.swift */; };
 		7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
@@ -137,6 +139,7 @@
 		7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistsViewController.swift; path = "View Controllers/ArtistsViewController.swift"; sourceTree = "<group>"; };
 		7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenTableViewController.swift; path = "View Controllers/RelistenTableViewController.swift"; sourceTree = "<group>"; };
 		7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaybackController.swift; path = Playback/PlaybackController.swift; sourceTree = "<group>"; };
+		7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceTrackAudioItem.swift; path = Playback/Models/SourceTrackAudioItem.swift; sourceTree = "<group>"; };
 		7CD270F11EE6B27A005888E3 /* SourceDetailsLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceDetailsLayout.swift; path = Layouts/SourceDetailsLayout.swift; sourceTree = "<group>"; };
 		7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -352,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				7CA94EA71F0A6C74004663F3 /* TrackStatus.swift */,
+				7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -808,6 +812,7 @@
 				8E91CF363725BB2441672DC9 /* RelistenResourceStatusOverlay.swift in Sources */,
 				8E91C72389219DDCA7733977 /* YearShowLayout.swift in Sources */,
 				7CABACCB1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
+				7CC4EDC61F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */,
 				7C5076341EE701D500BE3CE7 /* SourceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -850,6 +855,7 @@
 				7CABACBF1EDEE178009C5E3B /* PaddingLabel.swift in Sources */,
 				7CABACCA1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
 				8E91CA4985FB22E1CE0A26C3 /* YearLayout.swift in Sources */,
+				7CC4EDC51F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */,
 				8E91CEEF48E7DBDC4E7871F9 /* RelistenResourceStatusOverlay.swift in Sources */,
 				8E91C0747A674A864013F1AB /* YearShowLayout.swift in Sources */,
 				7CABACC51EDEE63F009C5E3B /* YearViewController.swift in Sources */,
@@ -908,7 +914,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.Phish-Tracks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -926,7 +932,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.Phish-Tracks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -989,6 +995,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1040,6 +1047,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1067,7 +1075,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1085,7 +1093,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
 				PRODUCT_NAME = "$(TARGET_NAME)";

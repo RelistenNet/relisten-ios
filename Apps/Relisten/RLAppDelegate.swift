@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
 
         FirebaseRemoteConfig = RemoteConfig.remoteConfig()
-        FirebaseRemoteConfig.setDefaults(["api_base": "https://relistenapi.alecgorge.com" as NSObject])
+        FirebaseRemoteConfig.setDefaults(["api_base": "https://api.relisten.live" as NSObject])
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {

@@ -13,11 +13,11 @@
   },
   "social_media_url": "https://twitter.com/alecgorge",
   "platforms": {
-    "ios": "8.0",
+    "ios": "10.0",
     "osx": "10.9"
   },
   "requires_arc": true,
-  "source_files": "AGAudioPlayer/*.{h,m}",
+  "source_files": "AGAudioPlayer/**/*.{h,m,swift}",
   "ios": {
     "frameworks": "MediaPlayer"
   },

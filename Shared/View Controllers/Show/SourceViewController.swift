@@ -70,8 +70,11 @@ class SourceViewController: RelistenBaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        //if let d = latestData {
-            //navigationController?.pushViewController(YearViewController(artist: artist, year: d[indexPath.row]), animated: true)
-        //}
+        let items = source.toAudioItems(inShow: show, byArtist: artist)
+        PlaybackController.sharedInstance.playbackQueue.clearAndReplace(with: items)
+        
+        PlaybackController.sharedInstance.player.currentIndex = 0
+        
+        PlaybackController.sharedInstance.display(on: self, completion: nil)
     }
 }

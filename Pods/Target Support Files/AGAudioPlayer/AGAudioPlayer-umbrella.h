@@ -16,6 +16,7 @@
 #import "AGAudioPlayerUpNextQueue.h"
 #import "AGCachable.h"
 #import "AGDurationHelper.h"
+#import "AGAudioPlayer-Bridging-Header.h"
 
 FOUNDATION_EXPORT double AGAudioPlayerVersionNumber;
 FOUNDATION_EXPORT const unsigned char AGAudioPlayerVersionString[];

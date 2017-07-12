@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '9.0'
+platform :ios, '10.0'
 
 target 'Relisten' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
@@ -8,24 +8,29 @@ target 'Relisten' do
 
   pod 'Siesta/Core'
   pod 'Siesta/UI'
-  pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
   pod 'SwiftyJSON'
   pod 'Cache', :git => 'https://github.com/hyperoslo/Cache.git'
+  pod 'ReachabilitySwift', '~> 3'
+
+  pod 'NapySlider', :path => '../NapySlider'
+  pod 'BASSGaplessAudioPlayer', :path => '../gapless-audio-bass-ios'
+  pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
+
   pod 'Firebase/Database'
   pod 'Firebase/RemoteConfig'
   pod 'Firebase/DynamicLinks'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+
   pod "DownloadButton"
-  pod 'ReachabilitySwift', '~> 3'
+  pod 'AXRatingView'
+  pod 'NAKPlaybackIndicatorView'
+
   pod 'LayoutKit'
   pod 'DWURecyclingAlert'
+
   pod 'SINQ'
-  pod 'AXRatingView'
   pod 'Reveal-SDK', :configurations => ['Debug']
-  pod 'NAKPlaybackIndicatorView'
-  pod 'BASSGaplessAudioPlayer', :path => '../gapless-audio-bass-ios'
-  pod 'NapySlider', :path => '../NapySlider'
 
   # pod 'BFNavigationBarDrawer'
   target 'PhishOD' do
@@ -41,4 +46,11 @@ target 'Relisten' do
     # Pods for testing
   end
 
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['ENABLE_BITCODE'] = 'NO'
+      end
+    end
+  end
 end

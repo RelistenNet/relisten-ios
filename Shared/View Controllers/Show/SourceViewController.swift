@@ -70,11 +70,16 @@ class SourceViewController: RelistenBaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        guard indexPath.section != 0 else {
+            return
+        }
+        
         let items = source.toAudioItems(inShow: show, byArtist: artist)
+        
         PlaybackController.sharedInstance.playbackQueue.clearAndReplace(with: items)
         
-        PlaybackController.sharedInstance.player.currentIndex = 0
+        PlaybackController.sharedInstance.displayMini(on: self, completion: nil)
         
-        PlaybackController.sharedInstance.display(on: self, completion: nil)
+        PlaybackController.sharedInstance.player.playItem(at: UInt(source.flattenedIndex(forIndexPath: IndexPath(row: indexPath.row, section: indexPath.section - 1))))
     }
 }

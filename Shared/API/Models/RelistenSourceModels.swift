@@ -132,6 +132,14 @@ public class SourceFull : Source {
     }
 }
 
+extension SourceFull {
+    public func flattenedIndex(forIndexPath: IndexPath) -> Int {
+        let prevTrackCount = self.sets[0..<forIndexPath.section].map({ $0.tracks.count }).reduce(0, +)
+        
+        return prevTrackCount + forIndexPath.row
+    }
+}
+
 public class Link : RelistenObject {
     public let source_id: Int
     public let upstream_source_id: Int

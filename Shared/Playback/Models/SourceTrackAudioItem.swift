@@ -15,8 +15,14 @@ public class SourceTrackAudioItem : AGAudioItem {
     public required init(_ track: SourceTrack, inSource: SourceFull, fromShow: Show, byArtist: SlimArtistWithFeatures) {
         super.init()
         
-        self.displayText = track.title
         self.title = track.title
+        self.artist = byArtist.name
+        
+        if let d = track.duration {
+            self.duration = d
+        }
+        
+        self.trackNumber = track.track_position
         
         var venueStr = ""
         
@@ -24,8 +30,13 @@ public class SourceTrackAudioItem : AGAudioItem {
             venueStr = " — \(v.name), \(v.location)"
         }
         
-        self.displaySubtext = "\(byArtist.name) — \(inSource.display_date)\(venueStr)"
+        self.album = "\(inSource.display_date)\(venueStr)"
+        
+        self.displayText = track.title
+        self.displaySubtext = "\(byArtist.name) — \(album)"
+        
         self.playbackURL = track.mp3_url
+
         self.metadataLoaded = true
     }
     

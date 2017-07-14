@@ -62,6 +62,10 @@ class SourceViewController: RelistenBaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            cell.selectionStyle = .none
+        }
+        
         cell.accessoryType = .none
         
         return cell

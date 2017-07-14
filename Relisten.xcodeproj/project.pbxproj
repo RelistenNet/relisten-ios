@@ -27,6 +27,8 @@
 		7C449EB41D5A4F4300750D54 /* PhishODUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C449EB31D5A4F4300750D54 /* PhishODUITests.swift */; };
 		7C5076331EE701D500BE3CE7 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5076321EE701D500BE3CE7 /* SourceViewController.swift */; };
 		7C5076341EE701D500BE3CE7 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5076321EE701D500BE3CE7 /* SourceViewController.swift */; };
+		7C61C7CE1F18DB320094E0AF /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */; };
+		7C61C7CF1F18DB320094E0AF /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */; };
 		7C8044071E6E582000BA946E /* ArtistLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044061E6E582000BA946E /* ArtistLayout.swift */; };
 		7C8044091E6F29A800BA946E /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
 		7C80440A1E6F29A800BA946E /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
@@ -115,6 +117,7 @@
 		7C449EB31D5A4F4300750D54 /* PhishODUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishODUITests.swift; sourceTree = "<group>"; };
 		7C449EB51D5A4F4300750D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C5076321EE701D500BE3CE7 /* SourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceViewController.swift; path = "View Controllers/Show/SourceViewController.swift"; sourceTree = "<group>"; };
+		7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = SharedAssets.xcassets; path = Assets/SharedAssets.xcassets; sourceTree = "<group>"; };
 		7C8044061E6E582000BA946E /* ArtistLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistLayout.swift; path = Layouts/ArtistLayout.swift; sourceTree = "<group>"; };
 		7C8044081E6F29A800BA946E /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistViewController.swift; path = "View Controllers/ArtistViewController.swift"; sourceTree = "<group>"; };
 		7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenMenuView.swift; path = Views/RelistenMenuView.swift; sourceTree = "<group>"; };
@@ -236,6 +239,7 @@
 		7C449EBD1D5A513300750D54 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				7C61C7CC1F18DB160094E0AF /* Assets */,
 				7CA94EA51F0A6C53004663F3 /* Playback */,
 				7C8044101E6F454A00BA946E /* Extensions */,
 				7C80440C1E6F29AF00BA946E /* Views */,
@@ -257,6 +261,14 @@
 				8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		7C61C7CC1F18DB160094E0AF /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 		7C8044051E6E57F800BA946E /* Layouts */ = {
@@ -571,6 +583,7 @@
 				7C449EA91D5A4F4300750D54 /* PHODLaunchScreen.storyboard in Resources */,
 				7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */,
 				7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */,
+				7C61C7CF1F18DB320094E0AF /* SharedAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +601,7 @@
 				7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */,
 				7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */,
 				7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */,
+				7C61C7CE1F18DB320094E0AF /* SharedAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

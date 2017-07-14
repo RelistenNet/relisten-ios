@@ -17,26 +17,23 @@ class RelistenJsonCache : EntityCache {
     static let cacheName = "RelistenApiCache"
     
     let cacheConfig = Config(
-        frontKind: .memory,
-        backKind: .disk,
         expiry: .never,
         
-        // 100 MB max data cache
-        maxSize: 1024 * 1024 * 100,
-        
         // max objects to hold in cache at once
-        maxObjects: 100,
+        memoryCountLimit: 100,
+        
+        // 100 MB max data cache
+        maxDiskSize: 1024 * 1024 * 100,
         
         cacheDirectory: NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                             FileManager.SearchPathDomainMask.userDomainMask,
                                                             true).first! + "/" + cacheName
     )
     
-    let backingCache: SyncCache<Entity<Any>>
+    let backingCache: SpecializedCache<Entity<Any>>
     
     init() {
-        let cache = Cache<Entity<Any>>(name: RelistenJsonCache.cacheName, config: self.cacheConfig)
-        backingCache = SyncCache(cache)
+        backingCache = SpecializedCache<Entity<Any>>(name: RelistenJsonCache.cacheName, config: self.cacheConfig)
     }
     
     func key(for resource: Resource) -> String? {
@@ -44,7 +41,7 @@ class RelistenJsonCache : EntityCache {
     }
     
     func readEntity(forKey key: String) -> Entity<Any>? {
-        let val = backingCache.object(key)
+        let val = backingCache.object(forKey: key)
         
         print("[cache] readEntity(forKey \(key)) = *snip*")//\(String(describing: val))")
         
@@ -60,13 +57,23 @@ class RelistenJsonCache : EntityCache {
             return
         }
         
-        backingCache.add(key, object: entity)
+        do {
+            try backingCache.addObject(entity, forKey: key)
+        }
+        catch {
+            print("error caching entity!")
+        }
     }
     
     func removeEntity(forKey key: String) {
         print("[cache] removeEntity(forKey \(key))")
         
-        backingCache.remove(key)
+        do {
+            try backingCache.removeObject(forKey: key)
+        }
+        catch {
+            print("error removing entity!")
+        }
     }
 }
 

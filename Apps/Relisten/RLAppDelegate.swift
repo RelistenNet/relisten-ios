@@ -10,15 +10,16 @@ import UIKit
 
 import Siesta
 import Firebase
+import FirebaseAuth
 import DWURecyclingAlert
 
 public var FirebaseRemoteConfig: RemoteConfig! = nil
 
 public let AppColors = _AppColors(
-    primary: UIColor.blue,
+    primary: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
     textOnPrimary: UIColor.white,
-    soundboard: UIColor.green,
-    remaster: UIColor.blue
+    soundboard: UIColor(red:0.0/255.0, green:128.0/255.0, blue:95.0/255.0, alpha:1.0),
+    remaster: UIColor(red:0, green:0.616, blue:0.753, alpha:1)
 )
 
 @UIApplicationMain
@@ -33,10 +34,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         FirebaseRemoteConfig = RemoteConfig.remoteConfig()
         FirebaseRemoteConfig.setDefaults(["api_base": "https://api.relisten.live" as NSObject])
+        
+        if Auth.auth().currentUser == nil {
+            print("No current user. Signing in.")
+            Auth.auth().signInAnonymously(completion: { (u, err) in
+                print("Signed into Firebase: \(String(describing: u)) \(String(describing: err))")
+            })
+        }
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         setupThirdPartyDependencies()
+        setupAppearance()
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
@@ -44,9 +53,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.makeKeyAndVisible()
         
-        PlaybackController.window = window
+        setupPlayback()
         
         return true
+    }
+    
+    func setupPlayback() {
+        PlaybackController.window = window
+    }
+    
+    func setupAppearance() {
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        UINavigationBar.appearance().barTintColor = AppColors.primary
+        UINavigationBar.appearance().backgroundColor = AppColors.primary
+        UINavigationBar.appearance().tintColor = AppColors.textOnPrimary
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: AppColors.textOnPrimary]
+        
+        UIToolbar.appearance().backgroundColor = AppColors.primary
+        UIToolbar.appearance().tintColor = AppColors.textOnPrimary
+        
+        UIButton.appearance().tintColor = AppColors.primary
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: AppColors.textOnPrimary], for: .normal)
+        
+        UISegmentedControl.appearance().tintColor = AppColors.primary
+        UITabBar.appearance().tintColor = AppColors.primary
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

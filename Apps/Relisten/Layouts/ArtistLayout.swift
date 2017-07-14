@@ -9,8 +9,41 @@
 import UIKit
 
 import LayoutKit
+import FaveButton
+
+func color(_ rgbColor: Int) -> UIColor{
+    return UIColor(
+        red:   CGFloat((rgbColor & 0xFF0000) >> 16) / 255.0,
+        green: CGFloat((rgbColor & 0x00FF00) >> 8 ) / 255.0,
+        blue:  CGFloat((rgbColor & 0x0000FF) >> 0 ) / 255.0,
+        alpha: CGFloat(1.0)
+    )
+}
+
+public class RelistenFaveButtonDelegate : FaveButtonDelegate {
+    let colors = [
+        DotColors(first: color(0x7DC2F4), second: color(0xE2264D)),
+        DotColors(first: color(0xF8CC61), second: color(0x9BDFBA)),
+        DotColors(first: color(0xAF90F4), second: color(0x90D1F9)),
+        DotColors(first: color(0xE9A966), second: color(0xF8C852)),
+        DotColors(first: color(0xF68FA7), second: color(0xF6A2B8))
+    ]
+    
+    public func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
+    }
+    
+    public func faveButtonDotColors(_ faveButton: FaveButton) -> [DotColors]?{
+        return colors
+    }
+    
+    public func instantCallback(_ faveButton: FaveButton, didSelected selected: Bool) {
+        
+    }
+}
 
 public class ArtistLayout : InsetLayout<UIView> {
+    static let faveButtonDelegate = RelistenFaveButtonDelegate()
+    
     public init(artist: ArtistWithCounts) {
         let artistName = LabelLayout(
             text: artist.name,
@@ -20,15 +53,20 @@ public class ArtistLayout : InsetLayout<UIView> {
             flexibility: .flexible,
             viewReuseId: "artistName")
         
-        let favoriteButton = SizeLayout<UIButton>(
-            width: 64,
-            height: 24,
+        let favoriteButton = SizeLayout<FaveButton>(
+            width: 32,
+            height: 32,
             alignment: .centerTrailing,
             flexibility: .inflexible,
             viewReuseId: "favoriteArtist") { (button) in
-                button.setTitle("Favorite", for: .normal)
-                button.setTitleColor(.black, for: .normal)
+                button.setImage(UIImage(named: "heart"), for: .normal)
+                button.accessibilityLabel = "Favorite Artist"
+                button.delegate = ArtistLayout.faveButtonDelegate
+                
+                button.applyInit()
             }
+        
+        let favoriteButtonContainer = InsetLayout(insets: UIEdgeInsetsMake(0, 16, 0, 8), sublayout: favoriteButton)
         
         let showsLabel = LabelLayout(
             text: "\(artist.show_count) shows",
@@ -44,28 +82,36 @@ public class ArtistLayout : InsetLayout<UIView> {
             viewReuseId: "sourcesCount"
         )
         
+        let rows = StackLayout(
+            axis: .vertical,
+            spacing: 4,
+            viewReuseId: "artist-vert-stack",
+            sublayouts: [
+                StackLayout(
+                    axis: .horizontal,
+                    sublayouts: [
+                        artistName,
+                        // favoriteButton
+                    ]
+                ),
+                StackLayout(
+                    axis: .horizontal,
+                    sublayouts: [
+                        showsLabel,
+                        sourcesLabel
+                    ]
+                )
+            ]
+        )
+
         super.init(
-            insets: EdgeInsets(top: 8, left: 16, bottom: 12, right: 16 + 8 + 8),
+            insets: EdgeInsets(top: 8, left: 0, bottom: 12, right: 16 + 8 + 8),
             viewReuseId: "artistLayout",
             sublayout: StackLayout(
-                axis: .vertical,
-                spacing: 4,
-                sublayouts: [
-                    StackLayout(
-                        axis: .horizontal,
-                        sublayouts: [
-                            artistName,
-                            favoriteButton
-                        ]
-                    ),
-                    StackLayout(
-                        axis: .horizontal,
-                        sublayouts: [
-                            showsLabel,
-                            sourcesLabel
-                        ]
-                    )
-                ]
+                axis: .horizontal,
+                spacing: 0,
+                viewReuseId: "artist-horiz-stack",
+                sublayouts: [favoriteButtonContainer, rows]
             )
         )
     }

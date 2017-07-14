@@ -74,7 +74,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
         
         stack.append(ButtonLayout(
             type: ButtonLayoutType.system,
-            title: "...",
+            title: "···",
             image: .defaultImage,
             font: nil,
             contentEdgeInsets: nil,

@@ -95,7 +95,7 @@ open class FaveButton: UIButton {
 
 // MARK: create
 extension FaveButton{
-    fileprivate func applyInit(){
+    public func applyInit(){
         
         if nil == faveIconImage{
             faveIconImage = image(for: UIControlState())
@@ -114,7 +114,6 @@ extension FaveButton{
         
         addActions()
     }
-    
     
     fileprivate func createFaveIcon(_ faveIconImage: UIImage) -> FaveIcon{
         return FaveIcon.createFaveIcon(self, icon: faveIconImage,color: normalColor)

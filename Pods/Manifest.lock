@@ -12,7 +12,10 @@ PODS:
     - SwiftHash (~> 1.4.0)
   - DownloadButton (0.1.0)
   - DWURecyclingAlert (1.0.2)
-  - FaveButton (2.0.3)
+  - FaveButton (2.0.4)
+  - Firebase/Auth (4.0.4):
+    - Firebase/Core
+    - FirebaseAuth (= 4.0.0)
   - Firebase/Core (4.0.4):
     - FirebaseAnalytics (= 4.0.2)
     - FirebaseCore (= 4.0.4)
@@ -32,6 +35,10 @@ PODS:
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseAuth (4.0.0):
+    - FirebaseAnalytics (~> 4.0)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseCore (4.0.4):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
@@ -52,11 +59,19 @@ PODS:
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - Protobuf (~> 3.1)
+  - GoogleToolboxForMac/DebugUtils (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/Logger (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.1)
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
+  - GTMSessionFetcher/Core (1.1.11)
   - Interpolate (0.4.0)
   - LayoutKit (4.0.2)
   - MarqueeLabel (3.1.1):
@@ -86,7 +101,8 @@ DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache.git`)
   - DownloadButton
   - DWURecyclingAlert
-  - FaveButton
+  - FaveButton (from `../fave-button`)
+  - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/DynamicLinks
@@ -109,6 +125,8 @@ EXTERNAL SOURCES:
     :path: "../gapless-audio-bass-ios"
   Cache:
     :git: https://github.com/hyperoslo/Cache.git
+  FaveButton:
+    :path: "../fave-button"
   NapySlider:
     :path: "../NapySlider"
 
@@ -125,9 +143,10 @@ SPEC CHECKSUMS:
   Cache: adbacf2672fbc9d48f552e03bbd4916510c39ac0
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
-  FaveButton: cfcbc5e73da159c4f916613da5687357b5bb4783
+  FaveButton: 271bdd3a1012ef6c667e428bc9754e7d65ca7455
   Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
+  FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
   FirebaseCore: cfc042628ef9f20debe09c0eb683135fcd404cb4
   FirebaseDatabase: d829b3a8c3e2ac7a16773c5df226966b0805dfc2
   FirebaseDynamicLinks: ad3bef2e8addfa1490af9db02201429c5c9447dd
@@ -135,6 +154,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
   FirebaseRemoteConfig: 328244399f64226cfdfa32efee596bb010ef5665
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   Interpolate: 682895f1a2fc091da0ba53ccb018520daf51f8fd
   LayoutKit: 7a7b20acc03d815ff444d44cf4d982aed6839688
   MarqueeLabel: 17c5148b6f7144498eff5e0d286bd2e7e866f972
@@ -149,6 +169,6 @@ SPEC CHECKSUMS:
   SwiftHash: acf0f29032309a5c7a7f625595eade1aca97aca2
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 3d6be8c45e6213fbeb3fbd188f5ead5f09269d92
+PODFILE CHECKSUM: 2ec32544e9b72c20495fe30f915f8ba335a179b6
 
 COCOAPODS: 1.2.1

@@ -17,6 +17,7 @@ target 'Relisten' do
   pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
 
   pod 'Firebase/Database'
+  pod 'Firebase/Auth'
   pod 'Firebase/RemoteConfig'
   pod 'Firebase/DynamicLinks'
   pod 'Firebase/Core'
@@ -24,6 +25,7 @@ target 'Relisten' do
 
   pod "DownloadButton"
   pod 'AXRatingView'
+  pod 'FaveButton', :path => '../fave-button'
   pod 'NAKPlaybackIndicatorView'
 
   pod 'LayoutKit'

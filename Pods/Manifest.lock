@@ -8,32 +8,33 @@ PODS:
   - AXRatingView (1.0.6)
   - BASSGaplessAudioPlayer (0.0.1)
   - BCColor (0.2)
-  - Cache (2.2.2):
-    - CryptoSwift
-  - CryptoSwift (0.6.9)
+  - Cache (3.3.0):
+    - SwiftHash (~> 1.4.0)
   - DownloadButton (0.1.0)
   - DWURecyclingAlert (1.0.2)
-  - Firebase/Core (4.0.0):
-    - FirebaseAnalytics (= 4.0.0)
-    - FirebaseCore (= 4.0.0)
-  - Firebase/Database (4.0.0):
+  - FaveButton (2.0.3)
+  - Firebase/Core (4.0.4):
+    - FirebaseAnalytics (= 4.0.2)
+    - FirebaseCore (= 4.0.4)
+  - Firebase/Database (4.0.4):
     - Firebase/Core
     - FirebaseDatabase (= 4.0.0)
-  - Firebase/DynamicLinks (4.0.0):
+  - Firebase/DynamicLinks (4.0.4):
     - Firebase/Core
     - FirebaseDynamicLinks (= 2.0.0)
-  - Firebase/Messaging (4.0.0):
+  - Firebase/Messaging (4.0.4):
     - Firebase/Core
     - FirebaseMessaging (= 2.0.0)
-  - Firebase/RemoteConfig (4.0.0):
+  - Firebase/RemoteConfig (4.0.4):
     - Firebase/Core
-    - FirebaseRemoteConfig (= 2.0.0)
-  - FirebaseAnalytics (4.0.0):
+    - FirebaseRemoteConfig (= 2.0.1)
+  - FirebaseAnalytics (4.0.2):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseCore (4.0.0):
+  - FirebaseCore (4.0.4):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - nanopb (~> 0.3)
   - FirebaseDatabase (4.0.0):
     - FirebaseAnalytics (~> 4.0)
   - FirebaseDynamicLinks (2.0.0):
@@ -46,7 +47,7 @@ PODS:
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
-  - FirebaseRemoteConfig (2.0.0):
+  - FirebaseRemoteConfig (2.0.1):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
@@ -58,18 +59,24 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - Interpolate (0.4.0)
   - LayoutKit (4.0.2)
-  - MarqueeLabel (3.1.0):
-    - MarqueeLabel/ObjC (= 3.1.0)
-  - MarqueeLabel/ObjC (3.1.0)
+  - MarqueeLabel (3.1.1):
+    - MarqueeLabel/ObjC (= 3.1.1)
+  - MarqueeLabel/ObjC (3.1.1)
   - NAKPlaybackIndicatorView (0.0.3)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
   - NapySlider (0.3)
   - Protobuf (3.3.0)
   - ReachabilitySwift (3)
-  - Reveal-SDK (8)
+  - Reveal-SDK (9)
   - Siesta/Core (1.1.1)
   - Siesta/UI (1.1.1):
     - Siesta/Core
   - SINQ (0.7.0)
+  - SwiftHash (1.4.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
@@ -79,6 +86,7 @@ DEPENDENCIES:
   - Cache (from `https://github.com/hyperoslo/Cache.git`)
   - DownloadButton
   - DWURecyclingAlert
+  - FaveButton
   - Firebase/Core
   - Firebase/Database
   - Firebase/DynamicLinks
@@ -106,7 +114,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-    :commit: f8848eda94bcb6cf3a38fa39166c6d2332ca4f6e
+    :commit: 4699caf4a994996840826a504270fb1ea6ac0a4f
     :git: https://github.com/hyperoslo/Cache.git
 
 SPEC CHECKSUMS:
@@ -114,31 +122,33 @@ SPEC CHECKSUMS:
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 30b7984efd16d9f40ff14b9e9df3ec74a3ace4b5
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
-  Cache: 6d217a16102dacda48ac25eb142b800e0d7b86b5
-  CryptoSwift: a22f6ba238e9ce4d26ee7bf45b9ed82e7122d4a0
+  Cache: adbacf2672fbc9d48f552e03bbd4916510c39ac0
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
-  Firebase: 284eea779b73fdff309791817da7c68bff8dd572
-  FirebaseAnalytics: 6f08e746f7d66f5452931bc2e822b5df9c66b64a
-  FirebaseCore: 85ad466044c2f013cdb167f85d426d15b128114a
+  FaveButton: cfcbc5e73da159c4f916613da5687357b5bb4783
+  Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
+  FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
+  FirebaseCore: cfc042628ef9f20debe09c0eb683135fcd404cb4
   FirebaseDatabase: d829b3a8c3e2ac7a16773c5df226966b0805dfc2
   FirebaseDynamicLinks: ad3bef2e8addfa1490af9db02201429c5c9447dd
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
-  FirebaseRemoteConfig: b1bde8c572a1ca13558b5b179f4563cb877aa34b
+  FirebaseRemoteConfig: 328244399f64226cfdfa32efee596bb010ef5665
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   Interpolate: 682895f1a2fc091da0ba53ccb018520daf51f8fd
   LayoutKit: 7a7b20acc03d815ff444d44cf4d982aed6839688
-  MarqueeLabel: 061d04687ee5485ac035b45c8e292274a87afe01
+  MarqueeLabel: 17c5148b6f7144498eff5e0d286bd2e7e866f972
   NAKPlaybackIndicatorView: 794dd97576fe074bb1844c19ebcbf7509384a47f
+  nanopb: 22bc080fa3955e2116b6ff3ee6c2cb3c15ab97cb
   NapySlider: 6565f73f715414b44cda40ff178a319aeae38b14
   Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
-  Reveal-SDK: 43be4e662864e937960d0d04d005135e29c4e53b
+  Reveal-SDK: d977a1ec41e7c076025c1005da6e6d7c1b8ed254
   Siesta: 920372f09b7cfd798074d85d8f3cf8505529a56e
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
+  SwiftHash: acf0f29032309a5c7a7f625595eade1aca97aca2
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: ead26b14cf31cc439b595477de6b66f4771d9b73
+PODFILE CHECKSUM: 3d6be8c45e6213fbeb3fbd188f5ead5f09269d92
 
 COCOAPODS: 1.2.1

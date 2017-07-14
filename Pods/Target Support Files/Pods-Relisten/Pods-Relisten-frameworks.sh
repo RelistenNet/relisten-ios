@@ -94,9 +94,9 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/BCColor/BCColor.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Cache/Cache.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/CryptoSwift/CryptoSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DWURecyclingAlert/DWURecyclingAlert.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DownloadButton/DownloadButton.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FaveButton/FaveButton.framework"
   install_framework "$BUILT_PRODUCTS_DIR/GoogleToolboxForMac/GoogleToolboxForMac.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Interpolate/Interpolate.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LayoutKit/LayoutKit.framework"
@@ -105,10 +105,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/NapySlider/NapySlider.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Protobuf/Protobuf.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ReachabilitySwift/ReachabilitySwift.framework"
-  install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer-8/iOS/RevealServer.framework"
+  install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer-9/iOS/RevealServer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SINQ/SINQ.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Siesta/Siesta.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftHash/SwiftHash.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/nanopb/nanopb.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/AGAudioPlayer/AGAudioPlayer.framework"
@@ -116,9 +118,9 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/BCColor/BCColor.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Cache/Cache.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/CryptoSwift/CryptoSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DWURecyclingAlert/DWURecyclingAlert.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DownloadButton/DownloadButton.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FaveButton/FaveButton.framework"
   install_framework "$BUILT_PRODUCTS_DIR/GoogleToolboxForMac/GoogleToolboxForMac.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Interpolate/Interpolate.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LayoutKit/LayoutKit.framework"
@@ -129,7 +131,9 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/ReachabilitySwift/ReachabilitySwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SINQ/SINQ.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Siesta/Siesta.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftHash/SwiftHash.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/nanopb/nanopb.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

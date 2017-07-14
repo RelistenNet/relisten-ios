@@ -1,3 +1,8 @@
+Version 2.0.1
+==================================
+- Add a warning message if a plist file can't be found when setting default values from it.
+- Internal clean up removing code for testing that is no longer used.
+
 Version 2.0.0
 ==================================
 - Change Swift API names to better align with Swift convention.

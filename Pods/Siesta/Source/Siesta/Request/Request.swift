@@ -15,8 +15,14 @@ import Foundation
 */
 public enum RequestMethod: String
     {
+    /// OPTIONS
+    case options
+
     /// GET
     case get
+
+    /// HEAD. The HTTP method, not the body part.
+    case head
 
     /// POST. Just POST. Doc comment is the same as the enum.
     case post
@@ -34,7 +40,7 @@ public enum RequestMethod: String
     /// I’m here all week! Thank you for reading the documentation!
     case delete
 
-    internal static let all: [RequestMethod] = [.get, .post, .put, .patch, .delete]
+    internal static let all: [RequestMethod] = [.get, .post, .put, .patch, .delete, .head, .options]
     }
 
 /**
@@ -73,7 +79,7 @@ public protocol Request: class
 
     /// Call the closure once if the request succeeds with a 304.
     @discardableResult
-    func onNotModified(_ callback: @escaping (Void) -> Void) -> Self
+    func onNotModified(_ callback: @escaping () -> Void) -> Self
 
     /// Call the closure once if the request fails for any reason.
     @discardableResult

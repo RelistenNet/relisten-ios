@@ -15,7 +15,7 @@ import Foundation
     /// `UIImage` on iOS; `NSImage` on macOS.
     public typealias Image = NSImage
 
-#elseif os(iOS)
+#elseif os(iOS) || os(tvOS) || os(watchOS)
     import UIKit
 
     public typealias Image = UIImage
@@ -117,8 +117,9 @@ public struct ResponseContentTransformer<InputContentType, OutputContentType>: R
     /**
       A closure that both processes the content and describes the required input and output types.
 
-      The first argument will be the `Entity.content` property of the second argument, safely cast
-      to the type expected by the closure.
+      The input will be an `Entity` whose `content` is safely cast to the type expected by the closure.
+      If the response content is not castable to `InputContentType`, then the pipeline skips the closure
+      and replaces the resopnse with a `RequestError` describing the type mismatch.
 
       The closure can throw an error to indicate that parsing failed. If it throws a `RequestError`, that
       error is passed on to the resource as is. Other failures are wrapped in a `RequestError`.
@@ -285,7 +286,7 @@ public func TextResponseTransformer(_ transformErrors: Bool = true) -> ResponseT
         }
     }
 
-/// Parses `Data` content as JSON, outputting either a dictionary or an array.
+/// Parses `Data` content as JSON using JSONSerialization, outputting either a dictionary or an array.
 public func JSONResponseTransformer(_ transformErrors: Bool = true) -> ResponseTransformer
     {
     return ResponseContentTransformer<Data, JSONConvertible>(transformErrors: transformErrors)

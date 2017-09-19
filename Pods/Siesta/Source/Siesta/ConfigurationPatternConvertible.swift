@@ -63,17 +63,17 @@ extension String: ConfigurationPatternConvertible
 
         let resolvedPattern: String
         if !contains(regex: "^[a-z]+:"), let prefix = service.baseURL?.absoluteString
-            { resolvedPattern = prefix + stripPrefix("/") }
+            { resolvedPattern = prefix + strippingPrefix("/") }
         else
             { resolvedPattern = self }
 
         let pattern = try! NSRegularExpression(pattern:
             "^"
             + NSRegularExpression.escapedPattern(for: resolvedPattern)
-                .replacingOccurrences(of: "\\*\\*\\/", with: "([^:?]*/|)")
-                .replacingOccurrences(of: "\\*\\*",    with: "[^:?]*")
-                .replacingOccurrences(of: "\\*",       with: "[^/:?]*")
-                .replacingOccurrences(of: "\\?",       with: "[^/:?]")
+                .replacingOccurrences(of: "\\*\\*\\/", with: "([^?]*/|)")
+                .replacingOccurrences(of: "\\*\\*",    with: "[^?]*")
+                .replacingOccurrences(of: "\\*",       with: "[^/?]*")
+                .replacingOccurrences(of: "\\?",       with: "[^/?]")
             + "($|\\?)")
         debugLog(.configuration, ["URL pattern", self, "compiles to regex", pattern.pattern])
 

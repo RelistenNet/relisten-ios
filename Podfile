@@ -6,10 +6,10 @@ target 'Relisten' do
   use_frameworks!
   inhibit_all_warnings!
 
-  pod 'Siesta/Core'
-  pod 'Siesta/UI'
+  pod 'Siesta/Core', :git => 'https://github.com/bustoutsolutions/siesta.git'
+  pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
-  pod 'Cache', :git => 'https://github.com/hyperoslo/Cache.git'
+  pod 'Cache', '3.3.0'
   pod 'ReachabilitySwift', '~> 3'
 
   pod 'NapySlider', :path => '../NapySlider'

@@ -106,11 +106,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/NapySlider/NapySlider.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Protobuf/Protobuf.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ReachabilitySwift/ReachabilitySwift.framework"
-  install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer-9/iOS/RevealServer.framework"
+  install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer-11/iOS/RevealServer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SINQ/SINQ.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Siesta/Siesta.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftHash/SwiftHash.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/leveldb-library/leveldb.framework"
   install_framework "$BUILT_PRODUCTS_DIR/nanopb/nanopb.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -135,6 +136,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Siesta/Siesta.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftHash/SwiftHash.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/leveldb-library/leveldb.framework"
   install_framework "$BUILT_PRODUCTS_DIR/nanopb/nanopb.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

@@ -1,3 +1,18 @@
+# 2017-08-25 -- v2.0.2
+- Fixed a startup performance regression, removing a call which was blocking the
+  main thread.
+
+# 2017-08-07 -- v2.0.1
+- Fixed issues with token and app identifier being inaccessible when the device
+  is locked.
+- Fixed a crash if bundle identifier is nil, which is possible in some testing
+  environments.
+- Fixed a small memory leak fetching a new token.
+- Moved to a new and simplified token storage system.
+- Moved to a new queuing system for token fetches and deletes.
+- Simplified logic and code around configuration and logging.
+- Added clarification about the 'apns_sandbox' parameter, in header comments.
+
 # 2017-05-08 -- v2.0.0
 - Introduced an improved interface for Swift 3 developers
 - Deprecated some methods and properties after moving their logic to the

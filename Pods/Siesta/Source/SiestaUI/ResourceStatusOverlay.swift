@@ -6,7 +6,9 @@
 //  Copyright © 2016 Bust Out Solutions. All rights reserved.
 //
 
-import Siesta
+#if !COCOAPODS
+    import Siesta
+#endif
 import Foundation
 import CoreGraphics
 import UIKit
@@ -49,6 +51,7 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
     /**
       Creates a status overlay with the default layout.
     */
+    @objc
     public required init()
         {
         super.init(frame: CGRect.zero)
@@ -60,12 +63,14 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
     /**
       Create an overlay with a programmatic layout.
     */
+    @objc
     public override init(frame: CGRect)
         { super.init(frame: frame) }
 
     /**
       Create an overlay with a programmatic or serialized layout.
     */
+    @objc
     public required init?(coder: NSCoder)
         { super.init(coder: coder) }
 
@@ -73,6 +78,7 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
       Populates a status overlay with your custom nib of choice. Your nib may bind as many or as few of the public
       `@IBOutlet`s as it likes.
     */
+    @objc
     open func load(
             fromNib nibName: String,
             bundle: Bundle = Bundle.main)
@@ -96,7 +102,7 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
       Place this child inside the given view controller’s view, and position it so that it covers the entire bounds.
       Be sure to call `positionToCoverParent()` from your `viewDidLayoutSubviews()` method.
     */
-    @discardableResult
+    @discardableResult @objc
     public func embed(in parentViewController: UIViewController) -> Self
         {
         parentVC = parentViewController
@@ -119,6 +125,7 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
       Repositions this view to conver the view controller’s content area. Has no effect unless this overlay was embedded
       using `embedIn(_:)`.
     */
+    @objc
     public func positionToCoverParent()
         {
         if let parentVC = parentVC
@@ -138,6 +145,7 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
       Positions this overlay to exactly cover the given view. The two views do not have to be siblings; this method
       works across the view hierarchy.
     */
+    @objc
     public func positionToCover(_ view: UIView)
         {
         positionToCover(view.bounds, inView: view)
@@ -147,6 +155,7 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
       Positions this view within its current superview so that it covers the given rect in the local coordinates of the
       given view. Has no effect if the overlay has no superview.
     */
+    @objc
     public func positionToCover(_ rect: CGRect, inView srcView: UIView)
         {
         if let superview = superview
@@ -180,7 +189,7 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
 
       …and call `trackManualLoad(_:)` with your user-initiated request.
     */
-    public var displayPriority: [StateRule] = [.anyData, .loading, .error]
+    public var displayPriority: [StateRule] = [.loading, .error, .anyData]
 
     /**
       Arbitrarily prioritizable rules for governing the behavior of `ResourceStatusOverlay`.
@@ -280,6 +289,7 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
     // MARK: Retry & reload
 
     /// Call `loadIfNeeded()` on any resources with errors that this overlay is observing.
+    @objc
     public func retryFailedRequests()
         {
         for res in observedResources

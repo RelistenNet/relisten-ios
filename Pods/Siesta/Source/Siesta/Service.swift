@@ -29,6 +29,7 @@ import Foundation
 open class Service: NSObject
     {
     /// The root URL of the API. If nil, then `resource(_:)` will only accept absolute URLs.
+    @objc
     public let baseURL: URL?
 
     internal let networkingProvider: NetworkingProvider
@@ -40,9 +41,13 @@ open class Service: NSObject
       - Parameter baseURL:
           The URL underneath which the API exposes its endpoints. If nil, there is no base URL, and thus you must use
           only `resource(absoluteURL:)` and `resource(baseURL:path:)` to acquire resources.
-      - Parameter useDefaultTransformers:
-          If true, include handling for JSON, text, and images. If false, leave all responses as `Data` (unless you
-          add your own `ResponseTransformer` using `configure(...)`).
+      - Parameter standardTransformers:
+          By default, includes:
+             - JSON → `Dictionary`/`Array`
+             - text → `String`
+             - image → `UIImage`/`NSImage`.
+          If empty, leaves all responses as `Data` (unless you add your own `ResponseTransformer` using `configure(...)`).
+          For more details on the various standard parsing options, see `StandardTransformer`.
       - Parameter networking:
           The handler to use for networking. The default is `URLSession` with ephemeral session configuration. You can
           pass an `URLSession`, `URLSessionConfiguration`, or `Alamofire.Manager` to use an existing provider with
@@ -50,7 +55,7 @@ open class Service: NSObject
     */
     public init(
             baseURL: URLConvertible? = nil,
-            useDefaultTransformers: Bool = true,
+            standardTransformers: [StandardTransformer] = [.json, .text, .image],
             networking: NetworkingProviderConvertible = URLSessionConfiguration.ephemeral)
         {
         DispatchQueue.mainThreadPrecondition()
@@ -65,14 +70,10 @@ open class Service: NSObject
 
         super.init()
 
-        if useDefaultTransformers
+        for transformer in standardTransformers
             {
-            configure(description: "Siesta default response parsers")
-                {
-                $0.pipeline[.parsing].add(JSONResponseTransformer(),  contentTypes: ["*/json", "*/*+json"])
-                $0.pipeline[.parsing].add(TextResponseTransformer(),  contentTypes: ["text/*"])
-                $0.pipeline[.parsing].add(ImageResponseTransformer(), contentTypes: ["image/*"])
-                }
+            configure(description: "Siesta standard \(transformer.name) parsing")
+                { $0.pipeline.add(transformer) }
             }
         }
 
@@ -113,7 +114,7 @@ open class Service: NSObject
         {
         return resource(absoluteURL:
             customBaseURL?.url?.appendingPathComponent(
-              path.stripPrefix("/")))
+              path.strippingPrefix("/")))
         }
 
     /**
@@ -186,6 +187,9 @@ open class Service: NSObject
           Selects the subset of resources to which this configuration applies. You can pass a `String`, `Resource`, or
           `NSRegularExpression` for the `pattern` argument — or write your own custom implementation of
           `ConfigurationPatternConvertible`.
+      - Parameter requestMethods:
+          If specified, only applies this configuration to requests with the given HTTP methods.
+          Defaults to *all* methods.
       - Parameter description:
           An optional description of this piece of configuration, for logging and debugging purposes.
       - Parameter configurer:
@@ -254,6 +258,23 @@ open class Service: NSObject
             FooModel(json: $0.content)
           }
 
+      By default, the transfromer applies to GET, POST, PUT, PATCH, and DELETE requests — the HTTP methods that commonly
+      return a description of the resulting resource in the response body. If your API does not return a full model for
+      all these HTTP methods, you may need to configure different transformers for different request methods.
+
+      For example, here is configuration for a hypothetical API that wraps responses to mutating requests in an envelope
+      which the app models with an `UpdateResult` struct:
+
+          configureTransformer("/foo/​*", requestMethods: [.get]) {
+            FooModel(json: $0.content)
+          }
+
+          configureTransformer("/foo/​*", requestMethods: [.post, .put, .patch]) {
+            UpdateResult<FooModel>(json: $0.content)
+          }
+
+      Note that `configureTransformer(...)` does _not_ apply to HEAD and OPTIONS by default, but `configure(...)` does.
+
       Siesta checks that the incoming `Entity.content` matches the type of the closure’s `content` parameter. In the
       example code above, if the `json` parameter of `FooModel.init` takes a `Dictionary`, but the transformer pipeline
       at that point has produced a `String`, then the transformer outputs a failure response.
@@ -262,7 +283,7 @@ open class Service: NSObject
       a transformer that passes the content through unmodified, but requires a specific type:
 
           service.configureTransformer("**") {
-            $0.content as JSONConvertible
+            $0.content as JSONConvertible  // error if content from upstream in pipeline is not JSONConvertible
           }
 
       - SeeAlso: `configure(_:requestMethods:description:configurer:)`
@@ -293,7 +314,10 @@ open class Service: NSObject
                  + " : \(I.self) → \(O.self)"
             }
 
-        configure(pattern, requestMethods: requestMethods, description: description ?? defaultDescription())
+        configure(
+                pattern,
+                requestMethods: requestMethods ?? [.get, .put, .post, .patch, .delete],
+                description: description ?? defaultDescription())
             {
             if action == .replaceExisting
                 { $0.pipeline[stage].removeTransformers() }
@@ -343,6 +367,7 @@ open class Service: NSObject
       Configurations are computed lazily, and the (still relatively low) performance impact of recomputation is spread
       over subsequent resource interactions.
     */
+    @objc
     public final func invalidateConfiguration()
         {
         DispatchQueue.mainThreadPrecondition()
@@ -388,6 +413,7 @@ open class Service: NSObject
 
       Applies to resources matching the predicate, or all resources by default.
     */
+    @objc
     public final func wipeResources(matching predicate: (Resource) -> Bool =  { _ in true })
         {
         DispatchQueue.mainThreadPrecondition()
@@ -414,21 +440,42 @@ open class Service: NSObject
 
       Useful for making shared predicates that you can pass to both `configure(...)` and this method.
     */
+    @objc
     public final func wipeResources(withURLsMatching predicate: (URL) -> Bool)
         {
         wipeResources { predicate($0.url) }
         }
 
-    // MARK: General Configuration
+    // MARK: In-memory cache management
 
     /**
       Soft limit on the number of resources cached in memory. If the internal cache size exceeds this limit, Siesta
       flushes all unused resources. Note that any resources still in use — i.e. retained outside of Siesta — will remain
       in the cache, no matter how many there are.
     */
+    @objc
     public var cachedResourceCountLimit: Int
         {
         get { return resourceCache.countLimit }
         set { resourceCache.countLimit = newValue }
+        }
+
+    /**
+      Switches to weak references for all `Resource` instances cached by this service. This immediately releases any
+      resources not currently in use.
+
+      Siesta automatically flushes unused resources whenever:
+
+      - the number of cached resources exceeds `cachedResourceCountLimit` or
+      - there is a low memory event (iOS and tvOS only).
+
+      It is unusual for apps to call this method directly. You might need it if you want to first fiddle with Siesta
+      resources yourself during a low memory, then tell Siesta to release them when you are done. You might also call it
+      preemptively before a memory-intensive operation, to prevent memory churn.
+     */
+    @objc
+    public final func flushUnusedResources()
+        {
+        resourceCache.flushUnused()
         }
     }

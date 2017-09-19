@@ -44,6 +44,10 @@
 		7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1171D5A49C300004B5C /* RLAssets.xcassets */; };
 		7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */; };
 		7C8EF1261D5A49C300004B5C /* RelistenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */; };
+		7CA3CD141F71763400E936AB /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD131F71763400E936AB /* VenuesViewController.swift */; };
+		7CA3CD151F71763400E936AB /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD131F71763400E936AB /* VenuesViewController.swift */; };
+		7CA3CD171F71766E00E936AB /* VenueLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD161F71766E00E936AB /* VenueLayout.swift */; };
+		7CA3CD181F71766E00E936AB /* VenueLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD161F71766E00E936AB /* VenueLayout.swift */; };
 		7CA94EA81F0A6C74004663F3 /* TrackStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* TrackStatus.swift */; };
 		7CA94EA91F0A6C74004663F3 /* TrackStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* TrackStatus.swift */; };
 		7CA94EAB1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */; };
@@ -132,6 +136,8 @@
 		7C8EF1211D5A49C300004B5C /* RelistenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenUITests.swift; sourceTree = "<group>"; };
 		7C8EF1271D5A49C300004B5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CA3CD131F71763400E936AB /* VenuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenuesViewController.swift; path = "View Controllers/Venues/VenuesViewController.swift"; sourceTree = "<group>"; };
+		7CA3CD161F71766E00E936AB /* VenueLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueLayout.swift; path = Layouts/VenueLayout.swift; sourceTree = "<group>"; };
 		7CA94EA71F0A6C74004663F3 /* TrackStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackStatus.swift; path = Playback/Models/TrackStatus.swift; sourceTree = "<group>"; };
 		7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackStatusLayout.swift; path = Layouts/TrackStatusLayout.swift; sourceTree = "<group>"; };
 		7CABACBE1EDEE178009C5E3B /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaddingLabel.swift; path = Views/PaddingLabel.swift; sourceTree = "<group>"; };
@@ -287,6 +293,7 @@
 				7CABACCC1EDF15D9009C5E3B /* SourceLayout.swift */,
 				7CD270F11EE6B27A005888E3 /* SourceDetailsLayout.swift */,
 				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
+				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 			);
 			name = Layouts;
 			sourceTree = "<group>";
@@ -354,6 +361,14 @@
 			path = RelistenUITests;
 			sourceTree = "<group>";
 		};
+		7CA3CD121F71761B00E936AB /* Venues */ = {
+			isa = PBXGroup;
+			children = (
+				7CA3CD131F71763400E936AB /* VenuesViewController.swift */,
+			);
+			name = Venues;
+			sourceTree = "<group>";
+		};
 		7CA94EA51F0A6C53004663F3 /* Playback */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,6 +408,7 @@
 		7CC0953E1E6C6D370067FD39 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7CA3CD121F71761B00E936AB /* Venues */,
 				7CABACC81EDF141E009C5E3B /* Year */,
 				7CABACC71EDF1419009C5E3B /* Show */,
 				7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */,
@@ -818,6 +834,7 @@
 				7C8677FF1EDECF8F0000223E /* YearsViewController.swift in Sources */,
 				7C8044131E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */,
 				7C03A4B71E60E8B7006F2912 /* RelistenApi.swift in Sources */,
+				7CA3CD151F71763400E936AB /* VenuesViewController.swift in Sources */,
 				7C03A4BF1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
 				7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */,
 				7CABACC61EDEE63F009C5E3B /* YearViewController.swift in Sources */,
@@ -826,6 +843,7 @@
 				8E91CF363725BB2441672DC9 /* RelistenResourceStatusOverlay.swift in Sources */,
 				8E91C72389219DDCA7733977 /* YearShowLayout.swift in Sources */,
 				7CABACCB1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
+				7CA3CD181F71766E00E936AB /* VenueLayout.swift in Sources */,
 				7CC4EDC61F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */,
 				7C5076341EE701D500BE3CE7 /* SourceViewController.swift in Sources */,
 			);
@@ -856,11 +874,13 @@
 				7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
 				7CABACCD1EDF15D9009C5E3B /* SourceLayout.swift in Sources */,
 				7C8677FE1EDECF8F0000223E /* YearsViewController.swift in Sources */,
+				7CA3CD171F71766E00E936AB /* VenueLayout.swift in Sources */,
 				7C03A4C11E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
 				7C03A4BE1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
 				7C8EF1111D5A49C300004B5C /* RLAppDelegate.swift in Sources */,
 				7C03A4BC1E60FFD2006F2912 /* RelistenJsonUtils.swift in Sources */,
 				7C8044071E6E582000BA946E /* ArtistLayout.swift in Sources */,
+				7CA3CD141F71763400E936AB /* VenuesViewController.swift in Sources */,
 				7C80440E1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */,
 				7C8044121E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */,
 				7C8044091E6F29A800BA946E /* ArtistViewController.swift in Sources */,

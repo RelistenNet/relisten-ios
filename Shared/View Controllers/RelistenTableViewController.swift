@@ -29,7 +29,7 @@ public class RelistenReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
         return relistenTableView.tableView(tableView, cell: cell, forRowAt: indexPath)
     }
     
-    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         relistenTableView.tableView(tableView, didSelectRowAt: indexPath)
     }
 }

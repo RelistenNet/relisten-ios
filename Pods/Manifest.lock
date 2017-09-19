@@ -8,8 +8,8 @@ PODS:
   - AXRatingView (1.0.6)
   - BASSGaplessAudioPlayer (0.0.1)
   - BCColor (0.2)
-  - Cache (3.3.0):
-    - SwiftHash (~> 1.4.0)
+  - Cache (4.0.0):
+    - SwiftHash (~> 2.0.0)
   - DownloadButton (0.1.0)
   - DWURecyclingAlert (1.0.2)
   - FaveButton (2.0.4)
@@ -91,7 +91,7 @@ PODS:
   - Siesta/UI (1.1.1):
     - Siesta/Core
   - SINQ (0.7.0)
-  - SwiftHash (1.4.0)
+  - SwiftHash (2.0.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
@@ -132,7 +132,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Cache:
-    :commit: 4699caf4a994996840826a504270fb1ea6ac0a4f
+    :commit: 0d7d8006fde3da062ce8fc984bc1c4678d17f5e5
     :git: https://github.com/hyperoslo/Cache.git
 
 SPEC CHECKSUMS:
@@ -140,7 +140,7 @@ SPEC CHECKSUMS:
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 30b7984efd16d9f40ff14b9e9df3ec74a3ace4b5
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
-  Cache: adbacf2672fbc9d48f552e03bbd4916510c39ac0
+  Cache: ecde4da6b8379f3066b9ce1e5e2e0433ca41a024
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   FaveButton: 271bdd3a1012ef6c667e428bc9754e7d65ca7455
@@ -166,7 +166,7 @@ SPEC CHECKSUMS:
   Reveal-SDK: d977a1ec41e7c076025c1005da6e6d7c1b8ed254
   Siesta: 920372f09b7cfd798074d85d8f3cf8505529a56e
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
-  SwiftHash: acf0f29032309a5c7a7f625595eade1aca97aca2
+  SwiftHash: d2e09b13495447178cdfb8e46e54a5c46f15f5a9
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
 PODFILE CHECKSUM: 2ec32544e9b72c20495fe30f915f8ba335a179b6

@@ -57,7 +57,11 @@ public func RemasterLabelLayout() -> InsetLayout<UIView> {
 }
 
 public class YearShowLayout : InsetLayout<UIView> {
-    public init(show: Show) {
+    public convenience init(show: Show) {
+        self.init(show: show, withRank: nil)
+    }
+    
+    public init(show: Show, withRank: Int?) {
         let showName = LabelLayout(
             text: show.display_date,
             font: UIFont.preferredFont(forTextStyle: .headline),
@@ -101,6 +105,17 @@ public class YearShowLayout : InsetLayout<UIView> {
         ) { (label: UILabel) in
             label.textAlignment = .right
         }
+        
+        let rankLabel = LabelLayout(
+            text: withRank == nil ? "" : "#\(withRank!)",
+            font: UIFont.preferredFont(forTextStyle: .headline),
+            numberOfLines: 1,
+            alignment: .center,
+            flexibility: .inflexible,
+            viewReuseId: "rankLabel"
+        ) { (label: UILabel) in
+            label.textColor = AppColors.mutedText
+        }
 
         var topRow: [ Layout ] = [ showName ]
 
@@ -109,28 +124,39 @@ public class YearShowLayout : InsetLayout<UIView> {
         }
         
         topRow.append(ratingView)
+        
+        let showStack = StackLayout(
+            axis: .vertical,
+            spacing: 4,
+            sublayouts: [
+                StackLayout(
+                    axis: .horizontal,
+                    spacing: 8,
+                    sublayouts: topRow
+                ),
+                StackLayout(
+                    axis: .horizontal,
+                    sublayouts: [
+                        venueLabel,
+                        metaLabel
+                    ]
+                )
+            ]
+        )
+        
+        let rankStack = StackLayout(
+            axis: .horizontal,
+            spacing: 4,
+            sublayouts: [
+                InsetLayout(inset: 12.0, sublayout: rankLabel),
+                showStack
+            ]
+        )
 
         super.init(
-            insets: EdgeInsets(top: 8, left: 16, bottom: 12, right: 16 + 8 + 8),
+            insets: EdgeInsets(top: 8, left: 0, bottom: 12, right: 16 + 8 + 8),
             viewReuseId: "yearShowLayout",
-            sublayout: StackLayout(
-                axis: .vertical,
-                spacing: 4,
-                sublayouts: [
-                    StackLayout(
-                        axis: .horizontal,
-                        spacing: 8,
-                        sublayouts: topRow
-                    ),
-                    StackLayout(
-                        axis: .horizontal,
-                        sublayouts: [
-                            venueLabel,
-                            metaLabel
-                        ]
-                    )
-                ]
-            )
+            sublayout: withRank == nil ? showStack : rankStack
         )
     }
 }

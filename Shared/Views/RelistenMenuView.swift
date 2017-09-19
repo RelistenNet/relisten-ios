@@ -177,8 +177,11 @@ public class RelistenMenuView : UIView {
         case .EverythingTours: print(item)
             
         case .DiscoverTop: print(item)
-        case .DiscoverRandom: print(item)
+            viewController.navigationController?.pushViewController(TopShowsViewController(artist: artist), animated: true)
             
+        case .DiscoverRandom: print(item)
+            viewController.navigationController?.pushViewController(SourcesViewController(artist: artist), animated: true)
+
         case .RecentlyPlayed: print(item)
         case .RecentlyAdded: print(item)
             

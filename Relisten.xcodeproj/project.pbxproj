@@ -62,6 +62,8 @@
 		7CABACCB1EDF1441009C5E3B /* SourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC91EDF1440009C5E3B /* SourcesViewController.swift */; };
 		7CABACCD1EDF15D9009C5E3B /* SourceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACCC1EDF15D9009C5E3B /* SourceLayout.swift */; };
 		7CABACCE1EDF15D9009C5E3B /* SourceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACCC1EDF15D9009C5E3B /* SourceLayout.swift */; };
+		7CB1DBC81F718E90006AC393 /* TopShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB1DBC71F718E90006AC393 /* TopShowsViewController.swift */; };
+		7CB1DBC91F718E90006AC393 /* TopShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB1DBC71F718E90006AC393 /* TopShowsViewController.swift */; };
 		7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */; };
 		7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */; };
 		7CC095411E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */; };
@@ -145,6 +147,7 @@
 		7CABACC41EDEE63F009C5E3B /* YearViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YearViewController.swift; path = "View Controllers/YearViewController.swift"; sourceTree = "<group>"; };
 		7CABACC91EDF1440009C5E3B /* SourcesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourcesViewController.swift; path = "View Controllers/Show/SourcesViewController.swift"; sourceTree = "<group>"; };
 		7CABACCC1EDF15D9009C5E3B /* SourceLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceLayout.swift; path = Layouts/SourceLayout.swift; sourceTree = "<group>"; };
+		7CB1DBC71F718E90006AC393 /* TopShowsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TopShowsViewController.swift; path = "View Controllers/Show/TopShowsViewController.swift"; sourceTree = "<group>"; };
 		7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistsViewController.swift; path = "View Controllers/ArtistsViewController.swift"; sourceTree = "<group>"; };
 		7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenTableViewController.swift; path = "View Controllers/RelistenTableViewController.swift"; sourceTree = "<group>"; };
 		7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaybackController.swift; path = Playback/PlaybackController.swift; sourceTree = "<group>"; };
@@ -392,6 +395,7 @@
 			children = (
 				7CABACC91EDF1440009C5E3B /* SourcesViewController.swift */,
 				7C5076321EE701D500BE3CE7 /* SourceViewController.swift */,
+				7CB1DBC71F718E90006AC393 /* TopShowsViewController.swift */,
 			);
 			name = Show;
 			sourceTree = "<group>";
@@ -818,6 +822,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CB1DBC91F718E90006AC393 /* TopShowsViewController.swift in Sources */,
 				7CD270F31EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */,
 				7C03A4C81E6218CF006F2912 /* RelistenModelCachable.swift in Sources */,
 				7CC095411E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
@@ -869,6 +874,7 @@
 				7C8044151E6F4B1F00BA946E /* AppColors.swift in Sources */,
 				7CABACC21EDEE3A2009C5E3B /* TimeInterval+Humanize.swift in Sources */,
 				7C03A4BA1E60FB66006F2912 /* RelistenModels.swift in Sources */,
+				7CB1DBC81F718E90006AC393 /* TopShowsViewController.swift in Sources */,
 				7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */,
 				7CD270F21EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */,
 				7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,

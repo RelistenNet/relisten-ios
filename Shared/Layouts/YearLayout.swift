@@ -13,7 +13,7 @@ public class YearLayout : InsetLayout<UIView> {
 
     internal static func ratingSize() -> CGSize {
         if ratingViewStub == nil {
-            var r = AXRatingView()
+            let r = AXRatingView()
             r.isUserInteractionEnabled = false
             r.value = 0.5
             r.sizeToFit()

@@ -17,11 +17,21 @@ import SINQ
 class SourcesViewController: RelistenTableViewController<ShowWithSources> {
     
     let artist: SlimArtistWithFeatures
-    let show: Show
+    let show: Show?
+    let isRandom: Bool
     
     public required init(artist: SlimArtistWithFeatures, show: Show) {
         self.artist = artist
         self.show = show
+        self.isRandom = false
+        
+        super.init()
+    }
+    
+    public required init(artist: SlimArtistWithFeatures) {
+        self.show = nil
+        self.artist = artist
+        self.isRandom = true
         
         super.init()
     }
@@ -33,10 +43,20 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "\(show.display_date) Sources"
+        updateTitle()
     }
     
-    override var resource: Resource? { get { return api.showWithSources(forShow: show, byArtist: artist) } }
+    func updateTitle() {
+        if let s = show {
+            title = "\(s.display_date) Sources"
+        }
+    }
+    
+    override var resource: Resource? {
+        get {
+            return self.show == nil ? api.randomShow(byArtist: artist) : api.showWithSources(forShow: show!, byArtist: artist)
+        }
+    }
     
     override func render(forData: ShowWithSources) {
         layout {

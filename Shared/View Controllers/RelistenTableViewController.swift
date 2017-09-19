@@ -70,7 +70,7 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     
     // MARK: Layout & Rendering
     
-    internal func layout(width: CGFloat? = nil, synchronous: Bool = true, layout: @escaping (Void) -> [Section<[Layout]>]) {
+    internal func layout(width: CGFloat? = nil, synchronous: Bool = true, layout: @escaping () -> [Section<[Layout]>]) {
         var w = width
         if w == nil {
             w = tableView.frame.width

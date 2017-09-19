@@ -109,6 +109,10 @@ class _RelistenApi {
             return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
         }
         
+        service.configureTransformer("/artists/*/shows/random") {
+            return try ShowWithSources(json: $0.content)
+        }
+        
         service.configureTransformer("/artists/shows/on-date") {
             return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
         }
@@ -194,6 +198,12 @@ class _RelistenApi {
         return artistResource(byArtist)
             .child("venues")
             .child(String(atVenue.id))
+    }
+    
+    public func randomShow(byArtist: SlimArtist) -> Resource {
+        return artistResource(byArtist)
+            .child("shows")
+            .child("random")
     }
     
     public func topShows(byArtist: SlimArtist) -> Resource {

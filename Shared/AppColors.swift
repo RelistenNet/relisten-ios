@@ -15,10 +15,13 @@ public struct _AppColors {
     let soundboard: UIColor
     let remaster: UIColor
     
-    public init(primary: UIColor, textOnPrimary: UIColor, soundboard: UIColor, remaster: UIColor) {
+    let mutedText: UIColor
+    
+    public init(primary: UIColor, textOnPrimary: UIColor, soundboard: UIColor, remaster: UIColor, mutedText: UIColor) {
         self.primary = primary
         self.textOnPrimary = textOnPrimary
         self.soundboard = soundboard
+        self.mutedText = mutedText
         self.remaster = remaster
     }
 }

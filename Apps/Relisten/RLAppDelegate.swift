@@ -19,7 +19,8 @@ public let AppColors = _AppColors(
     primary: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
     textOnPrimary: UIColor.white,
     soundboard: UIColor(red:0.0/255.0, green:128.0/255.0, blue:95.0/255.0, alpha:1.0),
-    remaster: UIColor(red:0, green:0.616, blue:0.753, alpha:1)
+    remaster: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
+    mutedText: UIColor.gray
 )
 
 @UIApplicationMain

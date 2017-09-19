@@ -92,7 +92,7 @@ public class SourceLayout : InsetLayout<UIView> {
             flexibility: .flexible,
             viewReuseId: "taperInfo")
         
-        let listenButton = ButtonLayout(
+        _ = ButtonLayout(
             type: .custom,
             title: "🎧 Listen to this source →",
             image: .defaultImage,

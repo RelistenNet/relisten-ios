@@ -21,11 +21,15 @@ class TopShowsViewController: RelistenTableViewController<[Show]> {
     public required init(artist: SlimArtistWithFeatures) {
         self.artist = artist
         
-        super.init()
+        super.init(useCache: true, refreshOnAppear: true)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
+    }
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool) {
+        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
     override func viewDidLoad() {

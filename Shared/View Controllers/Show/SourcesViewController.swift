@@ -25,16 +25,23 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
         self.show = show
         self.isRandom = false
         
-        super.init()
+        super.init(useCache: true, refreshOnAppear: true)
     }
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool) {
+        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
+    }
+
     
     public required init(artist: SlimArtistWithFeatures) {
         self.show = nil
         self.artist = artist
         self.isRandom = true
         
-        super.init()
+        super.init(useCache: false, refreshOnAppear: false)
     }
+    
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
@@ -43,11 +50,11 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateTitle()
+        updateTitle(forShow: show)
     }
     
-    func updateTitle() {
-        if let s = show {
+    func updateTitle(forShow: Show?) {
+        if let s = forShow {
             title = "\(s.display_date) Sources"
         }
     }
@@ -59,6 +66,8 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
     }
     
     override func render(forData: ShowWithSources) {
+        updateTitle(forShow: forData)
+
         layout {
             return forData.sources.enumerated().map { (idx, src) in SourceLayout(source: src, idx: idx, sourceCount: forData.sources.count) }.asTable()
         }

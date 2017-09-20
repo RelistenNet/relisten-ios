@@ -22,8 +22,13 @@ class YearViewController: RelistenTableViewController<YearWithShows> {
         self.artist = artist
         self.year = year
         
-        super.init()
+        super.init(useCache: true, refreshOnAppear: true)
     }
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool) {
+        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
+    }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()

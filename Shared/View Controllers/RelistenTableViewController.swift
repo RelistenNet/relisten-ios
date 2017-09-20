@@ -11,6 +11,7 @@ import UIKit
 import Siesta
 import ReachabilitySwift
 import LayoutKit
+import SINQ
 
 fileprivate let reachability = Reachability()!
 
@@ -31,6 +32,10 @@ public class RelistenReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         relistenTableView.tableView(tableView, didSelectRowAt: indexPath)
+    }
+    
+    public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return relistenTableView.sectionIndexTitles(for: tableView)
     }
 }
 
@@ -88,6 +93,10 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+    
+    public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return nil
+    }
 }
 
 public class RelistenTableViewController<TData> : RelistenBaseTableViewController {
@@ -95,12 +104,18 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
     
     internal var resource: Resource? { get { return nil } }
     
-    public override init() {
+    public let useCache: Bool;
+    public let refreshOnAppear: Bool;
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool) {
+        self.useCache = useCache
+        self.refreshOnAppear = refreshOnAppear
+
         super.init()
     }
     
     public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("just...don't")
     }
     
     public override func viewDidLoad() {
@@ -111,11 +126,27 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
                 .addObserver(statusOverlay)
         }
         
-        latestData = resource?.latestData?.typedContent()
-        render()
+        if !refreshOnAppear {
+            load()
+        }
+        
+        if useCache {
+            latestData = resource?.latestData?.typedContent()
+            render()
+        }
         
         statusOverlay.embed(in: self)
     }
+    
+    func load() {
+        if useCache {
+            let _ = resource?.loadFromCacheThenUpdate()
+        }
+        else {
+            let _ = resource?.load()
+        }
+    }
+    
     
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -132,12 +163,15 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let _ = resource?.loadFromCacheThenUpdate()
+        if refreshOnAppear {
+            load()
+        }
     }
     
     // MARK: data handling
     
     public var latestData: TData? = nil
+    public var groups: [Grouping<String, TData>]? = nil
     
     public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
         print("event: \(event)")
@@ -151,8 +185,11 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
     
     // MARK: Layout & Rendering
     
+    public func buildGroups
+    
     public func render() {
         if let data = latestData {
+            print("calling render(forData:)")
             render(forData: data)
         }
         else {
@@ -172,7 +209,7 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
 
 }
 
-public func LayoutsAsSingleSection(items: Array<Layout>, title: String? = nil) -> Section<[Layout]> {
+public func LayoutsAsSingleSection(items: [Layout], title: String? = nil) -> Section<[Layout]> {
     return Section(
         header: title != nil ? InsetLayout(
             insets: EdgeInsets(top: 8, left: 16, bottom: 8, right: 16),

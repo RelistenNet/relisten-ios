@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        window?.rootViewController = UINavigationController(rootViewController: ArtistsViewController())
+        window?.rootViewController = UINavigationController(rootViewController: ArtistsViewController(useCache: true, refreshOnAppear: false))
         
         window?.makeKeyAndVisible()
         

@@ -21,7 +21,11 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
     public required init(artist: SlimArtistWithFeatures) {
         self.artist = artist
         
-        super.init()
+        super.init(useCache: true, refreshOnAppear: true)
+    }
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool) {
+        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,10 +40,48 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
     
     override var resource: Resource? { get { return api.venues(forArtist: artist) } }
     
+    var groups: [Grouping<String, VenueWithShowCount>]? = nil
+    
     override func render(forData: [VenueWithShowCount]) {
+        let digitSet = CharacterSet.decimalDigits
+        
+        groups = sinq(forData)
+            .groupBy({
+                var s = $0.name.substring(to: $0.name.index($0.name.startIndex, offsetBy: 1)).uppercased()
+                
+                for ch in s.unicodeScalars {
+                    if digitSet.contains(ch) {
+                        s = "#"
+                        break
+                    }
+                }
+                
+                return s
+            })
+            .toArray()
+            .sorted(by: { (a, b) -> Bool in
+                return a.key <= b.key
+            })
+
         layout {
-            return forData.map { VenueLayout(venue: $0) }.asTable()
+            guard let g = self.groups else {
+                return [Section(header: nil, items: [], footer: nil)]
+            }
+            
+            return g.map {
+                LayoutsAsSingleSection(items: $0.values.map({ (v) in
+                    return VenueLayout(venue: v)
+                }), title: $0.key as String?)
+            }
         }
+    }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        if let g = groups {
+            return g.map({ $0.key })
+        }
+        
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {

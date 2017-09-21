@@ -129,6 +129,14 @@ class _RelistenApi {
             return try ($0.content as JSON).arrayValue.map(Era.init)
         }
         
+        service.configureTransformer("/artists/*/songs") {
+            return try ($0.content as JSON).arrayValue.map(SongWithShowCount.init)
+        }
+        
+        service.configureTransformer("/artists/*/songs/*") {
+            return try SongWithShows(json: $0.content)
+        }
+
         service.configureTransformer("/artists/*/tours") {
             return try ($0.content as JSON).arrayValue.map(TourWithShowCount.init)
         }
@@ -210,6 +218,17 @@ class _RelistenApi {
         return artistResource(byArtist)
             .child("shows")
             .child("top")
+    }
+    
+    public func songs(byArtist: SlimArtist) -> Resource {
+        return artistResource(byArtist)
+            .child("songs")
+    }
+    
+    public func shows(withPlayedSong: Song, byArtist: SlimArtist) -> Resource {
+        return artistResource(byArtist)
+            .child("songs")
+            .child(String(withPlayedSong.id))
     }
     
     public func onThisDay(byArtist: SlimArtist) -> Resource {

@@ -171,6 +171,8 @@ public class RelistenMenuView : UIView {
             viewController.navigationController?.pushViewController(YearsViewController(artist: artist), animated: true)
 
         case .EverythingSongs: print(item)
+            viewController.navigationController?.pushViewController(SongsViewController(artist: artist), animated: true)
+            
         case .EverythingVenues: print(item)
             viewController.navigationController?.pushViewController(VenuesViewController(artist: artist), animated: true)
             

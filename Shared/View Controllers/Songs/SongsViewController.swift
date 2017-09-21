@@ -1,8 +1,8 @@
 //
-//  VenuesViewController.swift
+//  SongsViewController.swift
 //  Relisten
 //
-//  Created by Alec Gorge on 9/19/17.
+//  Created by Alec Gorge on 9/20/17.
 //  Copyright © 2017 Alec Gorge. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ import Siesta
 import LayoutKit
 import SINQ
 
-class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
+class SongsViewController: RelistenTableViewController<[SongWithShowCount]> {
     
     let artist: SlimArtistWithFeatures
     
@@ -35,21 +35,25 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Venues"
+        title = "Songs"
     }
     
-    override var resource: Resource? { get { return api.venues(forArtist: artist) } }
+    override func has(oldData: [SongWithShowCount], changed: [SongWithShowCount]) -> Bool {
+        return oldData.count != changed.count
+    }
     
-    var groups: [Grouping<String, VenueWithShowCount>]? = nil
+    override var resource: Resource? { get { return api.songs(byArtist: artist) } }
     
-    override func render(forData: [VenueWithShowCount]) {
+    var groups: [Grouping<String, SongWithShowCount>]? = nil
+    
+    override func render(forData: [SongWithShowCount]) {
         let digitSet = CharacterSet.decimalDigits
         
         groups = sinq(forData)
             .groupBy({
                 let n = $0.sortName
                 var s = n.substring(to: n.index(n.startIndex, offsetBy: 1)).uppercased()
-                
+
                 for ch in s.unicodeScalars {
                     if digitSet.contains(ch) {
                         s = "#"
@@ -63,7 +67,7 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
             .sorted(by: { (a, b) -> Bool in
                 return a.key <= b.key
             })
-
+        
         layout {
             guard let g = self.groups else {
                 return [Section(header: nil, items: [], footer: nil)]
@@ -71,7 +75,7 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
             
             return g.map {
                 LayoutsAsSingleSection(items: $0.values.map({ (v) in
-                    return VenueLayout(venue: v)
+                    return SongLayout(song: v)
                 }), title: $0.key as String?)
             }
         }
@@ -95,8 +99,8 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if let g = groups {
-            let v = g[indexPath.section].values.elementAt(indexPath.row)
-            navigationController?.pushViewController(VenueViewController(artist: artist, venue: v), animated: true)
+            let s = g[indexPath.section].values.elementAt(indexPath.row)
+            navigationController?.pushViewController(SongViewController(artist: artist, song: s), animated: true)
         }
     }
 }

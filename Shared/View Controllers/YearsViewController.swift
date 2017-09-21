@@ -47,6 +47,10 @@ class YearsViewController: RelistenTableViewController<[Year]> {
         }
     }
     
+    override func has(oldData: [Year], changed: [Year]) -> Bool {
+        return oldData.count != changed.count
+    }
+    
     override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
         cell.accessoryType = .disclosureIndicator
         

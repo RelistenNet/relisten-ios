@@ -154,7 +154,7 @@ public class YearShowLayout : InsetLayout<UIView> {
         )
 
         super.init(
-            insets: EdgeInsets(top: 8, left: 0, bottom: 12, right: 16 + 8 + 8),
+            insets: EdgeInsets(top: 8, left: withRank == nil ? 16 : 0, bottom: 12, right: 16 + 8 + 8),
             viewReuseId: "yearShowLayout",
             sublayout: withRank == nil ? showStack : rankStack
         )

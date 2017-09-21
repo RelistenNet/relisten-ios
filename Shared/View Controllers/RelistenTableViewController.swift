@@ -171,21 +171,30 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
     // MARK: data handling
     
     public var latestData: TData? = nil
-    public var groups: [Grouping<String, TData>]? = nil
+    public var previousData: TData? = nil
     
+    public func has(oldData: TData, changed: TData) -> Bool {
+        return true
+    }
+
     public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
         print("event: \(event)")
         
         if let data: TData = resource.latestData?.typedContent() {
+            previousData = latestData
             latestData = data
         }
-        
-        render()
+
+        if previousData == nil && latestData != nil
+            || previousData != nil && latestData == nil
+            || (previousData != nil && latestData != nil && self.has(oldData: previousData!, changed: latestData!)
+            ) {
+            print("---> data changed")
+            render()
+        }
     }
     
     // MARK: Layout & Rendering
-    
-    public func buildGroups
     
     public func render() {
         if let data = latestData {

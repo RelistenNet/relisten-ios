@@ -11,7 +11,7 @@ import Foundation
 import LayoutKit
 import AXRatingView
 
-extension Numeric {
+public extension Numeric {
     public func pluralize(_ single: String, _ multiple: String) -> String {
         if(self == 1) {
             return "\(self) \(single)"
@@ -67,7 +67,7 @@ public class VenueLayout : InsetLayout<UIView> {
         sb.append(venueLocation)
         
         super.init(
-            insets: EdgeInsets(top: 8, left: 16, bottom: 12, right: 16 + 8 + 8),
+            insets: EdgeInsets(top: 8, left: 16, bottom: 12, right: 16 + 8 + 8 + 16),
             viewReuseId: "venueLayout",
             sublayout: StackLayout(
                 axis: .horizontal,

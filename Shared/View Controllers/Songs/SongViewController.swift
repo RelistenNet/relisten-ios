@@ -1,8 +1,8 @@
 //
-//  TopShowsViewController.swift
+//  SongViewController.swift
 //  Relisten
 //
-//  Created by Alec Gorge on 9/19/17.
+//  Created by Alec Gorge on 9/20/17.
 //  Copyright © 2017 Alec Gorge. All rights reserved.
 //
 
@@ -14,16 +14,19 @@ import Siesta
 import LayoutKit
 import SINQ
 
-class TopShowsViewController: ShowListViewController<[Show]> {
+class SongViewController: ShowListViewController<SongWithShows> {
+    let song: Song
     
-    public required init(artist: SlimArtistWithFeatures) {
+    public required init(artist: SlimArtistWithFeatures, song: Song) {
+        self.song = song
+        
         super.init(
             artist: artist,
-            showsResource: RelistenApi.topShows(byArtist: artist),
+            showsResource: RelistenApi.shows(withPlayedSong: song, byArtist: artist),
             tourSections: false
         )
         
-        title = "Top Shows"
+        title = song.name
     }
     
     public required init(useCache: Bool, refreshOnAppear: Bool) {
@@ -38,15 +41,7 @@ class TopShowsViewController: ShowListViewController<[Show]> {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
     }
     
-    override func has(oldData: [Show], changed: [Show]) -> Bool {
-        return true
-    }
-    
-    override func layout(show: Show, atIndex: IndexPath) -> Layout {
-        return YearShowLayout(show: show, withRank: atIndex.row + 1)
-    }
-    
-    override func extractShows(forData: [Show]) -> [Show] {
-        return forData
+    override func extractShows(forData: SongWithShows) -> [Show] {
+        return forData.shows
     }
 }

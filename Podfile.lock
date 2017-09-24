@@ -1,4 +1,5 @@
 PODS:
+  - ActionKit (2.0)
   - AGAudioPlayer (0.8.0):
     - BASSGaplessAudioPlayer
     - BCColor
@@ -99,6 +100,7 @@ PODS:
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
+  - ActionKit (~> 2.0)
   - AGAudioPlayer (from `../AGAudioPlayer`)
   - AXRatingView
   - BASSGaplessAudioPlayer (from `../gapless-audio-bass-ios`)
@@ -140,6 +142,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/bustoutsolutions/siesta.git
 
 SPEC CHECKSUMS:
+  ActionKit: a9ac8aa51b1e404489d4ebdeefb587c112b7669f
   AGAudioPlayer: 7b3fde7669a2a732c8e2cf448ba5c437d87d3cc6
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 30b7984efd16d9f40ff14b9e9df3ec74a3ace4b5
@@ -174,6 +177,6 @@ SPEC CHECKSUMS:
   SwiftHash: acf0f29032309a5c7a7f625595eade1aca97aca2
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 60f031beed0a35cc9d7123273a04513cc998727e
+PODFILE CHECKSUM: b20fa059dad4964399fad2ac7c174b64d1ae42be
 
 COCOAPODS: 1.2.1

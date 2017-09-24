@@ -61,10 +61,16 @@ extension SourceFull {
         
         for set in self.sets {
             for track in set.tracks {
-                items.append(SourceTrackAudioItem(track, inSource: self, fromShow: inShow, byArtist: byArtist))
+                items.append(track.toAudioItem(inSource: self, fromShow: inShow, byArtist: byArtist))
             }
         }
         
         return items
+    }
+}
+
+extension SourceTrack {
+    public func toAudioItem(inSource: SourceFull, fromShow: Show, byArtist: SlimArtistWithFeatures) -> AGAudioItem {
+        return SourceTrackAudioItem(self, inSource: inSource, fromShow: fromShow, byArtist: byArtist)
     }
 }

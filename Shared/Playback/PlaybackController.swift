@@ -42,6 +42,25 @@ public class PlaybackController {
         shrinker.fix(viewController: vc)
     }
     
+    public func hideMini(_ completion: (() -> Void)? = nil) {
+        if hasBarBeenAdded {
+            UIView.animate(withDuration: 0.3, animations: {
+                if let w = PlaybackController.window {
+                    self.viewController.view.frame = CGRect(
+                        x: 0,
+                        y: w.bounds.height,
+                        width: self.viewController.view.bounds.width,
+                        height: self.viewController.view.bounds.height
+                    )
+                }
+            }, completion: { _ in
+                if let c = completion {
+                    c()
+                }
+            })
+        }
+    }
+    
     public func display(_ completion: ((Bool) -> Void)? = nil) {
         viewController.viewWillAppear(true)
         viewController.switchToFullPlayer(animated: true)

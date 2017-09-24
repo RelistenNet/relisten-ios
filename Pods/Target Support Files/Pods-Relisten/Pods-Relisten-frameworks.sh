@@ -91,6 +91,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/AGAudioPlayer/AGAudioPlayer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AXRatingView/AXRatingView.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/ActionKit/ActionKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/BCColor/BCColor.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Cache/Cache.framework"
@@ -117,6 +118,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/AGAudioPlayer/AGAudioPlayer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AXRatingView/AXRatingView.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/ActionKit/ActionKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework"
   install_framework "$BUILT_PRODUCTS_DIR/BCColor/BCColor.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Cache/Cache.framework"

@@ -53,7 +53,7 @@ class SourceViewController: RelistenBaseTableViewController {
             var sections: [Section<[Layout]>] = [ Section(items: [ SourceDetailsLayout(source: self.source, inShow: self.show, artist: self.artist, atIndex: self.idx) ]) ]
             
             sections.append(contentsOf: self.source.sets.map({ (set: SourceSet) -> Section<[Layout]> in
-                let layouts = set.tracks.map({ TrackStatusLayout(forTrack: TrackStatus(forTrack: $0), inSource: self.source, byArtist: self.artist) })
+                let layouts = set.tracks.map({ TrackStatusLayout(withTrack: CompleteTrackShowInformation(track: TrackStatus(forTrack: $0), source: self.source, show: self.show, artist: self.artist), withHandler: self) })
                 return LayoutsAsSingleSection(items: layouts, title: self.artist.features.sets ? set.name : "Tracks")
             }))
             
@@ -78,12 +78,18 @@ class SourceViewController: RelistenBaseTableViewController {
             return
         }
         
-        let items = source.toAudioItems(inShow: show, byArtist: artist)
+        let show = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
         
-        PlaybackController.sharedInstance.playbackQueue.clearAndReplace(with: items)
-        
-        PlaybackController.sharedInstance.displayMini(on: self, completion: nil)
-        
-        PlaybackController.sharedInstance.player.playItem(at: UInt(source.flattenedIndex(forIndexPath: IndexPath(row: indexPath.row, section: indexPath.section - 1))))
+        TrackActions.play(
+            trackAtIndexPath: IndexPath(row: indexPath.row, section: indexPath.section - 1),
+            inShow: show,
+            fromViewController: self
+        )
+    }
+}
+
+extension SourceViewController : TrackStatusActionHandler {
+    func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation) {
+        TrackActions.showActionOptions(fromViewController: self, forTrack: track)
     }
 }

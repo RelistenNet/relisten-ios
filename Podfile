@@ -11,6 +11,7 @@ target 'Relisten' do
   pod 'SwiftyJSON'
   pod 'Cache', '3.3.0'
   pod 'ReachabilitySwift', '~> 3'
+  pod 'ActionKit', '~> 2.0'
 
   pod 'NapySlider', :path => '../NapySlider'
   pod 'BASSGaplessAudioPlayer', :path => '../gapless-audio-bass-ios'

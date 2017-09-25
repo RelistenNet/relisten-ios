@@ -50,7 +50,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        window?.rootViewController = UINavigationController(rootViewController: ArtistsViewController(useCache: true, refreshOnAppear: false))
+        let nav = UINavigationController(rootViewController: ArtistsViewController(useCache: true, refreshOnAppear: false))
+        
+        if #available(iOS 11.0, *) {
+            nav.navigationBar.prefersLargeTitles = true
+            nav.navigationBar.largeTitleTextAttributes = [NSForegroundColorAttributeName: AppColors.textOnPrimary]
+        }
+        
+        window?.rootViewController = nav
         
         window?.makeKeyAndVisible()
         

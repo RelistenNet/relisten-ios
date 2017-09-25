@@ -15,7 +15,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         title = "Relisten"
     }
 

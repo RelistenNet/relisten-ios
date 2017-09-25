@@ -11,8 +11,17 @@ import Foundation
 public class TrackStatus {
     public let track: SourceTrack
     
-    public var isPlaying = false
-    public var isActiveTrack = false
+    public var isPlaying: Bool {
+        get {
+            return PlaybackController.sharedInstance.player.isPlaying
+        }
+    }
+    
+    public var isActiveTrack: Bool {
+        get {
+            return PlaybackController.sharedInstance.player.currentItem?.playbackURL == track.mp3_url
+        }
+    }
     
     public init(forTrack: SourceTrack) {
         track = forTrack

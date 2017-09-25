@@ -25,11 +25,10 @@ public class PlaybackController {
         player = AGAudioPlayer(queue: playbackQueue)
         viewController = AGAudioPlayerViewController(player: player)
         
-        viewController.loadViewIfNeeded()
-        
         shrinker = PlaybackMinibarShrinker(window: PlaybackController.window, barHeight: viewController.barHeight)
-
         viewController.presentationDelegate = self
+
+        viewController.loadViewIfNeeded()
     }
     
     public func displayMini(on vc: UIViewController, completion: (() -> Void)?) {
@@ -179,6 +178,27 @@ extension PlaybackController : AGAudioPlayerViewControllerPresentationDelegate {
         }) { (b) in
             self.viewController.viewDidAppear(true)
         }
+    }
+    
+    public func setupTableView(_ tableView: UITableView) {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    public func tableViewCell(forAudioItem: AGAudioItem, atIndex: IndexPath, inTableView: UITableView) -> UITableViewCell {
+        let cell = inTableView.dequeueReusableCell(withIdentifier: "cell", for: atIndex)
+        
+        if let t = forAudioItem as? SourceTrackAudioItem {
+            let v = TrackStatusLayout(withTrack: t.relisten, withHandler: self)
+            v.arrangement(width: inTableView.bounds.size.width) .makeViews(in: cell.contentView)
+        }
+        
+        return UITableViewCell()
+    }
+}
+
+extension PlaybackController : TrackStatusActionHandler {
+    public func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation) {
+        TrackActions.showActionOptions(fromViewController: viewController, forTrack: track)
     }
 }
 

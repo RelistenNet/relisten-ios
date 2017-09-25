@@ -12,7 +12,11 @@ import AGAudioPlayer
 import SINQ
 
 public class SourceTrackAudioItem : AGAudioItem {
+    public let relisten: CompleteTrackShowInformation
+    
     public required init(_ track: SourceTrack, inSource: SourceFull, fromShow: Show, byArtist: SlimArtistWithFeatures) {
+        self.relisten = CompleteTrackShowInformation(track: TrackStatus(forTrack: track), source: inSource, show: fromShow, artist: byArtist)
+
         super.init()
         
         self.title = track.title

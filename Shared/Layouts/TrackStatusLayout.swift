@@ -18,20 +18,20 @@ public protocol TrackStatusActionHandler {
 
 public protocol ICompleteShowInformation {
     var source: SourceFull { get }
-    var show: ShowWithSources { get }
+    var show: Show { get }
     var artist: SlimArtistWithFeatures { get }
 }
 
 public struct CompleteShowInformation : ICompleteShowInformation {
     public let source: SourceFull
-    public let show: ShowWithSources
+    public let show: Show
     public let artist: SlimArtistWithFeatures
 }
 
 public struct CompleteTrackShowInformation : ICompleteShowInformation {
     public let track: TrackStatus
     public let source: SourceFull
-    public let show: ShowWithSources
+    public let show: Show
     public let artist: SlimArtistWithFeatures
 }
 

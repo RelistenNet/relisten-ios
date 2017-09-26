@@ -582,6 +582,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HT7ELV3Q35;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					7C449EAE1D5A4F4300750D54 = {
 						CreatedOnToolsVersion = 8.0;
@@ -593,6 +598,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HT7ELV3Q35;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					7C8EF1201D5A49C300004B5C = {
 						CreatedOnToolsVersion = 8.0;

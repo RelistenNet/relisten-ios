@@ -44,7 +44,7 @@ class _RelistenApi {
     
     // MARK: Configuration
     
-    private let service = Service(baseURL: (FirebaseRemoteConfig["api_base"].stringValue as String!) + "/api/v2")
+    private let service = Service(baseURL: /* (FirebaseRemoteConfig["api_base"].stringValue as String!) */ "https://api.relisten.live" + "/api/v2")
     
     fileprivate init() {
         #if DEBUG

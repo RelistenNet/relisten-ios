@@ -9,11 +9,11 @@
 import UIKit
 
 import Siesta
-import Firebase
-import FirebaseAuth
+// import Firebase
+// import FirebaseAuth
 import DWURecyclingAlert
 
-public var FirebaseRemoteConfig: RemoteConfig! = nil
+// public var FirebaseRemoteConfig: RemoteConfig! = nil
 
 public let AppColors = _AppColors(
     primary: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
@@ -30,7 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupThirdPartyDependencies() {
 //        Inject_DWURecyclingAlert()
-        
+
+        /*
         FirebaseApp.configure()
 
         FirebaseRemoteConfig = RemoteConfig.remoteConfig()
@@ -42,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Signed into Firebase: \(String(describing: u)) \(String(describing: err))")
             })
         }
+        */
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {

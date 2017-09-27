@@ -17,12 +17,12 @@ target 'Relisten' do
   pod 'BASSGaplessAudioPlayer', :path => '../gapless-audio-bass-ios'
   pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
 
-  pod 'Firebase/Database'
-  pod 'Firebase/Auth'
-  pod 'Firebase/RemoteConfig'
-  pod 'Firebase/DynamicLinks'
-  pod 'Firebase/Core'
-  pod 'Firebase/Messaging'
+# pod 'Firebase/Database'
+# pod 'Firebase/Auth'
+# pod 'Firebase/RemoteConfig'
+# pod 'Firebase/DynamicLinks'
+# pod 'Firebase/Core'
+# pod 'Firebase/Messaging'
 
   pod "DownloadButton"
   pod 'AXRatingView'

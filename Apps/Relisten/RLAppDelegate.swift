@@ -9,8 +9,8 @@
 import UIKit
 
 import Siesta
-// import Firebase
-// import FirebaseAuth
+import Firebase
+import FirebaseAuth
 import DWURecyclingAlert
 
 // public var FirebaseRemoteConfig: RemoteConfig! = nil
@@ -31,19 +31,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupThirdPartyDependencies() {
 //        Inject_DWURecyclingAlert()
 
-        /*
         FirebaseApp.configure()
 
-        FirebaseRemoteConfig = RemoteConfig.remoteConfig()
-        FirebaseRemoteConfig.setDefaults(["api_base": "https://api.relisten.live" as NSObject])
+        // FirebaseRemoteConfig = RemoteConfig.remoteConfig()
+        // FirebaseRemoteConfig.setDefaults(["api_base": "https://api.relisten.live" as NSObject])
         
-        if Auth.auth().currentUser == nil {
+        if let u = Auth.auth().currentUser {
+            MyLibraryManager.sharedInstance.onUserSignedIn(u)
+        }
+        else {
             print("No current user. Signing in.")
             Auth.auth().signInAnonymously(completion: { (u, err) in
+                if let user = u {
+                    MyLibraryManager.sharedInstance.onUserSignedIn(user)
+                }
                 print("Signed into Firebase: \(String(describing: u)) \(String(describing: err))")
             })
         }
-        */
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
@@ -76,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.statusBarStyle = .lightContent
         
         UINavigationBar.appearance().barTintColor = AppColors.primary
-        UINavigationBar.appearance().backgroundColor = AppColors.primary
+        UINavigationBar.appearance().backgroundColor = AppColors.textOnPrimary
         UINavigationBar.appearance().tintColor = AppColors.textOnPrimary
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: AppColors.textOnPrimary]
@@ -85,6 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIToolbar.appearance().tintColor = AppColors.textOnPrimary
         
         UIButton.appearance().tintColor = AppColors.primary
+        UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = AppColors.textOnPrimary
         
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: AppColors.textOnPrimary], for: .normal)
         

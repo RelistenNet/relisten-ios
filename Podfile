@@ -21,7 +21,8 @@ target 'Relisten' do
 # pod 'Firebase/Auth'
 # pod 'Firebase/RemoteConfig'
 # pod 'Firebase/DynamicLinks'
-# pod 'Firebase/Core'
+  pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
 # pod 'Firebase/Messaging'
 
   pod "DownloadButton"
@@ -34,6 +35,9 @@ target 'Relisten' do
 
   pod 'SINQ'
   pod 'Reveal-SDK', :configurations => ['Debug']
+  
+  pod "MZDownloadManager"
+  pod 'CWStatusBarNotification'
 
   # pod 'BFNavigationBarDrawer'
   target 'PhishOD' do

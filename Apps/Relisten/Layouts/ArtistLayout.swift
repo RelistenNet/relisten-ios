@@ -53,6 +53,7 @@ public class ArtistLayout : InsetLayout<UIView> {
             flexibility: .flexible,
             viewReuseId: "artistName")
         
+        /*
         let favoriteButton = SizeLayout<FaveButton>(
             width: 32,
             height: 32,
@@ -65,9 +66,10 @@ public class ArtistLayout : InsetLayout<UIView> {
                 
                 button.applyInit()
             }
-        
+ 
         let favoriteButtonContainer = InsetLayout(insets: UIEdgeInsetsMake(0, 16, 0, 8), sublayout: favoriteButton)
-        
+         */
+
         let showsLabel = LabelLayout(
             text: "\(artist.show_count) shows",
             font: UIFont.preferredFont(forTextStyle: .caption1),
@@ -105,13 +107,13 @@ public class ArtistLayout : InsetLayout<UIView> {
         )
 
         super.init(
-            insets: EdgeInsets(top: 8, left: 0, bottom: 12, right: 16 + 8 + 8),
+            insets: EdgeInsets(top: 8, left: 16, bottom: 12, right: 16 + 8 + 8),
             viewReuseId: "artistLayout",
             sublayout: StackLayout(
                 axis: .horizontal,
                 spacing: 0,
                 viewReuseId: "artist-horiz-stack",
-                sublayouts: [favoriteButtonContainer, rows]
+                sublayouts: [/* favoriteButtonContainer, */ rows]
             )
         )
     }

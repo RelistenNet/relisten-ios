@@ -23,6 +23,8 @@
 		7C03A4C81E6218CF006F2912 /* RelistenModelCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */; };
 		7C1F1A5F1F733ACD009408AA /* VenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */; };
 		7C1F1A601F733ACD009408AA /* VenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */; };
+		7C3474DE1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */; };
+		7C3474DF1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */; };
 		7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */; };
 		7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */; };
 		7C449EA91D5A4F4300750D54 /* PHODLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA71D5A4F4300750D54 /* PHODLaunchScreen.storyboard */; };
@@ -39,6 +41,8 @@
 		7C5076341EE701D500BE3CE7 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5076321EE701D500BE3CE7 /* SourceViewController.swift */; };
 		7C61C7CE1F18DB320094E0AF /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */; };
 		7C61C7CF1F18DB320094E0AF /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */; };
+		7C68279C1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */; };
+		7C68279D1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */; };
 		7C8044071E6E582000BA946E /* ArtistLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044061E6E582000BA946E /* ArtistLayout.swift */; };
 		7C8044091E6F29A800BA946E /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
 		7C80440A1E6F29A800BA946E /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
@@ -125,6 +129,7 @@
 		7C03A4C31E621836006F2912 /* ApiCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCache.swift; sourceTree = "<group>"; };
 		7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenModelCachable.swift; sourceTree = "<group>"; };
 		7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueViewController.swift; path = "View Controllers/Venues/VenueViewController.swift"; sourceTree = "<group>"; };
+		7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibraryManager.swift; sourceTree = "<group>"; };
 		7C449E9C1D5A4F4200750D54 /* PhishOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhishOD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHODAppDelegate.swift; sourceTree = "<group>"; };
 		7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PHODAssets.xcassets; sourceTree = "<group>"; };
@@ -139,6 +144,7 @@
 		7C4F1BED1F733A0700C592BD /* SongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongViewController.swift; path = "View Controllers/Songs/SongViewController.swift"; sourceTree = "<group>"; };
 		7C5076321EE701D500BE3CE7 /* SourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceViewController.swift; path = "View Controllers/Show/SourceViewController.swift"; sourceTree = "<group>"; };
 		7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = SharedAssets.xcassets; path = Assets/SharedAssets.xcassets; sourceTree = "<group>"; };
+		7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenDownloadManager.swift; sourceTree = "<group>"; };
 		7C8044061E6E582000BA946E /* ArtistLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistLayout.swift; path = Layouts/ArtistLayout.swift; sourceTree = "<group>"; };
 		7C8044081E6F29A800BA946E /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistViewController.swift; path = "View Controllers/ArtistViewController.swift"; sourceTree = "<group>"; };
 		7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenMenuView.swift; path = Views/RelistenMenuView.swift; sourceTree = "<group>"; };
@@ -167,6 +173,7 @@
 		7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenTableViewController.swift; path = "View Controllers/RelistenTableViewController.swift"; sourceTree = "<group>"; };
 		7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaybackController.swift; path = Playback/PlaybackController.swift; sourceTree = "<group>"; };
 		7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceTrackAudioItem.swift; path = Playback/Models/SourceTrackAudioItem.swift; sourceTree = "<group>"; };
+		7CCE0DE91F9BD38B00041D47 /* Relisten-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Relisten-Bridging-Header.h"; sourceTree = "<group>"; };
 		7CD270F11EE6B27A005888E3 /* SourceDetailsLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceDetailsLayout.swift; path = Layouts/SourceDetailsLayout.swift; sourceTree = "<group>"; };
 		7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -273,6 +280,7 @@
 				7C449EBE1D5A513800750D54 /* API */,
 				7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */,
 				7C8044141E6F4B1E00BA946E /* AppColors.swift */,
+				7CCE0DE91F9BD38B00041D47 /* Relisten-Bridging-Header.h */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -280,6 +288,7 @@
 		7C449EBE1D5A513800750D54 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				7C68279A1F99240A00E260B1 /* Offline */,
 				7C03A4B81E60FB52006F2912 /* Models */,
 				7C03A4C31E621836006F2912 /* ApiCache.swift */,
 				7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */,
@@ -303,6 +312,15 @@
 				7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */,
 			);
 			name = Assets;
+			sourceTree = "<group>";
+		};
+		7C68279A1F99240A00E260B1 /* Offline */ = {
+			isa = PBXGroup;
+			children = (
+				7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */,
+				7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */,
+			);
+			path = Offline;
 			sourceTree = "<group>";
 		};
 		7C8044051E6E57F800BA946E /* Layouts */ = {
@@ -724,13 +742,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Relisten-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		446D1DAE7444255BB234E2D3 /* [CP] Copy Pods Resources */ = {
@@ -754,13 +775,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PhishOD-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		613EA6CA2F7DB4D615B04590 /* [CP] Copy Pods Resources */ = {
@@ -784,13 +808,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PhishODUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C699FB9F85B6CE01CD251ADA /* [CP] Check Pods Manifest.lock */ = {
@@ -799,13 +826,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RelistenUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C8727B5F915331ECB2CBB8F7 /* [CP] Embed Pods Frameworks */ = {
@@ -829,9 +859,74 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AGAudioPlayer/AGAudioPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework",
+				"${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework",
+				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework",
+				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
+				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
+				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
+				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
+				"${BUILT_PRODUCTS_DIR}/MZDownloadManager/MZDownloadManager.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/NapySlider/NapySlider.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/ReachabilitySwift.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-11/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
+				"${BUILT_PRODUCTS_DIR}/Siesta/Siesta.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftHash/SwiftHash.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AGAudioPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXRatingView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CWStatusBarNotification.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZDownloadManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NAKPlaybackIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NapySlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReachabilitySwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SINQ.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siesta.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -868,6 +963,7 @@
 				7C03A4C21E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
 				7CA94EA91F0A6C74004663F3 /* TrackStatus.swift in Sources */,
 				7C80440A1E6F29A800BA946E /* ArtistViewController.swift in Sources */,
+				7C68279D1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */,
 				7C4F1BE61F7317BE00C592BD /* SongsViewController.swift in Sources */,
 				7CABACC01EDEE178009C5E3B /* PaddingLabel.swift in Sources */,
 				7C8044161E6F4B1F00BA946E /* AppColors.swift in Sources */,
@@ -887,6 +983,7 @@
 				7C1F1A601F733ACD009408AA /* VenueViewController.swift in Sources */,
 				7CABACC61EDEE63F009C5E3B /* YearViewController.swift in Sources */,
 				8E91C39267864B76C24722C7 /* YearLayout.swift in Sources */,
+				7C3474DF1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */,
 				7CABACC31EDEE3A2009C5E3B /* TimeInterval+Humanize.swift in Sources */,
 				8E91CF363725BB2441672DC9 /* RelistenResourceStatusOverlay.swift in Sources */,
 				8E91C72389219DDCA7733977 /* YearShowLayout.swift in Sources */,
@@ -921,6 +1018,7 @@
 				7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */,
 				7CD270F21EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */,
 				7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
+				7C3474DE1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */,
 				7CABACCD1EDF15D9009C5E3B /* SourceLayout.swift in Sources */,
 				7C8677FE1EDECF8F0000223E /* YearsViewController.swift in Sources */,
 				7C4F1BE81F73186500C592BD /* RelistenSongModels.swift in Sources */,
@@ -941,6 +1039,7 @@
 				7CABACBF1EDEE178009C5E3B /* PaddingLabel.swift in Sources */,
 				7CABACCA1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
 				8E91CA4985FB22E1CE0A26C3 /* YearLayout.swift in Sources */,
+				7C68279C1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */,
 				7C1F1A5F1F733ACD009408AA /* VenueViewController.swift in Sources */,
 				7CC4EDC51F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */,
 				7C4F1BEE1F733A0700C592BD /* SongViewController.swift in Sources */,
@@ -1008,6 +1107,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "18898802-5565-4259-bae2-2321c90445e0";
 				PROVISIONING_PROFILE_SPECIFIER = "2016-08-09 PhishOD Dev";
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Relisten-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -1026,6 +1126,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6593bab3-c262-419b-aacf-cd3b8f4a3acc";
 				PROVISIONING_PROFILE_SPECIFIER = "2016-08-09 PhishOD Dist";
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Relisten-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -1181,6 +1282,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Relisten-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -1199,6 +1301,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Relisten-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

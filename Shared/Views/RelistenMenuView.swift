@@ -51,7 +51,7 @@ public class RelistenMenuView : UIView {
         
         var everything: [RelistenMenuItem] = []
         var discover: [RelistenMenuItem] = []
-        let my: [RelistenMenuItem] = [.MyShowsLibrary, .MyShowsPlaylists, .MyShowsPlaylists]
+        let my: [RelistenMenuItem] = [.MyShowsLibrary, .MyShowsPlaylists, .MyShowsDownloaded]
         
         if artist.features.years { everything.append(.EverythingYears) }
         if artist.features.songs { everything.append(.EverythingSongs) }
@@ -253,7 +253,7 @@ public class RelistenMenuView : UIView {
         case .DiscoverRandom: return "random"
             
         case .RecentlyPlayed: return "recently played"
-        case .RecentlyAdded: return "recently added"
+        case .RecentlyAdded: return "recently performed"
             
         case .MyShowsLibrary: return "my library"
         case .MyShowsPlaylists: return "playlists"

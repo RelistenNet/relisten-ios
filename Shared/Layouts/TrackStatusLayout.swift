@@ -12,6 +12,9 @@ import LayoutKit
 import NAKPlaybackIndicatorView
 import ActionKit
 
+import Cache
+import SwiftyJSON
+
 public protocol TrackStatusActionHandler {
     func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation)
 }
@@ -22,10 +25,62 @@ public protocol ICompleteShowInformation {
     var artist: SlimArtistWithFeatures { get }
 }
 
-public struct CompleteShowInformation : ICompleteShowInformation {
+public class CompleteShowInformation : ICompleteShowInformation, Cachable {
     public let source: SourceFull
     public let show: Show
     public let artist: SlimArtistWithFeatures
+    
+    public typealias CacheType = CompleteShowInformation
+    public var originalJSON: SwJSON
+
+    public required init(source: SourceFull, show: Show, artist: SlimArtistWithFeatures) {
+        self.source = source
+        self.show = show
+        self.artist = artist
+        
+        var j = SwJSON([:])
+        j["source"] = source.originalJSON
+        j["show"] = show.originalJSON
+        j["artist"] = artist.originalJSON
+        
+        originalJSON = j
+    }
+    
+    public required init(json: SwJSON) throws {
+        source = try SourceFull(json: ["source"])
+        show = try Show(json: json["show"])
+        artist = try SlimArtistWithFeatures(json: json["artist"])
+
+        originalJSON = json
+    }
+    
+    public func toPrettyJSONString() -> String {
+        return originalJSON.rawString(.utf8, options: .prettyPrinted)!
+    }
+    
+    public func toData() throws -> Data {
+        return try originalJSON.rawData()
+    }
+    
+    public static func decode(_ data: Data) -> CompleteShowInformation? {
+        do {
+            return try self.init(json: SwJSON(data: data))
+        }
+        catch {
+            print("whoa. invalid item in the cache?!")
+            return nil
+        }
+    }
+    
+    public func encode() -> Data? {
+        do {
+            return try self.toData()
+        }
+        catch {
+            print("whoa. unable to cache item!?")
+            return nil
+        }
+    }
 }
 
 public struct CompleteTrackShowInformation : ICompleteShowInformation {

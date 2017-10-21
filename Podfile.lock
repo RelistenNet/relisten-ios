@@ -9,18 +9,86 @@ PODS:
   - AXRatingView (1.0.6)
   - BASSGaplessAudioPlayer (0.0.1)
   - BCColor (0.2)
+  - BoringSSL (9.0):
+    - BoringSSL/Implementation (= 9.0)
+    - BoringSSL/Interface (= 9.0)
+  - BoringSSL/Implementation (9.0):
+    - BoringSSL/Interface (= 9.0)
+  - BoringSSL/Interface (9.0)
   - Cache (3.3.0):
     - SwiftHash (~> 1.4.0)
+  - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.0)
   - DWURecyclingAlert (1.0.2)
   - FaveButton (2.0.4)
+  - Firebase/Core (4.4.0):
+    - FirebaseAnalytics (= 4.0.4)
+    - FirebaseCore (= 4.0.9)
+  - Firebase/Firestore (4.4.0):
+    - Firebase/Core
+    - FirebaseFirestore (= 0.9.0)
+  - FirebaseAnalytics (4.0.4):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - nanopb (~> 0.3)
+  - FirebaseAuth (4.3.0):
+    - FirebaseAnalytics (~> 4.0)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseCore (4.0.9):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - nanopb (~> 0.3)
+  - FirebaseFirestore (0.9.0):
+    - FirebaseAnalytics (~> 4.0)
+    - FirebaseAuth (~> 4.3)
+    - FirebaseCore (~> 4.0)
+    - gRPC-ProtoRPC (~> 1.0)
+    - leveldb-library (~> 1.18)
+    - Protobuf (~> 3.1)
+  - FirebaseInstanceID (2.0.5)
+  - GoogleToolboxForMac/DebugUtils (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
+  - gRPC (1.6.5):
+    - gRPC-Core (= 1.6.5)
+    - gRPC-RxLibrary (= 1.6.5)
+  - gRPC-Core (1.6.5):
+    - gRPC-Core/Implementation (= 1.6.5)
+    - gRPC-Core/Interface (= 1.6.5)
+  - gRPC-Core/Implementation (1.6.5):
+    - BoringSSL (~> 9.0)
+    - gRPC-Core/Interface (= 1.6.5)
+    - nanopb (~> 0.3)
+  - gRPC-Core/Interface (1.6.5)
+  - gRPC-ProtoRPC (1.6.5):
+    - gRPC (= 1.6.5)
+    - gRPC-RxLibrary (= 1.6.5)
+    - Protobuf (~> 3.0)
+  - gRPC-RxLibrary (1.6.5)
+  - GTMSessionFetcher/Core (1.1.12)
   - Interpolate (0.4.0)
   - LayoutKit (5.0.0)
+  - leveldb-library (1.18.3)
   - MarqueeLabel (3.1.3):
     - MarqueeLabel/ObjC (= 3.1.3)
   - MarqueeLabel/ObjC (3.1.3)
+  - MZDownloadManager (3.3)
   - NAKPlaybackIndicatorView (0.1.1)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
   - NapySlider (0.3)
+  - Protobuf (3.4.0)
   - ReachabilitySwift (3)
   - Reveal-SDK (11)
   - Siesta/Core (1.3.0)
@@ -36,10 +104,14 @@ DEPENDENCIES:
   - AXRatingView
   - BASSGaplessAudioPlayer (from `../gapless-audio-bass-ios`)
   - Cache (= 3.3.0)
+  - CWStatusBarNotification
   - DownloadButton
   - DWURecyclingAlert
   - FaveButton (from `../fave-button`)
+  - Firebase/Core
+  - Firebase/Firestore
   - LayoutKit
+  - MZDownloadManager
   - NAKPlaybackIndicatorView
   - NapySlider (from `../NapySlider`)
   - ReachabilitySwift (~> 3)
@@ -51,13 +123,13 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   AGAudioPlayer:
-    :path: "../AGAudioPlayer"
+    :path: ../AGAudioPlayer
   BASSGaplessAudioPlayer:
-    :path: "../gapless-audio-bass-ios"
+    :path: ../gapless-audio-bass-ios
   FaveButton:
-    :path: "../fave-button"
+    :path: ../fave-button
   NapySlider:
-    :path: "../NapySlider"
+    :path: ../NapySlider
   Siesta:
     :git: https://github.com/bustoutsolutions/siesta.git
 
@@ -72,15 +144,33 @@ SPEC CHECKSUMS:
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 30b7984efd16d9f40ff14b9e9df3ec74a3ace4b5
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
+  BoringSSL: 19083b821ef3ae0f758fae15482e183003b1e265
   Cache: 871805a8a7268feac34f5c10c54506801f0bd4cd
+  CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   FaveButton: 271bdd3a1012ef6c667e428bc9754e7d65ca7455
+  Firebase: 3e92884a63e8f76d107c43a67d2ab9071e1eda10
+  FirebaseAnalytics: 722b53c7b32bfc7806b06e0093a2f5180d4f2c5a
+  FirebaseAuth: e0087d479709b20b9613b804704a928d6eafb052
+  FirebaseCore: ebe73f64302705e693b1de9919a76edbdd17a19d
+  FirebaseFirestore: ad1096ea647a8cc60ead57f7c54f5225d54fbd76
+  FirebaseInstanceID: f2b688c66b972f30d7fa9f5f9f91455454a03b47
+  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  gRPC: 42f915ce322b1abc5241621acc776f2fdb0a2039
+  gRPC-Core: 54211a073d238ec8569be06e1a939a72f081a3e9
+  gRPC-ProtoRPC: 4299db62f86df58c88844ccb50f5c48993e704f6
+  gRPC-RxLibrary: 1b1c9c9cf666709ad7714cb0e0f3c44dc0cbfb0b
+  GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   Interpolate: 682895f1a2fc091da0ba53ccb018520daf51f8fd
-  LayoutKit: '09e015b77fe5cd58696c427d496704b9226876cf'
+  LayoutKit: 09e015b77fe5cd58696c427d496704b9226876cf
+  leveldb-library: 10fb39c39e243db4af1828441162405bbcec1404
   MarqueeLabel: baa5753dcbd36dca080e1f5c589a665aa5c906f1
+  MZDownloadManager: b6ee998b15a05b25f011d9c715ec6b184729a258
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NapySlider: 6565f73f715414b44cda40ff178a319aeae38b14
+  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   Reveal-SDK: 7fa13d04bb55db61ff2342a990cf731d5159361d
   Siesta: 02ebadcf2be602c0a81545533e9fedda2356f51b
@@ -88,6 +178,6 @@ SPEC CHECKSUMS:
   SwiftHash: acf0f29032309a5c7a7f625595eade1aca97aca2
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 8f1d7843921865939853b3c42fc8b93b1e99d47d
+PODFILE CHECKSUM: f72071b85d03296ff65140f119f457b5fc1332b5
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.4.0.beta.1

@@ -106,7 +106,7 @@ public class SourceLayout : InsetLayout<UIView> {
         }
         
         super.init(
-            insets: EdgeInsets(top: 32, left: 16, bottom: 32, right: 16),
+            insets: EdgeInsets(top: 32, left: 16, bottom: 32, right: 16 + 8 + 8),
             viewReuseId: "sourceLayout",
             sublayout: StackLayout(
                 axis: .vertical,

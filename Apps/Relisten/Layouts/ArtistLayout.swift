@@ -44,7 +44,7 @@ public class RelistenFaveButtonDelegate : FaveButtonDelegate {
 public class ArtistLayout : InsetLayout<UIView> {
     static let faveButtonDelegate = RelistenFaveButtonDelegate()
     
-    public init(artist: ArtistWithCounts) {
+    public init(artist: ArtistWithCounts, withFavoritedArtists: Set<Int>) {
         let artistName = LabelLayout(
             text: artist.name,
             font: UIFont.preferredFont(forTextStyle: .headline),
@@ -53,7 +53,6 @@ public class ArtistLayout : InsetLayout<UIView> {
             flexibility: .flexible,
             viewReuseId: "artistName")
         
-        /*
         let favoriteButton = SizeLayout<FaveButton>(
             width: 32,
             height: 32,
@@ -62,13 +61,28 @@ public class ArtistLayout : InsetLayout<UIView> {
             viewReuseId: "favoriteArtist") { (button) in
                 button.setImage(UIImage(named: "heart"), for: .normal)
                 button.accessibilityLabel = "Favorite Artist"
+                
+                var currentlyFavorited = withFavoritedArtists.contains(artist.id)
+
                 button.delegate = ArtistLayout.faveButtonDelegate
                 
                 button.applyInit()
+                
+                button.setSelected(selected: currentlyFavorited, animated: false)
+
+                button.addHandler(for: .touchUpInside, handler: { _ in
+                    currentlyFavorited = !currentlyFavorited
+                    
+                    if currentlyFavorited {
+                        MyLibraryManager.sharedInstance.favoriteArtist(artist: artist)
+                    }
+                    else {
+                        let _ = MyLibraryManager.sharedInstance.removeArtist(artist: artist)
+                    }
+                })
             }
  
         let favoriteButtonContainer = InsetLayout(insets: UIEdgeInsetsMake(0, 16, 0, 8), sublayout: favoriteButton)
-         */
 
         let showsLabel = LabelLayout(
             text: "\(artist.show_count) shows",
@@ -107,13 +121,13 @@ public class ArtistLayout : InsetLayout<UIView> {
         )
 
         super.init(
-            insets: EdgeInsets(top: 8, left: 16, bottom: 12, right: 16 + 8 + 8),
+            insets: EdgeInsets(top: 8, left: 0, bottom: 12, right: 16 + 8 + 8),
             viewReuseId: "artistLayout",
             sublayout: StackLayout(
                 axis: .horizontal,
                 spacing: 0,
                 viewReuseId: "artist-horiz-stack",
-                sublayouts: [/* favoriteButtonContainer, */ rows]
+                sublayouts: [favoriteButtonContainer, rows]
             )
         )
     }

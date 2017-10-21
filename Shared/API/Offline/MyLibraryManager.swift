@@ -37,27 +37,27 @@ public class ShowWithSourcesArtistContainer {
 
 public class MyLibrary {
     public var shows: [ShowWithSourcesArtistContainer]
-    public var artists: [SlimArtistWithFeatures]
+    public var artistIds: Set<Int>
     
     public var offlineTrackURLs: Set<URL>
     
     public init() {
         shows = []
-        artists = []
+        artistIds = []
         offlineTrackURLs = []
     }
     
     public init(json: SwJSON) throws {
         shows = try json["shows"].arrayValue.map(ShowWithSourcesArtistContainer.init)
-        artists = try json["artists"].arrayValue.map(SlimArtistWithFeatures.init)
+        artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
         offlineTrackURLs = Set(json["offlineTrackURLs"].arrayValue.map({ $0.url! }))
     }
     
     public func ToJSON() -> SwJSON {
         var s = SwJSON()
         s["shows"] = SwJSON(shows.map({ $0.originalJSON }))
-        s["artists"] = SwJSON(artists.map({ $0.originalJSON }))
-        s["offlineTrackURLs"] = SwJSON(offlineTrackURLs)
+        s["artistIds"] = SwJSON(Array(artistIds))
+        s["offlineTrackURLs"] = SwJSON(Array(offlineTrackURLs))
 
         return s
     }
@@ -71,6 +71,8 @@ public class MyLibraryManager {
     var user: User? = nil
     var userDoc: DocumentReference? = nil
     var library: MyLibrary
+    
+    public let favoriteArtistIdsChanged = Event<Set<Int>>()
     
     init() {
         library = MyLibrary()
@@ -87,20 +89,34 @@ public class MyLibraryManager {
     
     func loadFromFirestore() {
         userDoc?.getDocument(completion: { (docSnapshot, err) in
+            if let e = err {
+                print(e)
+            }
+            
             if let d = docSnapshot {
-                if d.exists {
+                if !d.exists {
                     self.setupFirstDocument()
                 }
                 else {
                     self.library = try! MyLibrary(json: SwJSON(d.data()))
+                    
+                    self.favoriteArtistIdsChanged.raise(data: self.library.artistIds)
                 }
             }
         })
     }
     
     func saveToFirestore() {
-        if let d = userDoc, let dict = library.ToJSON().dictionary {
-            d.updateData(dict)
+        if let d = userDoc {
+            do {
+                let j = library.ToJSON()
+                let json = try JSONSerialization.jsonObject(with: try j.rawData()) as! [String: Any]
+                
+                d.setData(json)
+            }
+            catch {
+                print(error)
+            }
         }
     }
     
@@ -130,15 +146,17 @@ extension MyLibraryManager {
     }
     
     public func favoriteArtist(artist: SlimArtistWithFeatures) {
-        library.artists.append(artist)
+        library.artistIds.insert(artist.id)
         
         saveToFirestore()
+        
+        favoriteArtistIdsChanged.raise(data: library.artistIds)
     }
     
     public func removeArtist(artist: SlimArtistWithFeatures) -> Bool {
-        if let idx = library.artists.index(where: { $0.id == artist.id }) {
-            library.artists.remove(at: idx)
-            
+        if let _ = library.artistIds.remove(artist.id) {
+            favoriteArtistIdsChanged.raise(data: library.artistIds)
+
             saveToFirestore()
             
             return true
@@ -153,9 +171,9 @@ extension MyLibraryManager {
         return library.shows.contains(where: { $0.show.display_date == show.display_date && $0.artist.id == byArtist.id })
     }
     
-    public var artists: [SlimArtistWithFeatures] {
+    public var artistIds: Set<Int>  {
         get {
-            return library.artists
+            return library.artistIds
         }
     }
     

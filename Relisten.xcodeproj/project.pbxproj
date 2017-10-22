@@ -89,6 +89,8 @@
 		7CCE0DED1F9BDE4A00041D47 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEB1F9BDE4A00041D47 /* Events.swift */; };
 		7CCE0DEF1F9BE33B00041D47 /* UIControl+Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */; };
 		7CCE0DF01F9BE33B00041D47 /* UIControl+Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */; };
+		7CCE0DF21F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */; };
+		7CCE0DF31F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */; };
 		7CD270F21EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD270F11EE6B27A005888E3 /* SourceDetailsLayout.swift */; };
 		7CD270F31EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD270F11EE6B27A005888E3 /* SourceDetailsLayout.swift */; };
 		7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
@@ -180,6 +182,7 @@
 		7CCE0DE91F9BD38B00041D47 /* Relisten-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Relisten-Bridging-Header.h"; sourceTree = "<group>"; };
 		7CCE0DEB1F9BDE4A00041D47 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Events.swift; path = Events/Events.swift; sourceTree = "<group>"; };
 		7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Handler.swift"; sourceTree = "<group>"; };
+		7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwitchCellLayout.swift; path = Layouts/SwitchCellLayout.swift; sourceTree = "<group>"; };
 		7CD270F11EE6B27A005888E3 /* SourceDetailsLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceDetailsLayout.swift; path = Layouts/SourceDetailsLayout.swift; sourceTree = "<group>"; };
 		7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -348,6 +351,7 @@
 				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
 				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 				7C4F1BEA1F731A5900C592BD /* SongLayout.swift */,
+				7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */,
 			);
 			name = Layouts;
 			sourceTree = "<group>";
@@ -887,6 +891,8 @@
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCommunity/FirebaseCommunity.framework",
+				"${BUILT_PRODUCTS_DIR}/Firestore/Firestore.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
@@ -922,6 +928,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCommunity.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Firestore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
@@ -971,6 +979,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CCE0DF31F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */,
 				7C4F1BEC1F731A5900C592BD /* SongLayout.swift in Sources */,
 				7CB1DBC91F718E90006AC393 /* TopShowsViewController.swift in Sources */,
 				7CD270F31EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */,
@@ -1053,6 +1062,7 @@
 				7C8044121E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */,
 				7C8044091E6F29A800BA946E /* ArtistViewController.swift in Sources */,
 				7C5076331EE701D500BE3CE7 /* SourceViewController.swift in Sources */,
+				7CCE0DF21F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */,
 				7CC4EDC21F0AC2F0004CB615 /* PlaybackController.swift in Sources */,
 				7C4F1BEB1F731A5900C592BD /* SongLayout.swift in Sources */,
 				7CABACBF1EDEE178009C5E3B /* PaddingLabel.swift in Sources */,

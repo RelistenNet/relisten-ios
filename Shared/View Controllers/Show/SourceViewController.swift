@@ -38,19 +38,55 @@ class SourceViewController: RelistenBaseTableViewController {
         self.idx = idx
         
         super.init()
+        
+        onToggleAddToMyShows = { (newValue: Bool) in
+            self.isShowInLibrary = newValue
+            if newValue {
+                MyLibraryManager.sharedInstance.addShow(show: self.show, byArtist: self.artist)
+            }
+            else {
+                let _ = MyLibraryManager.sharedInstance.removeShow(show: self.show, byArtist: self.artist)
+            }
+        }
+        
+        onToggleOffline = { (newValue: Bool) in
+            if newValue {
+                // download whole show
+                RelistenDownloadManager.sharedInstance.download(show: self.completeShowInformation)
+
+                self.isAvailableOffline = true
+            }
+            else {
+                // remove any downloaded tracks
+            }
+        }
+
+        isShowInLibrary = MyLibraryManager.sharedInstance.isShowInLibrary(show: self.show, byArtist: self.artist)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
     
+    var isShowInLibrary: Bool = false
+    var isAvailableOffline: Bool = false
+
+    var onToggleAddToMyShows: ((Bool) -> Void)? = nil
+    var onToggleOffline: ((Bool) -> Void)? = nil
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "\(show.display_date) #\(idx + 1)"
         
         layout {
-            var sections: [Section<[Layout]>] = [ Section(items: [ SourceDetailsLayout(source: self.source, inShow: self.show, artist: self.artist, atIndex: self.idx) ]) ]
+            var sections: [Section<[Layout]>] = [
+                Section(items: [
+                    SourceDetailsLayout(source: self.source, inShow: self.show, artist: self.artist, atIndex: self.idx),
+                    SwitchCellLayout(title: "Add to My Shows", checkedByDefault: { self.isShowInLibrary }, onSwitch: self.onToggleAddToMyShows!),
+                    SwitchCellLayout(title: "Available Offline", checkedByDefault: { self.isAvailableOffline }, onSwitch: self.onToggleOffline!)
+                ])
+            ]
             
             sections.append(contentsOf: self.source.sets.map({ (set: SourceSet) -> Section<[Layout]> in
                 let layouts = set.tracks.map({ TrackStatusLayout(withTrack: CompleteTrackShowInformation(track: TrackStatus(forTrack: $0), source: self.source, show: self.show, artist: self.artist), withHandler: self) })
@@ -71,6 +107,12 @@ class SourceViewController: RelistenBaseTableViewController {
         return cell
     }
     
+    var completeShowInformation: CompleteShowInformation {
+        get {
+            return CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -78,11 +120,9 @@ class SourceViewController: RelistenBaseTableViewController {
             return
         }
         
-        let show = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
-        
         TrackActions.play(
             trackAtIndexPath: IndexPath(row: indexPath.row, section: indexPath.section - 1),
-            inShow: show,
+            inShow: completeShowInformation,
             fromViewController: self
         )
     }

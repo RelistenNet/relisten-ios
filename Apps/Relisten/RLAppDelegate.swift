@@ -9,8 +9,7 @@
 import UIKit
 
 import Siesta
-import Firebase
-import FirebaseAuth
+import FirebaseCommunity
 import DWURecyclingAlert
 
 // public var FirebaseRemoteConfig: RemoteConfig! = nil
@@ -74,6 +73,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupPlayback() {
         PlaybackController.window = window
+        
+        DispatchQueue.main.async {
+            let _ = RelistenDownloadManager.sharedInstance
+        }
     }
     
     func setupAppearance() {

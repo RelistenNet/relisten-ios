@@ -208,16 +208,24 @@ public class TrackActions {
             PlaybackController.sharedInstance.dismiss()
         }))
         
+        a.addAction(UIAlertAction(title: "Make Available Offline", style: .default, handler: { _ in
+            self.download(info.track, inShow: CompleteShowInformation(source: info.source, show: info.show, artist: info.artist))
+            PlaybackController.sharedInstance.dismiss()
+        }))
         a.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
             PlaybackController.sharedInstance.dismiss()
         }))
-        
+
         a.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
             PlaybackController.sharedInstance.dismiss()
         }))
         
         PlaybackController.sharedInstance.hideMini()
         vc.present(a, animated: true, completion: nil)
+    }
+    
+    public static func download(_ trackStatus: TrackStatus, inShow: CompleteShowInformation) {
+        RelistenDownloadManager.sharedInstance.download(track: trackStatus.track, fromShow: inShow)
     }
     
     public static func play(trackAtIndexPath idx: IndexPath, inShow info: CompleteShowInformation, fromViewController vc: UIViewController) {

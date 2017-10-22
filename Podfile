@@ -21,8 +21,9 @@ target 'Relisten' do
 # pod 'Firebase/Auth'
 # pod 'Firebase/RemoteConfig'
 # pod 'Firebase/DynamicLinks'
-  pod 'Firebase/Core'
-  pod 'Firebase/Firestore'
+  pod 'FirebaseCommunity/Core'
+  pod 'FirebaseCommunity/Auth'
+  pod 'Firestore', :path => '../firebase-ios-sdk/Firestore'
 # pod 'Firebase/Messaging'
 
   pod "DownloadButton"

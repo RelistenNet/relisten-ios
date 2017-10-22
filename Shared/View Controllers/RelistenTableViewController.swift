@@ -79,13 +79,13 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     
     // MARK: Layout & Rendering
     
-    internal func layout(width: CGFloat? = nil, synchronous: Bool = true, layout: @escaping () -> [Section<[Layout]>]) {
+    internal func layout(width: CGFloat? = nil, synchronous: Bool = true, batchUpdates: BatchUpdates? = nil, layout: @escaping () -> [Section<[Layout]>]) {
         var w = width
         if w == nil {
             w = tableView.frame.width
         }
         
-        reloadableViewLayoutAdapter.reload(width: w, synchronous: synchronous, layoutProvider: layout)
+        reloadableViewLayoutAdapter.reload(width: w, synchronous: synchronous, batchUpdates: batchUpdates, layoutProvider: layout)
     }
     
     // MARK: TableView "dataSource" and "delegate"

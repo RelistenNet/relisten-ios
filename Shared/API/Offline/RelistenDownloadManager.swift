@@ -12,6 +12,7 @@ import Cache
 import SwiftyJSON
 import MZDownloadManager
 import CWStatusBarNotification
+import MarqueeLabel
 
 func MD5(_ string: String) -> String? {
     let length = Int(CC_MD5_DIGEST_LENGTH)
@@ -39,6 +40,11 @@ public class RelistenDownloadManager {
         downloadFolder = NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                              FileManager.SearchPathDomainMask.userDomainMask,
                                                              true).first! + "/" + "offline-mp3s"
+        
+        statusLabel = MarqueeLabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
+        statusLabel.font = UIFont.systemFont(ofSize: 12.0)
+        
+        try! FileManager.default.createDirectory(atPath: downloadFolder, withIntermediateDirectories: true, attributes: nil)
     }
     
     public func download(show: CompleteShowInformation) {
@@ -56,10 +62,19 @@ public class RelistenDownloadManager {
     }
     
     let downloadFolder: String
+    let statusLabel: MarqueeLabel
     
     func downloadPath(forTrack: SourceTrack) -> String {
         let filename = MD5(forTrack.mp3_url.absoluteString)! + ".mp3"
         return downloadFolder + "/" + filename
+    }
+    
+    public func offlineURL(forTrack: SourceTrack) -> URL? {
+        if MyLibraryManager.sharedInstance.isTrackAvailableOffline(track: forTrack) {
+            return URL(fileURLWithPath: downloadPath(forTrack: forTrack))
+        }
+        
+        return nil
     }
     
     public func isTrackDownloading(_ track: SourceTrack) -> Bool {
@@ -69,14 +84,19 @@ public class RelistenDownloadManager {
 
 extension RelistenDownloadManager : MZDownloadManagerDelegate {
     public func downloadRequestDidUpdateProgress(_ downloadModel: MZDownloadModel, index: Int) {
-        notificationBar.display(withMessage: "Downloading \"\(downloadModel.fileName)\" \((downloadModel.progress * 100).rounded())% (\(downloadManager.downloadingArray.count - index) left)", completion: nil)
+        let txt = "Downloading \"\(downloadModel.fileName!)\" \((downloadModel.progress * 100.0).rounded())% (\(downloadManager.downloadingArray.count - index) left)"
+        
+        statusLabel.text = txt
+        print(txt)
+        notificationBar.display(with: statusLabel, completion: nil)
     }
     
     public func downloadRequestDidPopulatedInterruptedTasks(_ downloadModel: [MZDownloadModel]) {
-        notificationBar.display(withMessage: "Restoring \(downloadModel.count) downloads", completion: nil)
+        // notificationBar.display(withMessage: "Restoring \(downloadModel.count) downloads", completion: nil)
     }
     
     public func downloadRequestStarted(_ downloadModel: MZDownloadModel, index: Int) {
+        notificationBar.display(with: statusLabel, completion: nil)
         print("Started downloading: \(downloadModel)")
     }
     
@@ -92,6 +112,6 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
     }
     
     public func downloadRequestDestinationDoestNotExists(_ downloadModel: MZDownloadModel, index: Int, location: URL) {
-        print("404: \(index):\(location): \(downloadModel)")
+        try! FileManager.default.moveItem(atPath: location.path, toPath: downloadModel.destinationPath)
     }
 }

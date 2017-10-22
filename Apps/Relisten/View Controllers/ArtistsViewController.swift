@@ -30,21 +30,32 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
     }
     
     func favoritesChanged(ids: Set<Int>) {
-        render()
+        if let data = latestData {
+            let b = BatchUpdates()
+            b.reloadSections.insert(0)
+            
+            layout(batchUpdates: b, layout: {
+                return self.doLayout(forData: data)
+            })
+        }
+    }
+    
+    func doLayout(forData: [ArtistWithCounts]) -> [Section<[Layout]>] {
+        let favArtistIds = MyLibraryManager.sharedInstance.artistIds
+        let toLayout : (ArtistWithCounts) -> ArtistLayout = { ArtistLayout(artist: $0, withFavoritedArtists: favArtistIds) }
+    
+        return [
+            forData.filter({ favArtistIds.contains($0.id) }).sorted(by: { $0.name < $1.name }).map(toLayout).asSection("Favorites"),
+            forData.filter({ $0.featured > 0 }).map(toLayout).asSection("Featured"),
+            forData.map(toLayout).asSection("All \(forData.count) Artists")
+        ]
     }
 
     override var resource: Resource? { get { return api.artists() } }
     
     override func render(forData: [ArtistWithCounts]) {
         layout {
-            let favArtistIds = MyLibraryManager.sharedInstance.artistIds
-            let toLayout : (ArtistWithCounts) -> ArtistLayout = { ArtistLayout(artist: $0, withFavoritedArtists: favArtistIds) }
-            
-            return [
-                forData.filter({ favArtistIds.contains($0.id) }).map(toLayout).asSection("Favorites"),
-                forData.filter({ $0.featured > 0 }).map(toLayout).asSection("Featured"),
-                forData.map(toLayout).asSection("All \(forData.count) Artists")
-            ]
+            return self.doLayout(forData: forData)
         }
     }
     
@@ -62,7 +73,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
             
             var artist: ArtistWithCounts
             if indexPath.section == 0 {
-                artist = d.filter({ favArtistIds.contains($0.id) })[indexPath.row]
+                artist = d.filter({ favArtistIds.contains($0.id) }).sorted(by: { $0.name < $1.name })[indexPath.row]
             }
             else if indexPath.section == 1 {
                 artist = d.filter({ $0.featured > 0 })[indexPath.row]

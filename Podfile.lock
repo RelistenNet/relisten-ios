@@ -21,32 +21,20 @@ PODS:
   - DownloadButton (0.1.0)
   - DWURecyclingAlert (1.0.2)
   - FaveButton (2.0.4)
-  - Firebase/Core (4.4.0):
-    - FirebaseAnalytics (= 4.0.4)
-    - FirebaseCore (= 4.0.9)
-  - Firebase/Firestore (4.4.0):
-    - Firebase/Core
-    - FirebaseFirestore (= 0.9.0)
-  - FirebaseAnalytics (4.0.4):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseAuth (4.3.0):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseCommunity/Auth (0.1.4):
+    - FirebaseCommunity/Core
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.9):
+  - FirebaseCommunity/Core (0.1.4):
+    - FirebaseCommunity/Root
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseFirestore (0.9.0):
-    - FirebaseAnalytics (~> 4.0)
-    - FirebaseAuth (~> 4.3)
-    - FirebaseCore (~> 4.0)
-    - gRPC-ProtoRPC (~> 1.0)
-    - leveldb-library (~> 1.18)
-    - Protobuf (~> 3.1)
-  - FirebaseInstanceID (2.0.5)
+  - FirebaseCommunity/Root (0.1.4)
+  - Firestore (0.1.0):
+    - FirebaseCommunity/Auth
+    - FirebaseCommunity/Core
+    - gRPC-ProtoRPC
+    - leveldb-library
+    - Protobuf
   - GoogleToolboxForMac/DebugUtils (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - GoogleToolboxForMac/Defines (2.1.3)
@@ -108,8 +96,9 @@ DEPENDENCIES:
   - DownloadButton
   - DWURecyclingAlert
   - FaveButton (from `../fave-button`)
-  - Firebase/Core
-  - Firebase/Firestore
+  - FirebaseCommunity/Auth
+  - FirebaseCommunity/Core
+  - Firestore (from `../firebase-ios-sdk/Firestore`)
   - LayoutKit
   - MZDownloadManager
   - NAKPlaybackIndicatorView
@@ -128,6 +117,8 @@ EXTERNAL SOURCES:
     :path: ../gapless-audio-bass-ios
   FaveButton:
     :path: ../fave-button
+  Firestore:
+    :path: ../firebase-ios-sdk/Firestore
   NapySlider:
     :path: ../NapySlider
   Siesta:
@@ -150,12 +141,8 @@ SPEC CHECKSUMS:
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   FaveButton: 271bdd3a1012ef6c667e428bc9754e7d65ca7455
-  Firebase: 3e92884a63e8f76d107c43a67d2ab9071e1eda10
-  FirebaseAnalytics: 722b53c7b32bfc7806b06e0093a2f5180d4f2c5a
-  FirebaseAuth: e0087d479709b20b9613b804704a928d6eafb052
-  FirebaseCore: ebe73f64302705e693b1de9919a76edbdd17a19d
-  FirebaseFirestore: ad1096ea647a8cc60ead57f7c54f5225d54fbd76
-  FirebaseInstanceID: f2b688c66b972f30d7fa9f5f9f91455454a03b47
+  FirebaseCommunity: 158175f2781bd436b75a55d379e0ea61c3feee7d
+  Firestore: 13194843175f50355a5ff51d863ac8ee4cc0af00
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   gRPC: 42f915ce322b1abc5241621acc776f2fdb0a2039
   gRPC-Core: 54211a073d238ec8569be06e1a939a72f081a3e9
@@ -178,6 +165,6 @@ SPEC CHECKSUMS:
   SwiftHash: acf0f29032309a5c7a7f625595eade1aca97aca2
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: f72071b85d03296ff65140f119f457b5fc1332b5
+PODFILE CHECKSUM: 4ed7881062bfce8d09618d9bd0807ff176c17c52
 
 COCOAPODS: 1.4.0.beta.1

@@ -8,7 +8,8 @@
 
 import Foundation
 
-import Firebase
+import FirebaseCommunity
+import Firestore
 import SwiftyJSON
 
 public class ShowWithSourcesArtistContainer {
@@ -57,7 +58,7 @@ public class MyLibrary {
         var s = SwJSON()
         s["shows"] = SwJSON(shows.map({ $0.originalJSON }))
         s["artistIds"] = SwJSON(Array(artistIds))
-        s["offlineTrackURLs"] = SwJSON(Array(offlineTrackURLs))
+        s["offlineTrackURLs"] = SwJSON(Array(offlineTrackURLs).map({ $0.absoluteString }))
 
         return s
     }

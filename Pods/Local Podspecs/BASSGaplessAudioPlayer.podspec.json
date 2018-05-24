@@ -9,7 +9,7 @@
     "Alec Gorge": "alecgorge@gmail.com"
   },
   "platforms": {
-    "ios": "9.0"
+    "ios": "11.0"
   },
   "source": {
     "git": "https://github.com/alecgorge/gapless-audio-bass-ios.git",

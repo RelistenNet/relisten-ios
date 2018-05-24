@@ -16,33 +16,72 @@ open class LabelLayout<Label: UILabel>: BaseLayout<Label>, ConfigurableLayout {
     open let text: Text
     open let font: UIFont
     open let numberOfLines: Int
+    open let lineHeight: CGFloat
 
     public init(text: Text,
-                font: UIFont = defaultFont,
-                numberOfLines: Int = defaultNumberOfLines,
-                alignment: Alignment = defaultAlignment,
-                flexibility: Flexibility = defaultFlexibility,
+                font: UIFont = LabelLayoutDefaults.defaultFont,
+                lineHeight: CGFloat? = nil,
+                numberOfLines: Int = LabelLayoutDefaults.defaultNumberOfLines,
+                alignment: Alignment = LabelLayoutDefaults.defaultAlignment,
+                flexibility: Flexibility = LabelLayoutDefaults.defaultFlexibility,
                 viewReuseId: String? = nil,
                 config: ((Label) -> Void)? = nil) {
         
         self.text = text
         self.numberOfLines = numberOfLines
         self.font = font
+        self.lineHeight = lineHeight ?? font.lineHeight
         super.init(alignment: alignment, flexibility: flexibility, viewReuseId: viewReuseId, config: config)
+    }
+
+    init(attributedString: NSAttributedString,
+         font: UIFont = LabelLayoutDefaults.defaultFont,
+         lineHeight: CGFloat? = nil,
+         numberOfLines: Int = LabelLayoutDefaults.defaultNumberOfLines,
+         alignment: Alignment = LabelLayoutDefaults.defaultAlignment,
+         flexibility: Flexibility = LabelLayoutDefaults.defaultFlexibility,
+         viewReuseId: String? = nil,
+         viewClass: Label.Type? = nil,
+         config: ((Label) -> Void)? = nil) {
+
+        self.text = .attributed(attributedString)
+        self.numberOfLines = numberOfLines
+        self.font = font
+        self.lineHeight = lineHeight ?? font.lineHeight
+        super.init(alignment: alignment, flexibility: flexibility, viewReuseId: viewReuseId, viewClass: viewClass ?? Label.self, config: config)
+    }
+
+    init(string: String,
+         font: UIFont = LabelLayoutDefaults.defaultFont,
+         lineHeight: CGFloat? = nil,
+         numberOfLines: Int = LabelLayoutDefaults.defaultNumberOfLines,
+         alignment: Alignment = LabelLayoutDefaults.defaultAlignment,
+         flexibility: Flexibility = LabelLayoutDefaults.defaultFlexibility,
+         viewReuseId: String? = nil,
+         viewClass: Label.Type? = nil,
+         config: ((Label) -> Void)? = nil) {
+
+        self.text = .unattributed(string)
+        self.numberOfLines = numberOfLines
+        self.font = font
+        self.lineHeight = lineHeight ?? font.lineHeight
+        super.init(alignment: alignment, flexibility: flexibility, viewReuseId: viewReuseId, viewClass: viewClass ?? Label.self, config: config)
     }
 
     // MARK: - Convenience initializers
 
     public convenience init(text: String,
-                            font: UIFont = defaultFont,
-                            numberOfLines: Int = defaultNumberOfLines,
-                            alignment: Alignment = defaultAlignment,
-                            flexibility: Flexibility = defaultFlexibility,
+                            font: UIFont = LabelLayoutDefaults.defaultFont,
+                            lineHeight: CGFloat? = nil,
+                            numberOfLines: Int = LabelLayoutDefaults.defaultNumberOfLines,
+                            alignment: Alignment = LabelLayoutDefaults.defaultAlignment,
+                            flexibility: Flexibility = LabelLayoutDefaults.defaultFlexibility,
                             viewReuseId: String? = nil,
                             config: ((Label) -> Void)? = nil) {
 
         self.init(text: .unattributed(text),
                   font: font,
+                  lineHeight: lineHeight,
                   numberOfLines: numberOfLines,
                   alignment: alignment,
                   flexibility: flexibility,
@@ -51,15 +90,17 @@ open class LabelLayout<Label: UILabel>: BaseLayout<Label>, ConfigurableLayout {
     }
 
     public convenience init(attributedText: NSAttributedString,
-                            font: UIFont = defaultFont,
-                            numberOfLines: Int = defaultNumberOfLines,
-                            alignment: Alignment = defaultAlignment,
-                            flexibility: Flexibility = defaultFlexibility,
+                            font: UIFont = LabelLayoutDefaults.defaultFont,
+                            lineHeight: CGFloat? = nil,
+                            numberOfLines: Int = LabelLayoutDefaults.defaultNumberOfLines,
+                            alignment: Alignment = LabelLayoutDefaults.defaultAlignment,
+                            flexibility: Flexibility = LabelLayoutDefaults.defaultFlexibility,
                             viewReuseId: String? = nil,
                             config: ((Label) -> Void)? = nil) {
 
         self.init(text: .attributed(attributedText),
                   font: font,
+                  lineHeight: lineHeight,
                   numberOfLines: numberOfLines,
                   alignment: alignment,
                   flexibility: flexibility,
@@ -77,7 +118,7 @@ open class LabelLayout<Label: UILabel>: BaseLayout<Label>, ConfigurableLayout {
     private func textSize(within maxSize: CGSize) -> CGSize {
         var size = text.textSize(within: maxSize, font: font)
         if numberOfLines > 0 {
-            let maxHeight = (CGFloat(numberOfLines) * font.lineHeight).roundedUpToFractionalPoint
+            let maxHeight = (CGFloat(numberOfLines) * lineHeight).roundedUpToFractionalPoint
             if size.height > maxHeight {
                 size = CGSize(width: maxSize.width, height: maxHeight)
             }
@@ -110,7 +151,10 @@ open class LabelLayout<Label: UILabel>: BaseLayout<Label>, ConfigurableLayout {
 // MARK: - Things that belong in LabelLayout but aren't because LabelLayout is generic.
 // "Static stored properties not yet supported in generic types"
 
-private let defaultNumberOfLines = 0
-private let defaultFont = UILabel().font ?? UIFont.systemFont(ofSize: 17)
-private let defaultAlignment = Alignment.topLeading
-private let defaultFlexibility = Flexibility.flexible
+public class LabelLayoutDefaults {
+    public static let defaultNumberOfLines = 0
+    public static let defaultFont = UILabel().font ?? UIFont.systemFont(ofSize: 17)
+    public static let defaultAlignment = Alignment.topLeading
+    public static let defaultFlexibility = Flexibility.flexible
+}
+

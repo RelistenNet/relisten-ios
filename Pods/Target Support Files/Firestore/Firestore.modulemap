@@ -1,6 +1,0 @@
-framework module Firestore {
-  umbrella header "Firestore-umbrella.h"
-
-  export *
-  module * { export * }
-}

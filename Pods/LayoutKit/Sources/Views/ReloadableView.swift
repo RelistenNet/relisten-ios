@@ -21,10 +21,10 @@ public protocol ReloadableView: class {
     var bounds: CGRect { get }
 
     /// Returns whether the user has touched the content to initiate scrolling.
-    var tracking: Bool { get }
+    var isTracking: Bool { get }
 
     /// Returns whether the content is moving in the scroll view after the user lifted their finger.
-    var decelerating: Bool { get }
+    var isDecelerating: Bool { get }
 
     /**
      Reloads the data synchronously.
@@ -41,7 +41,7 @@ public protocol ReloadableView: class {
      The reloadable view must follow the same semantics for handling the index paths
      of concurrent inserts/updates/deletes as UICollectionView documents in `performBatchUpdates`.
      */
-    func perform(batchUpdates: BatchUpdates)
+    func perform(batchUpdates: BatchUpdates, completion: (() -> Void)?)
 }
 
 // MARK: - UICollectionView
@@ -49,6 +49,7 @@ public protocol ReloadableView: class {
 /// Make UICollectionView conform to ReloadableView protocol.
 extension UICollectionView: ReloadableView {
 
+    @objc
     open func reloadDataSynchronously() {
         reloadData()
 
@@ -56,13 +57,15 @@ extension UICollectionView: ReloadableView {
         layoutIfNeeded()
     }
 
+    @objc
     open func registerViews(withReuseIdentifier reuseIdentifier: String) {
         register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: reuseIdentifier)
         register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifier)
     }
 
-    open func perform(batchUpdates: BatchUpdates) {
+    @objc
+    open func perform(batchUpdates: BatchUpdates, completion: (() -> Void)?) {
         performBatchUpdates({
             if batchUpdates.insertItems.count > 0 {
                 self.insertItems(at: batchUpdates.insertItems)
@@ -89,7 +92,9 @@ extension UICollectionView: ReloadableView {
             for move in batchUpdates.moveSections {
                 self.moveSection(move.from, toSection: move.to)
             }
-        }, completion: nil)
+        }, completion: { _ in
+            completion?()
+        })
     }
 }
 
@@ -98,16 +103,19 @@ extension UICollectionView: ReloadableView {
 /// Make UITableView conform to ReloadableView protocol.
 extension UITableView: ReloadableView {
 
+    @objc
     open func reloadDataSynchronously() {
         reloadData()
     }
 
+    @objc
     open func registerViews(withReuseIdentifier reuseIdentifier: String) {
         register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: reuseIdentifier)
     }
 
-    open func perform(batchUpdates: BatchUpdates) {
+    @objc
+    open func perform(batchUpdates: BatchUpdates, completion: (() -> Void)?) {
         beginUpdates()
 
         // Update items.
@@ -139,5 +147,7 @@ extension UITableView: ReloadableView {
         }
 
         endUpdates()
+
+        completion?()
     }
 }

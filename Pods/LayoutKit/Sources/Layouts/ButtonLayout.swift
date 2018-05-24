@@ -33,8 +33,8 @@ open class ButtonLayout<Button: UIButton>: BaseLayout<Button>, ConfigurableLayou
                 image: ButtonLayoutImage = .defaultImage,
                 font: UIFont? = nil,
                 contentEdgeInsets: UIEdgeInsets? = nil,
-                alignment: Alignment = defaultAlignment,
-                flexibility: Flexibility = defaultFlexibility,
+                alignment: Alignment = ButtonLayoutDefaults.defaultAlignment,
+                flexibility: Flexibility = ButtonLayoutDefaults.defaultFlexibility,
                 viewReuseId: String? = nil,
                 config: ((Button) -> Void)? = nil) {
 
@@ -44,6 +44,25 @@ open class ButtonLayout<Button: UIButton>: BaseLayout<Button>, ConfigurableLayou
         self.font = font
         self.contentEdgeInsets = contentEdgeInsets ?? ButtonLayout.defaultContentEdgeInsets(for: type, image: image)
         super.init(alignment: alignment, flexibility: flexibility, viewReuseId: viewReuseId, config: config)
+    }
+
+    init(type: ButtonLayoutType,
+         title: String,
+         image: ButtonLayoutImage = .defaultImage,
+         font: UIFont? = nil,
+         contentEdgeInsets: UIEdgeInsets? = nil,
+         alignment: Alignment = ButtonLayoutDefaults.defaultAlignment,
+         flexibility: Flexibility = ButtonLayoutDefaults.defaultFlexibility,
+         viewReuseId: String? = nil,
+         viewClass: Button.Type? = nil,
+         config: ((UIButton) -> Void)? = nil) {
+
+        self.type = type
+        self.title = .unattributed(title)
+        self.image = image
+        self.font = font
+        self.contentEdgeInsets = contentEdgeInsets ?? ButtonLayout.defaultContentEdgeInsets(for: type, image: image)
+        super.init(alignment: alignment, flexibility: flexibility, viewReuseId: viewReuseId, viewClass: viewClass ?? Button.self, config: config)
     }
 
     private static func defaultContentEdgeInsets(for type: ButtonLayoutType, image: ButtonLayoutImage) -> UIEdgeInsets {
@@ -122,7 +141,7 @@ open class ButtonLayout<Button: UIButton>: BaseLayout<Button>, ConfigurableLayou
 
     private var defaultFontForCustomButton: UIFont {
         #if os(tvOS)
-            return UIFont.systemFont(ofSize: 38, weight: UIFontWeightMedium)
+            return UIFont.systemFont(ofSize: 38, weight: UIFont.Weight.medium)
         #else
             return UIFont.systemFont(ofSize: 18)
         #endif
@@ -130,7 +149,7 @@ open class ButtonLayout<Button: UIButton>: BaseLayout<Button>, ConfigurableLayou
 
     private var defaultFontForSystemButton: UIFont {
         #if os(tvOS)
-            return UIFont.systemFont(ofSize: 38, weight: UIFontWeightMedium)
+            return UIFont.systemFont(ofSize: 38, weight: UIFont.Weight.medium)
         #else
             return UIFont.systemFont(ofSize: 15)
         #endif
@@ -291,5 +310,8 @@ public enum ButtonLayoutType {
     }
 }
 
-private let defaultAlignment = Alignment.topLeading
-private let defaultFlexibility = Flexibility.flexible
+public class ButtonLayoutDefaults {
+    public static let defaultAlignment = Alignment.topLeading
+    public static let defaultFlexibility = Flexibility.flexible
+}
+

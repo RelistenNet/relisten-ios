@@ -26,7 +26,7 @@ protocol ReloadableViewUpdateManager {
     weak var operation: Operation? { get }
 
     /// Applies a partial arrangement to the delegate's reloadable view and data source.
-    func apply(partialArrangement arrangement: [Section<[LayoutArrangement]>], insertedIndexPath: IndexPath)
+    func apply(partialArrangement arrangement: [Section<[LayoutArrangement]>], insertedIndexPaths: [IndexPath])
 
     /// Applies the final arrangement to the delegate's reloadable view and data source.
     func apply(finalArrangement arrangement: [Section<[LayoutArrangement]>], batchUpdates: BatchUpdates?, completion: (() -> Void)?)
@@ -65,14 +65,14 @@ class IncrementalUpdateManager: BaseReloadableViewUpdateManager, ReloadableViewU
 
     private var pendingInsertedIndexPaths = [IndexPath]()
 
-    func apply(partialArrangement arrangement: [Section<[LayoutArrangement]>], insertedIndexPath: IndexPath) {
+    func apply(partialArrangement arrangement: [Section<[LayoutArrangement]>], insertedIndexPaths: [IndexPath]) {
         updateReloadableView(waitUntilFinished: false) { (reloadableView: ReloadableView) in
-            self.pendingInsertedIndexPaths.append(insertedIndexPath)
+            self.pendingInsertedIndexPaths += insertedIndexPaths
 
             // Don't modify the data while the view is moving.
             // Doing so causes weird artifacts (i.e. "bouncing" breaks).
             // We will try again on the next loop iteration or when the final arrangement is applied.
-            if reloadableView.tracking || reloadableView.decelerating {
+            if reloadableView.isTracking || reloadableView.isDecelerating {
                 return
             }
 
@@ -111,17 +111,17 @@ class IncrementalUpdateManager: BaseReloadableViewUpdateManager, ReloadableViewU
                     batchUpdates.insertItems.append(pendingInsertedIndexPath)
                 }
             }
-            reloadableView.perform(batchUpdates: batchUpdates)
+            reloadableView.perform(batchUpdates: batchUpdates, completion: nil)
         }
 
-        pendingInsertedIndexPaths.removeAll()
+        pendingInsertedIndexPaths.removeAll(keepingCapacity: true)
     }
 }
 
 /// Only updates the `ReloadableView` with the final arrangement.
 class BatchUpdateManager: BaseReloadableViewUpdateManager, ReloadableViewUpdateManager {
 
-    func apply(partialArrangement arrangement: [Section<[LayoutArrangement]>], insertedIndexPath: IndexPath) {
+    func apply(partialArrangement arrangement: [Section<[LayoutArrangement]>], insertedIndexPaths: [IndexPath]) {
         // Nothing to do here. This update strategy ignores partial arrangements.
     }
 
@@ -137,12 +137,11 @@ class BatchUpdateManager: BaseReloadableViewUpdateManager, ReloadableViewUpdateM
             // Perform the update.
             delegate.currentArrangement = arrangement
             if canBatchUpdate, let batchUpdates = batchUpdates {
-                reloadableView.perform(batchUpdates: batchUpdates)
+                reloadableView.perform(batchUpdates: batchUpdates, completion: completion)
             } else {
                 reloadableView.reloadDataSynchronously()
+                completion?()
             }
-            
-            completion?()
         }
     }
 }

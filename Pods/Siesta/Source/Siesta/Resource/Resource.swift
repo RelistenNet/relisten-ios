@@ -432,7 +432,7 @@ public final class Resource: NSObject
 
         trackRequest(req, in: &loadRequests)
 
-        req.onProgress(notifyObservers)
+        req.onProgress(notifyObservers(ofProgress:))
 
         req.onNewData(receiveNewDataFromNetwork)
         req.onNotModified(receiveDataNotModified)
@@ -471,7 +471,7 @@ public final class Resource: NSObject
     @objc
     public func cancelLoadIfUnobserved(afterDelay delay: TimeInterval, then callback: @escaping () -> Void = {})
         {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05)
             {
             self.cancelLoadIfUnobserved()
             callback()
@@ -624,8 +624,9 @@ public final class Resource: NSObject
       - Sets `latestData` to nil.
       - Sets `latestError` to nil.
       - Cancels all resource requests in progress.
+      - Triggers a cache fetch if there is a persistent cache configured for this resource.
 
-      Observers receive a `newData` event. Requests in progress call completion hooks with a cancellation error.
+      Observers receive a `newData(.wipe)` event. Requests in progress call completion hooks with a cancellation error.
 
       - SeeAlso: `invalidate()`
     */

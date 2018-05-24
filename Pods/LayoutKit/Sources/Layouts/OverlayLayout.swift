@@ -49,6 +49,18 @@ open class OverlayLayout<V: View>: BaseLayout<V> {
         super.init(alignment: alignment, flexibility: primary.flexibility, viewReuseId: viewReuseId, config: config)
     }
 
+    init(primary: Layout,
+         background: [Layout] = [],
+         overlay: [Layout] = [],
+         alignment: Alignment = .fill,
+         viewReuseId: String? = nil,
+         viewClass: V.Type? = nil,
+         config: ((V) -> Void)? = nil) {
+        self.primary = primary
+        self.background = background
+        self.overlay = overlay
+        super.init(alignment: alignment, flexibility: primary.flexibility, viewReuseId: viewReuseId, viewClass: viewClass ?? V.self, config: config)
+    }
 }
 
 // MARK: - Layout interface
@@ -62,8 +74,8 @@ extension OverlayLayout: ConfigurableLayout {
         let measuredSublayout = primary.measurement(within: maxSize)
 
         // Measure the background and overlay layouts
-        let measuredBackgroundLayouts = background.map { $0.measurement(within: measuredSublayout.size) }
-        let measuredOverlayLayouts = overlay.map { $0.measurement(within: measuredSublayout.size) }
+        let measuredBackgroundLayouts = background.map { $0.measurement(within: measuredSublayout.maxSize) }
+        let measuredOverlayLayouts = overlay.map { $0.measurement(within: measuredSublayout.maxSize) }
         let measuredSublayouts = Array([measuredBackgroundLayouts, [measuredSublayout], measuredOverlayLayouts].joined())
         return LayoutMeasurement(layout: self, size: measuredSublayout.size, maxSize: maxSize, sublayouts: measuredSublayouts)
     }

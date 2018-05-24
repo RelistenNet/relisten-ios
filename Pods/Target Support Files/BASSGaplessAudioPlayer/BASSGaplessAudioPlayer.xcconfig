@@ -1,6 +1,5 @@
 CONFIGURATION_BUILD_DIR = ${PODS_CONFIGURATION_BUILD_DIR}/BASSGaplessAudioPlayer
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Reveal-SDK"
 LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/../../gapless-audio-bass-ios/BASS Audio Test"
 OTHER_LDFLAGS = $(inherited) -l"bass" -l"bass_fx" -l"bassmix" -l"stdc++" -framework "AVFoundation" -framework "Accelerate" -framework "AudioToolbox" -framework "CFNetwork" -framework "SystemConfiguration"
 PODS_BUILD_DIR = ${BUILD_DIR}

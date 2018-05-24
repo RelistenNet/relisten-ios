@@ -39,6 +39,52 @@ public class PlaybackController {
         viewController.delegate = self
         
         viewController.loadViewIfNeeded()
+        
+        trackStartedHandler = RelistenDownloadManager.shared.eventTrackStartedDownloading.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTrack)
+        tracksQueuedHandler = RelistenDownloadManager.shared.eventTracksQueuedToDownload.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTracks)
+        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTrack)
+        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTracks)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
+    var trackStartedHandler: Disposable?
+    var tracksQueuedHandler: Disposable?
+    var trackFinishedHandler: Disposable?
+    var tracksDeletedHandler: Disposable?
+    var trackPlaybackChangedHandler: Disposable?
+    
+    deinit {
+        for handler in [trackStartedHandler, tracksQueuedHandler, trackFinishedHandler, tracksDeletedHandler, trackPlaybackChangedHandler] {
+            handler?.dispose()
+        }
+    }
+    
+    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+        if let _ = playbackQueue.findSourceTrackAudioItem(forCompleteTrack: track) {
+            viewController.tableReloadData()
+        }
+    }
+    
+    func relayoutIfCompleteContainsTrack(_ complete: CompleteTrackShowInformation?) {
+        if complete == nil {
+            viewController.tableReloadData()
+            return
+        }
+        
+        if let c = complete, let _ = playbackQueue.findSourceTrackAudioItem(forCompleteTrack: c) {
+            viewController.tableReloadData()
+        }
+    }
+    
+    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+        for track in tracks {
+            if let _ = playbackQueue.findSourceTrackAudioItem(forCompleteTrack: track) {
+                viewController.tableReloadData()
+            }
+        }
     }
     
     public func displayMini(on vc: UIViewController, completion: (() -> Void)?) {

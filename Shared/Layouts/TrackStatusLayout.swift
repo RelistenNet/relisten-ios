@@ -140,10 +140,13 @@ public class TrackStatusLayout : InsetLayout<UIView> {
             stack.append(l)
         }
         
-        var potentialLayout: Layout? = nil
+        var potentialOfflineLayout: Layout? = nil
         
-        if track.track.isAvailableOffline || track.track.isQueuedToDownload || track.track.isActivelyDownloading {
-            potentialLayout = SizeLayout<UIImageView>(
+        let availableOffline = track.track.isAvailableOffline
+        let activelyDownloading = track.track.isActivelyDownloading
+        
+        if availableOffline || track.track.isQueuedToDownload || activelyDownloading {
+            potentialOfflineLayout = SizeLayout<UIImageView>(
                 minWidth: 12,
                 maxWidth: nil,
                 minHeight: 12,
@@ -153,9 +156,9 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                 viewReuseId: "track",
                 sublayout: nil,
                 config: { imageV in
-                    imageV.image = track.track.isAvailableOffline ? UIImage(named: "download-complete") : UIImage(named: "download-active")
+                    imageV.image = availableOffline ? UIImage(named: "download-complete") : UIImage(named: "download-active")
                     
-                    if track.track.isActivelyDownloading {
+                    if activelyDownloading {
                         imageV.alpha = 1.0
                         UIView.animate(withDuration: 1.0,
                                        delay: 0,
@@ -172,23 +175,8 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                     }
             })
         }
-        else if track.track.isActivelyDownloading {
-            potentialLayout = SizeLayout<UIActivityIndicatorView>(
-                minWidth: 12,
-                maxWidth: nil,
-                minHeight: 12,
-                maxHeight: nil,
-                alignment: Alignment.center,
-                flexibility: Flexibility.inflexible,
-                viewReuseId: "trackDownloadIndicator",
-                sublayout: nil,
-                config: { spinner in
-                    spinner.transform = CGAffineTransform.init(scaleX: 0.6, y: 0.6)
-                    spinner.startAnimating()
-            })
-        }
         
-        if let p = potentialLayout {
+        if let p = potentialOfflineLayout, !showingArtistInformation {
             stack.append(InsetLayout(insets: EdgeInsets(top: 0, left: 0, bottom: 0, right: 8), sublayout: p))
         }
         
@@ -213,13 +201,28 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                 config: nil
             )
             
+            var subs: [Layout] = [
+                trackTitleLabel
+            ]
+            
+            if let p = potentialOfflineLayout {
+                subs.append(StackLayout(
+                    axis: .horizontal,
+                    spacing: 4,
+                    sublayouts: [
+                        p,
+                        artistInfoLabel
+                    ]
+                ))
+            }
+            else {
+                subs.append(artistInfoLabel)
+            }
+            
             stack.append(StackLayout(
                 axis: .vertical,
                 spacing: 4,
-                sublayouts: [
-                    trackTitleLabel,
-                    artistInfoLabel
-                ]
+                sublayouts: subs
             ))
         }
         else {

@@ -54,6 +54,20 @@ public class SourceTrackAudioItem : AGAudioItem {
     }
 }
 
+extension AGAudioPlayerUpNextQueue {
+    public func findSourceTrackAudioItem(forCompleteTrack track: CompleteTrackShowInformation) -> SourceTrackAudioItem? {
+        for item in queue {
+            if let st = item as? SourceTrackAudioItem {
+                if st.relisten == track {
+                    return st
+                }
+            }
+        }
+        
+        return nil
+    }
+}
+
 extension Show {
     public func correctVenue(withFallback: Venue?) -> Venue? {
         if let v = self.venue {

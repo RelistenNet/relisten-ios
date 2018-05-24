@@ -32,10 +32,10 @@ public class TrackActions {
             PlaybackController.sharedInstance.playbackQueue.append(ai)
         }))
         
-        MyLibraryManager.shared.library.diskUsageForTrack(track: info.track.track) { (size) in
+        MyLibraryManager.shared.library.diskUsageForTrack(track: info) { (size) in
             if let s = size {
                 a.addAction(UIAlertAction(title: "Remove Downloaded File" + " (\(s.humanizeBytes()))", style: .default, handler: { _ in
-                    RelistenDownloadManager.shared.delete(track: info.track.track, saveOffline: true)
+                    RelistenDownloadManager.shared.delete(track: info, saveOffline: true)
                 }))
             }
             else {
@@ -60,7 +60,9 @@ public class TrackActions {
     }
     
     public static func download(_ trackStatus: TrackStatus, inShow: CompleteShowInformation) {
-        RelistenDownloadManager.shared.download(track: trackStatus.track)
+        let t = CompleteTrackShowInformation(track: trackStatus, source: inShow.source, show: inShow.show, artist: inShow.artist)
+        
+        RelistenDownloadManager.shared.download(track: t)
     }
     
     public static func play(trackAtIndexPath idx: IndexPath, inShow info: CompleteShowInformation, fromViewController vc: UIViewController) {

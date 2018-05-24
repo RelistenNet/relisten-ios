@@ -39,7 +39,7 @@ public class SourceTrackAudioItem : AGAudioItem {
         self.displayText = track.title
         self.displaySubtext = "\(byArtist.name) — \(album)"
         
-        if let offlineURL = RelistenDownloadManager.shared.offlineURL(forTrack: track) {
+        if let offlineURL = RelistenDownloadManager.shared.offlineURL(forTrack: relisten) {
             self.playbackURL = offlineURL
         }
         else {

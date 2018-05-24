@@ -80,7 +80,17 @@ public class CompleteShowInformation : ICompleteShowInformation, Codable {
     }
 }
 
-public struct CompleteTrackShowInformation : ICompleteShowInformation {
+public struct CompleteTrackShowInformation : ICompleteShowInformation, Codable, Hashable {
+    public var hashValue: Int {
+        return track.track.mp3_url.hashValue ^ artist.id.hashValue ^ show.display_date.hashValue
+    }
+    
+    public static func == (lhs: CompleteTrackShowInformation, rhs: CompleteTrackShowInformation) -> Bool {
+        return lhs.artist.id == rhs.artist.id
+            && lhs.show.display_date == rhs.show.display_date
+            && lhs.track.track.mp3_url == rhs.track.track.mp3_url
+    }
+    
     public let track: TrackStatus
     public let source: SourceFull
     public let show: Show

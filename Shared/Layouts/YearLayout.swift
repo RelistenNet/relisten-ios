@@ -8,6 +8,21 @@ import UIKit
 import LayoutKit
 import AXRatingView
 
+public func RelistenMakeOfflineExistsIndicator() -> Layout {
+    return SizeLayout<UIImageView>(
+        minWidth: 12,
+        maxWidth: nil,
+        minHeight: 12,
+        maxHeight: nil,
+        alignment: Alignment.center,
+        flexibility: Flexibility.inflexible,
+        viewReuseId: "offlineIndicator",
+        sublayout: nil,
+        config: { imageV in
+            imageV.image = UIImage(named: "download-complete")
+    })
+}
+
 public class YearLayout : InsetLayout<UIView> {
     internal static var ratingViewStub: AXRatingView? = nil
 
@@ -62,6 +77,8 @@ public class YearLayout : InsetLayout<UIView> {
             alignment: .centerTrailing,
             viewReuseId: "sourcesCount"
         )
+        
+        let hasOffline = MyLibraryManager.shared.library.isYearAtLeastPartiallyAvailableOffline(year)
 
         super.init(
             insets: EdgeInsets(top: 8, left: 16, bottom: 12, right: 16 + 8 + 8),
@@ -79,7 +96,12 @@ public class YearLayout : InsetLayout<UIView> {
                     ),
                     StackLayout(
                         axis: .horizontal,
-                        sublayouts: [
+                        spacing: 8,
+                        sublayouts: hasOffline ? [
+                            RelistenMakeOfflineExistsIndicator(),
+                            showsLabel,
+                            sourcesLabel
+                        ] : [
                             showsLabel,
                             sourcesLabel
                         ]

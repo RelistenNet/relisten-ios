@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TrackStatus {
+public class TrackStatus : Codable {
     public let track: SourceTrack
     
     public var isPlaying: Bool {

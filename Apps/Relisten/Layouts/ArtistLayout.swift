@@ -98,6 +98,8 @@ public class ArtistLayout : InsetLayout<UIView> {
             viewReuseId: "sourcesCount"
         )
         
+        let hasOffline = MyLibraryManager.shared.library.isArtistAtLeastPartiallyAvailableOffline(artist)
+        
         let rows = StackLayout(
             axis: .vertical,
             spacing: 4,
@@ -105,14 +107,17 @@ public class ArtistLayout : InsetLayout<UIView> {
             sublayouts: [
                 StackLayout(
                     axis: .horizontal,
-                    sublayouts: [
-                        artistName,
-                        // favoriteButton
-                    ]
+                    spacing: 0,
+                    sublayouts: [artistName]
                 ),
                 StackLayout(
                     axis: .horizontal,
-                    sublayouts: [
+                    spacing: 4,
+                    sublayouts: hasOffline ? [
+                        RelistenMakeOfflineExistsIndicator(),
+                        showsLabel,
+                        sourcesLabel
+                    ] : [
                         showsLabel,
                         sourcesLabel
                     ]

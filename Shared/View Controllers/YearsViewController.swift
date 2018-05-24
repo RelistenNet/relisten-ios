@@ -37,6 +37,30 @@ class YearsViewController: RelistenTableViewController<[Year]> {
         super.viewDidLoad()
         
         title = "Years"
+
+        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: YearsViewController.relayoutIfContainsTrack)
+        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: YearsViewController.relayoutIfContainsTracks)
+    }
+    
+    var trackFinishedHandler: Disposable?
+    var tracksDeletedHandler: Disposable?
+    
+    deinit {
+        for handler in [trackFinishedHandler, tracksDeletedHandler] {
+            handler?.dispose()
+        }
+    }
+    
+    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+        if artist.id == track.artist.id, let d = latestData {
+            render(forData: d)
+        }
+    }
+    
+    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+        if sinq(tracks).any({ $0.artist.id == artist.id }), let d = latestData {
+            render(forData: d)
+        }
     }
     
     override var resource: Resource? { get { return api.years(byArtist: artist) } }

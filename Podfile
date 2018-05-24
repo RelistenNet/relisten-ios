@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 target 'Relisten' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
@@ -9,9 +9,9 @@ target 'Relisten' do
   pod 'Siesta/Core', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
-  pod 'Cache', '3.3.0'
-  pod 'ReachabilitySwift', '~> 3'
-  pod 'ActionKit', '~> 2.0'
+  pod 'Cache'
+  pod 'ReachabilitySwift'
+  pod 'ActionKit'
 
   pod 'NapySlider', :path => '../NapySlider'
   pod 'BASSGaplessAudioPlayer', :path => '../gapless-audio-bass-ios'
@@ -21,9 +21,11 @@ target 'Relisten' do
 # pod 'Firebase/Auth'
 # pod 'Firebase/RemoteConfig'
 # pod 'Firebase/DynamicLinks'
-  pod 'FirebaseCommunity/Core'
-  pod 'FirebaseCommunity/Auth'
-  pod 'Firestore', :path => '../firebase-ios-sdk/Firestore'
+  pod 'Firebase' # To enable Firebase module, with `@import Firebase` support
+  pod 'FirebaseCore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
+  pod 'FirebaseAuth', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
+  pod 'FirebaseDatabase', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
+  pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
 # pod 'Firebase/Messaging'
 
   pod "DownloadButton"
@@ -37,8 +39,10 @@ target 'Relisten' do
   pod 'SINQ'
   pod 'Reveal-SDK', :configurations => ['Debug']
   
-  pod "MZDownloadManager"
+  pod "MZDownloadManager", :git => "https://github.com/alecgorge/MZDownloadManager.git"
+  pod 'AsyncSwift'
   pod 'CWStatusBarNotification'
+  # pod 'SpinnerView'
 
   # pod 'BFNavigationBarDrawer'
   target 'PhishOD' do

@@ -18,8 +18,8 @@ public class SourceDetailsLayout : InsetLayout<UIView> {
         let regularFont = UIFont.preferredFont(forTextStyle: .subheadline)
         let boldFont = regularFont.font(scaledBy: 1.0, withDifferentWeight: .Bold)
         
-        mut.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(0, prefix.characters.count))
-        mut.addAttribute(NSFontAttributeName, value: regularFont, range: NSMakeRange(prefix.characters.count, text == nil ? 0 : text!.characters.count))
+        mut.addAttribute(NSAttributedStringKey.font, value: boldFont, range: NSMakeRange(0, prefix.count))
+        mut.addAttribute(NSAttributedStringKey.font, value: regularFont, range: NSMakeRange(prefix.count, text == nil ? 0 : text!.count))
         
         return mut
     }

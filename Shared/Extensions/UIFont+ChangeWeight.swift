@@ -13,15 +13,15 @@ public enum FontWeight {
     
     var asFontWeightTraitValue: CGFloat {
         switch self {
-        case .UltraLight: return UIFontWeightUltraLight
-        case .Thin: return UIFontWeightThin
-        case .Light: return UIFontWeightLight
-        case .Regular: return UIFontWeightRegular
-        case .Medium: return UIFontWeightMedium
-        case .Semibold: return UIFontWeightSemibold
-        case .Bold: return UIFontWeightBold
-        case .Heavy: return UIFontWeightHeavy
-        case .Black: return UIFontWeightBlack
+        case .UltraLight: return UIFont.Weight.ultraLight.rawValue
+        case .Thin: return UIFont.Weight.thin.rawValue
+        case .Light: return UIFont.Weight.light.rawValue
+        case .Regular: return UIFont.Weight.regular.rawValue
+        case .Medium: return UIFont.Weight.medium.rawValue
+        case .Semibold: return UIFont.Weight.semibold.rawValue
+        case .Bold: return UIFont.Weight.bold.rawValue
+        case .Heavy: return UIFont.Weight.heavy.rawValue
+        case .Black: return UIFont.Weight.black.rawValue
         }
     }
 }
@@ -35,7 +35,14 @@ public extension UIFont {
         var attributes = fontDescriptor.fontAttributes
 
         if let newWeight = withDifferentWeight {
-            attributes[UIFontWeightTrait] = newWeight.asFontWeightTraitValue
+            let traits = attributes[.traits] as? [UIFontDescriptor.TraitKey: Any]
+            
+            if var t = traits {
+                t[.weight] = newWeight.asFontWeightTraitValue
+            }
+            else {
+                attributes[.traits] = [UIFontDescriptor.TraitKey.weight: newWeight.asFontWeightTraitValue]
+            }
         }
         
         let descriptor = UIFontDescriptor(fontAttributes: attributes)

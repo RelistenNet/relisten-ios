@@ -9,7 +9,7 @@
 import UIKit
 
 import Siesta
-import FirebaseCommunity
+import Firebase
 import DWURecyclingAlert
 
 // public var FirebaseRemoteConfig: RemoteConfig! = nil
@@ -36,13 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // FirebaseRemoteConfig.setDefaults(["api_base": "https://api.relisten.live" as NSObject])
         
         if let u = Auth.auth().currentUser {
-            MyLibraryManager.sharedInstance.onUserSignedIn(u)
+            MyLibraryManager.shared.onUserSignedIn(u)
         }
         else {
             print("No current user. Signing in.")
             Auth.auth().signInAnonymously(completion: { (u, err) in
                 if let user = u {
-                    MyLibraryManager.sharedInstance.onUserSignedIn(user)
+                    MyLibraryManager.shared.onUserSignedIn(user.user)
                 }
                 print("Signed into Firebase: \(String(describing: u)) \(String(describing: err))")
             })
@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if #available(iOS 11.0, *) {
             nav.navigationBar.prefersLargeTitles = true
-            nav.navigationBar.largeTitleTextAttributes = [NSForegroundColorAttributeName: AppColors.textOnPrimary]
+            nav.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
         }
         
         window?.rootViewController = nav
@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PlaybackController.window = window
         
         DispatchQueue.main.async {
-            let _ = RelistenDownloadManager.sharedInstance
+            let _ = RelistenDownloadManager.shared
         }
     }
     
@@ -86,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().backgroundColor = AppColors.textOnPrimary
         UINavigationBar.appearance().tintColor = AppColors.textOnPrimary
         UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: AppColors.textOnPrimary]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
         
         UIToolbar.appearance().backgroundColor = AppColors.primary
         UIToolbar.appearance().tintColor = AppColors.textOnPrimary
@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIButton.appearance().tintColor = AppColors.primary
         UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = AppColors.textOnPrimary
         
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: AppColors.textOnPrimary], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary], for: .normal)
         
         UISegmentedControl.appearance().tintColor = AppColors.primary
         UITabBar.appearance().tintColor = AppColors.primary

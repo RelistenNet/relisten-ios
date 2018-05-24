@@ -161,7 +161,7 @@ public class RelistenMenuView : UIView {
         layoutSubviews(forWidth: 320)
     }
     
-    public func submenuItemTapped(_ sender: UIButton?) {
+    @objc public func submenuItemTapped(_ sender: UIButton?) {
         guard let btn = sender, let item = decodeMenuItem(forTag: btn.tag) else {
             return
         }
@@ -194,7 +194,7 @@ public class RelistenMenuView : UIView {
         
     }
     
-    public func menuItemTapped(_ sender: UIButton?) {
+    @objc public func menuItemTapped(_ sender: UIButton?) {
         guard let btn = sender, let _ = decodeCategory(forTag: btn.tag) else {
             return
         }

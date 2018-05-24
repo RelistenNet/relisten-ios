@@ -141,8 +141,8 @@ open class RelistenResourceStatusOverlay: UIView, ResourceObserver
         {
             var bounds = parentVC.view.bounds
 #if !os(OSX)
-            let top = parentVC.topLayoutGuide.length,
-                    bot = parentVC.bottomLayoutGuide.length
+            let top = parentVC.view.safeAreaInsets.top,
+                    bot = parentVC.view.safeAreaInsets.bottom
             bounds.origin.y += top
             bounds.size.height -= top + bot
 #endif
@@ -255,7 +255,7 @@ open class RelistenResourceStatusOverlay: UIView, ResourceObserver
                 { return showSuccess() }
 
             case .error:
-                if let error = observedResources.flatMap({ $0.latestError }).first
+                if let error = observedResources.compactMap({ $0.latestError }).first
                 { return showError(error) }
             }
         }

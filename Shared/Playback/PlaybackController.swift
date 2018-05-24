@@ -10,11 +10,19 @@ import Foundation
 
 import AGAudioPlayer
 
+extension AGAudioPlayerViewController : TrackStatusActionHandler {
+    public func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation) {
+        TrackActions.showActionOptions(fromViewController: self, forTrack: track)
+    }
+}
+
 public class PlaybackController {
     public let playbackQueue: AGAudioPlayerUpNextQueue
     public let player: AGAudioPlayer
     public let viewController: AGAudioPlayerViewController
     public let shrinker: PlaybackMinibarShrinker
+    
+    public let eventTrackPlaybackChanged = Event<CompleteTrackShowInformation?>()
     
     public static var window: UIWindow? = nil
     
@@ -27,7 +35,9 @@ public class PlaybackController {
         
         shrinker = PlaybackMinibarShrinker(window: PlaybackController.window, barHeight: viewController.barHeight)
         viewController.presentationDelegate = self
-
+        viewController.cellDataSource = self
+        viewController.delegate = self
+        
         viewController.loadViewIfNeeded()
     }
     
@@ -88,7 +98,7 @@ public class PlaybackController {
         }, completion: completion)
     }
     
-    private var hasBarBeenAdded = false
+    public private(set) var hasBarBeenAdded = false
     public func addBarIfNeeded() {
         if !hasBarBeenAdded, let w = PlaybackController.window {
             viewController.viewWillAppear(true)
@@ -119,6 +129,8 @@ public class PlaybackController {
             hasBarBeenAdded = true
         }
     }
+
+    private var cellContentViewWidth: CGFloat = CGFloat(0)
 }
 
 extension PlaybackController : AGAudioPlayerViewControllerPresentationDelegate {
@@ -251,3 +263,66 @@ public class PlaybackMinibarShrinker: NSObject, UINavigationControllerDelegate {
         scrollView.scrollIndicatorInsets = edges
     }
 }
+
+extension PlaybackController : AGAudioPlayerViewControllerDelegate {
+    public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, trackChangedState audioItem: AGAudioItem?) {
+        let completeInfo = (audioItem as? SourceTrackAudioItem)?.relisten
+
+        eventTrackPlaybackChanged.raise(data: completeInfo)
+    }
+    
+    public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, changedTrackTo audioItem: AGAudioItem?) {
+        let completeInfo = (audioItem as? SourceTrackAudioItem)?.relisten
+
+        eventTrackPlaybackChanged.raise(data: completeInfo)
+    }
+    
+    public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedDotsForAudioItem audioItem: AGAudioItem) {
+        let completeInfo = (audioItem as! SourceTrackAudioItem).relisten
+        
+        TrackActions.showActionOptions(fromViewController: agAudio, forTrack: completeInfo)
+    }
+    
+    public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedPlusForAudioItem audioItem: AGAudioItem) {
+        
+    }
+    
+    
+}
+
+extension PlaybackController : AGAudioPlayerViewControllerCellDataSource {
+    public func cell(inTableView tableView: UITableView, basedOnCell cell: UITableViewCell, atIndexPath: IndexPath, forPlaybackItem playbackItem: AGAudioItem, isCurrentlyPlaying: Bool) -> UITableViewCell {
+        let completeInfo = (playbackItem as! SourceTrackAudioItem).relisten
+        
+        let layout = TrackStatusLayout(
+            withTrack: completeInfo,
+            withHandler: viewController,
+            usingExplicitTrackNumber: atIndexPath.row + 1,
+            showingArtistInformation: true
+        )
+        
+        cellContentViewWidth = cell.contentView.frame.size.width
+        
+        layout
+            .arrangement(width: cellContentViewWidth, height: nil)
+            .makeViews(in: cell.contentView, direction: .leftToRight)
+        
+        return cell
+    }
+    
+    public func heightForCell(inTableView tableView: UITableView, atIndexPath: IndexPath, forPlaybackItem playbackItem: AGAudioItem, isCurrentlyPlaying: Bool) -> CGFloat {
+        let completeInfo = (playbackItem as! SourceTrackAudioItem).relisten
+        
+        let layout = TrackStatusLayout(
+            withTrack: completeInfo,
+            withHandler: viewController,
+            usingExplicitTrackNumber: atIndexPath.row + 1,
+            showingArtistInformation: true
+        )
+        
+        return layout
+            .arrangement(width: cellContentViewWidth, height: nil)
+            .frame.height
+    }
+}
+

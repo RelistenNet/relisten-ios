@@ -10,26 +10,14 @@ import Foundation
 
 import Cache
 
-extension RelistenObject : Cachable {
-    public typealias CacheType = RelistenObject
-    
-    public static func decode(_ data: Data) -> RelistenObject? {
-        do {
-            return try self.init(json: SwJSON(data: data))
-        }
-        catch {
-            print("whoa. invalid item in the cache?!")
-            return nil
-        }
+extension RelistenObject : Codable {
+    enum CodingKeys: String, CodingKey
+    {
+        case originalJson
     }
     
-    public func encode() -> Data? {
-        do {
-            return try self.toData()
-        }
-        catch {
-            print("whoa. unable to cache item!?")
-            return nil
-        }
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(toData(), forKey: .originalJson)
     }
 }

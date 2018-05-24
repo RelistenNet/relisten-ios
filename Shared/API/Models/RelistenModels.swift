@@ -27,6 +27,14 @@ public class RelistenObject {
         originalJSON = json
     }
     
+    public convenience required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let data = try values.decode(Data.self, forKey: .originalJson)
+        
+        try self.init(json: SwJSON(data: data))
+    }
+    
+    
     public func toPrettyJSONString() -> String {
         return originalJSON.rawString(.utf8, options: .prettyPrinted)!
     }

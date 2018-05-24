@@ -11,29 +11,38 @@ import Foundation
 import Siesta
 import Cache
 
+let PersistentCacheDirectory = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                                                        FileManager.SearchPathDomainMask.userDomainMask,
+                                                                                        true).first! + "/")
+
 class RelistenJsonCache : EntityCache {
     typealias Key = String
     
     static let cacheName = "RelistenApiCache"
     
-    let cacheConfig = Config(
+    let diskCacheConfig = DiskConfig(
+        name: RelistenJsonCache.cacheName,
+        
         expiry: .never,
         
-        // max objects to hold in cache at once
-        memoryCountLimit: 100,
-        
         // 100 MB max data cache
-        maxDiskSize: 1024 * 1024 * 100,
+        maxSize: 1024 * 1024 * 100,
         
-        cacheDirectory: NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                            FileManager.SearchPathDomainMask.userDomainMask,
-                                                            true).first! + "/" + cacheName
+        directory: PersistentCacheDirectory
     )
     
-    let backingCache: SpecializedCache<Entity<Any>>
+    let memoryCacheConfig = MemoryConfig(
+        expiry: .never,
+        countLimit: 100,
+        
+        // 100MB
+        totalCostLimit: 1024 * 1024 * 100
+    )
+    
+    let backingCache: Storage
     
     init() {
-        backingCache = SpecializedCache<Entity<Any>>(name: RelistenJsonCache.cacheName, config: self.cacheConfig)
+        backingCache = try! Storage(diskConfig: diskCacheConfig, memoryConfig: memoryCacheConfig)
     }
     
     func key(for resource: Resource) -> String? {
@@ -41,11 +50,22 @@ class RelistenJsonCache : EntityCache {
     }
     
     func readEntity(forKey key: String) -> Entity<Any>? {
-        let val = backingCache.object(forKey: key)
-        
-        print("[cache] readEntity(forKey \(key)) = *snip*")//\(String(describing: val))")
-        
-        return val
+        do {
+            let val = try backingCache.object(ofType: Entity<Any>.self, forKey: key)
+            
+            print("[cache] readEntity(forKey \(key)) = *snip*")//\(String(describing: val))")
+            
+            return val
+        }
+        catch {
+            if let sError = error as? StorageError {
+                if sError != StorageError.notFound {
+                    print(error)
+                }
+            }
+            
+            return nil
+        }
     }
     
     func writeEntity(_ entity: Entity<Any>, forKey key: String) {
@@ -58,7 +78,7 @@ class RelistenJsonCache : EntityCache {
         }
         
         do {
-            try backingCache.addObject(entity, forKey: key)
+            try backingCache.setObject(entity, forKey: key)
         }
         catch {
             print("error caching entity!")
@@ -77,9 +97,44 @@ class RelistenJsonCache : EntityCache {
     }
 }
 
-extension Entity : Cachable {
-    public typealias CacheType = Entity
+enum EntityCodableError: Error {
+    case contentNotSwJSON
+}
+
+extension Entity : Codable {
+    enum CodingKeys: String, CodingKey
+    {
+        case content
+        case charset
+        case headers
+        case timestamp
+    }
     
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.init(
+            content: SwJSON(try values.decode(Data.self, forKey: .content)) as! ContentType,
+            charset: try values.decode(String.self, forKey: .charset),
+            headers: try values.decode(Dictionary.self, forKey: .headers),
+            timestamp: try values.decode(TimeInterval.self, forKey: .timestamp)
+        )
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        guard let json = content as? SwJSON else {
+            throw EntityCodableError.contentNotSwJSON
+        }
+
+        try container.encode(json.rawData(), forKey: .content)
+        try container.encode(charset, forKey: .charset)
+        try container.encode(headers, forKey: .headers)
+        try container.encode(timestamp, forKey: .timestamp)
+    }
+    
+    /*
     public static func decode(_ data: Data) -> Entity<ContentType>? {
         let json = SwJSON(data: data)
         
@@ -105,4 +160,5 @@ extension Entity : Cachable {
         
         return try! j.rawData()
     }
+    */
 }

@@ -9,6 +9,7 @@
 import Foundation
 
 import SwiftyJSON
+import SINQ
 
 public enum FlacType : String {
     case NoFlac = "NoFlac"
@@ -130,6 +131,10 @@ public class SourceFull : Source {
         
         try super.init(json: json)
     }
+    
+    public var tracksFlattened: [SourceTrack] {
+        return sinq(sets).selectMany({ $0.tracks }).toArray()
+    }
 }
 
 extension SourceFull {
@@ -186,7 +191,15 @@ public class SourceSet : RelistenObject {
     }
 }
 
-public class SourceTrack : RelistenObject {
+public class SourceTrack : RelistenObject, Hashable {
+    public var hashValue: Int {
+        return mp3_url.hashValue ^ id.hashValue
+    }
+    
+    public static func == (lhs: SourceTrack, rhs: SourceTrack) -> Bool {
+        return lhs.mp3_url == rhs.mp3_url
+    }
+    
     public let source_id: Int
     public let source_set_id: Int
     

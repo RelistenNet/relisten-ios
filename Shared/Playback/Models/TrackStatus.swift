@@ -19,8 +19,21 @@ public class TrackStatus {
     
     public var isActiveTrack: Bool {
         get {
-            return PlaybackController.sharedInstance.player.currentItem?.playbackURL == track.mp3_url
+            let relisten = (PlaybackController.sharedInstance.player.currentItem as? SourceTrackAudioItem)?.relisten
+            return relisten?.track.track.mp3_url == track.mp3_url
         }
+    }
+    
+    public var isActivelyDownloading: Bool {
+        return RelistenDownloadManager.shared.isTrackActivelyDownloading(track)
+    }
+    
+    public var isQueuedToDownload: Bool {
+        return RelistenDownloadManager.shared.isTrackQueuedToDownload(track)
+    }
+    
+    public var isAvailableOffline: Bool {
+        return MyLibraryManager.shared.library.isTrackAvailableOffline(track: track)
     }
     
     public init(forTrack: SourceTrack) {

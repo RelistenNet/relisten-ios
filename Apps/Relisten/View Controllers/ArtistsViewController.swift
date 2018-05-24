@@ -20,7 +20,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
         
         title = "Relisten"
         
-        artistIdChangedEventHandler = MyLibraryManager.sharedInstance.favoriteArtistIdsChanged.addHandler(target: self, handler: ArtistsViewController.favoritesChanged)
+        artistIdChangedEventHandler = MyLibraryManager.shared.favoriteArtistIdsChanged.addHandler(target: self, handler: ArtistsViewController.favoritesChanged)
     }
     
     deinit {
@@ -41,7 +41,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
     }
     
     func doLayout(forData: [ArtistWithCounts]) -> [Section<[Layout]>] {
-        let favArtistIds = MyLibraryManager.sharedInstance.artistIds
+        let favArtistIds = MyLibraryManager.shared.library.artistIds
         let toLayout : (ArtistWithCounts) -> ArtistLayout = { ArtistLayout(artist: $0, withFavoritedArtists: favArtistIds) }
     
         return [
@@ -69,7 +69,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if let d = latestData {
-            let favArtistIds = MyLibraryManager.sharedInstance.artistIds
+            let favArtistIds = MyLibraryManager.shared.library.artistIds
             
             var artist: ArtistWithCounts
             if indexPath.section == 0 {

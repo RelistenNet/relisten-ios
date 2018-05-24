@@ -8,64 +8,14 @@
 
 import Foundation
 
-import FirebaseCommunity
-import Firestore
+import Firebase
 import SwiftyJSON
-
-public class ShowWithSourcesArtistContainer {
-    public let show: ShowWithSources
-    public let artist: SlimArtistWithFeatures
-    
-    public init(show: ShowWithSources, byArtist: SlimArtistWithFeatures) {
-        self.show = show
-        self.artist = byArtist
-    }
-    
-    public init(json: SwJSON) throws {
-        show = try ShowWithSources(json: json["show"])
-        artist = try SlimArtistWithFeatures(json: json["artist"])
-    }
-    
-    public var originalJSON: SwJSON {
-        get {
-            var s = SwJSON()
-            s["show"] = show.originalJSON
-            s["artist"] = artist.originalJSON
-            return s
-        }
-    }
-}
-
-public class MyLibrary {
-    public var shows: [ShowWithSourcesArtistContainer]
-    public var artistIds: Set<Int>
-    
-    public var offlineTrackURLs: Set<URL>
-    
-    public init() {
-        shows = []
-        artistIds = []
-        offlineTrackURLs = []
-    }
-    
-    public init(json: SwJSON) throws {
-        shows = try json["shows"].arrayValue.map(ShowWithSourcesArtistContainer.init)
-        artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
-        offlineTrackURLs = Set(json["offlineTrackURLs"].arrayValue.map({ $0.url! }))
-    }
-    
-    public func ToJSON() -> SwJSON {
-        var s = SwJSON()
-        s["shows"] = SwJSON(shows.map({ $0.originalJSON }))
-        s["artistIds"] = SwJSON(Array(artistIds))
-        s["offlineTrackURLs"] = SwJSON(Array(offlineTrackURLs).map({ $0.absoluteString }))
-
-        return s
-    }
-}
+import Cache
+import Async
+import SINQ
 
 public class MyLibraryManager {
-    static let sharedInstance = MyLibraryManager()
+    static let shared = MyLibraryManager()
     
     let db = Firestore.firestore()
     
@@ -77,6 +27,18 @@ public class MyLibraryManager {
     
     init() {
         library = MyLibrary()
+        
+        RelistenDownloadManager.shared.delegate = self.library
+        
+        let db = Firestore.firestore()
+        let settings = db.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        db.settings = settings
+        
+        let i = min(library.downloadBacklog.count, 3)
+        for track in library.downloadBacklog[0..<i] {
+            RelistenDownloadManager.shared.download(track: track)
+        }
     }
     
     public func onUserSignedIn(_ user: User) {
@@ -87,6 +49,16 @@ public class MyLibraryManager {
         
         loadFromFirestore()
     }
+    
+    private func loadFromDocumentSnapshot(_ d: DocumentSnapshot) {
+        self.library = try! MyLibrary(json: SwJSON(d.data() as Any))
+        
+        RelistenDownloadManager.shared.delegate = self.library
+
+        self.favoriteArtistIdsChanged.raise(data: self.library.artistIds)
+    }
+    
+    private var addedFirestoreListener = false
     
     func loadFromFirestore() {
         userDoc?.getDocument(completion: { (docSnapshot, err) in
@@ -99,9 +71,18 @@ public class MyLibraryManager {
                     self.setupFirstDocument()
                 }
                 else {
-                    self.library = try! MyLibrary(json: SwJSON(d.data()))
+                    self.loadFromDocumentSnapshot(d)
+                }
+                
+                if !self.addedFirestoreListener {
+                    self.userDoc?.addSnapshotListener({ (docSnap, err) in
+                        if let doc = docSnap, doc.exists {
+                            print("found changes from snapshot listener")
+                            self.loadFromDocumentSnapshot(doc)
+                        }
+                    })
                     
-                    self.favoriteArtistIdsChanged.raise(data: self.library.artistIds)
+                    self.addedFirestoreListener = true
                 }
             }
         })
@@ -167,32 +148,8 @@ extension MyLibraryManager {
     }
 }
 
-extension MyLibraryManager {
-    public func isShowInLibrary(show: ShowWithSources, byArtist: SlimArtist) -> Bool {
-        return library.shows.contains(where: { $0.show.display_date == show.display_date && $0.artist.id == byArtist.id })
-    }
-    
-    public var artistIds: Set<Int>  {
-        get {
-            return library.artistIds
-        }
-    }
-    
-    public var shows: [ShowWithSourcesArtistContainer] {
-        get {
-            return library.shows
-        }
-    }
-    
-    public func isTrackAvailableOffline(track: SourceTrack) -> Bool {
-        return library.offlineTrackURLs.contains(track.mp3_url)
-    }
-}
-
-extension MyLibraryManager {
-    public func URLIsAvailableOffline(_ url: URL) {
-        library.offlineTrackURLs.insert(url)
-        
-        saveToFirestore()
-    }
+func synced(_ lock: Any, closure: () -> ()) {
+    objc_sync_enter(lock)
+    closure()
+    objc_sync_exit(lock)
 }

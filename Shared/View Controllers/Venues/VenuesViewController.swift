@@ -48,7 +48,7 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
         groups = sinq(forData)
             .groupBy({
                 let n = $0.sortName
-                var s = n.substring(to: n.index(n.startIndex, offsetBy: 1)).uppercased()
+                var s = n[..<n.index(n.startIndex, offsetBy: 1)].uppercased()
                 
                 for ch in s.unicodeScalars {
                     if digitSet.contains(ch) {

@@ -9,7 +9,7 @@
 import UIKit
 
 import Siesta
-import ReachabilitySwift
+import Reachability
 import LayoutKit
 import SINQ
 

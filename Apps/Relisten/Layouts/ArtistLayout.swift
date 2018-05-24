@@ -74,10 +74,10 @@ public class ArtistLayout : InsetLayout<UIView> {
                     currentlyFavorited = !currentlyFavorited
                     
                     if currentlyFavorited {
-                        MyLibraryManager.sharedInstance.favoriteArtist(artist: artist)
+                        MyLibraryManager.shared.favoriteArtist(artist: artist)
                     }
                     else {
-                        let _ = MyLibraryManager.sharedInstance.removeArtist(artist: artist)
+                        let _ = MyLibraryManager.shared.removeArtist(artist: artist)
                     }
                 })
             }

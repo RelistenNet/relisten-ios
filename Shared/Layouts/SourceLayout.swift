@@ -29,12 +29,22 @@ public class SourceLayout : InsetLayout<UIView> {
             text: "Source \(idx + 1) of \(sourceCount)",
             font: UIFont.preferredFont(forTextStyle: .headline),
             numberOfLines: 0,
-            alignment: .fillLeading,
+            alignment: .centerLeading,
             flexibility: .low,
             viewReuseId: "sourceNumber"
         )
         
         var topRow: [ Layout ] = [ showName ]
+        
+        if MyLibraryManager.shared.library.isSourceAtLeastPartiallyAvailableOffline(source) {
+            topRow.insert(
+                InsetLayout(
+                    insets: UIEdgeInsetsMake(0, 0, 0, 4),
+                    sublayout: RelistenMakeOfflineExistsIndicator()
+                ),
+                at: 0
+            )
+        }
         
         if source.is_soundboard {
             topRow.append(SBDLabelLayout())
@@ -53,8 +63,6 @@ public class SourceLayout : InsetLayout<UIView> {
             viewReuseId: "sourceRatingNumber"
         ) { (label) in label.textAlignment = .right }
         
-        topRow.append(ratingNumber)
-        
         let ratingView = SizeLayout<AXRatingView>(
             width: YearLayout.ratingSize().width,
             height: YearLayout.ratingSize().height,
@@ -66,7 +74,14 @@ public class SourceLayout : InsetLayout<UIView> {
             rating.value = source.avg_rating / 10.0 * 5.0
         }
         
-        topRow.append(ratingView)
+        topRow.append(StackLayout(
+            axis: .vertical,
+            spacing: 4,
+            sublayouts: [
+                ratingNumber,
+                ratingView
+            ])
+        )
         
         let sourceLayout = LabelLayout(
             attributedText: SourceLayout.createPrefixedAttributedText(prefix: "Source: ", source.source),
@@ -105,23 +120,37 @@ public class SourceLayout : InsetLayout<UIView> {
                 button.setTitleColor(AppColors.textOnPrimary, for: .normal)
         }
         
+        var subLayouts: [Layout] = [
+            StackLayout(
+                axis: .horizontal,
+                spacing: 4,
+                sublayouts: topRow
+            ),
+        ]
+        
+        func isStringEmptyOrNil(_ str: String?) -> Bool {
+            return str == nil || str?.count == 0
+        }
+        
+        if !isStringEmptyOrNil(source.source) {
+            subLayouts.append(sourceLayout)
+        }
+        
+        if !isStringEmptyOrNil(source.lineage) {
+            subLayouts.append(lineageLayout)
+        }
+        
+        if !isStringEmptyOrNil(source.taper) {
+            subLayouts.append(taperLayout)
+        }
+
         super.init(
-            insets: EdgeInsets(top: 32, left: 16, bottom: 32, right: 16 + 8 + 8),
+            insets: EdgeInsets(top: 16, left: 16, bottom: 16, right: 16 + 8 + 8),
             viewReuseId: "sourceLayout",
             sublayout: StackLayout(
                 axis: .vertical,
                 spacing: 8,
-                sublayouts: [
-                    StackLayout(
-                        axis: .horizontal,
-                        spacing: 4,
-                        sublayouts: topRow
-                    ),
-                    sourceLayout,
-                    lineageLayout,
-                    taperLayout,
-                    //listenButton
-                ]
+                sublayouts: subLayouts
             )
         )
     }

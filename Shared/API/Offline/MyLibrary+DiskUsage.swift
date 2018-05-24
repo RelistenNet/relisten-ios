@@ -20,12 +20,12 @@ extension MyLibrary {
         }
     }
     
-    public func diskUsageForTrack(track: SourceTrack, _ callback: @escaping (UInt64?) -> Void) {
-        if let meta = offlineMetadataForTrack(track: track) {
+    public func diskUsageForTrack(track: CompleteTrackShowInformation, _ callback: @escaping (UInt64?) -> Void) {
+        if let meta = offlineMetadataForTrack(track: track.track.track) {
             return callback(meta.fileSize)
         }
         
-        if isTrackAvailableOffline(track: track) {
+        if track.track.isAvailableOffline {
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
                     let offlinePath = RelistenDownloadManager.shared.downloadPath(forTrack: track)
@@ -40,7 +40,7 @@ extension MyLibrary {
                     let fileSize = attributes[FileAttributeKey.size] as! UInt64
                     
                     // put it in the cache so subsequent calls are hot
-                    self.urlSizeBecameKnown(url: track.mp3_url, fileSize: fileSize)
+                    self.trackSizeBecameKnown(track, fileSize: fileSize)
                     
                     callback(fileSize)
                 }
@@ -60,9 +60,9 @@ extension MyLibrary {
         }
     }
     
-    public func diskUsageForSource(source: SourceFull, _ callback: @escaping (UInt64?) -> Void) {
+    public func diskUsageForSource(source: CompleteShowInformation, _ callback: @escaping (UInt64?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let tracks = source.tracksFlattened
+            let tracks = source.source.completeTracksFlattened(forShow: source)
             
             var completeBytes: UInt64 = 0
             

@@ -21,12 +21,25 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
         title = "Relisten"
         
         artistIdChangedEventHandler = MyLibraryManager.shared.favoriteArtistIdsChanged.addHandler(target: self, handler: ArtistsViewController.favoritesChanged)
+        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: ArtistsViewController.relayoutIfContainsTrack)
+        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: ArtistsViewController.relayoutIfContainsTracks)
     }
     
+    var trackFinishedHandler: Disposable?
+    var tracksDeletedHandler: Disposable?
+    
     deinit {
-        if let e = self.artistIdChangedEventHandler {
-            e.dispose()
+        for handler in [trackFinishedHandler, tracksDeletedHandler, artistIdChangedEventHandler] {
+            handler?.dispose()
         }
+    }
+    
+    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+        render()
+    }
+    
+    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+        render()
     }
     
     func favoritesChanged(ids: Set<Int>) {

@@ -35,6 +35,44 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: ShowListViewController<T>.relayoutIfContainsTrack)
+        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: ShowListViewController<T>.relayoutIfContainsTracks)
+    }
+    
+    var trackFinishedHandler: Disposable?
+    var tracksDeletedHandler: Disposable?
+    
+    deinit {
+        for handler in [trackFinishedHandler, tracksDeletedHandler] {
+            handler?.dispose()
+        }
+    }
+    
+    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+        if let d = latestData {
+            let shows = extractShows(forData: d)
+            
+            if sinq(shows).any({ $0.id == track.show.id }) {
+                render(shows: shows)
+            }
+        }
+    }
+    
+    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+        if let d = latestData {
+            let shows = extractShows(forData: d)
+            
+            let trackShowsId = tracks.map({ $0.show.id })
+            
+            if sinq(shows).any({ trackShowsId.contains($0.id) }) {
+                render(shows: shows)
+            }
+        }
+    }
+    
     override var resource: Resource? { get { return showsResource } }
     
     var showMapping: [IndexPath: Show]? = nil

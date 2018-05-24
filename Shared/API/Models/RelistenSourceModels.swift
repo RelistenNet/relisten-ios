@@ -135,6 +135,11 @@ public class SourceFull : Source {
     public var tracksFlattened: [SourceTrack] {
         return sinq(sets).selectMany({ $0.tracks }).toArray()
     }
+    
+    public func completeTracksFlattened(forShow source: CompleteShowInformation) -> [CompleteTrackShowInformation] {
+        return tracksFlattened
+            .map({ CompleteTrackShowInformation(track: TrackStatus(forTrack: $0), source: source.source, show: source.show, artist: source.artist) })
+    }
 }
 
 extension SourceFull {

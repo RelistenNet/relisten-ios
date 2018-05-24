@@ -51,6 +51,30 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
         super.viewDidLoad()
         
         updateTitle(forShow: show)
+        
+        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: SourcesViewController.relayoutIfContainsTrack)
+        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: SourcesViewController.relayoutIfContainsTracks)
+    }
+    
+    var trackFinishedHandler: Disposable?
+    var tracksDeletedHandler: Disposable?
+
+    deinit {
+        for handler in [trackFinishedHandler, tracksDeletedHandler] {
+            handler?.dispose()
+        }
+    }
+    
+    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+        if let s = show, s.id == track.show.id, let d = latestData {
+            render(forData: d)
+        }
+    }
+    
+    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+        if let s = show, sinq(tracks).any({ $0.show.id == s.id }), let d = latestData {
+            render(forData: d)
+        }
     }
     
     func updateTitle(forShow: Show?) {

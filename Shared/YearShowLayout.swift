@@ -125,6 +125,21 @@ public class YearShowLayout : InsetLayout<UIView> {
         
         topRow.append(ratingView)
         
+        let hasOffline = MyLibraryManager.shared.library.isShowAtLeastPartiallyAvailableOffline(show)
+        
+        let offlineIndicator = SizeLayout<UIImageView>(
+            minWidth: 12,
+            maxWidth: nil,
+            minHeight: 12,
+            maxHeight: nil,
+            alignment: Alignment.center,
+            flexibility: Flexibility.inflexible,
+            viewReuseId: "offlineIndicator",
+            sublayout: nil,
+            config: { imageV in
+                imageV.image = UIImage(named: "download-complete")
+        })
+        
         let showStack = StackLayout(
             axis: .vertical,
             spacing: 4,
@@ -136,7 +151,12 @@ public class YearShowLayout : InsetLayout<UIView> {
                 ),
                 StackLayout(
                     axis: .horizontal,
-                    sublayouts: [
+                    spacing: 8,
+                    sublayouts: hasOffline ? [
+                        offlineIndicator,
+                        venueLabel,
+                        metaLabel
+                    ] : [
                         venueLabel,
                         metaLabel
                     ]

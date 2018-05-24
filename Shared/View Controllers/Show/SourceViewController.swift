@@ -60,7 +60,7 @@ class SourceViewController: RelistenBaseTableViewController {
                 // remove any downloaded tracks
                 self.isAvailableOffline = false
                 
-                RelistenDownloadManager.shared.delete(source: self.source)
+                RelistenDownloadManager.shared.delete(source: self.completeShowInformation)
             }
         }
 
@@ -101,8 +101,8 @@ class SourceViewController: RelistenBaseTableViewController {
         relayout()
     }
     
-    func relayoutIfContainsTrack(_ track: SourceTrack) {
-        if source.tracksFlattened.contains(where: { $0 === track }) {
+    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+        if source.tracksFlattened.contains(where: { $0 === track.track.track }) {
             relayout()
         }
     }
@@ -113,18 +113,18 @@ class SourceViewController: RelistenBaseTableViewController {
         }
     }
     
-    func relayoutIfContainsTracks(_ tracks: [SourceTrack]) {
-        if source.tracksFlattened.contains(where: { outer in tracks.contains(where: { inner in outer === inner })  }) {
+    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+        if source.tracksFlattened.contains(where: { outer in tracks.contains(where: { inner in outer === inner.track.track })  }) {
             relayout()
         }
     }
 
     func relayout() {
-        isAvailableOffline = MyLibraryManager.shared.library.isSourceFullyAvailableOffline(source: self.source)
-        isShowInLibrary = MyLibraryManager.shared.library.isShowInLibrary(show: self.show, byArtist: self.artist)
+        isAvailableOffline = MyLibraryManager.shared.library.isSourceFullyAvailableOffline(source: source)
+        isShowInLibrary = MyLibraryManager.shared.library.isShowInLibrary(show: show, byArtist: artist)
 
         if isAvailableOffline {
-            MyLibraryManager.shared.library.diskUsageForSource(source: self.source) { (size) in
+            MyLibraryManager.shared.library.diskUsageForSource(source: completeShowInformation) { (size) in
                 DispatchQueue.main.async {
                     self.doLayout(sourceSize: size)
                 }

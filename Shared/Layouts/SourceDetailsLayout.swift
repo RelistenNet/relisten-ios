@@ -130,7 +130,17 @@ public class SourceDetailsLayout : InsetLayout<UIView> {
                 flexibility: .flexible,
                 viewReuseId: "taperInfo")
             
-            stack.append(contentsOf: [sourceLayout, lineageLayout, taperLayout])
+            if let s = source.source, s.count > 0 {
+                stack.append(sourceLayout)
+            }
+            
+            if let s = source.lineage, s.count > 0 {
+                stack.append(lineageLayout)
+            }
+            
+            if let s = source.taper, s.count > 0 {
+                stack.append(taperLayout)
+            }
         }
         
         let details = LabelLayout(

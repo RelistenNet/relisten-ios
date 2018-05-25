@@ -56,12 +56,64 @@ public func RemasterLabelLayout() -> InsetLayout<UIView> {
     return layout
 }
 
-public class YearShowLayout : InsetLayout<UIView> {
-    public convenience init(show: Show) {
-        self.init(show: show, withRank: nil)
+public class CollectionViewLayout : SizeLayout<UICollectionView> {
+    public var collectionViewLayout: UICollectionViewLayout! = nil
+    
+    public override func makeView() -> View {
+        return UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+    }
+}
+
+public class CellSelectCallbackReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
+    let callback: (IndexPath) -> Bool
+    
+    public init(reloadableView: ReloadableView, _ callback: @escaping (IndexPath) -> Bool) {
+        self.callback = callback
+
+        super.init(reloadableView: reloadableView)
     }
     
-    public init(show: Show, withRank: Int?) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if self.callback(indexPath) {
+            collectionView.deselectItem(at: indexPath, animated: true)
+        }
+    }
+}
+
+public func HorizontalShowCollection(makeAdapater cb: @escaping (UICollectionView) -> ReloadableViewLayoutAdapter, layoutProvider: @escaping () -> [Section<[Layout]>]) -> CollectionViewLayout {
+    let l = CollectionViewLayout(
+        minHeight: 145,
+        alignment: .fill,
+        flexibility: .flexible,
+        viewReuseId: "horizShowCollection",
+        config: { (collectionView) in
+            let adapter = cb(collectionView)
+            
+            collectionView.backgroundColor = UIColor.clear
+            collectionView.delegate = adapter
+            collectionView.dataSource = adapter
+            collectionView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.00)
+            
+            adapter.reload(width: nil, synchronous: true, layoutProvider: layoutProvider)
+    })
+    
+    let flowLayout = UICollectionViewFlowLayout()
+    flowLayout.scrollDirection = .horizontal
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 4, 4, 4)
+    flowLayout.estimatedItemSize = CGSize(width: 170, height: 145)
+    flowLayout.minimumInteritemSpacing = 16
+    
+    l.collectionViewLayout = flowLayout
+    
+    return l
+}
+
+public class YearShowLayout : InsetLayout<UIView> {
+    public convenience init(show: Show) {
+        self.init(show: show, withRank: nil, verticalLayout: false)
+    }
+    
+    public init(show: Show, withRank: Int?, verticalLayout: Bool) {
         let showName = LabelLayout(
             text: show.display_date,
             font: UIFont.preferredFont(forTextStyle: .headline),
@@ -74,7 +126,7 @@ public class YearShowLayout : InsetLayout<UIView> {
         let ratingView = SizeLayout<AXRatingView>(
                 width: YearLayout.ratingSize().width,
                 height: YearLayout.ratingSize().height,
-                alignment: .centerTrailing,
+                alignment: verticalLayout ? .centerLeading : .centerTrailing,
                 flexibility: .flexible,
                 viewReuseId: "yearRating")
         { (rating: AXRatingView) in
@@ -95,15 +147,20 @@ public class YearShowLayout : InsetLayout<UIView> {
             viewReuseId: "showCount"
         )
 
+        var metaText = "\(show.avg_duration == nil ? "" : show.avg_duration!.humanize())"
+        if !verticalLayout {
+            metaText += "\n\(show.source_count) recordings"
+        }
+        
         let metaLabel = LabelLayout(
-            text: "\(show.avg_duration == nil ? "" : show.avg_duration!.humanize())\n\(show.source_count) recordings",
+            text: metaText,
             font: UIFont.preferredFont(forTextStyle: .caption1),
             numberOfLines: 0,
-            alignment: .centerTrailing,
+            alignment: verticalLayout ? .centerLeading : .centerTrailing,
             flexibility: .inflexible,
             viewReuseId: "sourcesCount"
         ) { (label: UILabel) in
-            label.textAlignment = .right
+            label.textAlignment = verticalLayout ? .left : .right
         }
         
         let rankLabel = LabelLayout(
@@ -140,43 +197,86 @@ public class YearShowLayout : InsetLayout<UIView> {
                 imageV.image = UIImage(named: "download-complete")
         })
         
-        let showStack = StackLayout(
-            axis: .vertical,
-            spacing: 4,
-            sublayouts: [
-                StackLayout(
-                    axis: .horizontal,
-                    spacing: 8,
-                    sublayouts: topRow
-                ),
-                StackLayout(
-                    axis: .horizontal,
-                    spacing: 8,
-                    sublayouts: hasOffline ? [
-                        offlineIndicator,
-                        venueLabel,
-                        metaLabel
-                    ] : [
-                        venueLabel,
-                        metaLabel
-                    ]
-                )
-            ]
-        )
-        
-        let rankStack = StackLayout(
-            axis: .horizontal,
-            spacing: 4,
-            sublayouts: [
-                InsetLayout(inset: 12.0, sublayout: rankLabel),
-                showStack
-            ]
-        )
+        if verticalLayout {
+            var fullStackLayouts: [Layout] = [ showName, venueLabel ]
+            
+            var metaStack: [Layout] = []
+            
+            if hasOffline {
+                metaStack.append(offlineIndicator)
+            }
+            
+            if show.has_soundboard_source {
+                metaStack.append(SBDLabelLayout())
+            }
 
-        super.init(
-            insets: EdgeInsets(top: 8, left: withRank == nil ? 16 : 0, bottom: 12, right: 16 + 8 + 8),
-            viewReuseId: "yearShowLayout",
-            sublayout: withRank == nil ? showStack : rankStack
-        )
+            metaStack.append(metaLabel)
+            
+            fullStackLayouts.append(ratingView)
+            
+            fullStackLayouts.append(SizeLayout<UIView>(
+                minHeight: 22,
+                sublayout: StackLayout(
+                    axis: .horizontal,
+                    spacing: 8,
+                    sublayouts: metaStack
+                )
+            ))
+            
+            let fullStack = StackLayout(
+                axis: .vertical,
+                spacing: 4,
+                sublayouts: fullStackLayouts
+            )
+            
+            super.init(
+                insets: EdgeInsets(top: 12, left: 12, bottom: 12, right: 12),
+                viewReuseId: "yearShowLayoutVertical",
+                sublayout: fullStack,
+                config: { view in
+                    view.backgroundColor = UIColor.white
+                }
+            )
+        }
+        else {
+            let showStack = StackLayout(
+                axis: .vertical,
+                spacing: 4,
+                sublayouts: [
+                    StackLayout(
+                        axis: .horizontal,
+                        spacing: 8,
+                        sublayouts: topRow
+                    ),
+                    StackLayout(
+                        axis: .horizontal,
+                        spacing: 8,
+                        sublayouts: hasOffline ? [
+                            offlineIndicator,
+                            venueLabel,
+                            metaLabel
+                            ] : [
+                                venueLabel,
+                                metaLabel
+                        ]
+                    )
+                ]
+            )
+            
+            let rankStack = StackLayout(
+                axis: .horizontal,
+                spacing: 4,
+                sublayouts: [
+                    InsetLayout(inset: 12.0, sublayout: rankLabel),
+                    showStack
+                ]
+            )
+            
+            super.init(
+                insets: EdgeInsets(top: 8, left: withRank == nil ? 16 : 0, bottom: 12, right: 16 + 8 + 8),
+                viewReuseId: "yearShowLayout",
+                sublayout: withRank == nil ? showStack : rankStack
+            )
+        }
     }
 }

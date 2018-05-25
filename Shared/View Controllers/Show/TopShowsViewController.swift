@@ -43,7 +43,7 @@ class TopShowsViewController: ShowListViewController<[Show]> {
     }
     
     override func layout(show: Show, atIndex: IndexPath) -> Layout {
-        return YearShowLayout(show: show, withRank: atIndex.row + 1)
+        return YearShowLayout(show: show, withRank: atIndex.row + 1, verticalLayout: false)
     }
     
     override func extractShows(forData: [Show]) -> [Show] {

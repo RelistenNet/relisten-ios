@@ -34,9 +34,9 @@ class TopShowsViewController: ShowListViewController<[Show]> {
         fatalError()
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
-    }
+    }    
     
     override func has(oldData: [Show], changed: [Show]) -> Bool {
         return true

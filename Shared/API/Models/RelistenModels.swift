@@ -44,7 +44,15 @@ public class RelistenObject {
     }
 }
 
-public class SlimArtist : RelistenObject {
+public class SlimArtist : RelistenObject, Hashable {
+    public var hashValue: Int {
+        return id.hashValue
+    }
+    
+    public static func == (lhs: SlimArtist, rhs: SlimArtist) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     public let musicbrainz_id: String
     public let featured: Int
     

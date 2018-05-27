@@ -14,7 +14,7 @@ public class TrackActions {
         
         let a = UIAlertController(
             title: "\(info.track.track.title) \((duration == nil ? "" : "(\(duration!)" )))",
-            message: "\(info.source.display_date) — \(info.artist.name)",
+            message: "\(info.source.display_date) • \(info.artist.name)",
             preferredStyle: .actionSheet
         )
         
@@ -69,7 +69,7 @@ public class TrackActions {
         play(trackAtIndex: UInt(info.source.flattenedIndex(forIndexPath: idx)), inShow: info, fromViewController: vc)
     }
     
-    public static func play(trackAtIndex: UInt, inShow info: ICompleteShowInformation, fromViewController vc: UIViewController) {
+    public static func play<T: ICompleteShowInformation>(trackAtIndex: UInt, inShow info: T, fromViewController vc: UIViewController) {
         let items = info.source.toAudioItems(inShow: info.show, byArtist: info.artist)
         
         PlaybackController.sharedInstance.playbackQueue.clearAndReplace(with: items)

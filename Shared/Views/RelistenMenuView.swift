@@ -51,7 +51,7 @@ public class RelistenMenuView : UIView {
         
         var everything: [RelistenMenuItem] = []
         var discover: [RelistenMenuItem] = []
-        let my: [RelistenMenuItem] = [.MyShowsLibrary, .MyShowsPlaylists, .MyShowsDownloaded]
+        let my: [RelistenMenuItem] = [.MyShowsLibrary, /* .MyShowsPlaylists, */ .MyShowsDownloaded]
         
         if artist.features.years { everything.append(.EverythingYears) }
         if artist.features.songs { everything.append(.EverythingSongs) }
@@ -185,11 +185,17 @@ public class RelistenMenuView : UIView {
             viewController.navigationController?.pushViewController(SourcesViewController(artist: artist), animated: true)
 
         case .RecentlyPlayed: print(item)
+            viewController.navigationController?.pushViewController(MyRecentlyPlayedViewController(artist: artist), animated: true)
+            
         case .RecentlyAdded: print(item)
             
         case .MyShowsLibrary: print(item)
+            viewController.navigationController?.pushViewController(MyLibraryViewController(artist: artist), animated: true)
+
         case .MyShowsPlaylists: print(item)
+            
         case .MyShowsDownloaded: print(item)
+            viewController.navigationController?.pushViewController(DownloadedViewController(artist: artist), animated: true)
         }
         
     }

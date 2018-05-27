@@ -37,7 +37,7 @@ class VenueViewController: ShowListViewController<VenueWithShows> {
         fatalError()
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
     }
     

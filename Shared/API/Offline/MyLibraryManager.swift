@@ -35,6 +35,10 @@ public class MyLibraryManager {
         settings.areTimestampsInSnapshotsEnabled = true
         db.settings = settings
         
+        downloadBacklog()
+    }
+    
+    private func downloadBacklog() {
         let i = min(library.downloadBacklog.count, 3)
         for track in library.downloadBacklog[0..<i] {
             RelistenDownloadManager.shared.download(track: track)
@@ -109,14 +113,14 @@ public class MyLibraryManager {
 }
 
 extension MyLibraryManager {
-    public func addShow(show: ShowWithSources, byArtist: SlimArtistWithFeatures) {
-        library.shows.append(ShowWithSourcesArtistContainer(show: show, byArtist: byArtist))
+    public func addShow(show: CompleteShowInformation) {
+        library.shows.append(show)
         
         saveToFirestore()
     }
     
-    public func removeShow(show: ShowWithSources, byArtist: SlimArtist) -> Bool {
-        if let idx = library.shows.index(where: { $0.show.display_date == show.display_date && $0.artist.id == byArtist.id }) {
+    public func removeShow(show: CompleteShowInformation) -> Bool {
+        if let idx = library.shows.index(where: { $0 == show }) {
             library.shows.remove(at: idx)
             
             saveToFirestore()
@@ -145,6 +149,12 @@ extension MyLibraryManager {
         }
         
         return false
+    }
+    
+    public func trackWasPlayed(_ track: CompleteTrackShowInformation) {
+        if library.trackWasPlayed(track) {
+            saveToFirestore()
+        }
     }
 }
 

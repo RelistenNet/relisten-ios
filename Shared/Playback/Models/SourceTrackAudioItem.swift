@@ -31,13 +31,13 @@ public class SourceTrackAudioItem : AGAudioItem {
         var venueStr = ""
         
         if let v = fromShow.correctVenue(withFallback: inSource.venue) {
-            venueStr = " — \(v.name), \(v.location)"
+            venueStr = " • \(v.name), \(v.location)"
         }
         
         self.album = "\(inSource.display_date)\(venueStr)"
         
         self.displayText = track.title
-        self.displaySubtext = "\(byArtist.name) — \(album)"
+        self.displaySubtext = "\(byArtist.name) • \(album)"
         
         if let offlineURL = RelistenDownloadManager.shared.offlineURL(forTrack: relisten) {
             self.playbackURL = offlineURL

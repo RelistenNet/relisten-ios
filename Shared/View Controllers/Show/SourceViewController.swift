@@ -42,10 +42,10 @@ class SourceViewController: RelistenBaseTableViewController {
         onToggleAddToMyShows = { (newValue: Bool) in
             self.isShowInLibrary = newValue
             if newValue {
-                MyLibraryManager.shared.addShow(show: self.show, byArtist: self.artist)
+                MyLibraryManager.shared.addShow(show: self.completeShowInformation)
             }
             else {
-                let _ = MyLibraryManager.shared.removeShow(show: self.show, byArtist: self.artist)
+                let _ = MyLibraryManager.shared.removeShow(show: self.completeShowInformation)
             }
         }
         

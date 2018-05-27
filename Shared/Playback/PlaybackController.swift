@@ -23,7 +23,8 @@ public class PlaybackController {
     public let shrinker: PlaybackMinibarShrinker
     
     public let eventTrackPlaybackChanged = Event<CompleteTrackShowInformation?>()
-    
+    public let eventTrackWasPlayed = Event<CompleteTrackShowInformation>()
+
     public static var window: UIWindow? = nil
     
     public static let sharedInstance = PlaybackController()
@@ -333,7 +334,12 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
         
     }
     
-    
+    public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, passedHalfWayFor audioItem: AGAudioItem) {
+        let completeInfo = (audioItem as! SourceTrackAudioItem).relisten
+        
+        MyLibraryManager.shared.trackWasPlayed(completeInfo)
+        eventTrackWasPlayed.raise(data: completeInfo)
+    }
 }
 
 extension PlaybackController : AGAudioPlayerViewControllerCellDataSource {

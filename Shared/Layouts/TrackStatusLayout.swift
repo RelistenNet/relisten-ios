@@ -19,18 +19,29 @@ public protocol TrackStatusActionHandler {
     func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation)
 }
 
-public protocol ICompleteShowInformation {
+public protocol ICompleteShowInformation : Codable, Hashable {
     var source: SourceFull { get }
     var show: Show { get }
     var artist: SlimArtistWithFeatures { get }
 }
 
-public class CompleteShowInformation : ICompleteShowInformation, Codable {
+public class CompleteShowInformation : ICompleteShowInformation {
+    public var hashValue: Int {
+        return artist.id.hashValue ^ show.display_date.hashValue ^ source.upstream_identifier.hashValue
+    }
+    
+    public static func == (lhs: CompleteShowInformation, rhs: CompleteShowInformation) -> Bool {
+        return lhs.artist.id == rhs.artist.id
+            && (
+                (lhs.show.id == rhs.show.id && lhs.source.id == rhs.source.id)
+                || (lhs.show.display_date == rhs.show.display_date && rhs.source.upstream_identifier == lhs.source.upstream_identifier)
+            )
+    }
+    
     public let source: SourceFull
     public let show: Show
     public let artist: SlimArtistWithFeatures
     
-    public typealias CacheType = CompleteShowInformation
     public var originalJSON: SwJSON
 
     public required init(source: SourceFull, show: Show, artist: SlimArtistWithFeatures) {
@@ -47,7 +58,7 @@ public class CompleteShowInformation : ICompleteShowInformation, Codable {
     }
     
     public required init(json: SwJSON) throws {
-        source = try SourceFull(json: ["source"])
+        source = try SourceFull(json: json["source"])
         show = try Show(json: json["show"])
         artist = try SlimArtistWithFeatures(json: json["artist"])
 
@@ -80,21 +91,53 @@ public class CompleteShowInformation : ICompleteShowInformation, Codable {
     }
 }
 
-public struct CompleteTrackShowInformation : ICompleteShowInformation, Codable, Hashable {
+public struct CompleteTrackShowInformation : ICompleteShowInformation {
     public var hashValue: Int {
-        return track.track.mp3_url.hashValue ^ artist.id.hashValue ^ show.display_date.hashValue
+        return track.track.mp3_url.hashValue ^ artist.id.hashValue ^ show.display_date.hashValue ^ source.upstream_identifier.hashValue
     }
     
     public static func == (lhs: CompleteTrackShowInformation, rhs: CompleteTrackShowInformation) -> Bool {
         return lhs.artist.id == rhs.artist.id
             && lhs.show.display_date == rhs.show.display_date
             && lhs.track.track.mp3_url == rhs.track.track.mp3_url
+            && lhs.source.upstream_identifier == rhs.source.upstream_identifier
+    }
+    
+    public func toCompleteShowInformation() -> CompleteShowInformation {
+        return CompleteShowInformation(source: source, show: show, artist: artist)
     }
     
     public let track: TrackStatus
     public let source: SourceFull
     public let show: Show
     public let artist: SlimArtistWithFeatures
+}
+
+extension CompleteTrackShowInformation {
+    public init(_ json: SwJSON) throws {
+        let track = try SourceTrack(json: json["track"])
+        let source = try SourceFull(json: json["source"])
+        let show = try Show(json: json["show"])
+        let artist = try SlimArtistWithFeatures(json: json["artist"])
+        
+        self.init(
+            track: TrackStatus(forTrack: track),
+            source: source,
+            show: show,
+            artist: artist
+        )
+    }
+    
+    public var originalJSON: SwJSON {
+        var j = SwJSON([:])
+        
+        j["track"] = track.track.originalJSON
+        j["source"] = source.originalJSON
+        j["show"] = show.originalJSON
+        j["artist"] = artist.originalJSON
+        
+        return j
+    }
 }
 
 public class TrackStatusLayout : InsetLayout<UIView> {
@@ -116,6 +159,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                     sublayout: nil,
                     config: { (p) in
                         p.state = track.track.isPlaying ? .playing : .paused
+                        p.tintColor = AppColors.primary
                 })
             )
             

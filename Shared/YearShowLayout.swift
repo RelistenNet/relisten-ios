@@ -80,12 +80,12 @@ public class CellSelectCallbackReloadableViewLayoutAdapter : ReloadableViewLayou
     }
 }
 
-public func HorizontalShowCollection(makeAdapater cb: @escaping (UICollectionView) -> ReloadableViewLayoutAdapter, layoutProvider: @escaping () -> [Section<[Layout]>]) -> CollectionViewLayout {
+public func HorizontalShowCollection(withId: String, makeAdapater cb: @escaping (UICollectionView) -> ReloadableViewLayoutAdapter, layoutProvider: @escaping () -> [Section<[Layout]>]) -> CollectionViewLayout {
     let l = CollectionViewLayout(
         minHeight: 145,
         alignment: .fill,
         flexibility: .flexible,
-        viewReuseId: "horizShowCollection",
+        viewReuseId: "horizShowCollection-" + withId,
         config: { (collectionView) in
             let adapter = cb(collectionView)
             
@@ -94,7 +94,9 @@ public func HorizontalShowCollection(makeAdapater cb: @escaping (UICollectionVie
             collectionView.dataSource = adapter
             collectionView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.00)
             
-            adapter.reload(width: nil, synchronous: true, layoutProvider: layoutProvider)
+            DispatchQueue.main.async {
+                adapter.reload(width: nil, synchronous: true, layoutProvider: layoutProvider)
+            }
     })
     
     let flowLayout = UICollectionViewFlowLayout()

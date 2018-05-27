@@ -16,10 +16,10 @@ import SINQ
 
 class ShowListViewController<T> : RelistenTableViewController<T> {
     let artist: SlimArtistWithFeatures
-    let showsResource: Resource
+    let showsResource: Resource?
     let tourSections: Bool
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
         self.artist = artist
         self.showsResource = showsResource
         self.tourSections = tourSections
@@ -131,10 +131,10 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
                     let idxP = IndexPath(row: currentSection.count, section: sections.count)
                     self.showMapping?[idxP] = show
                     currentSection.append(self.layout(show: show, atIndex: idxP))
-                    
-                    if idx == shows.count - 1 {
-                        sections.append(LayoutsAsSingleSection(items: currentSection, title: show.tour?.name))
-                    }
+                }
+                
+                if idx == shows.count - 1 {
+                    sections.append(LayoutsAsSingleSection(items: currentSection, title: show.tour?.name))
                 }
             }
             
@@ -185,7 +185,7 @@ class YearViewController: ShowListViewController<YearWithShows> {
         fatalError()
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
     }
     

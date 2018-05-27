@@ -81,7 +81,7 @@ public class SourceDetailsLayout : InsetLayout<UIView> {
             }
             
             let duration = LabelLayout(
-                text: "\(source.duration == nil ? "" : source.duration!.humanize()) — " + String(source.num_ratings ?? source.num_reviews) + " " + (source.num_ratings != nil ? "ratings" : "reviews"),
+                text: "\(source.duration == nil ? "" : source.duration!.humanize()) • " + String(source.num_ratings ?? source.num_reviews) + " " + (source.num_ratings != nil ? "ratings" : "reviews"),
                 font: UIFont.preferredFont(forTextStyle: .caption1),
                 numberOfLines: 0,
                 alignment: .centerTrailing,

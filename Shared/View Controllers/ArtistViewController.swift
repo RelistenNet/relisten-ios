@@ -33,6 +33,8 @@ public class ArtistViewController : RelistenBaseTableViewController {
 
     private var av: RelistenMenuView! = nil
     public override func viewDidLoad() {
+        navigationItem.largeTitleDisplayMode = .always
+
         super.viewDidLoad()
 
         tableView.separatorStyle = .none
@@ -62,6 +64,10 @@ public class ArtistViewController : RelistenBaseTableViewController {
         resourceToday.loadFromCacheThenUpdate()
     }
     
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -75,7 +81,9 @@ public class ArtistViewController : RelistenBaseTableViewController {
     }()
     
     lazy var todayLayout: CollectionViewLayout = {
-        return HorizontalShowCollection(makeAdapater: { (collectionView) -> ReloadableViewLayoutAdapter in
+        return HorizontalShowCollection(
+            withId: "today",
+            makeAdapater: { (collectionView) -> ReloadableViewLayoutAdapter in
             self.todayLayoutAdapater = CellSelectCallbackReloadableViewLayoutAdapter(reloadableView: collectionView) { indexPath in
                 if let today = self.resourceTodayData, indexPath.item < today.count {
                     let item = today[indexPath.item]
@@ -98,16 +106,52 @@ public class ArtistViewController : RelistenBaseTableViewController {
     }()
     var todayLayoutAdapater: ReloadableViewLayoutAdapter? = nil
     
+    lazy var recentlyPlayedLayout: CollectionViewLayout = {
+        return HorizontalShowCollection(
+            withId: "recentlyPlayed",
+            makeAdapater: { (collectionView) -> ReloadableViewLayoutAdapter in
+            self.recentlyPlayedLayoutAdapter = CellSelectCallbackReloadableViewLayoutAdapter(reloadableView: collectionView) { indexPath in
+                let recent = MyLibraryManager.shared.library.recentlyPlayedByArtist(self.artist)
+
+                if indexPath.item < recent.count {
+                    let item = recent[indexPath.item]
+                    let vc = SourcesViewController(artist: self.artist, show: item.show)
+                    
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
+                return true
+            }
+            return self.recentlyPlayedLayoutAdapter!
+        }) { () -> [Section<[Layout]>] in
+            let recent = MyLibraryManager.shared.library.recentlyPlayedByArtist(self.artist)
+            
+            let recentItems = recent.map({ YearShowLayout(show: $0.show, withRank: nil, verticalLayout: true) })
+            return [LayoutsAsSingleSection(items: recentItems)]
+        }
+    }()
+    var recentlyPlayedLayoutAdapter: ReloadableViewLayoutAdapter? = nil
+    
     func buildLayout() -> [Section<[Layout]>] {
         guard let today = resourceTodayData else {
             return []
         }
         
-        let todayTitle = "\(today.count) Show\(today.count != 1 ? "s" : "") on " + ArtistViewController.dateFormatter.string(from: Date())
+        var sections: [Section<[Layout]>] = []
         
-        return [
-            LayoutsAsSingleSection(items: [todayLayout], title: todayTitle)
-        ]
+        if today.count > 0 {
+            let todayTitle = "\(today.count) Show\(today.count != 1 ? "s" : "") on " + ArtistViewController.dateFormatter.string(from: Date())
+
+            sections.append(LayoutsAsSingleSection(items: [todayLayout], title: todayTitle))
+        }
+        
+        if MyLibraryManager.shared.library.recentlyPlayedByArtist(self.artist).count > 0 {
+            let recentTitle = "My Recently Played Shows"
+
+            sections.append(LayoutsAsSingleSection(items: [recentlyPlayedLayout], title: recentTitle))
+        }
+        
+        return sections
     }
     
     func render() {

@@ -13,30 +13,6 @@ import Cache
 import Async
 import SINQ
 
-public class ShowWithSourcesArtistContainer {
-    public let show: ShowWithSources
-    public let artist: SlimArtistWithFeatures
-    
-    public init(show: ShowWithSources, byArtist: SlimArtistWithFeatures) {
-        self.show = show
-        self.artist = byArtist
-    }
-    
-    public init(json: SwJSON) throws {
-        show = try ShowWithSources(json: json["show"])
-        artist = try SlimArtistWithFeatures(json: json["artist"])
-    }
-    
-    public var originalJSON: SwJSON {
-        get {
-            var s = SwJSON()
-            s["show"] = show.originalJSON
-            s["artist"] = artist.originalJSON
-            return s
-        }
-    }
-}
-
 /// This is used for information that doens't come from Relisten.
 /// It is like a "sidecar" set of data that provides device-specific info
 public class OfflineTrackMetadata : Codable {
@@ -48,25 +24,51 @@ public class OfflineTrackMetadata : Codable {
 }
 
 public struct OfflineSourceMetadata : Codable, Hashable {
-    public let artistId: Int
+    public var hashValue: Int {
+        return completeShowInformation.hashValue
+    }
+
+    public static func == (lhs: OfflineSourceMetadata, rhs: OfflineSourceMetadata) -> Bool {
+        return lhs.completeShowInformation == rhs.completeShowInformation
+    }
     
-    public let year: String
-    public let showDisplayDate: String
+    public var year: String {
+        let yearEnd = completeShowInformation.show.display_date.index(completeShowInformation.show.display_date.startIndex, offsetBy: 4)
+        return String(completeShowInformation.show.display_date[..<yearEnd])
+    }
     
-    public let showId: Int
-    public let sourceId: Int
+    public var show: Show {
+        return completeShowInformation.show
+    }
+    
+    public var source: SourceFull {
+        return completeShowInformation.source
+    }
+    
+    public var artist: SlimArtistWithFeatures {
+        return completeShowInformation.artist
+    }
+    
+    public let completeShowInformation: CompleteShowInformation
+    
+    public let dateAdded: Date
     
     public static func from(completeTrack track: CompleteTrackShowInformation) -> OfflineSourceMetadata {
-        let yearEnd = track.show.display_date.index(track.show.display_date.startIndex, offsetBy: 4)
-        let year = String(track.show.display_date[..<yearEnd])
-        
-        return self.init(artistId: track.artist.id, year: year, showDisplayDate: track.show.display_date, showId: track.show.id, sourceId: track.source.id)
+        return self.init(completeShowInformation: track.toCompleteShowInformation(), dateAdded: Date())
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case completeShowInformation
+        case dateAdded
     }
 }
 
 public class MyLibrary {
-    public var shows: [ShowWithSourcesArtistContainer] = []
+    public var shows: [CompleteShowInformation] = []
     public var artistIds: Set<Int> = []
+    
+    public static let MaxRecentlyPlayedShows: Int = 25
+    public var recentlyPlayed: [CompleteTrackShowInformation] = []
     
     public var offlineTrackURLs: Set<URL> = []
     public var downloadBacklog: [CompleteTrackShowInformation] = []
@@ -104,8 +106,9 @@ public class MyLibrary {
     }
     
     public init(json: SwJSON) throws {
-        shows = try json["shows"].arrayValue.map(ShowWithSourcesArtistContainer.init)
+        shows = try json["shows"].arrayValue.map(CompleteShowInformation.init)
         artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
+        recentlyPlayed = try json["recentlyPlayed"].arrayValue.map(CompleteTrackShowInformation.init)
 
         try loadOfflineData()
     }
@@ -114,7 +117,8 @@ public class MyLibrary {
         var s = SwJSON()
         s["shows"] = SwJSON(shows.map({ $0.originalJSON }))
         s["artistIds"] = SwJSON(Array(artistIds))
-        
+        s["recentlyPlayed"] = SwJSON(recentlyPlayed.map({ $0.originalJSON }))
+
         return s
     }
     
@@ -240,11 +244,11 @@ extension MyLibrary {
     }
     
     public func isArtistAtLeastPartiallyAvailableOffline(_ artist: SlimArtist) -> Bool {
-        return sinq(offlineSourcesMetadata).any({ $0.artistId == artist.id })
+        return sinq(offlineSourcesMetadata).any({ $0.artist.id == artist.id })
     }
     
     public func isShowAtLeastPartiallyAvailableOffline(_ show: Show) -> Bool {
-        return sinq(offlineSourcesMetadata).any({ $0.showId == show.id })
+        return sinq(offlineSourcesMetadata).any({ $0.show.id == show.id })
     }
     
     public func isSourceAtLeastPartiallyAvailableOffline(_ source: SourceFull) -> Bool {
@@ -253,5 +257,41 @@ extension MyLibrary {
     
     public func isYearAtLeastPartiallyAvailableOffline(_ year: Year) -> Bool {
         return sinq(offlineSourcesMetadata).any({ $0.year == year.year })
+    }
+}
+
+extension MyLibrary {
+    public func recentlyPlayedByArtist(_ artist: SlimArtist) -> [CompleteTrackShowInformation] {
+        return recentlyPlayed.filter({ $0.artist == artist })
+    }
+    
+    public func offlinePlayedByArtist(_ artist: SlimArtist) -> [OfflineSourceMetadata] {
+        return offlineSourcesMetadata
+            .filter({ $0.artist == artist })
+            .sorted(by: { $0.show.date < $1.show.date })
+    }
+    
+    public func favoritedShowsPlayedByArtist(_ artist: SlimArtist) -> [CompleteShowInformation] {
+        return shows
+            .filter({ $0.artist == artist })
+            .sorted(by: { $0.show.date < $1.show.date })
+    }
+}
+
+extension MyLibrary {
+    public func trackWasPlayed(_ track: CompleteTrackShowInformation) -> Bool {
+        for (idx, complete) in recentlyPlayed.enumerated() {
+            if complete.show == track.show && complete.artist == track.artist {
+                // move that show to the front
+                recentlyPlayed.remove(at: idx)
+                recentlyPlayed.insertAtBeginning(track, ensuringMaxCapacity: MyLibrary.MaxRecentlyPlayedShows)
+                
+                return true
+            }
+        }
+        
+        recentlyPlayed.insertAtBeginning(track, ensuringMaxCapacity: MyLibrary.MaxRecentlyPlayedShows)
+        
+        return true
     }
 }

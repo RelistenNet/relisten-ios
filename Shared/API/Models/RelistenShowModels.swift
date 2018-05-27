@@ -48,7 +48,11 @@ public class YearWithShows : Year {
     }
 }
 
-public class Show : RelistenObject {
+public class Show : RelistenObject, Equatable {
+    public static func == (lhs: Show, rhs: Show) -> Bool {
+        return lhs.artist_id == rhs.artist_id && lhs.date == rhs.date
+    }
+    
     public let artist_id: Int
     
     public let venue_id: Int?

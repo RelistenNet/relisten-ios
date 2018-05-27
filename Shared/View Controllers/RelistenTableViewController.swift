@@ -37,6 +37,16 @@ public class RelistenReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return relistenTableView.sectionIndexTitles(for: tableView)
     }
+    
+    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        relistenTableView.isCurrentlyScrolling = true
+    }
+    
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        relistenTableView.isCurrentlyScrolling = false
+        
+        relistenTableView.renderAfterScrollingIfNeeded()
+    }
 }
 
 public class RelistenBaseTableViewController : UIViewController, ResourceObserver {
@@ -44,6 +54,9 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     internal var reloadableViewLayoutAdapter: RelistenReloadableViewLayoutAdapter!
     
     internal let api = RelistenApi
+    
+    internal var isCurrentlyScrolling: Bool = false
+    internal var needsRenderAfterScrollingFinishes: Bool = false
     
     public init() {
         super.init(nibName: nil, bundle: nil)
@@ -88,6 +101,10 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
         reloadableViewLayoutAdapter.reload(width: w, synchronous: synchronous, batchUpdates: batchUpdates, layoutProvider: layout)
     }
     
+    public func renderAfterScrollingIfNeeded() {
+        
+    }
+    
     // MARK: TableView "dataSource" and "delegate"
     
     public func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,6 +114,8 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+    
+    
     
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return nil
@@ -108,8 +127,8 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
     
     internal var resource: Resource? { get { return nil } }
     
-    public let useCache: Bool;
-    public let refreshOnAppear: Bool;
+    public let useCache: Bool
+    public var refreshOnAppear: Bool
     
     public required init(useCache: Bool, refreshOnAppear: Bool) {
         self.useCache = useCache
@@ -128,18 +147,19 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
         if let res = resource {
             res.addObserver(self)
                 .addObserver(statusOverlay)
+            
+            statusOverlay.embed(in: self)
         }
         
         if !refreshOnAppear {
             load()
         }
         
-        if useCache {
-            latestData = resource?.latestData?.typedContent()
-            render()
+        if useCache, let res = resource {
+            latestData = res.latestData?.typedContent()
         }
-        
-        statusOverlay.embed(in: self)
+
+        render()
     }
     
     func load() {
@@ -200,7 +220,21 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
     
     // MARK: Layout & Rendering
     
+    public override func renderAfterScrollingIfNeeded() {
+        if needsRenderAfterScrollingFinishes {
+            needsRenderAfterScrollingFinishes = false
+            
+            render()
+        }
+    }
+    
     public func render() {
+        guard isCurrentlyScrolling == false else {
+            needsRenderAfterScrollingFinishes = true
+            
+            return
+        }
+        
         if let data = latestData {
             print("calling render(forData:)")
             render(forData: data)

@@ -14,7 +14,7 @@ import SINQ
 public class SourceTrackAudioItem : AGAudioItem {
     public let relisten: CompleteTrackShowInformation
     
-    public required init(_ track: SourceTrack, inSource: SourceFull, fromShow: Show, byArtist: SlimArtistWithFeatures) {
+    public required init(_ track: SourceTrack, inSource: SourceFull, fromShow: Show, byArtist: ArtistWithCounts) {
         self.relisten = CompleteTrackShowInformation(track: TrackStatus(forTrack: track), source: inSource, show: fromShow, artist: byArtist)
 
         super.init()
@@ -69,7 +69,7 @@ extension AGAudioPlayerUpNextQueue {
 }
 
 extension Show {
-    public func correctVenue(withFallback: Venue?) -> Venue? {
+    public func correctVenue(withFallback: VenueWithShowCount?) -> VenueWithShowCount? {
         if let v = self.venue {
             return v
         }
@@ -79,7 +79,7 @@ extension Show {
 }
 
 extension SourceFull {
-    public func toAudioItems(inShow: Show, byArtist: SlimArtistWithFeatures) -> [AGAudioItem] {
+    public func toAudioItems(inShow: Show, byArtist: ArtistWithCounts) -> [AGAudioItem] {
         var items: [AGAudioItem] = []
         
         for set in self.sets {
@@ -93,7 +93,7 @@ extension SourceFull {
 }
 
 extension SourceTrack {
-    public func toAudioItem(inSource: SourceFull, fromShow: Show, byArtist: SlimArtistWithFeatures) -> AGAudioItem {
+    public func toAudioItem(inSource: SourceFull, fromShow: Show, byArtist: ArtistWithCounts) -> AGAudioItem {
         return SourceTrackAudioItem(self, inSource: inSource, fromShow: fromShow, byArtist: byArtist)
     }
 }

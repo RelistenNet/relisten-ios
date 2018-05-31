@@ -16,11 +16,11 @@ import SINQ
 
 class SourcesViewController: RelistenTableViewController<ShowWithSources> {
     
-    let artist: SlimArtistWithFeatures
+    let artist: ArtistWithCounts
     let show: Show?
     let isRandom: Bool
     
-    public required init(artist: SlimArtistWithFeatures, show: Show) {
+    public required init(artist: ArtistWithCounts, show: Show) {
         self.artist = artist
         self.show = show
         self.isRandom = false
@@ -28,12 +28,12 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
         super.init(useCache: true, refreshOnAppear: true)
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
 
     
-    public required init(artist: SlimArtistWithFeatures) {
+    public required init(artist: ArtistWithCounts) {
         self.show = nil
         self.artist = artist
         self.isRandom = true

@@ -22,7 +22,7 @@ public protocol TrackStatusActionHandler {
 public protocol ICompleteShowInformation : Codable, Hashable {
     var source: SourceFull { get }
     var show: Show { get }
-    var artist: SlimArtistWithFeatures { get }
+    var artist: ArtistWithCounts { get }
 }
 
 public class CompleteShowInformation : ICompleteShowInformation {
@@ -40,11 +40,11 @@ public class CompleteShowInformation : ICompleteShowInformation {
     
     public let source: SourceFull
     public let show: Show
-    public let artist: SlimArtistWithFeatures
+    public let artist: ArtistWithCounts
     
     public var originalJSON: SwJSON
 
-    public required init(source: SourceFull, show: Show, artist: SlimArtistWithFeatures) {
+    public required init(source: SourceFull, show: Show, artist: ArtistWithCounts) {
         self.source = source
         self.show = show
         self.artist = artist
@@ -60,7 +60,7 @@ public class CompleteShowInformation : ICompleteShowInformation {
     public required init(json: SwJSON) throws {
         source = try SourceFull(json: json["source"])
         show = try Show(json: json["show"])
-        artist = try SlimArtistWithFeatures(json: json["artist"])
+        artist = try ArtistWithCounts(json: json["artist"])
 
         originalJSON = json
     }
@@ -110,7 +110,7 @@ public struct CompleteTrackShowInformation : ICompleteShowInformation {
     public let track: TrackStatus
     public let source: SourceFull
     public let show: Show
-    public let artist: SlimArtistWithFeatures
+    public let artist: ArtistWithCounts
 }
 
 extension CompleteTrackShowInformation {
@@ -118,7 +118,7 @@ extension CompleteTrackShowInformation {
         let track = try SourceTrack(json: json["track"])
         let source = try SourceFull(json: json["source"])
         let show = try Show(json: json["show"])
-        let artist = try SlimArtistWithFeatures(json: json["artist"])
+        let artist = try ArtistWithCounts(json: json["artist"])
         
         self.init(
             track: TrackStatus(forTrack: track),
@@ -308,7 +308,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
         
         super.init(
             insets: EdgeInsets(top: 8, left: 16, bottom: 8, right: 16),
-            viewReuseId: "sourceDetailsLayout",
+            viewReuseId: "trackStatusLayout",
             sublayout: StackLayout(
                 axis: .horizontal,
                 spacing: 0,

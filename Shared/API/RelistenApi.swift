@@ -144,7 +144,11 @@ class _RelistenApi {
         service.configureTransformer("/artists/*/tours/*") {
             return try TourWithShows(json: $0.content)
         }
-
+        
+        service.configureTransformer("/artists/*/sources/*/reviews") {
+            return try ($0.content as JSON).arrayValue.map(SourceReview.init)
+        }
+        
         /*
         service.configure("/user/starred/* /*") {   // Github gives 202 for “starred” and 404 for “not starred.”
             $0.pipeline[.model].add(               // This custom transformer turns that curious convention into
@@ -229,6 +233,19 @@ class _RelistenApi {
         return artistResource(byArtist)
             .child("songs")
             .child(String(withPlayedSong.id))
+    }
+    
+    public func show(onDate: String /* YYYY-MM-DD */, byArtist: SlimArtist) -> Resource {
+        return artistResource(byArtist)
+            .child("shows")
+            .child(onDate)
+    }
+    
+    public func reviews(forSource: Source, byArtist: SlimArtist) -> Resource {
+        return artistResource(byArtist)
+            .child("sources")
+            .child(String(forSource.id))
+            .child("reviews")
     }
     
     public func onThisDay(byArtist: SlimArtist) -> Resource {

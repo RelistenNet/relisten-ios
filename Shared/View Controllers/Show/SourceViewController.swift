@@ -16,12 +16,12 @@ import SINQ
 
 class SourceViewController: RelistenBaseTableViewController {
     
-    let artist: SlimArtistWithFeatures
+    let artist: ArtistWithCounts
     let show: ShowWithSources
     let source: SourceFull
     let idx: Int
     
-    public required init(artist: SlimArtistWithFeatures, show: ShowWithSources, source: SourceFull) {
+    public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
         self.show = show
         self.source = source
@@ -143,7 +143,8 @@ class SourceViewController: RelistenBaseTableViewController {
                 Section(items: [
                     SourceDetailsLayout(source: self.source, inShow: self.show, artist: self.artist, atIndex: self.idx),
                     SwitchCellLayout(title: "Part of My Shows", checkedByDefault: { self.isShowInLibrary }, onSwitch: self.onToggleAddToMyShows!),
-                    SwitchCellLayout(title: "Fully Available Offline" + str, checkedByDefault: { self.isAvailableOffline }, onSwitch: self.onToggleOffline!)
+                    SwitchCellLayout(title: "Fully Available Offline" + str, checkedByDefault: { self.isAvailableOffline }, onSwitch: self.onToggleOffline!),
+                    ShareCellLayout()
                     ])
             ]
             
@@ -159,6 +160,12 @@ class SourceViewController: RelistenBaseTableViewController {
     override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             cell.selectionStyle = .none
+            
+            if indexPath.row == 3 {
+                cell.accessoryType = .disclosureIndicator
+                
+                return cell
+            }
         }
         
         cell.accessoryType = .none
@@ -175,7 +182,25 @@ class SourceViewController: RelistenBaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard indexPath.section != 0 else {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            navigationController?.pushViewController(SourceDetailsViewController(artist: artist, show: show, source: source), animated: true)
+            
+            return
+        }
+        else if indexPath.section == 0 && indexPath.row == 3 {
+            let show = completeShowInformation
+            let activities: [Any] = [ShareHelper.text(forSource: show), ShareHelper.url(forSource: show)]
+            
+            let shareVc = UIActivityViewController(activityItems: activities, applicationActivities: nil)
+            shareVc.modalTransitionStyle = .coverVertical
+            
+            if PlaybackController.sharedInstance.hasBarBeenAdded {
+                PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
+            }
+            else {
+                self.present(shareVc, animated: true, completion: nil)
+            }
+            
             return
         }
         

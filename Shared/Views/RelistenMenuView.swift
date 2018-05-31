@@ -33,7 +33,7 @@ public enum RelistenMenuItem: Int {
 }
 
 public class RelistenMenuView : UIView {
-    public let artist: Artist
+    public let artist: ArtistWithCounts
     public let viewController: UIViewController
     
     private let size_MenuLineSpacing: CGFloat = 16.0 as CGFloat
@@ -45,7 +45,7 @@ public class RelistenMenuView : UIView {
     private let menuCategories: [RelistenMenuCategory]
     private let menu: [[RelistenMenuItem]]
     
-    public required init(artist: Artist, inViewController vc: UIViewController) {
+    public required init(artist: ArtistWithCounts, inViewController vc: UIViewController) {
         self.artist = artist
         self.viewController = vc
         
@@ -267,16 +267,21 @@ public class RelistenMenuView : UIView {
         }
     }
     
-    public func menuButton(forTitle: String, withTag: Int = -1) -> UIButton {
+    public func menuButton(forTitle: String, withTag: Int = -1, top: Bool = false) -> UIButton {
         let button = UIButton(type: .custom)
         
-        button.setTitle(forTitle, for: .normal)
+        button.setTitle(forTitle + (top ? " ›" : ""), for: .normal)
+        button.accessibilityLabel = forTitle
         button.tag = withTag
         
         button.backgroundColor = AppColors.primary
         button.setTitleColor(AppColors.textOnPrimary, for: .normal)
         
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout).font(withDifferentWeight: .Medium)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
+            .font(
+                scaledBy: top ? 1.1 : 1.0,
+                withDifferentWeight: top ? .Heavy : .Semibold
+            )
         button.sizeToFit()
         
         button.frame = CGRect(
@@ -307,7 +312,7 @@ extension RelistenMenuView {
     }
     
     public func menuButton(forButton: RelistenMenuCategory) -> UIButton {
-        return menuButton(forTitle: title(forButton: forButton), withTag: createTag(forButton: forButton))
+        return menuButton(forTitle: title(forButton: forButton), withTag: createTag(forButton: forButton), top: true)
     }
     
     public func menuButton(forSubmenuButton: RelistenMenuItem) -> UIButton {

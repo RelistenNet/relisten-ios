@@ -64,8 +64,8 @@ public class SourceLayout : InsetLayout<UIView> {
         ) { (label) in label.textAlignment = .right }
         
         let ratingView = SizeLayout<AXRatingView>(
-            width: YearLayout.ratingSize().width,
-            height: YearLayout.ratingSize().height,
+            width: RatingViewStubBounds.size.width,
+            height: RatingViewStubBounds.size.height,
             alignment: .centerTrailing,
             flexibility: .inflexible,
             viewReuseId: "sourceRating")

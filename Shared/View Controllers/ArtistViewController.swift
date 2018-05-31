@@ -10,6 +10,7 @@ import UIKit
 
 import Siesta
 import LayoutKit
+import KASlideShow
 
 public class ArtistViewController : RelistenBaseTableViewController {
     internal let statusOverlay = RelistenResourceStatusOverlay()
@@ -33,6 +34,15 @@ public class ArtistViewController : RelistenBaseTableViewController {
 
     private var av: RelistenMenuView! = nil
     public override func viewDidLoad() {
+        if artist.name == "Phish" {
+            AppColors_SwitchToPhishOD(navigationController)
+            cellDefaultBackgroundColor = UIColor.clear
+        }
+        else {
+            AppColors_SwitchToRelisten(navigationController)
+            cellDefaultBackgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1.0)
+        }
+        
         navigationItem.largeTitleDisplayMode = .always
 
         super.viewDidLoad()
@@ -44,18 +54,16 @@ public class ArtistViewController : RelistenBaseTableViewController {
         resourceToday.addObserver(self)
             .addObserver(statusOverlay)
         
-//        layout(width: tableView.bounds.size.width, synchronous: false) { self.buildLayout() }
-
         av = RelistenMenuView(artist: artist, inViewController: self)
         av.frame.origin = CGPoint(x: 0, y: 16)
         av.frame.size = av.sizeThatFits(CGSize(width: tableView.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
         
-        let containerView = UIView(frame: av.frame.insetBy(dx: 0, dy: -32).insetBy(dx: 0, dy: 16))
+        let containerView = UIView(frame: av.frame.insetBy(dx: 0, dy: -48).insetBy(dx: 0, dy: 16))
         containerView.addSubview(av)
 
         tableView.tableHeaderView = containerView
         
-//        tableView.contentInset.top += av.frame.size.height
+        setupBackgroundSlideshow()
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +74,14 @@ public class ArtistViewController : RelistenBaseTableViewController {
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        viewDidAppear_SlideShow(animated)
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        viewWillDisappear_SlideShow(animated)
     }
     
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -167,4 +183,64 @@ public class ArtistViewController : RelistenBaseTableViewController {
     // recently played by band
     // recently played by user
     // recently added
+    
+    var shuffledImageNames: [NSString] = []
+    var slider: KASlideShow! = nil
+}
+
+extension ArtistViewController : KASlideShowDataSource {
+    public func slideShow(_ slideShow: KASlideShow!, objectAt index: UInt) -> NSObject! {
+        return shuffledImageNames[Int(index)]
+    }
+    
+    public func slideShowImagesNumber(_ slideShow: KASlideShow!) -> UInt {
+        return artist.name == "Phish" ? 36 : 0
+    }
+    
+    public func setupBackgroundSlideshow() {
+        guard artist.name == "Phish" else {
+            return
+        }
+        
+        for i in 1...36 {
+            shuffledImageNames.append(NSString(string: "phishod_bg_" + (i < 10 ? "0" : "") + String(i)))
+        }
+        
+        shuffledImageNames.shuffle()
+        
+        slider = KASlideShow(frame: view.bounds)
+        
+        slider.datasource = self
+        slider.imagesContentMode = .scaleAspectFill
+        slider.delay = 7.5
+        slider.transitionDuration = 1.0
+        slider.transitionType = .fade
+        
+        slider.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        view.addSubview(slider)
+        
+        let fog = UIView(frame: view.bounds)
+        fog.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        fog.backgroundColor = UIColor.blue.withAlphaComponent(0.4)
+        
+        view.addSubview(fog)
+        
+        view.sendSubview(toBack: fog)
+        view.sendSubview(toBack: slider)
+        
+        tableView.backgroundColor = UIColor.clear
+    }
+    
+    public func viewWillDisappear_SlideShow(_ animated: Bool) {
+        if let s = slider {
+            s.stop()
+        }
+    }
+    
+    public func viewDidAppear_SlideShow(_ animated: Bool) {
+        if let s = slider {
+            s.start()
+        }
+    }
 }

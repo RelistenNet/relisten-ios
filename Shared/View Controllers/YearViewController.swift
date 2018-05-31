@@ -15,11 +15,11 @@ import LayoutKit
 import SINQ
 
 class ShowListViewController<T> : RelistenTableViewController<T> {
-    let artist: SlimArtistWithFeatures
+    let artist: ArtistWithCounts
     let showsResource: Resource?
     let tourSections: Bool
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: ArtistWithCounts, showsResource: Resource?, tourSections: Bool) {
         self.artist = artist
         self.showsResource = showsResource
         self.tourSections = tourSections
@@ -31,7 +31,7 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
@@ -168,7 +168,7 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
 class YearViewController: ShowListViewController<YearWithShows> {
     let year: Year
     
-    public required init(artist: SlimArtistWithFeatures, year: Year) {
+    public required init(artist: ArtistWithCounts, year: Year) {
         self.year = year
         
         super.init(artist: artist, showsResource: RelistenApi.shows(inYear: year, byArtist: artist), tourSections: true)
@@ -176,7 +176,7 @@ class YearViewController: ShowListViewController<YearWithShows> {
         title = year.year
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     

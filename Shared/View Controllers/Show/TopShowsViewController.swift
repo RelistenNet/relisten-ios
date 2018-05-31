@@ -16,7 +16,7 @@ import SINQ
 
 class TopShowsViewController: ShowListViewController<[Show]> {
     
-    public required init(artist: SlimArtistWithFeatures) {
+    public required init(artist: ArtistWithCounts) {
         super.init(
             artist: artist,
             showsResource: RelistenApi.topShows(byArtist: artist),
@@ -26,7 +26,7 @@ class TopShowsViewController: ShowListViewController<[Show]> {
         title = "Top Shows"
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     

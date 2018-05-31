@@ -16,15 +16,15 @@ import SINQ
 
 class SongsViewController: RelistenTableViewController<[SongWithShowCount]> {
     
-    let artist: SlimArtistWithFeatures
+    let artist: ArtistWithCounts
     
-    public required init(artist: SlimArtistWithFeatures) {
+    public required init(artist: ArtistWithCounts) {
         self.artist = artist
         
         super.init(useCache: true, refreshOnAppear: true)
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     

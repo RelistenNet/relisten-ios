@@ -11,7 +11,7 @@ import UIKit
 import Siesta
 
 class DownloadedViewController: ShowListViewController<[OfflineSourceMetadata]> {
-    public required init(artist: SlimArtistWithFeatures) {
+    public required init(artist: ArtistWithCounts) {
         super.init(artist: artist, showsResource: nil, tourSections: true)
         
         refreshOnAppear = true
@@ -20,7 +20,7 @@ class DownloadedViewController: ShowListViewController<[OfflineSourceMetadata]> 
         latestData = loadOffline()
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     

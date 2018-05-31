@@ -82,19 +82,19 @@ public class CellSelectCallbackReloadableViewLayoutAdapter : ReloadableViewLayou
 
 public func HorizontalShowCollection(withId: String, makeAdapater cb: @escaping (UICollectionView) -> ReloadableViewLayoutAdapter, layoutProvider: @escaping () -> [Section<[Layout]>]) -> CollectionViewLayout {
     let l = CollectionViewLayout(
-        minHeight: 145,
+        minHeight: 165,
         alignment: .fill,
         flexibility: .flexible,
         viewReuseId: "horizShowCollection-" + withId,
         config: { (collectionView) in
-            let adapter = cb(collectionView)
-            
-            collectionView.backgroundColor = UIColor.clear
-            collectionView.delegate = adapter
-            collectionView.dataSource = adapter
-            collectionView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.00)
-            
             DispatchQueue.main.async {
+                let adapter = cb(collectionView)
+                
+                collectionView.backgroundColor = UIColor.clear
+                collectionView.delegate = adapter
+                collectionView.dataSource = adapter
+                //            collectionView.backgroundColor = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.00)
+
                 adapter.reload(width: nil, synchronous: true, layoutProvider: layoutProvider)
             }
     })
@@ -112,10 +112,10 @@ public func HorizontalShowCollection(withId: String, makeAdapater cb: @escaping 
 
 public class YearShowLayout : InsetLayout<UIView> {
     public convenience init(show: Show) {
-        self.init(show: show, withRank: nil, verticalLayout: false)
+        self.init(show: show, withRank: nil, verticalLayout: false, showingArtist: nil)
     }
     
-    public init(show: Show, withRank: Int?, verticalLayout: Bool) {
+    public init(show: Show, withRank: Int?, verticalLayout: Bool, showingArtist: SlimArtist? = nil) {
         let showName = LabelLayout(
             text: show.display_date,
             font: UIFont.preferredFont(forTextStyle: .headline),
@@ -126,8 +126,8 @@ public class YearShowLayout : InsetLayout<UIView> {
         )
 
         let ratingView = SizeLayout<AXRatingView>(
-                width: YearLayout.ratingSize().width,
-                height: YearLayout.ratingSize().height,
+                width: RatingViewStubBounds.size.width,
+                height: RatingViewStubBounds.size.height,
                 alignment: verticalLayout ? .centerLeading : .centerTrailing,
                 flexibility: .flexible,
                 viewReuseId: "yearRating")
@@ -201,6 +201,21 @@ public class YearShowLayout : InsetLayout<UIView> {
         
         if verticalLayout {
             var fullStackLayouts: [Layout] = [ showName, venueLabel ]
+            
+            if let artist = showingArtist {
+                let artistLabel = LabelLayout(
+                    text: artist.name,
+                    font: UIFont.preferredFont(forTextStyle: .caption1),
+                    numberOfLines: 1,
+                    alignment: .centerLeading,
+                    flexibility: .inflexible,
+                    viewReuseId: "artistLabel"
+                ) { (label: UILabel) in
+                    label.textColor = AppColors.mutedText
+                }
+                
+                fullStackLayouts.insert(artistLabel, at: 0)
+            }
             
             var metaStack: [Layout] = []
             

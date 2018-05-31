@@ -9,6 +9,8 @@
 import Foundation
 
 import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 import SwiftyJSON
 import Cache
 import Async
@@ -17,7 +19,7 @@ import SINQ
 public class MyLibraryManager {
     static let shared = MyLibraryManager()
     
-    let db = Firestore.firestore()
+    let db: Firestore
     
     var user: User? = nil
     var userDoc: DocumentReference? = nil
@@ -30,9 +32,11 @@ public class MyLibraryManager {
         
         RelistenDownloadManager.shared.delegate = self.library
         
-        let db = Firestore.firestore()
+        db = Firestore.firestore()
         let settings = db.settings
         settings.areTimestampsInSnapshotsEnabled = true
+        settings.isPersistenceEnabled = true
+        
         db.settings = settings
         
         downloadBacklog()

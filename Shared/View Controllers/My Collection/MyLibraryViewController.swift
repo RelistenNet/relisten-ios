@@ -11,7 +11,7 @@ import UIKit
 import Siesta
 
 class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]> {
-    public required init(artist: SlimArtistWithFeatures) {
+    public required init(artist: ArtistWithCounts) {
         super.init(artist: artist, showsResource: nil, tourSections: true)
         
         title = "My Library"
@@ -19,7 +19,7 @@ class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]>
         latestData = loadMyShows()
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     

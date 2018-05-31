@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AGAudioPlayer
 
-public struct _AppColors {
+public struct _AppColors : Equatable {
     let primary: UIColor
     let textOnPrimary: UIColor
     
@@ -23,5 +24,48 @@ public struct _AppColors {
         self.soundboard = soundboard
         self.mutedText = mutedText
         self.remaster = remaster
+    }
+}
+
+public let RelistenAppColors = _AppColors(
+    primary: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
+    textOnPrimary: UIColor.white,
+    soundboard: UIColor(red:0.0/255.0, green:128.0/255.0, blue:95.0/255.0, alpha:1.0),
+    remaster: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
+    mutedText: UIColor.gray
+)
+
+public let RelistenPlayerColors = AGAudioPlayerColors(main: RelistenAppColors.primary, accent: RelistenAppColors.textOnPrimary)
+
+public let PhishODAppColors = _AppColors(
+    primary: UIColor(red:0, green:128.0/255.0, blue:95.0/255.0, alpha:1),
+    textOnPrimary: UIColor.white,
+    soundboard: UIColor(red:0.0/255.0, green:128.0/255.0, blue:95.0/255.0, alpha:1.0),
+    remaster: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
+    mutedText: UIColor.gray
+)
+
+public let PhishODPlayerColors = AGAudioPlayerColors(main: PhishODAppColors.primary, accent: PhishODAppColors.textOnPrimary)
+
+
+public var AppColors = RelistenAppColors
+
+public func AppColors_SwitchToPhishOD(_ viewController: UINavigationController?) {
+    if AppColors != PhishODAppColors {
+        AppColors = PhishODAppColors
+        
+        AppDelegate.shared.setupAppearance(viewController)
+        
+        PlaybackController.sharedInstance.viewController.applyColors(PhishODPlayerColors)
+    }
+}
+
+public func AppColors_SwitchToRelisten(_ viewController: UINavigationController?) {
+    if AppColors != RelistenAppColors {
+        AppColors = RelistenAppColors
+        
+        AppDelegate.shared.setupAppearance(viewController)
+        
+        PlaybackController.sharedInstance.viewController.applyColors(RelistenPlayerColors)
     }
 }

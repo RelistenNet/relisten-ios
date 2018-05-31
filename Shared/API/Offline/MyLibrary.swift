@@ -45,7 +45,7 @@ public struct OfflineSourceMetadata : Codable, Hashable {
         return completeShowInformation.source
     }
     
-    public var artist: SlimArtistWithFeatures {
+    public var artist: ArtistWithCounts {
         return completeShowInformation.artist
     }
     

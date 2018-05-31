@@ -16,7 +16,7 @@ import SINQ
 fileprivate let reachability = Reachability()!
 
 public class RelistenReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
-    internal let relistenTableView: RelistenBaseTableViewController
+    internal weak var relistenTableView: RelistenBaseTableViewController?
     
     public init(tableView: RelistenBaseTableViewController, reloadableView: ReloadableView) {
         relistenTableView = tableView
@@ -27,25 +27,29 @@ public class RelistenReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
-        return relistenTableView.tableView(tableView, cell: cell, forRowAt: indexPath)
+        let cell2 = relistenTableView?.tableView(tableView, cell: cell, forRowAt: indexPath)
+        
+        cell2?.backgroundColor = relistenTableView?.cellDefaultBackgroundColor
+
+        return cell2 ?? cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        relistenTableView.tableView(tableView, didSelectRowAt: indexPath)
+        relistenTableView?.tableView(tableView, didSelectRowAt: indexPath)
     }
     
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return relistenTableView.sectionIndexTitles(for: tableView)
+        return relistenTableView?.sectionIndexTitles(for: tableView)
     }
     
     public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        relistenTableView.isCurrentlyScrolling = true
+        relistenTableView?.isCurrentlyScrolling = true
     }
     
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        relistenTableView.isCurrentlyScrolling = false
+        relistenTableView?.isCurrentlyScrolling = false
         
-        relistenTableView.renderAfterScrollingIfNeeded()
+        relistenTableView?.renderAfterScrollingIfNeeded()
     }
 }
 
@@ -58,7 +62,12 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     internal var isCurrentlyScrolling: Bool = false
     internal var needsRenderAfterScrollingFinishes: Bool = false
     
-    public init() {
+    internal var tableViewStyle: UITableViewStyle
+    internal var cellDefaultBackgroundColor: UIColor = UIColor.clear
+    
+    public init(style: UITableViewStyle = .plain) {
+        tableViewStyle = style
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -73,7 +82,7 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
             navigationItem.largeTitleDisplayMode = .always
         }
 
-        tableView = UITableView(frame: view.bounds, style: .plain)
+        tableView = UITableView(frame: view.bounds, style: tableViewStyle)
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         reloadableViewLayoutAdapter = RelistenReloadableViewLayoutAdapter(tableView: self, reloadableView: tableView)
@@ -92,7 +101,7 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     
     // MARK: Layout & Rendering
     
-    internal func layout(width: CGFloat? = nil, synchronous: Bool = true, batchUpdates: BatchUpdates? = nil, layout: @escaping () -> [Section<[Layout]>]) {
+    internal func layout(width: CGFloat? = nil, synchronous: Bool = false, batchUpdates: BatchUpdates? = nil, layout: @escaping () -> [Section<[Layout]>]) {
         var w = width
         if w == nil {
             w = tableView.frame.width
@@ -130,11 +139,11 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
     public let useCache: Bool
     public var refreshOnAppear: Bool
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         self.useCache = useCache
         self.refreshOnAppear = refreshOnAppear
 
-        super.init()
+        super.init(style: style)
     }
     
     public required init?(coder aDecoder: NSCoder) {

@@ -40,8 +40,8 @@ public class SourceDetailsLayout : InsetLayout<UIView> {
             var topRow: [ Layout ] = [ showName ]
             
             let ratingView = SizeLayout<AXRatingView>(
-                width: YearLayout.ratingSize().width,
-                height: YearLayout.ratingSize().height,
+                width: RatingViewStubBounds.size.width,
+                height: RatingViewStubBounds.size.height,
                 alignment: .centerTrailing,
                 flexibility: .inflexible,
                 viewReuseId: "sourceRating")
@@ -144,7 +144,7 @@ public class SourceDetailsLayout : InsetLayout<UIView> {
         }
         
         let details = LabelLayout(
-            text: "See Details ›",
+            text: "See details, taper notes, reviews & more ›",
             font: UIFont.preferredFont(forTextStyle: .caption1),
             numberOfLines: 1,
             alignment: .fillLeading,

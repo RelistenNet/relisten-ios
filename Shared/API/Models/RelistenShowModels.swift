@@ -56,7 +56,7 @@ public class Show : RelistenObject, Equatable {
     public let artist_id: Int
     
     public let venue_id: Int?
-    public let venue: Venue?
+    public let venue: VenueWithShowCount?
     
     public let tour_id: Int?
     public let tour: Tour?
@@ -79,11 +79,23 @@ public class Show : RelistenObject, Equatable {
     public let has_soundboard_source: Bool
     public let has_streamable_flac_source: Bool
     
+    public var yearFromDate : String {
+        return String(display_date[display_date.startIndex..<display_date.index(display_date.startIndex, offsetBy: 4)])
+    }
+    
+    public var monthFromDate : String {
+        return String(display_date[display_date.index(display_date.startIndex, offsetBy: 5)..<display_date.index(display_date.startIndex, offsetBy: 7)])
+    }
+    
+    public var dayFromDate : String {
+        return String(display_date[display_date.index(display_date.startIndex, offsetBy: 8)..<display_date.endIndex])
+    }
+
     public required init(json: JSON) throws {
         artist_id = try json["artist_id"].int.required()
         
         venue_id = json["venue_id"].int
-        venue = !json["venue"].isEmpty ? try Venue(json: json["venue"]) : nil
+        venue = !json["venue"].isEmpty ? try VenueWithShowCount(json: json["venue"]) : nil
         
         tour_id = json["tour_id"].int
         tour = !json["tour"].isEmpty ? try Tour(json: json["tour"]) : nil
@@ -121,9 +133,11 @@ public class ShowWithArtist : Show {
 
 public class ShowWithSources : Show {
     public let sources: [SourceFull]
+    public let year: Year
     
     public required init(json: JSON) throws {
         sources = try json["sources"].arrayValue.map(SourceFull.init)
+        year = try Year(json: json["year"])
         
         try super.init(json: json)
     }
@@ -171,7 +185,7 @@ public class VenueWithShowCount : Venue {
     public let shows_at_venue: Int
     
     public required init(json: JSON) throws {
-        shows_at_venue = try json["shows_at_venue"].int.required()
+        shows_at_venue = json["shows_at_venue"].int ?? -1
         
         try super.init(json: json)
     }

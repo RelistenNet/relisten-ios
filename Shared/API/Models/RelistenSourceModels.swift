@@ -23,7 +23,7 @@ public class SlimSource : RelistenObject {
     
     // only for per-source venues
     public let venue_id: Int?
-    public let venue: Venue?
+    public let venue: VenueWithShowCount?
     
     public let display_date: String
     
@@ -44,7 +44,7 @@ public class SlimSource : RelistenObject {
         artist_id = try json["artist_id"].int.required()
         
         venue_id = json["venue_id"].int
-        venue = json["venue"].isEmpty ? nil : try Venue(json: json["venue"])
+        venue = json["venue"].isEmpty ? nil : try VenueWithShowCount(json: json["venue"])
         
         display_date = try json["display_date"].string.required()
         
@@ -120,12 +120,12 @@ public class Source : SlimSource {
 }
 
 public class SourceFull : Source {
-    public let reviews: [SourceReview]
+    public let review_count: Int
     public let sets: [SourceSet]
     public let links: [Link]
     
     public required init(json: JSON) throws {
-        reviews = try json["reviews"].arrayValue.map(SourceReview.init)
+        review_count = json["review_count"].int ?? -1
         sets = try json["sets"].arrayValue.map(SourceSet.init)
         links = try json["links"].arrayValue.map(Link.init)
         

@@ -23,26 +23,16 @@ public func RelistenMakeOfflineExistsIndicator() -> Layout {
     })
 }
 
+public let RatingViewStubBounds = { () -> CGRect in
+    let r = AXRatingView()
+    r.isUserInteractionEnabled = false
+    r.value = 0.5
+    r.sizeToFit()
+    
+    return r.bounds
+}()
+
 public class YearLayout : InsetLayout<UIView> {
-    internal static var ratingViewStub: AXRatingView? = nil
-
-    internal static func ratingSize() -> CGSize {
-        if ratingViewStub == nil {
-            let r = AXRatingView()
-            r.isUserInteractionEnabled = false
-            r.value = 0.5
-            r.sizeToFit()
-
-            ratingViewStub = r
-        }
-
-        if let r = ratingViewStub {
-            return r.bounds.size
-        }
-
-        return CGSize.zero
-    }
-
     public init(year: Year) {
         let yearName = LabelLayout(
             text: year.year,
@@ -54,8 +44,8 @@ public class YearLayout : InsetLayout<UIView> {
         )
 
         let ratingView = SizeLayout<AXRatingView>(
-            width: YearLayout.ratingSize().width,
-            height: YearLayout.ratingSize().height,
+            width: RatingViewStubBounds.size.width,
+            height: RatingViewStubBounds.size.height,
             alignment: .centerTrailing,
             flexibility: .flexible,
             viewReuseId: "yearRating")

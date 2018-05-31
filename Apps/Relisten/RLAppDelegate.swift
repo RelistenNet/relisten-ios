@@ -10,22 +10,16 @@ import UIKit
 
 import Siesta
 import Firebase
+import FirebaseAuth
 import DWURecyclingAlert
-
-// public var FirebaseRemoteConfig: RemoteConfig! = nil
-
-public let AppColors = _AppColors(
-    primary: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
-    textOnPrimary: UIColor.white,
-    soundboard: UIColor(red:0.0/255.0, green:128.0/255.0, blue:95.0/255.0, alpha:1.0),
-    remaster: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
-    mutedText: UIColor.gray
-)
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    public static var shared: AppDelegate! = nil
     
     func setupThirdPartyDependencies() {
 //        Inject_DWURecyclingAlert()
@@ -48,21 +42,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
     }
+    
+    var rootNavigationController: UINavigationController! = nil
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        AppDelegate.shared = self
+        
         setupThirdPartyDependencies()
         setupAppearance()
         
+        print(StandardSwitchBounds)
+        print(RatingViewStubBounds)
+        
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        let nav = UINavigationController(rootViewController: ArtistsViewController(useCache: true, refreshOnAppear: false))
+        rootNavigationController = UINavigationController(rootViewController: ArtistsViewController(useCache: true, refreshOnAppear: true))
         
-        if #available(iOS 11.0, *) {
-            nav.navigationBar.prefersLargeTitles = true
-            nav.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
-        }
+        rootNavigationController.navigationBar.prefersLargeTitles = true
+        rootNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
         
-        window?.rootViewController = nav
+        window?.rootViewController = rootNavigationController
         
         window?.makeKeyAndVisible()
         
@@ -79,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func setupAppearance() {
+    public func setupAppearance(_ viewController: UINavigationController? = nil) {
         UIApplication.shared.statusBarStyle = .lightContent
         
         UINavigationBar.appearance().barTintColor = AppColors.primary
@@ -98,6 +97,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UISegmentedControl.appearance().tintColor = AppColors.primary
         UITabBar.appearance().tintColor = AppColors.primary
+        
+        if let nav = viewController {
+            nav.navigationBar.barTintColor = AppColors.primary
+            nav.navigationBar.backgroundColor = AppColors.primary
+            nav.navigationBar.tintColor = AppColors.primary
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -125,3 +130,99 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            let url = userActivity.webpageURL!
+            
+            // https://relisten.live/grateful-dead/1967/02/12/smokestack-lightning?source=87690
+            
+            let parts = url.pathComponents
+            
+            let artistsVc = rootNavigationController.viewControllers.first! as! ArtistsViewController
+            var vcs: [UIViewController] = [ artistsVc ]
+            
+            guard let artists = artistsVc.latestData else {
+                return true
+            }
+            
+            var artist: ArtistWithCounts! = nil
+            
+            if parts.count >= 2 {
+                // specific artist
+                
+                artist = artists.first(where: { $0.slug == parts[1] })
+                
+                vcs.append(ArtistViewController(artist: artist))
+            }
+            
+            func doneMakingViewControllers() {
+                SVProgressHUD.dismiss()
+                
+                rootNavigationController.setViewControllers(vcs, animated: false)
+            }
+            
+            if parts.count >= 3 {
+                vcs.append(YearsViewController(artist: artist))
+                
+                // year only
+                if parts.count < 5 {
+                    
+                    let res = RelistenApi.years(byArtist: artist)
+                    
+                    SVProgressHUD.show()
+                    res.addObserver(owner: self) { (res, event) in
+                        if let years: [Year] = res.typedContent(), let yearObj = years.filter({ $0.year == parts[2] }).first {
+                            vcs.append(YearViewController(artist: artist, year: yearObj))
+                            
+                            res.removeObservers(ownedBy: self)
+                            
+                            doneMakingViewControllers()
+                        }
+                    }
+                    res.load()
+                }
+            }
+            else {
+                doneMakingViewControllers()
+            }
+            
+            if parts.count >= 5 {
+                let res = RelistenApi.show(onDate: parts[2] + "-" + parts[3] + "-" + parts[4], byArtist: artist)
+
+                SVProgressHUD.show()
+                res.addObserver(owner: self) { (res, event) in
+                    if let show: ShowWithSources = res.typedContent() {
+                        vcs.append(YearViewController(artist: artist, year: show.year))
+                        vcs.append(SourcesViewController(artist: artist, show: show))
+                        
+                        if let queryString = url.query?.split(separator: "&") {
+                            var sourceId: Int? = nil
+                            
+                            for param in queryString {
+                                let kvs = String(param).split(separator: "=")
+                                
+                                if let f = kvs.first, String(f) == "source", let l = kvs.last {
+                                    sourceId = Int(String(l))
+                                }
+                            }
+                            
+                            if let sourceId = sourceId, let source = show.sources.filter({ $0.id == sourceId }).first {
+                                vcs.append(SourceViewController(artist: artist, show: show, source: source))
+                            }
+                        }
+                        
+                        res.removeObservers(ownedBy: self)
+                        
+                        doneMakingViewControllers()
+                    }
+                }
+                res.load()
+            }
+            
+            print(url.absoluteString)
+            //handle url
+        }
+        return true
+    }
+}

@@ -17,7 +17,7 @@ import SINQ
 class SongViewController: ShowListViewController<SongWithShows> {
     let song: Song
     
-    public required init(artist: SlimArtistWithFeatures, song: Song) {
+    public required init(artist: ArtistWithCounts, song: Song) {
         self.song = song
         
         super.init(
@@ -29,7 +29,7 @@ class SongViewController: ShowListViewController<SongWithShows> {
         title = song.name
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     

@@ -45,6 +45,16 @@ public class TrackActions {
             }
             
             a.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
+                let activities: [Any] = [ShareHelper.text(forCompleteTrack: info), ShareHelper.url(forCompleteTrack: info)]
+                let shareVc = UIActivityViewController(activityItems: activities, applicationActivities: nil)
+                shareVc.modalTransitionStyle = .coverVertical
+                
+                if PlaybackController.sharedInstance.hasBarBeenAdded {
+                    PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
+                }
+                else {
+                    vc.present(shareVc, animated: true, completion: nil)
+                }
             }))
             
             a.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in

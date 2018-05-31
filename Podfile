@@ -38,10 +38,12 @@ target 'Relisten' do
 
   pod 'SINQ'
   pod 'Reveal-SDK', :configurations => ['Debug']
+  pod 'KASlideShow'
   
   pod "MZDownloadManager", :git => "https://github.com/alecgorge/MZDownloadManager.git"
   pod 'AsyncSwift'
   pod 'CWStatusBarNotification'
+  pod 'SVProgressHUD'
   # pod 'SpinnerView'
 
   # pod 'BFNavigationBarDrawer'

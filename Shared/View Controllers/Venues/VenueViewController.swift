@@ -17,7 +17,7 @@ import SINQ
 class VenueViewController: ShowListViewController<VenueWithShows> {
     let venue: Venue
     
-    public required init(artist: SlimArtistWithFeatures, venue: Venue) {
+    public required init(artist: ArtistWithCounts, venue: Venue) {
         self.venue = venue
         
         super.init(
@@ -29,7 +29,7 @@ class VenueViewController: ShowListViewController<VenueWithShows> {
         title = venue.name
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     

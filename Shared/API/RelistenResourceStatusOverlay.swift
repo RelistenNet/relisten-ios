@@ -296,7 +296,7 @@ open class RelistenResourceStatusOverlay: UIView, ResourceObserver
     // MARK: Retry & reload
 
     /// Call `loadIfNeeded()` on any resources with errors that this overlay is observing.
-    public func retryFailedRequests()
+    @objc public func retryFailedRequests()
     {
         for res in observedResources
             where res.latestError != nil
@@ -307,7 +307,7 @@ open class RelistenResourceStatusOverlay: UIView, ResourceObserver
     }
 
     /// Variant of `retryFailedRequests()` suitable for use as an IBOutlet. (The `sender` is ignored.)
-    @IBAction public func retryFailedRequests(_ sender: Any)
+    @objc @IBAction public func retryFailedRequests(_ sender: Any)
     {
         retryFailedRequests()
     }

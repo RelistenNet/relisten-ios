@@ -39,6 +39,24 @@
 		7C13705C20BA399E00710E90 /* MyRecentlyPlayedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */; };
 		7C1F1A5F1F733ACD009408AA /* VenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */; };
 		7C1F1A601F733ACD009408AA /* VenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */; };
+		7C31550E20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
+		7C31550F20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
+		7C31551220BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551120BFAE6E00F07622 /* SourceDetailsViewController.swift */; };
+		7C31551320BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551120BFAE6E00F07622 /* SourceDetailsViewController.swift */; };
+		7C31551520BFB3DA00F07622 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551420BFB3DA00F07622 /* String.swift */; };
+		7C31551620BFB3DA00F07622 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551420BFB3DA00F07622 /* String.swift */; };
+		7C31551920BFB71B00F07622 /* LongTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551820BFB71B00F07622 /* LongTextViewController.swift */; };
+		7C31551A20BFB71B00F07622 /* LongTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551820BFB71B00F07622 /* LongTextViewController.swift */; };
+		7C31551C20BFBE9A00F07622 /* UpstreamSourceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */; };
+		7C31551D20BFBE9A00F07622 /* UpstreamSourceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */; };
+		7C31551F20BFC4C300F07622 /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551E20BFC4C300F07622 /* ReviewsViewController.swift */; };
+		7C31552020BFC4C300F07622 /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551E20BFC4C300F07622 /* ReviewsViewController.swift */; };
+		7C31552220BFC55900F07622 /* ReviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552120BFC55900F07622 /* ReviewLayout.swift */; };
+		7C31552320BFC55900F07622 /* ReviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552120BFC55900F07622 /* ReviewLayout.swift */; };
+		7C31552520C09D8B00F07622 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
+		7C31552620C09D8B00F07622 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
+		7C31552820C0A08300F07622 /* ShareCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552720C0A08300F07622 /* ShareCellLayout.swift */; };
+		7C31552920C0A08300F07622 /* ShareCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552720C0A08300F07622 /* ShareCellLayout.swift */; };
 		7C3474DE1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */; };
 		7C3474DF1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */; };
 		7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */; };
@@ -159,6 +177,16 @@
 		7C13705720B9FC7600710E90 /* DownloadedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadedViewController.swift; path = "View Controllers/My Collection/DownloadedViewController.swift"; sourceTree = "<group>"; };
 		7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyRecentlyPlayedViewController.swift; path = "View Controllers/My Collection/MyRecentlyPlayedViewController.swift"; sourceTree = "<group>"; };
 		7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueViewController.swift; path = "View Controllers/Venues/VenueViewController.swift"; sourceTree = "<group>"; };
+		7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = PhishBackgrounds.xcassets; path = Assets/PhishBackgrounds.xcassets; sourceTree = "<group>"; };
+		7C31551020BF3E0100F07622 /* Relisten.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Relisten.entitlements; sourceTree = "<group>"; };
+		7C31551120BFAE6E00F07622 /* SourceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourceDetailsViewController.swift; path = "View Controllers/Show/SourceDetailsViewController.swift"; sourceTree = "<group>"; };
+		7C31551420BFB3DA00F07622 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = String.swift; path = Extensions/String.swift; sourceTree = "<group>"; };
+		7C31551820BFB71B00F07622 /* LongTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LongTextViewController.swift; path = "View Controllers/General/LongTextViewController.swift"; sourceTree = "<group>"; };
+		7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpstreamSourceLayout.swift; path = Layouts/UpstreamSourceLayout.swift; sourceTree = "<group>"; };
+		7C31551E20BFC4C300F07622 /* ReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReviewsViewController.swift; path = "View Controllers/Show/ReviewsViewController.swift"; sourceTree = "<group>"; };
+		7C31552120BFC55900F07622 /* ReviewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReviewLayout.swift; path = Layouts/ReviewLayout.swift; sourceTree = "<group>"; };
+		7C31552420C09D8B00F07622 /* ShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShareHelper.swift; path = Helpers/ShareHelper.swift; sourceTree = "<group>"; };
+		7C31552720C0A08300F07622 /* ShareCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShareCellLayout.swift; path = Layouts/ShareCellLayout.swift; sourceTree = "<group>"; };
 		7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibraryManager.swift; sourceTree = "<group>"; };
 		7C449E9C1D5A4F4200750D54 /* PhishOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhishOD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHODAppDelegate.swift; sourceTree = "<group>"; };
@@ -274,6 +302,7 @@
 		7C13704F20B9E8A100710E90 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				7C31552420C09D8B00F07622 /* ShareHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -286,6 +315,14 @@
 				7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */,
 			);
 			name = "My Collection";
+			sourceTree = "<group>";
+		};
+		7C31551720BFB6F900F07622 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				7C31551820BFB71B00F07622 /* LongTextViewController.swift */,
+			);
+			name = General;
 			sourceTree = "<group>";
 		};
 		7C449E9D1D5A4F4200750D54 /* PhishOD */ = {
@@ -362,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */,
+				7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -396,6 +434,9 @@
 				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 				7C4F1BEA1F731A5900C592BD /* SongLayout.swift */,
 				7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */,
+				7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */,
+				7C31552120BFC55900F07622 /* ReviewLayout.swift */,
+				7C31552720C0A08300F07622 /* ShareCellLayout.swift */,
 			);
 			name = Layouts;
 			sourceTree = "<group>";
@@ -417,6 +458,7 @@
 				7CABACC11EDEE3A2009C5E3B /* TimeInterval+Humanize.swift */,
 				7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */,
 				7C13704320B5FE6200710E90 /* UInt64+HumanizeBytes.swift */,
+				7C31551420BFB3DA00F07622 /* String.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -424,6 +466,7 @@
 		7C8EF1041D5A49C200004B5C = {
 			isa = PBXGroup;
 			children = (
+				7C31551020BF3E0100F07622 /* Relisten.entitlements */,
 				7C449EBC1D5A511C00750D54 /* Apps */,
 				FBC463F999487576B5C823F4 /* Frameworks */,
 				C4F5A2683057A5DAFFCCFB82 /* Pods */,
@@ -499,6 +542,8 @@
 				7CABACC91EDF1440009C5E3B /* SourcesViewController.swift */,
 				7C5076321EE701D500BE3CE7 /* SourceViewController.swift */,
 				7CB1DBC71F718E90006AC393 /* TopShowsViewController.swift */,
+				7C31551120BFAE6E00F07622 /* SourceDetailsViewController.swift */,
+				7C31551E20BFC4C300F07622 /* ReviewsViewController.swift */,
 			);
 			name = Show;
 			sourceTree = "<group>";
@@ -515,6 +560,7 @@
 		7CC0953E1E6C6D370067FD39 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7C31551720BFB6F900F07622 /* General */,
 				7C13705320B9FC4000710E90 /* My Collection */,
 				7C4F1BE31F73179F00C592BD /* Songs */,
 				7CA3CD121F71761B00E936AB /* Venues */,
@@ -681,6 +727,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
 						};
 					};
 					7C8EF1201D5A49C300004B5C = {
@@ -719,6 +768,7 @@
 			files = (
 				7C449EA91D5A4F4300750D54 /* PHODLaunchScreen.storyboard in Resources */,
 				7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */,
+				7C31550F20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */,
 				7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */,
 				7C61C7CF1F18DB320094E0AF /* SharedAssets.xcassets in Resources */,
 			);
@@ -737,6 +787,7 @@
 			files = (
 				7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */,
 				7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */,
+				7C31550E20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */,
 				7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */,
 				7C61C7CE1F18DB320094E0AF /* SharedAssets.xcassets in Resources */,
 			);
@@ -846,6 +897,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
+				"${BUILT_PRODUCTS_DIR}/KASlideShow/KASlideShow.framework",
 				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
 				"${BUILT_PRODUCTS_DIR}/MZDownloadManager/MZDownloadManager.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
@@ -853,8 +905,10 @@
 				"${BUILT_PRODUCTS_DIR}/NapySlider/NapySlider.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-14/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-15/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Siesta/Siesta.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
@@ -881,6 +935,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KASlideShow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZDownloadManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
@@ -889,7 +944,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SINQ.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siesta.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
@@ -916,6 +973,7 @@
 				7CB1DBC91F718E90006AC393 /* TopShowsViewController.swift in Sources */,
 				7CD270F31EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */,
 				7C13704B20B62D9200710E90 /* MyLibrary+DiskUsage.swift in Sources */,
+				7C31551A20BFB71B00F07622 /* LongTextViewController.swift in Sources */,
 				7C03A4C81E6218CF006F2912 /* RelistenModelCachable.swift in Sources */,
 				7CCE0DED1F9BDE4A00041D47 /* Events.swift in Sources */,
 				7CC095411E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
@@ -929,6 +987,7 @@
 				7C8044161E6F4B1F00BA946E /* AppColors.swift in Sources */,
 				7C80440F1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */,
 				7C03A4C51E621836006F2912 /* ApiCache.swift in Sources */,
+				7C31551620BFB3DA00F07622 /* String.swift in Sources */,
 				7CA94EAC1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */,
 				7CC4EDC31F0AC2F0004CB615 /* PlaybackController.swift in Sources */,
 				7CABACCE1EDF15D9009C5E3B /* SourceLayout.swift in Sources */,
@@ -937,18 +996,24 @@
 				7C8044131E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */,
 				7C4F1BE91F73186500C592BD /* RelistenSongModels.swift in Sources */,
 				7C13705620B9FC5400710E90 /* MyLibraryViewController.swift in Sources */,
+				7C31552320BFC55900F07622 /* ReviewLayout.swift in Sources */,
 				7C03A4B71E60E8B7006F2912 /* RelistenApi.swift in Sources */,
 				7CA3CD151F71763400E936AB /* VenuesViewController.swift in Sources */,
+				7C31551D20BFBE9A00F07622 /* UpstreamSourceLayout.swift in Sources */,
 				7C4F1BEF1F733A0700C592BD /* SongViewController.swift in Sources */,
 				7C03A4BF1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
 				7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */,
+				7C31552020BFC4C300F07622 /* ReviewsViewController.swift in Sources */,
 				7C1F1A601F733ACD009408AA /* VenueViewController.swift in Sources */,
 				7CABACC61EDEE63F009C5E3B /* YearViewController.swift in Sources */,
 				7C13704820B62C2D00710E90 /* MyLibrary.swift in Sources */,
 				8E91C39267864B76C24722C7 /* YearLayout.swift in Sources */,
 				7C3474DF1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */,
 				7CABACC31EDEE3A2009C5E3B /* TimeInterval+Humanize.swift in Sources */,
+				7C31552920C0A08300F07622 /* ShareCellLayout.swift in Sources */,
 				8E91CF363725BB2441672DC9 /* RelistenResourceStatusOverlay.swift in Sources */,
+				7C31552620C09D8B00F07622 /* ShareHelper.swift in Sources */,
+				7C31551320BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */,
 				7CCE0DF01F9BE33B00041D47 /* UIControl+Handler.swift in Sources */,
 				7C13704520B5FE6200710E90 /* UInt64+HumanizeBytes.swift in Sources */,
 				8E91C72389219DDCA7733977 /* YearShowLayout.swift in Sources */,
@@ -978,9 +1043,12 @@
 				7CA94EAB1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */,
 				7C03A4C41E621836006F2912 /* ApiCache.swift in Sources */,
 				7CA94EA81F0A6C74004663F3 /* TrackStatus.swift in Sources */,
+				7C31551920BFB71B00F07622 /* LongTextViewController.swift in Sources */,
 				7C8044151E6F4B1F00BA946E /* AppColors.swift in Sources */,
+				7C31551520BFB3DA00F07622 /* String.swift in Sources */,
 				7C13705120B9E8B800710E90 /* Array+MaxSize.swift in Sources */,
 				7C13705820B9FC7600710E90 /* DownloadedViewController.swift in Sources */,
+				7C31552820C0A08300F07622 /* ShareCellLayout.swift in Sources */,
 				7CABACC21EDEE3A2009C5E3B /* TimeInterval+Humanize.swift in Sources */,
 				7C03A4BA1E60FB66006F2912 /* RelistenModels.swift in Sources */,
 				7CCE0DEF1F9BE33B00041D47 /* UIControl+Handler.swift in Sources */,
@@ -989,11 +1057,14 @@
 				7CD270F21EE6B27A005888E3 /* SourceDetailsLayout.swift in Sources */,
 				7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
 				7C3474DE1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */,
+				7C31551F20BFC4C300F07622 /* ReviewsViewController.swift in Sources */,
 				7CABACCD1EDF15D9009C5E3B /* SourceLayout.swift in Sources */,
 				7C8677FE1EDECF8F0000223E /* YearsViewController.swift in Sources */,
+				7C31551220BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */,
 				7C4F1BE81F73186500C592BD /* RelistenSongModels.swift in Sources */,
 				7CA3CD171F71766E00E936AB /* VenueLayout.swift in Sources */,
 				7C13704420B5FE6200710E90 /* UInt64+HumanizeBytes.swift in Sources */,
+				7C31552520C09D8B00F07622 /* ShareHelper.swift in Sources */,
 				7C03A4C11E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
 				7C13704720B62C2D00710E90 /* MyLibrary.swift in Sources */,
 				7C03A4BE1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
@@ -1015,6 +1086,7 @@
 				7C13705520B9FC5400710E90 /* MyLibraryViewController.swift in Sources */,
 				7CABACBF1EDEE178009C5E3B /* PaddingLabel.swift in Sources */,
 				7CABACCA1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
+				7C31551C20BFBE9A00F07622 /* UpstreamSourceLayout.swift in Sources */,
 				8E91CA4985FB22E1CE0A26C3 /* YearLayout.swift in Sources */,
 				7C68279C1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */,
 				7C1F1A5F1F733ACD009408AA /* VenueViewController.swift in Sources */,
@@ -1022,6 +1094,7 @@
 				7C4F1BEE1F733A0700C592BD /* SongViewController.swift in Sources */,
 				7CCE0DEC1F9BDE4A00041D47 /* Events.swift in Sources */,
 				8E91CEEF48E7DBDC4E7871F9 /* RelistenResourceStatusOverlay.swift in Sources */,
+				7C31552220BFC55900F07622 /* ReviewLayout.swift in Sources */,
 				8E91C0747A674A864013F1AB /* YearShowLayout.swift in Sources */,
 				7CABACC51EDEE63F009C5E3B /* YearViewController.swift in Sources */,
 			);
@@ -1255,6 +1328,7 @@
 			baseConfigurationReference = EEF13FC8FABCBBC9FD61F35C /* Pods-Relisten.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Relisten App Icon";
+				CODE_SIGN_ENTITLEMENTS = Relisten.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
@@ -1275,6 +1349,7 @@
 			baseConfigurationReference = A82930F25AEEDCD2C5F101AD /* Pods-Relisten.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Relisten App Icon";
+				CODE_SIGN_ENTITLEMENTS = Relisten.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = HT7ELV3Q35;

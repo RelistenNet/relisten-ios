@@ -15,6 +15,7 @@ import SwiftyJSON
 import Cache
 import Async
 import SINQ
+import Observable
 
 public class MyLibraryManager {
     static let shared = MyLibraryManager()
@@ -23,13 +24,15 @@ public class MyLibraryManager {
     
     var user: User? = nil
     var userDoc: DocumentReference? = nil
-    var library: MyLibrary
+    var library: MyLibrary = MyLibrary()
     
-    public let favoriteArtistIdsChanged = Event<Set<Int>>()
+    public let artistFavorited = Event<ArtistWithCounts>()
+    public let artistUnfavorited = Event<ArtistWithCounts>()
     
+    public lazy var observeFavoriteArtistIds = Observable(library.artistIds)
+    public lazy var observeRecentlyPlayedShows = Observable(library.recentlyPlayed)
+
     init() {
-        library = MyLibrary()
-        
         RelistenDownloadManager.shared.delegate = self.library
         
         db = Firestore.firestore()
@@ -63,7 +66,8 @@ public class MyLibraryManager {
         
         RelistenDownloadManager.shared.delegate = self.library
 
-        self.favoriteArtistIdsChanged.raise(data: self.library.artistIds)
+        observeRecentlyPlayedShows.value = library.recentlyPlayed
+        observeFavoriteArtistIds.value = library.artistIds
     }
     
     private var addedFirestoreListener = false
@@ -135,17 +139,21 @@ extension MyLibraryManager {
         return false
     }
     
-    public func favoriteArtist(artist: SlimArtistWithFeatures) {
-        library.artistIds.insert(artist.id)
-        
-        saveToFirestore()
-        
-        favoriteArtistIdsChanged.raise(data: library.artistIds)
+    public func favoriteArtist(artist: ArtistWithCounts) {
+        if !library.artistIds.contains(artist.id) {
+            library.artistIds.insert(artist.id)
+            
+            saveToFirestore()
+            
+            artistFavorited.raise(artist)
+            observeFavoriteArtistIds.value = library.artistIds
+        }
     }
     
-    public func removeArtist(artist: SlimArtistWithFeatures) -> Bool {
+    public func removeArtist(artist: ArtistWithCounts) -> Bool {
         if let _ = library.artistIds.remove(artist.id) {
-            favoriteArtistIdsChanged.raise(data: library.artistIds)
+            artistUnfavorited.raise(artist)
+            observeFavoriteArtistIds.value = library.artistIds
 
             saveToFirestore()
             
@@ -158,6 +166,8 @@ extension MyLibraryManager {
     public func trackWasPlayed(_ track: CompleteTrackShowInformation) {
         if library.trackWasPlayed(track) {
             saveToFirestore()
+            
+            observeRecentlyPlayedShows.value = library.recentlyPlayed
         }
     }
 }

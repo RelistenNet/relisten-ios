@@ -10,7 +10,7 @@ import UIKit
 
 extension String {
     func convertHtml() -> NSAttributedString{
-        var extended = appending("<style>body{font: -apple-system-body;}</style>")
+        let extended = appending("<style>body{font: -apple-system-body;}</style>")
         
         guard let data = extended.data(using: .utf8) else { return NSAttributedString() }
         do {

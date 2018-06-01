@@ -11,8 +11,15 @@ import UIKit
 import Siesta
 import LayoutKit
 import KASlideShow
+import AsyncDisplayKit
 
-public class ArtistViewController : RelistenBaseTableViewController {
+public class ArtistViewController : RelistenBaseAsyncTableontroller {
+    enum Sections: Int, RawRepresentable {
+        case today = 0
+        case recentlyPlayed
+        case count
+    }
+
     internal let statusOverlay = RelistenResourceStatusOverlay()
 
     public let artist: ArtistWithCounts
@@ -20,12 +27,22 @@ public class ArtistViewController : RelistenBaseTableViewController {
     let resourceToday: Resource
     var resourceTodayData: [Show]? = nil
     
+    public var recentlyPlayed: [CompleteTrackShowInformation] = []
+    public let recentShowsNode: HorizontalShowCollectionCellNode
+    public let todayShowsNode: HorizontalShowCollectionCellNode
+
     public required init(artist: ArtistWithCounts) {
         self.artist = artist
         
+        recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+        todayShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+
         resourceToday = RelistenApi.onThisDay(byArtist: artist)
         
         super.init()
+        
+        recentShowsNode.collectionNode.delegate = self
+        todayShowsNode.collectionNode.delegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -36,18 +53,18 @@ public class ArtistViewController : RelistenBaseTableViewController {
     public override func viewDidLoad() {
         if artist.name == "Phish" {
             AppColors_SwitchToPhishOD(navigationController)
-            cellDefaultBackgroundColor = UIColor.clear
+//            cellDefaultBackgroundColor = UIColor.clear
         }
         else {
             AppColors_SwitchToRelisten(navigationController)
-            cellDefaultBackgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1.0)
+//            cellDefaultBackgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1.0)
         }
         
         navigationItem.largeTitleDisplayMode = .always
 
         super.viewDidLoad()
 
-        tableView.separatorStyle = .none
+        tableNode.view.separatorStyle = .none
         
         title = artist.name
         
@@ -56,14 +73,24 @@ public class ArtistViewController : RelistenBaseTableViewController {
         
         av = RelistenMenuView(artist: artist, inViewController: self)
         av.frame.origin = CGPoint(x: 0, y: 16)
-        av.frame.size = av.sizeThatFits(CGSize(width: tableView.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
+        av.frame.size = av.sizeThatFits(CGSize(width: tableNode.view.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
         
         let containerView = UIView(frame: av.frame.insetBy(dx: 0, dy: -48).insetBy(dx: 0, dy: 16))
         containerView.addSubview(av)
 
-        tableView.tableHeaderView = containerView
+        tableNode.view.tableHeaderView = containerView
         
         setupBackgroundSlideshow()
+        
+        MyLibraryManager.shared.observeRecentlyPlayedShows
+            .observe({ [weak self] shows, _ in
+                guard let s = self else { return }
+                
+                s.recentlyPlayed = MyLibraryManager.shared.library.recentlyPlayedByArtist(s.artist)
+                s.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+                s.recentShowsNode.shows = s.recentlyPlayed.map({ ($0.show, nil) })
+            })
+            .add(to: &disposal)
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -84,94 +111,17 @@ public class ArtistViewController : RelistenBaseTableViewController {
         viewWillDisappear_SlideShow(animated)
     }
     
-    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        layout(width: size.width, synchronous: true) { self.buildLayout() }
-    }
-    
     static var dateFormatter: DateFormatter = {
         let d = DateFormatter()
         d.dateFormat = "MMM d"
         return d
     }()
     
-    lazy var todayLayout: CollectionViewLayout = {
-        return HorizontalShowCollection(
-            withId: "today",
-            makeAdapater: { (collectionView) -> ReloadableViewLayoutAdapter in
-            self.todayLayoutAdapater = CellSelectCallbackReloadableViewLayoutAdapter(reloadableView: collectionView) { indexPath in
-                if let today = self.resourceTodayData, indexPath.item < today.count {
-                    let item = today[indexPath.item]
-                    let vc = SourcesViewController(artist: self.artist, show: item)
-                    
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-                
-                return true
-            }
-            return self.todayLayoutAdapater!
-        }) { () -> [Section<[Layout]>] in
-            guard let today = self.resourceTodayData else {
-                return []
-            }
-            
-            let todayItems = today.map({ YearShowLayout(show: $0, withRank: nil, verticalLayout: true) })
-            return [LayoutsAsSingleSection(items: todayItems)]
-        }
-    }()
-    var todayLayoutAdapater: ReloadableViewLayoutAdapter? = nil
-    
-    lazy var recentlyPlayedLayout: CollectionViewLayout = {
-        return HorizontalShowCollection(
-            withId: "recentlyPlayed",
-            makeAdapater: { (collectionView) -> ReloadableViewLayoutAdapter in
-            self.recentlyPlayedLayoutAdapter = CellSelectCallbackReloadableViewLayoutAdapter(reloadableView: collectionView) { indexPath in
-                let recent = MyLibraryManager.shared.library.recentlyPlayedByArtist(self.artist)
-
-                if indexPath.item < recent.count {
-                    let item = recent[indexPath.item]
-                    let vc = SourcesViewController(artist: self.artist, show: item.show)
-                    
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-                
-                return true
-            }
-            return self.recentlyPlayedLayoutAdapter!
-        }) { () -> [Section<[Layout]>] in
-            let recent = MyLibraryManager.shared.library.recentlyPlayedByArtist(self.artist)
-            
-            let recentItems = recent.map({ YearShowLayout(show: $0.show, withRank: nil, verticalLayout: true) })
-            return [LayoutsAsSingleSection(items: recentItems)]
-        }
-    }()
-    var recentlyPlayedLayoutAdapter: ReloadableViewLayoutAdapter? = nil
-    
-    func buildLayout() -> [Section<[Layout]>] {
-        guard let today = resourceTodayData else {
-            return []
-        }
-        
-        var sections: [Section<[Layout]>] = []
-        
-        if today.count > 0 {
-            let todayTitle = "\(today.count) Show\(today.count != 1 ? "s" : "") on " + ArtistViewController.dateFormatter.string(from: Date())
-
-            sections.append(LayoutsAsSingleSection(items: [todayLayout], title: todayTitle))
-        }
-        
-        if MyLibraryManager.shared.library.recentlyPlayedByArtist(self.artist).count > 0 {
-            let recentTitle = "My Recently Played Shows"
-
-            sections.append(LayoutsAsSingleSection(items: [recentlyPlayedLayout], title: recentTitle))
-        }
-        
-        return sections
-    }
-    
     func render() {
-        layout(layout: self.buildLayout)
+        if let today = resourceTodayData {
+            tableNode.reloadSections([ Sections.today.rawValue ], with: .automatic)
+            todayShowsNode.shows = today.map({ ($0, nil) })
+        }
     }
     
     public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
@@ -229,7 +179,7 @@ extension ArtistViewController : KASlideShowDataSource {
         view.sendSubview(toBack: fog)
         view.sendSubview(toBack: slider)
         
-        tableView.backgroundColor = UIColor.clear
+        tableNode.backgroundColor = UIColor.clear
     }
     
     public func viewWillDisappear_SlideShow(_ animated: Bool) {
@@ -241,6 +191,69 @@ extension ArtistViewController : KASlideShowDataSource {
     public func viewDidAppear_SlideShow(_ animated: Bool) {
         if let s = slider {
             s.start()
+        }
+    }
+}
+
+extension ArtistViewController {
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return Sections.count.rawValue
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        switch Sections(rawValue: section)! {
+        case .today:
+            return (resourceTodayData?.count ?? 0) > 0 ? 1 : 0
+        case .recentlyPlayed:
+            return recentlyPlayed.count > 0 ? 1 : 0
+        case .count:
+            fatalError()
+        }
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        switch Sections(rawValue: indexPath.section)! {
+        case .today:
+            let n = todayShowsNode
+            return { n }
+        case .recentlyPlayed:
+            let n = recentShowsNode
+            return { n }
+        case .count:
+            fatalError()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch Sections(rawValue: section)! {
+        case .today:
+            if let t = resourceTodayData {
+                return "\(t.count) Show\(t.count != 1 ? "s" : "") on " + ArtistViewController.dateFormatter.string(from: Date())
+            }
+            else {
+                return nil
+            }
+        case .recentlyPlayed:
+            return recentlyPlayed.count > 0 ? "My Recently Played Shows" : nil
+        default:
+            return nil
+        }
+    }
+}
+
+extension ArtistViewController : ASCollectionDelegate {
+    public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        if collectionNode === todayShowsNode, let today = resourceTodayData {
+            let item = today[indexPath.row]
+            let vc = SourcesViewController(artist: self.artist, show: item)
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        else if collectionNode === recentShowsNode {
+            let item = recentlyPlayed[indexPath.row]
+            let vc = SourcesViewController(artist: self.artist, show: item.show)
+            
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

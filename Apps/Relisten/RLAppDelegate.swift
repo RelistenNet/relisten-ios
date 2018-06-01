@@ -13,6 +13,7 @@ import Firebase
 import FirebaseAuth
 import DWURecyclingAlert
 import SVProgressHUD
+import AsyncDisplayKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -43,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    var rootNavigationController: UINavigationController! = nil
+    var rootNavigationController: ASNavigationController! = nil
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         AppDelegate.shared = self
@@ -56,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        rootNavigationController = UINavigationController(rootViewController: ArtistsViewController(useCache: true, refreshOnAppear: true))
+        rootNavigationController = ASNavigationController(rootViewController: ArtistsViewController())
         
         rootNavigationController.navigationBar.prefersLargeTitles = true
         rootNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]

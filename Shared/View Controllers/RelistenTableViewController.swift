@@ -12,6 +12,7 @@ import Siesta
 import Reachability
 import LayoutKit
 import SINQ
+import Observable
 
 fileprivate let reachability = Reachability()!
 
@@ -65,6 +66,8 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     internal var tableViewStyle: UITableViewStyle
     internal var cellDefaultBackgroundColor: UIColor = UIColor.clear
     
+    internal var disposal = Disposal()
+
     public init(style: UITableViewStyle = .plain) {
         tableViewStyle = style
         
@@ -283,5 +286,154 @@ extension Array where Element : Layout {
     
     func asTable() -> [Section<[Layout]>] {
         return [self.asSection()]
+    }
+}
+
+import AsyncDisplayKit
+
+public class RelistenBaseAsyncTableontroller : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
+    internal let tableNode: ASTableNode!
+    
+    internal let api = RelistenApi
+    
+    internal var disposal = Disposal()
+    
+    public init(style: UITableViewStyle = .plain) {
+        let tableNode = ASTableNode(style: style)
+        
+        self.tableNode = tableNode
+
+        super.init(node: tableNode)
+
+        self.tableNode.dataSource = self
+        self.tableNode.delegate = self
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationItem.largeTitleDisplayMode = .always
+    }
+    
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { context in
+            self.tableNode.transitionLayout(with: ASSizeRange(min: size, max: size), animated: true, shouldMeasureAsync: true)
+        })
+    }
+    
+    // MARK: data handling
+    
+    public func resourceChanged(_ resource: Resource, event: ResourceEvent) {
+        
+    }
+    
+    // MARK: TableView "dataSource" and "delegate"
+}
+
+public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableontroller {
+    internal let statusOverlay = RelistenResourceStatusOverlay()
+    
+    internal var resource: Resource? { get { return nil } }
+    
+    public let useCache: Bool
+    public var refreshOnAppear: Bool
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
+        self.useCache = useCache
+        self.refreshOnAppear = refreshOnAppear
+        
+        super.init(style: style)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("just...don't")
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let res = resource {
+            res.addObserver(self)
+                .addObserver(statusOverlay)
+            
+            statusOverlay.embed(in: self)
+        }
+        
+        if !refreshOnAppear {
+            load()
+        }
+        
+        if useCache, let res = resource {
+            latestData = res.latestData?.typedContent()
+        }
+        
+        render()
+    }
+    
+    func load() {
+        if useCache {
+            let _ = resource?.loadFromCacheThenUpdate()
+        }
+        else {
+            let _ = resource?.load()
+        }
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        statusOverlay.positionToCoverParent()
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if refreshOnAppear {
+            load()
+        }
+    }
+    
+    // MARK: data handling
+    
+    public var latestData: TData? = nil
+    public var previousData: TData? = nil
+    
+    internal func has(oldData old: TData, changed new: TData) -> Bool {
+        return true
+    }
+    
+    internal func dataChanged(_ data: TData) {
+        
+    }
+    
+    public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
+        print("event: \(event)")
+        
+        if let data: TData = resource.latestData?.typedContent() {
+            previousData = latestData
+            latestData = data
+        }
+        
+        if previousData == nil && latestData != nil
+            || previousData != nil && latestData == nil
+            || (previousData != nil && latestData != nil && self.has(oldData: previousData!, changed: latestData!)
+            ) {
+            print("---> data changed")
+            dataChanged(latestData!)
+            render()
+        }
+    }
+    
+    // MARK: Layout & Rendering
+    
+    public func render() {
+        print("[render] calling tableNode.reloadData()")
+        tableNode.reloadData()
     }
 }

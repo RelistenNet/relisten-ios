@@ -9,6 +9,7 @@
 import Foundation
 
 import AGAudioPlayer
+import Observable
 
 extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation) {
@@ -21,6 +22,9 @@ public class PlaybackController {
     public let player: AGAudioPlayer
     public let viewController: AGAudioPlayerViewController
     public let shrinker: PlaybackMinibarShrinker
+    
+    public let currentTrackChanged = Observable<CompleteTrackShowInformation?>(nil)
+    public let trackWasPlayed = Observable<CompleteTrackShowInformation?>(nil)
     
     public let eventTrackPlaybackChanged = Event<CompleteTrackShowInformation?>()
     public let eventTrackWasPlayed = Event<CompleteTrackShowInformation>()
@@ -41,26 +45,16 @@ public class PlaybackController {
         
         viewController.loadViewIfNeeded()
         
-        trackStartedHandler = RelistenDownloadManager.shared.eventTrackStartedDownloading.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTrack)
-        tracksQueuedHandler = RelistenDownloadManager.shared.eventTracksQueuedToDownload.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTracks)
-        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTrack)
-        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTracks)
+        /*
+        RelistenDownloadManager.shared.eventTrackStartedDownloading.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTrack)
+        RelistenDownloadManager.shared.eventTracksQueuedToDownload.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTracks)
+        RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTrack)
+        RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTracks)
+         */
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError()
-    }
-    
-    var trackStartedHandler: Disposable?
-    var tracksQueuedHandler: Disposable?
-    var trackFinishedHandler: Disposable?
-    var tracksDeletedHandler: Disposable?
-    var trackPlaybackChangedHandler: Disposable?
-    
-    deinit {
-        for handler in [trackStartedHandler, tracksQueuedHandler, trackFinishedHandler, tracksDeletedHandler, trackPlaybackChangedHandler] {
-            handler?.dispose()
-        }
     }
     
     func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
@@ -315,13 +309,13 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, trackChangedState audioItem: AGAudioItem?) {
         let completeInfo = (audioItem as? SourceTrackAudioItem)?.relisten
 
-        eventTrackPlaybackChanged.raise(data: completeInfo)
+        eventTrackPlaybackChanged.raise(completeInfo)
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, changedTrackTo audioItem: AGAudioItem?) {
         let completeInfo = (audioItem as? SourceTrackAudioItem)?.relisten
 
-        eventTrackPlaybackChanged.raise(data: completeInfo)
+        eventTrackPlaybackChanged.raise(completeInfo)
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedDotsForAudioItem audioItem: AGAudioItem) {
@@ -338,7 +332,7 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
         let completeInfo = (audioItem as! SourceTrackAudioItem).relisten
         
         MyLibraryManager.shared.trackWasPlayed(completeInfo)
-        eventTrackWasPlayed.raise(data: completeInfo)
+        eventTrackWasPlayed.raise(completeInfo)
     }
 }
 

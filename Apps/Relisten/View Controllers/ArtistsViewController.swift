@@ -9,20 +9,81 @@
 import UIKit
 
 import Siesta
-import LayoutKit
+import AsyncDisplayKit
 
-class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
+class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]> {
+    enum Sections: Int, RawRepresentable {
+        case recentlyPlayed = 0
+        case availableOffline
+        case favorited
+        case featured
+        case all
+        case count
+    }
+    
+    public var recentlyPlayed: [CompleteTrackShowInformation] = []
+    public var favoriteArtists: [Int] = []
+    public var offlineShows: Set<OfflineSourceMetadata> = []
+    
+    public var allArtists: [ArtistWithCounts] = []
+    public var featuredArtists: [ArtistWithCounts] = []
+    
+    public let recentShowsNode: HorizontalShowCollectionCellNode
+    public let offlineShowsNode: HorizontalShowCollectionCellNode
 
-    var artistIdChangedEventHandler: Disposable?
+    public init() {
+        recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+        offlineShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+
+        super.init(useCache: true, refreshOnAppear: true)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle) {
+        fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Relisten"
         
-        artistIdChangedEventHandler = MyLibraryManager.shared.favoriteArtistIdsChanged.addHandler(target: self, handler: ArtistsViewController.favoritesChanged)
-        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: ArtistsViewController.relayoutIfContainsTrack)
-        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: ArtistsViewController.relayoutIfContainsTracks)
+        let cb: Event<Any>.EventHandler = { [weak self] _ in self?.render() }
+        
+        RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(cb).add(to: &disposal)
+        RelistenDownloadManager.shared.eventTracksDeleted.addHandler(cb).add(to: &disposal)
+
+        MyLibraryManager.shared.observeFavoriteArtistIds
+            .observe({ [weak self] artistIds, _ in
+                self?.favoriteArtists = Array(artistIds);
+                self?.tableNode.reloadSections([ Sections.favorited.rawValue ], with: .automatic)
+            })
+            .add(to: &disposal)
+        
+        MyLibraryManager.shared.observeRecentlyPlayedShows
+            .observe({ [weak self] shows, _ in
+                self?.recentlyPlayed = shows
+                self?.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+                
+                if let s = self {
+                    s.recentShowsNode.shows = s.recentlyPlayed.map({ ($0.show, $0.artist) })
+                }
+            })
+            .add(to: &disposal)
+        
+        MyLibraryManager.shared.library.observeOfflineSources
+            .observe({ [weak self] shows, _ in
+                self?.offlineShows = shows
+                self?.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
+                
+                if let s = self {
+                    s.offlineShowsNode.shows = s.offlineShows.map({ ($0.show, $0.artist) })
+                }
+            })
+            .add(to: &disposal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,151 +92,106 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]> {
         AppColors_SwitchToRelisten(navigationController)
     }
     
-    var trackFinishedHandler: Disposable?
-    var tracksDeletedHandler: Disposable?
-    
-    deinit {
-        for handler in [trackFinishedHandler, tracksDeletedHandler, artistIdChangedEventHandler] {
-            handler?.dispose()
-        }
+    override func has(oldData old: [ArtistWithCounts], changed new: [ArtistWithCounts]) -> Bool {
+        return old.count != new.count
     }
     
-    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
-        render()
-    }
-    
-    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
-        render()
-    }
-    
-    func favoritesChanged(ids: Set<Int>) {
-        render()
-    }
-    
-    func doLayout(forData: [ArtistWithCounts]) -> [Section<[Layout]>] {
-        let favArtistIds = MyLibraryManager.shared.library.artistIds
-        let toLayout : (ArtistWithCounts) -> ArtistLayout = { ArtistLayout(artist: $0, withFavoritedArtists: favArtistIds) }
-    
-        var sections = [
-//            forData.filter({ favArtistIds.contains($0.id) }).sorted(by: { $0.name < $1.name }).map(toLayout).asSection("Favorites"),
-            forData.filter({ $0.featured > 0 }).map(toLayout).asSection("Featured"),
-            forData.map(toLayout).asSection("All \(forData.count) Artists")
-        ]
-        
-        if MyLibraryManager.shared.library.offlineSourcesMetadata.count > 0 {
-            sections.insert(LayoutsAsSingleSection(items: [offlineLayout], title: "Downloaded Shows"), at: 0)
-        }
-        
-        if MyLibraryManager.shared.library.recentlyPlayed.count > 0 {
-            sections.insert(LayoutsAsSingleSection(items: [recentlyPlayedLayout], title: "Recently Played"), at: 0)
-        }
-
-        return sections
+    override func dataChanged(_ data: [ArtistWithCounts]) {
+        allArtists = data
+        featuredArtists = data.filter({ $0.featured > 0 })
     }
 
     override var resource: Resource? { get { return api.artists() } }
     
-    override func render(forData: [ArtistWithCounts]) {
-        layout {
-            return self.doLayout(forData: forData)
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return Sections.count.rawValue
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        switch Sections(rawValue: section)! {
+        case .recentlyPlayed:
+            return recentlyPlayed.count > 0 ? 1 : 0
+        case .availableOffline:
+            return offlineShows.count > 0 ? 1 : 0
+        case .favorited:
+            return favoriteArtists.count
+        case .featured:
+            return featuredArtists.count
+        case .all:
+            return allArtists.count
+        case .count:
+            fatalError()
         }
     }
     
-    override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let firstSub = cell.contentView.subviews.first, let _ = firstSub as? UICollectionView {
-            cell.accessoryType = .none
-        }
-        else {
-            cell.accessoryType = .disclosureIndicator
-        }
+    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        let row = indexPath.row
         
-        return cell
+        switch Sections(rawValue: indexPath.section)! {
+        case .recentlyPlayed:
+            let n = recentShowsNode
+            return { n }
+        case .availableOffline:
+            let n = offlineShowsNode
+            return { n }
+        case .favorited:
+            let artist = allArtists.first(where: { art in art.id == favoriteArtists[row] })!
+            
+            return { ArtistCellNode(artist: artist, withFavoritedArtists: self.favoriteArtists) }
+        case .featured:
+            let artist = featuredArtists[row]
+            
+            return { ArtistCellNode(artist: artist, withFavoritedArtists: self.favoriteArtists) }
+        case .all:
+            let artist = allArtists[indexPath.row]
+            
+            return { ArtistCellNode(artist: artist, withFavoritedArtists: self.favoriteArtists) }
+        case .count:
+            fatalError()
+        }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if let d = latestData {
-            var artist: ArtistWithCounts
-            
-            /*
-             let favArtistIds = MyLibraryManager.shared.library.artistIds
-             
-            if indexPath.section == 0 {
-                artist = d.filter({ favArtistIds.contains($0.id) }).sorted(by: { $0.name < $1.name })[indexPath.row]
-            }
-            */
-            
-            var currentSection = 0
-            
-            if MyLibraryManager.shared.library.offlineSourcesMetadata.count > 0 {
-                currentSection += 1
-            }
-            
-            if MyLibraryManager.shared.library.recentlyPlayed.count > 0 {
-                currentSection += 1
-            }
-                
-            if indexPath.section == currentSection {
-                artist = d.filter({ $0.featured > 0 })[indexPath.row]
-            }
-            else {
-                artist = d[indexPath.row]
-            }
+        let row = indexPath.row
+        
+        switch Sections(rawValue: indexPath.section)! {
+        case .favorited:
+            let artist = allArtists.first(where: { art in art.id == favoriteArtists[row] })!
             
             navigationController?.pushViewController(ArtistViewController(artist: artist), animated: true)
+        case .featured:
+            let artist = featuredArtists[row]
+            
+            navigationController?.pushViewController(ArtistViewController(artist: artist), animated: true)
+        case .all:
+            let artist = allArtists[indexPath.row]
+            
+            navigationController?.pushViewController(ArtistViewController(artist: artist), animated: true)
+        default:
+            return
         }
     }
     
-    lazy var recentlyPlayedLayout: CollectionViewLayout = {
-        return HorizontalShowCollection(
-            withId: "recentlyPlayed",
-            makeAdapater: { (collectionView) -> ReloadableViewLayoutAdapter in
-                self.recentlyPlayedLayoutAdapter = CellSelectCallbackReloadableViewLayoutAdapter(reloadableView: collectionView) { indexPath in
-                    let recent = MyLibraryManager.shared.library.recentlyPlayed
-                    
-                    if indexPath.item < recent.count {
-                        let item = recent[indexPath.item]
-                        let vc = SourcesViewController(artist: item.artist, show: item.show)
-                        
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }
-                    
-                    return true
-                }
-                return self.recentlyPlayedLayoutAdapter!
-        }) { () -> [Section<[Layout]>] in
-            let recent = MyLibraryManager.shared.library.recentlyPlayed
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch Sections(rawValue: section)! {
+        case .recentlyPlayed:
+            return recentlyPlayed.count > 0 ? "Recently Played" : nil
+        case .availableOffline:
+            return offlineShows.count > 0 ? "Available Offline" : nil
+        case .favorited:
+            return favoriteArtists.count > 0 ? "Favorite" : nil
+        case .featured:
+            return "Featured"
+        case .all:
+            if let artists = latestData {
+                return "All \(artists.count) Artists"
+            }
             
-            let recentItems = recent.map({ YearShowLayout(show: $0.show, withRank: nil, verticalLayout: true, showingArtist: $0.artist) })
-            return [LayoutsAsSingleSection(items: recentItems)]
+            return "All Artists"
+        default:
+            return nil
         }
-    }()
-    var recentlyPlayedLayoutAdapter: ReloadableViewLayoutAdapter? = nil
-    
-    lazy var offlineLayout: CollectionViewLayout = {
-        return HorizontalShowCollection(
-            withId: "offline",
-            makeAdapater: { (collectionView) -> ReloadableViewLayoutAdapter in
-                self.offlineLayoutAdapter = CellSelectCallbackReloadableViewLayoutAdapter(reloadableView: collectionView) { indexPath in
-                    let recent = MyLibraryManager.shared.library.offlineSourcesMetadata.sorted(by: { $0.dateAdded > $1.dateAdded })
-                    
-                    if indexPath.item < recent.count {
-                        let item = recent[indexPath.item]
-                        let vc = SourcesViewController(artist: item.artist, show: item.show)
-                        
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }
-                    
-                    return true
-                }
-                return self.offlineLayoutAdapter!
-        }) { () -> [Section<[Layout]>] in
-            let recent = MyLibraryManager.shared.library.offlineSourcesMetadata.sorted(by: { $0.dateAdded > $1.dateAdded })
-            
-            let recentItems = recent.map({ YearShowLayout(show: $0.show, withRank: nil, verticalLayout: true, showingArtist: $0.artist) })
-            return [LayoutsAsSingleSection(items: recentItems)]
-        }
-    }()
-    var offlineLayoutAdapter: ReloadableViewLayoutAdapter? = nil
+    }
 }

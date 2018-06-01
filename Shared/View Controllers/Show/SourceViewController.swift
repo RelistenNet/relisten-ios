@@ -64,27 +64,17 @@ class SourceViewController: RelistenBaseTableViewController {
             }
         }
 
+        /*
         trackStartedHandler = RelistenDownloadManager.shared.eventTrackStartedDownloading.addHandler(target: self, handler: SourceViewController.relayoutIfContainsTrack)
         tracksQueuedHandler = RelistenDownloadManager.shared.eventTracksQueuedToDownload.addHandler(target: self, handler: SourceViewController.relayoutIfContainsTracks)
         trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: SourceViewController.relayoutIfContainsTrack)
         tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: SourceViewController.relayoutIfContainsTracks)
         trackPlaybackChangedHandler = PlaybackController.sharedInstance.eventTrackPlaybackChanged.addHandler(target: self, handler: SourceViewController.relayoutIfCompleteContainsTrack)
+        */
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
-    }
-    
-    var trackStartedHandler: Disposable?
-    var tracksQueuedHandler: Disposable?
-    var trackFinishedHandler: Disposable?
-    var tracksDeletedHandler: Disposable?
-    var trackPlaybackChangedHandler: Disposable?
-
-    deinit {
-        for handler in [trackStartedHandler, tracksQueuedHandler, trackFinishedHandler, tracksDeletedHandler, trackPlaybackChangedHandler] {
-            handler?.dispose()
-        }
     }
 
     var isShowInLibrary: Bool = false

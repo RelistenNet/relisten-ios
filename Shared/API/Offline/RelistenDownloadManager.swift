@@ -79,7 +79,7 @@ public class RelistenDownloadManager {
         }
         
         MyLibraryManager.shared.library.saveOfflineTrackUrls()
-        eventTracksDeleted.raise(data: tracks)
+        eventTracksDeleted.raise(tracks)
         MyLibraryManager.shared.library.saveDownloadBacklog()
     }
     
@@ -99,7 +99,7 @@ public class RelistenDownloadManager {
         }
 
         if saveOffline {
-            eventTracksDeleted.raise(data: [track])
+            eventTracksDeleted.raise([track])
             
             MyLibraryManager.shared.library.saveDownloadBacklog()
         }
@@ -128,7 +128,7 @@ public class RelistenDownloadManager {
             }
         }
         
-        eventTracksQueuedToDownload.raise(data: tracks)
+        eventTracksQueuedToDownload.raise(tracks)
     }
     
     private func addDownloadTask(_ track: CompleteTrackShowInformation) {
@@ -145,7 +145,7 @@ public class RelistenDownloadManager {
             MyLibraryManager.shared.library.queueToBacklog(track)
         }
         
-        eventTracksQueuedToDownload.raise(data: [ track ])
+        eventTracksQueuedToDownload.raise([ track ])
     }
     
     let downloadFolder: String
@@ -231,7 +231,7 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
                 print("Somehow missing the file size from the download model")
             }
 
-            eventTrackStartedDownloading.raise(data: t)
+            eventTrackStartedDownloading.raise(t)
         }
     }
     
@@ -246,7 +246,7 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
             }
             delegate?.trackBecameAvailableOffline(t)
 
-            eventTrackFinishedDownloading.raise(data: t)
+            eventTrackFinishedDownloading.raise(t)
             
             urlToTrackMap.removeValue(forKey: url)
         }

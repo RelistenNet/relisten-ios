@@ -93,6 +93,22 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - NapySlider (0.3)
+  - Observable (1.3.3)
+  - PINCache (3.0.1-beta.6):
+    - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
+    - PINCache/Core (= 3.0.1-beta.6)
+  - PINCache/Arc-exception-safe (3.0.1-beta.6):
+    - PINCache/Core
+  - PINCache/Core (3.0.1-beta.6):
+    - PINOperation (~> 1.1.0)
+  - PINOperation (1.1.1)
+  - PINRemoteImage/Core (3.0.0-beta.13):
+    - PINOperation
+  - PINRemoteImage/iOS (3.0.0-beta.13):
+    - PINRemoteImage/Core
+  - PINRemoteImage/PINCache (3.0.0-beta.13):
+    - PINCache (= 3.0.1-beta.6)
+    - PINRemoteImage/Core
   - Protobuf (3.5.0)
   - ReachabilitySwift (4.1.0)
   - Reveal-SDK (15)
@@ -105,6 +121,13 @@ PODS:
   - SINQ (0.7.0)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (4.1.0)
+  - Texture (2.7):
+    - Texture/PINRemoteImage (= 2.7)
+  - Texture/Core (2.7)
+  - Texture/PINRemoteImage (2.7):
+    - PINRemoteImage/iOS (= 3.0.0-beta.13)
+    - PINRemoteImage/PINCache
+    - Texture/Core
 
 DEPENDENCIES:
   - ActionKit
@@ -127,6 +150,7 @@ DEPENDENCIES:
   - MZDownloadManager (from `https://github.com/alecgorge/MZDownloadManager.git`)
   - NAKPlaybackIndicatorView
   - NapySlider (from `../NapySlider`)
+  - Observable
   - ReachabilitySwift
   - Reveal-SDK
   - Siesta/Core (from `https://github.com/bustoutsolutions/siesta.git`)
@@ -134,6 +158,7 @@ DEPENDENCIES:
   - SINQ
   - SVProgressHUD
   - SwiftyJSON
+  - Texture
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -162,6 +187,10 @@ SPEC REPOS:
     - MarqueeLabel
     - NAKPlaybackIndicatorView
     - nanopb
+    - Observable
+    - PINCache
+    - PINOperation
+    - PINRemoteImage
     - Protobuf
     - ReachabilitySwift
     - Reveal-SDK
@@ -169,6 +198,7 @@ SPEC REPOS:
     - SINQ
     - SVProgressHUD
     - SwiftyJSON
+    - Texture
 
 EXTERNAL SOURCES:
   AGAudioPlayer:
@@ -251,6 +281,10 @@ SPEC CHECKSUMS:
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NapySlider: 3406d87c1f1e7434764585a7fde913f14ff0a406
+  Observable: 360b0132cef970a50bc69611df7fcbda46e91c34
+  PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
+  PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
+  PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   Reveal-SDK: 25e21896c478b60b948f876043f91570d368d23d
@@ -259,7 +293,8 @@ SPEC CHECKSUMS:
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
 
-PODFILE CHECKSUM: bee6087c5a306b03237a291b503e7e899de86dc6
+PODFILE CHECKSUM: 6c856f4ec679cabce7243bd56579bce849724cba
 
 COCOAPODS: 1.5.3

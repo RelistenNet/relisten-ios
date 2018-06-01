@@ -11,6 +11,9 @@ import UIKit
 import LayoutKit
 import FaveButton
 
+import AsyncDisplayKit
+import Observable
+
 func color(_ rgbColor: Int) -> UIColor{
     return UIColor(
         red:   CGFloat((rgbColor & 0xFF0000) >> 16) / 255.0,
@@ -38,6 +41,200 @@ public class RelistenFaveButtonDelegate : FaveButtonDelegate {
     
     public func instantCallback(_ faveButton: FaveButton, didSelected selected: Bool) {
         
+    }
+}
+
+public func RelistenAttributedString(_ string: String, font: UIFont, color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> NSAttributedString {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.alignment = alignment ?? NSTextAlignment.left
+    
+    return NSAttributedString(string: string, attributes: [
+        NSAttributedStringKey.font: font,
+        NSAttributedStringKey.foregroundColor: color ?? UIColor.darkText,
+        NSAttributedStringKey.paragraphStyle: paragraphStyle
+    ])
+}
+
+public func RelistenAttributedString(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> NSAttributedString {
+    return RelistenAttributedString(string, font: UIFont.preferredFont(forTextStyle: textStyle), color: color, alignment: alignment)
+}
+
+extension ASTextNode {
+    public convenience init(_ string: String, font: UIFont, color: UIColor? = nil, alignment: NSTextAlignment? = nil) {
+        self.init()
+        
+        maximumNumberOfLines = 0
+        attributedText = RelistenAttributedString(string, font: font, color: color, alignment: alignment)
+    }
+
+    public convenience init(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) {
+        self.init()
+        
+        maximumNumberOfLines = 0
+        attributedText = RelistenAttributedString(string, textStyle: textStyle, color: color, alignment: alignment)
+    }
+}
+
+public func SpacerNode() -> ASLayoutSpec {
+    let node = ASLayoutSpec()
+    node.style.flexGrow = 1.0
+    
+    return node
+}
+
+public class FavoriteButtonNode : ASDisplayNode {
+    public static let image = UIImage(named: "heart")
+
+    let artist: ArtistWithCounts
+    var currentlyFavorited: Bool
+    
+    let faveButtonNode: ASDisplayNode
+    
+    var disposal = Disposal()
+    
+    public init(artist: ArtistWithCounts, withFavoritedArtists: [Int]) {
+        self.artist = artist
+        currentlyFavorited = withFavoritedArtists.contains(artist.id)
+        
+        faveButtonNode = ASDisplayNode(viewBlock: { FaveButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32)) })
+        
+        super.init()
+        
+        automaticallyManagesSubnodes = true
+    }
+    
+    func updateSelected() {
+        if let button = faveButtonNode.view as? FaveButton {
+            button.setSelected(selected: currentlyFavorited, animated: false)
+        }
+    }
+    
+    public override func didLoad() {
+        super.didLoad()
+        
+        if let button = faveButtonNode.view as? FaveButton {
+            button.setImage(FavoriteButtonNode.image, for: .normal)
+            button.accessibilityLabel = "Favorite Artist"
+            
+            button.delegate = ArtistLayout.faveButtonDelegate
+            
+            button.applyInit()
+            
+            button.setSelected(selected: currentlyFavorited, animated: false)
+            
+            button.addTarget(self, action: #selector(onFavorite), for: .touchUpInside)
+        }
+        
+        MyLibraryManager.shared.artistFavorited.addHandler({ [weak self] artist in
+            self?.currentlyFavorited = self?.artist.id == artist.id
+            self?.updateSelected()
+        }).add(to: &disposal)
+        
+        MyLibraryManager.shared.artistUnfavorited.addHandler({ [weak self] artist in
+            if self?.artist.id == artist.id {
+                self?.currentlyFavorited = false
+                self?.updateSelected()
+            }
+        }).add(to: &disposal)
+        
+        MyLibraryManager.shared.observeFavoriteArtistIds.observe({ [weak self] ids, _ in
+            guard let s = self else { return }
+            
+            s.currentlyFavorited = ids.contains(s.artist.id)
+            s.updateSelected()
+        }).add(to: &disposal)
+    }
+    
+    public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        faveButtonNode.style.layoutPosition = CGPoint(x: 0, y: 0)
+        faveButtonNode.style.preferredSize = CGSize(width: 32, height: 32)
+        
+        return ASAbsoluteLayoutSpec(
+            sizing: ASAbsoluteLayoutSpecSizing.sizeToFit,
+            children: [ faveButtonNode ]
+        )
+    }
+    
+    @objc public func onFavorite() {
+        currentlyFavorited = !currentlyFavorited
+        
+        if currentlyFavorited {
+            MyLibraryManager.shared.favoriteArtist(artist: self.artist)
+        }
+        else {
+            let _ = MyLibraryManager.shared.removeArtist(artist: self.artist)
+        }
+    }
+}
+
+public class ArtistCellNode : ASCellNode {
+    public let artist: ArtistWithCounts
+    public let favoriteArtists: [Int]
+    
+    let nameNode: ASTextNode
+    let showsNode: ASTextNode
+    let sourcesNode: ASTextNode
+    let favoriteNode: FavoriteButtonNode
+    
+    public init(artist: ArtistWithCounts, withFavoritedArtists: [Int]) {
+        self.artist = artist
+        self.favoriteArtists = withFavoritedArtists
+        
+        nameNode = ASTextNode(artist.name, textStyle: .headline)
+        showsNode = ASTextNode("\(artist.show_count) shows", textStyle: .caption1)
+        sourcesNode = ASTextNode("\(artist.source_count) recordings", textStyle: .caption1)
+        favoriteNode = FavoriteButtonNode(artist: artist, withFavoritedArtists: withFavoritedArtists)
+
+        super.init()
+        
+        automaticallyManagesSubnodes = true
+        accessoryType = .disclosureIndicator
+    }
+    
+    public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        let bottomRow = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 0.0,
+            justifyContent: .spaceBetween,
+            alignItems: .baselineFirst,
+            children: [
+                showsNode,
+                sourcesNode
+            ]
+        )
+        bottomRow.style.alignSelf = .stretch
+        
+        let stack = ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 4.0,
+            justifyContent: .start,
+            alignItems: .start,
+            children: [
+                nameNode,
+                bottomRow
+            ]
+        )
+        stack.style.flexGrow = 1.0
+        
+        let containerStack = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 8.0,
+            justifyContent: .start,
+            alignItems: .center,
+            children: [
+                favoriteNode,
+                stack
+            ]
+        )
+        containerStack.style.alignSelf = .stretch
+        
+        let inset = ASInsetLayoutSpec(
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 0),
+            child: containerStack
+        )
+        inset.style.alignSelf = .stretch
+        
+        return inset
     }
 }
 

@@ -12,17 +12,22 @@ import UIKit
 
 import Siesta
 import LayoutKit
+import AsyncDisplayKit
 import SINQ
 
-class ShowListViewController<T> : RelistenTableViewController<T> {
-    let artist: ArtistWithCounts
-    let showsResource: Resource?
-    let tourSections: Bool
+class ShowListViewController<T> : RelistenAsyncTableController<T> {
+    internal let artist: ArtistWithCounts
+    internal let showsResource: Resource?
+    internal let tourSections: Bool
+    
+    internal var showsByTour: [(tourName: String?, shows: [Show])] = []
+    
+    internal var shows: [Show] = []
     
     public required init(artist: ArtistWithCounts, showsResource: Resource?, tourSections: Bool) {
         self.artist = artist
         self.showsResource = showsResource
-        self.tourSections = tourSections
+        self.tourSections = artist.features.tours && tourSections
         
         super.init(useCache: true, refreshOnAppear: true)
     }
@@ -37,18 +42,11 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        /*
         trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: ShowListViewController<T>.relayoutIfContainsTrack)
         tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: ShowListViewController<T>.relayoutIfContainsTracks)
-    }
-    
-    var trackFinishedHandler: Disposable?
-    var tracksDeletedHandler: Disposable?
-    
-    deinit {
-        for handler in [trackFinishedHandler, tracksDeletedHandler] {
-            handler?.dispose()
-        }
+         */
     }
     
     func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
@@ -56,7 +54,7 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
             let shows = extractShows(forData: d)
             
             if sinq(shows).any({ $0.id == track.show.id }) {
-                render(shows: shows)
+//                render(shows: shows)
             }
         }
     }
@@ -68,7 +66,7 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
             let trackShowsId = tracks.map({ $0.show.id })
             
             if sinq(shows).any({ trackShowsId.contains($0.id) }) {
-                render(shows: shows)
+//                render(shows: shows)
             }
         }
     }
@@ -77,16 +75,12 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
     
     var showMapping: [IndexPath: Show]? = nil
 
-    public func layout(show: Show, atIndex: IndexPath) -> Layout {
-        return YearShowLayout(show: show)
+    public func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
+        return { YearShowCellNode(show: show) }
     }
     
     public func extractShows(forData: T) -> [Show] {
         fatalError("need to override this")
-    }
-    
-    public override func render(forData: T) {
-        render(shows: extractShows(forData: forData))
     }
     
     override func has(oldData: T, changed: T) -> Bool {
@@ -96,61 +90,57 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
         return x1.count != x2.count
     }
     
-    public func render(shows: [Show]) {
-        layout {
-            if self.tourSections == false {
-                let itms = shows.enumerated().map {
-                    self.layout(show: $0.element, atIndex: IndexPath(row: $0.offset, section: 0))
+    public override func render() {
+        if let d = latestData {
+            shows = extractShows(forData: d)
+            
+            if tourSections {
+                buildTourSections()
+            }
+        }
+        
+        super.render()
+    }
+    
+    func buildTourSections() {
+        var sections: [[Show]] = []
+        
+        showMapping = [:]
+        showsByTour = []
+        
+        var currentSection: [Show] = []
+        
+        for (idx, show) in shows.enumerated() {
+            if idx == 0 {
+                let idxP = IndexPath(row: 0, section: 0)
+                
+                currentSection.append(show)
+                showMapping?[idxP] = show
+            }
+            else {
+                let prevShow = shows[idx - 1]
+                
+                if prevShow.tour_id != show.tour_id {
+                    showsByTour.append((prevShow.tour?.name, currentSection))
+                    sections.append(currentSection)
+                    
+                    currentSection = []
                 }
                 
-                return [ LayoutsAsSingleSection(items: itms, title: nil) ]
+                let idxP = IndexPath(row: currentSection.count, section: sections.count)
+                showMapping?[idxP] = show
+                currentSection.append(show)
             }
             
-            var sections: [Section<[Layout]>] = []
-            
-            self.showMapping = [:]
-            
-            var currentSection: [Layout] = []
-            
-            for (idx, show) in shows.enumerated() {
-                if idx == 0 {
-                    let idxP = IndexPath(row: 0, section: 0)
-                    
-                    currentSection.append(self.layout(show: show, atIndex: idxP))
-                    self.showMapping?[idxP] = show
-                }
-                else {
-                    let prevShow = shows[idx - 1]
-                    
-                    if prevShow.tour_id != show.tour_id {
-                        sections.append(LayoutsAsSingleSection(items: currentSection, title: prevShow.tour?.name))
-                        
-                        currentSection = []
-                    }
-                    
-                    let idxP = IndexPath(row: currentSection.count, section: sections.count)
-                    self.showMapping?[idxP] = show
-                    currentSection.append(self.layout(show: show, atIndex: idxP))
-                }
-                
-                if idx == shows.count - 1 {
-                    sections.append(LayoutsAsSingleSection(items: currentSection, title: show.tour?.name))
-                }
+            if idx == shows.count - 1 {
+                showsByTour.append((show.tour?.name, currentSection))
             }
-            
-            return sections
         }
     }
     
-    override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        cell.accessoryType = .disclosureIndicator
+    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        tableNode.deselectRow(at: indexPath, animated: true)
         
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
         var show: Show? = nil
         if tourSections, let d = showMapping, let s = d[indexPath] {
             show = s
@@ -158,10 +148,28 @@ class ShowListViewController<T> : RelistenTableViewController<T> {
         else if !tourSections, let d = latestData {
             show = self.extractShows(forData: d)[indexPath.row]
         }
-
+        
         if let s = show {
             navigationController?.pushViewController(SourcesViewController(artist: artist, show: s), animated: true)
         }
+    }
+    
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return tourSections ? showsByTour.count : 1
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return tourSections ? showsByTour[section].shows.count : shows.count
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        let show = tourSections ? showsByTour[indexPath.section].shows[indexPath.row] : shows[indexPath.row]
+        
+        return self.layout(show: show, atIndex: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return tourSections ? showsByTour[section].tourName : nil
     }
 }
 
@@ -191,5 +199,25 @@ class YearViewController: ShowListViewController<YearWithShows> {
     
     override func extractShows(forData: YearWithShows) -> [Show] {
         return forData.shows
+    }
+    
+    override func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return super.numberOfSections(in: tableNode)
+    }
+    
+    override func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return super.tableNode(tableNode, numberOfRowsInSection: section)
+    }
+    
+    override func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return super.tableView(tableView, titleForHeaderInSection: section)
+    }
+    
+    override func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        return super.tableNode(tableNode, didSelectRowAt: indexPath)
     }
 }

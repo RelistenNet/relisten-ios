@@ -12,6 +12,7 @@ import SwiftyJSON
 import Cache
 import Async
 import SINQ
+import Observable
 
 /// This is used for information that doens't come from Relisten.
 /// It is like a "sidecar" set of data that provides device-specific info
@@ -66,6 +67,7 @@ public struct OfflineSourceMetadata : Codable, Hashable {
 public class MyLibrary {
     public var shows: [CompleteShowInformation] = []
     public var artistIds: Set<Int> = []
+    public lazy var artistIdsChanged = Observable(artistIds)
     
     public static let MaxRecentlyPlayedShows: Int = 25
     public var recentlyPlayed: [CompleteTrackShowInformation] = []
@@ -73,6 +75,8 @@ public class MyLibrary {
     public var offlineTrackURLs: Set<URL> = []
     public var downloadBacklog: [CompleteTrackShowInformation] = []
     public var offlineSourcesMetadata: Set<OfflineSourceMetadata> = []
+    
+    public lazy var observeOfflineSources = Observable(offlineSourcesMetadata)
     
     private static let offlineTrackFileSizeCacheName = "offlineTrackSize"
     private static let offlineCacheName = "offline"
@@ -111,6 +115,8 @@ public class MyLibrary {
         recentlyPlayed = try json["recentlyPlayed"].arrayValue.map(CompleteTrackShowInformation.init)
 
         try loadOfflineData()
+        
+        artistIdsChanged.value = artistIds
     }
     
     public func ToJSON() -> SwJSON {
@@ -120,12 +126,6 @@ public class MyLibrary {
         s["recentlyPlayed"] = SwJSON(recentlyPlayed.map({ $0.originalJSON }))
 
         return s
-    }
-    
-    public func URLIsAvailableOffline(_ url: URL) {
-        offlineTrackURLs.insert(url)
-        
-        saveOfflineTrackUrls()
     }
     
     public func URLNotAvailableOffline(_ track: CompleteTrackShowInformation, save: Bool = true) {
@@ -139,6 +139,8 @@ public class MyLibrary {
         if save {
             saveOfflineTrackUrls()
             saveOfflineSourcesMetadata()
+            
+            observeOfflineSources.value = offlineSourcesMetadata
         }
     }
     
@@ -167,11 +169,15 @@ public class MyLibrary {
 
 extension MyLibrary : RelistenDownloadManagerDelegate {
     public func trackBecameAvailableOffline(_ track: CompleteTrackShowInformation) {
-        URLIsAvailableOffline(track.track.track.mp3_url)
-        
-        offlineSourcesMetadata.insert(OfflineSourceMetadata.from(completeTrack: track))
-        
-        saveOfflineSourcesMetadata()
+        if offlineTrackURLs.insert(track.track.track.mp3_url).inserted {
+            saveOfflineTrackUrls()
+        }
+
+        if offlineSourcesMetadata.insert(OfflineSourceMetadata.from(completeTrack: track)).inserted {
+            saveOfflineSourcesMetadata()
+            
+            observeOfflineSources.value = offlineSourcesMetadata
+        }
     }
     
     public func trackSizeBecameKnown(_ track: CompleteTrackShowInformation, fileSize: UInt64) {

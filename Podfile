@@ -32,9 +32,11 @@ target 'Relisten' do
   pod 'AXRatingView'
   pod 'FaveButton', :path => '../fave-button'
   pod 'NAKPlaybackIndicatorView'
+  pod 'Observable'
 
   pod 'LayoutKit'
   pod 'DWURecyclingAlert'
+  pod "Texture"
 
   pod 'SINQ'
   pod 'Reveal-SDK', :configurations => ['Debug']

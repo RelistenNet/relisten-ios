@@ -8,55 +8,31 @@
 
 import Foundation
 
+import Observable
+
 public class Event<T> {
-    
     public typealias EventHandler = (T) -> ()
     
-    fileprivate var eventHandlers = [Invocable]()
+    public func raise(_ data: T) {
+        observers.values.forEach { $0(data) }
+    }
     
-    public func raise(data: T) {
-        for handler in self.eventHandlers {
-            handler.invoke(data: data)
+    private var observers: [Int: EventHandler] = [:]
+    private var uniqueID = (0...).makeIterator()
+    
+    public func addHandler(_ observer: @escaping EventHandler) -> Disposable {
+        guard let id = uniqueID.next() else { fatalError("There should always be a next unique id") }
+        
+        observers[id] = observer
+        
+        let disposable = Disposable { [weak self] in
+            self?.observers[id] = nil
         }
+        
+        return disposable
     }
     
-    public func addHandler<U: AnyObject>(target: U,
-                                         handler: @escaping (U) -> EventHandler) -> Disposable {
-        let wrapper = EventHandlerWrapper(target: target,
-                                          handler: handler, event: self)
-        eventHandlers.append(wrapper)
-        return wrapper
+    public func removeAllObservers() {
+        observers.removeAll()
     }
-}
-
-private protocol Invocable: class {
-    func invoke(data: Any)
-}
-
-private class EventHandlerWrapper<T: AnyObject, U>
-: Invocable, Disposable {
-    weak var target: T?
-    let handler: (T) -> (U) -> ()
-    let event: Event<U>
-    
-    init(target: T?, handler: @escaping (T) -> (U) -> (), event: Event<U>) {
-        self.target = target
-        self.handler = handler
-        self.event = event;
-    }
-    
-    func invoke(data: Any) -> () {
-        if let t = target {
-            handler(t)(data as! U)
-        }
-    }
-    
-    func dispose() {
-        event.eventHandlers =
-            event.eventHandlers.filter { $0 !== self }
-    }
-}
-
-public protocol Disposable {
-    func dispose()
 }

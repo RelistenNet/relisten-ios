@@ -38,17 +38,10 @@ class YearsViewController: RelistenTableViewController<[Year]> {
         
         title = "Years"
 
+        /*
         trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: YearsViewController.relayoutIfContainsTrack)
         tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: YearsViewController.relayoutIfContainsTracks)
-    }
-    
-    var trackFinishedHandler: Disposable?
-    var tracksDeletedHandler: Disposable?
-    
-    deinit {
-        for handler in [trackFinishedHandler, tracksDeletedHandler] {
-            handler?.dispose()
-        }
+         */
     }
     
     func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {

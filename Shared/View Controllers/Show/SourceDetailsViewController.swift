@@ -161,8 +161,6 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
             
             if let venue = show.correctVenue(withFallback: source.venue) {
                 if indexPath.row == matchingRows {
-                    let venue = show.venue ?? source.venue!
-
                     navigationController?.pushViewController(VenueViewController(artist: artist, venue: venue), animated: true)
                     
                     return

@@ -9,6 +9,7 @@
 import UIKit
 
 import Siesta
+import AsyncDisplayKit
 
 class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]> {
     public required init(artist: ArtistWithCounts) {
@@ -49,5 +50,25 @@ class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]>
     
     func loadMyShows() -> [CompleteShowInformation] {
         return MyLibraryManager.shared.library.favoritedShowsPlayedByArtist(artist)
+    }
+    
+    override func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return super.numberOfSections(in: tableNode)
+    }
+    
+    override func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return super.tableNode(tableNode, numberOfRowsInSection: section)
+    }
+    
+    override func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return super.tableView(tableView, titleForHeaderInSection: section)
+    }
+    
+    override func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        return super.tableNode(tableNode, didSelectRowAt: indexPath)
     }
 }

@@ -44,44 +44,6 @@ public class RelistenFaveButtonDelegate : FaveButtonDelegate {
     }
 }
 
-public func RelistenAttributedString(_ string: String, font: UIFont, color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> NSAttributedString {
-    let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.alignment = alignment ?? NSTextAlignment.left
-    
-    return NSAttributedString(string: string, attributes: [
-        NSAttributedStringKey.font: font,
-        NSAttributedStringKey.foregroundColor: color ?? UIColor.darkText,
-        NSAttributedStringKey.paragraphStyle: paragraphStyle
-    ])
-}
-
-public func RelistenAttributedString(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> NSAttributedString {
-    return RelistenAttributedString(string, font: UIFont.preferredFont(forTextStyle: textStyle), color: color, alignment: alignment)
-}
-
-extension ASTextNode {
-    public convenience init(_ string: String, font: UIFont, color: UIColor? = nil, alignment: NSTextAlignment? = nil) {
-        self.init()
-        
-        maximumNumberOfLines = 0
-        attributedText = RelistenAttributedString(string, font: font, color: color, alignment: alignment)
-    }
-
-    public convenience init(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) {
-        self.init()
-        
-        maximumNumberOfLines = 0
-        attributedText = RelistenAttributedString(string, textStyle: textStyle, color: color, alignment: alignment)
-    }
-}
-
-public func SpacerNode() -> ASLayoutSpec {
-    let node = ASLayoutSpec()
-    node.style.flexGrow = 1.0
-    
-    return node
-}
-
 public class FavoriteButtonNode : ASDisplayNode {
     public static let image = UIImage(named: "heart")
 
@@ -105,7 +67,9 @@ public class FavoriteButtonNode : ASDisplayNode {
     
     func updateSelected() {
         if let button = faveButtonNode.view as? FaveButton {
-            button.setSelected(selected: currentlyFavorited, animated: false)
+            DispatchQueue.main.async {
+                button.setSelected(selected: self.currentlyFavorited, animated: false)
+            }
         }
     }
     
@@ -116,7 +80,7 @@ public class FavoriteButtonNode : ASDisplayNode {
             button.setImage(FavoriteButtonNode.image, for: .normal)
             button.accessibilityLabel = "Favorite Artist"
             
-            button.delegate = ArtistLayout.faveButtonDelegate
+            button.delegate = ArtistCellNode.faveButtonDelegate
             
             button.applyInit()
             
@@ -170,6 +134,8 @@ public class FavoriteButtonNode : ASDisplayNode {
 public class ArtistCellNode : ASCellNode {
     public let artist: ArtistWithCounts
     public let favoriteArtists: [Int]
+    
+    public static let faveButtonDelegate = RelistenFaveButtonDelegate()
     
     let nameNode: ASTextNode
     let showsNode: ASTextNode
@@ -235,104 +201,5 @@ public class ArtistCellNode : ASCellNode {
         inset.style.alignSelf = .stretch
         
         return inset
-    }
-}
-
-public class ArtistLayout : InsetLayout<UIView> {
-    static let faveButtonDelegate = RelistenFaveButtonDelegate()
-    
-    public init(artist: ArtistWithCounts, withFavoritedArtists: Set<Int>) {
-        let artistName = LabelLayout(
-            text: artist.name,
-            font: UIFont.preferredFont(forTextStyle: .headline),
-            numberOfLines: 0,
-            alignment: .fillLeading,
-            flexibility: .flexible,
-            viewReuseId: "artistName")
-        
-        /*
-        let favoriteButton = SizeLayout<FaveButton>(
-            width: 32,
-            height: 32,
-            alignment: .centerTrailing,
-            flexibility: .inflexible,
-            viewReuseId: "favoriteArtist") { (button) in
-                button.setImage(UIImage(named: "heart"), for: .normal)
-                button.accessibilityLabel = "Favorite Artist"
-                
-                var currentlyFavorited = withFavoritedArtists.contains(artist.id)
-
-                button.delegate = ArtistLayout.faveButtonDelegate
-                
-                button.applyInit()
-                
-                button.setSelected(selected: currentlyFavorited, animated: false)
-
-                button.addHandler(for: .touchUpInside, handler: { _ in
-                    currentlyFavorited = !currentlyFavorited
-                    
-                    if currentlyFavorited {
-                        MyLibraryManager.shared.favoriteArtist(artist: artist)
-                    }
-                    else {
-                        let _ = MyLibraryManager.shared.removeArtist(artist: artist)
-                    }
-                })
-            }
- 
-        let favoriteButtonContainer = InsetLayout(insets: UIEdgeInsetsMake(0, 16, 0, 8), sublayout: favoriteButton)
-        */
-        
-        let showsLabel = LabelLayout(
-            text: "\(artist.show_count) shows",
-            font: UIFont.preferredFont(forTextStyle: .caption1),
-            alignment: .centerLeading,
-            viewReuseId: "showCount"
-        )
-        
-        let sourcesLabel = LabelLayout(
-            text: "\(artist.source_count) recordings",
-            font: UIFont.preferredFont(forTextStyle: .caption1),
-            alignment: .centerTrailing,
-            viewReuseId: "sourcesCount"
-        )
-        
-        let hasOffline = MyLibraryManager.shared.library.isArtistAtLeastPartiallyAvailableOffline(artist)
-        
-        let rows = StackLayout(
-            axis: .vertical,
-            spacing: 4,
-            viewReuseId: "artist-vert-stack",
-            sublayouts: [
-                StackLayout(
-                    axis: .horizontal,
-                    spacing: 0,
-                    sublayouts: [artistName]
-                ),
-                StackLayout(
-                    axis: .horizontal,
-                    spacing: 4,
-                    sublayouts: hasOffline ? [
-                        RelistenMakeOfflineExistsIndicator(),
-                        showsLabel,
-                        sourcesLabel
-                    ] : [
-                        showsLabel,
-                        sourcesLabel
-                    ]
-                )
-            ]
-        )
-
-        super.init(
-            insets: EdgeInsets(top: 8, left: 16, bottom: 12, right: 16 + 8 + 8),
-            viewReuseId: "artistLayout",
-            sublayout: StackLayout(
-                axis: .horizontal,
-                spacing: 0,
-                viewReuseId: "artist-horiz-stack",
-                sublayouts: [/*favoriteButtonContainer, */ rows]
-            )
-        )
     }
 }

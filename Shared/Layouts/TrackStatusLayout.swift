@@ -15,7 +15,7 @@ import ActionKit
 import Cache
 import SwiftyJSON
 
-public protocol TrackStatusActionHandler {
+public protocol TrackStatusActionHandler : class {
     func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation)
 }
 

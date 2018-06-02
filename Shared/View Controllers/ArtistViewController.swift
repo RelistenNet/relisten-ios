@@ -87,8 +87,11 @@ public class ArtistViewController : RelistenBaseAsyncTableontroller {
                 guard let s = self else { return }
                 
                 s.recentlyPlayed = MyLibraryManager.shared.library.recentlyPlayedByArtist(s.artist)
-                s.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
                 s.recentShowsNode.shows = s.recentlyPlayed.map({ ($0.show, nil) })
+                
+                DispatchQueue.main.async {
+                    s.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+                }
             })
             .add(to: &disposal)
     }

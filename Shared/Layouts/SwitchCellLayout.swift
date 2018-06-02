@@ -10,13 +10,6 @@ import Foundation
 
 import LayoutKit
 
-public let StandardSwitchBounds = { () -> CGRect in
-    let s = UISwitch()
-    s.sizeToFit()
-    
-    return s.bounds
-}()
-
 public class SwitchCellLayout : InsetLayout<UIView> {
     public init(title: String, checkedByDefault: @escaping () -> Bool, onSwitch: @escaping (Bool) -> Void) {
         let label = LabelLayout(

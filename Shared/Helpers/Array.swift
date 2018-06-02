@@ -20,6 +20,10 @@ public extension Array {
     }
 }
 
+public func ArrayNoNils<T>(_ values: T?...) -> [T] {
+    return values.filter({ $0 != nil }) as! [T]
+}
+
 extension MutableCollection {
     /// Shuffles the contents of this collection.
     mutating func shuffle() {

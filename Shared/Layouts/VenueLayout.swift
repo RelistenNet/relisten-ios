@@ -13,16 +13,6 @@ import AXRatingView
 import MapKit
 import CoreLocation
 
-public extension Numeric {
-    public func pluralize(_ single: String, _ multiple: String) -> String {
-        if(self == 1) {
-            return "\(self) \(single)"
-        }
-        
-        return "\(self) \(multiple)"
-    }
-}
-
 public class VenueLayout : InsetLayout<UIView> {
     public init(venue: VenueWithShowCount, useViewLanguage: Bool = false) {
         let venueName = LabelLayout(

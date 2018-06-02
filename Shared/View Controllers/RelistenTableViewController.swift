@@ -433,7 +433,9 @@ public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableontroll
     // MARK: Layout & Rendering
     
     public func render() {
-        print("[render] calling tableNode.reloadData()")
-        tableNode.reloadData()
+        DispatchQueue.main.async {
+            print("[render] calling tableNode.reloadData()")
+            self.tableNode.reloadData()
+        }
     }
 }

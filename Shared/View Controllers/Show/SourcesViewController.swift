@@ -11,14 +11,16 @@ import Foundation
 import UIKit
 
 import Siesta
-import LayoutKit
+import AsyncDisplayKit
 import SINQ
 
-class SourcesViewController: RelistenTableViewController<ShowWithSources> {
+class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
     
     let artist: ArtistWithCounts
     let show: Show?
     let isRandom: Bool
+    
+    var sources: [SourceFull] = []
     
     public required init(artist: ArtistWithCounts, show: Show) {
         self.artist = artist
@@ -32,7 +34,6 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
 
-    
     public required init(artist: ArtistWithCounts) {
         self.show = nil
         self.artist = artist
@@ -40,8 +41,6 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
         
         super.init(useCache: false, refreshOnAppear: false)
     }
-    
-
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
@@ -51,23 +50,6 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
         super.viewDidLoad()
         
         updateTitle(forShow: show)
-        
-        /*
-        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: SourcesViewController.relayoutIfContainsTrack)
-        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: SourcesViewController.relayoutIfContainsTracks)
-         */
-    }
-    
-    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
-        if let s = show, s.id == track.show.id, let d = latestData {
-            render(forData: d)
-        }
-    }
-    
-    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
-        if let s = show, sinq(tracks).any({ $0.show.id == s.id }), let d = latestData {
-            render(forData: d)
-        }
     }
     
     func updateTitle(forShow: Show?) {
@@ -82,25 +64,34 @@ class SourcesViewController: RelistenTableViewController<ShowWithSources> {
         }
     }
     
-    override func render(forData: ShowWithSources) {
-        updateTitle(forShow: forData)
+    override func dataChanged(_ data: ShowWithSources) {
+        sources = data.sources
+        updateTitle(forShow: data)
+    }
+    
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return sources.count > 0 ? 1 : 0
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return sources.count
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        guard let show = latestData else { return { ASCellNode() } }
+        
+        let source = sources[indexPath.row]
+        let artist = self.artist
+        
+        return { SourceDetailsNode(source: source, inShow: show, artist: artist, atIndex: indexPath.row, isDetails: false) }
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        tableNode.deselectRow(at: indexPath, animated: true)
+        
+        guard let show = latestData else { return }
 
-        layout {
-            return forData.sources.enumerated().map { (idx, src) in SourceLayout(source: src, idx: idx, sourceCount: forData.sources.count) }.asTable()
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        cell.accessoryType = .disclosureIndicator
-        
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        if let d = latestData {
-            navigationController?.pushViewController(SourceViewController(artist: artist, show: d, source: d.sources[indexPath.row]), animated: true)
-        }
+        let vc = SourceViewController(artist: artist, show: show, source: sources[indexPath.row])
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -11,12 +11,13 @@ import Foundation
 import UIKit
 
 import Siesta
-import LayoutKit
+import AsyncDisplayKit
 import SINQ
 
-class YearsViewController: RelistenTableViewController<[Year]> {
+class YearsViewController: RelistenAsyncTableController<[Year]> {
     
     let artist: ArtistWithCounts
+    var years: [Year] = []
     
     public required init(artist: ArtistWithCounts) {
         self.artist = artist
@@ -37,48 +38,36 @@ class YearsViewController: RelistenTableViewController<[Year]> {
         super.viewDidLoad()
         
         title = "Years"
-
-        /*
-        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: YearsViewController.relayoutIfContainsTrack)
-        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: YearsViewController.relayoutIfContainsTracks)
-         */
-    }
-    
-    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
-        if artist.id == track.artist.id, let d = latestData {
-            render(forData: d)
-        }
-    }
-    
-    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
-        if sinq(tracks).any({ $0.artist.id == artist.id }), let d = latestData {
-            render(forData: d)
-        }
     }
     
     override var resource: Resource? { get { return api.years(byArtist: artist) } }
     
-    override func render(forData: [Year]) {
-        layout {
-            return forData.map { YearLayout(year: $0) }.asTable()
-        }
+    override func dataChanged(_ data: [Year]) {
+        years = data
     }
     
     override func has(oldData: [Year], changed: [Year]) -> Bool {
         return oldData.count != changed.count
     }
     
-    override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        cell.accessoryType = .disclosureIndicator
-        
-        return cell
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return years.count > 0 ? 1 : 0
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return years.count
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        let year = years[indexPath.row]
         
-        if let d = latestData {
-            navigationController?.pushViewController(YearViewController(artist: artist, year: d[indexPath.row]), animated: true)
-        }
+        return { YearNode(year: year) }
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        tableNode.deselectRow(at: indexPath, animated: true)
+        
+        let vc = YearViewController(artist: artist, year: years[indexPath.row])
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

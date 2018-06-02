@@ -137,9 +137,9 @@ public class RelistenDownloadManager {
     
     public func download(track: CompleteTrackShowInformation, raiseEvent: Bool = true) {
         if downloadManager.downloadingArray.count < 3 {
-            addDownloadTask(track)
-            
             urlToTrackMap[track.track.track.mp3_url] = track
+
+            addDownloadTask(track)
         }
         else {
             MyLibraryManager.shared.library.queueToBacklog(track)
@@ -224,13 +224,6 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
         print("Started downloading: \(downloadModel)")
         
         if let t = urlToTrackMap[downloadModel.downloadingURL] {
-            if let f = downloadModel.file {
-                delegate?.trackSizeBecameKnown(t, fileSize: UInt64(fileToActualBytes(f)))
-            }
-            else {
-                print("Somehow missing the file size from the download model")
-            }
-
             eventTrackStartedDownloading.raise(t)
         }
     }

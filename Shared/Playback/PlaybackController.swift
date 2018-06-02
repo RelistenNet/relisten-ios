@@ -23,7 +23,7 @@ public class PlaybackController {
     public let viewController: AGAudioPlayerViewController
     public let shrinker: PlaybackMinibarShrinker
     
-    public let currentTrackChanged = Observable<CompleteTrackShowInformation?>(nil)
+    public let observeCurrentTrack = Observable<CompleteTrackShowInformation?>(nil)
     public let trackWasPlayed = Observable<CompleteTrackShowInformation?>(nil)
     
     public let eventTrackPlaybackChanged = Event<CompleteTrackShowInformation?>()
@@ -310,12 +310,14 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
         let completeInfo = (audioItem as? SourceTrackAudioItem)?.relisten
 
         eventTrackPlaybackChanged.raise(completeInfo)
+        observeCurrentTrack.value = completeInfo
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, changedTrackTo audioItem: AGAudioItem?) {
         let completeInfo = (audioItem as? SourceTrackAudioItem)?.relisten
 
         eventTrackPlaybackChanged.raise(completeInfo)
+        observeCurrentTrack.value = completeInfo
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedDotsForAudioItem audioItem: AGAudioItem) {

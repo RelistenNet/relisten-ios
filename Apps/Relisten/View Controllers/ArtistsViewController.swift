@@ -58,15 +58,19 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]> {
 
         MyLibraryManager.shared.observeFavoriteArtistIds
             .observe({ [weak self] artistIds, _ in
-                self?.favoriteArtists = Array(artistIds);
-                self?.tableNode.reloadSections([ Sections.favorited.rawValue ], with: .automatic)
+                DispatchQueue.main.async {
+                    self?.favoriteArtists = Array(artistIds);
+                    self?.tableNode.reloadSections([ Sections.favorited.rawValue ], with: .automatic)
+                }
             })
             .add(to: &disposal)
         
         MyLibraryManager.shared.observeRecentlyPlayedShows
             .observe({ [weak self] shows, _ in
-                self?.recentlyPlayed = shows
-                self?.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+                DispatchQueue.main.async {
+                    self?.recentlyPlayed = shows
+                    self?.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+                }
                 
                 if let s = self {
                     s.recentShowsNode.shows = s.recentlyPlayed.map({ ($0.show, $0.artist) })
@@ -76,8 +80,10 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]> {
         
         MyLibraryManager.shared.library.observeOfflineSources
             .observe({ [weak self] shows, _ in
-                self?.offlineShows = shows
-                self?.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
+                DispatchQueue.main.async {
+                    self?.offlineShows = shows
+                    self?.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
+                }
                 
                 if let s = self {
                     s.offlineShowsNode.shows = s.offlineShows.map({ ($0.show, $0.artist) })

@@ -11,16 +11,23 @@ import Foundation
 import UIKit
 
 import Siesta
-import LayoutKit
+import AsyncDisplayKit
+import Observable
 import SINQ
 
-class SourceViewController: RelistenBaseTableViewController {
+class SourceViewController: RelistenBaseAsyncTableontroller {
     
     let artist: ArtistWithCounts
     let show: ShowWithSources
     let source: SourceFull
     let idx: Int
     
+    let isInMyShows = Observable(false)
+    let isAvailableOffline = Observable(false)
+
+    lazy var addToMyShowsNode = SwitchCellNode(observeChecked: isInMyShows, withLabel: "Part of My Shows")
+    lazy var downloadNode = SwitchCellNode(observeChecked: isAvailableOffline, withLabel: "Fully Available Offline")
+
     public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
         self.show = show
@@ -39,92 +46,87 @@ class SourceViewController: RelistenBaseTableViewController {
         
         super.init()
         
-        onToggleAddToMyShows = { (newValue: Bool) in
-            self.isShowInLibrary = newValue
+        addSwitchListeners()
+        
+        let library = MyLibraryManager.shared.library
+        
+        library.observeOfflineSources.observe { [weak self] (new, old) in
+            self?.isAvailableOffline.value = library.isSourceFullyAvailableOffline(source: source)
+        }.add(to: &disposal)
+
+        MyLibraryManager.shared.observeMyShows.observe { [weak self] (new, old) in
+            guard let s = self else { return }
+            
+            s.isInMyShows.value = library.isShowInLibrary(show: s.show, byArtist: s.artist)
+        }.add(to: &disposal)
+        
+        RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler({ [weak self] track in
+            guard let s = self else { return }
+            
+            if track.source.id == s.source.id {
+                MyLibraryManager.shared.library.diskUsageForSource(source: s.completeShowInformation) { (size) in
+                    s.rebuildOfflineSwitch(size)
+                }
+            }
+        }).add(to: &disposal)
+        
+        RelistenDownloadManager.shared.eventTracksDeleted.addHandler({ [weak self] tracks in
+            guard let s = self else { return }
+            
+            if tracks.any(match: { $0.source.id == s.source.id }) {
+                MyLibraryManager.shared.library.diskUsageForSource(source: s.completeShowInformation) { (size) in
+                    s.rebuildOfflineSwitch(size)
+                }
+            }
+        }).add(to: &disposal)
+    }
+    
+    func rebuildOfflineSwitch(_ sourceSize: UInt64?) {
+        let txt = "Fully Available Offline" + (sourceSize == nil ? "" : " (\(sourceSize!.humanizeBytes()))")
+        downloadNode = SwitchCellNode(observeChecked: isAvailableOffline, withLabel: txt)
+        addSwitchListeners()
+        
+        DispatchQueue.main.async {
+            self.tableNode.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+        }
+    }
+    
+    func addSwitchListeners() {
+        addToMyShowsNode.observeUserChecked.removeAllObservers()
+        downloadNode.observeUserChecked.removeAllObservers()
+        
+        addToMyShowsNode.observeUserChecked.observe(includingInitial: false) { (newValue, old) in
             if newValue {
                 MyLibraryManager.shared.addShow(show: self.completeShowInformation)
             }
             else {
                 let _ = MyLibraryManager.shared.removeShow(show: self.completeShowInformation)
             }
-        }
+        }.add(to: &disposal)
         
-        onToggleOffline = { (newValue: Bool) in
+        downloadNode.observeUserChecked.observe(includingInitial: false) { (newValue, old) in
             if newValue {
                 // download whole show
                 RelistenDownloadManager.shared.download(show: self.completeShowInformation)
-
-                self.isAvailableOffline = true
             }
             else {
                 // remove any downloaded tracks
-                self.isAvailableOffline = false
-                
                 RelistenDownloadManager.shared.delete(source: self.completeShowInformation)
             }
-        }
-
-        /*
-        trackStartedHandler = RelistenDownloadManager.shared.eventTrackStartedDownloading.addHandler(target: self, handler: SourceViewController.relayoutIfContainsTrack)
-        tracksQueuedHandler = RelistenDownloadManager.shared.eventTracksQueuedToDownload.addHandler(target: self, handler: SourceViewController.relayoutIfContainsTracks)
-        trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: SourceViewController.relayoutIfContainsTrack)
-        tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: SourceViewController.relayoutIfContainsTracks)
-        trackPlaybackChangedHandler = PlaybackController.sharedInstance.eventTrackPlaybackChanged.addHandler(target: self, handler: SourceViewController.relayoutIfCompleteContainsTrack)
-        */
+        }.add(to: &disposal)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
 
-    var isShowInLibrary: Bool = false
-    var isAvailableOffline: Bool = false
-
-    var onToggleAddToMyShows: ((Bool) -> Void)? = nil
-    var onToggleOffline: ((Bool) -> Void)? = nil
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "\(show.display_date) #\(idx + 1)"
-        
-        relayout()
     }
     
-    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
-        if source.tracksFlattened.contains(where: { $0 === track.track.track }) {
-            relayout()
-        }
-    }
-    
-    func relayoutIfCompleteContainsTrack(_ complete: CompleteTrackShowInformation?) {
-        if complete == nil || source.id == complete!.source.id {
-            relayout()
-        }
-    }
-    
-    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
-        if source.tracksFlattened.contains(where: { outer in tracks.contains(where: { inner in outer === inner.track.track })  }) {
-            relayout()
-        }
-    }
-
-    func relayout() {
-        isAvailableOffline = MyLibraryManager.shared.library.isSourceFullyAvailableOffline(source: source)
-        isShowInLibrary = MyLibraryManager.shared.library.isShowInLibrary(show: show, byArtist: artist)
-
-        if isAvailableOffline {
-            MyLibraryManager.shared.library.diskUsageForSource(source: completeShowInformation) { (size) in
-                DispatchQueue.main.async {
-                    self.doLayout(sourceSize: size)
-                }
-            }
-        }
-        else {
-            doLayout(sourceSize: nil)
-        }
-    }
-    
+    /*
     func doLayout(sourceSize: UInt64?) {
         let str = sourceSize == nil ? "" : " (\(sourceSize!.humanizeBytes()))"
         
@@ -146,22 +148,7 @@ class SourceViewController: RelistenBaseTableViewController {
             return sections
         }
     }
-    
-    override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            cell.selectionStyle = .none
-            
-            if indexPath.row == 3 {
-                cell.accessoryType = .disclosureIndicator
-                
-                return cell
-            }
-        }
-        
-        cell.accessoryType = .none
-        
-        return cell
-    }
+     */
     
     var completeShowInformation: CompleteShowInformation {
         get {
@@ -169,8 +156,47 @@ class SourceViewController: RelistenBaseTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return 1 + source.sets.count
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 4
+        }
+        
+        return source.sets[section - 1].tracks.count
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        let artist = self.artist
+        let source = self.source
+        let show = self.show
+        
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+                return { SourceDetailsNode(source: source, inShow: show, artist: artist, atIndex: indexPath.row, isDetails: true) }
+            }
+            else if indexPath.row == 1 {
+                return { self.addToMyShowsNode }
+            }
+            else if indexPath.row == 2 {
+                return { self.downloadNode }
+            }
+            else if indexPath.row == 3 {
+                return { ShareCellNode() }
+            }
+        }
+        
+        let track = source.sets[indexPath.section - 1].tracks[indexPath.row]
+        let trackStatus = TrackStatus(forTrack: track)
+        let complete = CompleteTrackShowInformation(track: trackStatus, source: source, show: show, artist: artist)
+        
+        return { TrackStatusCellNode(withTrack: complete, withHandler: self) }
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        tableNode.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 && indexPath.row == 0 {
             navigationController?.pushViewController(SourceDetailsViewController(artist: artist, show: show, source: source), animated: true)
@@ -193,12 +219,23 @@ class SourceViewController: RelistenBaseTableViewController {
             
             return
         }
+        else if indexPath.section == 0 {
+            return
+        }
         
         TrackActions.play(
             trackAtIndexPath: IndexPath(row: indexPath.row, section: indexPath.section - 1),
             inShow: completeShowInformation,
             fromViewController: self
         )
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard section != 0 else {
+            return nil
+        }
+        
+        return self.artist.features.sets ? source.sets[section - 1].name : "Tracks"
     }
 }
 

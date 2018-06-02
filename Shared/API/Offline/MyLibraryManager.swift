@@ -28,9 +28,13 @@ public class MyLibraryManager {
     
     public let artistFavorited = Event<ArtistWithCounts>()
     public let artistUnfavorited = Event<ArtistWithCounts>()
-    
+
+    public let showAdded = Event<CompleteShowInformation>()
+    public let showRemoved = Event<CompleteShowInformation>()
+
     public lazy var observeFavoriteArtistIds = Observable(library.artistIds)
     public lazy var observeRecentlyPlayedShows = Observable(library.recentlyPlayed)
+    public lazy var observeMyShows = Observable(library.shows)
 
     init() {
         RelistenDownloadManager.shared.delegate = self.library
@@ -101,15 +105,17 @@ public class MyLibraryManager {
     }
     
     func saveToFirestore() {
-        if let d = userDoc {
-            do {
-                let j = library.ToJSON()
-                let json = try JSONSerialization.jsonObject(with: try j.rawData()) as! [String: Any]
-                
-                d.setData(json)
-            }
-            catch {
-                print(error)
+        DispatchQueue.global(qos: .background).async {
+            if let d = self.userDoc {
+                do {
+                    let j = self.library.ToJSON()
+                    let json = try JSONSerialization.jsonObject(with: try j.rawData()) as! [String: Any]
+                    
+                    d.setData(json)
+                }
+                catch {
+                    print(error)
+                }
             }
         }
     }
@@ -124,12 +130,18 @@ extension MyLibraryManager {
     public func addShow(show: CompleteShowInformation) {
         library.shows.append(show)
         
+        showAdded.raise(show)
+        observeMyShows.value = library.shows
+        
         saveToFirestore()
     }
     
     public func removeShow(show: CompleteShowInformation) -> Bool {
         if let idx = library.shows.index(where: { $0 == show }) {
             library.shows.remove(at: idx)
+            
+            showRemoved.raise(show)
+            observeMyShows.value = library.shows
             
             saveToFirestore()
 

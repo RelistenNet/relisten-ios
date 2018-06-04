@@ -11,7 +11,7 @@ import UIKit
 import Siesta
 import AsyncDisplayKit
 
-class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]> {
+class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, ASCollectionDelegate {
     enum Sections: Int, RawRepresentable {
         case recentlyPlayed = 0
         case availableOffline
@@ -36,6 +36,9 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]> {
         offlineShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
 
         super.init(useCache: true, refreshOnAppear: true)
+        
+        recentShowsNode.collectionNode.delegate = self
+        offlineShowsNode.collectionNode.delegate = self
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -198,6 +201,24 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]> {
             return "All Artists"
         default:
             return nil
+        }
+    }
+
+    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        let show: CompleteShowInformation?
+        
+        if collectionNode === recentShowsNode.collectionNode {
+            show = recentlyPlayed[indexPath.item].toCompleteShowInformation()
+        }
+        else if collectionNode === offlineShowsNode.collectionNode {
+            show = Array(offlineShows)[indexPath.item].completeShowInformation
+        }
+        else {
+            show = nil
+        }
+        
+        if let s = show {
+            navigationController?.pushViewController(SourcesViewController(artist: s.artist, show: s.show), animated: true)
         }
     }
 }

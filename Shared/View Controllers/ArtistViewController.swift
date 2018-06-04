@@ -246,13 +246,13 @@ extension ArtistViewController {
 
 extension ArtistViewController : ASCollectionDelegate {
     public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        if collectionNode === todayShowsNode, let today = resourceTodayData {
+        if collectionNode === todayShowsNode.collectionNode, let today = resourceTodayData {
             let item = today[indexPath.row]
             let vc = SourcesViewController(artist: self.artist, show: item)
             
             navigationController?.pushViewController(vc, animated: true)
         }
-        else if collectionNode === recentShowsNode {
+        else if collectionNode === recentShowsNode.collectionNode {
             let item = recentlyPlayed[indexPath.row]
             let vc = SourcesViewController(artist: self.artist, show: item.show)
             

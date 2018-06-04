@@ -127,7 +127,7 @@ public class TrackStatusCellNode : ASCellNode {
             downloadState = .downloading
         }
         else {
-            trackState = .notActive
+            downloadState = .none
         }
         
         if track.track.isPlaying {

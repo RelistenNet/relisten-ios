@@ -32,7 +32,7 @@ target 'Relisten' do
   pod 'AXRatingView'
   pod 'FaveButton', :path => '../fave-button'
   pod 'NAKPlaybackIndicatorView'
-  pod 'Observable'
+  pod 'Observable', :git => "https://github.com/alecgorge/Observable.git"
 
   pod 'LayoutKit'
   pod 'DWURecyclingAlert'

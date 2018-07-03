@@ -43,21 +43,9 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
     var groups: [Grouping<String, VenueWithShowCount>]? = nil
     
     override func render(forData: [VenueWithShowCount]) {
-        let digitSet = CharacterSet.decimalDigits
-        
         groups = sinq(forData)
             .groupBy({
-                let n = $0.sortName
-                var s = n[..<n.index(n.startIndex, offsetBy: 1)].uppercased()
-                
-                for ch in s.unicodeScalars {
-                    if digitSet.contains(ch) {
-                        s = "#"
-                        break
-                    }
-                }
-                
-                return s
+                return $0.sortName.groupNameForTableView()
             })
             .toArray()
             .sorted(by: { (a, b) -> Bool in

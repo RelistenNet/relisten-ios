@@ -13,9 +13,9 @@ target 'Relisten' do
   pod 'ReachabilitySwift'
   pod 'ActionKit'
 
-  pod 'NapySlider', :path => '../NapySlider'
-  pod 'BASSGaplessAudioPlayer', :path => '../gapless-audio-bass-ios'
-  pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
+  pod 'NapySlider', :git=> 'https://github.com/farktronix/NapySlider.git'
+  pod 'BASSGaplessAudioPlayer', :git => 'https://github.com/alecgorge/gapless-audio-bass-ios.git'
+  pod 'AGAudioPlayer', :git => 'https://github.com/alecgorge/AGAudioPlayer.git'
 
 # pod 'Firebase/Database'
 # pod 'Firebase/Auth'
@@ -30,7 +30,7 @@ target 'Relisten' do
 
   pod "DownloadButton"
   pod 'AXRatingView'
-  pod 'FaveButton', :path => '../fave-button'
+  pod 'FaveButton', :git => 'https://github.com/alecgorge/fave-button.git'
   pod 'NAKPlaybackIndicatorView'
   pod 'Observable', :git => "https://github.com/alecgorge/Observable.git"
 

@@ -82,9 +82,9 @@ PODS:
     - SDWebImage (~> 3.8)
   - LayoutKit (7.0.3)
   - leveldb-library (1.20)
-  - MarqueeLabel (3.1.4):
-    - MarqueeLabel/ObjC (= 3.1.4)
-  - MarqueeLabel/ObjC (3.1.4)
+  - MarqueeLabel (3.1.6):
+    - MarqueeLabel/ObjC (= 3.1.6)
+  - MarqueeLabel/ObjC (3.1.6)
   - MZDownloadManager (3.4)
   - NAKPlaybackIndicatorView (0.1.1)
   - nanopb (0.3.8):
@@ -92,7 +92,7 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - NapySlider (0.3)
+  - NapySlider (0.3.4)
   - Observable (1.3.3)
   - PINCache (3.0.1-beta.6):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
@@ -131,15 +131,15 @@ PODS:
 
 DEPENDENCIES:
   - ActionKit
-  - AGAudioPlayer (from `../AGAudioPlayer`)
+  - AGAudioPlayer (from `https://github.com/alecgorge/AGAudioPlayer.git`)
   - AsyncSwift
   - AXRatingView
-  - BASSGaplessAudioPlayer (from `../gapless-audio-bass-ios`)
+  - BASSGaplessAudioPlayer (from `https://github.com/alecgorge/gapless-audio-bass-ios.git`)
   - Cache
   - CWStatusBarNotification
   - DownloadButton
   - DWURecyclingAlert
-  - FaveButton (from `../fave-button`)
+  - FaveButton (from `https://github.com/alecgorge/fave-button.git`)
   - Firebase
   - FirebaseAuth (from `https://github.com/firebase/firebase-ios-sdk.git`, tag `5.0.0`)
   - FirebaseCore (from `https://github.com/firebase/firebase-ios-sdk.git`, tag `5.0.0`)
@@ -149,8 +149,8 @@ DEPENDENCIES:
   - LayoutKit
   - MZDownloadManager (from `https://github.com/alecgorge/MZDownloadManager.git`)
   - NAKPlaybackIndicatorView
-  - NapySlider (from `../NapySlider`)
-  - Observable
+  - NapySlider (from `https://github.com/farktronix/NapySlider.git`)
+  - Observable (from `https://github.com/alecgorge/Observable.git`)
   - ReachabilitySwift
   - Reveal-SDK
   - Siesta/Core (from `https://github.com/bustoutsolutions/siesta.git`)
@@ -187,7 +187,6 @@ SPEC REPOS:
     - MarqueeLabel
     - NAKPlaybackIndicatorView
     - nanopb
-    - Observable
     - PINCache
     - PINOperation
     - PINRemoteImage
@@ -202,11 +201,11 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   AGAudioPlayer:
-    :path: "../AGAudioPlayer"
+    :git: https://github.com/alecgorge/AGAudioPlayer.git
   BASSGaplessAudioPlayer:
-    :path: "../gapless-audio-bass-ios"
+    :git: https://github.com/alecgorge/gapless-audio-bass-ios.git
   FaveButton:
-    :path: "../fave-button"
+    :git: https://github.com/alecgorge/fave-button.git
   FirebaseAuth:
     :git: https://github.com/firebase/firebase-ios-sdk.git
     :tag: 5.0.0
@@ -222,11 +221,22 @@ EXTERNAL SOURCES:
   MZDownloadManager:
     :git: https://github.com/alecgorge/MZDownloadManager.git
   NapySlider:
-    :path: "../NapySlider"
+    :git: https://github.com/farktronix/NapySlider.git
+  Observable:
+    :git: https://github.com/alecgorge/Observable.git
   Siesta:
     :git: https://github.com/bustoutsolutions/siesta.git
 
 CHECKOUT OPTIONS:
+  AGAudioPlayer:
+    :commit: 7c535df54138e4047bc7e5c36b993054b0fb6886
+    :git: https://github.com/alecgorge/AGAudioPlayer.git
+  BASSGaplessAudioPlayer:
+    :commit: 35cd7f1c695618d8b7e72bb20c420de889eab08a
+    :git: https://github.com/alecgorge/gapless-audio-bass-ios.git
+  FaveButton:
+    :commit: 98aa0447a1fb4b8d6d9028264fb6f2d58012f967
+    :git: https://github.com/alecgorge/fave-button.git
   FirebaseAuth:
     :git: https://github.com/firebase/firebase-ios-sdk.git
     :tag: 5.0.0
@@ -242,23 +252,29 @@ CHECKOUT OPTIONS:
   MZDownloadManager:
     :commit: 68c2c4b68c5e417bb9fb695ee6e014ff535d7e4e
     :git: https://github.com/alecgorge/MZDownloadManager.git
+  NapySlider:
+    :commit: 54f5ca07c2d62063ccfe0adf8e3472c1f43445ca
+    :git: https://github.com/farktronix/NapySlider.git
+  Observable:
+    :commit: afd5d63e9c6e544681b3bd6d25973f160a5d01a3
+    :git: https://github.com/alecgorge/Observable.git
   Siesta:
     :commit: fb27aa9af248e107681315ba3f2b061b79922fd6
     :git: https://github.com/bustoutsolutions/siesta.git
 
 SPEC CHECKSUMS:
   ActionKit: cf7ca5781f4a43342384d872105fadd58985f416
-  AGAudioPlayer: 2044b1fa402341b646b16b2e2e6d851ddadb70db
+  AGAudioPlayer: 6788a6536fd6ba55b1b4cae5f25e4f5d51fe7a87
   AsyncSwift: 65775a7b32e740609b24969ece3de58723b9dc3e
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
-  BASSGaplessAudioPlayer: 5547414722926aaa7d1116557f5208df57b0caab
+  BASSGaplessAudioPlayer: 5b074495769769192b720c70aa2a60f6f33751f3
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
   BoringSSL: c46efb47593135382bc0934196f16d2f726f5f36
   Cache: f28f8dd64b632155aabf9b3906b036a659048251
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
-  FaveButton: e26220c69725ca00f08d7494edb5765c3eaef8c7
+  FaveButton: 271bdd3a1012ef6c667e428bc9754e7d65ca7455
   Firebase: 4bd804448ab2596794698773d41520a0af101e65
   FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
   FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
@@ -276,11 +292,11 @@ SPEC CHECKSUMS:
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
   LayoutKit: 5116e931d7ec963c3d5d2bf8b87040068a31b461
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
+  MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   MZDownloadManager: 8e9f186b2e804ffaeaf782c0cd3e22f27625cb7b
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  NapySlider: 3406d87c1f1e7434764585a7fde913f14ff0a406
+  NapySlider: cdced5cf00e407e0a5f2cb0a6ef826b329cda024
   Observable: 360b0132cef970a50bc69611df7fcbda46e91c34
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
@@ -295,6 +311,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
 
-PODFILE CHECKSUM: 6c856f4ec679cabce7243bd56579bce849724cba
+PODFILE CHECKSUM: 1d08e55b230411e2c9ddaa3d5adc1a755894a7ec
 
 COCOAPODS: 1.5.3

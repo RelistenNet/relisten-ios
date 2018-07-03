@@ -576,22 +576,38 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
     
     __weak __typeof__(self) weakSelf = self;
     self.scrollCompletionBlock = ^(BOOL finished) {
-        if (!finished || !weakSelf) {
+        if (!weakSelf) {
+            return;
+        }
+        
+        // Call returned home method
+        [weakSelf labelReturnedToHome:YES];
+        
+        // Check to ensure that:
+        // 1) The instance is still attached to a window - this completion block is called for
+        //    many reasons, including if the animation is removed due to the view being removed
+        //    from the UIWindow (typically when the view controller is no longer the "top" view)
+        if (!weakSelf.window) {
+            return;
+        }
+        // 2) We don't double fire if an animation already exists
+        if ([weakSelf.subLabel.layer animationForKey:@"position"]) {
+            return;
+        }
+        // 3) We don't not start automatically if the animation was unexpectedly interrupted
+        if (!finished) {
             // Do not continue into the next loop
             return;
         }
-        // Call returned home method
-        [weakSelf labelReturnedToHome:YES];
-        // Check to ensure that:
-        // 1) We don't double fire if an animation already exists
-        // 2) The instance is still attached to a window - this completion block is called for
-        //    many reasons, including if the animation is removed due to the view being removed
-        //    from the UIWindow (typically when the view controller is no longer the "top" view)
-        if (self.window && ![weakSelf.subLabel.layer animationForKey:@"position"]) {
-            // Begin again, if conditions met
-            if (weakSelf.labelShouldScroll && !weakSelf.tapToScroll && !weakSelf.holdScrolling) {
-                [weakSelf scrollAwayWithInterval:interval delayAmount:delayAmount shouldReturn:shouldReturn];
-            }
+        // 4) A completion block still exists for the NEXT loop. A notable case here is if
+        // returnLabelToHome was called during a subclass's labelReturnToHome function
+        if (!weakSelf.scrollCompletionBlock) {
+            return;
+        }
+        
+        // Begin again, if conditions met
+        if (weakSelf.labelShouldScroll && !weakSelf.tapToScroll && !weakSelf.holdScrolling) {
+            [weakSelf scrollAwayWithInterval:interval delayAmount:delayAmount shouldReturn:shouldReturn];
         }
     };
     
@@ -1181,10 +1197,12 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
 
 #pragma mark - Modified UILabel Methods/Getters/Setters
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 100000 && !(TARGET_OS_TV)
 - (UIView *)viewForBaselineLayout {
     // Use subLabel view for handling baseline layouts
     return self.subLabel;
 }
+#endif
 
 - (UIView *)viewForLastBaselineLayout {
     // Use subLabel view for handling baseline layouts
@@ -1308,9 +1326,11 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
     [super setAdjustsFontSizeToFitWidth:NO];
 }
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 70000
 - (void)setMinimumFontSize:(CGFloat)minimumFontSize {
     [super setMinimumFontSize:0.0];
 }
+#endif
 
 - (UIBaselineAdjustment)baselineAdjustment {
     return self.subLabel.baselineAdjustment;
@@ -1341,10 +1361,12 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
     return contentSize;
 }
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 70000
 - (void)setAdjustsLetterSpacingToFitWidth:(BOOL)adjustsLetterSpacingToFitWidth {
     // By the nature of MarqueeLabel, this is NO
     [super setAdjustsLetterSpacingToFitWidth:NO];
 }
+#endif
 
 - (void)setMinimumScaleFactor:(CGFloat)minimumScaleFactor {
     [super setMinimumScaleFactor:0.0f];
@@ -1359,6 +1381,10 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
     self.subLabel.contentMode = contentMode;
 }
 
+- (void)setIsAccessibilityElement:(BOOL)isAccessibilityElement {
+    [super setIsAccessibilityElement:isAccessibilityElement];
+    self.subLabel.isAccessibilityElement = isAccessibilityElement;
+}
 
 #pragma mark - Custom Getters and Setters
 

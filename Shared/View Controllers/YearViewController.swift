@@ -150,7 +150,8 @@ class ShowListViewController<T> : RelistenAsyncTableController<T> {
         }
         
         if let s = show {
-            navigationController?.pushViewController(SourcesViewController(artist: artist, show: s), animated: true)
+            let sourcesViewController = SourcesViewController(artist: artist, show: s)
+            sourcesViewController.presentIfNecessary(navigationController: navigationController)
         }
     }
     

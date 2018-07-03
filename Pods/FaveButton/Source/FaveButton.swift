@@ -29,6 +29,9 @@ import UIKit
 public typealias DotColors = (first: UIColor, second: UIColor)
 
 public protocol FaveButtonDelegate{
+
+    func instantCallback(_ faveButton: FaveButton, didSelected selected: Bool) //Returns exactly when the user clicked the button(not wait animation)
+
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool)
     
     func faveButtonDotColors(_ faveButton: FaveButton) -> [DotColors]?
@@ -50,12 +53,14 @@ open class FaveButton: UIButton {
         static let dotRadiusFactors     = (first: 0.0633, second: 0.04)
     }
     
-    @IBInspectable open var normalColor: UIColor     = UIColor(colorLiteralRed: 137/255, green: 156/255, blue: 167/255, alpha: 1)
-    @IBInspectable open var selectedColor: UIColor   = UIColor(colorLiteralRed: 226/255, green: 38/255,  blue: 77/255,  alpha: 1)
-    @IBInspectable open var dotFirstColor: UIColor   = UIColor(colorLiteralRed: 152/255, green: 219/255, blue: 236/255, alpha: 1)
-    @IBInspectable open var dotSecondColor: UIColor  = UIColor(colorLiteralRed: 247/255, green: 188/255, blue: 48/255,  alpha: 1)
-    @IBInspectable open var circleFromColor: UIColor = UIColor(colorLiteralRed: 221/255, green: 70/255,  blue: 136/255, alpha: 1)
-    @IBInspectable open var circleToColor: UIColor   = UIColor(colorLiteralRed: 205/255, green: 143/255, blue: 246/255, alpha: 1)
+    public var canReceiveClick: Bool = true // Status switch - when the button can receive another click
+
+    @IBInspectable open var normalColor: UIColor     = UIColor(red: 137/255, green: 156/255, blue: 167/255, alpha: 1)
+    @IBInspectable open var selectedColor: UIColor   = UIColor(red: 226/255, green: 38/255,  blue: 77/255,  alpha: 1)
+    @IBInspectable open var dotFirstColor: UIColor   = UIColor(red: 152/255, green: 219/255, blue: 236/255, alpha: 1)
+    @IBInspectable open var dotSecondColor: UIColor  = UIColor(red: 247/255, green: 188/255, blue: 48/255,  alpha: 1)
+    @IBInspectable open var circleFromColor: UIColor = UIColor(red: 221/255, green: 70/255,  blue: 136/255, alpha: 1)
+    @IBInspectable open var circleToColor: UIColor   = UIColor(red: 205/255, green: 143/255, blue: 246/255, alpha: 1)
     
     @IBOutlet open weak var delegate: AnyObject?
     
@@ -63,10 +68,14 @@ open class FaveButton: UIButton {
     
     fileprivate var faveIconImage:UIImage?
     fileprivate var faveIcon: FaveIcon!
-    
+    fileprivate var animationsEnabled = true
     
     override open var isSelected: Bool{
         didSet{
+            guard self.animationsEnabled else {
+                return
+            }
+            
             animateSelect(self.isSelected, duration: Const.duration)
         }
     }
@@ -89,6 +98,22 @@ open class FaveButton: UIButton {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         applyInit()
+    }
+    
+    public func setSelected(selected: Bool, animated: Bool) {
+        guard selected != self.isSelected else {
+            return
+        }
+        guard animated == false else {
+            self.isSelected = selected
+            return
+        }
+        
+        self.animationsEnabled = false
+        self.isSelected = selected
+        self.animationsEnabled = true
+        
+        animateSelect(self.isSelected, duration: 0.0) // trigger state change without animation
     }
 }
 
@@ -161,16 +186,19 @@ extension FaveButton{
         self.addTarget(self, action: #selector(toggle(_:)), for: .touchUpInside)
     }
     
-    func toggle(_ sender: FaveButton){
-        sender.isSelected = !sender.isSelected
-        
-        guard case let delegate as FaveButtonDelegate = self.delegate else{
-            return
-        }
-        
-        let delay = DispatchTime.now() + Double(Int64(Double(NSEC_PER_SEC) * Const.duration)) / Double(NSEC_PER_SEC)
-        DispatchQueue.main.asyncAfter(deadline: delay){
-            delegate.faveButton(sender, didSelected: sender.isSelected)
+    @objc func toggle(_ sender: FaveButton){
+        if canReceiveClick {
+            sender.isSelected = !sender.isSelected
+
+            guard case let delegate as FaveButtonDelegate = self.delegate else{
+                return
+            }
+            delegate.instantCallback(sender, didSelected: sender.isSelected)
+
+            let delay = DispatchTime.now() + Double(Int64(Double(NSEC_PER_SEC) * Const.duration)) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delay){
+                delegate.faveButton(sender, didSelected: sender.isSelected)
+            }
         }
     }
 }
@@ -181,7 +209,11 @@ extension FaveButton{
     fileprivate func animateSelect(_ isSelected: Bool, duration: Double){
         let color  = isSelected ? selectedColor : normalColor
         
-        faveIcon.animateSelect(isSelected, fillColor: color, duration: duration, delay: Const.faveIconShowDelay)
+        faveIcon.animateSelect(isSelected, fillColor: color, duration: duration, delay: duration > 0.0 ? Const.faveIconShowDelay : 0.0)
+        
+        guard duration > 0.0 else {
+            return
+        }
         
         if isSelected{
             let radius           = bounds.size.scaleBy(1.3).width/2 // ring radius

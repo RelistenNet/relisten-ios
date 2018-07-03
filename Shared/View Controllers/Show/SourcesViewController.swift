@@ -21,11 +21,13 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
     let isRandom: Bool
     
     var sources: [SourceFull] = []
+    var canSkipIfSingleSource : Bool
     
     public required init(artist: ArtistWithCounts, show: Show) {
         self.artist = artist
         self.show = show
         self.isRandom = false
+        self.canSkipIfSingleSource = false
         
         super.init(useCache: true, refreshOnAppear: true)
     }
@@ -38,6 +40,7 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
         self.show = nil
         self.artist = artist
         self.isRandom = true
+        self.canSkipIfSingleSource = false
         
         super.init(useCache: false, refreshOnAppear: false)
     }
@@ -46,10 +49,24 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
         fatalError()
     }
     
+    func presentIfNecessary(navigationController : UINavigationController?) {
+        self.load()
+        var controllerToPresent : UIViewController = self
+        if self.sources.count == 1 {
+            if let show = latestData {
+                controllerToPresent = SourceViewController(artist: artist, show: show, source: sources[0])
+            }
+        }
+        navigationController?.pushViewController(controllerToPresent, animated: true)
+        canSkipIfSingleSource = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateTitle(forShow: show)
+        if !self.canSkipIfSingleSource {
+            updateTitle(forShow: show)
+        }
     }
     
     func updateTitle(forShow: Show?) {
@@ -65,15 +82,42 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
     }
     
     override func dataChanged(_ data: ShowWithSources) {
+        var shouldReloadTitle = true
+        
         sources = data.sources
-        updateTitle(forShow: data)
+        if canSkipIfSingleSource {
+            if sources.count == 1 {
+                let controllerToPresent = SourceViewController(artist: artist, show: data, source: sources[0])
+                if var viewControllers = navigationController?.viewControllers {
+                    if viewControllers.last == self {
+                        viewControllers.removeLast()
+                    }
+                    viewControllers.append(controllerToPresent)
+                    navigationController?.setViewControllers(viewControllers, animated: false)
+                    shouldReloadTitle = false
+                }
+            } else {
+                canSkipIfSingleSource = false
+                tableNode.reloadData()
+            }
+        }
+        
+        if shouldReloadTitle {
+            updateTitle(forShow: data)
+        }
     }
     
     func numberOfSections(in tableNode: ASTableNode) -> Int {
+        if canSkipIfSingleSource {
+            return 0
+        }
         return sources.count > 0 ? 1 : 0
     }
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        if canSkipIfSingleSource {
+            return 0
+        }
         return sources.count
     }
     

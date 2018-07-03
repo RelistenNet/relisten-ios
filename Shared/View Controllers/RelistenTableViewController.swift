@@ -369,16 +369,18 @@ public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableontroll
             load()
         }
         
-        if useCache, let res = resource {
-            latestData = res.latestData?.typedContent()
-        }
-        
         render()
     }
     
     func load() {
         if useCache {
             let _ = resource?.loadFromCacheThenUpdate()
+            if latestData == nil, let res = resource {
+                latestData = res.latestData?.typedContent()
+            }
+            if let latestData = latestData {
+                self.dataChanged(latestData)
+            }
         }
         else {
             let _ = resource?.load()

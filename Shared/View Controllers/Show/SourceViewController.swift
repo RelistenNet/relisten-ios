@@ -123,7 +123,11 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "\(show.display_date) #\(idx + 1)"
+        if show.sources.count == 1 {
+            title = "\(show.display_date)"
+        } else {
+            title = "\(show.display_date) #\(idx + 1)"
+        }
     }
     
     /*

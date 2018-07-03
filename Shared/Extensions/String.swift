@@ -27,5 +27,22 @@ extension String {
             return NSAttributedString()
         }
     }
+    
+    /// Returns a string suitable for grouping by in a table view
+    func groupNameForTableView() -> String {
+        if self.count == 0 {
+            return ""
+        }
+        var s = self[..<self.index(self.startIndex, offsetBy: 1)].uppercased()
+        
+        for ch in s.unicodeScalars {
+            if CharacterSet.decimalDigits.contains(ch) {
+                s = "#"
+                break
+            }
+        }
+        
+        return s
+    }
 }
 

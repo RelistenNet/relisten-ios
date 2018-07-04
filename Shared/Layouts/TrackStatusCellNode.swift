@@ -101,16 +101,18 @@ public class TrackStatusCellNode : ASCellNode {
         PlaybackController.sharedInstance.observeCurrentTrack.observe { [weak self] (current, previous) in
             if let s = self {
                 let prev = s.trackState
+                var newState : TrackState = .notActive
                 
-                if let track = current, track == s.track {
-                    s.trackState = track.track.isActiveTrack ? .paused : .notActive
-                    
+                if let track : CompleteTrackShowInformation = current, track == s.track {
                     if track.track.isPlaying {
-                        s.trackState = .playing
+                        newState = .playing
+                    } else if track.track.isActiveTrack {
+                        newState = .paused
                     }
                 }
                 
-                if prev != s.trackState {
+                if prev != newState {
+                    s.trackState = newState
                     DispatchQueue.main.async { s.updateTrackState() }
                     s.setNeedsLayout()
                 }
@@ -130,13 +132,14 @@ public class TrackStatusCellNode : ASCellNode {
             downloadState = .none
         }
         
-        if track.track.isPlaying {
-            trackState = .playing
-        }
-        else if track.track.isActiveTrack {
-            trackState = .paused
-        }
-        else {
+        if track.track.isActiveTrack {
+            if track.track.isPlaying {
+                trackState = .playing
+            }
+            else {
+                trackState = .paused
+            }
+        } else {
             trackState = .notActive
         }
     }

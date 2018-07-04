@@ -13,14 +13,16 @@ public class TrackStatus : Codable {
     
     public var isPlaying: Bool {
         get {
-            return PlaybackController.sharedInstance.player.isPlaying
+            return (PlaybackController.sharedInstance.player.isPlaying && self.isActiveTrack)
         }
     }
     
     public var isActiveTrack: Bool {
         get {
-            let relisten = (PlaybackController.sharedInstance.player.currentItem as? SourceTrackAudioItem)?.relisten
-            return relisten?.track.track.mp3_url == track.mp3_url
+            if let relisten = (PlaybackController.sharedInstance.player.currentItem as? SourceTrackAudioItem)?.relisten {
+                return relisten.track.track.mp3_url == track.mp3_url
+            }
+            return false
         }
     }
     

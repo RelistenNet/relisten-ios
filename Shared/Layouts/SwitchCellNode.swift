@@ -34,6 +34,7 @@ public class SwitchCellNode : ASCellNode {
             s.backgroundColor = .clear
             return s
         })
+        self.switchNode.isUserInteractionEnabled = true
         self.switchNode.backgroundColor = .clear
         
         self.observeUserChecked = Observable(observeChecked.value)

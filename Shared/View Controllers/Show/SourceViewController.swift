@@ -51,7 +51,7 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
         let library = MyLibraryManager.shared.library
         
         library.observeOfflineSources.observe { [weak self] (new, old) in
-            self?.isAvailableOffline.value = library.isSourceFullyAvailableOffline(source: source)
+            self?.isAvailableOffline.value = library.isSourceFullyAvailableOffline(source)
         }.add(to: &disposal)
 
         MyLibraryManager.shared.observeMyShows.observe { [weak self] (new, old) in
@@ -63,7 +63,7 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
         RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler({ [weak self] track in
             guard let s = self else { return }
             
-            if track.source.id == s.source.id {
+            if track.showInfo.source.id == s.source.id {
                 MyLibraryManager.shared.library.diskUsageForSource(source: s.completeShowInformation) { (size) in
                     s.rebuildOfflineSwitch(size)
                 }
@@ -73,7 +73,7 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
         RelistenDownloadManager.shared.eventTracksDeleted.addHandler({ [weak self] tracks in
             guard let s = self else { return }
             
-            if tracks.any(match: { $0.source.id == s.source.id }) {
+            if tracks.any(match: { $0.showInfo.source.id == s.source.id }) {
                 MyLibraryManager.shared.library.diskUsageForSource(source: s.completeShowInformation) { (size) in
                     s.rebuildOfflineSwitch(size)
                 }
@@ -111,7 +111,7 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
             }
             else {
                 // remove any downloaded tracks
-                RelistenDownloadManager.shared.delete(source: self.completeShowInformation)
+                RelistenDownloadManager.shared.delete(showInfo: self.completeShowInformation)
             }
         }.add(to: &disposal)
     }
@@ -145,7 +145,7 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
             ]
             
             sections.append(contentsOf: self.source.sets.map({ (set: SourceSet) -> Section<[Layout]> in
-                let layouts = set.tracks.map({ TrackStatusLayout(withTrack: CompleteTrackShowInformation(track: TrackStatus(forTrack: $0), source: self.source, show: self.show, artist: self.artist), withHandler: self) })
+     let layouts = set.tracks.map({ TrackStatusLayout(withTrack: Track(sourceTrack: $0, showInfo: CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)), withHandler: self) })
                 return LayoutsAsSingleSection(items: layouts, title: self.artist.features.sets ? set.name : "Tracks")
             }))
             
@@ -208,11 +208,11 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
             }
         }
         
-        let track = source.sets[indexPath.section - 1].tracks[indexPath.row]
-        let trackStatus = TrackStatus(forTrack: track)
-        let complete = CompleteTrackShowInformation(track: trackStatus, source: source, show: show, artist: artist)
+        let sourceTrack = source.sets[indexPath.section - 1].tracks[indexPath.row]
+        let showInfo = CompleteShowInformation(source: source, show: show, artist: artist)
+        let track = Track(sourceTrack: sourceTrack, showInfo: showInfo)
         
-        return { TrackStatusCellNode(withTrack: complete, withHandler: self) }
+        return { TrackStatusCellNode(withTrack: track, withHandler: self) }
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
@@ -257,7 +257,7 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
 }
 
 extension SourceViewController : TrackStatusActionHandler {
-    func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation) {
+    func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
         TrackActions.showActionOptions(fromViewController: self, forTrack: track)
     }
 }

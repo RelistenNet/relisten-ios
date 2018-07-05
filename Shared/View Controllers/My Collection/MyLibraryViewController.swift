@@ -32,13 +32,13 @@ class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]>
         fatalError()
     }
     
-    override func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+    override func relayoutIfContainsTrack(_ track: Track) {
         latestData = loadMyShows()
         
         super.relayoutIfContainsTrack(track)
     }
     
-    override func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+    override func relayoutIfContainsTracks(_ tracks: [Track]) {
         latestData = loadMyShows()
         
         super.relayoutIfContainsTracks(tracks)

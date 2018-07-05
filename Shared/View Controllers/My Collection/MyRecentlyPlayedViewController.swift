@@ -11,7 +11,7 @@ import UIKit
 import Siesta
 import AsyncDisplayKit
 
-class MyRecentlyPlayedViewController: ShowListViewController<[CompleteTrackShowInformation]> {
+class MyRecentlyPlayedViewController: ShowListViewController<[Track]> {
     public required init(artist: ArtistWithCounts) {
         super.init(artist: artist, showsResource: nil, tourSections: true)
         
@@ -32,23 +32,23 @@ class MyRecentlyPlayedViewController: ShowListViewController<[CompleteTrackShowI
         fatalError()
     }
     
-    override func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+    override func relayoutIfContainsTrack(_ track: Track) {
         latestData = loadMyShows()
         
         super.relayoutIfContainsTrack(track)
     }
     
-    override func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+    override func relayoutIfContainsTracks(_ tracks: [Track]) {
         latestData = loadMyShows()
         
         super.relayoutIfContainsTracks(tracks)
     }
     
-    override func extractShows(forData: [CompleteTrackShowInformation]) -> [Show] {
-        return forData.map({ $0.show })
+    override func extractShows(forData: [Track]) -> [Show] {
+        return forData.map({ $0.showInfo.show })
     }
     
-    func loadMyShows() -> [CompleteTrackShowInformation] {
+    func loadMyShows() -> [Track] {
         return MyLibraryManager.shared.library.recentlyPlayedByArtist(artist)
     }
     

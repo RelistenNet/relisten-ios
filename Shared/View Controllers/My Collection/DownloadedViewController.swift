@@ -33,13 +33,13 @@ class DownloadedViewController: ShowListViewController<[OfflineSourceMetadata]> 
         fatalError()
     }
     
-    override func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+    override func relayoutIfContainsTrack(_ track: Track) {
         latestData = loadOffline()
         
         super.relayoutIfContainsTrack(track)
     }
     
-    override func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+    override func relayoutIfContainsTracks(_ tracks: [Track]) {
         latestData = loadOffline()
         
         super.relayoutIfContainsTracks(tracks)

@@ -27,7 +27,7 @@ public class ArtistViewController : RelistenBaseAsyncTableontroller {
     let resourceToday: Resource
     var resourceTodayData: [Show]? = nil
     
-    public var recentlyPlayed: [CompleteTrackShowInformation] = []
+    public var recentlyPlayed: [Track] = []
     public let recentShowsNode: HorizontalShowCollectionCellNode
     public let todayShowsNode: HorizontalShowCollectionCellNode
 
@@ -87,7 +87,7 @@ public class ArtistViewController : RelistenBaseAsyncTableontroller {
                 guard let s = self else { return }
                 
                 s.recentlyPlayed = MyLibraryManager.shared.library.recentlyPlayedByArtist(s.artist)
-                s.recentShowsNode.shows = s.recentlyPlayed.map({ ($0.show, nil) })
+                s.recentShowsNode.shows = s.recentlyPlayed.map({ ($0.showInfo.show, nil) })
                 
                 DispatchQueue.main.async {
                     s.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
@@ -253,7 +253,7 @@ extension ArtistViewController : ASCollectionDelegate {
         }
         else if collectionNode === recentShowsNode.collectionNode {
             let item = recentlyPlayed[indexPath.row]
-            let vc = SourcesViewController(artist: self.artist, show: item.show)
+            let vc = SourcesViewController(artist: self.artist, show: item.showInfo.show)
             vc.presentIfNecessary(navigationController: navigationController)
         }
     }

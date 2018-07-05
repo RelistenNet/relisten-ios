@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4370C24520EDDD7D00D3358B /* CompleteShowInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */; };
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
 		7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */; };
@@ -119,8 +120,8 @@
 		7CA3CD151F71763400E936AB /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD131F71763400E936AB /* VenuesViewController.swift */; };
 		7CA3CD171F71766E00E936AB /* VenueLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD161F71766E00E936AB /* VenueLayout.swift */; };
 		7CA3CD181F71766E00E936AB /* VenueLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD161F71766E00E936AB /* VenueLayout.swift */; };
-		7CA94EA81F0A6C74004663F3 /* TrackStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* TrackStatus.swift */; };
-		7CA94EA91F0A6C74004663F3 /* TrackStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* TrackStatus.swift */; };
+		7CA94EA81F0A6C74004663F3 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* Track.swift */; };
+		7CA94EA91F0A6C74004663F3 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* Track.swift */; };
 		7CA94EAB1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */; };
 		7CA94EAC1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */; };
 		7CABACBF1EDEE178009C5E3B /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACBE1EDEE178009C5E3B /* PaddingLabel.swift */; };
@@ -175,6 +176,7 @@
 
 /* Begin PBXFileReference section */
 		2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
 		598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Relisten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3DAE0BE91F9DD1D3300EE2 /* Pods-PhishODUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		74ABE39157492B09F7AB0CDB /* Pods-PhishODUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -247,7 +249,7 @@
 		7C8EF1271D5A49C300004B5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CA3CD131F71763400E936AB /* VenuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenuesViewController.swift; path = "View Controllers/Venues/VenuesViewController.swift"; sourceTree = "<group>"; };
 		7CA3CD161F71766E00E936AB /* VenueLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueLayout.swift; path = Layouts/VenueLayout.swift; sourceTree = "<group>"; };
-		7CA94EA71F0A6C74004663F3 /* TrackStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackStatus.swift; path = Playback/Models/TrackStatus.swift; sourceTree = "<group>"; };
+		7CA94EA71F0A6C74004663F3 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Track.swift; path = Playback/Models/Track.swift; sourceTree = "<group>"; };
 		7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackStatusLayout.swift; path = Layouts/TrackStatusLayout.swift; sourceTree = "<group>"; };
 		7CABACBE1EDEE178009C5E3B /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaddingLabel.swift; path = Views/PaddingLabel.swift; sourceTree = "<group>"; };
 		7CABACC11EDEE3A2009C5E3B /* TimeInterval+Humanize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TimeInterval+Humanize.swift"; path = "Extensions/TimeInterval+Humanize.swift"; sourceTree = "<group>"; };
@@ -563,7 +565,8 @@
 		7CA94EA61F0A6C57004663F3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				7CA94EA71F0A6C74004663F3 /* TrackStatus.swift */,
+				7CA94EA71F0A6C74004663F3 /* Track.swift */,
+				4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */,
 				7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */,
 			);
 			name = Models;
@@ -1024,7 +1027,7 @@
 				7C03A4C21E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
 				7C31553820C2079200F07622 /* HorizontalShowCollectionCellNode.swift in Sources */,
 				7C31554420C2343000F07622 /* ShareCellNode.swift in Sources */,
-				7CA94EA91F0A6C74004663F3 /* TrackStatus.swift in Sources */,
+				7CA94EA91F0A6C74004663F3 /* Track.swift in Sources */,
 				7C31552C20C206BA00F07622 /* Numeric.swift in Sources */,
 				7C13705220B9E8B800710E90 /* Array.swift in Sources */,
 				7C80440A1E6F29A800BA946E /* ArtistViewController.swift in Sources */,
@@ -1095,13 +1098,14 @@
 				7C03A4C71E6218CF006F2912 /* RelistenModelCachable.swift in Sources */,
 				7CA94EAB1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */,
 				7C03A4C41E621836006F2912 /* ApiCache.swift in Sources */,
-				7CA94EA81F0A6C74004663F3 /* TrackStatus.swift in Sources */,
+				7CA94EA81F0A6C74004663F3 /* Track.swift in Sources */,
 				7C31551920BFB71B00F07622 /* LongTextViewController.swift in Sources */,
 				7C8044151E6F4B1F00BA946E /* AppColors.swift in Sources */,
 				7C31551520BFB3DA00F07622 /* String.swift in Sources */,
 				7C13705120B9E8B800710E90 /* Array.swift in Sources */,
 				7C13705820B9FC7600710E90 /* DownloadedViewController.swift in Sources */,
 				7C31552820C0A08300F07622 /* ShareCellLayout.swift in Sources */,
+				4370C24520EDDD7D00D3358B /* CompleteShowInformation.swift in Sources */,
 				7CABACC21EDEE3A2009C5E3B /* TimeInterval+Humanize.swift in Sources */,
 				7C31552E20C2072D00F07622 /* OfflineIndicatorNode.swift in Sources */,
 				7C03A4BA1E60FB66006F2912 /* RelistenModels.swift in Sources */,

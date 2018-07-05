@@ -21,7 +21,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         case count
     }
     
-    public var recentlyPlayed: [CompleteTrackShowInformation] = []
+    public var recentlyPlayedTracks: [Track] = []
     public var favoriteArtists: [Int] = []
     public var offlineShows: Set<OfflineSourceMetadata> = []
     
@@ -69,14 +69,14 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             .add(to: &disposal)
         
         MyLibraryManager.shared.observeRecentlyPlayedShows
-            .observe({ [weak self] shows, _ in
+            .observe({ [weak self] tracks, _ in
                 DispatchQueue.main.async {
-                    self?.recentlyPlayed = shows
+                    self?.recentlyPlayedTracks = tracks
                     self?.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
                 }
                 
                 if let s = self {
-                    s.recentShowsNode.shows = s.recentlyPlayed.map({ ($0.show, $0.artist) })
+                    s.recentShowsNode.shows = s.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) })
                 }
             })
             .add(to: &disposal)
@@ -119,7 +119,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .recentlyPlayed:
-            return recentlyPlayed.count > 0 ? 1 : 0
+            return recentlyPlayedTracks.count > 0 ? 1 : 0
         case .availableOffline:
             return offlineShows.count > 0 ? 1 : 0
         case .favorited:
@@ -186,7 +186,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Sections(rawValue: section)! {
         case .recentlyPlayed:
-            return recentlyPlayed.count > 0 ? "Recently Played" : nil
+            return recentlyPlayedTracks.count > 0 ? "Recently Played" : nil
         case .availableOffline:
             return offlineShows.count > 0 ? "Available Offline" : nil
         case .favorited:
@@ -208,7 +208,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         let show: CompleteShowInformation?
         
         if collectionNode === recentShowsNode.collectionNode {
-            show = recentlyPlayed[indexPath.item].toCompleteShowInformation()
+            show = recentlyPlayedTracks[indexPath.item].showInfo
         }
         else if collectionNode === offlineShowsNode.collectionNode {
             show = Array(offlineShows)[indexPath.item].completeShowInformation

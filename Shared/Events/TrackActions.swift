@@ -9,43 +9,43 @@
 import UIKit
 
 public class TrackActions {
-    public static func showActionOptions(fromViewController vc: UIViewController, forTrack info: CompleteTrackShowInformation) {
-        let duration = info.track.track.duration?.humanize()
+    public static func showActionOptions(fromViewController vc: UIViewController, forTrack track: Track) {
+        let duration = track.duration?.humanize()
         
         let a = UIAlertController(
-            title: "\(info.track.track.title) \((duration == nil ? "" : "(\(duration!)" )))",
-            message: "\(info.source.display_date) • \(info.artist.name)",
+            title: "\(track.title) \((duration == nil ? "" : "(\(duration!)" )))",
+            message: "\(track.showInfo.source.display_date) • \(track.showInfo.artist.name)",
             preferredStyle: .actionSheet
         )
         
         a.addAction(UIAlertAction(title: "Play Now", style: .default, handler: { _ in
-            self.play(track: info, fromViewController: vc)
+            self.play(track: track, fromViewController: vc)
         }))
         
         a.addAction(UIAlertAction(title: "Play Next", style: .default, handler: { _ in
-            let ai = info.track.track.toAudioItem(inSource: info.source, fromShow: info.show, byArtist: info.artist)
+            let ai = track.toAudioItem()
             PlaybackController.sharedInstance.playbackQueue.insert(ai, at: UInt(PlaybackController.sharedInstance.player.currentIndex) + UInt(1))
         }))
         
         a.addAction(UIAlertAction(title: "Add to End of Queue", style: .default, handler: { _ in
-            let ai = info.track.track.toAudioItem(inSource: info.source, fromShow: info.show, byArtist: info.artist)
+            let ai = track.toAudioItem()
             PlaybackController.sharedInstance.playbackQueue.append(ai)
         }))
         
-        MyLibraryManager.shared.library.diskUsageForTrack(track: info) { (size) in
+        MyLibraryManager.shared.library.diskUsageForTrackURL(trackURL: track.mp3URL) { (size) in
             if let s = size {
                 a.addAction(UIAlertAction(title: "Remove Downloaded File" + " (\(s.humanizeBytes()))", style: .default, handler: { _ in
-                    RelistenDownloadManager.shared.delete(track: info, saveOffline: true)
+                    RelistenDownloadManager.shared.delete(track: track, saveOffline: true)
                 }))
             }
             else {
                 a.addAction(UIAlertAction(title: "Make Available Offline", style: .default, handler: { _ in
-                    self.download(info.track, inShow: CompleteShowInformation(source: info.source, show: info.show, artist: info.artist))
+                    RelistenDownloadManager.shared.download(track: track)
                 }))
             }
             
             a.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
-                let activities: [Any] = [ShareHelper.text(forCompleteTrack: info), ShareHelper.url(forCompleteTrack: info)]
+                let activities: [Any] = [ShareHelper.text(forTrack: track), ShareHelper.url(forTrack: track)]
                 let shareVc = UIActivityViewController(activityItems: activities, applicationActivities: nil)
                 shareVc.modalTransitionStyle = .coverVertical
                 
@@ -69,31 +69,15 @@ public class TrackActions {
         }
     }
     
-    public static func download(_ trackStatus: TrackStatus, inShow: CompleteShowInformation) {
-        let t = CompleteTrackShowInformation(track: trackStatus, source: inShow.source, show: inShow.show, artist: inShow.artist)
-        
-        RelistenDownloadManager.shared.download(track: t)
-    }
-    
     public static func play(trackAtIndexPath idx: IndexPath, inShow info: CompleteShowInformation, fromViewController vc: UIViewController) {
         play(trackAtIndex: UInt(info.source.flattenedIndex(forIndexPath: idx)), inShow: info, fromViewController: vc)
     }
     
-    public static func play<T: ICompleteShowInformation>(trackAtIndex: UInt, inShow info: T, fromViewController vc: UIViewController) {
-        let items = info.source.toAudioItems(inShow: info.show, byArtist: info.artist)
-        
-        PlaybackController.sharedInstance.playbackQueue.clearAndReplace(with: items)
-        
-        PlaybackController.sharedInstance.displayMini(on: vc, completion: nil)
-        
-        PlaybackController.sharedInstance.player.playItem(at: trackAtIndex)
-    }
-    
-    public static func play(track info: CompleteTrackShowInformation, fromViewController vc: UIViewController) {
+    public static func play(track: Track, fromViewController vc: UIViewController) {
         var idx: UInt = 0
-        for set in info.source.sets {
-            for track in set.tracks {
-                if track.id == info.track.track.id {
+        for set in track.showInfo.source.sets {
+            for sourceTrack in set.tracks {
+                if sourceTrack.id == track.id {
                     break
                 }
                 
@@ -101,6 +85,16 @@ public class TrackActions {
             }
         }
         
-        play(trackAtIndex: idx, inShow: info, fromViewController: vc)
+        play(trackAtIndex: idx, inShow: track.showInfo, fromViewController: vc)
+    }
+    
+    public static func play(trackAtIndex: UInt, inShow info: CompleteShowInformation, fromViewController vc: UIViewController) {
+        let items = info.source.toAudioItems(inShow: info.show, byArtist: info.artist)
+        
+        PlaybackController.sharedInstance.playbackQueue.clearAndReplace(with: items)
+        
+        PlaybackController.sharedInstance.displayMini(on: vc, completion: nil)
+        
+        PlaybackController.sharedInstance.player.playItem(at: trackAtIndex)
     }
 }

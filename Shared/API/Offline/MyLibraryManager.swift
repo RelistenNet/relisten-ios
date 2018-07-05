@@ -33,7 +33,7 @@ public class MyLibraryManager {
     public let showRemoved = Event<CompleteShowInformation>()
 
     public lazy var observeFavoriteArtistIds = Observable(library.artistIds)
-    public lazy var observeRecentlyPlayedShows = Observable(library.recentlyPlayed)
+    public lazy var observeRecentlyPlayedShows = Observable(library.recentlyPlayedTracks)
     public lazy var observeMyShows = Observable(library.shows)
 
     init() {
@@ -70,7 +70,7 @@ public class MyLibraryManager {
         
         RelistenDownloadManager.shared.delegate = self.library
 
-        observeRecentlyPlayedShows.value = library.recentlyPlayed
+        observeRecentlyPlayedShows.value = library.recentlyPlayedTracks
         observeFavoriteArtistIds.value = library.artistIds
     }
     
@@ -175,11 +175,11 @@ extension MyLibraryManager {
         return false
     }
     
-    public func trackWasPlayed(_ track: CompleteTrackShowInformation) {
+    public func trackWasPlayed(_ track: Track) {
         if library.trackWasPlayed(track) {
             saveToFirestore()
             
-            observeRecentlyPlayedShows.value = library.recentlyPlayed
+            observeRecentlyPlayedShows.value = library.recentlyPlayedTracks
         }
     }
 }

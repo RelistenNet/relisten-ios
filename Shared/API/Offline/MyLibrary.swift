@@ -54,8 +54,8 @@ public struct OfflineSourceMetadata : Codable, Hashable {
     
     public let dateAdded: Date
     
-    public static func from(completeTrack track: CompleteTrackShowInformation) -> OfflineSourceMetadata {
-        return self.init(completeShowInformation: track.toCompleteShowInformation(), dateAdded: Date())
+    public static func from(track: Track) -> OfflineSourceMetadata {
+        return self.init(completeShowInformation: track.showInfo, dateAdded: Date())
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -70,10 +70,10 @@ public class MyLibrary {
     public lazy var artistIdsChanged = Observable(artistIds)
     
     public static let MaxRecentlyPlayedShows: Int = 25
-    public var recentlyPlayed: [CompleteTrackShowInformation] = []
+    public var recentlyPlayedTracks: [Track] = []
     
     public var offlineTrackURLs: Set<URL> = []
-    public var downloadBacklog: [CompleteTrackShowInformation] = []
+    public var downloadBacklog: [Track] = []
     public var offlineSourcesMetadata: Set<OfflineSourceMetadata> = []
     
     public lazy var observeOfflineSources = Observable(offlineSourcesMetadata)
@@ -112,7 +112,7 @@ public class MyLibrary {
     public init(json: SwJSON) throws {
         shows = try json["shows"].arrayValue.map(CompleteShowInformation.init)
         artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
-        recentlyPlayed = try json["recentlyPlayed"].arrayValue.map(CompleteTrackShowInformation.init)
+        recentlyPlayedTracks = try json["recentlyPlayedTracks"].arrayValue.map(Track.init)
 
         try loadOfflineData()
         
@@ -123,18 +123,18 @@ public class MyLibrary {
         var s = SwJSON()
         s["shows"] = SwJSON(shows.map({ $0.originalJSON }))
         s["artistIds"] = SwJSON(Array(artistIds))
-        s["recentlyPlayed"] = SwJSON(recentlyPlayed.map({ $0.originalJSON }))
+        s["recentlyPlayedTracks"] = SwJSON(recentlyPlayedTracks.map({ $0.originalJSON }))
 
         return s
     }
     
-    public func URLNotAvailableOffline(_ track: CompleteTrackShowInformation, save: Bool = true) {
-        let url = track.track.track.mp3_url
+    public func URLNotAvailableOffline(_ track: Track, save: Bool = true) {
+        let url = track.mp3URL
         
         offlineTrackURLs.remove(url)
         offlineTrackFileSizeCache.async.removeObject(forKey: url.absoluteString, completion: { _ in })
         
-        offlineSourcesMetadata.remove(OfflineSourceMetadata.from(completeTrack: track))
+        offlineSourcesMetadata.remove(OfflineSourceMetadata.from(track: track))
         
         if save {
             saveOfflineTrackUrls()
@@ -148,13 +148,13 @@ public class MyLibrary {
         return shows.contains(where: { $0.show.display_date == show.display_date && $0.artist.id == byArtist.id })
     }
     
-    public func queueToBacklog(_ track: CompleteTrackShowInformation) {
+    public func queueToBacklog(_ track: Track) {
         downloadBacklog.append(track)
         
         saveDownloadBacklog()
     }
     
-    public func dequeueFromBacklog() -> CompleteTrackShowInformation? {
+    public func dequeueFromBacklog() -> Track? {
         if downloadBacklog.count == 0 {
             return nil
         }
@@ -168,26 +168,34 @@ public class MyLibrary {
 }
 
 extension MyLibrary : RelistenDownloadManagerDelegate {
-    public func trackBecameAvailableOffline(_ track: CompleteTrackShowInformation) {
-        if offlineTrackURLs.insert(track.track.track.mp3_url).inserted {
+    public func trackBecameAvailableOffline(_ track: Track) {
+        if offlineTrackURLs.insert(track.mp3URL).inserted {
             saveOfflineTrackUrls()
         }
 
-        if offlineSourcesMetadata.insert(OfflineSourceMetadata.from(completeTrack: track)).inserted {
+        if offlineSourcesMetadata.insert(OfflineSourceMetadata.from(track: track)).inserted {
             saveOfflineSourcesMetadata()
             
             observeOfflineSources.value = offlineSourcesMetadata
         }
     }
     
-    public func trackSizeBecameKnown(_ track: CompleteTrackShowInformation, fileSize: UInt64) {
+    func trackSizeBecameKnown(trackURL : URL, fileSize: UInt64) {
         do {
-            try offlineTrackFileSizeCache.setObject(OfflineTrackMetadata(fileSize: fileSize), forKey: track.track.track.mp3_url.absoluteString)
+            try offlineTrackFileSizeCache.setObject(OfflineTrackMetadata(fileSize: fileSize), forKey: trackURL.absoluteString)
         }
         catch {
             print(error)
             RelistenNotificationBar.display(withMessage: error.localizedDescription, forDuration: 10)
         }
+    }
+    
+    public func trackSizeBecameKnown(_ track: Track, fileSize: UInt64) {
+        trackSizeBecameKnown(trackURL: track.mp3URL, fileSize: fileSize)
+    }
+    
+    public func trackSizeBecameKnown(_ sourceTrack: SourceTrack, fileSize: UInt64) {
+        trackSizeBecameKnown(trackURL: sourceTrack.mp3_url, fileSize: fileSize)
     }
 }
 
@@ -202,7 +210,7 @@ extension MyLibrary {
         }
         
         do {
-            downloadBacklog = try offlineCache.object(ofType: [CompleteTrackShowInformation].self, forKey: "downloadBacklog")
+            downloadBacklog = try offlineCache.object(ofType: [Track].self, forKey: "downloadBacklog")
         }
         catch CocoaError.fileReadNoSuchFile {
             downloadBacklog = []
@@ -237,12 +245,16 @@ extension MyLibrary {
 
 /// offline checks
 extension MyLibrary {
-    public func isTrackAvailableOffline(track: SourceTrack) -> Bool {
+    public func isTrackAvailableOffline(_ track: Track) -> Bool {
+        return offlineTrackURLs.contains(track.mp3URL)
+    }
+    
+    public func isTrackAvailableOffline(_ track: SourceTrack) -> Bool {
         return offlineTrackURLs.contains(track.mp3_url)
     }
     
-    public func isSourceFullyAvailableOffline(source: SourceFull) -> Bool {
-        if sinq(source.tracksFlattened).any({ !isTrackAvailableOffline(track: $0) }) {
+    public func isSourceFullyAvailableOffline(_ source: SourceFull) -> Bool {
+        if sinq(source.tracksFlattened).any({ !isTrackAvailableOffline($0) }) {
             return false
         }
         
@@ -258,7 +270,7 @@ extension MyLibrary {
     }
     
     public func isSourceAtLeastPartiallyAvailableOffline(_ source: SourceFull) -> Bool {
-        return sinq(source.tracksFlattened).any({ isTrackAvailableOffline(track: $0) })
+        return sinq(source.tracksFlattened).any({ isTrackAvailableOffline($0) })
     }
     
     public func isYearAtLeastPartiallyAvailableOffline(_ year: Year) -> Bool {
@@ -267,8 +279,8 @@ extension MyLibrary {
 }
 
 extension MyLibrary {
-    public func recentlyPlayedByArtist(_ artist: SlimArtist) -> [CompleteTrackShowInformation] {
-        return recentlyPlayed.filter({ $0.artist == artist })
+    public func recentlyPlayedByArtist(_ artist: SlimArtist) -> [Track] {
+        return recentlyPlayedTracks.filter({ $0.showInfo.artist == artist })
     }
     
     public func offlinePlayedByArtist(_ artist: SlimArtist) -> [OfflineSourceMetadata] {
@@ -285,18 +297,18 @@ extension MyLibrary {
 }
 
 extension MyLibrary {
-    public func trackWasPlayed(_ track: CompleteTrackShowInformation) -> Bool {
-        for (idx, complete) in recentlyPlayed.enumerated() {
-            if complete.show == track.show && complete.artist == track.artist {
+    public func trackWasPlayed(_ track: Track) -> Bool {
+        for (idx, complete) in recentlyPlayedTracks.enumerated() {
+            if complete.showInfo.show == track.showInfo.show && complete.showInfo.artist == track.showInfo.artist {
                 // move that show to the front
-                recentlyPlayed.remove(at: idx)
-                recentlyPlayed.insertAtBeginning(track, ensuringMaxCapacity: MyLibrary.MaxRecentlyPlayedShows)
+                recentlyPlayedTracks.remove(at: idx)
+                recentlyPlayedTracks.insertAtBeginning(track, ensuringMaxCapacity: MyLibrary.MaxRecentlyPlayedShows)
                 
                 return true
             }
         }
         
-        recentlyPlayed.insertAtBeginning(track, ensuringMaxCapacity: MyLibrary.MaxRecentlyPlayedShows)
+        recentlyPlayedTracks.insertAtBeginning(track, ensuringMaxCapacity: MyLibrary.MaxRecentlyPlayedShows)
         
         return true
     }

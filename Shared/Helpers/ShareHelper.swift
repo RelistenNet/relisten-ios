@@ -9,15 +9,15 @@
 import Foundation
 
 public class ShareHelper {
-    public static func url(forCompleteTrack info: CompleteTrackShowInformation) -> URL {
+    public static func url(forTrack track: Track) -> URL {
         let urlText = String(
             format: "https://relisten.live/%@/%@/%@/%@/%@?source=%d",
-            info.artist.slug,
-            info.show.yearFromDate,
-            info.show.monthFromDate,
-            info.show.dayFromDate,
-            info.track.track.slug,
-            info.source.id
+            track.showInfo.artist.slug,
+            track.showInfo.show.yearFromDate,
+            track.showInfo.show.monthFromDate,
+            track.showInfo.show.dayFromDate,
+            track.slug,
+            track.showInfo.source.id
         )
         
         return URL(string: urlText)!
@@ -36,12 +36,12 @@ public class ShareHelper {
         return URL(string: urlText)!
     }
     
-    public static func text(forCompleteTrack info: CompleteTrackShowInformation) -> String {
-        let item = SourceTrackAudioItem(info.track.track, inSource: info.source, fromShow: info.show, byArtist: info.artist)
+    public static func text(forTrack track: Track) -> String {
+        let item = SourceTrackAudioItem(track)
         
         var text = item.displayText
         
-        if info.artist.features.track_durations, let dur = info.track.track.duration {
+        if track.showInfo.artist.features.track_durations, let dur = track.duration {
             text += " (\(dur.humanize()))"
         }
         

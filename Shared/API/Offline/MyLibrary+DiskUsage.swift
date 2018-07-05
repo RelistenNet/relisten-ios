@@ -11,80 +11,68 @@ import Foundation
 extension MyLibrary {
     // this can return non-nil even when isTrackAvailableOffline returns false
     // this will also be non-nil if isTrackAvailableOffline return true
-    public func offlineMetadataForTrack(track: SourceTrack) -> OfflineTrackMetadata? {
+    private func offlineMetadata(forTrackURL trackURL: URL) -> OfflineTrackMetadata? {
         do {
-            return try offlineTrackFileSizeCache.object(ofType: OfflineTrackMetadata.self, forKey: track.mp3_url.absoluteString)
+            return try offlineTrackFileSizeCache.object(ofType: OfflineTrackMetadata.self, forKey: trackURL.absoluteString)
         }
         catch {
             return nil
         }
     }
     
-    public func diskUsageForTrack(track: CompleteTrackShowInformation, _ callback: @escaping (UInt64?) -> Void) {
-        if let meta = offlineMetadataForTrack(track: track.track.track) {
+    public func diskUsageForTrackURL(trackURL: URL, _ callback: @escaping (UInt64?) -> Void) {
+        if let meta = offlineMetadata(forTrackURL: trackURL) {
             return callback(meta.fileSize)
         }
-        
-        if track.track.isAvailableOffline {
-            DispatchQueue.global(qos: .userInitiated).async {
-                do {
-                    let offlinePath = RelistenDownloadManager.shared.downloadPath(forTrack: track)
-                    
-                    guard FileManager.default.fileExists(atPath: offlinePath) else {
-                        callback(nil)
-                        
-                        return
-                    }
-                    
-                    let attributes = try FileManager.default.attributesOfItem(atPath: offlinePath)
-                    let fileSize = attributes[FileAttributeKey.size] as! UInt64
-                    
-                    // put it in the cache so subsequent calls are hot
-                    self.trackSizeBecameKnown(track, fileSize: fileSize)
-                    
-                    callback(fileSize)
-                }
-                catch {
-                    print(error)
-                    
-                    DispatchQueue.main.async {
-                        RelistenNotificationBar.display(withMessage: error.localizedDescription, forDuration: 10)
-                    }
-                    
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                let offlinePath = RelistenDownloadManager.shared.downloadPath(forURL: trackURL)
+                
+                guard FileManager.default.fileExists(atPath: offlinePath) else {
                     callback(nil)
+                    
+                    return
                 }
+                
+                let attributes = try FileManager.default.attributesOfItem(atPath: offlinePath)
+                let fileSize = attributes[FileAttributeKey.size] as! UInt64
+                
+                // put it in the cache so subsequent calls are hot
+                self.trackSizeBecameKnown(trackURL: trackURL, fileSize: fileSize)
+                
+                callback(fileSize)
             }
-        }
-        else {
-            callback(nil)
+            catch {
+                print(error)
+                
+                DispatchQueue.main.async {
+                    RelistenNotificationBar.display(withMessage: error.localizedDescription, forDuration: 10)
+                }
+                
+                callback(nil)
+            }
         }
     }
     
     public func diskUsageForSource(source: CompleteShowInformation, _ callback: @escaping (UInt64?) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let tracks = source.source.completeTracksFlattened(forShow: source)
-            
+        DispatchQueue.global(qos: .userInitiated).async {            
             var completeBytes: UInt64 = 0
             
-            let semaphore = DispatchSemaphore(value: 0)
+            let group = DispatchGroup()
             
-            for track in tracks {
-                self.diskUsageForTrack(track: track, { (size) in
+            for track in source.source.tracksFlattened {
+                self.diskUsageForTrackURL(trackURL: track.mp3_url, { (size) in
                     if let bytes = size {
+                        group.enter()
                         synced(completeBytes) {
                             completeBytes += bytes
-                            semaphore.signal()
+                            group.leave()
                         }
-                    }
-                    else {
-                        semaphore.signal()
                     }
                 })
             }
             
-            for _ in tracks {
-                semaphore.wait()
-            }
+            group.wait()
             
             callback(completeBytes)
         }

@@ -49,21 +49,21 @@ class ShowListViewController<T> : RelistenAsyncTableController<T> {
          */
     }
     
-    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
+    func relayoutIfContainsTrack(_ track: Track) {
         if let d = latestData {
             let shows = extractShows(forData: d)
             
-            if sinq(shows).any({ $0.id == track.show.id }) {
+            if sinq(shows).any({ $0.id == track.showInfo.show.id }) {
 //                render(shows: shows)
             }
         }
     }
     
-    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+    func relayoutIfContainsTracks(_ tracks: [Track]) {
         if let d = latestData {
             let shows = extractShows(forData: d)
             
-            let trackShowsId = tracks.map({ $0.show.id })
+            let trackShowsId = tracks.map({ $0.showInfo.show.id })
             
             if sinq(shows).any({ trackShowsId.contains($0.id) }) {
 //                render(shows: shows)

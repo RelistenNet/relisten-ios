@@ -19,7 +19,7 @@ class MyRecentlyPlayedViewController: ShowListViewController<[Track]> {
         
         latestData = loadMyShows()
         
-        MyLibraryManager.shared.observeRecentlyPlayedShows.observe { [weak self] (_, _) in
+        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe { [weak self] (_, _) in
             let myShows = self?.loadMyShows()
             if !(myShows == self?.latestData) {
                 self?.latestData = myShows

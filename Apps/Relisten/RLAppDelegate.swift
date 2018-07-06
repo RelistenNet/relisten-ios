@@ -68,6 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupPlayback()
         
+        // Initialize CarPlay
+        CarPlayController.shared
+        
         return true
     }
     

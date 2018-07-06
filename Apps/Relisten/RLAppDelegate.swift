@@ -69,13 +69,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupPlayback()
         
         // Initialize CarPlay
-        CarPlayController.shared
+        CarPlayController.shared.setup()
         
         return true
     }
     
     func setupPlayback() {
         PlaybackController.window = window
+        let audioPlayer = PlaybackController.sharedInstance.viewController.player
+        PlaybackController.sharedInstance.viewController.audioPlayerAudioSessionSetUp(audioPlayer)
         
         DispatchQueue.main.async {
             let _ = RelistenDownloadManager.shared

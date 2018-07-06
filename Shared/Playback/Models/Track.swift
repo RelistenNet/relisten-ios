@@ -23,15 +23,17 @@ public class Track : Codable, Hashable {
     }
     
     public let showInfo : CompleteShowInformation
-    
+
+    // Note: This should be a complete passthrough for SourceTrack so that the properties are visible on Track.
+    // Resist the temptation to change the names or alter the SourceTrack properties in the getter
     public var id : Int { get { return sourceTrack.id } }
-    public var sourceID : Int { get { return sourceTrack.source_id } }
-    public var sourceSetID : Int { get { return sourceTrack.source_set_id } }
-    public var position : Int { get { return sourceTrack.track_position } }
+    public var source_id : Int { get { return sourceTrack.source_id } }
+    public var set_id : Int { get { return sourceTrack.source_set_id } }
+    public var track_position : Int { get { return sourceTrack.track_position } }
     public var duration : TimeInterval? { get { return sourceTrack.duration } }
     public var title : String { get { return sourceTrack.title } }
     public var slug : String { get { return sourceTrack.slug } }
-    public var mp3URL : URL { get { return sourceTrack.mp3_url } }
+    public var mp3_url : URL { get { return sourceTrack.mp3_url } }
     public var md5 : String? { get { return sourceTrack.md5 } }
     
     private let sourceTrack: SourceTrack
@@ -40,7 +42,7 @@ public class Track : Codable, Hashable {
         get {
             var isActiveTrack = false
             if let activeTrack = (PlaybackController.sharedInstance.player.currentItem as? SourceTrackAudioItem)?.track {
-                isActiveTrack = (activeTrack.mp3URL == mp3URL)
+                isActiveTrack = (activeTrack.mp3_url == mp3_url)
             }
             if isActiveTrack {
                 if PlaybackController.sharedInstance.player.isPlaying {
@@ -83,7 +85,7 @@ public class Track : Codable, Hashable {
     }
     
     public var hashValue: Int {
-        return mp3URL.hashValue ^ showInfo.hashValue
+        return mp3_url.hashValue ^ showInfo.hashValue
     }
     
     public static func == (lhs: Track, rhs: Track) -> Bool {
@@ -92,7 +94,7 @@ public class Track : Codable, Hashable {
     
     public func isEqual(_ other: Track) -> Bool {
         return showInfo.isEqual(other.showInfo) &&
-               self.mp3URL == other.mp3URL
+               self.mp3_url == other.mp3_url
     }
     
     public var originalJSON: SwJSON {

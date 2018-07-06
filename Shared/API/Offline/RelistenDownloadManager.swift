@@ -59,7 +59,7 @@ public class RelistenDownloadManager {
     
     private func downloadModelForTrack(_ track: Track) -> MZDownloadModel? {
         for dlModel in downloadManager.downloadingArray {
-            if URL(string: dlModel.fileURL)! == track.mp3URL {
+            if URL(string: dlModel.fileURL)! == track.mp3_url {
                 return dlModel
             }
         }
@@ -99,7 +99,7 @@ public class RelistenDownloadManager {
         
         if track.downloadState == .downloading {
             for (idx, downloadModel) in downloadManager.downloadingArray.enumerated() {
-                if downloadModel.downloadingURL == track.mp3URL {
+                if downloadModel.downloadingURL == track.mp3_url {
                     downloadManager.cancelTaskAtIndex(idx)
                 }
             }
@@ -139,12 +139,12 @@ public class RelistenDownloadManager {
     }
     
     private func addDownloadTask(_ track: Track) {
-        downloadManager.addDownloadTask(downloadFilename(forTrack: track), fileURL: track.mp3URL.absoluteString, destinationPath: downloadFolder)
+        downloadManager.addDownloadTask(downloadFilename(forTrack: track), fileURL: track.mp3_url.absoluteString, destinationPath: downloadFolder)
     }
     
     public func download(track: Track, raiseEvent: Bool = true) {
         if downloadManager.downloadingArray.count < 3 {
-            urlToTrackMap[track.mp3URL] = track
+            urlToTrackMap[track.mp3_url] = track
 
             addDownloadTask(track)
         }
@@ -157,14 +157,14 @@ public class RelistenDownloadManager {
     
     let downloadFolder: String
     let statusLabel: MarqueeLabel
-    
+
     func downloadFilename(forURL url: URL) -> String {
         let filename = MD5(url.absoluteString)! + ".mp3"
         return filename
     }
     
     func downloadFilename(forTrack track: Track) -> String {
-        return downloadFilename(forURL: track.mp3URL)
+        return downloadFilename(forURL: track.mp3_url)
     }
     
     func downloadFilename(forSourceTrack sourceTrack: SourceTrack) -> String {
@@ -176,7 +176,7 @@ public class RelistenDownloadManager {
     }
     
     func downloadPath(forTrack track: Track) -> String {
-        return downloadPath(forURL: track.mp3URL)
+        return downloadPath(forURL: track.mp3_url)
     }
     
     func downloadPath(forSourceTrack sourceTrack: SourceTrack) -> String {
@@ -199,7 +199,7 @@ public class RelistenDownloadManager {
         }
         
         for backlogTrack in MyLibraryManager.shared.library.downloadBacklog {
-            if backlogTrack.mp3URL == track.mp3URL {
+            if backlogTrack.mp3_url == track.mp3_url {
                 return true
             }
         }
@@ -272,7 +272,7 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
         }
         
         if let nextTrack = MyLibraryManager.shared.library.dequeueFromBacklog() {
-            urlToTrackMap[nextTrack.mp3URL] = nextTrack
+            urlToTrackMap[nextTrack.mp3_url] = nextTrack
 
             addDownloadTask(nextTrack)
         }

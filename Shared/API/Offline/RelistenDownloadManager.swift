@@ -132,7 +132,7 @@ public class RelistenDownloadManager {
     }
     
     private func addDownloadTask(_ track: Track) {
-        downloadManager.addDownloadTask(track.title, fileURL: track.mp3URL.absoluteString, destinationPath: downloadPath(forTrack: track))
+        downloadManager.addDownloadTask(downloadFilename(forTrack: track), fileURL: track.mp3URL.absoluteString, destinationPath: downloadFolder)
     }
     
     public func download(track: Track, raiseEvent: Bool = true) {
@@ -151,9 +151,21 @@ public class RelistenDownloadManager {
     let downloadFolder: String
     let statusLabel: MarqueeLabel
     
-    func downloadPath(forURL url: URL) -> String {
+    func downloadFilename(forURL url: URL) -> String {
         let filename = MD5(url.absoluteString)! + ".mp3"
-        return downloadFolder + "/" + filename
+        return filename
+    }
+    
+    func downloadFilename(forTrack track: Track) -> String {
+        return downloadFilename(forURL: track.mp3URL)
+    }
+    
+    func downloadFilename(forSourceTrack sourceTrack: SourceTrack) -> String {
+        return downloadFilename(forURL: sourceTrack.mp3_url)
+    }
+    
+    func downloadPath(forURL url: URL) -> String {
+        return downloadFolder + "/" + downloadFilename(forURL: url)
     }
     
     func downloadPath(forTrack track: Track) -> String {

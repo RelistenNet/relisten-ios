@@ -26,7 +26,7 @@ public class SourceTrackAudioItem : AGAudioItem {
             self.duration = d
         }
         
-        self.trackNumber = track.position
+        self.trackNumber = track.track_position
         
         var venueStr = ""
         
@@ -43,7 +43,7 @@ public class SourceTrackAudioItem : AGAudioItem {
             self.playbackURL = offlineURL
         }
         else {
-            self.playbackURL = track.mp3URL
+            self.playbackURL = track.mp3_url
         }
 
         self.metadataLoaded = true

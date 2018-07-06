@@ -70,33 +70,22 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         
         MyLibraryManager.shared.observeRecentlyPlayedShows
             .observe({ [weak self] tracks, _ in
-                DispatchQueue.main.async {
-                    self?.recentlyPlayedTracks = tracks
-                    self?.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
-                }
-                
-                if let s = self {
-                    s.recentShowsNode.shows = s.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) })
-                }
+                self?.reloadRecentShows(tracks: tracks)
             })
             .add(to: &disposal)
         
         MyLibraryManager.shared.library.observeOfflineSources
             .observe({ [weak self] shows, _ in
-                self?.offlineShows = shows
-                if let s = self {
-                    s.offlineShowsNode.shows = s.offlineShows.map({ ($0.show, $0.artist) })
-                }
-                
-                DispatchQueue.main.async {
-                    self?.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
-                }
+                self?.reloadOfflineSources(shows: shows)
             })
             .add(to: &disposal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let library = MyLibraryManager.shared.library
+        reloadOfflineSources(shows: library.offlineSourcesMetadata)
+        reloadRecentShows(tracks: library.recentlyPlayedTracks)
         
         AppColors_SwitchToRelisten(navigationController)
     }
@@ -111,6 +100,27 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     }
 
     override var resource: Resource? { get { return api.artists() } }
+    
+    private func reloadOfflineSources(shows: Set<OfflineSourceMetadata>) {
+        if !(shows == offlineShows) {
+            offlineShows = shows
+            offlineShowsNode.shows = offlineShows.map({ ($0.show, $0.artist) })
+            
+            DispatchQueue.main.async {
+                self.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
+            }
+        }
+    }
+    
+    private func reloadRecentShows(tracks: [Track]) {
+        DispatchQueue.main.async {
+            self.recentlyPlayedTracks = tracks
+            self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+        }
+        recentShowsNode.shows = recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) })
+    }
+    
+    // MARK: UITableViewDataSource
     
     func numberOfSections(in tableNode: ASTableNode) -> Int {
         return Sections.count.rawValue

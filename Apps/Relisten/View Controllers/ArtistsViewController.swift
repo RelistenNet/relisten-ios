@@ -83,13 +83,13 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         
         MyLibraryManager.shared.library.observeOfflineSources
             .observe({ [weak self] shows, _ in
-                DispatchQueue.main.async {
-                    self?.offlineShows = shows
-                    self?.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
-                }
-                
+                self?.offlineShows = shows
                 if let s = self {
                     s.offlineShowsNode.shows = s.offlineShows.map({ ($0.show, $0.artist) })
+                }
+                
+                DispatchQueue.main.async {
+                    self?.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
                 }
             })
             .add(to: &disposal)

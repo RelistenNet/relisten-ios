@@ -14,6 +14,8 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     static let shared = CarPlayController()
     var disposal = Disposal()
     
+    private var recentlyPlayedTracks: [Track] = []
+    
     enum Sections: Int, RawRepresentable {
         case recentlyPlayed = 0
         case availableOffline
@@ -54,11 +56,9 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         return contentItem
     }()
     
-    override init() {
-        super.init()
-        
-        MPPlayableContentManager.shared().dataSource = self;
+    func setup() {
         MPPlayableContentManager.shared().delegate = self;
+        MPPlayableContentManager.shared().dataSource = self;
         
         PlaybackController.sharedInstance.observeCurrentTrack.observe { (current, _) in
             var nowPlayingIdentifiers : [String] = []
@@ -67,45 +67,91 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             }
             MPPlayableContentManager.shared().nowPlayingIdentifiers = nowPlayingIdentifiers
         }.add(to: &disposal)
+        
+        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe({ [weak self] tracks, _ in
+            self?.reloadRecentTracks(tracks: tracks)
+        }).add(to: &disposal)
     }
     
     // MARK: MPPlayableContentDelegate
-    public func playableContentManager(_ contentManager: MPPlayableContentManager, initializePlaybackQueueWithContentItems contentItems: [Any]?, completionHandler: @escaping (Error?) -> Swift.Void) {
-        
-    }
-    public func playableContentManager(_ contentManager: MPPlayableContentManager, initiatePlaybackOfContentItemAt indexPath: IndexPath, completionHandler: @escaping (Error?) -> Swift.Void) {
-        
-    }
+//    public func playableContentManager(_ contentManager: MPPlayableContentManager, initializePlaybackQueueWithContentItems contentItems: [Any]?, completionHandler: @escaping (Error?) -> Swift.Void) {
+//
+//    }
+    
+//    public func playableContentManager(_ contentManager: MPPlayableContentManager, initiatePlaybackOfContentItemAt indexPath: IndexPath, completionHandler: @escaping (Error?) -> Swift.Void) {
+//
+//    }
     
     // MARK: MPPlayableContentDataSource
     public func numberOfChildItems(at indexPath: IndexPath) -> Int {
-        return 4
+        if indexPath.count == 0 {
+            return Sections.count.rawValue
+        } else if indexPath.count == 1 {
+            switch Sections(rawValue: indexPath[0])! {
+            case .recentlyPlayed:
+                return recentlyPlayedTracks.count
+            case .availableOffline:
+                return 0
+            case .favorite:
+                return 0
+            case .artists:
+                return 0
+            case .count:
+                return 0
+            }
+        }
+        return 0
     }
     
     public func contentItem(at indexPath: IndexPath) -> MPContentItem? {
-        //let row = indexPath.row
-        
-        switch Sections(rawValue: indexPath[0])! {
-        case .recentlyPlayed:
-            return self.recentlyPlayedContentItem
-        case .availableOffline:
-            return self.availableOfflineContentItem
-        case .favorite:
-            return self.favoritesContentItem
-        case .artists:
-            return self.artistsContentItem
-        case .count:
-            return nil
+        if indexPath.count == 1 {
+            switch Sections(rawValue: indexPath[0])! {
+            case .recentlyPlayed:
+                return self.recentlyPlayedContentItem
+            case .availableOffline:
+                return self.availableOfflineContentItem
+            case .favorite:
+                return self.favoritesContentItem
+            case .artists:
+                return self.artistsContentItem
+            case .count:
+                return nil
+            }
+        } else if indexPath.count == 2 {
+            switch Sections(rawValue: indexPath[0])! {
+            case .recentlyPlayed:
+                return recentlyPlayedTracks[indexPath[1]].asMPContentItem()
+            case .availableOffline:
+                return self.availableOfflineContentItem
+            case .favorite:
+                return self.favoritesContentItem
+            case .artists:
+                return self.artistsContentItem
+            case .count:
+                return nil
+            }
+        }
+        return nil
+    }
+    
+    private func reloadRecentTracks(tracks: [Track]) {
+        if !(tracks == recentlyPlayedTracks) {
+            DispatchQueue.main.async {
+                MPPlayableContentManager.shared().beginUpdates()
+                self.recentlyPlayedTracks = tracks
+                MPPlayableContentManager.shared().endUpdates()
+                MPPlayableContentManager.shared().reloadData()
+            }
         }
     }
     
-    public func beginLoadingChildItems(at indexPath: IndexPath, completionHandler: @escaping (Error?) -> Swift.Void) {
-        
-    }
-    
-    public func contentItem(forIdentifier identifier: String, completionHandler: @escaping (MPContentItem?, Error?) -> Swift.Void) {
-        
-    }
+//    public func beginLoadingChildItems(at indexPath: IndexPath, completionHandler: @escaping (Error?) -> Swift.Void) {
+//        completionHandler(nil)
+//    }
+//
+//    public func contentItem(forIdentifier identifier: String, completionHandler: @escaping (MPContentItem?, Error?) -> Swift.Void) {
+//
+//    }
     
     public func childItemsDisplayPlaybackProgress(at indexPath: IndexPath) -> Bool {
         return true;

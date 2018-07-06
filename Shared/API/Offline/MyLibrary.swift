@@ -129,7 +129,7 @@ public class MyLibrary {
     }
     
     public func URLNotAvailableOffline(_ track: Track, save: Bool = true) {
-        let url = track.mp3URL
+        let url = track.mp3_url
         
         offlineTrackURLs.remove(url)
         offlineTrackFileSizeCache.async.removeObject(forKey: url.absoluteString, completion: { _ in })
@@ -169,7 +169,7 @@ public class MyLibrary {
 
 extension MyLibrary : RelistenDownloadManagerDelegate {
     public func trackBecameAvailableOffline(_ track: Track) {
-        if offlineTrackURLs.insert(track.mp3URL).inserted {
+        if offlineTrackURLs.insert(track.mp3_url).inserted {
             saveOfflineTrackUrls()
         }
 
@@ -191,7 +191,7 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
     }
     
     public func trackSizeBecameKnown(_ track: Track, fileSize: UInt64) {
-        trackSizeBecameKnown(trackURL: track.mp3URL, fileSize: fileSize)
+        trackSizeBecameKnown(trackURL: track.mp3_url, fileSize: fileSize)
     }
     
     public func trackSizeBecameKnown(_ sourceTrack: SourceTrack, fileSize: UInt64) {
@@ -246,7 +246,7 @@ extension MyLibrary {
 /// offline checks
 extension MyLibrary {
     public func isTrackAvailableOffline(_ track: Track) -> Bool {
-        return offlineTrackURLs.contains(track.mp3URL)
+        return offlineTrackURLs.contains(track.mp3_url)
     }
     
     public func isTrackAvailableOffline(_ track: SourceTrack) -> Bool {

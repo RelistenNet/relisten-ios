@@ -32,7 +32,7 @@ public class TrackActions {
             PlaybackController.sharedInstance.playbackQueue.append(ai)
         }))
         
-        MyLibraryManager.shared.library.diskUsageForTrackURL(trackURL: track.mp3URL) { (size) in
+        MyLibraryManager.shared.library.diskUsageForTrackURL(trackURL: track.mp3_url) { (size) in
             if let s = size {
                 a.addAction(UIAlertAction(title: "Remove Downloaded File" + " (\(s.humanizeBytes()))", style: .default, handler: { _ in
                     RelistenDownloadManager.shared.delete(track: track, saveOffline: true)

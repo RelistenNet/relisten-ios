@@ -46,8 +46,15 @@ public class RelistenDownloadManager {
 
     fileprivate var urlToTrackMap: [URL: Track] = [:]
     
+    private let initQueue : DispatchQueue = DispatchQueue(label: "live.relisten.ios.mp3-offline.queue")
+    private var backingDownloadManager : MZDownloadManager?
     lazy var downloadManager: MZDownloadManager = {
-        return MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self)
+        initQueue.sync {
+            if (backingDownloadManager == nil) {
+                backingDownloadManager = MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self)
+            }
+        }
+        return backingDownloadManager!
     }()
     
     private func downloadModelForTrack(_ track: Track) -> MZDownloadModel? {

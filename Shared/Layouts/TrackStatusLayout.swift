@@ -63,7 +63,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                 viewReuseId: "trackNumber",
                 sublayout: nil,
                 config: { l in
-                    l.text = String(describing: usingExplicitTrackNumber ?? track.position)
+                    l.text = String(describing: usingExplicitTrackNumber ?? track.track_position)
                     l.font = UIFont.preferredFont(forTextStyle: .caption1)
                     l.textColor = .darkGray
             })

@@ -34,7 +34,7 @@ public class TrackStatusCellNode : ASCellNode {
         })
         nowPlayingNode.backgroundColor = UIColor.clear
         
-        trackNumberNode = ASTextNode(String(explicitTrackNumber ?? track.position), textStyle: .caption1, color: .darkGray)
+        trackNumberNode = ASTextNode(String(explicitTrackNumber ?? track.track_position), textStyle: .caption1, color: .darkGray)
         
         titleNode = ASTextNode(track.title, textStyle: .body)
         titleNode.maximumNumberOfLines = 0

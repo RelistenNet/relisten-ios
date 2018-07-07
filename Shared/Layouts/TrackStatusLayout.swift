@@ -16,135 +16,14 @@ import Cache
 import SwiftyJSON
 
 public protocol TrackStatusActionHandler : class {
-    func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation)
-}
-
-public protocol ICompleteShowInformation : Codable, Hashable {
-    var source: SourceFull { get }
-    var show: Show { get }
-    var artist: ArtistWithCounts { get }
-}
-
-public class CompleteShowInformation : ICompleteShowInformation {
-    public var hashValue: Int {
-        return artist.id.hashValue ^ show.display_date.hashValue ^ source.upstream_identifier.hashValue
-    }
-    
-    public static func == (lhs: CompleteShowInformation, rhs: CompleteShowInformation) -> Bool {
-        return lhs.artist.id == rhs.artist.id
-            && (
-                (lhs.show.id == rhs.show.id && lhs.source.id == rhs.source.id)
-                || (lhs.show.display_date == rhs.show.display_date && rhs.source.upstream_identifier == lhs.source.upstream_identifier)
-            )
-    }
-    
-    public let source: SourceFull
-    public let show: Show
-    public let artist: ArtistWithCounts
-    
-    public var originalJSON: SwJSON
-
-    public required init(source: SourceFull, show: Show, artist: ArtistWithCounts) {
-        self.source = source
-        self.show = show
-        self.artist = artist
-        
-        var j = SwJSON([:])
-        j["source"] = source.originalJSON
-        j["show"] = show.originalJSON
-        j["artist"] = artist.originalJSON
-        
-        originalJSON = j
-    }
-    
-    public required init(json: SwJSON) throws {
-        source = try SourceFull(json: json["source"])
-        show = try Show(json: json["show"])
-        artist = try ArtistWithCounts(json: json["artist"])
-
-        originalJSON = json
-    }
-    
-    public convenience required init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        let data = try values.decode(Data.self, forKey: .originalJson)
-        
-        try self.init(json: SwJSON(data: data))
-    }
-    
-    public func toPrettyJSONString() -> String {
-        return originalJSON.rawString(.utf8, options: .prettyPrinted)!
-    }
-    
-    public func toData() throws -> Data {
-        return try originalJSON.rawData()
-    }
-    
-    enum CodingKeys: String, CodingKey
-    {
-        case originalJson
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(toData(), forKey: .originalJson)
-    }
-}
-
-public struct CompleteTrackShowInformation : ICompleteShowInformation {
-    public var hashValue: Int {
-        return track.track.mp3_url.hashValue ^ artist.id.hashValue ^ show.display_date.hashValue ^ source.upstream_identifier.hashValue
-    }
-    
-    public static func == (lhs: CompleteTrackShowInformation, rhs: CompleteTrackShowInformation) -> Bool {
-        return lhs.artist.id == rhs.artist.id
-            && lhs.show.display_date == rhs.show.display_date
-            && lhs.track.track.mp3_url == rhs.track.track.mp3_url
-            && lhs.source.upstream_identifier == rhs.source.upstream_identifier
-    }
-    
-    public func toCompleteShowInformation() -> CompleteShowInformation {
-        return CompleteShowInformation(source: source, show: show, artist: artist)
-    }
-    
-    public let track: TrackStatus
-    public let source: SourceFull
-    public let show: Show
-    public let artist: ArtistWithCounts
-}
-
-extension CompleteTrackShowInformation {
-    public init(_ json: SwJSON) throws {
-        let track = try SourceTrack(json: json["track"])
-        let source = try SourceFull(json: json["source"])
-        let show = try Show(json: json["show"])
-        let artist = try ArtistWithCounts(json: json["artist"])
-        
-        self.init(
-            track: TrackStatus(forTrack: track),
-            source: source,
-            show: show,
-            artist: artist
-        )
-    }
-    
-    public var originalJSON: SwJSON {
-        var j = SwJSON([:])
-        
-        j["track"] = track.track.originalJSON
-        j["source"] = source.originalJSON
-        j["show"] = show.originalJSON
-        j["artist"] = artist.originalJSON
-        
-        return j
-    }
+    func trackButtonTapped(_ button: UIButton, forTrack track: Track)
 }
 
 public class TrackStatusLayout : InsetLayout<UIView> {
-    public init(withTrack track: CompleteTrackShowInformation, withHandler handler: TrackStatusActionHandler, usingExplicitTrackNumber: Int? = nil, showingArtistInformation: Bool = false) {
+    public init(withTrack track: Track, withHandler handler: TrackStatusActionHandler, usingExplicitTrackNumber: Int? = nil, showingArtistInformation: Bool = false) {
         var stack : [Layout] = []
         
-        if track.track.isActiveTrack {
+        if (track.playbackState == .paused || track.playbackState == .playing) {
             // 24x16 in total
             let l = InsetLayout(
                 insets: UIEdgeInsetsMake(2, 0, 2, 12),
@@ -158,7 +37,14 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                     viewReuseId: "nowPlaying",
                     sublayout: nil,
                     config: { (p) in
-                        p.state = track.track.isPlaying ? .playing : .paused
+                        switch track.playbackState {
+                        case .playing:
+                            p.state = .playing
+                        case .paused:
+                            p.state = .paused
+                        case .notActive:
+                            p.state = .stopped
+                        }
                         p.tintColor = AppColors.primary
                 })
             )
@@ -177,7 +63,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                 viewReuseId: "trackNumber",
                 sublayout: nil,
                 config: { l in
-                    l.text = String(describing: usingExplicitTrackNumber ?? track.track.track.track_position)
+                    l.text = String(describing: usingExplicitTrackNumber ?? track.track_position)
                     l.font = UIFont.preferredFont(forTextStyle: .caption1)
                     l.textColor = .darkGray
             })
@@ -186,10 +72,8 @@ public class TrackStatusLayout : InsetLayout<UIView> {
         
         var potentialOfflineLayout: Layout? = nil
         
-        let availableOffline = track.track.isAvailableOffline
-        let activelyDownloading = track.track.isActivelyDownloading
-        
-        if availableOffline || track.track.isQueuedToDownload || activelyDownloading {
+        switch track.downloadState {
+        case .downloaded, .downloading, .queued:
             potentialOfflineLayout = SizeLayout<UIImageView>(
                 minWidth: 12,
                 maxWidth: nil,
@@ -200,9 +84,13 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                 viewReuseId: "track",
                 sublayout: nil,
                 config: { imageV in
-                    imageV.image = availableOffline ? UIImage(named: "download-complete") : UIImage(named: "download-active")
+                    if track.downloadState == .downloaded {
+                        imageV.image = UIImage(named: "download-complete")
+                    } else if track.downloadState == .downloading {
+                        imageV.image = UIImage(named: "download-active")
+                    }
                     
-                    if activelyDownloading {
+                    if track.downloadState == .downloading {
                         imageV.alpha = 1.0
                         UIView.animate(withDuration: 1.0,
                                        delay: 0,
@@ -218,6 +106,8 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                         })
                     }
             })
+        default:
+            break
         }
         
         if let p = potentialOfflineLayout, !showingArtistInformation {
@@ -225,7 +115,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
         }
         
         let trackTitleLabel = LabelLayout(
-            text: track.track.track.title,
+            text: track.title,
             font: UIFont.preferredFont(forTextStyle: .body),
             numberOfLines: 0,
             alignment: .fillLeading,
@@ -236,7 +126,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
         
         if showingArtistInformation {
             let artistInfoLabel = LabelLayout(
-                text: track.artist.name + " • " + track.show.display_date,
+                text: track.showInfo.artist.name + " • " + track.showInfo.show.display_date,
                 font: UIFont.preferredFont(forTextStyle: .caption1),
                 numberOfLines: 0,
                 alignment: .fillLeading,
@@ -273,7 +163,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
             stack.append(trackTitleLabel)
         }
         
-        if let dur = track.track.track.duration, track.artist.features.track_durations {
+        if let dur = track.duration, track.showInfo.artist.features.track_durations {
             let label = LabelLayout(
                 text: dur.humanize(),
                 font: UIFont.preferredFont(forTextStyle: .caption1),

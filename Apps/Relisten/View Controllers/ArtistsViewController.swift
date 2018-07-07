@@ -218,7 +218,8 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         }
         
         if let s = show {
-            navigationController?.pushViewController(SourcesViewController(artist: s.artist, show: s.show), animated: true)
+            let sourcesController = SourcesViewController(artist: s.artist, show: s.show)
+            sourcesController.presentIfNecessary(navigationController: navigationController)
         }
     }
 }

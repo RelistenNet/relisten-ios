@@ -182,7 +182,8 @@ public class RelistenMenuView : UIView {
             viewController.navigationController?.pushViewController(TopShowsViewController(artist: artist), animated: true)
             
         case .DiscoverRandom: print(item)
-            viewController.navigationController?.pushViewController(SourcesViewController(artist: artist), animated: true)
+            let sourcesViewController = SourcesViewController(artist: artist)
+            sourcesViewController.presentIfNecessary(navigationController: viewController.navigationController)
 
         case .RecentlyPlayed: print(item)
             viewController.navigationController?.pushViewController(MyRecentlyPlayedViewController(artist: artist), animated: true)

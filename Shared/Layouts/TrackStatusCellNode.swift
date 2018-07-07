@@ -14,14 +14,14 @@ import AsyncDisplayKit
 import Observable
 
 public class TrackStatusCellNode : ASCellNode {
-    public let track: CompleteTrackShowInformation
+    public let track: Track
     public weak var delegate: TrackStatusActionHandler?
     public let explicitTrackNumber: Int?
     public let showArtistInformation: Bool
     
     var disposal = Disposal()
     
-    public init(withTrack track: CompleteTrackShowInformation, withHandler handler: TrackStatusActionHandler, usingExplicitTrackNumber: Int? = nil, showingArtistInformation: Bool = false) {
+    public init(withTrack track: Track, withHandler handler: TrackStatusActionHandler, usingExplicitTrackNumber: Int? = nil, showingArtistInformation: Bool = false) {
         self.track = track
         self.delegate = handler
         self.explicitTrackNumber = usingExplicitTrackNumber
@@ -34,19 +34,19 @@ public class TrackStatusCellNode : ASCellNode {
         })
         nowPlayingNode.backgroundColor = UIColor.clear
         
-        trackNumberNode = ASTextNode(String(explicitTrackNumber ?? track.track.track.track_position), textStyle: .caption1, color: .darkGray)
+        trackNumberNode = ASTextNode(String(explicitTrackNumber ?? track.track_position), textStyle: .caption1, color: .darkGray)
         
-        titleNode = ASTextNode(track.track.track.title, textStyle: .body)
+        titleNode = ASTextNode(track.title, textStyle: .body)
         titleNode.maximumNumberOfLines = 0
         
         if showingArtistInformation {
-            artistInfoNode = ASTextNode(track.artist.name + " • " + track.show.display_date, textStyle: .caption1)
+            artistInfoNode = ASTextNode(track.showInfo.artist.name + " • " + track.showInfo.show.display_date, textStyle: .caption1)
         }
         else {
             artistInfoNode = nil
         }
         
-        if let dur = track.track.track.duration, track.artist.features.track_durations {
+        if let dur = track.duration, track.showInfo.artist.features.track_durations {
             durationNode = ASTextNode(dur.humanize(), textStyle: .caption1, color: .darkGray)
         }
         else {
@@ -101,44 +101,22 @@ public class TrackStatusCellNode : ASCellNode {
         PlaybackController.sharedInstance.observeCurrentTrack.observe { [weak self] (current, previous) in
             if let s = self {
                 let prev = s.trackState
+                var newState : Track.PlaybackState = .notActive
                 
-                if let track = current, track == s.track {
-                    s.trackState = track.track.isActiveTrack ? .paused : .notActive
-                    
-                    if track.track.isPlaying {
-                        s.trackState = .playing
-                    }
+                if let track : Track = current, track == s.track {
+                    newState = track.playbackState
                 }
                 
-                if prev != s.trackState {
+                if prev != newState {
+                    s.trackState = newState
                     DispatchQueue.main.async { s.updateTrackState() }
                     s.setNeedsLayout()
                 }
             }
         }.add(to: &disposal)
-        
-        if track.track.isAvailableOffline {
-            downloadState = .downloaded
-        }
-        else if track.track.isQueuedToDownload {
-            downloadState = .queued
-        }
-        else if track.track.isActivelyDownloading {
-            downloadState = .downloading
-        }
-        else {
-            downloadState = .none
-        }
-        
-        if track.track.isPlaying {
-            trackState = .playing
-        }
-        else if track.track.isActiveTrack {
-            trackState = .paused
-        }
-        else {
-            trackState = .notActive
-        }
+    
+        downloadState = track.downloadState
+        trackState = track.playbackState
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
@@ -155,22 +133,9 @@ public class TrackStatusCellNode : ASCellNode {
     public let offlineNode = OfflineIndicatorNode()
     public let downloadingNode = OfflineDownloadingIndicatorNode()
     
-    var trackState = TrackState.notActive
-    var downloadState = DownloadState.none
-    
-    enum TrackState {
-        case notActive
-        case paused
-        case playing
-    }
-    
-    enum DownloadState {
-        case none
-        case queued
-        case downloading
-        case downloaded
-    }
-    
+    var trackState : Track.PlaybackState = .notActive
+    var downloadState : Track.DownloadState = .none
+
     func updateTrackState() {
         if let nak = nowPlayingNode.view as? NAKPlaybackIndicatorView {
             switch trackState {

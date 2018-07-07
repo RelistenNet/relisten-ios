@@ -249,14 +249,12 @@ extension ArtistViewController : ASCollectionDelegate {
         if collectionNode === todayShowsNode.collectionNode, let today = resourceTodayData {
             let item = today[indexPath.row]
             let vc = SourcesViewController(artist: self.artist, show: item)
-            
-            navigationController?.pushViewController(vc, animated: true)
+            vc.presentIfNecessary(navigationController: navigationController)
         }
         else if collectionNode === recentShowsNode.collectionNode {
             let item = recentlyPlayed[indexPath.row]
-            let vc = SourcesViewController(artist: self.artist, show: item.showInfo.show)
-            
-            navigationController?.pushViewController(vc, animated: true)
+            let vc = SourcesViewController(artist: self.artist, show: item.show)
+            vc.presentIfNecessary(navigationController: navigationController)
         }
     }
 }

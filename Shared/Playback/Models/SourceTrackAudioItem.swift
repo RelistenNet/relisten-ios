@@ -12,15 +12,15 @@ import AGAudioPlayer
 import SINQ
 
 public class SourceTrackAudioItem : AGAudioItem {
-    public let relisten: CompleteTrackShowInformation
+    public let track: Track
     
-    public required init(_ track: SourceTrack, inSource: SourceFull, fromShow: Show, byArtist: ArtistWithCounts) {
-        self.relisten = CompleteTrackShowInformation(track: TrackStatus(forTrack: track), source: inSource, show: fromShow, artist: byArtist)
+    public required init(_ track: Track) {
+        self.track = track
 
         super.init()
         
         self.title = track.title
-        self.artist = byArtist.name
+        self.artist = track.showInfo.artist.name
         
         if let d = track.duration {
             self.duration = d
@@ -30,16 +30,16 @@ public class SourceTrackAudioItem : AGAudioItem {
         
         var venueStr = ""
         
-        if let v = fromShow.correctVenue(withFallback: inSource.venue) {
+        if let v = track.showInfo.show.correctVenue(withFallback: track.showInfo.source.venue) {
             venueStr = " • \(v.name), \(v.location)"
         }
         
-        self.album = "\(inSource.display_date)\(venueStr)"
+        self.album = "\(track.showInfo.source.display_date)\(venueStr)"
         
         self.displayText = track.title
-        self.displaySubtext = "\(byArtist.name) • \(album)"
+        self.displaySubtext = "\(track.showInfo.artist.name) • \(album)"
         
-        if let offlineURL = RelistenDownloadManager.shared.offlineURL(forTrack: relisten) {
+        if let offlineURL = RelistenDownloadManager.shared.offlineURL(forTrack: track) {
             self.playbackURL = offlineURL
         }
         else {
@@ -55,10 +55,10 @@ public class SourceTrackAudioItem : AGAudioItem {
 }
 
 extension AGAudioPlayerUpNextQueue {
-    public func findSourceTrackAudioItem(forCompleteTrack track: CompleteTrackShowInformation) -> SourceTrackAudioItem? {
+    public func findSourceTrackAudioItem(forTrack track: Track) -> SourceTrackAudioItem? {
         for item in queue {
             if let st = item as? SourceTrackAudioItem {
-                if st.relisten == track {
+                if st.track == track {
                     return st
                 }
             }
@@ -82,9 +82,12 @@ extension SourceFull {
     public func toAudioItems(inShow: Show, byArtist: ArtistWithCounts) -> [AGAudioItem] {
         var items: [AGAudioItem] = []
         
+        let showInfo : CompleteShowInformation = CompleteShowInformation(source: self, show: inShow, artist: byArtist)
+        
         for set in self.sets {
-            for track in set.tracks {
-                items.append(track.toAudioItem(inSource: self, fromShow: inShow, byArtist: byArtist))
+            for sourceTrack in set.tracks {
+                let track = Track(sourceTrack: sourceTrack, showInfo: showInfo)
+                items.append(track.toAudioItem())
             }
         }
         
@@ -92,8 +95,8 @@ extension SourceFull {
     }
 }
 
-extension SourceTrack {
-    public func toAudioItem(inSource: SourceFull, fromShow: Show, byArtist: ArtistWithCounts) -> AGAudioItem {
-        return SourceTrackAudioItem(self, inSource: inSource, fromShow: fromShow, byArtist: byArtist)
+extension Track {
+    public func toAudioItem() -> AGAudioItem {
+        return SourceTrackAudioItem(self)
     }
 }

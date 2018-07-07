@@ -16,15 +16,31 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     
     private var recentlyPlayedTracks: [Track] = []
     private var offlineShows: [OfflineSourceMetadata] = []
-    private var favoriteShows: [CompleteShowInformation] = []
+    private var favoriteShowsByArtist: [Artist : [CompleteShowInformation]] = [:]
     
-    enum Sections: Int, RawRepresentable {
-        case recentlyPlayed = 0
-        case availableOffline
-        case favorite
-        case artists
-        case count
+    // MARK: Favorite Accessors
+    private var favoriteArtistsSorted : [Artist] {
+        get {
+            return favoriteShowsByArtist.keys.sorted(by: { (lhs, rhs) -> Bool in return lhs.name > rhs.name })
+        }
     }
+    
+    private func favoriteArtist(at index: Int) -> Artist? {
+        let sortedArtists = favoriteArtistsSorted
+        if index >= 0, index < favoriteArtistsSorted.count {
+            return sortedArtists[index]
+        }
+        return nil
+    }
+    
+    private func favoriteShowsForArtist(at index: Int) -> [CompleteShowInformation]? {
+        if let artist = favoriteArtist(at: index) {
+            return favoriteShowsByArtist[artist]
+        }
+        return nil
+    }
+    
+    // MARK: Tab Headers
     
     private func resizeImage(image : UIImage, newSize : CGSize) -> UIImage {
         return  UIGraphicsImageRenderer(size: newSize).image { (context) in
@@ -84,6 +100,8 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         return contentItem
     }()
     
+    // MARK: Setup
+    
     func setup() {
         MPPlayableContentManager.shared().delegate = self;
         MPPlayableContentManager.shared().dataSource = self;
@@ -105,7 +123,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         }).add(to: &disposal)
         
         MyLibraryManager.shared.observeMyShows.observe({ [weak self] shows, _ in
-            self?.reloadFavorites(shows: shows)
+            self?.reloadFavorites(shows: MyLibraryManager.shared.library.shows)
         }).add(to: &disposal)
     }
     
@@ -119,18 +137,32 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
 //    }
     
     // MARK: MPPlayableContentDataSource
+    enum Sections: Int, RawRepresentable {
+        case recentlyPlayed = 0
+        case availableOffline
+        case favorite
+        case artists
+        case count
+    }
+    
     public func numberOfChildItems(at indexPath: IndexPath) -> Int {
         if indexPath.count == 0 {
+            // Tab Bar
             return Sections.count.rawValue
         } else if indexPath.count == 1 {
             switch Sections(rawValue: indexPath[0])! {
             case .recentlyPlayed:
+                // Recent->Tracks
                 return recentlyPlayedTracks.count
             case .availableOffline:
+                // Offline->Shows
                 return offlineShows.count
             case .favorite:
-                return favoriteShows.count
+                // Favorites->Artists
+                return favoriteShowsByArtist.count
             case .artists:
+                // Artists->Artists
+                // TODO
                 return 0
             case .count:
                 return 0
@@ -140,10 +172,34 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             case .recentlyPlayed:
                 return 0
             case .availableOffline:
+                // Offline->Show->Tracks
                 return offlineShows[indexPath[1]].source.tracksFlattened.count
             case .favorite:
+                // Favorites->Artist->Shows
+                if let shows = favoriteShowsForArtist(at: indexPath[1]) {
+                    return shows.count
+                }
                 return 0
             case .artists:
+                // Artists->Artist->Shows
+                return 0
+            case .count:
+                return 0
+            }
+        } else if indexPath.count == 3 {
+            switch Sections(rawValue: indexPath[0])! {
+            case .recentlyPlayed:
+                return 0
+            case .availableOffline:
+                return 0
+            case .favorite:
+                // Favorites->Artist->Show->Tracks
+                if let shows = favoriteShowsForArtist(at: indexPath[1]) {
+                    return shows[indexPath[2]].source.tracksFlattened.count
+                }
+                return 0
+            case .artists:
+                // Artists->Artist->Show->Tracks
                 return 0
             case .count:
                 return 0
@@ -154,6 +210,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     
     public func contentItem(at indexPath: IndexPath) -> MPContentItem? {
         if indexPath.count == 1 {
+            // Tab Bar Items
             switch Sections(rawValue: indexPath[0])! {
             case .recentlyPlayed:
                 return self.recentlyPlayedContentItem
@@ -169,15 +226,20 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         } else if indexPath.count == 2 {
             switch Sections(rawValue: indexPath[0])! {
             case .recentlyPlayed:
+                // Recent->Tracks
                 return recentlyPlayedTracks[indexPath[1]].asMPContentItem()
             case .availableOffline:
+                // Offline->Shows
                 let offlineShow = offlineShows[indexPath[1]]
                 return offlineShow.asMPContentItem()
             case .favorite:
-                let favoriteShow = favoriteShows[indexPath[1]]
-                return favoriteShow.asMPContentItem()
+                // Favorites->Artists
+                let artist = favoriteArtistsSorted[indexPath[1]]
+                let shows = favoriteShowsForArtist(at: indexPath[1])
+                return artist.asMPContentItem(withShows: shows)
             case .artists:
-                return self.artistsContentItem
+                // Artists->Artists
+                return nil
             case .count:
                 return nil
             }
@@ -186,17 +248,38 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             case .recentlyPlayed:
                 return nil
             case .availableOffline:
+                // Offline->Show->Tracks
                 let offlineShow = offlineShows[indexPath[1]]
                 let sourceTrack = offlineShow.source.tracksFlattened[indexPath[2]]
                 let track = Track(sourceTrack: sourceTrack, showInfo: offlineShow.completeShowInformation)
                 return track.asMPContentItem()
             case .favorite:
-                let favoriteShow = favoriteShows[indexPath[1]]
-                let sourceTrack = favoriteShow.source.tracksFlattened[indexPath[2]]
-                let track = Track(sourceTrack: sourceTrack, showInfo: favoriteShow)
-                return track.asMPContentItem()
+                // Favorites->Artist->Shows
+                if let shows = favoriteShowsForArtist(at: indexPath[1]) {
+                    return shows[indexPath[2]].asMPContentItem()
+                }
+                return nil
             case .artists:
-                return self.artistsContentItem
+                return nil
+            case .count:
+                return nil
+            }
+        } else if indexPath.count == 3 {
+            switch Sections(rawValue: indexPath[0])! {
+            case .recentlyPlayed:
+                return nil
+            case .availableOffline:
+                return nil
+            case .favorite:
+                // Favorites->Artist->Show->Tracks
+                if let shows = favoriteShowsForArtist(at: indexPath[1]) {
+                    let show = shows[indexPath[2]]
+                    let sourceTrack = show.source.tracksFlattened[indexPath[3]]
+                    let track = Track(sourceTrack: sourceTrack, showInfo: show)
+                    return track.asMPContentItem()
+                }
+            case .artists:
+                return nil
             case .count:
                 return nil
             }
@@ -228,10 +311,19 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     }
     
     private func reloadFavorites(shows: [CompleteShowInformation]) {
-        if !(shows == favoriteShows) {
+        var showsByArtist : [Artist : [CompleteShowInformation]] = [:]
+        shows.forEach { (show) in
+            var artistShows = showsByArtist[show.artist]
+            if artistShows == nil {
+                artistShows = []
+                showsByArtist[show.artist] = artistShows
+            }
+            artistShows?.append(show)
+        }
+        if !(showsByArtist == favoriteShowsByArtist) {
             DispatchQueue.main.async {
                 MPPlayableContentManager.shared().beginUpdates()
-                self.favoriteShows = shows
+                self.favoriteShowsByArtist = showsByArtist
                 MPPlayableContentManager.shared().endUpdates()
                 MPPlayableContentManager.shared().reloadData()
             }
@@ -271,6 +363,30 @@ extension Track {
         contentItem.isContainer = false
         contentItem.isPlayable = true
 
+        return contentItem
+    }
+}
+
+extension Artist {
+    public var carPlayIdentifier : String {
+        get {
+            return "live.relisten.artist.\(self.hashValue)"
+        }
+    }
+    
+    public func asMPContentItem(withShows shows: [CompleteShowInformation]?) -> MPContentItem {
+        let contentItem = MPContentItem(identifier: self.carPlayIdentifier)
+        contentItem.title = self.name
+        if let shows = shows {
+            var subtitle = "\(shows.count) show"
+            if shows.count > 1 {
+                subtitle = subtitle + "s"
+            }
+            contentItem.subtitle = subtitle
+        }
+        contentItem.isContainer = true
+        contentItem.isPlayable = false
+        
         return contentItem
     }
 }

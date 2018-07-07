@@ -12,7 +12,7 @@ import AGAudioPlayer
 import Observable
 
 extension AGAudioPlayerViewController : TrackStatusActionHandler {
-    public func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation) {
+    public func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
         TrackActions.showActionOptions(fromViewController: self, forTrack: track)
     }
 }
@@ -23,11 +23,11 @@ public class PlaybackController {
     public let viewController: AGAudioPlayerViewController
     public let shrinker: PlaybackMinibarShrinker
     
-    public let observeCurrentTrack = Observable<CompleteTrackShowInformation?>(nil)
-    public let trackWasPlayed = Observable<CompleteTrackShowInformation?>(nil)
+    public let observeCurrentTrack = Observable<Track?>(nil)
+    public let trackWasPlayed = Observable<Track?>(nil)
     
-    public let eventTrackPlaybackChanged = Event<CompleteTrackShowInformation?>()
-    public let eventTrackWasPlayed = Event<CompleteTrackShowInformation>()
+    public let eventTrackPlaybackChanged = Event<Track?>()
+    public let eventTrackWasPlayed = Event<Track>()
 
     public static var window: UIWindow? = nil
     
@@ -57,26 +57,15 @@ public class PlaybackController {
         fatalError()
     }
     
-    func relayoutIfContainsTrack(_ track: CompleteTrackShowInformation) {
-        if let _ = playbackQueue.findSourceTrackAudioItem(forCompleteTrack: track) {
+    func relayoutIfContainsTrack(_ track: Track) {
+        if let _ = playbackQueue.findSourceTrackAudioItem(forTrack: track) {
             viewController.tableReloadData()
         }
     }
     
-    func relayoutIfCompleteContainsTrack(_ complete: CompleteTrackShowInformation?) {
-        if complete == nil {
-            viewController.tableReloadData()
-            return
-        }
-        
-        if let c = complete, let _ = playbackQueue.findSourceTrackAudioItem(forCompleteTrack: c) {
-            viewController.tableReloadData()
-        }
-    }
-    
-    func relayoutIfContainsTracks(_ tracks: [CompleteTrackShowInformation]) {
+    func relayoutIfContainsTracks(_ tracks: [Track]) {
         for track in tracks {
-            if let _ = playbackQueue.findSourceTrackAudioItem(forCompleteTrack: track) {
+            if let _ = playbackQueue.findSourceTrackAudioItem(forTrack: track) {
                 viewController.tableReloadData()
             }
         }
@@ -241,7 +230,7 @@ extension PlaybackController : AGAudioPlayerViewControllerPresentationDelegate {
         let cell = inTableView.dequeueReusableCell(withIdentifier: "cell", for: atIndex)
         
         if let t = forAudioItem as? SourceTrackAudioItem {
-            let v = TrackStatusLayout(withTrack: t.relisten, withHandler: self)
+            let v = TrackStatusLayout(withTrack: t.track, withHandler: self)
             v.arrangement(width: inTableView.bounds.size.width) .makeViews(in: cell.contentView)
         }
         
@@ -250,7 +239,7 @@ extension PlaybackController : AGAudioPlayerViewControllerPresentationDelegate {
 }
 
 extension PlaybackController : TrackStatusActionHandler {
-    public func trackButtonTapped(_ button: UIButton, forTrack track: CompleteTrackShowInformation) {
+    public func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
         TrackActions.showActionOptions(fromViewController: viewController, forTrack: track)
     }
 }
@@ -307,21 +296,21 @@ public class PlaybackMinibarShrinker: NSObject, UINavigationControllerDelegate {
 
 extension PlaybackController : AGAudioPlayerViewControllerDelegate {
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, trackChangedState audioItem: AGAudioItem?) {
-        let completeInfo = (audioItem as? SourceTrackAudioItem)?.relisten
+        let completeInfo = (audioItem as? SourceTrackAudioItem)?.track
 
         eventTrackPlaybackChanged.raise(completeInfo)
         observeCurrentTrack.value = completeInfo
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, changedTrackTo audioItem: AGAudioItem?) {
-        let completeInfo = (audioItem as? SourceTrackAudioItem)?.relisten
+        let completeInfo = (audioItem as? SourceTrackAudioItem)?.track
 
         eventTrackPlaybackChanged.raise(completeInfo)
         observeCurrentTrack.value = completeInfo
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedDotsForAudioItem audioItem: AGAudioItem) {
-        let completeInfo = (audioItem as! SourceTrackAudioItem).relisten
+        let completeInfo = (audioItem as! SourceTrackAudioItem).track
         
         TrackActions.showActionOptions(fromViewController: agAudio, forTrack: completeInfo)
     }
@@ -331,7 +320,7 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, passedHalfWayFor audioItem: AGAudioItem) {
-        let completeInfo = (audioItem as! SourceTrackAudioItem).relisten
+        let completeInfo = (audioItem as! SourceTrackAudioItem).track
         
         MyLibraryManager.shared.trackWasPlayed(completeInfo)
         eventTrackWasPlayed.raise(completeInfo)
@@ -340,7 +329,7 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
 
 extension PlaybackController : AGAudioPlayerViewControllerCellDataSource {
     public func cell(inTableView tableView: UITableView, basedOnCell cell: UITableViewCell, atIndexPath: IndexPath, forPlaybackItem playbackItem: AGAudioItem, isCurrentlyPlaying: Bool) -> UITableViewCell {
-        let completeInfo = (playbackItem as! SourceTrackAudioItem).relisten
+        let completeInfo = (playbackItem as! SourceTrackAudioItem).track
         
         let layout = TrackStatusLayout(
             withTrack: completeInfo,
@@ -359,7 +348,7 @@ extension PlaybackController : AGAudioPlayerViewControllerCellDataSource {
     }
     
     public func heightForCell(inTableView tableView: UITableView, atIndexPath: IndexPath, forPlaybackItem playbackItem: AGAudioItem, isCurrentlyPlaying: Bool) -> CGFloat {
-        let completeInfo = (playbackItem as! SourceTrackAudioItem).relisten
+        let completeInfo = (playbackItem as! SourceTrackAudioItem).track
         
         let layout = TrackStatusLayout(
             withTrack: completeInfo,

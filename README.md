@@ -2,7 +2,7 @@
 
 Relisten is an iOS app for streaming millions of free recordings from the [Internet Archive](https://archive.org/details/audio)
 
-![Relisten Main Screen](Relisten-home.png) ![Relisten Player Screen](Relisten-player.png) 
+![Relisten Main Screen](Assets/readme-banner.png)
 
 # Getting Started
 

@@ -19,6 +19,14 @@ class DownloadedViewController: ShowListViewController<[OfflineSourceMetadata]> 
         title = "Downloaded Shows"
         
         latestData = loadOffline()
+        
+        MyLibraryManager.shared.library.observeOfflineSources.observe { [weak self] (_, _) in
+            let offlineSources = self?.loadOffline()
+            if !(offlineSources == self?.latestData) {
+                self?.latestData = offlineSources
+                self?.render()
+            }
+        }.add(to: &disposal)
     }
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {

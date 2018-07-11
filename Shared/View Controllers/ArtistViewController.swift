@@ -27,7 +27,7 @@ public class ArtistViewController : RelistenBaseAsyncTableontroller {
     let resourceToday: Resource
     var resourceTodayData: [Show]? = nil
     
-    public var recentlyPlayed: [Track] = []
+    public var recentlyPlayedTracks: [Track] = []
     public let recentShowsNode: HorizontalShowCollectionCellNode
     public let todayShowsNode: HorizontalShowCollectionCellNode
 
@@ -82,22 +82,15 @@ public class ArtistViewController : RelistenBaseAsyncTableontroller {
         
         setupBackgroundSlideshow()
         
-        MyLibraryManager.shared.observeRecentlyPlayedShows
-            .observe({ [weak self] shows, _ in
-                guard let s = self else { return }
-                
-                s.recentlyPlayed = MyLibraryManager.shared.library.recentlyPlayedByArtist(s.artist)
-                s.recentShowsNode.shows = s.recentlyPlayed.map({ ($0.showInfo.show, nil) })
-                
-                DispatchQueue.main.async {
-                    s.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
-                }
-            })
-            .add(to: &disposal)
+        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe({ [weak self] tracks, _ in
+            guard let s = self else { return }
+            s.reloadRecentShows(tracks: tracks)
+        }).add(to: &disposal)
     }
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        reloadRecentShows(tracks: MyLibraryManager.shared.library.recentlyPlayedTracks)
 
         resourceToday.loadFromCacheThenUpdate()
     }
@@ -114,23 +107,44 @@ public class ArtistViewController : RelistenBaseAsyncTableontroller {
         viewWillDisappear_SlideShow(animated)
     }
     
+    private func reloadRecentShows(tracks: [Track]) {
+        let filteredTracks = tracks.filter { (track) -> Bool in
+            return track.showInfo.artist == artist
+        }
+        if !(filteredTracks == recentlyPlayedTracks) {
+            DispatchQueue.main.async {
+                self.recentlyPlayedTracks = filteredTracks
+                self.recentShowsNode.shows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) })
+                self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+            }
+        }
+    }
+    
+    private func reloadShowsOnThisDate(todaysShows: [Show]) {
+        if !(todaysShows == resourceTodayData) {
+            var shows : [(show: Show, artist: ArtistWithCounts?)] = []
+            todaysShows.forEach { (show) in
+                shows.append((show: show, artist: artist))
+            }
+            
+            DispatchQueue.main.async {
+                self.resourceTodayData = todaysShows
+                self.todayShowsNode.shows = todaysShows.map({ ($0, nil) })
+                self.tableNode.reloadSections([ Sections.today.rawValue ], with: .automatic)
+            }
+        }
+    }
+    
     static var dateFormatter: DateFormatter = {
         let d = DateFormatter()
         d.dateFormat = "MMM d"
         return d
     }()
     
-    func render() {
-        if let today = resourceTodayData {
-            tableNode.reloadSections([ Sections.today.rawValue ], with: .automatic)
-            todayShowsNode.shows = today.map({ ($0, nil) })
-        }
-    }
-    
     public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
-        resourceTodayData = resource.latestData?.typedContent()
-        
-        render()
+        if let todaysShows : [Show] = resource.latestData?.typedContent() {
+            reloadShowsOnThisDate(todaysShows: todaysShows)
+        }
     }
     
     // recently played by band
@@ -208,7 +222,7 @@ extension ArtistViewController {
         case .today:
             return (resourceTodayData?.count ?? 0) > 0 ? 1 : 0
         case .recentlyPlayed:
-            return recentlyPlayed.count > 0 ? 1 : 0
+            return recentlyPlayedTracks.count > 0 ? 1 : 0
         case .count:
             fatalError()
         }
@@ -237,7 +251,7 @@ extension ArtistViewController {
                 return nil
             }
         case .recentlyPlayed:
-            return recentlyPlayed.count > 0 ? "My Recently Played Shows" : nil
+            return recentlyPlayedTracks.count > 0 ? "My Recently Played Shows" : nil
         default:
             return nil
         }
@@ -252,8 +266,8 @@ extension ArtistViewController : ASCollectionDelegate {
             vc.presentIfNecessary(navigationController: navigationController)
         }
         else if collectionNode === recentShowsNode.collectionNode {
-            let item = recentlyPlayed[indexPath.row]
-            let vc = SourcesViewController(artist: self.artist, show: item.show)
+            let item = recentlyPlayedTracks[indexPath.row]
+            let vc = SourcesViewController(artist: self.artist, show: item.showInfo.show)
             vc.presentIfNecessary(navigationController: navigationController)
         }
     }

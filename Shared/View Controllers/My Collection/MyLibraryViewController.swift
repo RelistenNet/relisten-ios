@@ -18,6 +18,14 @@ class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]>
         title = "My Library"
         
         latestData = loadMyShows()
+        
+        MyLibraryManager.shared.observeMyShows.observe { [weak self] (_, _) in
+            let myShows = self?.loadMyShows()
+            if !(myShows == self?.latestData) {
+                self?.latestData = myShows
+                self?.render()
+            }
+        }.add(to: &disposal)
     }
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {

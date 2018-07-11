@@ -46,8 +46,15 @@ public class RelistenDownloadManager {
 
     fileprivate var urlToTrackMap: [URL: Track] = [:]
     
+    private let initQueue : DispatchQueue = DispatchQueue(label: "live.relisten.ios.mp3-offline.queue")
+    private var backingDownloadManager : MZDownloadManager?
     lazy var downloadManager: MZDownloadManager = {
-        return MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self)
+        initQueue.sync {
+            if (backingDownloadManager == nil) {
+                backingDownloadManager = MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self)
+            }
+        }
+        return backingDownloadManager!
     }()
     
     private func downloadModelForTrack(_ track: Track) -> MZDownloadModel? {
@@ -132,7 +139,7 @@ public class RelistenDownloadManager {
     }
     
     private func addDownloadTask(_ track: Track) {
-        downloadManager.addDownloadTask(track.title, fileURL: track.mp3_url.absoluteString, destinationPath: downloadPath(forTrack: track))
+        downloadManager.addDownloadTask(downloadFilename(forTrack: track), fileURL: track.mp3_url.absoluteString, destinationPath: downloadFolder)
     }
     
     public func download(track: Track, raiseEvent: Bool = true) {
@@ -151,9 +158,21 @@ public class RelistenDownloadManager {
     let downloadFolder: String
     let statusLabel: MarqueeLabel
 
-    func downloadPath(forURL url: URL) -> String {
+    func downloadFilename(forURL url: URL) -> String {
         let filename = MD5(url.absoluteString)! + ".mp3"
-        return downloadFolder + "/" + filename
+        return filename
+    }
+    
+    func downloadFilename(forTrack track: Track) -> String {
+        return downloadFilename(forURL: track.mp3_url)
+    }
+    
+    func downloadFilename(forSourceTrack sourceTrack: SourceTrack) -> String {
+        return downloadFilename(forURL: sourceTrack.mp3_url)
+    }
+    
+    func downloadPath(forURL url: URL) -> String {
+        return downloadFolder + "/" + downloadFilename(forURL: url)
     }
     
     func downloadPath(forTrack track: Track) -> String {

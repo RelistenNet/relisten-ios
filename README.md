@@ -4,7 +4,11 @@ Relisten is an iOS app for streaming millions of free recordings from the [Inter
 
 ![Relisten Main Screen](Assets/readme-banner.png)
 
-# Getting Started
+# Beta Testing
+
+[Click Here](https://beta.relisten.live/) to add yourself to the beta testing group for Relisten.
+
+# Development: Getting Started
 
 If you'd like to build Relisten iOS you'll need [Cocoapods](http://cocoapods.org). 
 

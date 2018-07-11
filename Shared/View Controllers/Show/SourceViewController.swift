@@ -160,6 +160,22 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
         }
     }
     
+    private func presentShareSheet() {
+        let show = completeShowInformation
+        let activities: [Any] = [ShareHelper.text(forSource: show), ShareHelper.url(forSource: show)]
+        
+        let shareVc = UIActivityViewController(activityItems: activities, applicationActivities: nil)
+        shareVc.modalTransitionStyle = .coverVertical
+        
+        if PlaybackController.sharedInstance.hasBarBeenAdded {
+            PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
+        }
+        else {
+            self.present(shareVc, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: UITableViewDelegate
     func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 1 + source.sets.count
     }
@@ -199,39 +215,36 @@ class SourceViewController: RelistenBaseAsyncTableontroller {
         return { TrackStatusCellNode(withTrack: track, withHandler: self) }
     }
     
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        // Don't highlight taps on the "my shows"/downloads cells, since they require a tap on the switch
+        if indexPath.section == 0, indexPath.row > 0, indexPath.row < 3 {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.section == 0 && indexPath.row == 0 {
-            navigationController?.pushViewController(SourceDetailsViewController(artist: artist, show: show, source: source), animated: true)
-            
-            return
-        }
-        else if indexPath.section == 0 && indexPath.row == 3 {
-            let show = completeShowInformation
-            let activities: [Any] = [ShareHelper.text(forSource: show), ShareHelper.url(forSource: show)]
-            
-            let shareVc = UIActivityViewController(activityItems: activities, applicationActivities: nil)
-            shareVc.modalTransitionStyle = .coverVertical
-            
-            if PlaybackController.sharedInstance.hasBarBeenAdded {
-                PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
+        if indexPath.section == 0 {
+            switch indexPath.row {
+                case 0:
+                    navigationController?.pushViewController(SourceDetailsViewController(artist: artist, show: show, source: source), animated: true)
+                case 3:
+                    presentShareSheet()
+                default:
+                    break
             }
-            else {
-                self.present(shareVc, animated: true, completion: nil)
-            }
-            
-            return
-        }
-        else if indexPath.section == 0 {
-            return
         }
         
-        TrackActions.play(
-            trackAtIndexPath: IndexPath(row: indexPath.row, section: indexPath.section - 1),
-            inShow: completeShowInformation,
-            fromViewController: self
-        )
+        if indexPath.section > 0 {
+            TrackActions.play(
+                trackAtIndexPath: IndexPath(row: indexPath.row, section: indexPath.section - 1),
+                inShow: completeShowInformation,
+                fromViewController: self
+            )
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

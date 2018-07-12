@@ -75,9 +75,14 @@ public class TrackActions {
     
     public static func play(track: Track, fromViewController vc: UIViewController) {
         var idx: UInt = 0
+        var trackFound : Bool = false
         for set in track.showInfo.source.sets {
+            if trackFound {
+                break
+            }
             for sourceTrack in set.tracks {
                 if sourceTrack.id == track.id {
+                    trackFound = true
                     break
                 }
                 

@@ -76,8 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupPlayback() {
         PlaybackController.window = window
-        let audioPlayer = PlaybackController.sharedInstance.viewController.player
-        PlaybackController.sharedInstance.viewController.audioPlayerAudioSessionSetUp(audioPlayer)
+        let _ = PlaybackController.sharedInstance
         
         DispatchQueue.main.async {
             let _ = RelistenDownloadManager.shared

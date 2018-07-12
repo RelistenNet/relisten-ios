@@ -24,12 +24,20 @@ let TimeIntervalHumanizeShortFormatter = { () -> DateComponentsFormatter in
     return formatter
 }()
 
+// DateComponentsFormatter claims to be thread safe, but without this serial queue for formatting there are
+//  occasional races where dates will get formatted with a leading '0'
+let formatQueue : DispatchQueue = DispatchQueue(label: "live.relisten.ios.dateFormatQueue")
+
 public extension TimeInterval {
     public func humanize() -> String {
-        if(self < 60) {
-            return TimeIntervalHumanizeShortFormatter.string(from: self)!
+        var returnValue = ""
+        formatQueue.sync {
+            if(self < 60) {
+                returnValue = TimeIntervalHumanizeShortFormatter.string(from: self)!
+            }
+            
+            returnValue = TimeIntervalHumanizeFormatter.string(from: self)!
         }
-        
-        return TimeIntervalHumanizeFormatter.string(from: self)!
+        return returnValue
     }
 }

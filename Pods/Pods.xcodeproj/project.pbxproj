@@ -19297,40 +19297,6 @@
 			};
 			name = Debug;
 		};
-		1A5BD4D92F84C3D220CF90FB0F04733D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 883E6F534D5890B8D1577FFDBA150B4E /* NapySlider.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/NapySlider/NapySlider-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/NapySlider/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/NapySlider/NapySlider.modulemap";
-				PRODUCT_MODULE_NAME = NapySlider;
-				PRODUCT_NAME = NapySlider;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		1D72362946507592541894438C5E0AD9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E01E05ACC5FC76FBB5079096E99F8565 /* Pods-RelistenUITests.release.xcconfig */;
@@ -21116,6 +21082,39 @@
 			};
 			name = Release;
 		};
+		A2E6299BA26EBDD387F15B83658C66EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 883E6F534D5890B8D1577FFDBA150B4E /* NapySlider.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/NapySlider/NapySlider-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NapySlider/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NapySlider/NapySlider.modulemap";
+				PRODUCT_MODULE_NAME = NapySlider;
+				PRODUCT_NAME = NapySlider;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		A3AF0030D0CFDFFAF2074AB10CB9095F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DAE0649997E23EC9A0D832E9EF34F581 /* SVProgressHUD.xcconfig */;
@@ -21374,6 +21373,40 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		AF06058E5AAC3EB17AADCE334A6DB023 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 883E6F534D5890B8D1577FFDBA150B4E /* NapySlider.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/NapySlider/NapySlider-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NapySlider/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/NapySlider/NapySlider.modulemap";
+				PRODUCT_MODULE_NAME = NapySlider;
+				PRODUCT_NAME = NapySlider;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		AF8248EAC6B8151156CDC576CCE66A2C /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -21881,39 +21914,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		DA34FBE272A5DBFBD9BDA78E56A2A669 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 883E6F534D5890B8D1577FFDBA150B4E /* NapySlider.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/NapySlider/NapySlider-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/NapySlider/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/NapySlider/NapySlider.modulemap";
-				PRODUCT_MODULE_NAME = NapySlider;
-				PRODUCT_NAME = NapySlider;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		E014F2CAA54E7E9CBE07F50FBDFB4A1D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -22549,8 +22549,8 @@
 		92AA2106D84848D9F1F74B578C250A9C /* Build configuration list for PBXNativeTarget "NapySlider" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DA34FBE272A5DBFBD9BDA78E56A2A669 /* Debug */,
-				1A5BD4D92F84C3D220CF90FB0F04733D /* Release */,
+				A2E6299BA26EBDD387F15B83658C66EC /* Debug */,
+				AF06058E5AAC3EB17AADCE334A6DB023 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

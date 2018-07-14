@@ -21,6 +21,7 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
     let isRandom: Bool
     
     var sources: [SourceFull] = []
+    var sourceToPresent : SourceFull?
     var canSkipIfSingleSource : Bool
     
     public required init(artist: ArtistWithCounts, show: Show) {
@@ -49,12 +50,15 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
         fatalError()
     }
     
-    func presentIfNecessary(navigationController : UINavigationController?) {
+    func presentIfNecessary(navigationController : UINavigationController?, forSource source: SourceFull? = nil) {
         self.load()
         var controllerToPresent : UIViewController = self
-        if self.sources.count == 1 {
-            if let show = latestData {
+        sourceToPresent = source
+        if let show = latestData {
+            if self.sources.count == 1 {
                 controllerToPresent = SourceViewController(artist: artist, show: show, source: sources[0])
+            } else if let source = source {
+                controllerToPresent = SourceViewController(artist: artist, show: show, source: source)
             }
         }
         navigationController?.pushViewController(controllerToPresent, animated: true)
@@ -86,8 +90,14 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
         
         sources = data.sources
         if canSkipIfSingleSource {
+            var controllerToPresent : SourceViewController?
             if sources.count == 1 {
-                let controllerToPresent = SourceViewController(artist: artist, show: data, source: sources[0])
+                controllerToPresent = SourceViewController(artist: artist, show: data, source: sources[0])
+            } else if let source = sourceToPresent {
+                controllerToPresent = SourceViewController(artist: artist, show: data, source: source)
+            }
+            
+            if let controllerToPresent = controllerToPresent {
                 if var viewControllers = navigationController?.viewControllers {
                     if viewControllers.last == self {
                         viewControllers.removeLast()

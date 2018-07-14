@@ -230,7 +230,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         
         if let s = show {
             let sourcesController = SourcesViewController(artist: s.artist, show: s.show)
-            sourcesController.presentIfNecessary(navigationController: navigationController)
+            sourcesController.presentIfNecessary(navigationController: navigationController, forSource: s.source)
         }
     }
 }

@@ -9,14 +9,57 @@
 import Foundation
 import MediaPlayer
 import Observable
+import Siesta
+import UIKit
+import CoreGraphics
 
-public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayableContentDataSource {
+public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayableContentDataSource, ResourceObserver {
     static let shared = CarPlayController()
     var disposal = Disposal()
     
     private var recentlyPlayedTracks: [Track] = []
     private var offlineShows: [OfflineSourceMetadata] = []
     private var favoriteShowsByArtist: [Artist : [CompleteShowInformation]] = [:]
+    private var allArtists: [ArtistWithCounts] = []
+    
+    // MARK: Setup
+    
+    func setup() {
+        MPPlayableContentManager.shared().delegate = self;
+        MPPlayableContentManager.shared().dataSource = self;
+        
+        PlaybackController.sharedInstance.observeCurrentTrack.observe { (current, _) in
+            var nowPlayingIdentifiers : [String] = []
+            if let current = current {
+                nowPlayingIdentifiers.append(current.carPlayIdentifier)
+            }
+            MPPlayableContentManager.shared().nowPlayingIdentifiers = nowPlayingIdentifiers
+            }.add(to: &disposal)
+        
+        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe({ [weak self] tracks, _ in
+            self?.reloadRecentTracks(tracks: tracks)
+        }).add(to: &disposal)
+        
+        MyLibraryManager.shared.library.observeOfflineSources.observe({ [weak self] shows, _ in
+            self?.reloadOfflineSources(shows: shows)
+        }).add(to: &disposal)
+        
+        MyLibraryManager.shared.observeMyShows.observe({ [weak self] shows, _ in
+            self?.reloadFavorites(shows: MyLibraryManager.shared.library.shows)
+        }).add(to: &disposal)
+        
+        loadArtists()
+    }
+    
+    deinit {
+        RelistenApi.artists().removeObservers(ownedBy: self)
+    }
+    
+    private func loadArtists() {
+        let resource = RelistenApi.artists()
+        resource.addObserver(self)
+        resource.loadFromCacheThenUpdate()
+    }
     
     // MARK: Favorite Accessors
     private var favoriteArtistsSorted : [Artist] {
@@ -40,8 +83,63 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         return nil
     }
     
-    // MARK: Tab Headers
+    // MARK: Reloading Data
+    private func reloadRecentTracks(tracks: [Track]) {
+        if !(tracks == recentlyPlayedTracks) {
+            DispatchQueue.main.async {
+                MPPlayableContentManager.shared().beginUpdates()
+                self.recentlyPlayedTracks = tracks
+                MPPlayableContentManager.shared().endUpdates()
+                MPPlayableContentManager.shared().reloadData()
+            }
+        }
+    }
     
+    private func reloadOfflineSources(shows: Set<OfflineSourceMetadata>) {
+        let showArray = shows.map({ return $0 })
+        if !(showArray == offlineShows) {
+            DispatchQueue.main.async {
+                MPPlayableContentManager.shared().beginUpdates()
+                self.offlineShows = showArray
+                MPPlayableContentManager.shared().endUpdates()
+                MPPlayableContentManager.shared().reloadData()
+            }
+        }
+    }
+    
+    private func reloadFavorites(shows: [CompleteShowInformation]) {
+        var showsByArtist : [Artist : [CompleteShowInformation]] = [:]
+        shows.forEach { (show) in
+            var artistShows = showsByArtist[show.artist]
+            if artistShows == nil {
+                artistShows = []
+            }
+            artistShows?.append(show)
+            showsByArtist[show.artist] = artistShows
+        }
+        if !(showsByArtist == favoriteShowsByArtist) {
+            DispatchQueue.main.async {
+                MPPlayableContentManager.shared().beginUpdates()
+                self.favoriteShowsByArtist = showsByArtist
+                MPPlayableContentManager.shared().endUpdates()
+                MPPlayableContentManager.shared().reloadData()
+            }
+        }
+    }
+    
+    public func resourceChanged(_ resource: Resource, event: ResourceEvent) {
+        if let resourceData : [ArtistWithCounts] = resource.latestData?.typedContent() {
+            DispatchQueue.main.async {
+                MPPlayableContentManager.shared().beginUpdates()
+                self.allArtists = resourceData
+                MPPlayableContentManager.shared().endUpdates()
+                MPPlayableContentManager.shared().reloadData()
+            }
+        }
+    }
+
+    
+    // MARK: Tab Headers
     private func resizeImage(image : UIImage, newSize : CGSize) -> UIImage {
         if image.size == newSize {
             return image
@@ -104,33 +202,6 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         return contentItem
     }()
     
-    // MARK: Setup
-    
-    func setup() {
-        MPPlayableContentManager.shared().delegate = self;
-        MPPlayableContentManager.shared().dataSource = self;
-        
-        PlaybackController.sharedInstance.observeCurrentTrack.observe { (current, _) in
-            var nowPlayingIdentifiers : [String] = []
-            if let current = current {
-                nowPlayingIdentifiers.append(current.carPlayIdentifier)
-            }
-            MPPlayableContentManager.shared().nowPlayingIdentifiers = nowPlayingIdentifiers
-        }.add(to: &disposal)
-        
-        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe({ [weak self] tracks, _ in
-            self?.reloadRecentTracks(tracks: tracks)
-        }).add(to: &disposal)
-        
-        MyLibraryManager.shared.library.observeOfflineSources.observe({ [weak self] shows, _ in
-            self?.reloadOfflineSources(shows: shows)
-        }).add(to: &disposal)
-        
-        MyLibraryManager.shared.observeMyShows.observe({ [weak self] shows, _ in
-            self?.reloadFavorites(shows: MyLibraryManager.shared.library.shows)
-        }).add(to: &disposal)
-    }
-    
     // MARK: MPPlayableContentDelegate
 //    public func playableContentManager(_ contentManager: MPPlayableContentManager, initializePlaybackQueueWithContentItems contentItems: [Any]?, completionHandler: @escaping (Error?) -> Swift.Void) {
 //
@@ -152,7 +223,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             
         case .artists:
             // Artists->Artists
-            // TODO
+            (_, _, _, _, _, _, track) = allArtistItems(at: indexPath)
             break
             
         case .count:
@@ -218,10 +289,10 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         return (offlineMetadata, track)
     }
     
-    private func favoriteItems(at indexPath: IndexPath) -> (Artist?, Int?, CompleteShowInformation?, Track?) {
+    private func favoriteItems(at indexPath: IndexPath) -> (Artist?, showCount : Int?, CompleteShowInformation?, Track?) {
         var artist : Artist?
-        var show : CompleteShowInformation?
         var showCount : Int?
+        var show : CompleteShowInformation?
         var track : Track?
         if carPlaySection(from: indexPath) == .favorite {
             if indexPath.count > 1 {
@@ -247,6 +318,55 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             }
         }
         return (artist, showCount, show, track)
+    }
+    
+    private func allArtistItems(at indexPath: IndexPath) -> (ArtistWithCounts?, yearCount: Int?, Year?, showCount: Int?, Show?, SourceFull?, Track?) {
+        var artist : ArtistWithCounts?
+        var yearCount : Int?
+        var years : [Year]?
+        var year : Year?
+        var yearWithShows : YearWithShows?
+        var showCount : Int?
+        var show : Show?
+        var source : SourceFull?
+        var track : Track?
+        if carPlaySection(from: indexPath) == .artists {
+            if indexPath.count > 1 {
+                artist = allArtists[indexPath[1]]
+                if let artist = artist {
+                    showCount = artist.show_count
+                    
+                    years = RelistenApi.years(byArtist: artist).latestData?.typedContent()
+                    if let years = years {
+                        yearCount = years.count
+                    }
+                }
+            }
+            if let artist = artist {
+                if indexPath.count > 2 {
+                    if let years = years {
+                        year = years[indexPath[2]]
+                        
+                        if let year = year {
+                            yearWithShows = RelistenApi.shows(inYear: year, byArtist: artist).latestData?.typedContent()
+                            if let yearWithShows = yearWithShows {
+                                showCount = yearWithShows.shows.count
+                            }
+                        }
+                    }
+                }
+                if indexPath.count > 3 {
+                    if let yearWithShows = yearWithShows {
+                        show = yearWithShows.shows[indexPath[3]]
+                    }
+                }
+                if indexPath.count > 4 {
+                    
+                }
+            }
+        }
+        
+        return (artist, yearCount, year, showCount, show, source, track)
     }
     
     public func numberOfChildItems(at indexPath: IndexPath) -> Int {
@@ -277,8 +397,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 
             case .artists:
                 // Artists->Artists
-                // TODO
-                return 0
+                return allArtists.count
                 
             case .count:
                 return 0
@@ -304,8 +423,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 return 0
                 
             case .artists:
-                // Artists->Artist->Shows
-                // TODO
+                // Artists->Artist->Years
+                let (_, yearCount, _, _, _, _, _) = allArtistItems(at: indexPath)
+                if let yearCount = yearCount {
+                    return yearCount
+                }
                 return 0
                 
             case .count:
@@ -328,9 +450,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 return 0
                 
             case .artists:
-                // Artists->Artist->Show->Sources
-                // TODO
-                return 0
+                // Artists->Artist->Year->Shows
+                let (_, _, _, showCount, _, _, _) = allArtistItems(at: indexPath)
+                if let showCount = showCount {
+                    return showCount
+                }
                 
             case .count:
                 return 0
@@ -347,9 +471,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 return 0
                 
             case .artists:
-                // Artists->Artist->Show->Sources->Tracks
-                // TODO
-                return 0
+                // Artists->Artist->Year->Show->Tracks
+                let (_, _, _, _, _, source, _) = allArtistItems(at: indexPath)
+                if let source = source {
+                    return source.tracksFlattened.count
+                }
                 
             case .count:
                 return 0
@@ -405,8 +531,10 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 
             case .artists:
                 // Artists->Artists
-                // TODO
-                return nil
+                let (artist, _, _, _, _, _, _) = allArtistItems(at: indexPath)
+                if let artist = artist {
+                    return artist.asMPContentItem(withShowCount: artist.show_count)
+                }
                 
             case .count:
                 return nil
@@ -431,9 +559,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 }
                 
             case .artists:
-                // Artists->Artists->Shows
-                // TODO
-                return nil
+                // Artists->Artist->Years
+                let (_, _, year, _, _, _, _) = allArtistItems(at: indexPath)
+                if let year = year {
+                    return year.asMPContentItem()
+                }
                 
             case .count:
                 return nil
@@ -454,9 +584,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 }
                 
             case .artists:
-                // Artists->Artists->Shows->Sources
-                // TODO
-                return nil
+                // Artists->Artist->Year->Shows
+                let (_, _, _, _, show, _, _) = allArtistItems(at: indexPath)
+                if let show = show {
+                    return show.asMPContentItem()
+                }
                 
             case .count:
                 return nil
@@ -473,9 +605,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 return nil
                 
             case .artists:
-                // Artists->Artists->Shows->Sources->Tracks
-                // TODO
-                return nil
+                // Artists->Artist->Year->Show->Tracks
+                let (_, _, _, _, _, _, track) = allArtistItems(at: indexPath)
+                if let track = track {
+                    return track.asMPContentItem()
+                }
                 
             case .count:
                 return nil
@@ -486,53 +620,64 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         return nil
     }
     
-    private func reloadRecentTracks(tracks: [Track]) {
-        if !(tracks == recentlyPlayedTracks) {
-            DispatchQueue.main.async {
-                MPPlayableContentManager.shared().beginUpdates()
-                self.recentlyPlayedTracks = tracks
-                MPPlayableContentManager.shared().endUpdates()
-                MPPlayableContentManager.shared().reloadData()
+    public func beginLoadingChildItems(at indexPath: IndexPath, completionHandler: @escaping (Error?) -> Swift.Void) {
+        guard let section = carPlaySection(from: indexPath) else {
+            // TODO: Create an error
+            completionHandler(nil)
+            return
+        }
+        
+        DispatchQueue.main.async {
+            var request : Request?
+            switch indexPath.count {
+            case 2:
+                switch section {
+                case .artists:
+                    let (artist, _, _, _, _, _, _) = self.allArtistItems(at: indexPath)
+                    if let artist = artist {
+                        request = RelistenApi.years(byArtist: artist).loadFromCacheThenUpdate()
+                    }
+                default:
+                    break
+                }
+            case 3:
+                switch section {
+                case .artists:
+                    let (artist, _, year, _, _, _, _) = self.allArtistItems(at: indexPath)
+                    if let artist = artist {
+                        if let year = year {
+                            request = RelistenApi.shows(inYear: year, byArtist: artist).loadFromCacheThenUpdate()
+                        }
+                    }
+                default:
+                    break
+                }
+            case 4:
+                switch section {
+                case .artists:
+                    let (artist, _, _, _, showInfo, _, _) = self.allArtistItems(at: indexPath)
+                    if let artist = artist {
+                        if let showInfo = showInfo {
+                            request = RelistenApi.showWithSources(forShow: showInfo, byArtist: artist).loadFromCacheThenUpdate()
+                        }
+                    }
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            
+            if let request = request {
+                request.onCompletion { (_) in
+                    completionHandler(nil)
+                }
+            } else {
+                completionHandler(nil)
             }
         }
     }
-    
-    private func reloadOfflineSources(shows: Set<OfflineSourceMetadata>) {
-        let showArray = shows.map({ return $0 })
-        if !(showArray == offlineShows) {
-            DispatchQueue.main.async {
-                MPPlayableContentManager.shared().beginUpdates()
-                self.offlineShows = showArray
-                MPPlayableContentManager.shared().endUpdates()
-                MPPlayableContentManager.shared().reloadData()
-            }
-        }
-    }
-    
-    private func reloadFavorites(shows: [CompleteShowInformation]) {
-        var showsByArtist : [Artist : [CompleteShowInformation]] = [:]
-        shows.forEach { (show) in
-            var artistShows = showsByArtist[show.artist]
-            if artistShows == nil {
-                artistShows = []
-            }
-            artistShows?.append(show)
-            showsByArtist[show.artist] = artistShows
-        }
-        if !(showsByArtist == favoriteShowsByArtist) {
-            DispatchQueue.main.async {
-                MPPlayableContentManager.shared().beginUpdates()
-                self.favoriteShowsByArtist = showsByArtist
-                MPPlayableContentManager.shared().endUpdates()
-                MPPlayableContentManager.shared().reloadData()
-            }
-        }
-    }
-    
-//    public func beginLoadingChildItems(at indexPath: IndexPath, completionHandler: @escaping (Error?) -> Swift.Void) {
-//        completionHandler(nil)
-//    }
-//
+
 //    public func contentItem(forIdentifier identifier: String, completionHandler: @escaping (MPContentItem?, Error?) -> Swift.Void) {
 //
 //    }
@@ -628,6 +773,45 @@ extension CompleteShowInformation {
         } else {
             contentItem.subtitle = self.artist.name
         }
+        contentItem.isContainer = true
+        contentItem.isPlayable = false
+        
+        return contentItem
+    }
+}
+
+extension Show {
+    public var carPlayIdentifier : String {
+        get {
+            return "live.relisten.show.\(self.id)"
+        }
+    }
+    
+    public func asMPContentItem() -> MPContentItem {
+        let contentItem = MPContentItem(identifier: self.carPlayIdentifier)
+        contentItem.title = self.display_date
+        if let venueName = self.venue?.name {
+            contentItem.subtitle = "\(venueName)"
+        }
+        contentItem.isContainer = true
+        contentItem.isPlayable = false
+        
+        return contentItem
+    }
+}
+
+extension Year {
+    public var carPlayIdentifier : String {
+        get {
+            return "live.relisten.year.\(self.id)"
+        }
+    }
+    
+    public func asMPContentItem() -> MPContentItem {
+        let contentItem = MPContentItem(identifier: self.carPlayIdentifier)
+        contentItem.title = self.year
+        let showString = (show_count > 1) ? "shows" : "show"
+        contentItem.subtitle = "\(show_count) \(showString)"
         contentItem.isContainer = true
         contentItem.isPlayable = false
         

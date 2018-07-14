@@ -291,7 +291,7 @@ extension Array where Element : Layout {
 
 import AsyncDisplayKit
 
-public class RelistenBaseAsyncTableontroller : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
+public class RelistenBaseAsyncTableViewController : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
     internal let tableNode: ASTableNode!
     
     internal let api = RelistenApi
@@ -336,7 +336,7 @@ public class RelistenBaseAsyncTableontroller : ASViewController<ASDisplayNode>, 
     // MARK: TableView "dataSource" and "delegate"
 }
 
-public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableontroller {
+public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewController {
     internal let statusOverlay = RelistenResourceStatusOverlay()
     
     internal var resource: Resource? { get { return nil } }

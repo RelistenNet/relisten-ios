@@ -20,7 +20,26 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     private var recentlyPlayedTracks: [Track] = []
     private var offlineShows: [OfflineSourceMetadata] = []
     private var favoriteShowsByArtist: [Artist : [CompleteShowInformation]] = [:]
-    private var allArtists: [ArtistWithCounts] = []
+    
+    private var favoriteArtistIds : [Int] = [] {
+        didSet {
+            _sortedArtists = self.sortedArtists(self.allArtists)
+        }
+    }
+    
+    private var _sortedArtists : [ArtistWithCounts] = []
+    private var allArtists: [ArtistWithCounts] {
+        get {
+            return _sortedArtists
+        }
+        
+        set {
+            let artists = sortedArtists(newValue)
+            if !(artists == _sortedArtists) {
+                _sortedArtists = artists
+            }
+        }
+    }
     
     // MARK: Setup
     
@@ -44,6 +63,10 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             self?.reloadOfflineSources(shows: shows)
         }).add(to: &disposal)
         
+        MyLibraryManager.shared.observeFavoriteArtistIds.observe({ [weak self] artistIds, _ in
+            self?.reloadFavoriteArtistIds(artistIds: Array(artistIds))
+        }).add(to: &disposal)
+        
         MyLibraryManager.shared.observeMyShows.observe({ [weak self] shows, _ in
             self?.reloadFavorites(shows: MyLibraryManager.shared.library.shows)
         }).add(to: &disposal)
@@ -59,6 +82,26 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         let resource = RelistenApi.artists()
         resource.addObserver(self)
         resource.loadFromCacheThenUpdate()
+    }
+    
+    private func sortedArtists(_ artists : [ArtistWithCounts]) -> [ArtistWithCounts] {
+        var favoriteArtists : [ArtistWithCounts] = []
+        var remainingArtists : [ArtistWithCounts] = []
+        for artist : ArtistWithCounts in artists {
+            if self.favoriteArtistIds.contains(artist.id) {
+                favoriteArtists.append(artist)
+            } else {
+                remainingArtists.append(artist)
+            }
+        }
+        return favoriteArtists + remainingArtists
+    }
+    
+    private func sortArtists() {
+        let sortedArtists = self.sortedArtists(self.allArtists)
+        if !(sortedArtists != self.allArtists) {
+            self.allArtists = sortedArtists
+        }
     }
     
     // MARK: Favorite Accessors
@@ -104,6 +147,15 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 MPPlayableContentManager.shared().endUpdates()
                 MPPlayableContentManager.shared().reloadData()
             }
+        }
+    }
+    
+    private func reloadFavoriteArtistIds(artistIds: [Int]) {
+        DispatchQueue.main.async {
+            MPPlayableContentManager.shared().beginUpdates()
+            self.favoriteArtistIds = artistIds
+            MPPlayableContentManager.shared().endUpdates()
+            MPPlayableContentManager.shared().reloadData()
         }
     }
     

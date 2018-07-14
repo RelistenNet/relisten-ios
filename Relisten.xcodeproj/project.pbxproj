@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		436C220C20F6C4FE0088F563 /* CarPlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EF8D6720F01A41002FF970 /* CarPlayController.swift */; };
 		4370C24520EDDD7D00D3358B /* CompleteShowInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */; };
+		43EF8D6820F01A41002FF970 /* CarPlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EF8D6720F01A41002FF970 /* CarPlayController.swift */; };
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
 		7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */; };
@@ -177,6 +179,8 @@
 /* Begin PBXFileReference section */
 		2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
+		43EF8D6720F01A41002FF970 /* CarPlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayController.swift; path = "View Controllers/CarPlayController.swift"; sourceTree = "<group>"; };
+		43EF8D6920F099DC002FF970 /* CREDITS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CREDITS.md; sourceTree = "<group>"; };
 		598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Relisten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3DAE0BE91F9DD1D3300EE2 /* Pods-PhishODUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		74ABE39157492B09F7AB0CDB /* Pods-PhishODUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -397,6 +401,7 @@
 				7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */,
 				7C8044141E6F4B1E00BA946E /* AppColors.swift */,
 				7CCE0DE91F9BD38B00041D47 /* Relisten-Bridging-Header.h */,
+				43EF8D6920F099DC002FF970 /* CREDITS.md */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -604,6 +609,7 @@
 				7CABACC71EDF1419009C5E3B /* Show */,
 				7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */,
 				7C8044081E6F29A800BA946E /* ArtistViewController.swift */,
+				43EF8D6720F01A41002FF970 /* CarPlayController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -758,7 +764,7 @@
 					7C8EF10C1D5A49C200004B5C = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HT7ELV3Q35;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1031,6 +1037,7 @@
 				7C31552C20C206BA00F07622 /* Numeric.swift in Sources */,
 				7C13705220B9E8B800710E90 /* Array.swift in Sources */,
 				7C80440A1E6F29A800BA946E /* ArtistViewController.swift in Sources */,
+				436C220C20F6C4FE0088F563 /* CarPlayController.swift in Sources */,
 				7C31554720C2350800F07622 /* TrackStatusCellNode.swift in Sources */,
 				7C68279D1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */,
 				7C31553520C2076C00F07622 /* AXRatingViewNode.swift in Sources */,
@@ -1152,6 +1159,7 @@
 				7C31554920C2D21800F07622 /* ArtistCellNode.swift in Sources */,
 				7C31551C20BFBE9A00F07622 /* UpstreamSourceLayout.swift in Sources */,
 				7C68279C1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */,
+				43EF8D6820F01A41002FF970 /* CarPlayController.swift in Sources */,
 				7C1F1A5F1F733ACD009408AA /* VenueViewController.swift in Sources */,
 				7CC4EDC51F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */,
 				7C4F1BEE1F733A0700C592BD /* SongViewController.swift in Sources */,
@@ -1395,14 +1403,15 @@
 				CODE_SIGN_ENTITLEMENTS = Relisten.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "87bcc8e3-7282-4870-b540-8b774927fe42";
+				PROVISIONING_PROFILE_SPECIFIER = "Relisten CarPlay Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Relisten-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
@@ -1416,7 +1425,8 @@
 				CODE_SIGN_ENTITLEMENTS = Relisten.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = HT7ELV3Q35;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -17,7 +17,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     static let shared = CarPlayController()
     var disposal = Disposal()
     
-    private var recentlyPlayedTracks: [Track] = []
+    private var recentlyPlayedShows: [CompleteShowInformation] = []
     private var offlineShows: [OfflineSourceMetadata] = []
     private var favoriteShowsByArtist: [Artist : [CompleteShowInformation]] = [:]
     
@@ -128,10 +128,13 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     
     // MARK: Reloading Data
     private func reloadRecentTracks(tracks: [Track]) {
-        if !(tracks == recentlyPlayedTracks) {
+        let recentShows : [CompleteShowInformation] = tracks.map { (track : Track) -> CompleteShowInformation in
+            return track.showInfo
+        }
+        if !(recentShows == recentlyPlayedShows) {
             DispatchQueue.main.async {
                 MPPlayableContentManager.shared().beginUpdates()
-                self.recentlyPlayedTracks = tracks
+                self.recentlyPlayedShows = recentShows
                 MPPlayableContentManager.shared().endUpdates()
                 MPPlayableContentManager.shared().reloadData()
             }
@@ -265,7 +268,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         
         switch section {
         case .recentlyPlayed:
-            track = recentlyPlayedTracks[indexPath[1]]
+            (_, track) = recentShowItems(at: indexPath)
             
         case .availableOffline:
             (_, track) = offlineItems(at: indexPath)
@@ -321,6 +324,24 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             }
         }
         return nil
+    }
+    
+    private func recentShowItems(at indexPath: IndexPath) -> (CompleteShowInformation?, Track?) {
+        var showInfo : CompleteShowInformation?
+        var track : Track?
+        if carPlaySection(from: indexPath) == .recentlyPlayed {
+            if indexPath.count > 1 {
+                showInfo = recentlyPlayedShows[indexPath[1]]
+            }
+            if indexPath.count > 2 {
+                if let showInfo = showInfo {
+                    let sourceTrack = showInfo.source.tracksFlattened[indexPath[2]]
+                    track = Track(sourceTrack: sourceTrack, showInfo: showInfo)
+                }
+            }
+        }
+        
+        return (showInfo, track)
     }
     
     private func offlineItems(at indexPath: IndexPath) -> (OfflineSourceMetadata?, Track?) {
@@ -455,8 +476,8 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         case 1:
             switch section {
             case .recentlyPlayed:
-                // Recent->Tracks
-                return recentlyPlayedTracks.count
+                // Recent->Shows
+                return recentlyPlayedShows.count
                 
             case .availableOffline:
                 // Offline->Shows
@@ -476,7 +497,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         case 2:
             switch section {
             case .recentlyPlayed:
-                return 0
+                // Recent->Show->Tracks
+                let (show, _) = recentShowItems(at: indexPath)
+                if let show = show {
+                    return show.source.tracksFlattened.count
+                }
                 
             case .availableOffline:
                 // Offline->Show->Tracks
@@ -491,7 +516,6 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 if let showCount = showCount {
                     return showCount
                 }
-                return 0
                 
             case .artists:
                 // Artists->Artist->Years
@@ -499,26 +523,18 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 if let yearCount = yearCount {
                     return yearCount
                 }
-                return 0
                 
             case .count:
                 return 0
             }
         case 3:
             switch section {
-            case .recentlyPlayed:
-                return 0
-                
-            case .availableOffline:
-                return 0
-                
             case .favorite:
                 // Favorites->Artist->Show->Tracks
                 let (_, _, show, _) = favoriteItems(at: indexPath)
                 if let show = show {
                     return show.source.tracksFlattened.count
                 }
-                return 0
                 
             case .artists:
                 // Artists->Artist->Year->Shows
@@ -527,28 +543,18 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                     return showCount
                 }
                 
-            case .count:
+            default:
                 return 0
             }
         case 4:
             switch section {
-            case .recentlyPlayed:
-                return 0
-                
-            case .availableOffline:
-                return 0
-                
-            case .favorite:
-                return 0
-                
             case .artists:
                 // Artists->Artist->Year->Show->Tracks
                 let (_, _, _, _, _, source, _) = allArtistItems(at: indexPath)
                 if let source = source {
                     return source.tracksFlattened.count
                 }
-                
-            case .count:
+            default:
                 return 0
             }
         default:
@@ -583,8 +589,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         case 2:
             switch section {
             case .recentlyPlayed:
-                // Recent->Tracks
-                return recentlyPlayedTracks[indexPath[1]].asMPContentItem()
+                // Recent->Shows
+                let (show, _) = recentShowItems(at: indexPath)
+                if let show = show {
+                    return show.asMPContentItem()
+                }
                 
             case .availableOffline:
                 // Offline->Shows
@@ -613,7 +622,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         case 3:
             switch section {
             case .recentlyPlayed:
-                return nil
+                // Recent->Show->Tracks
+                let (_, track) = recentShowItems(at: indexPath)
+                if let track = track {
+                    return track.asMPContentItem()
+                }
                 
             case .availableOffline:
                 // Offline->Show->Tracks
@@ -641,12 +654,6 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             }
         case 4:
             switch section {
-            case .recentlyPlayed:
-                return nil
-                
-            case .availableOffline:
-                return nil
-                
             case .favorite:
                 // Favorites->Artist->Show->Tracks
                 let (_, _, _, track) = favoriteItems(at: indexPath)
@@ -661,20 +668,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                     return show.asMPContentItem()
                 }
                 
-            case .count:
+            default:
                 return nil
             }
         case 5:
             switch section {
-            case .recentlyPlayed:
-                return nil
-                
-            case .availableOffline:
-                return nil
-                
-            case .favorite:
-                return nil
-                
             case .artists:
                 // Artists->Artist->Year->Show->Tracks
                 let (_, _, _, _, _, _, track) = allArtistItems(at: indexPath)
@@ -682,7 +680,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                     return track.asMPContentItem()
                 }
                 
-            case .count:
+            default:
                 return nil
             }
         default:

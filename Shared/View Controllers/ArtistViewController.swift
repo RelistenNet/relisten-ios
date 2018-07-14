@@ -13,7 +13,7 @@ import LayoutKit
 import KASlideShow
 import AsyncDisplayKit
 
-public class ArtistViewController : RelistenBaseAsyncTableontroller {
+public class ArtistViewController : RelistenBaseAsyncTableViewController {
     enum Sections: Int, RawRepresentable {
         case today = 0
         case recentlyPlayed

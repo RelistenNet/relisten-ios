@@ -15,7 +15,7 @@ import AsyncDisplayKit
 import Observable
 import SINQ
 
-class SourceViewController: RelistenBaseAsyncTableontroller {
+class SourceViewController: RelistenBaseAsyncTableViewController {
     
     let artist: ArtistWithCounts
     let show: ShowWithSources

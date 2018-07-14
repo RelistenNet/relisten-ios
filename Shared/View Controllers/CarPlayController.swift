@@ -328,44 +328,63 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         var yearWithShows : YearWithShows?
         var showCount : Int?
         var show : Show?
+        var showWithSources : ShowWithSources?
         var source : SourceFull?
         var track : Track?
-        if carPlaySection(from: indexPath) == .artists {
-            if indexPath.count > 1 {
-                artist = allArtists[indexPath[1]]
-                if let artist = artist {
-                    showCount = artist.show_count
-                    
-                    years = RelistenApi.years(byArtist: artist).latestData?.typedContent()
-                    if let years = years {
-                        yearCount = years.count
+        let block = {
+            if self.carPlaySection(from: indexPath) == .artists {
+                if indexPath.count > 1 {
+                    artist = self.allArtists[indexPath[1]]
+                    if let artist = artist {
+                        showCount = artist.show_count
+                        
+                        years = RelistenApi.years(byArtist: artist).latestData?.typedContent()
+                        if let years = years {
+                            yearCount = years.count
+                        }
                     }
                 }
-            }
-            if let artist = artist {
-                if indexPath.count > 2 {
-                    if let years = years {
-                        year = years[indexPath[2]]
-                        
-                        if let year = year {
-                            yearWithShows = RelistenApi.shows(inYear: year, byArtist: artist).latestData?.typedContent()
-                            if let yearWithShows = yearWithShows {
-                                showCount = yearWithShows.shows.count
+                if let artist = artist {
+                    if indexPath.count > 2 {
+                        if let years = years {
+                            year = years[indexPath[2]]
+                            
+                            if let year = year {
+                                yearWithShows = RelistenApi.shows(inYear: year, byArtist: artist).latestData?.typedContent()
+                                if let yearWithShows = yearWithShows {
+                                    showCount = yearWithShows.shows.count
+                                }
+                            }
+                        }
+                    }
+                    if indexPath.count > 3 {
+                        if let yearWithShows = yearWithShows {
+                            show = yearWithShows.shows[indexPath[3]]
+                            if let show = show {
+                                showWithSources = RelistenApi.showWithSources(forShow: show, byArtist: artist).latestData?.typedContent()
+                                if let showWithSources = showWithSources {
+                                    source = showWithSources.sources.first
+                                }
+                            }
+                        }
+                    }
+                    if indexPath.count > 4 {
+                        if let show = show {
+                            if let source = source {
+                                let sourceTrack = source.tracksFlattened[indexPath[4]]
+                                let completeShowInfo = CompleteShowInformation(source: source, show: show, artist: artist)
+                                track = Track(sourceTrack: sourceTrack, showInfo: completeShowInfo)
                             }
                         }
                     }
                 }
-                if indexPath.count > 3 {
-                    if let yearWithShows = yearWithShows {
-                        show = yearWithShows.shows[indexPath[3]]
-                    }
-                }
-                if indexPath.count > 4 {
-                    
-                }
             }
         }
-        
+        if !(Thread.isMainThread) {
+            DispatchQueue.main.sync(execute: block)
+        } else {
+            block()
+        }
         return (artist, yearCount, year, showCount, show, source, track)
     }
     

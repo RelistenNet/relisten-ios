@@ -72,6 +72,7 @@ public class MyLibraryManager {
 
         observeRecentlyPlayedTracks.value = library.recentlyPlayedTracks
         observeFavoriteArtistIds.value = library.artistIds
+        observeMyShows.value = library.shows
     }
     
     private var addedFirestoreListener = false

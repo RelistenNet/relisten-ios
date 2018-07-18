@@ -41,8 +41,8 @@ class VenueViewController: ShowListViewController<VenueWithShows> {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
     }
     
-    override func extractShows(forData: VenueWithShows) -> [Show] {
-        return forData.shows
+    override func extractShowsAndSource(forData:VenueWithShows) -> [ShowWithSingleSource] {
+        return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil) })
     }
     
     override func numberOfSections(in tableNode: ASTableNode) -> Int {

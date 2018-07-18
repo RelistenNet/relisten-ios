@@ -11,14 +11,15 @@ import Siesta
 import SINQ
 import AsyncDisplayKit
 
+struct ShowWithSingleSource {
+    public let show : Show
+    public let source : SourceFull?
+}
+
 class ShowListViewController<T> : RelistenAsyncTableController<T> {
     internal let artist: ArtistWithCounts
     internal let showsResource: Resource?
     internal let tourSections: Bool
-    
-    internal var showsByTour: [(tourName: String?, shows: [Show])] = []
-    
-    internal var shows: [Show] = []
     
     public required init(artist: ArtistWithCounts, showsResource: Resource?, tourSections: Bool) {
         self.artist = artist
@@ -36,6 +37,27 @@ class ShowListViewController<T> : RelistenAsyncTableController<T> {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
+    override var resource: Resource? { get { return showsResource } }
+    
+    public func extractShowsAndSource(forData: T) -> [ShowWithSingleSource] {
+        fatalError("need to override this")
+    }
+    
+    override func has(oldData: T, changed: T) -> Bool {
+        let x1 = extractShowsAndSource(forData: oldData)
+        let x2 = extractShowsAndSource(forData: changed)
+        
+        return x1.count != x2.count
+    }
+    
+    public override func render() {
+        showMappingQueue.sync {
+            rebuildShowMappings()
+        }
+        super.render()
+    }
+    
+    // MARK: Relayout
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,127 +67,198 @@ class ShowListViewController<T> : RelistenAsyncTableController<T> {
          */
     }
     
-    func relayoutIfContainsTrack(_ track: Track) {
-        if let d = latestData {
-            let shows = extractShows(forData: d)
-            
-            if sinq(shows).any({ $0.id == track.showInfo.show.id }) {
-                //                render(shows: shows)
-            }
-        }
-    }
-    
-    func relayoutIfContainsTracks(_ tracks: [Track]) {
-        if let d = latestData {
-            let shows = extractShows(forData: d)
-            
-            let trackShowsId = tracks.map({ $0.showInfo.show.id })
-            
-            if sinq(shows).any({ trackShowsId.contains($0.id) }) {
-                //                render(shows: shows)
-            }
-        }
-    }
-    
-    override var resource: Resource? { get { return showsResource } }
-    
-    var showMapping: [IndexPath: Show]? = nil
-    
     public func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
         return { YearShowCellNode(show: show) }
     }
-    
-    public func extractShows(forData: T) -> [Show] {
-        fatalError("need to override this")
-    }
-    
-    override func has(oldData: T, changed: T) -> Bool {
-        let x1 = extractShows(forData: oldData)
-        let x2 = extractShows(forData: changed)
-        
-        return x1.count != x2.count
-    }
-    
-    public override func render() {
-        if let d = latestData {
-            shows = extractShows(forData: d)
+
+    func relayoutIfContainsTrack(_ track: Track) {
+        showMappingQueue.sync {
+            rebuildShowMappings()
             
-            if tourSections {
-                buildTourSections()
-            }
+//            if let showsWithSources = showsWithSources {
+//                if sinq(showsWithSources).any({ $0.show.id == track.showInfo.show.id }) {
+//                    render()
+//                }
+//            }
+        }
+    }
+
+    func relayoutIfContainsTracks(_ tracks: [Track]) {
+        showMappingQueue.sync {
+            rebuildShowMappings()
+            
+//            if let showsWithSources = showsWithSources {
+//                let trackShowsId = tracks.map({ $0.showInfo.show.id })
+//            
+//                if sinq(showsWithSources).any({ trackShowsId.contains($0.show.id) }) {
+//                    render()
+//                }
+//            }
+        }
+    }
+    
+    // MARK: Preparing Show Info for the DataSource
+    internal var showsByTour: [(tourName: String?, showWithSource: [ShowWithSingleSource])]?
+    internal var showMapping: [IndexPath: ShowWithSingleSource]?
+    internal var showsWithSources: [ShowWithSingleSource]?
+    
+    internal let showMappingQueue = DispatchQueue(label: "live.relisten.ShowListViewController.mappingQueue")
+    
+    private func rebuildShowMappings() {
+        dispatchPrecondition(condition: .onQueue(showMappingQueue))
+        if let d = latestData {
+            showsWithSources = extractShowsAndSource(forData: d)
+            buildShowMappingAndTourSections()
+        }
+    }
+    
+    private func buildShowMappingAndTourSections() {
+        dispatchPrecondition(condition: .onQueue(showMappingQueue))
+        guard let showsWithSources = showsWithSources else {
+            return
         }
         
-        super.render()
-    }
-    
-    func buildTourSections() {
-        var sections: [[Show]] = []
+        var sectionCount = 0
         
         showMapping = [:]
-        showsByTour = []
+        if tourSections {
+            showsByTour = []
+        }
         
-        var currentSection: [Show] = []
+        var currentSection: [ShowWithSingleSource] = []
         
-        for (idx, show) in shows.enumerated() {
+        for (idx, showWithSource) in showsWithSources.enumerated() {
             if idx == 0 {
                 let idxP = IndexPath(row: 0, section: 0)
                 
-                currentSection.append(show)
-                showMapping?[idxP] = show
+                currentSection.append(showWithSource)
+                showMapping?[idxP] = showWithSource
             }
             else {
-                let prevShow = shows[idx - 1]
-                
-                if prevShow.tour_id != show.tour_id {
-                    showsByTour.append((prevShow.tour?.name, currentSection))
-                    sections.append(currentSection)
+                if tourSections {
+                    let prevShowWithSource = showsWithSources[idx - 1]
                     
-                    currentSection = []
+                    if prevShowWithSource.show.tour_id != showWithSource.show.tour_id {
+                        showsByTour?.append((prevShowWithSource.show.tour?.name, currentSection))
+                        sectionCount += 1
+                        
+                        currentSection = []
+                    }
                 }
                 
-                let idxP = IndexPath(row: currentSection.count, section: sections.count)
-                showMapping?[idxP] = show
-                currentSection.append(show)
+                let idxP = IndexPath(row: currentSection.count, section: sectionCount)
+                showMapping?[idxP] = showWithSource
+                currentSection.append(showWithSource)
             }
             
-            if idx == shows.count - 1 {
-                showsByTour.append((show.tour?.name, currentSection))
+            if tourSections {
+                if idx == showsWithSources.count - 1 {
+                    showsByTour?.append((showWithSource.show.tour?.name, currentSection))
+                }
             }
         }
     }
     
+    private func showWithSource(at indexPath : IndexPath) -> ShowWithSingleSource? {
+        var showWithSource : ShowWithSingleSource?
+        
+        showMappingQueue.sync {
+            if showsWithSources == nil {
+                rebuildShowMappings()
+            }
+            
+            showWithSource = showMapping?[indexPath]
+        }
+        
+        return showWithSource
+    }
+    
+    private func numberOfSections() -> Int {
+        var retval : Int = 1
+        showMappingQueue.sync {
+            if showsWithSources == nil {
+                rebuildShowMappings()
+            }
+            
+            if tourSections, let r = showsByTour?.count {
+                retval = r
+            }
+        }
+        return retval
+    }
+    
+    private func numberOfRows(in section : Int) -> Int {
+        var retval : Int = 0
+        showMappingQueue.sync {
+            if showsWithSources == nil {
+                rebuildShowMappings()
+            }
+            
+            if tourSections {
+                if let r = showsByTour?[section].showWithSource.count {
+                    retval = r
+                }
+            } else if let r = showsWithSources?.count {
+                retval = r
+            }
+        }
+        return retval
+    }
+    
+    private func nodeBlockForRow(at indexPath: IndexPath) -> ASCellNodeBlock {
+        var showWithSource : ShowWithSingleSource?
+        showMappingQueue.sync {
+            if showsWithSources == nil {
+                rebuildShowMappings()
+            }
+            
+            if tourSections {
+                showWithSource = showsByTour?[indexPath.section].showWithSource[indexPath.row]
+            } else {
+                showWithSource = showsWithSources?[indexPath.row]
+            }
+        }
+        assert(!(showWithSource == nil), "Couldn't find a show for index path \(indexPath) with tour sections = \(tourSections)")
+        return layout(show: showWithSource!.show, atIndex: indexPath)
+     }
+    
+    private func titleForHeader(in section: Int) -> String? {
+        var title : String?
+        showMappingQueue.sync {
+            if showsWithSources == nil {
+                rebuildShowMappings()
+            }
+            
+            if tourSections, let tourName = showsByTour?[section].tourName {
+                title = tourName
+            }
+        }
+        return title
+    }
+    
+    // MARK: Table Data Source
     func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
         
-        var show: Show? = nil
-        if tourSections, let d = showMapping, let s = d[indexPath] {
-            show = s
-        }
-        else if !tourSections, let d = latestData {
-            show = self.extractShows(forData: d)[indexPath.row]
-        }
-        
-        if let s = show {
-            let sourcesViewController = SourcesViewController(artist: artist, show: s)
-            sourcesViewController.presentIfNecessary(navigationController: navigationController)
+        if let showWithSource = showWithSource(at: indexPath) {
+            let sourcesViewController = SourcesViewController(artist: artist, show: showWithSource.show)
+            sourcesViewController.presentIfNecessary(navigationController: navigationController, forSource: showWithSource.source)
         }
     }
     
     func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return tourSections ? showsByTour.count : 1
+        return numberOfSections()
     }
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return tourSections ? showsByTour[section].shows.count : shows.count
+        return numberOfRows(in: section)
     }
     
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        let show = tourSections ? showsByTour[indexPath.section].shows[indexPath.row] : shows[indexPath.row]
-        
-        return self.layout(show: show, atIndex: indexPath)
+        return nodeBlockForRow(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return tourSections ? showsByTour[section].tourName : nil
+        return titleForHeader(in: section)
     }
 }

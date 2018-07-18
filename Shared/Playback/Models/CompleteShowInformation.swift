@@ -8,13 +8,7 @@
 
 import Foundation
 
-public protocol ICompleteShowInformation : Codable, Hashable {
-    var source: SourceFull { get }
-    var show: Show { get }
-    var artist: ArtistWithCounts { get }
-}
-
-public class CompleteShowInformation : ICompleteShowInformation {
+public class CompleteShowInformation : Codable, Hashable  {
     public var hashValue: Int {
         return artist.id.hashValue ^ show.display_date.hashValue ^ source.upstream_identifier.hashValue
     }

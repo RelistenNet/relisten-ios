@@ -36,10 +36,11 @@ class YearViewController: ShowListViewController<YearWithShows> {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
     }
     
-    override func extractShows(forData: YearWithShows) -> [Show] {
-        return forData.shows
+    override func extractShowsAndSource(forData: YearWithShows) -> [ShowWithSingleSource] {
+        return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil) })
     }
     
+    // This subclass has to re-implement this method because Texture tries to perform an Obj-C respondsToSelctor: check and it's not finding the methods if they just exist on the superclass with the argument label names (numberOfSectionsIn: does exist though)
     override func numberOfSections(in tableNode: ASTableNode) -> Int {
         return super.numberOfSections(in: tableNode)
     }

@@ -42,8 +42,8 @@ class TopShowsViewController: ShowListViewController<[Show]> {
         return { YearShowCellNode(show: show, withRank: atIndex.row + 1, verticalLayout: false) }
     }
     
-    override func extractShows(forData: [Show]) -> [Show] {
-        return forData
+    override func extractShowsAndSource(forData: [Show]) -> [ShowWithSingleSource] {
+        return forData.map({ ShowWithSingleSource(show: $0, source: nil) })
     }
     
     override func numberOfSections(in tableNode: ASTableNode) -> Int {

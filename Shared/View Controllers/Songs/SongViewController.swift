@@ -41,8 +41,8 @@ class SongViewController: ShowListViewController<SongWithShows> {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
     }
     
-    override func extractShows(forData: SongWithShows) -> [Show] {
-        return forData.shows
+    override func extractShowsAndSource(forData: SongWithShows) -> [ShowWithSingleSource] {
+        return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil) })
     }
     
     override func numberOfSections(in tableNode: ASTableNode) -> Int {

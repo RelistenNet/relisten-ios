@@ -52,14 +52,15 @@ class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]>
         super.relayoutIfContainsTracks(tracks)
     }
     
-    override func extractShows(forData: [CompleteShowInformation]) -> [Show] {
-        return forData.map({ $0.show })
+    override func extractShowsAndSource(forData: [CompleteShowInformation]) -> [ShowWithSingleSource] {
+        return forData.map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
     }
     
     func loadMyShows() -> [CompleteShowInformation] {
         return MyLibraryManager.shared.library.favoritedShowsPlayedByArtist(artist)
     }
     
+    // This subclass has to re-implement this method because Texture tries to perform an Obj-C respondsToSelctor: check and it's not finding the methods if they just exist on the superclass with the argument label names (numberOfSectionsIn: does exist though)
     override func numberOfSections(in tableNode: ASTableNode) -> Int {
         return super.numberOfSections(in: tableNode)
     }

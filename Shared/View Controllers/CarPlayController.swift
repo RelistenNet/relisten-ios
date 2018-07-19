@@ -412,8 +412,9 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                         showCount = artist.show_count
                         
                         years = RelistenApi.years(byArtist: artist).latestData?.typedContent()
-                        if let years = years {
-                            yearCount = years.count
+                        if let y = years {
+                            years = sortedYears(from: y, for: artist)
+                            yearCount = y.count
                         }
                     }
                 }

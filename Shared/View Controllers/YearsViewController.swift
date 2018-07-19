@@ -43,7 +43,7 @@ class YearsViewController: RelistenAsyncTableController<[Year]> {
     override var resource: Resource? { get { return api.years(byArtist: artist) } }
     
     override func dataChanged(_ data: [Year]) {
-        years = data
+        years = sortedYears(from: data, for: artist)
     }
     
     override func has(oldData: [Year], changed: [Year]) -> Bool {

@@ -59,16 +59,17 @@ extension MyLibrary {
             var completeBytes: UInt64 = 0
             
             let group = DispatchGroup()
+            let bytesQueue = DispatchQueue(label: "live.relisten.library.diskUsage.bytesQueue")
             
             for track in source.source.tracksFlattened {
+                group.enter()
                 self.diskUsageForTrackURL(trackURL: track.mp3_url, { (size) in
                     if let bytes = size {
-                        group.enter()
-                        synced(completeBytes) {
+                        bytesQueue.sync {
                             completeBytes += bytes
-                            group.leave()
                         }
                     }
+                    group.leave()
                 })
             }
             

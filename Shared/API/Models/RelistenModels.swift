@@ -59,6 +59,14 @@ public class SlimArtist : RelistenObject, Hashable {
     public let name: String
     public let slug: String
     
+    // This is a hack for now to make Phish sort descending. We should consider adding this to the API
+    public var shouldSortYearsDescending : Bool { get {
+        guard let apiValue = originalJSON["sort_descending"].bool else {
+            return slug == "phish"
+        }
+        return apiValue
+    }}
+    
     public required init(json: JSON) throws {
         musicbrainz_id = try json["musicbrainz_id"].string.required()
         featured = try json["featured"].int.required()

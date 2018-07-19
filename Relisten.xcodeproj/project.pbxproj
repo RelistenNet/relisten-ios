@@ -11,6 +11,7 @@
 		4370C24520EDDD7D00D3358B /* CompleteShowInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */; };
 		43B0472D20FD59D000251046 /* ShowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B0472C20FD59D000251046 /* ShowListViewController.swift */; };
 		43B047732100049E00251046 /* YearSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B047722100049E00251046 /* YearSorting.swift */; };
+		43B047752100626200251046 /* OfflineSourceMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B047742100626200251046 /* OfflineSourceMetadata.swift */; };
 		43EF8D6820F01A41002FF970 /* CarPlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EF8D6720F01A41002FF970 /* CarPlayController.swift */; };
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
@@ -183,6 +184,7 @@
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
 		43B0472C20FD59D000251046 /* ShowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListViewController.swift; path = "View Controllers/General/ShowListViewController.swift"; sourceTree = "<group>"; };
 		43B047722100049E00251046 /* YearSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YearSorting.swift; path = Helpers/YearSorting.swift; sourceTree = "<group>"; };
+		43B047742100626200251046 /* OfflineSourceMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSourceMetadata.swift; sourceTree = "<group>"; };
 		43EF8D6720F01A41002FF970 /* CarPlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayController.swift; path = "View Controllers/CarPlayController.swift"; sourceTree = "<group>"; };
 		43EF8D6920F099DC002FF970 /* CREDITS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CREDITS.md; sourceTree = "<group>"; };
 		598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Relisten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -330,6 +332,7 @@
 				7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */,
 				7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */,
 				7C4F1BE71F73186500C592BD /* RelistenSongModels.swift */,
+				43B047742100626200251046 /* OfflineSourceMetadata.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1133,6 +1136,7 @@
 				7C31551220BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */,
 				7C4F1BE81F73186500C592BD /* RelistenSongModels.swift in Sources */,
 				7CA3CD171F71766E00E936AB /* VenueLayout.swift in Sources */,
+				43B047752100626200251046 /* OfflineSourceMetadata.swift in Sources */,
 				7C13704420B5FE6200710E90 /* UInt64+HumanizeBytes.swift in Sources */,
 				7C31552520C09D8B00F07622 /* ShareHelper.swift in Sources */,
 				7C03A4C11E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,

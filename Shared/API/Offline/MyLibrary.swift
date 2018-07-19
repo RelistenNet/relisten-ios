@@ -94,7 +94,9 @@ public class MyLibrary {
         offlineTrackURLs.remove(url)
         offlineTrackFileSizeCache.async.removeObject(forKey: url.absoluteString, completion: { _ in })
         
-        offlineSourcesMetadata.remove(OfflineSourceMetadata.from(track: track))
+        if !(isSourceAtLeastPartiallyAvailableOffline(track.showInfo.source)) {
+            offlineSourcesMetadata.remove(OfflineSourceMetadata.from(track: track))
+        }
         
         if save {
             saveOfflineTrackUrls()

@@ -19,11 +19,7 @@ public class YearShowCellNode : ASCellNode {
     
     var disposal = Disposal()
     
-    public convenience init(show: Show) {
-        self.init(show: show, withRank: nil, verticalLayout: false, showingArtist: nil)
-    }
-    
-    public init(show: Show, withRank: Int?, verticalLayout: Bool, showingArtist: SlimArtist? = nil) {
+    public init(show: Show, withRank: Int? = nil, verticalLayout: Bool = false, showingArtist: SlimArtist? = nil, showUpdateDate : Bool = false) {
         self.show = show
         artist = showingArtist
         rank = withRank
@@ -52,6 +48,15 @@ public class YearShowCellNode : ASCellNode {
         }
         
         metaNode = ASTextNode(metaText, textStyle: .caption1, color: nil, alignment: vertical ? nil : NSTextAlignment.right)
+        
+        if showUpdateDate {
+            let updateDate = DateFormatter.localizedString(from: show.most_recent_source_updated_at, dateStyle: .long, timeStyle: .none)
+            let updateDateText = "Updated " + updateDate
+            updateDateNode = ASTextNode(updateDateText, textStyle: .caption2, color: AppColors.mutedText)
+        }
+        else {
+            updateDateNode = nil
+        }
         
         if let rank = withRank {
             rankNode = ASTextNode("#\(rank)", textStyle: .headline, color: AppColors.mutedText)
@@ -85,9 +90,11 @@ public class YearShowCellNode : ASCellNode {
     
     public let artistNode: ASTextNode?
     public let showNode: ASTextNode
-    public let venueNode: ASTextNode
     public let ratingNode: AXRatingViewNode
+    
+    public let venueNode: ASTextNode
     public let metaNode: ASTextNode
+    public let updateDateNode : ASTextNode?
     
     public let rankNode: ASTextNode?
     public let offlineIndicatorNode = OfflineIndicatorNode()
@@ -148,6 +155,12 @@ public class YearShowCellNode : ASCellNode {
             
             verticalStack.append(vs)
             
+            // The update date doesn't fit in the current vertical size, and it's not worth changing that size for a property that nobody uses in vertical mode.
+            // Uncomment this if that story changes later.
+//            if let updateDateNode = updateDateNode {
+//                verticalStack.append(updateDateNode)
+//            }
+            
             return ASInsetLayoutSpec(
                 insets: UIEdgeInsetsMake(12, 12, 12, 12),
                 child: ASStackLayoutSpec(
@@ -178,12 +191,24 @@ public class YearShowCellNode : ASCellNode {
         )
         bottom.style.alignSelf = .stretch
         
+        var footer : ASStackLayoutSpec? = nil
+        if let updateDateNode = updateDateNode {
+            footer = ASStackLayoutSpec(
+                direction: .horizontal,
+                spacing: 8,
+                justifyContent: .end,
+                alignItems: .baselineFirst,
+                children: ArrayNoNils(updateDateNode)
+            )
+            footer?.style.alignSelf = .stretch
+        }
+        
         let stack = ASStackLayoutSpec(
             direction: .vertical,
             spacing: 4.0,
             justifyContent: .start,
             alignItems: .start,
-            children: [top, bottom]
+            children: ArrayNoNils(top, bottom, footer)
         )
         stack.style.alignSelf = .stretch
 

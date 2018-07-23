@@ -156,8 +156,8 @@
 		7CCE0DF31F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */; };
 		7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
 		7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
-		8E91C0747A674A864013F1AB /* YearShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowNode.swift */; };
-		8E91C72389219DDCA7733977 /* YearShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowNode.swift */; };
+		8E91C0747A674A864013F1AB /* YearShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowCellNode.swift */; };
+		8E91C72389219DDCA7733977 /* YearShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowCellNode.swift */; };
 		8E91CEEF48E7DBDC4E7871F9 /* RelistenResourceStatusOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */; };
 		8E91CF363725BB2441672DC9 /* RelistenResourceStatusOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */; };
 		AC66B4F5C4BD9C01138EEBB8 /* Pods_PhishOD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */; };
@@ -282,7 +282,7 @@
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishOD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.debug.xcconfig"; sourceTree = "<group>"; };
 		8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenResourceStatusOverlay.swift; sourceTree = "<group>"; };
-		8E91C1703DD1522098B0957F /* YearShowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearShowNode.swift; sourceTree = "<group>"; };
+		8E91C1703DD1522098B0957F /* YearShowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearShowCellNode.swift; sourceTree = "<group>"; };
 		A82930F25AEEDCD2C5F101AD /* Pods-Relisten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Relisten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Relisten/Pods-Relisten.release.xcconfig"; sourceTree = "<group>"; };
 		D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishODUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0263F8B06570DBB1399A78F /* Pods-RelistenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -473,7 +473,7 @@
 		7C80440B1E6F29AB00BA946E /* DisplayNodes */ = {
 			isa = PBXGroup;
 			children = (
-				8E91C1703DD1522098B0957F /* YearShowNode.swift */,
+				8E91C1703DD1522098B0957F /* YearShowCellNode.swift */,
 				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
 				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 				7C4F1BEA1F731A5900C592BD /* SongLayout.swift */,
@@ -1091,7 +1091,7 @@
 				7C31551320BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */,
 				7CCE0DF01F9BE33B00041D47 /* UIControl+Handler.swift in Sources */,
 				7C13704520B5FE6200710E90 /* UInt64+HumanizeBytes.swift in Sources */,
-				8E91C72389219DDCA7733977 /* YearShowNode.swift in Sources */,
+				8E91C72389219DDCA7733977 /* YearShowCellNode.swift in Sources */,
 				7CABACCB1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
 				7CA3CD181F71766E00E936AB /* VenueLayout.swift in Sources */,
 				7C31554A20C2D21800F07622 /* ArtistCellNode.swift in Sources */,
@@ -1187,7 +1187,7 @@
 				8E91CEEF48E7DBDC4E7871F9 /* RelistenResourceStatusOverlay.swift in Sources */,
 				7C31552220BFC55900F07622 /* ReviewLayout.swift in Sources */,
 				7C31554620C2350800F07622 /* TrackStatusCellNode.swift in Sources */,
-				8E91C0747A674A864013F1AB /* YearShowNode.swift in Sources */,
+				8E91C0747A674A864013F1AB /* YearShowCellNode.swift in Sources */,
 				7CABACC51EDEE63F009C5E3B /* YearViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

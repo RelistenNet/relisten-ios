@@ -189,6 +189,7 @@ public class RelistenMenuView : UIView {
             viewController.navigationController?.pushViewController(MyRecentlyPlayedViewController(artist: artist), animated: true)
             
         case .RecentlyAdded: print(item)
+            viewController.navigationController?.pushViewController(RecentlyAddedViewController(artist: artist), animated: true)
             
         case .MyShowsLibrary: print(item)
             viewController.navigationController?.pushViewController(MyLibraryViewController(artist: artist), animated: true)
@@ -260,7 +261,7 @@ public class RelistenMenuView : UIView {
         case .DiscoverRandom: return "random"
             
         case .RecentlyPlayed: return "recently played"
-        case .RecentlyAdded: return "recently performed"
+        case .RecentlyAdded: return "recently added"
             
         case .MyShowsLibrary: return "my library"
         case .MyShowsPlaylists: return "playlists"

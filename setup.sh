@@ -71,27 +71,69 @@ runCmd ()
 function checkAndClone {
     projectName=$1
     projectURL=$2
+    if  [ -z $3 ]; then
+        projectBasePath=".."
+    else
+        projectBasePath=$3
+    fi
     
-    if [ ! -d "../$1" ]; then
-        runCmd "git clone --quiet $2 ../$1" "Cloning $1"
+    if [ ! -d "$projectBasePath/$1" ]; then
+        runCmd "git clone --quiet $2 $projectBasePath/$1" "Cloning $1"
     else
         printProgress "Checking $1"
         printSuccess
     fi
 }
 
-checkAndClone NapySlider https://github.com/farktronix/NapySlider.git
-checkAndClone BASSGaplessAudioPlayer https://github.com/alecgorge/gapless-audio-bass-ios.git
-checkAndClone AGAudioPlayer https://github.com/alecgorge/AGAudioPlayer.git
-checkAndClone fave-button https://github.com/alecgorge/fave-button.git
-
-printProgress "Checking for CocoaPods"
-command -v pod >/dev/null 2>&1 || { 
-    printFailure
-    echo >&2 "Cocoapods is not installed. Please install it from https://cocoapods.org and try again."
-    exit 1
+function usage {
+    printf "Use: $0 [-n] [-l path]\n"
+    printf "\t-n\tDon't install CocoaPods\n"
+    printf "\t-l\tClone development pods into a subdirectory\n"
 }
-printSuccess
-runCmd "pod install" "Installing pods"
+
+shouldInstallPods=1
+podBasePath=".."
+while getopts "nhl:" o; do
+    case "${o}" in
+        n)
+            shouldInstallPods=0
+            ;;
+        l)
+            podBasePath=${OPTARG}
+            mkdir -p $podBasePath
+            ;;
+        h)
+            usage
+            exit 0
+            ;;
+        *)
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+# Belt and suspenders
+if [[ ! -z ${TRAVIS} || ! -z ${CONTINUOUS_INTEGRATION} ]]; then 
+    echo "Running under continuous integration"
+    podBasePath="TravisPods"
+fi
+
+checkAndClone NapySlider https://github.com/farktronix/NapySlider.git $podBasePath
+checkAndClone BASSGaplessAudioPlayer https://github.com/alecgorge/gapless-audio-bass-ios.git $podBasePath
+checkAndClone AGAudioPlayer https://github.com/alecgorge/AGAudioPlayer.git $podBasePath
+checkAndClone fave-button https://github.com/alecgorge/fave-button.git $podBasePath
+
+if [[ $shouldInstallPods == 1 ]]; then
+    printProgress "Checking for CocoaPods"
+    command -v pod >/dev/null 2>&1 || { 
+        printFailure
+        echo >&2 "Cocoapods is not installed. Please install it from https://cocoapods.org and try again."
+        exit 1
+    }
+    printSuccess
+    runCmd "pod install" "Installing pods"
+fi
 
 printf "\n\n✅ Success! Open \033[0;33mRelisten.xcworkspace\033[0m to build the app.\n"
+exit 0

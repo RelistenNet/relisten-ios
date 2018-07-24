@@ -82,6 +82,8 @@
 		43B53463210922CE00DE9B1F /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044141E6F4B1E00BA946E /* AppColors.swift */; };
 		43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CBE10F2109296A003FAF51 /* RelistenApp.swift */; };
 		43CBE11521093D01003FAF51 /* Phish.json in Resources */ = {isa = PBXBuildFile; fileRef = 43CBE11421093C9B003FAF51 /* Phish.json */; };
+		43CBE116210942B6003FAF51 /* FavoriteButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4393DE272106F61B00FDC8EA /* FavoriteButtonNode.swift */; };
+		43CBE117210942DA003FAF51 /* RelistenFaveButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4393DE252106F54600FDC8EA /* RelistenFaveButtonDelegate.swift */; };
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
 		7B38C27DC32DC3C13586FC48 /* Pods_RelistenShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */; };
@@ -153,6 +155,8 @@
 		276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RelistenShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
+		4393DE252106F54600FDC8EA /* RelistenFaveButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RelistenFaveButtonDelegate.swift; path = Helpers/RelistenFaveButtonDelegate.swift; sourceTree = "<group>"; };
+		4393DE272106F61B00FDC8EA /* FavoriteButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteButtonNode.swift; path = Layouts/FavoriteButtonNode.swift; sourceTree = "<group>"; };
 		43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyAddedViewController.swift; path = "View Controllers/General/RecentlyAddedViewController.swift"; sourceTree = "<group>"; };
 		43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenArtistModels.swift; sourceTree = "<group>"; };
 		43B0472C20FD59D000251046 /* ShowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListViewController.swift; path = "View Controllers/General/ShowListViewController.swift"; sourceTree = "<group>"; };
@@ -331,6 +335,7 @@
 			children = (
 				7C31552420C09D8B00F07622 /* ShareHelper.swift */,
 				43B047722100049E00251046 /* YearSorting.swift */,
+				4393DE252106F54600FDC8EA /* RelistenFaveButtonDelegate.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -462,6 +467,7 @@
 				7C31553320C2076C00F07622 /* AXRatingViewNode.swift */,
 				7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */,
 				7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */,
+				4393DE272106F61B00FDC8EA /* FavoriteButtonNode.swift */,
 				7C31552120BFC55900F07622 /* ReviewLayout.swift */,
 				7C31552720C0A08300F07622 /* ShareCellLayout.swift */,
 				7C31554220C2343000F07622 /* ShareCellNode.swift */,
@@ -1187,6 +1193,7 @@
 				43B53457210922CE00DE9B1F /* MyLibrary+DiskUsage.swift in Sources */,
 				43B5344B210922CE00DE9B1F /* YearViewController.swift in Sources */,
 				43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */,
+				43CBE116210942B6003FAF51 /* FavoriteButtonNode.swift in Sources */,
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
 				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
@@ -1204,6 +1211,7 @@
 				43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */,
 				43B53423210922CE00DE9B1F /* SourceTrackAudioItem.swift in Sources */,
 				43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */,
+				43CBE117210942DA003FAF51 /* RelistenFaveButtonDelegate.swift in Sources */,
 				43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */,
 				43B5344D210922CE00DE9B1F /* SourceViewController.swift in Sources */,
 				43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */,

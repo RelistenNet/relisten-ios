@@ -20,18 +20,6 @@ public class SourceDetailsNode : ASCellNode {
     
     var disposal = Disposal()
     
-    private static func createPrefixedAttributedText(prefix: String, _ text: String?) -> NSAttributedString {
-        let mut = NSMutableAttributedString(string: prefix + (text == nil ? "" : text!))
-        
-        let regularFont = UIFont.preferredFont(forTextStyle: .subheadline)
-        let boldFont = regularFont.font(scaledBy: 1.0, withDifferentWeight: .Bold)
-        
-        mut.addAttribute(NSAttributedStringKey.font, value: boldFont, range: NSMakeRange(0, prefix.count))
-        mut.addAttribute(NSAttributedStringKey.font, value: regularFont, range: NSMakeRange(prefix.count, text == nil ? 0 : text!.count))
-        
-        return mut
-    }
-    
     public init(source: SourceFull, inShow show: ShowWithSources, artist: SlimArtistWithFeatures, atIndex: Int, isDetails: Bool) {
         self.source = source
         self.show = show
@@ -77,34 +65,56 @@ public class SourceDetailsNode : ASCellNode {
         }
         
         if artist.features.source_information {
+            var taperName : String? = nil
+            var transferrerName : String? = nil
+            
+            var taperNode : ASTextNode? = nil
+            var transferrerNode : ASTextNode? = nil
+            
+            var sourcePeople : [ASTextNode] = []
+            
+            if let s = source.taper, s.count > 0 {
+                taperName = s
+                
+                taperNode = ASTextNode()
+                taperNode?.attributedText = String.createPrefixedAttributedText(prefix: "Taper: ", taperName)
+            }
+            
+            if let s = source.transferrer, s.count > 0 {
+                transferrerName = s
+                
+                transferrerNode = ASTextNode()
+                transferrerNode?.attributedText = String.createPrefixedAttributedText(prefix: "Transferrer: ", transferrerName)
+            }
+            
+            if let taperNode = taperNode {
+                sourcePeople.append(taperNode)
+            }
+            
+            if let transferrerNode = transferrerNode, transferrerName != taperName {
+                sourcePeople.append(transferrerNode)
+            }
+            
+            sourcePeopleNode = ASStackLayoutSpec(
+                direction: .horizontal,
+                spacing: 8,
+                justifyContent: .start,
+                alignItems: .center,
+                children: sourcePeople
+            )
+            sourcePeopleNode?.flexWrap = .wrap
+            
             if let s = source.source, s.count > 0 {
                 sourceNode = ASTextNode()
-                sourceNode?.attributedText = SourceDetailsNode.createPrefixedAttributedText(prefix: "Source: ", source.source)
+                sourceNode?.attributedText = String.createPrefixedAttributedText(prefix: "Source: ", source.source)
             }
             else {
                 sourceNode = nil
             }
-            
-            if let s = source.lineage, s.count > 0 {
-                lineageNode = ASTextNode()
-                lineageNode?.attributedText = SourceDetailsNode.createPrefixedAttributedText(prefix: "Lineage: ", source.lineage)
-            }
-            else {
-                lineageNode = nil
-            }
-            
-            if let s = source.taper, s.count > 0 {
-                taperNode = ASTextNode()
-                taperNode?.attributedText = SourceDetailsNode.createPrefixedAttributedText(prefix: "Taper: ", source.taper)
-            }
-            else {
-                taperNode = nil
-            }
         }
         else {
             sourceNode = nil
-            lineageNode = nil
-            taperNode = nil
+            sourcePeopleNode = nil
         }
         
         detailsNode = ASTextNode("See details, taper notes, reviews & more ›", textStyle: .caption1, color: .gray)
@@ -136,9 +146,8 @@ public class SourceDetailsNode : ASCellNode {
     public let metaNode: ASTextNode
     public let detailsNode: ASTextNode
     
+    public let sourcePeopleNode: ASStackLayoutSpec?
     public let sourceNode: ASTextNode?
-    public let lineageNode: ASTextNode?
-    public let taperNode: ASTextNode?
 
     public let sbdNode: SoundboardIndicatorNode?
     public let remasterNode: RemasterIndicatorNode?
@@ -179,29 +188,48 @@ public class SourceDetailsNode : ASCellNode {
             spacing: 8,
             justifyContent: .start,
             alignItems: .center,
-            children: ArrayNoNils(locationNode, SpacerNode(), sbdNode, remasterNode, metaNode)
+            children: ArrayNoNils(
+                locationNode,
+                SpacerNode(),
+                sbdNode,
+                remasterNode,
+                metaNode)
         )
         second.style.alignSelf = .stretch
         
-        let vert = ASStackLayoutSpec(
-            direction: .vertical,
-            spacing: 8,
-            justifyContent: .start,
-            alignItems: .start,
-            children: ArrayNoNils(
-                top,
-                isDetails ? second : nil,
-                sourceNode,
-                lineageNode,
-                taperNode,
-                isDetails ? detailsNode : nil
+        var vert : ASStackLayoutSpec? = nil
+        if isDetails {
+                vert = ASStackLayoutSpec(
+                direction: .vertical,
+                spacing: 8,
+                justifyContent: .start,
+                alignItems: .start,
+                children: ArrayNoNils(
+                    top,
+                    second,
+                    sourcePeopleNode,
+                    sourceNode,
+                    detailsNode
+                    )
+                )
+        } else {
+            vert = ASStackLayoutSpec(
+                direction: .vertical,
+                spacing: 8,
+                justifyContent: .start,
+                alignItems: .start,
+                children: ArrayNoNils(
+                    top,
+                    sourcePeopleNode,
+                    sourceNode
+                )
             )
-        )
-        vert.style.alignSelf = .stretch
+        }
+        vert?.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
             insets: UIEdgeInsetsMake(16, 16, 16, isDetails ? 16 : 8),
-            child: vert
+            child: vert!
         )
         l.style.alignSelf = .stretch
         

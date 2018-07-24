@@ -44,5 +44,17 @@ extension String {
         
         return s
     }
+    
+    static func createPrefixedAttributedText(prefix: String, _ text: String?) -> NSAttributedString {
+        let mut = NSMutableAttributedString(string: prefix + (text == nil ? "" : text!))
+        
+        let regularFont = UIFont.preferredFont(forTextStyle: .subheadline)
+        let boldFont = regularFont.font(scaledBy: 1.0, withDifferentWeight: .Bold)
+        
+        mut.addAttribute(NSAttributedStringKey.font, value: boldFont, range: NSMakeRange(0, prefix.count))
+        mut.addAttribute(NSAttributedStringKey.font, value: regularFont, range: NSMakeRange(prefix.count, text == nil ? 0 : text!.count))
+        
+        return mut
+    }
 }
 

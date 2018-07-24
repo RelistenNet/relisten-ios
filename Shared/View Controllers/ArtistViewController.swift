@@ -36,6 +36,9 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         
         recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         todayShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+        
+        recentShowsNode.cellTransparency = 0.9
+        todayShowsNode.cellTransparency = 0.9
 
         resourceToday = RelistenApi.onThisDay(byArtist: artist)
         
@@ -191,12 +194,18 @@ extension ArtistViewController : KASlideShowDataSource {
         fog.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         fog.backgroundColor = UIColor.blue.withAlphaComponent(0.4)
         
-        view.addSubview(fog)
+        slider.addSubview(fog)
         
         view.sendSubview(toBack: fog)
         view.sendSubview(toBack: slider)
         
         tableNode.backgroundColor = UIColor.clear
+    }
+    
+    public override func viewWillLayoutSubviews() {
+        if let slider = slider {
+            view.sendSubview(toBack: slider)
+        }
     }
     
     public func viewWillDisappear_SlideShow(_ animated: Bool) {

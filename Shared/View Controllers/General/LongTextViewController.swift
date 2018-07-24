@@ -82,6 +82,10 @@ public class LongTextViewController : RelistenBaseTableViewController {
             ]
         }
     }
+    
+    public override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
 }
 
 extension LongTextViewController : UITextViewDelegate {

@@ -54,6 +54,8 @@ target 'Relisten' do
   pod 'CWStatusBarNotification'
   pod 'SVProgressHUD'
   # pod 'SpinnerView'
+  
+  pod 'Wormholy', :configurations => ['Debug'], :git => "https://github.com/pmusolino/Wormholy"
 
   # pod 'BFNavigationBarDrawer'
   target 'PhishOD' do

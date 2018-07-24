@@ -473,23 +473,23 @@
 		7C80440B1E6F29AB00BA946E /* DisplayNodes */ = {
 			isa = PBXGroup;
 			children = (
-				8E91C1703DD1522098B0957F /* YearShowCellNode.swift */,
-				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
-				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
-				7C4F1BEA1F731A5900C592BD /* SongLayout.swift */,
-				7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */,
-				7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */,
-				7C31552120BFC55900F07622 /* ReviewLayout.swift */,
-				7C31552720C0A08300F07622 /* ShareCellLayout.swift */,
-				7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */,
-				7C31553020C2074300F07622 /* SounceFeatureIndicatorNodes.swift */,
 				7C31553320C2076C00F07622 /* AXRatingViewNode.swift */,
 				7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */,
-				7C31553920C2081A00F07622 /* YearNode.swift */,
-				7C31553C20C2199500F07622 /* SourceDetailsNode.swift */,
-				7C31553F20C224F500F07622 /* SwitchCellNode.swift */,
+				7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */,
+				7C31552120BFC55900F07622 /* ReviewLayout.swift */,
+				7C31552720C0A08300F07622 /* ShareCellLayout.swift */,
 				7C31554220C2343000F07622 /* ShareCellNode.swift */,
+				7C4F1BEA1F731A5900C592BD /* SongLayout.swift */,
+				7C31553020C2074300F07622 /* SounceFeatureIndicatorNodes.swift */,
+				7C31553C20C2199500F07622 /* SourceDetailsNode.swift */,
+				7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */,
+				7C31553F20C224F500F07622 /* SwitchCellNode.swift */,
 				7C31554520C2350800F07622 /* TrackStatusCellNode.swift */,
+				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
+				7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */,
+				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
+				7C31553920C2081A00F07622 /* YearNode.swift */,
+				8E91C1703DD1522098B0957F /* YearShowCellNode.swift */,
 			);
 			name = DisplayNodes;
 			sourceTree = "<group>";

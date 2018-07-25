@@ -44,7 +44,6 @@
 #include "src/core/lib/security/transport/target_authority_table.h"
 #include "src/core/tsi/fake_transport_security.h"
 #include "src/core/tsi/ssl_transport_security.h"
-#include "src/core/tsi/transport_security_adapter.h"
 
 grpc_core::DebugOnlyTraceFlag grpc_trace_security_connector_refcount(
     false, "security_connector_refcount");
@@ -70,8 +69,11 @@ void grpc_set_ssl_roots_override_callback(grpc_ssl_roots_override_callback cb) {
 
 /* Defines the cipher suites that we accept by default. All these cipher suites
    are compliant with HTTP2. */
-#define GRPC_SSL_CIPHER_SUITES \
-  "ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384"
+#define GRPC_SSL_CIPHER_SUITES     \
+  "ECDHE-ECDSA-AES128-GCM-SHA256:" \
+  "ECDHE-ECDSA-AES256-GCM-SHA384:" \
+  "ECDHE-RSA-AES128-GCM-SHA256:"   \
+  "ECDHE-RSA-AES256-GCM-SHA384"
 
 static gpr_once cipher_suites_once = GPR_ONCE_INIT;
 static const char* cipher_suites = nullptr;
@@ -673,8 +675,7 @@ static void ssl_channel_add_handshakers(grpc_channel_security_connector* sc,
   }
   // Create handshakers.
   grpc_handshake_manager_add(
-      handshake_mgr, grpc_security_handshaker_create(
-                         tsi_create_adapter_handshaker(tsi_hs), &sc->base));
+      handshake_mgr, grpc_security_handshaker_create(tsi_hs, &sc->base));
 }
 
 static const char** fill_alpn_protocol_strings(size_t* num_alpn_protocols) {
@@ -782,8 +783,7 @@ static void ssl_server_add_handshakers(grpc_server_security_connector* sc,
   }
   // Create handshakers.
   grpc_handshake_manager_add(
-      handshake_mgr, grpc_security_handshaker_create(
-                         tsi_create_adapter_handshaker(tsi_hs), &sc->base));
+      handshake_mgr, grpc_security_handshaker_create(tsi_hs, &sc->base));
 }
 
 int grpc_ssl_host_matches_name(const tsi_peer* peer, const char* peer_name) {

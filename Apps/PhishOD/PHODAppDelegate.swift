@@ -7,16 +7,23 @@
 //
 
 import UIKit
+import AsyncDisplayKit
+import RelistenShared
 
 @UIApplicationMain
-class PHODAppDelegate: UIResponder, UIApplicationDelegate {
+class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
     var window: UIWindow?
+    public var rootNavigationController: ASNavigationController! = nil
 
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        RelistenApp.sharedApp.delegate = self
+        
         return true
+    }
+    
+    public func setupAppearance(_ viewController: UINavigationController? = nil) {
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

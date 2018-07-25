@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ActionKit
 
 public enum RelistenMenuCategory: Int {
     case Everything
@@ -129,7 +130,12 @@ public class RelistenMenuView : UIView {
         uiButtons = menuCategories.map { menuButton(forButton: $0) }
         
         for (idx, categoryButton) in uiButtons.enumerated() {
-            categoryButton.addTarget(self, action: #selector(menuItemTapped(_:)), for: .touchUpInside)
+            categoryButton.addControlEvent(.touchUpInside) { (control: UIControl) in
+                guard let button = control as? UIButton else {
+                    return
+                }
+                self.menuItemTapped(button)
+            }
 
             let subItems = menu[idx]
 
@@ -143,7 +149,12 @@ public class RelistenMenuView : UIView {
             for subMenuItem in subItems {
                 let subButton = menuButton(forSubmenuButton: subMenuItem)
                 
-                subButton.addTarget(self, action: #selector(submenuItemTapped(_:)), for: .touchUpInside)
+                subButton.addControlEvent(.touchUpInside) { (control: UIControl) in
+                    guard let button = control as? UIButton else {
+                        return
+                    }
+                    self.submenuItemTapped(button)
+                }
                 
                 container.addSubview(subButton)
                 

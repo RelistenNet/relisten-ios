@@ -15,18 +15,18 @@ import AsyncDisplayKit
 import Observable
 import SINQ
 
-class SourceViewController: RelistenBaseAsyncTableViewController {
+public class SourceViewController: RelistenBaseAsyncTableViewController {
     
-    let artist: ArtistWithCounts
-    let show: ShowWithSources
-    let source: SourceFull
-    let idx: Int
+    private let artist: ArtistWithCounts
+    private let show: ShowWithSources
+    private let source: SourceFull
+    private let idx: Int
     
-    let isInMyShows = Observable(false)
-    let isAvailableOffline = Observable(false)
+    public let isInMyShows = Observable(false)
+    public let isAvailableOffline = Observable(false)
 
-    lazy var addToMyShowsNode = SwitchCellNode(observeChecked: isInMyShows, withLabel: "Part of My Shows")
-    lazy var downloadNode = SwitchCellNode(observeChecked: isAvailableOffline, withLabel: "Fully Available Offline")
+    private lazy var addToMyShowsNode = SwitchCellNode(observeChecked: isInMyShows, withLabel: "Part of My Shows")
+    private lazy var downloadNode = SwitchCellNode(observeChecked: isAvailableOffline, withLabel: "Fully Available Offline")
 
     public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
@@ -116,11 +116,11 @@ class SourceViewController: RelistenBaseAsyncTableViewController {
         }.add(to: &disposal)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         if show.sources.count == 1 {
@@ -257,7 +257,7 @@ class SourceViewController: RelistenBaseAsyncTableViewController {
 }
 
 extension SourceViewController : TrackStatusActionHandler {
-    func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
+    public func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
         TrackActions.showActionOptions(fromViewController: self, forTrack: track)
     }
 }

@@ -10,8 +10,7 @@
 #endif
 #endif
 
-#import "CWStatusBarNotification.h"
 
-FOUNDATION_EXPORT double CWStatusBarNotificationVersionNumber;
-FOUNDATION_EXPORT const unsigned char CWStatusBarNotificationVersionString[];
+FOUNDATION_EXPORT double Pods_RelistenSharedVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_RelistenSharedVersionString[];
 

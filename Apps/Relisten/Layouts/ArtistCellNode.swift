@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import RelistenShared
 
 import LayoutKit
 import FaveButton
 
 import AsyncDisplayKit
 import Observable
+import ActionKit
 
 func color(_ rgbColor: Int) -> UIColor{
     return UIColor(
@@ -86,7 +88,9 @@ public class FavoriteButtonNode : ASDisplayNode {
             
             button.setSelected(selected: currentlyFavorited, animated: false)
             
-            button.addTarget(self, action: #selector(onFavorite), for: .touchUpInside)
+            button.addControlEvent(.touchUpInside) { (control: UIControl) in
+                self.onFavorite()
+            }
         }
         
         MyLibraryManager.shared.artistFavorited.addHandler({ [weak self] artist in

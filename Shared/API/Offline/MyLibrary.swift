@@ -10,7 +10,6 @@ import Foundation
 
 import SwiftyJSON
 import Cache
-import Async
 import SINQ
 import Observable
 
@@ -165,7 +164,6 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
         }
         catch {
             print(error)
-            RelistenNotificationBar.display(withMessage: error.localizedDescription, forDuration: 10)
         }
     }
     

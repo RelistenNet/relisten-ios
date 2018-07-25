@@ -41,40 +41,57 @@ public class MyLibrary {
     private static let offlineTrackFileSizeCacheName = "offlineTrackSize"
     private static let offlineCacheName = "offline"
     
-    public let offlineCache = try! Storage(
-        diskConfig: DiskConfig(
-            name: MyLibrary.offlineCacheName,
-            expiry: .never,
-            maxSize: 1024 * 1024 * 250,
-            directory: PersistentCacheDirectory
-        )
-    )
+    public let offlineCache : Storage<Set<URL>>
+    public let offlineCacheURLStorage : Storage<Set<URL>>
+    public let offlineCacheDownloadBacklogStorage : Storage<[Track]>
+    public let offlineCacheSourcesMetadata : Storage<Set<OfflineSourceMetadata>>
     
-    public let offlineTrackFileSizeCache = try! Storage(
-        diskConfig: DiskConfig(
-            name: MyLibrary.offlineTrackFileSizeCacheName,
-            expiry: .never,
-            maxSize: 0,
-            directory: nil,
-            protectionType: nil
-        ),
-        memoryConfig: MemoryConfig(
-            expiry: .never,
-            countLimit: 4000,
-            totalCostLimit: 1024 * 1024 * 16
-        )
-    )
+    public let offlineTrackFileSizeCache : Storage<OfflineTrackMetadata>
     
     public init() {
+        offlineCache = try! Storage(
+            diskConfig: DiskConfig(
+                name: MyLibrary.offlineCacheName,
+                expiry: .never,
+                maxSize: 1024 * 1024 * 250,
+                directory: PersistentCacheDirectory
+            ),
+            memoryConfig: MemoryConfig(
+                expiry: .never,
+                countLimit: 4000,
+                totalCostLimit: 1024 * 1024 * 2
+            ),
+            transformer: TransformerFactory.forCodable(ofType: Set<URL>.self)
+        )
+        offlineCacheURLStorage = offlineCache.transformCodable(ofType: Set<URL>.self)
+        offlineCacheDownloadBacklogStorage = offlineCache.transformCodable(ofType: [Track].self)
+        offlineCacheSourcesMetadata = offlineCache.transformCodable(ofType: Set<OfflineSourceMetadata>.self)
+        
+        offlineTrackFileSizeCache = try! Storage(
+            diskConfig: DiskConfig(
+                name: MyLibrary.offlineTrackFileSizeCacheName,
+                expiry: .never,
+                maxSize: 0,
+                directory: nil,
+                protectionType: nil
+            ),
+            memoryConfig: MemoryConfig(
+                expiry: .never,
+                countLimit: 4000,
+                totalCostLimit: 1024 * 1024 * 2
+            ),
+            transformer: TransformerFactory.forCodable(ofType: OfflineTrackMetadata.self)
+        )
+        
         try! loadOfflineData()
     }
     
-    public init(json: SwJSON) throws {
+    public convenience init(json: SwJSON) throws {
+        self.init()
+        
         shows = try json["shows"].arrayValue.map(CompleteShowInformation.init)
         artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
         recentlyPlayedTracks = try json["recentlyPlayedTracks"].arrayValue.map(Track.init)
-
-        try loadOfflineData()
         
         artistIdsChanged.value = artistIds
     }
@@ -165,21 +182,21 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
 extension MyLibrary {
     public func loadOfflineData() throws {
         do {
-            offlineTrackURLs = try offlineCache.object(ofType: Set<URL>.self, forKey: "offlineTrackURLs")
+            offlineTrackURLs = try offlineCacheURLStorage.object(forKey: "offlineTrackURLs")
         }
         catch CocoaError.fileReadNoSuchFile {
             offlineTrackURLs = Set<URL>()
         }
         
         do {
-            downloadBacklog = try offlineCache.object(ofType: [Track].self, forKey: "downloadBacklog")
+            downloadBacklog = try offlineCacheDownloadBacklogStorage.object(forKey: "downloadBacklog")
         }
         catch CocoaError.fileReadNoSuchFile {
             downloadBacklog = []
         }
         
         do {
-            offlineSourcesMetadata = try offlineCache.object(ofType: Set<OfflineSourceMetadata>.self, forKey: "offlineSourcesMetadata")
+            offlineSourcesMetadata = try offlineCacheSourcesMetadata.object(forKey: "offlineSourcesMetadata")
         }
         catch CocoaError.fileReadNoSuchFile {
             offlineSourcesMetadata = []
@@ -193,15 +210,15 @@ extension MyLibrary {
     }
     
     public func saveOfflineTrackUrls() {
-        offlineCache.async.setObject(offlineTrackURLs, forKey: "offlineTrackURLs", completion: { _ in })
+        offlineCacheURLStorage.async.setObject(offlineTrackURLs, forKey: "offlineTrackURLs", completion: { _ in })
     }
     
     public func saveDownloadBacklog() {
-        offlineCache.async.setObject(downloadBacklog, forKey: "downloadBacklog", completion: { _ in })
+        offlineCacheDownloadBacklogStorage.async.setObject(downloadBacklog, forKey: "downloadBacklog", completion: { _ in })
     }
     
     public func saveOfflineSourcesMetadata() {
-        offlineCache.async.setObject(offlineSourcesMetadata, forKey: "offlineSourcesMetadata", completion: { _ in })
+        offlineCacheSourcesMetadata.async.setObject(offlineSourcesMetadata, forKey: "offlineSourcesMetadata", completion: { _ in })
     }
 }
 

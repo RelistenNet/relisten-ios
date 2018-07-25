@@ -1,0 +1,119 @@
+//
+//  RequestDetailViewController.swift
+//  Wormholy-iOS
+//
+//  Created by Paolo Musolino on 15/04/18.
+//  Copyright © 2018 Wormholy. All rights reserved.
+//
+
+import UIKit
+
+class RequestDetailViewController: WHBaseViewController {
+    
+    @IBOutlet weak var tableView: WHTableView!
+    
+    var request: RequestModel?
+    var sections: [Section] = [
+        Section(name: "Overview", type: .overview),
+        Section(name: "Header", type: .header),
+        Section(name: "Request Body", type: .requestBody),
+        Section(name: "Response Body", type: .responseBody)
+    ]
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let urlString = request?.url{
+            title = URL(string: urlString)?.path
+        }
+        
+        tableView.estimatedRowHeight = 100.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.register(UINib(nibName: "TextTableViewCell", bundle:WHBundle.getBundle()), forCellReuseIdentifier: "TextTableViewCell")
+        tableView.register(UINib(nibName: "ActionableTableViewCell", bundle:WHBundle.getBundle()), forCellReuseIdentifier: "ActionableTableViewCell")
+        tableView.register(UINib(nibName: "RequestTitleSectionView", bundle:WHBundle.getBundle()), forHeaderFooterViewReuseIdentifier: "RequestTitleSectionView")
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    
+    // MARK: - Navigation
+    func openBodyDetailVC(title: String?, body: Data?){
+        let storyboard = UIStoryboard(name: "Flow", bundle: WHBundle.getBundle())
+        if let requestDetailVC = storyboard.instantiateViewController(withIdentifier: "BodyDetailViewController") as? BodyDetailViewController{
+            requestDetailVC.title = title
+            requestDetailVC.data = body
+            self.show(requestDetailVC, sender: self)
+        }
+    }
+    
+}
+
+
+extension RequestDetailViewController: UITableViewDataSource{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "RequestTitleSectionView") as! RequestTitleSectionView
+        header.contentView.backgroundColor = Colors.Gray.lighestGray
+        header.titleLabel.text = sections[section].name
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let section = sections[indexPath.section]
+        if let req = request{
+            switch section.type {
+            case .overview:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TextTableViewCell", for: indexPath) as! TextTableViewCell
+                cell.textView.attributedText = RequestModelBeautifier.overview(request: req)
+                return cell
+            case .header:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TextTableViewCell", for: indexPath) as! TextTableViewCell
+                cell.textView.attributedText = RequestModelBeautifier.header(request: req)
+                return cell
+            case .requestBody:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ActionableTableViewCell", for: indexPath) as! ActionableTableViewCell
+                cell.labelAction?.text = "View body"
+                return cell
+            case .responseBody:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ActionableTableViewCell", for: indexPath) as! ActionableTableViewCell
+                cell.labelAction?.text = "View body"
+                return cell
+            }
+        }
+        
+        return UITableViewCell()
+    }
+    
+}
+
+extension RequestDetailViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = sections[indexPath.section]
+        
+        switch section.type {
+        case .requestBody:
+            openBodyDetailVC(title: "Request body", body: request?.httpBody)
+            break
+        case .responseBody:
+            openBodyDetailVC(title: "Response body", body: request?.dataResponse)
+            break
+        default:
+            break
+        }
+    }
+}

@@ -13,6 +13,12 @@ import LayoutKit
 import KASlideShow
 import AsyncDisplayKit
 
+extension Calendar {
+    static func currentDayOfMonth() -> Int {
+        return Calendar.autoupdatingCurrent.component(.day, from: Date())
+    }
+}
+
 public class ArtistViewController : RelistenBaseAsyncTableViewController {
     enum Sections: Int, RawRepresentable {
         case today = 0
@@ -26,6 +32,7 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
     
     let resourceToday: Resource
     var resourceTodayData: [Show]? = nil
+    private var lastTodayShowsUpdateDay : Int
     
     public var recentlyPlayedTracks: [Track] = []
     public let recentShowsNode: HorizontalShowCollectionCellNode
@@ -41,6 +48,8 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         todayShowsNode.cellTransparency = 0.9
 
         resourceToday = RelistenApi.onThisDay(byArtist: artist)
+        
+        lastTodayShowsUpdateDay = Calendar.currentDayOfMonth()
         
         super.init()
         
@@ -90,6 +99,15 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
             guard let s = self else { return }
             s.reloadRecentShows(tracks: tracks)
         }).add(to: &disposal)
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // No need to reload shows on this day if the day hasn't changed
+        if Calendar.currentDayOfMonth() != lastTodayShowsUpdateDay {
+            resourceToday.loadFromCacheThenUpdate()
+        }
     }
     
     public override func viewDidAppear(_ animated: Bool) {

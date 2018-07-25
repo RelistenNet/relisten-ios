@@ -13,6 +13,7 @@ import Observable
 
 public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSource {
     public let collectionNode: ASCollectionNode
+    public var cellTransparency : CGFloat = 1.0
     
     var disposal = Disposal()
     
@@ -32,6 +33,8 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 4, 4, 4)
         
         collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+        collectionNode.backgroundColor = UIColor.clear
+        
         self.shows = shows
         
         super.init()
@@ -63,8 +66,9 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     public func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         let show = shows[indexPath.row]
+        let cellTransparency = self.cellTransparency
         
-        return { YearShowCellNode(show: show.show, withRank: nil, verticalLayout: true, showingArtist: show.artist) }
+        return { YearShowCellNode(show: show.show, withRank: nil, verticalLayout: true, showingArtist: show.artist, cellTransparency: cellTransparency) }
     }
 }
 

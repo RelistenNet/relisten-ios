@@ -10,13 +10,13 @@ import UIKit
 import AGAudioPlayer
 
 public struct _AppColors : Equatable {
-    let primary: UIColor
-    let textOnPrimary: UIColor
+    public let primary: UIColor
+    public let textOnPrimary: UIColor
     
-    let soundboard: UIColor
-    let remaster: UIColor
+    public let soundboard: UIColor
+    public let remaster: UIColor
     
-    let mutedText: UIColor
+    public let mutedText: UIColor
     
     public init(primary: UIColor, textOnPrimary: UIColor, soundboard: UIColor, remaster: UIColor, mutedText: UIColor) {
         self.primary = primary
@@ -54,7 +54,7 @@ public func AppColors_SwitchToPhishOD(_ viewController: UINavigationController?)
     if AppColors != PhishODAppColors {
         AppColors = PhishODAppColors
         
-        AppDelegate.shared.setupAppearance(viewController)
+        RelistenApp.sharedApp.delegate.setupAppearance(viewController)
         
         PlaybackController.sharedInstance.viewController.applyColors(PhishODPlayerColors)
     }
@@ -64,7 +64,7 @@ public func AppColors_SwitchToRelisten(_ viewController: UINavigationController?
     if AppColors != RelistenAppColors {
         AppColors = RelistenAppColors
         
-        AppDelegate.shared.setupAppearance(viewController)
+        RelistenApp.sharedApp.delegate.setupAppearance(viewController)
         
         PlaybackController.sharedInstance.viewController.applyColors(RelistenPlayerColors)
     }

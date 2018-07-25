@@ -38,7 +38,7 @@ public class ReviewsViewController : RelistenTableViewController<[SourceReview]>
         cellDefaultBackgroundColor = UIColor.white
     }
     
-    override var resource: Resource? { get { return api.reviews(forSource: source, byArtist: artist) } }
+    open override var resource: Resource? { get { return api.reviews(forSource: source, byArtist: artist) } }
     
     public override func render(forData: [SourceReview]) {
         layout {

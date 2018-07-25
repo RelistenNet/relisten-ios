@@ -7,164 +7,119 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		436C220C20F6C4FE0088F563 /* CarPlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EF8D6720F01A41002FF970 /* CarPlayController.swift */; };
-		4370C24520EDDD7D00D3358B /* CompleteShowInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */; };
-		43A6A9A92105954B00EFF3AD /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */; };
-		43A6A9AB2105B1EF00EFF3AD /* RelistenArtistModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */; };
-		43B0472D20FD59D000251046 /* ShowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B0472C20FD59D000251046 /* ShowListViewController.swift */; };
-		43B047732100049E00251046 /* YearSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B047722100049E00251046 /* YearSorting.swift */; };
-		43B047752100626200251046 /* OfflineSourceMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B047742100626200251046 /* OfflineSourceMetadata.swift */; };
-		43EF8D6820F01A41002FF970 /* CarPlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EF8D6720F01A41002FF970 /* CarPlayController.swift */; };
+		43B534172109228000DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
+		43B5341C2109229200DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
+		43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
+		43B5341E210922CE00DE9B1F /* YearSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B047722100049E00251046 /* YearSorting.swift */; };
+		43B5341F210922CE00DE9B1F /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEB1F9BDE4A00041D47 /* Events.swift */; };
+		43B53420210922CE00DE9B1F /* TrackActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704C20B677C300710E90 /* TrackActions.swift */; };
+		43B53421210922CE00DE9B1F /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* Track.swift */; };
+		43B53422210922CE00DE9B1F /* CompleteShowInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */; };
+		43B53423210922CE00DE9B1F /* SourceTrackAudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */; };
+		43B53424210922CE00DE9B1F /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */; };
+		43B53425210922CE00DE9B1F /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705020B9E8B800710E90 /* Array.swift */; };
+		43B53426210922CE00DE9B1F /* UIFont+ChangeWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044111E6F456000BA946E /* UIFont+ChangeWeight.swift */; };
+		43B53427210922CE00DE9B1F /* TimeInterval+Humanize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC11EDEE3A2009C5E3B /* TimeInterval+Humanize.swift */; };
+		43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */; };
+		43B53429210922CE00DE9B1F /* UInt64+HumanizeBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704320B5FE6200710E90 /* UInt64+HumanizeBytes.swift */; };
+		43B5342A210922CE00DE9B1F /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551420BFB3DA00F07622 /* String.swift */; };
+		43B5342B210922CE00DE9B1F /* Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552A20C206BA00F07622 /* Numeric.swift */; };
+		43B5342C210922CE00DE9B1F /* AsyncDisplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */; };
+		43B5342D210922CE00DE9B1F /* RelistenMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */; };
+		43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACBE1EDEE178009C5E3B /* PaddingLabel.swift */; };
+		43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553320C2076C00F07622 /* AXRatingViewNode.swift */; };
+		43B53430210922CE00DE9B1F /* HorizontalShowCollectionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */; };
+		43B53431210922CE00DE9B1F /* OfflineIndicatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */; };
+		43B53432210922CE00DE9B1F /* ReviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552120BFC55900F07622 /* ReviewLayout.swift */; };
+		43B53433210922CE00DE9B1F /* ShareCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552720C0A08300F07622 /* ShareCellLayout.swift */; };
+		43B53434210922CE00DE9B1F /* ShareCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554220C2343000F07622 /* ShareCellNode.swift */; };
+		43B53435210922CE00DE9B1F /* SongLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BEA1F731A5900C592BD /* SongLayout.swift */; };
+		43B53436210922CE00DE9B1F /* SounceFeatureIndicatorNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553020C2074300F07622 /* SounceFeatureIndicatorNodes.swift */; };
+		43B53437210922CE00DE9B1F /* SourceDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553C20C2199500F07622 /* SourceDetailsNode.swift */; };
+		43B53438210922CE00DE9B1F /* SwitchCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */; };
+		43B53439210922CE00DE9B1F /* SwitchCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553F20C224F500F07622 /* SwitchCellNode.swift */; };
+		43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554520C2350800F07622 /* TrackStatusCellNode.swift */; };
+		43B5343B210922CE00DE9B1F /* TrackStatusLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */; };
+		43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */; };
+		43B5343D210922CE00DE9B1F /* VenueLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD161F71766E00E936AB /* VenueLayout.swift */; };
+		43B5343E210922CE00DE9B1F /* YearNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553920C2081A00F07622 /* YearNode.swift */; };
+		43B5343F210922CE00DE9B1F /* YearShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowCellNode.swift */; };
+		43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551820BFB71B00F07622 /* LongTextViewController.swift */; };
+		43B53441210922CE00DE9B1F /* ShowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B0472C20FD59D000251046 /* ShowListViewController.swift */; };
+		43B53442210922CE00DE9B1F /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */; };
+		43B53443210922CE00DE9B1F /* MyLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705420B9FC5400710E90 /* MyLibraryViewController.swift */; };
+		43B53444210922CE00DE9B1F /* DownloadedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705720B9FC7600710E90 /* DownloadedViewController.swift */; };
+		43B53445210922CE00DE9B1F /* MyRecentlyPlayedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */; };
+		43B53446210922CE00DE9B1F /* SongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BE41F7317BE00C592BD /* SongsViewController.swift */; };
+		43B53447210922CE00DE9B1F /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BED1F733A0700C592BD /* SongViewController.swift */; };
+		43B53448210922CE00DE9B1F /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD131F71763400E936AB /* VenuesViewController.swift */; };
+		43B53449210922CE00DE9B1F /* VenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */; };
+		43B5344A210922CE00DE9B1F /* YearsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8677FD1EDECF8F0000223E /* YearsViewController.swift */; };
+		43B5344B210922CE00DE9B1F /* YearViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC41EDEE63F009C5E3B /* YearViewController.swift */; };
+		43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC91EDF1440009C5E3B /* SourcesViewController.swift */; };
+		43B5344D210922CE00DE9B1F /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5076321EE701D500BE3CE7 /* SourceViewController.swift */; };
+		43B5344E210922CE00DE9B1F /* TopShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB1DBC71F718E90006AC393 /* TopShowsViewController.swift */; };
+		43B5344F210922CE00DE9B1F /* SourceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551120BFAE6E00F07622 /* SourceDetailsViewController.swift */; };
+		43B53450210922CE00DE9B1F /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551E20BFC4C300F07622 /* ReviewsViewController.swift */; };
+		43B53451210922CE00DE9B1F /* RelistenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */; };
+		43B53452210922CE00DE9B1F /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
+		43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EF8D6720F01A41002FF970 /* CarPlayController.swift */; };
+		43B53454210922CE00DE9B1F /* RelistenDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */; };
+		43B53455210922CE00DE9B1F /* MyLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */; };
+		43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704620B62C2D00710E90 /* MyLibrary.swift */; };
+		43B53457210922CE00DE9B1F /* MyLibrary+DiskUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */; };
+		43B53458210922CE00DE9B1F /* RelistenJsonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */; };
+		43B53459210922CE00DE9B1F /* RelistenModelCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */; };
+		43B5345A210922CE00DE9B1F /* RelistenModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B91E60FB66006F2912 /* RelistenModels.swift */; };
+		43B5345B210922CE00DE9B1F /* RelistenArtistModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */; };
+		43B5345C210922CE00DE9B1F /* RelistenShowModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */; };
+		43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */; };
+		43B5345E210922CE00DE9B1F /* RelistenSongModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BE71F73186500C592BD /* RelistenSongModels.swift */; };
+		43B5345F210922CE00DE9B1F /* OfflineSourceMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B047742100626200251046 /* OfflineSourceMetadata.swift */; };
+		43B53460210922CE00DE9B1F /* ApiCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C31E621836006F2912 /* ApiCache.swift */; };
+		43B53461210922CE00DE9B1F /* RelistenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */; };
+		43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */; };
+		43B53463210922CE00DE9B1F /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044141E6F4B1E00BA946E /* AppColors.swift */; };
+		43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CBE10F2109296A003FAF51 /* RelistenApp.swift */; };
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
-		7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */; };
-		7C03A4B71E60E8B7006F2912 /* RelistenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */; };
-		7C03A4BA1E60FB66006F2912 /* RelistenModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4B91E60FB66006F2912 /* RelistenModels.swift */; };
-		7C03A4BC1E60FFD2006F2912 /* RelistenJsonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */; };
-		7C03A4BE1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */; };
-		7C03A4BF1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */; };
-		7C03A4C11E61CD70006F2912 /* RelistenSourceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */; };
-		7C03A4C21E61CD70006F2912 /* RelistenSourceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */; };
-		7C03A4C41E621836006F2912 /* ApiCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C31E621836006F2912 /* ApiCache.swift */; };
-		7C03A4C51E621836006F2912 /* ApiCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C31E621836006F2912 /* ApiCache.swift */; };
-		7C03A4C71E6218CF006F2912 /* RelistenModelCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */; };
-		7C03A4C81E6218CF006F2912 /* RelistenModelCachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */; };
-		7C13704420B5FE6200710E90 /* UInt64+HumanizeBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704320B5FE6200710E90 /* UInt64+HumanizeBytes.swift */; };
-		7C13704520B5FE6200710E90 /* UInt64+HumanizeBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704320B5FE6200710E90 /* UInt64+HumanizeBytes.swift */; };
-		7C13704720B62C2D00710E90 /* MyLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704620B62C2D00710E90 /* MyLibrary.swift */; };
-		7C13704820B62C2D00710E90 /* MyLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704620B62C2D00710E90 /* MyLibrary.swift */; };
-		7C13704A20B62D9200710E90 /* MyLibrary+DiskUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */; };
-		7C13704B20B62D9200710E90 /* MyLibrary+DiskUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */; };
-		7C13704D20B677C300710E90 /* TrackActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704C20B677C300710E90 /* TrackActions.swift */; };
-		7C13704E20B677C300710E90 /* TrackActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704C20B677C300710E90 /* TrackActions.swift */; };
-		7C13705120B9E8B800710E90 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705020B9E8B800710E90 /* Array.swift */; };
-		7C13705220B9E8B800710E90 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705020B9E8B800710E90 /* Array.swift */; };
-		7C13705520B9FC5400710E90 /* MyLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705420B9FC5400710E90 /* MyLibraryViewController.swift */; };
-		7C13705620B9FC5400710E90 /* MyLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705420B9FC5400710E90 /* MyLibraryViewController.swift */; };
-		7C13705820B9FC7600710E90 /* DownloadedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705720B9FC7600710E90 /* DownloadedViewController.swift */; };
-		7C13705920B9FC7600710E90 /* DownloadedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705720B9FC7600710E90 /* DownloadedViewController.swift */; };
-		7C13705B20BA399E00710E90 /* MyRecentlyPlayedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */; };
-		7C13705C20BA399E00710E90 /* MyRecentlyPlayedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */; };
-		7C1F1A5F1F733ACD009408AA /* VenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */; };
-		7C1F1A601F733ACD009408AA /* VenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */; };
+		7B38C27DC32DC3C13586FC48 /* Pods_RelistenShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */; };
 		7C31550E20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
 		7C31550F20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
-		7C31551220BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551120BFAE6E00F07622 /* SourceDetailsViewController.swift */; };
-		7C31551320BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551120BFAE6E00F07622 /* SourceDetailsViewController.swift */; };
-		7C31551520BFB3DA00F07622 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551420BFB3DA00F07622 /* String.swift */; };
-		7C31551620BFB3DA00F07622 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551420BFB3DA00F07622 /* String.swift */; };
-		7C31551920BFB71B00F07622 /* LongTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551820BFB71B00F07622 /* LongTextViewController.swift */; };
-		7C31551A20BFB71B00F07622 /* LongTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551820BFB71B00F07622 /* LongTextViewController.swift */; };
-		7C31551C20BFBE9A00F07622 /* UpstreamSourceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */; };
-		7C31551D20BFBE9A00F07622 /* UpstreamSourceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */; };
-		7C31551F20BFC4C300F07622 /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551E20BFC4C300F07622 /* ReviewsViewController.swift */; };
-		7C31552020BFC4C300F07622 /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551E20BFC4C300F07622 /* ReviewsViewController.swift */; };
-		7C31552220BFC55900F07622 /* ReviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552120BFC55900F07622 /* ReviewLayout.swift */; };
-		7C31552320BFC55900F07622 /* ReviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552120BFC55900F07622 /* ReviewLayout.swift */; };
-		7C31552520C09D8B00F07622 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
-		7C31552620C09D8B00F07622 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
-		7C31552820C0A08300F07622 /* ShareCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552720C0A08300F07622 /* ShareCellLayout.swift */; };
-		7C31552920C0A08300F07622 /* ShareCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552720C0A08300F07622 /* ShareCellLayout.swift */; };
-		7C31552B20C206BA00F07622 /* Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552A20C206BA00F07622 /* Numeric.swift */; };
-		7C31552C20C206BA00F07622 /* Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552A20C206BA00F07622 /* Numeric.swift */; };
-		7C31552E20C2072D00F07622 /* OfflineIndicatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */; };
-		7C31552F20C2072D00F07622 /* OfflineIndicatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */; };
-		7C31553120C2074300F07622 /* SounceFeatureIndicatorNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553020C2074300F07622 /* SounceFeatureIndicatorNodes.swift */; };
-		7C31553220C2074300F07622 /* SounceFeatureIndicatorNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553020C2074300F07622 /* SounceFeatureIndicatorNodes.swift */; };
-		7C31553420C2076C00F07622 /* AXRatingViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553320C2076C00F07622 /* AXRatingViewNode.swift */; };
-		7C31553520C2076C00F07622 /* AXRatingViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553320C2076C00F07622 /* AXRatingViewNode.swift */; };
-		7C31553720C2079200F07622 /* HorizontalShowCollectionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */; };
-		7C31553820C2079200F07622 /* HorizontalShowCollectionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */; };
-		7C31553A20C2081A00F07622 /* YearNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553920C2081A00F07622 /* YearNode.swift */; };
-		7C31553B20C2081A00F07622 /* YearNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553920C2081A00F07622 /* YearNode.swift */; };
-		7C31553D20C2199500F07622 /* SourceDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553C20C2199500F07622 /* SourceDetailsNode.swift */; };
-		7C31553E20C2199500F07622 /* SourceDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553C20C2199500F07622 /* SourceDetailsNode.swift */; };
-		7C31554020C224F500F07622 /* SwitchCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553F20C224F500F07622 /* SwitchCellNode.swift */; };
-		7C31554120C224F500F07622 /* SwitchCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553F20C224F500F07622 /* SwitchCellNode.swift */; };
-		7C31554320C2343000F07622 /* ShareCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554220C2343000F07622 /* ShareCellNode.swift */; };
-		7C31554420C2343000F07622 /* ShareCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554220C2343000F07622 /* ShareCellNode.swift */; };
-		7C31554620C2350800F07622 /* TrackStatusCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554520C2350800F07622 /* TrackStatusCellNode.swift */; };
-		7C31554720C2350800F07622 /* TrackStatusCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554520C2350800F07622 /* TrackStatusCellNode.swift */; };
 		7C31554920C2D21800F07622 /* ArtistCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554820C2D21800F07622 /* ArtistCellNode.swift */; };
 		7C31554A20C2D21800F07622 /* ArtistCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554820C2D21800F07622 /* ArtistCellNode.swift */; };
-		7C31554C20C2D24F00F07622 /* AsyncDisplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */; };
-		7C31554D20C2D24F00F07622 /* AsyncDisplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */; };
-		7C3474DE1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */; };
-		7C3474DF1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */; };
 		7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */; };
 		7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */; };
 		7C449EA91D5A4F4300750D54 /* PHODLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA71D5A4F4300750D54 /* PHODLaunchScreen.storyboard */; };
 		7C449EB41D5A4F4300750D54 /* PhishODUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C449EB31D5A4F4300750D54 /* PhishODUITests.swift */; };
-		7C4F1BE51F7317BE00C592BD /* SongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BE41F7317BE00C592BD /* SongsViewController.swift */; };
-		7C4F1BE61F7317BE00C592BD /* SongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BE41F7317BE00C592BD /* SongsViewController.swift */; };
-		7C4F1BE81F73186500C592BD /* RelistenSongModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BE71F73186500C592BD /* RelistenSongModels.swift */; };
-		7C4F1BE91F73186500C592BD /* RelistenSongModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BE71F73186500C592BD /* RelistenSongModels.swift */; };
-		7C4F1BEB1F731A5900C592BD /* SongLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BEA1F731A5900C592BD /* SongLayout.swift */; };
-		7C4F1BEC1F731A5900C592BD /* SongLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BEA1F731A5900C592BD /* SongLayout.swift */; };
-		7C4F1BEE1F733A0700C592BD /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BED1F733A0700C592BD /* SongViewController.swift */; };
-		7C4F1BEF1F733A0700C592BD /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BED1F733A0700C592BD /* SongViewController.swift */; };
-		7C5076331EE701D500BE3CE7 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5076321EE701D500BE3CE7 /* SourceViewController.swift */; };
-		7C5076341EE701D500BE3CE7 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5076321EE701D500BE3CE7 /* SourceViewController.swift */; };
 		7C61C7CE1F18DB320094E0AF /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */; };
 		7C61C7CF1F18DB320094E0AF /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */; };
-		7C68279C1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */; };
-		7C68279D1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */; };
-		7C8044091E6F29A800BA946E /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
-		7C80440A1E6F29A800BA946E /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
-		7C80440E1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */; };
-		7C80440F1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */; };
-		7C8044121E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044111E6F456000BA946E /* UIFont+ChangeWeight.swift */; };
-		7C8044131E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044111E6F456000BA946E /* UIFont+ChangeWeight.swift */; };
-		7C8044151E6F4B1F00BA946E /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044141E6F4B1E00BA946E /* AppColors.swift */; };
-		7C8044161E6F4B1F00BA946E /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044141E6F4B1E00BA946E /* AppColors.swift */; };
-		7C8677FE1EDECF8F0000223E /* YearsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8677FD1EDECF8F0000223E /* YearsViewController.swift */; };
-		7C8677FF1EDECF8F0000223E /* YearsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8677FD1EDECF8F0000223E /* YearsViewController.swift */; };
 		7C8EF1111D5A49C300004B5C /* RLAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8EF1101D5A49C300004B5C /* RLAppDelegate.swift */; };
 		7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1171D5A49C300004B5C /* RLAssets.xcassets */; };
 		7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */; };
 		7C8EF1261D5A49C300004B5C /* RelistenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */; };
-		7CA3CD141F71763400E936AB /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD131F71763400E936AB /* VenuesViewController.swift */; };
-		7CA3CD151F71763400E936AB /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD131F71763400E936AB /* VenuesViewController.swift */; };
-		7CA3CD171F71766E00E936AB /* VenueLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD161F71766E00E936AB /* VenueLayout.swift */; };
-		7CA3CD181F71766E00E936AB /* VenueLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD161F71766E00E936AB /* VenueLayout.swift */; };
-		7CA94EA81F0A6C74004663F3 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* Track.swift */; };
-		7CA94EA91F0A6C74004663F3 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* Track.swift */; };
-		7CA94EAB1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */; };
-		7CA94EAC1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */; };
-		7CABACBF1EDEE178009C5E3B /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACBE1EDEE178009C5E3B /* PaddingLabel.swift */; };
-		7CABACC01EDEE178009C5E3B /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACBE1EDEE178009C5E3B /* PaddingLabel.swift */; };
-		7CABACC21EDEE3A2009C5E3B /* TimeInterval+Humanize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC11EDEE3A2009C5E3B /* TimeInterval+Humanize.swift */; };
-		7CABACC31EDEE3A2009C5E3B /* TimeInterval+Humanize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC11EDEE3A2009C5E3B /* TimeInterval+Humanize.swift */; };
-		7CABACC51EDEE63F009C5E3B /* YearViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC41EDEE63F009C5E3B /* YearViewController.swift */; };
-		7CABACC61EDEE63F009C5E3B /* YearViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC41EDEE63F009C5E3B /* YearViewController.swift */; };
-		7CABACCA1EDF1441009C5E3B /* SourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC91EDF1440009C5E3B /* SourcesViewController.swift */; };
-		7CABACCB1EDF1441009C5E3B /* SourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACC91EDF1440009C5E3B /* SourcesViewController.swift */; };
-		7CB1DBC81F718E90006AC393 /* TopShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB1DBC71F718E90006AC393 /* TopShowsViewController.swift */; };
-		7CB1DBC91F718E90006AC393 /* TopShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB1DBC71F718E90006AC393 /* TopShowsViewController.swift */; };
 		7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */; };
-		7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */; };
-		7CC095411E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */; };
-		7CC4EDC21F0AC2F0004CB615 /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */; };
-		7CC4EDC31F0AC2F0004CB615 /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */; };
-		7CC4EDC51F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */; };
-		7CC4EDC61F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */; };
-		7CCE0DEC1F9BDE4A00041D47 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEB1F9BDE4A00041D47 /* Events.swift */; };
-		7CCE0DED1F9BDE4A00041D47 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEB1F9BDE4A00041D47 /* Events.swift */; };
-		7CCE0DEF1F9BE33B00041D47 /* UIControl+Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */; };
-		7CCE0DF01F9BE33B00041D47 /* UIControl+Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */; };
-		7CCE0DF21F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */; };
-		7CCE0DF31F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */; };
 		7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
 		7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
-		8E91C0747A674A864013F1AB /* YearShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowCellNode.swift */; };
-		8E91C72389219DDCA7733977 /* YearShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowCellNode.swift */; };
-		8E91CEEF48E7DBDC4E7871F9 /* RelistenResourceStatusOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */; };
-		8E91CF363725BB2441672DC9 /* RelistenResourceStatusOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */; };
 		AC66B4F5C4BD9C01138EEBB8 /* Pods_PhishOD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */; };
 		CC04E2FFA276A84027E27D73 /* Pods_RelistenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD98604195220F1A82FB9F0 /* Pods_RelistenUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		43B534182109228700DE9B1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C8EF1051D5A49C200004B5C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 43B5340F2109226F00DE9B1F;
+			remoteInfo = RelistenShared;
+		};
+		43B5341A2109228E00DE9B1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C8EF1051D5A49C200004B5C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 43B5340F2109226F00DE9B1F;
+			remoteInfo = RelistenShared;
+		};
 		7C449EB01D5A4F4300750D54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7C8EF1051D5A49C200004B5C /* Project object */;
@@ -181,7 +136,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		43B5340E2109226F00DE9B1F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RelistenShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
 		43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyAddedViewController.swift; path = "View Controllers/General/RecentlyAddedViewController.swift"; sourceTree = "<group>"; };
@@ -189,8 +157,11 @@
 		43B0472C20FD59D000251046 /* ShowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListViewController.swift; path = "View Controllers/General/ShowListViewController.swift"; sourceTree = "<group>"; };
 		43B047722100049E00251046 /* YearSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YearSorting.swift; path = Helpers/YearSorting.swift; sourceTree = "<group>"; };
 		43B047742100626200251046 /* OfflineSourceMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSourceMetadata.swift; sourceTree = "<group>"; };
+		43B534102109226F00DE9B1F /* libRelistenShared.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRelistenShared.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43CBE10F2109296A003FAF51 /* RelistenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenApp.swift; sourceTree = "<group>"; };
 		43EF8D6720F01A41002FF970 /* CarPlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayController.swift; path = "View Controllers/CarPlayController.swift"; sourceTree = "<group>"; };
 		43EF8D6920F099DC002FF970 /* CREDITS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CREDITS.md; sourceTree = "<group>"; };
+		4768B6B0073CD79A919BDF7F /* Pods-RelistenShared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenShared.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenShared/Pods-RelistenShared.release.xcconfig"; sourceTree = "<group>"; };
 		598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Relisten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3DAE0BE91F9DD1D3300EE2 /* Pods-PhishODUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		74ABE39157492B09F7AB0CDB /* Pods-PhishODUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -274,7 +245,7 @@
 		7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenTableViewController.swift; path = "View Controllers/RelistenTableViewController.swift"; sourceTree = "<group>"; };
 		7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaybackController.swift; path = Playback/PlaybackController.swift; sourceTree = "<group>"; };
 		7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceTrackAudioItem.swift; path = Playback/Models/SourceTrackAudioItem.swift; sourceTree = "<group>"; };
-		7CCE0DE91F9BD38B00041D47 /* Relisten-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Relisten-Bridging-Header.h"; sourceTree = "<group>"; };
+		7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RelistenShared-Bridging-Header.h"; sourceTree = "<group>"; };
 		7CCE0DEB1F9BDE4A00041D47 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Events.swift; path = Events/Events.swift; sourceTree = "<group>"; };
 		7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Handler.swift"; sourceTree = "<group>"; };
 		7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwitchCellLayout.swift; path = Layouts/SwitchCellLayout.swift; sourceTree = "<group>"; };
@@ -289,13 +260,23 @@
 		EBD98604195220F1A82FB9F0 /* Pods_RelistenUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RelistenUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEF13FC8FABCBBC9FD61F35C /* Pods-Relisten.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Relisten.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Relisten/Pods-Relisten.debug.xcconfig"; sourceTree = "<group>"; };
 		F199D81BECAC074CFA1DBE22 /* Pods-PhishOD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishOD.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.release.xcconfig"; sourceTree = "<group>"; };
+		F2C92D744AC05BD2FF4DA8A4 /* Pods-RelistenShared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenShared.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenShared/Pods-RelistenShared.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		43B5340D2109226F00DE9B1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B38C27DC32DC3C13586FC48 /* Pods_RelistenShared.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7C449E991D5A4F4200750D54 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43B5341C2109229200DE9B1F /* libRelistenShared.a in Frameworks */,
 				AC66B4F5C4BD9C01138EEBB8 /* Pods_PhishOD.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,6 +293,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43B534172109228000DE9B1F /* libRelistenShared.a in Frameworks */,
 				6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,7 +397,8 @@
 				7C449EBE1D5A513800750D54 /* API */,
 				7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */,
 				7C8044141E6F4B1E00BA946E /* AppColors.swift */,
-				7CCE0DE91F9BD38B00041D47 /* Relisten-Bridging-Header.h */,
+				43CBE10F2109296A003FAF51 /* RelistenApp.swift */,
+				7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */,
 				43EF8D6920F099DC002FF970 /* CREDITS.md */,
 			);
 			path = Shared;
@@ -537,6 +520,7 @@
 				7C8EF1211D5A49C300004B5C /* RelistenUITests.xctest */,
 				7C449E9C1D5A4F4200750D54 /* PhishOD.app */,
 				7C449EAF1D5A4F4300750D54 /* PhishODUITests.xctest */,
+				43B534102109226F00DE9B1F /* libRelistenShared.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -657,6 +641,8 @@
 				F199D81BECAC074CFA1DBE22 /* Pods-PhishOD.release.xcconfig */,
 				5B3DAE0BE91F9DD1D3300EE2 /* Pods-PhishODUITests.debug.xcconfig */,
 				74ABE39157492B09F7AB0CDB /* Pods-PhishODUITests.release.xcconfig */,
+				F2C92D744AC05BD2FF4DA8A4 /* Pods-RelistenShared.debug.xcconfig */,
+				4768B6B0073CD79A919BDF7F /* Pods-RelistenShared.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -668,6 +654,7 @@
 				EBD98604195220F1A82FB9F0 /* Pods_RelistenUITests.framework */,
 				2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */,
 				D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */,
+				276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -675,6 +662,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		43B5340F2109226F00DE9B1F /* RelistenShared */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43B534162109227000DE9B1F /* Build configuration list for PBXNativeTarget "RelistenShared" */;
+			buildPhases = (
+				341E653D3A759453FC2BCF46 /* [CP] Check Pods Manifest.lock */,
+				43B5340C2109226F00DE9B1F /* Sources */,
+				43B5340D2109226F00DE9B1F /* Frameworks */,
+				43B5340E2109226F00DE9B1F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RelistenShared;
+			productName = RelistenShared;
+			productReference = 43B534102109226F00DE9B1F /* libRelistenShared.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		7C449E9B1D5A4F4200750D54 /* PhishOD */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7C449EBA1D5A4F4300750D54 /* Build configuration list for PBXNativeTarget "PhishOD" */;
@@ -683,10 +688,12 @@
 				7C449E981D5A4F4200750D54 /* Sources */,
 				7C449E991D5A4F4200750D54 /* Frameworks */,
 				7C449E9A1D5A4F4200750D54 /* Resources */,
+				7957BBB6D7B900BE5301B197 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				43B5341B2109228E00DE9B1F /* PBXTargetDependency */,
 			);
 			name = PhishOD;
 			productName = PhishOD;
@@ -725,6 +732,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				43B534192109228700DE9B1F /* PBXTargetDependency */,
 			);
 			name = Relisten;
 			productName = Relisten;
@@ -756,10 +764,15 @@
 		7C8EF1051D5A49C200004B5C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Alec Gorge";
 				TargetAttributes = {
+					43B5340F2109226F00DE9B1F = {
+						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = HT7ELV3Q35;
+						ProvisioningStyle = Automatic;
+					};
 					7C449E9B1D5A4F4200750D54 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HT7ELV3Q35;
@@ -814,6 +827,7 @@
 				7C8EF1201D5A49C300004B5C /* RelistenUITests */,
 				7C449E9B1D5A4F4200750D54 /* PhishOD */,
 				7C449EAE1D5A4F4300750D54 /* PhishODUITests */,
+				43B5340F2109226F00DE9B1F /* RelistenShared */,
 			);
 		};
 /* End PBXProject section */
@@ -860,6 +874,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		341E653D3A759453FC2BCF46 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RelistenShared-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		38152CD89EFDFF81868E0C4D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -894,6 +926,96 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7957BBB6D7B900BE5301B197 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AGAudioPlayer/AGAudioPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework",
+				"${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework",
+				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
+				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
+				"${BUILT_PRODUCTS_DIR}/KASlideShow/KASlideShow.framework",
+				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
+				"${BUILT_PRODUCTS_DIR}/MZDownloadManager/MZDownloadManager.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/NapySlider/NapySlider.framework",
+				"${BUILT_PRODUCTS_DIR}/Observable/Observable.framework",
+				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
+				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
+				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-16/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Siesta/Siesta.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Texture/AsyncDisplayKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Wormholy/Wormholy.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AGAudioPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXRatingView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KASlideShow.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZDownloadManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NAKPlaybackIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NapySlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Observable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SINQ.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siesta.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AsyncDisplayKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Wormholy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BBB25557F501CD6E192BAEE7 /* [CP] Check Pods Manifest.lock */ = {
@@ -942,14 +1064,11 @@
 				"${BUILT_PRODUCTS_DIR}/AGAudioPlayer/AGAudioPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework",
 				"${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework",
-				"${BUILT_PRODUCTS_DIR}/AsyncSwift/Async.framework",
 				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
-				"${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
-				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -965,7 +1084,6 @@
 				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
 				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-16/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -986,14 +1104,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AGAudioPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXRatingView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Async.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CWStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -1009,7 +1124,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SINQ.framework",
@@ -1033,75 +1147,91 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		43B5340C2109226F00DE9B1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43B5341F210922CE00DE9B1F /* Events.swift in Sources */,
+				43B53455210922CE00DE9B1F /* MyLibraryManager.swift in Sources */,
+				43B5345C210922CE00DE9B1F /* RelistenShowModels.swift in Sources */,
+				43B5343F210922CE00DE9B1F /* YearShowCellNode.swift in Sources */,
+				43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */,
+				43B5345E210922CE00DE9B1F /* RelistenSongModels.swift in Sources */,
+				43B53458210922CE00DE9B1F /* RelistenJsonUtils.swift in Sources */,
+				43B5344A210922CE00DE9B1F /* YearsViewController.swift in Sources */,
+				43B53461210922CE00DE9B1F /* RelistenApi.swift in Sources */,
+				43B53449210922CE00DE9B1F /* VenueViewController.swift in Sources */,
+				43B53443210922CE00DE9B1F /* MyLibraryViewController.swift in Sources */,
+				43B53445210922CE00DE9B1F /* MyRecentlyPlayedViewController.swift in Sources */,
+				43B5343E210922CE00DE9B1F /* YearNode.swift in Sources */,
+				43B5342C210922CE00DE9B1F /* AsyncDisplayKit.swift in Sources */,
+				43B53425210922CE00DE9B1F /* Array.swift in Sources */,
+				43B5345A210922CE00DE9B1F /* RelistenModels.swift in Sources */,
+				43B53439210922CE00DE9B1F /* SwitchCellNode.swift in Sources */,
+				43B53426210922CE00DE9B1F /* UIFont+ChangeWeight.swift in Sources */,
+				43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */,
+				43B5341E210922CE00DE9B1F /* YearSorting.swift in Sources */,
+				43B53420210922CE00DE9B1F /* TrackActions.swift in Sources */,
+				43B53460210922CE00DE9B1F /* ApiCache.swift in Sources */,
+				43B53435210922CE00DE9B1F /* SongLayout.swift in Sources */,
+				43B53434210922CE00DE9B1F /* ShareCellNode.swift in Sources */,
+				43B53444210922CE00DE9B1F /* DownloadedViewController.swift in Sources */,
+				43B5343B210922CE00DE9B1F /* TrackStatusLayout.swift in Sources */,
+				43B5345B210922CE00DE9B1F /* RelistenArtistModels.swift in Sources */,
+				43B5344F210922CE00DE9B1F /* SourceDetailsViewController.swift in Sources */,
+				43B53424210922CE00DE9B1F /* PlaybackController.swift in Sources */,
+				43B53457210922CE00DE9B1F /* MyLibrary+DiskUsage.swift in Sources */,
+				43B5344B210922CE00DE9B1F /* YearViewController.swift in Sources */,
+				43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */,
+				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
+				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
+				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
+				43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */,
+				43B53436210922CE00DE9B1F /* SounceFeatureIndicatorNodes.swift in Sources */,
+				43B53447210922CE00DE9B1F /* SongViewController.swift in Sources */,
+				43B53451210922CE00DE9B1F /* RelistenTableViewController.swift in Sources */,
+				43B53433210922CE00DE9B1F /* ShareCellLayout.swift in Sources */,
+				43B53450210922CE00DE9B1F /* ReviewsViewController.swift in Sources */,
+				43B53441210922CE00DE9B1F /* ShowListViewController.swift in Sources */,
+				43B53446210922CE00DE9B1F /* SongsViewController.swift in Sources */,
+				43B53429210922CE00DE9B1F /* UInt64+HumanizeBytes.swift in Sources */,
+				43B53463210922CE00DE9B1F /* AppColors.swift in Sources */,
+				43B53438210922CE00DE9B1F /* SwitchCellLayout.swift in Sources */,
+				43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */,
+				43B53423210922CE00DE9B1F /* SourceTrackAudioItem.swift in Sources */,
+				43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */,
+				43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */,
+				43B5344D210922CE00DE9B1F /* SourceViewController.swift in Sources */,
+				43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */,
+				43B53430210922CE00DE9B1F /* HorizontalShowCollectionCellNode.swift in Sources */,
+				43B53422210922CE00DE9B1F /* CompleteShowInformation.swift in Sources */,
+				43B5342B210922CE00DE9B1F /* Numeric.swift in Sources */,
+				43B5342D210922CE00DE9B1F /* RelistenMenuView.swift in Sources */,
+				43B53431210922CE00DE9B1F /* OfflineIndicatorNode.swift in Sources */,
+				43B53452210922CE00DE9B1F /* ArtistViewController.swift in Sources */,
+				43B53432210922CE00DE9B1F /* ReviewLayout.swift in Sources */,
+				43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */,
+				43B53442210922CE00DE9B1F /* RecentlyAddedViewController.swift in Sources */,
+				43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */,
+				43B5342A210922CE00DE9B1F /* String.swift in Sources */,
+				43B53459210922CE00DE9B1F /* RelistenModelCachable.swift in Sources */,
+				43B53427210922CE00DE9B1F /* TimeInterval+Humanize.swift in Sources */,
+				43B5343D210922CE00DE9B1F /* VenueLayout.swift in Sources */,
+				43B53421210922CE00DE9B1F /* Track.swift in Sources */,
+				43B53454210922CE00DE9B1F /* RelistenDownloadManager.swift in Sources */,
+				43B53448210922CE00DE9B1F /* VenuesViewController.swift in Sources */,
+				43B53437210922CE00DE9B1F /* SourceDetailsNode.swift in Sources */,
+				43B5344E210922CE00DE9B1F /* TopShowsViewController.swift in Sources */,
+				43B5345F210922CE00DE9B1F /* OfflineSourceMetadata.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7C449E981D5A4F4200750D54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CCE0DF31F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */,
-				7C4F1BEC1F731A5900C592BD /* SongLayout.swift in Sources */,
-				7CB1DBC91F718E90006AC393 /* TopShowsViewController.swift in Sources */,
-				7C31554120C224F500F07622 /* SwitchCellNode.swift in Sources */,
-				7C13704B20B62D9200710E90 /* MyLibrary+DiskUsage.swift in Sources */,
-				7C31551A20BFB71B00F07622 /* LongTextViewController.swift in Sources */,
-				7C03A4C81E6218CF006F2912 /* RelistenModelCachable.swift in Sources */,
-				7CCE0DED1F9BDE4A00041D47 /* Events.swift in Sources */,
-				7CC095411E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
-				7C31553E20C2199500F07622 /* SourceDetailsNode.swift in Sources */,
-				7C03A4C21E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
-				7C31553820C2079200F07622 /* HorizontalShowCollectionCellNode.swift in Sources */,
-				7C31554420C2343000F07622 /* ShareCellNode.swift in Sources */,
-				7CA94EA91F0A6C74004663F3 /* Track.swift in Sources */,
-				7C31552C20C206BA00F07622 /* Numeric.swift in Sources */,
-				7C13705220B9E8B800710E90 /* Array.swift in Sources */,
-				7C80440A1E6F29A800BA946E /* ArtistViewController.swift in Sources */,
-				436C220C20F6C4FE0088F563 /* CarPlayController.swift in Sources */,
-				7C31554720C2350800F07622 /* TrackStatusCellNode.swift in Sources */,
-				7C68279D1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */,
-				7C31553520C2076C00F07622 /* AXRatingViewNode.swift in Sources */,
-				7C4F1BE61F7317BE00C592BD /* SongsViewController.swift in Sources */,
-				7CABACC01EDEE178009C5E3B /* PaddingLabel.swift in Sources */,
-				7C8044161E6F4B1F00BA946E /* AppColors.swift in Sources */,
-				7C31553220C2074300F07622 /* SounceFeatureIndicatorNodes.swift in Sources */,
-				7C80440F1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */,
-				7C03A4C51E621836006F2912 /* ApiCache.swift in Sources */,
-				7C31551620BFB3DA00F07622 /* String.swift in Sources */,
-				7C31553B20C2081A00F07622 /* YearNode.swift in Sources */,
-				7CA94EAC1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */,
-				7CC4EDC31F0AC2F0004CB615 /* PlaybackController.swift in Sources */,
-				7C8677FF1EDECF8F0000223E /* YearsViewController.swift in Sources */,
-				7C13704E20B677C300710E90 /* TrackActions.swift in Sources */,
-				7C8044131E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */,
-				7C4F1BE91F73186500C592BD /* RelistenSongModels.swift in Sources */,
-				7C13705620B9FC5400710E90 /* MyLibraryViewController.swift in Sources */,
-				7C31552320BFC55900F07622 /* ReviewLayout.swift in Sources */,
-				7C03A4B71E60E8B7006F2912 /* RelistenApi.swift in Sources */,
-				7CA3CD151F71763400E936AB /* VenuesViewController.swift in Sources */,
-				7C31551D20BFBE9A00F07622 /* UpstreamSourceLayout.swift in Sources */,
-				7C4F1BEF1F733A0700C592BD /* SongViewController.swift in Sources */,
-				7C03A4BF1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
 				7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */,
-				7C31552020BFC4C300F07622 /* ReviewsViewController.swift in Sources */,
-				7C1F1A601F733ACD009408AA /* VenueViewController.swift in Sources */,
-				7C31554D20C2D24F00F07622 /* AsyncDisplayKit.swift in Sources */,
-				7CABACC61EDEE63F009C5E3B /* YearViewController.swift in Sources */,
-				7C13704820B62C2D00710E90 /* MyLibrary.swift in Sources */,
-				7C3474DF1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */,
-				7CABACC31EDEE3A2009C5E3B /* TimeInterval+Humanize.swift in Sources */,
-				7C31552920C0A08300F07622 /* ShareCellLayout.swift in Sources */,
-				8E91CF363725BB2441672DC9 /* RelistenResourceStatusOverlay.swift in Sources */,
-				7C31552620C09D8B00F07622 /* ShareHelper.swift in Sources */,
-				7C31551320BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */,
-				7CCE0DF01F9BE33B00041D47 /* UIControl+Handler.swift in Sources */,
-				7C13704520B5FE6200710E90 /* UInt64+HumanizeBytes.swift in Sources */,
-				8E91C72389219DDCA7733977 /* YearShowCellNode.swift in Sources */,
-				7CABACCB1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
-				7CA3CD181F71766E00E936AB /* VenueLayout.swift in Sources */,
 				7C31554A20C2D21800F07622 /* ArtistCellNode.swift in Sources */,
-				7C31552F20C2072D00F07622 /* OfflineIndicatorNode.swift in Sources */,
-				7C13705920B9FC7600710E90 /* DownloadedViewController.swift in Sources */,
-				7CC4EDC61F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */,
-				7C5076341EE701D500BE3CE7 /* SourceViewController.swift in Sources */,
-				7C13705C20BA399E00710E90 /* MyRecentlyPlayedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1118,79 +1248,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */,
-				7C31553A20C2081A00F07622 /* YearNode.swift in Sources */,
-				7C03A4C71E6218CF006F2912 /* RelistenModelCachable.swift in Sources */,
-				7CA94EAB1F0A6D09004663F3 /* TrackStatusLayout.swift in Sources */,
-				7C03A4C41E621836006F2912 /* ApiCache.swift in Sources */,
-				7CA94EA81F0A6C74004663F3 /* Track.swift in Sources */,
-				7C31551920BFB71B00F07622 /* LongTextViewController.swift in Sources */,
-				7C8044151E6F4B1F00BA946E /* AppColors.swift in Sources */,
-				7C31551520BFB3DA00F07622 /* String.swift in Sources */,
-				7C13705120B9E8B800710E90 /* Array.swift in Sources */,
-				7C13705820B9FC7600710E90 /* DownloadedViewController.swift in Sources */,
-				7C31552820C0A08300F07622 /* ShareCellLayout.swift in Sources */,
-				4370C24520EDDD7D00D3358B /* CompleteShowInformation.swift in Sources */,
-				7CABACC21EDEE3A2009C5E3B /* TimeInterval+Humanize.swift in Sources */,
-				7C31552E20C2072D00F07622 /* OfflineIndicatorNode.swift in Sources */,
-				7C03A4BA1E60FB66006F2912 /* RelistenModels.swift in Sources */,
-				7CCE0DEF1F9BE33B00041D47 /* UIControl+Handler.swift in Sources */,
-				7CB1DBC81F718E90006AC393 /* TopShowsViewController.swift in Sources */,
-				43A6A9AB2105B1EF00EFF3AD /* RelistenArtistModels.swift in Sources */,
-				7C31553420C2076C00F07622 /* AXRatingViewNode.swift in Sources */,
-				7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */,
-				7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
-				7C3474DE1F9BB42900BD40AF /* MyLibraryManager.swift in Sources */,
-				7C31551F20BFC4C300F07622 /* ReviewsViewController.swift in Sources */,
-				7C8677FE1EDECF8F0000223E /* YearsViewController.swift in Sources */,
-				7C31551220BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */,
-				7C4F1BE81F73186500C592BD /* RelistenSongModels.swift in Sources */,
-				7CA3CD171F71766E00E936AB /* VenueLayout.swift in Sources */,
-				43B047752100626200251046 /* OfflineSourceMetadata.swift in Sources */,
-				7C13704420B5FE6200710E90 /* UInt64+HumanizeBytes.swift in Sources */,
-				7C31552520C09D8B00F07622 /* ShareHelper.swift in Sources */,
-				7C03A4C11E61CD70006F2912 /* RelistenSourceModels.swift in Sources */,
-				7C31553720C2079200F07622 /* HorizontalShowCollectionCellNode.swift in Sources */,
-				7C13704720B62C2D00710E90 /* MyLibrary.swift in Sources */,
-				7C31553120C2074300F07622 /* SounceFeatureIndicatorNodes.swift in Sources */,
-				7C03A4BE1E61BB4B006F2912 /* RelistenShowModels.swift in Sources */,
 				7C8EF1111D5A49C300004B5C /* RLAppDelegate.swift in Sources */,
-				43B047732100049E00251046 /* YearSorting.swift in Sources */,
-				7C31552B20C206BA00F07622 /* Numeric.swift in Sources */,
-				7C03A4BC1E60FFD2006F2912 /* RelistenJsonUtils.swift in Sources */,
-				7C4F1BE51F7317BE00C592BD /* SongsViewController.swift in Sources */,
-				7C13705B20BA399E00710E90 /* MyRecentlyPlayedViewController.swift in Sources */,
-				7C31554020C224F500F07622 /* SwitchCellNode.swift in Sources */,
-				7C31553D20C2199500F07622 /* SourceDetailsNode.swift in Sources */,
-				7C31554320C2343000F07622 /* ShareCellNode.swift in Sources */,
-				7CA3CD141F71763400E936AB /* VenuesViewController.swift in Sources */,
-				7C80440E1E6F34AF00BA946E /* RelistenMenuView.swift in Sources */,
-				7C31554C20C2D24F00F07622 /* AsyncDisplayKit.swift in Sources */,
-				43B0472D20FD59D000251046 /* ShowListViewController.swift in Sources */,
-				7C8044121E6F456000BA946E /* UIFont+ChangeWeight.swift in Sources */,
-				7C8044091E6F29A800BA946E /* ArtistViewController.swift in Sources */,
-				7C13704D20B677C300710E90 /* TrackActions.swift in Sources */,
-				7C13704A20B62D9200710E90 /* MyLibrary+DiskUsage.swift in Sources */,
-				7C5076331EE701D500BE3CE7 /* SourceViewController.swift in Sources */,
-				7CCE0DF21F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */,
-				7CC4EDC21F0AC2F0004CB615 /* PlaybackController.swift in Sources */,
-				7C4F1BEB1F731A5900C592BD /* SongLayout.swift in Sources */,
-				43A6A9A92105954B00EFF3AD /* RecentlyAddedViewController.swift in Sources */,
-				7C13705520B9FC5400710E90 /* MyLibraryViewController.swift in Sources */,
-				7CABACBF1EDEE178009C5E3B /* PaddingLabel.swift in Sources */,
-				7CABACCA1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
 				7C31554920C2D21800F07622 /* ArtistCellNode.swift in Sources */,
-				7C31551C20BFBE9A00F07622 /* UpstreamSourceLayout.swift in Sources */,
-				7C68279C1F99241C00E260B1 /* RelistenDownloadManager.swift in Sources */,
-				43EF8D6820F01A41002FF970 /* CarPlayController.swift in Sources */,
-				7C1F1A5F1F733ACD009408AA /* VenueViewController.swift in Sources */,
-				7CC4EDC51F0BE3C8004CB615 /* SourceTrackAudioItem.swift in Sources */,
-				7C4F1BEE1F733A0700C592BD /* SongViewController.swift in Sources */,
-				7CCE0DEC1F9BDE4A00041D47 /* Events.swift in Sources */,
-				8E91CEEF48E7DBDC4E7871F9 /* RelistenResourceStatusOverlay.swift in Sources */,
-				7C31552220BFC55900F07622 /* ReviewLayout.swift in Sources */,
-				7C31554620C2350800F07622 /* TrackStatusCellNode.swift in Sources */,
-				8E91C0747A674A864013F1AB /* YearShowCellNode.swift in Sources */,
-				7CABACC51EDEE63F009C5E3B /* YearViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1205,6 +1264,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		43B534192109228700DE9B1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 43B5340F2109226F00DE9B1F /* RelistenShared */;
+			targetProxy = 43B534182109228700DE9B1F /* PBXContainerItemProxy */;
+		};
+		43B5341B2109228E00DE9B1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 43B5340F2109226F00DE9B1F /* RelistenShared */;
+			targetProxy = 43B5341A2109228E00DE9B1F /* PBXContainerItemProxy */;
+		};
 		7C449EB11D5A4F4300750D54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7C449E9B1D5A4F4200750D54 /* PhishOD */;
@@ -1239,6 +1308,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		43B534142109227000DE9B1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F2C92D744AC05BD2FF4DA8A4 /* Pods-RelistenShared.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HT7ELV3Q35;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/RelistenShared-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		43B534152109227000DE9B1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4768B6B0073CD79A919BDF7F /* Pods-RelistenShared.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HT7ELV3Q35;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/RelistenShared-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		7C449EB61D5A4F4300750D54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */;
@@ -1252,8 +1359,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "18898802-5565-4259-bae2-2321c90445e0";
 				PROVISIONING_PROFILE_SPECIFIER = "2016-08-09 PhishOD Dev";
-				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Relisten-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1271,8 +1376,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6593bab3-c262-419b-aacf-cd3b8f4a3acc";
 				PROVISIONING_PROFILE_SPECIFIER = "2016-08-09 PhishOD Dist";
-				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Relisten-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1285,7 +1388,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xnotused.com.alecgorge.PhishODUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = PhishOD;
 			};
 			name = Debug;
@@ -1299,7 +1401,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xnotused.com.alecgorge.PhishODUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = PhishOD;
 			};
 			name = Release;
@@ -1354,12 +1455,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1408,10 +1510,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1428,14 +1531,11 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "87bcc8e3-7282-4870-b540-8b774927fe42";
 				PROVISIONING_PROFILE_SPECIFIER = "Relisten CarPlay Profile";
-				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Relisten-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1450,14 +1550,11 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Relisten-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -1470,7 +1567,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xnotused.com.alecgorge.RelistenUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Relisten;
 			};
 			name = Debug;
@@ -1484,7 +1580,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xnotused.com.alecgorge.RelistenUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Relisten;
 			};
 			name = Release;
@@ -1492,6 +1587,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		43B534162109227000DE9B1F /* Build configuration list for PBXNativeTarget "RelistenShared" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43B534142109227000DE9B1F /* Debug */,
+				43B534152109227000DE9B1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7C449EBA1D5A4F4300750D54 /* Build configuration list for PBXNativeTarget "PhishOD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

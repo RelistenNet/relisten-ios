@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RelistenShared
 
 import Siesta
 import Firebase
@@ -16,11 +17,10 @@ import SVProgressHUD
 import AsyncDisplayKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
     var window: UIWindow?
-    
-    public static var shared: AppDelegate! = nil
+    public var rootNavigationController: ASNavigationController! = nil
     
     func setupThirdPartyDependencies() {
 //        Inject_DWURecyclingAlert()
@@ -43,11 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
     }
-    
-    var rootNavigationController: ASNavigationController! = nil
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        AppDelegate.shared = self
+        RelistenApp.sharedApp.delegate = self
         
         setupThirdPartyDependencies()
         setupAppearance()

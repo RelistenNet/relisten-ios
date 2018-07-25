@@ -262,10 +262,6 @@ extension MZDownloadManager: URLSessionDownloadDelegate {
         }
     }
     
-    public func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
-        
-    }
-    
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         debugPrint("task id: \(task.taskIdentifier)")
         /***** Any interrupted tasks due to any reason will be populated in failed state after init *****/

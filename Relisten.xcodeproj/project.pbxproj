@@ -521,12 +521,12 @@
 		7C8EF1041D5A49C200004B5C = {
 			isa = PBXGroup;
 			children = (
-				7C31551020BF3E0100F07622 /* Relisten.entitlements */,
 				7C449EBC1D5A511C00750D54 /* Apps */,
+				7C449EBD1D5A513300750D54 /* Shared */,
 				FBC463F999487576B5C823F4 /* Frameworks */,
 				C4F5A2683057A5DAFFCCFB82 /* Pods */,
 				7C8EF10E1D5A49C300004B5C /* Products */,
-				7C449EBD1D5A513300750D54 /* Shared */,
+				7C31551020BF3E0100F07622 /* Relisten.entitlements */,
 			);
 			sourceTree = "<group>";
 		};

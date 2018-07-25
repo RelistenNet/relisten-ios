@@ -73,6 +73,7 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         
         resourceToday.addObserver(self)
             .addObserver(statusOverlay)
+        resourceToday.loadFromCacheThenUpdate()
         
         av = RelistenMenuView(artist: artist, inViewController: self)
         av.frame.origin = CGPoint(x: 0, y: 16)
@@ -89,13 +90,6 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
             guard let s = self else { return }
             s.reloadRecentShows(tracks: tracks)
         }).add(to: &disposal)
-    }
-    
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        reloadRecentShows(tracks: MyLibraryManager.shared.library.recentlyPlayedTracks)
-
-        resourceToday.loadFromCacheThenUpdate()
     }
     
     public override func viewDidAppear(_ animated: Bool) {

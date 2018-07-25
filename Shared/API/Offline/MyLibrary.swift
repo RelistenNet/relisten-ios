@@ -44,6 +44,9 @@ public class MyLibrary {
     public let offlineCacheURLStorage : Storage<Set<URL>>
     public let offlineCacheDownloadBacklogStorage : Storage<[Track]>
     public let offlineCacheSourcesMetadata : Storage<Set<OfflineSourceMetadata>>
+
+    internal let diskUseQueue : DispatchQueue = DispatchQueue(label: "live.relisten.library.diskUse")
+    internal let diskUseQueueKey = DispatchSpecificKey<Int>()
     
     public let offlineTrackFileSizeCache : Storage<OfflineTrackMetadata>
     
@@ -91,6 +94,10 @@ public class MyLibrary {
         shows = try json["shows"].arrayValue.map(CompleteShowInformation.init)
         artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
         recentlyPlayedTracks = try json["recentlyPlayedTracks"].arrayValue.map(Track.init)
+
+        diskUseQueue.setSpecific(key: diskUseQueueKey, value: 1)
+
+        try loadOfflineData()
         
         artistIdsChanged.value = artistIds
     }

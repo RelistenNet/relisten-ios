@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		430D64E02109441A005D7F7A /* UserPropertiesForShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C7F762107972D00EA32A9 /* UserPropertiesForShowNode.swift */; };
 		43B534172109228000DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341C2109229200DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
@@ -154,6 +155,7 @@
 /* Begin PBXFileReference section */
 		276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RelistenShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		436C7F762107972D00EA32A9 /* UserPropertiesForShowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPropertiesForShowNode.swift; path = Layouts/UserPropertiesForShowNode.swift; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
 		4393DE252106F54600FDC8EA /* RelistenFaveButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RelistenFaveButtonDelegate.swift; path = Helpers/RelistenFaveButtonDelegate.swift; sourceTree = "<group>"; };
 		4393DE272106F61B00FDC8EA /* FavoriteButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteButtonNode.swift; path = Layouts/FavoriteButtonNode.swift; sourceTree = "<group>"; };
@@ -465,9 +467,9 @@
 			isa = PBXGroup;
 			children = (
 				7C31553320C2076C00F07622 /* AXRatingViewNode.swift */,
+				4393DE272106F61B00FDC8EA /* FavoriteButtonNode.swift */,
 				7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */,
 				7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */,
-				4393DE272106F61B00FDC8EA /* FavoriteButtonNode.swift */,
 				7C31552120BFC55900F07622 /* ReviewLayout.swift */,
 				7C31552720C0A08300F07622 /* ShareCellLayout.swift */,
 				7C31554220C2343000F07622 /* ShareCellNode.swift */,
@@ -479,6 +481,7 @@
 				7C31554520C2350800F07622 /* TrackStatusCellNode.swift */,
 				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
 				7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */,
+				436C7F762107972D00EA32A9 /* UserPropertiesForShowNode.swift */,
 				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 				7C31553920C2081A00F07622 /* YearNode.swift */,
 				8E91C1703DD1522098B0957F /* YearShowCellNode.swift */,
@@ -1185,6 +1188,7 @@
 				43B53460210922CE00DE9B1F /* ApiCache.swift in Sources */,
 				43B53435210922CE00DE9B1F /* SongLayout.swift in Sources */,
 				43B53434210922CE00DE9B1F /* ShareCellNode.swift in Sources */,
+				430D64E02109441A005D7F7A /* UserPropertiesForShowNode.swift in Sources */,
 				43B53444210922CE00DE9B1F /* DownloadedViewController.swift in Sources */,
 				43B5343B210922CE00DE9B1F /* TrackStatusLayout.swift in Sources */,
 				43B5345B210922CE00DE9B1F /* RelistenArtistModels.swift in Sources */,

@@ -12,16 +12,33 @@ import UIKit
 import FaveButton
 import Observable
 
+public protocol FavoriteButtonDelegate {
+    func didFavorite(currentlyFavorited : Bool)
+    var favoriteButtonAccessibilityLabel : String { get }
+}
+
 open class FavoriteButtonNode : ASDisplayNode {
-    public static let image = UIImage(named: "heart")
+    private static let image = UIImage(named: "heart")
     
-    open var currentlyFavorited: Bool = false
+    private var _currentlyFavorited : Bool = false
+    open var currentlyFavorited: Bool {
+        get { return _currentlyFavorited }
+        set {
+            if _currentlyFavorited != newValue {
+                _currentlyFavorited = newValue
+                updateSelected()
+            }
+        }
+    }
     
     open let faveButtonNode: ASDisplayNode
     
     open var disposal = Disposal()
     
     open var accessibilityLabelString = "Favorite"
+    
+    open var delegate : FavoriteButtonDelegate? = nil
+    private var didInitButton : Bool = false
     
     public override init() {
         faveButtonNode = ASDisplayNode(viewBlock: { FaveButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32)) })
@@ -31,10 +48,17 @@ open class FavoriteButtonNode : ASDisplayNode {
         automaticallyManagesSubnodes = true
     }
     
+    public convenience init(delegate: FavoriteButtonDelegate) {
+        self.init()
+        self.delegate = delegate
+    }
+    
     open func updateSelected() {
-        if let button = faveButtonNode.view as? FaveButton {
+        if didInitButton {
             DispatchQueue.main.async {
-                button.setSelected(selected: self.currentlyFavorited, animated: false)
+                if let button = self.faveButtonNode.view as? FaveButton {
+                    button.setSelected(selected: self.currentlyFavorited, animated: false)
+                }
             }
         }
     }
@@ -44,7 +68,11 @@ open class FavoriteButtonNode : ASDisplayNode {
         
         if let button = faveButtonNode.view as? FaveButton {
             button.setImage(FavoriteButtonNode.image, for: .normal)
-            button.accessibilityLabel = accessibilityLabelString
+            if let d = delegate {
+                button.accessibilityLabel = d.favoriteButtonAccessibilityLabel
+            } else {
+                button.accessibilityLabel = accessibilityLabelString
+            }
             
             button.delegate = RelistenFaveButtonDelegate.sharedDelegate
             
@@ -55,6 +83,8 @@ open class FavoriteButtonNode : ASDisplayNode {
             button.addControlEvent(.touchUpInside) { (control: UIControl) in
                 self.onFavorite()
             }
+            
+            didInitButton = true
         }
     }
     
@@ -69,6 +99,14 @@ open class FavoriteButtonNode : ASDisplayNode {
     }
     
     @objc open func onFavorite() {
-        currentlyFavorited = !currentlyFavorited
+        _currentlyFavorited = !_currentlyFavorited
+        if let delegate = delegate {
+            delegate.didFavorite(currentlyFavorited : _currentlyFavorited)
+        }
     }
+}
+
+extension FavoriteButtonDelegate {
+    func didFavorite(currentlyFavorited : Bool) { }
+    var favoriteButtonAccessibilityLabel : String { get { return "Favorite" } }
 }

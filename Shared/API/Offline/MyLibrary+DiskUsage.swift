@@ -24,7 +24,7 @@ extension MyLibrary {
         if let meta = offlineMetadata(forTrackURL: trackURL) {
             return callback(meta.fileSize)
         }
-        DispatchQueue.global(qos: .userInitiated).async {
+        let filesizeBlock = {
             do {
                 let offlinePath = RelistenDownloadManager.shared.downloadPath(forURL: trackURL)
                 
@@ -39,7 +39,6 @@ extension MyLibrary {
                 
                 // put it in the cache so subsequent calls are hot
                 self.trackSizeBecameKnown(trackURL: trackURL, fileSize: fileSize)
-                
                 callback(fileSize)
             }
             catch {
@@ -48,11 +47,18 @@ extension MyLibrary {
                 callback(nil)
             }
         }
+        
+        if DispatchQueue.getSpecific(key: diskUseQueueKey) != nil {
+            filesizeBlock()
+        } else {
+            diskUseQueue.async(execute: filesizeBlock)
+        }
     }
     
-    public func diskUsageForSource(source: CompleteShowInformation, _ callback: @escaping (UInt64?) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {            
+    public func diskUsageForSource(source: CompleteShowInformation, _ callback: @escaping (_ diskUsage: UInt64, _ numberOfTracks: Int) -> Void) {
+        diskUseQueue.async {
             var completeBytes: UInt64 = 0
+            var numberOfTracks: Int = 0
             
             let group = DispatchGroup()
             let bytesQueue = DispatchQueue(label: "live.relisten.library.diskUsage.bytesQueue")
@@ -62,6 +68,7 @@ extension MyLibrary {
                 self.diskUsageForTrackURL(trackURL: track.mp3_url, { (size) in
                     if let bytes = size {
                         bytesQueue.sync {
+                            numberOfTracks += 1
                             completeBytes += bytes
                         }
                     }
@@ -71,7 +78,7 @@ extension MyLibrary {
             
             group.wait()
             
-            callback(completeBytes)
+            callback(completeBytes, numberOfTracks)
         }
     }
 }

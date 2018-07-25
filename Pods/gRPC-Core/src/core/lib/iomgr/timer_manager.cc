@@ -172,7 +172,7 @@ static bool wait_until(grpc_millis next) {
 
         if (grpc_timer_check_trace.enabled()) {
           grpc_millis wait_time = next - grpc_core::ExecCtx::Get()->Now();
-          gpr_log(GPR_INFO, "sleep for a %" PRIdPTR " milliseconds", wait_time);
+          gpr_log(GPR_INFO, "sleep for a %" PRId64 " milliseconds", wait_time);
         }
       } else {  // g_timed_waiter == true && next >= g_timed_waiter_deadline
         next = GRPC_MILLIS_INF_FUTURE;
@@ -265,7 +265,7 @@ static void timer_thread_cleanup(completed_thread* ct) {
 static void timer_thread(void* completed_thread_ptr) {
   // this threads exec_ctx: we try to run things through to completion here
   // since it's easy to spin up new threads
-  grpc_core::ExecCtx exec_ctx(0);
+  grpc_core::ExecCtx exec_ctx(GRPC_EXEC_CTX_FLAG_IS_INTERNAL_THREAD);
   timer_main_loop();
 
   timer_thread_cleanup(static_cast<completed_thread*>(completed_thread_ptr));

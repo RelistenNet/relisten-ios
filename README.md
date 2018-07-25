@@ -10,6 +10,8 @@ Relisten is an iOS app for streaming millions of free recordings from the [Inter
 
 # Development: Getting Started
 
+[![Build Status](https://travis-ci.org/RelistenNet/relisten-ios.svg?branch=master)](https://travis-ci.org/RelistenNet/relisten-ios)
+
 If you'd like to build Relisten iOS you'll need [Cocoapods](http://cocoapods.org). 
 
 Clone the repository, then run the setup script to make sure you have all of the dependencies checked out (they'll check out one directory up from your relisten-ios checkout)

@@ -9,6 +9,9 @@
 build/
 DerivedData/
 
+## CI Files
+TravisPods
+
 ## Various settings
 *.pbxuser
 !default.pbxuser

@@ -134,7 +134,7 @@ DEPENDENCIES:
   - AGAudioPlayer (from `../AGAudioPlayer`)
   - AsyncSwift
   - AXRatingView
-  - BASSGaplessAudioPlayer (from `../gapless-audio-bass-ios`)
+  - BASSGaplessAudioPlayer (from `../BASSGaplessAudioPlayer`)
   - Cache
   - CWStatusBarNotification
   - DownloadButton
@@ -203,7 +203,7 @@ EXTERNAL SOURCES:
   AGAudioPlayer:
     :path: "../AGAudioPlayer"
   BASSGaplessAudioPlayer:
-    :path: "../gapless-audio-bass-ios"
+    :path: "../BASSGaplessAudioPlayer"
   FaveButton:
     :path: "../fave-button"
   FirebaseAuth:
@@ -299,6 +299,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
 
-PODFILE CHECKSUM: b75143a5dc3842df267ac242b1e121fc06236b9e
+PODFILE CHECKSUM: 3fab1f74c49158ababef7746c56c23b6bd503dbc
 
 COCOAPODS: 1.5.3

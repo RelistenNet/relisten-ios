@@ -117,6 +117,10 @@ class _RelistenApi {
             return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
         }
         
+        service.configureTransformer("/artists/*/shows/recently-added") {
+            return try ($0.content as JSON).arrayValue.map(Show.init)
+        }
+        
         service.configureTransformer("/artists/*/venues") {
             return try ($0.content as JSON).arrayValue.map(VenueWithShowCount.init)
         }
@@ -222,6 +226,13 @@ class _RelistenApi {
         return artistResource(byArtist)
             .child("shows")
             .child("top")
+    }
+    
+    public func recentlyAddedShows(byArtist: SlimArtist) -> Resource {
+        return artistResource(byArtist)
+            .child("shows")
+            .child("recently-added")
+            .withParam("limit", "15")
     }
     
     public func songs(byArtist: SlimArtist) -> Resource {

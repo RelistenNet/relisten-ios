@@ -18,7 +18,6 @@
 
 #import "GRPCHost.h"
 
-#import <GRPCClient/GRPCCall+MobileLog.h>
 #import <GRPCClient/GRPCCall.h>
 #include <grpc/grpc.h>
 #include <grpc/grpc_security.h>
@@ -50,6 +49,7 @@ static NSMutableDictionary *kHostCache;
   if (_channelCreds != nil) {
     grpc_channel_credentials_release(_channelCreds);
   }
+  [GRPCConnectivityMonitor unregisterObserver:self];
 }
 
 // Default initializer.
@@ -222,9 +222,9 @@ static NSMutableDictionary *kHostCache;
     args[@GRPC_ARG_KEEPALIVE_TIMEOUT_MS] = [NSNumber numberWithInt:_keepaliveTimeout];
   }
 
-  id logConfig = [GRPCCall logConfig];
-  if (logConfig != nil) {
-    args[@GRPC_ARG_MOBILE_LOG_CONFIG] = logConfig;
+  id logContext = self.logContext;
+  if (logContext != nil) {
+    args[@GRPC_ARG_MOBILE_LOG_CONTEXT] = logContext;
   }
 
   if (useCronet) {
@@ -278,7 +278,7 @@ static NSMutableDictionary *kHostCache;
 // and Cellular data, so that a new call will use a new channel. Otherwise, a new call will still
 // use the cached channel which is no longer available and will cause gRPC to hang.
 - (void)connectivityChange:(NSNotification *)note {
-  [GRPCHost flushChannelCache];
+  [self disconnect];
 }
 
 @end

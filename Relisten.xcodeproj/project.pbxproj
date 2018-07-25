@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		436C220C20F6C4FE0088F563 /* CarPlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EF8D6720F01A41002FF970 /* CarPlayController.swift */; };
 		4370C24520EDDD7D00D3358B /* CompleteShowInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */; };
+		43A6A9A92105954B00EFF3AD /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */; };
+		43A6A9AB2105B1EF00EFF3AD /* RelistenArtistModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */; };
 		43B0472D20FD59D000251046 /* ShowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B0472C20FD59D000251046 /* ShowListViewController.swift */; };
 		43B047732100049E00251046 /* YearSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B047722100049E00251046 /* YearSorting.swift */; };
 		43B047752100626200251046 /* OfflineSourceMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B047742100626200251046 /* OfflineSourceMetadata.swift */; };
@@ -154,8 +156,8 @@
 		7CCE0DF31F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */; };
 		7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
 		7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
-		8E91C0747A674A864013F1AB /* YearShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowNode.swift */; };
-		8E91C72389219DDCA7733977 /* YearShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowNode.swift */; };
+		8E91C0747A674A864013F1AB /* YearShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowCellNode.swift */; };
+		8E91C72389219DDCA7733977 /* YearShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowCellNode.swift */; };
 		8E91CEEF48E7DBDC4E7871F9 /* RelistenResourceStatusOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */; };
 		8E91CF363725BB2441672DC9 /* RelistenResourceStatusOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */; };
 		AC66B4F5C4BD9C01138EEBB8 /* Pods_PhishOD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */; };
@@ -182,6 +184,8 @@
 /* Begin PBXFileReference section */
 		2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
+		43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyAddedViewController.swift; path = "View Controllers/General/RecentlyAddedViewController.swift"; sourceTree = "<group>"; };
+		43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenArtistModels.swift; sourceTree = "<group>"; };
 		43B0472C20FD59D000251046 /* ShowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListViewController.swift; path = "View Controllers/General/ShowListViewController.swift"; sourceTree = "<group>"; };
 		43B047722100049E00251046 /* YearSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YearSorting.swift; path = Helpers/YearSorting.swift; sourceTree = "<group>"; };
 		43B047742100626200251046 /* OfflineSourceMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineSourceMetadata.swift; sourceTree = "<group>"; };
@@ -278,7 +282,7 @@
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishOD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.debug.xcconfig"; sourceTree = "<group>"; };
 		8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenResourceStatusOverlay.swift; sourceTree = "<group>"; };
-		8E91C1703DD1522098B0957F /* YearShowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearShowNode.swift; sourceTree = "<group>"; };
+		8E91C1703DD1522098B0957F /* YearShowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearShowCellNode.swift; sourceTree = "<group>"; };
 		A82930F25AEEDCD2C5F101AD /* Pods-Relisten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Relisten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Relisten/Pods-Relisten.release.xcconfig"; sourceTree = "<group>"; };
 		D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishODUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0263F8B06570DBB1399A78F /* Pods-RelistenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -329,6 +333,7 @@
 				7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */,
 				7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */,
 				7C03A4B91E60FB66006F2912 /* RelistenModels.swift */,
+				43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */,
 				7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */,
 				7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */,
 				7C4F1BE71F73186500C592BD /* RelistenSongModels.swift */,
@@ -361,6 +366,7 @@
 			children = (
 				7C31551820BFB71B00F07622 /* LongTextViewController.swift */,
 				43B0472C20FD59D000251046 /* ShowListViewController.swift */,
+				43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -467,7 +473,7 @@
 		7C80440B1E6F29AB00BA946E /* DisplayNodes */ = {
 			isa = PBXGroup;
 			children = (
-				8E91C1703DD1522098B0957F /* YearShowNode.swift */,
+				8E91C1703DD1522098B0957F /* YearShowCellNode.swift */,
 				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
 				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 				7C4F1BEA1F731A5900C592BD /* SongLayout.swift */,
@@ -1085,7 +1091,7 @@
 				7C31551320BFAE6E00F07622 /* SourceDetailsViewController.swift in Sources */,
 				7CCE0DF01F9BE33B00041D47 /* UIControl+Handler.swift in Sources */,
 				7C13704520B5FE6200710E90 /* UInt64+HumanizeBytes.swift in Sources */,
-				8E91C72389219DDCA7733977 /* YearShowNode.swift in Sources */,
+				8E91C72389219DDCA7733977 /* YearShowCellNode.swift in Sources */,
 				7CABACCB1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
 				7CA3CD181F71766E00E936AB /* VenueLayout.swift in Sources */,
 				7C31554A20C2D21800F07622 /* ArtistCellNode.swift in Sources */,
@@ -1127,6 +1133,7 @@
 				7C03A4BA1E60FB66006F2912 /* RelistenModels.swift in Sources */,
 				7CCE0DEF1F9BE33B00041D47 /* UIControl+Handler.swift in Sources */,
 				7CB1DBC81F718E90006AC393 /* TopShowsViewController.swift in Sources */,
+				43A6A9AB2105B1EF00EFF3AD /* RelistenArtistModels.swift in Sources */,
 				7C31553420C2076C00F07622 /* AXRatingViewNode.swift in Sources */,
 				7C03A4B61E60E8B7006F2912 /* RelistenApi.swift in Sources */,
 				7CC095401E6C6D580067FD39 /* RelistenTableViewController.swift in Sources */,
@@ -1165,6 +1172,7 @@
 				7CCE0DF21F9CD6F200041D47 /* SwitchCellLayout.swift in Sources */,
 				7CC4EDC21F0AC2F0004CB615 /* PlaybackController.swift in Sources */,
 				7C4F1BEB1F731A5900C592BD /* SongLayout.swift in Sources */,
+				43A6A9A92105954B00EFF3AD /* RecentlyAddedViewController.swift in Sources */,
 				7C13705520B9FC5400710E90 /* MyLibraryViewController.swift in Sources */,
 				7CABACBF1EDEE178009C5E3B /* PaddingLabel.swift in Sources */,
 				7CABACCA1EDF1441009C5E3B /* SourcesViewController.swift in Sources */,
@@ -1179,7 +1187,7 @@
 				8E91CEEF48E7DBDC4E7871F9 /* RelistenResourceStatusOverlay.swift in Sources */,
 				7C31552220BFC55900F07622 /* ReviewLayout.swift in Sources */,
 				7C31554620C2350800F07622 /* TrackStatusCellNode.swift in Sources */,
-				8E91C0747A674A864013F1AB /* YearShowNode.swift in Sources */,
+				8E91C0747A674A864013F1AB /* YearShowCellNode.swift in Sources */,
 				7CABACC51EDEE63F009C5E3B /* YearViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

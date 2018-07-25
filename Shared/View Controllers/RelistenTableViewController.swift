@@ -52,6 +52,13 @@ public class RelistenReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
         
         relistenTableView?.renderAfterScrollingIfNeeded()
     }
+    
+    public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        guard let retval = relistenTableView?.tableView(tableView, shouldHighlightRowAt: indexPath) else {
+            return true
+        }
+        return retval
+    }
 }
 
 public class RelistenBaseTableViewController : UIViewController, ResourceObserver {
@@ -125,6 +132,10 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+    }
+    
+    public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
     

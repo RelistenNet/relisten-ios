@@ -15,6 +15,7 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
     let artist: ArtistWithCounts
     let show: ShowWithSources
     let source: SourceFull
+    var hasSourceInformation : Bool = false
     
     public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
@@ -48,7 +49,92 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
             section.append(VenueLayoutWithMap(venue: venue, forArtist: artist))
         }
         
-        if artist.features.taper_notes, let _ = source.taper_notes {
+        if artist.features.source_information {
+            var sourceInfo : [LabelLayout] = [] as! [LabelLayout]
+            
+            // (Farkas) This spacer is a bad hack, but I figure this code is all getting converted to AsyncDisplayKit soon so I didn't want to waste time finding a better fix
+            let spacer = LabelLayout(
+                    text: " ",
+                    font: UIFont.preferredFont(forTextStyle: .body),
+                    alignment: .fill,
+                    flexibility: .inflexible,
+                    viewReuseId: "text",
+                    config: nil
+                )
+            
+            if let s = source.taper, s.count > 0 {
+                let taperLabel = LabelLayout(
+                    attributedText: String.createPrefixedAttributedText(prefix: "Taper: ", s),
+                    font: UIFont.preferredFont(forTextStyle: .body),
+                    alignment: .fill,
+                    flexibility: .inflexible,
+                    viewReuseId: "text",
+                    config: nil
+                )
+                if sourceInfo.count > 0 {
+                    sourceInfo.append(spacer)
+                }
+                sourceInfo.append(taperLabel)
+            }
+            
+            
+            if let s = source.transferrer, s.count > 0 {
+                let transferrerLabel = LabelLayout(
+                    attributedText: String.createPrefixedAttributedText(prefix: "Transferrer: ", s),
+                    font: UIFont.preferredFont(forTextStyle: .body),
+                    alignment: .fill,
+                    flexibility: .inflexible,
+                    viewReuseId: "text",
+                    config: nil
+                )
+                if sourceInfo.count > 0 {
+                    sourceInfo.append(spacer)
+                }
+                sourceInfo.append(transferrerLabel)
+            }
+            
+            if let s = source.source, s.count > 0 {
+                let sourceLabel = LabelLayout(
+                    attributedText: String.createPrefixedAttributedText(prefix: "Source: ", s),
+                    font: UIFont.preferredFont(forTextStyle: .body),
+                    alignment: .fill,
+                    flexibility: .inflexible,
+                    viewReuseId: "text",
+                    config: nil
+                )
+                if sourceInfo.count > 0 {
+                    sourceInfo.append(spacer)
+                }
+                sourceInfo.append(sourceLabel)
+            }
+            
+            if let s = source.lineage, s.count > 0 {
+                let lineageLabel = LabelLayout(
+                    attributedText: String.createPrefixedAttributedText(prefix: "Lineage: ", s),
+                    font: UIFont.preferredFont(forTextStyle: .body),
+                    alignment: .fill,
+                    flexibility: .inflexible,
+                    viewReuseId: "text",
+                    config: nil
+                )
+                if sourceInfo.count > 0 {
+                    sourceInfo.append(spacer)
+                }
+                sourceInfo.append(lineageLabel)
+            }
+            
+            if sourceInfo.count > 0 {
+                hasSourceInformation = true
+                let stack = StackLayout(
+                        axis: .vertical,
+                        sublayouts: sourceInfo
+                )
+                
+                section.append(InsetLayout(insets: insets, sublayout: stack))
+            }
+        }
+        
+        if artist.features.taper_notes, let notes = source.taper_notes, notes.count > 0 {
             let label = LabelLayout(
                 text: "Taper Notes",
                 font: UIFont.preferredFont(forTextStyle: .body),
@@ -148,9 +234,18 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
     public override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cell: cell, forRowAt: indexPath)
         
-        cell.accessoryType = .disclosureIndicator
+        if !(hasSourceInformation && indexPath.row == 1) {
+            cell.accessoryType = .disclosureIndicator
+        }
         
         return cell
+    }
+    
+    public override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if hasSourceInformation, indexPath.row == 1 {
+            return false
+        }
+        return true
     }
     
     public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -167,7 +262,11 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
                 }
             }
             
-            if artist.features.taper_notes, let notes = source.taper_notes {
+            if hasSourceInformation {
+                matchingRows += 1
+            }
+            
+            if artist.features.taper_notes, let notes = source.taper_notes, notes.count > 0 {
                 matchingRows += 1
                 
                 if indexPath.row == matchingRows {

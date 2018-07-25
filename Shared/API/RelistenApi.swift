@@ -49,7 +49,7 @@ class _RelistenApi {
     fileprivate init() {
         #if DEBUG
             // Bare-bones logging of which network calls Siesta makes:
-            LogCategory.enabled = [] // [.network]
+            SiestaLog.Category.enabled = [] // [.network]
             
             // For more info about how Siesta decides whether to make a network call,
             // and when it broadcasts state updates to the app:

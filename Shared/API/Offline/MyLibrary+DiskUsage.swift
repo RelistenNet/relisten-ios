@@ -13,7 +13,7 @@ extension MyLibrary {
     // this will also be non-nil if isTrackAvailableOffline return true
     private func offlineMetadata(forTrackURL trackURL: URL) -> OfflineTrackMetadata? {
         do {
-            return try offlineTrackFileSizeCache.object(ofType: OfflineTrackMetadata.self, forKey: trackURL.absoluteString)
+            return try offlineTrackFileSizeCache.object(forKey: trackURL.absoluteString)
         }
         catch {
             return nil

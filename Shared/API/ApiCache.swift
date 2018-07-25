@@ -35,14 +35,14 @@ class RelistenJsonCache : EntityCache {
         expiry: .never,
         countLimit: 100,
         
-        // 100MB
-        totalCostLimit: 1024 * 1024 * 100
+        // 4MB
+        totalCostLimit: 1024 * 1024 * 4
     )
     
-    let backingCache: Storage
+    let backingCache: Storage<Entity<Any>>
     
     init() {
-        backingCache = try! Storage(diskConfig: diskCacheConfig, memoryConfig: memoryCacheConfig)
+        backingCache = try! Storage(diskConfig: diskCacheConfig, memoryConfig: memoryCacheConfig, transformer: TransformerFactory.forCodable(ofType: Entity<Any>.self))
     }
     
     func key(for resource: Resource) -> String? {
@@ -51,7 +51,7 @@ class RelistenJsonCache : EntityCache {
     
     func readEntity(forKey key: String) -> Entity<Any>? {
         do {
-            let val = try backingCache.object(ofType: Entity<Any>.self, forKey: key)
+            let val = try backingCache.object(forKey: key)
             
             print("[cache] readEntity(forKey \(key)) = *snip*")//\(String(describing: val))")
             

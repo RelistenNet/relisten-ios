@@ -170,7 +170,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework"
-  install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer-15/iOS/RevealServer.framework"
+  install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer-16/iOS/RevealServer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework"

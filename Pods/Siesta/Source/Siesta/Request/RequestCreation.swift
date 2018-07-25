@@ -13,6 +13,15 @@ public extension Resource
 
     /**
       Convenience method to initiate a request with a body containing arbitrary data.
+      - Parameter method: The HTTP method of the request.
+      - Parameter data: The body of the request.
+      - Parameter contentType: The value for the request’s `Content-Type` header. The priority order is as follows:
+          - any content-type set in `Configuration.mutateRequests(...)` overrides
+          - any content-type set in `requestMutation`, which overrides
+          - this parameter, which overrides
+          - any content-type set with `Configuration.headers`.
+      - Parameter requestMutation: Allows you to override details fo the HTTP request before it is sent.
+          See `request(_:requestMutation:)`.
     */
     public func request(
             _ method:        RequestMethod,
@@ -25,9 +34,8 @@ public extension Resource
             {
             underlyingRequest in
 
-            underlyingRequest.addValue(contentType, forHTTPHeaderField: "Content-Type")
+            underlyingRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
             underlyingRequest.httpBody = data
-
             requestMutation(&underlyingRequest)
             }
         }
@@ -57,7 +65,7 @@ public extension Resource
         else
             {
             return Resource.failedRequest(
-                RequestError(
+                returning: RequestError(
                     userMessage: NSLocalizedString("Cannot send request", comment: "userMessage"),
                     cause: RequestError.Cause.UnencodableText(encoding: encoding, text: text)))
             }
@@ -83,7 +91,7 @@ public extension Resource
         guard JSONSerialization.isValidJSONObject(json) else
             {
             return Resource.failedRequest(
-                RequestError(
+                returning: RequestError(
                     userMessage: NSLocalizedString("Cannot send request", comment: "userMessage"),
                     cause: RequestError.Cause.InvalidJSONObject()))
             }
@@ -100,7 +108,7 @@ public extension Resource
             // but we catch the exception anyway instead of using try! and crashing.
 
             return Resource.failedRequest(
-                RequestError(
+                returning: RequestError(
                     userMessage: NSLocalizedString("Cannot send request", comment: "userMessage"),
                     cause: error))
             }
@@ -141,7 +149,7 @@ public extension Resource
         catch
             {
             return Resource.failedRequest(
-                RequestError(
+                returning: RequestError(
                     userMessage: NSLocalizedString("Cannot send request", comment: "userMessage"),
                     cause: error))
             }
@@ -155,62 +163,6 @@ public extension Resource
         allowedChars.remove(charactersIn: charsToEscape)
         return allowedChars
         }()
-
-    /**
-      Returns a request for this resource that immedately fails, without ever touching the network. Useful for creating
-      your own custom requests that perform pre-request validation.
-     */
-    public static func failedRequest(_ error: RequestError) -> Request
-        {
-        return FailedRequest(error: error)
-        }
-    }
-
-
-/// For requests that failed before they even made it to the network layer
-private final class FailedRequest: RequestWithDefaultCallbacks
-    {
-    private let error: RequestError
-
-    var isCompleted: Bool { return true }
-    var progress: Double { return 1 }
-
-    init(error: RequestError)
-        { self.error = error }
-
-    func addResponseCallback(_ callback: @escaping ResponseCallback) -> Self
-        {
-        // FailedRequest is immutable and thus threadsafe. However, this call would not be safe if this were a
-        // NetworkRequest, and callers can’t assume they’re getting a FailedRequest, so we validate main thread anyway.
-
-        DispatchQueue.mainThreadPrecondition()
-
-        // Callback should not be called synchronously
-
-        DispatchQueue.main.async
-            { callback(ResponseInfo(response: .failure(self.error))) }
-
-        return self
-        }
-
-    func onProgress(_ callback: @escaping (Double) -> Void) -> Self
-        {
-        DispatchQueue.mainThreadPrecondition()
-
-        DispatchQueue.main.async
-            { callback(1) }
-
-        return self
-        }
-
-    func start() -> Self
-        { return self }
-
-    func cancel()
-        { DispatchQueue.mainThreadPrecondition() }
-
-    func repeated() -> Request
-        { return self }
     }
 
 /// Dictionaries and arrays can both be passed to `Resource.request(_:json:contentType:requestMutation:)`.

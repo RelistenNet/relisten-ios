@@ -215,6 +215,9 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
 
     public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
         print("event: \(event)")
+        if case .error = event {
+            print("Error was \(String(describing: resource.latestError))")
+        }
         
         if let data: TData = resource.latestData?.typedContent() {
             previousData = latestData
@@ -416,6 +419,9 @@ public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewCon
     
     public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
         print("event: \(event)")
+        if case .error = event {
+            print("Error was \(String(describing: resource.latestError))")
+        }
         
         if let data: TData = resource.latestData?.typedContent() {
             previousData = latestData

@@ -19,7 +19,7 @@ public class YearShowCellNode : ASCellNode {
     
     var disposal = Disposal()
     
-    public init(show: Show, withRank: Int? = nil, verticalLayout: Bool = false, showingArtist: SlimArtist? = nil, showUpdateDate : Bool = false) {
+    public init(show: Show, withRank: Int? = nil, verticalLayout: Bool = false, showingArtist: SlimArtist? = nil, showUpdateDate : Bool = false, cellTransparency : CGFloat = 1.0) {
         self.show = show
         artist = showingArtist
         rank = withRank
@@ -75,6 +75,14 @@ public class YearShowCellNode : ASCellNode {
         isAvailableOffline = MyLibraryManager.shared.library.isShowAtLeastPartiallyAvailableOffline(self.show)
         
         super.init()
+        
+        if cellTransparency == 1.0 {
+            self.backgroundColor = UIColor.white
+        } else if cellTransparency == 0.0 {
+            self.backgroundColor = UIColor.clear
+        } else {
+            self.backgroundColor = UIColor(white: 1.0, alpha: cellTransparency)
+        }
         
         automaticallyManagesSubnodes = true
         

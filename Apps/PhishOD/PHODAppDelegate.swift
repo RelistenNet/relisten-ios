@@ -9,6 +9,7 @@
 import UIKit
 import AsyncDisplayKit
 import RelistenShared
+import SwiftyJSON
 
 @UIApplicationMain
 class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
@@ -16,15 +17,54 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     var window: UIWindow?
     public var rootNavigationController: ASNavigationController! = nil
 
-    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         RelistenApp.sharedApp.delegate = self
+        
+        RelistenApp.sharedApp.setupThirdPartyDependencies()
+        RelistenApp.sharedApp.setupAppearance()
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        rootNavigationController = ASNavigationController(rootViewController: ArtistViewController(artist: loadPhishArtist()))
+        
+        rootNavigationController.navigationBar.prefersLargeTitles = true
+        rootNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
+        
+        window?.rootViewController = rootNavigationController
+        
+        window?.makeKeyAndVisible()
+        
+        setupPlayback()
+        
+        // Initialize CarPlay
+        CarPlayController.shared.setup()
         
         return true
     }
     
-    public func setupAppearance(_ viewController: UINavigationController? = nil) {
-        
+    private func loadPhishArtist() -> ArtistWithCounts {
+        do {
+            if let phishURL = Bundle.main.url(forResource: "Phish", withExtension: "json") {
+                let phishJSONData = try Data(contentsOf: phishURL)
+                let phishJSON = try JSON(data: phishJSONData)
+                let artist = try ArtistWithCounts(json: phishJSON)
+                return artist
+            }
+        } catch {
+            print(error)
+        }
+        fatalError("Couldn't load the Phish artist JSON data")
     }
+    
+    func setupPlayback() {
+        PlaybackController.window = window
+        let _ = PlaybackController.sharedInstance
+        
+        DispatchQueue.main.async {
+            let _ = RelistenDownloadManager.shared
+        }
+    }
+
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

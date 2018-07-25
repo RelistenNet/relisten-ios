@@ -54,7 +54,7 @@ public func AppColors_SwitchToPhishOD(_ viewController: UINavigationController?)
     if AppColors != PhishODAppColors {
         AppColors = PhishODAppColors
         
-        RelistenApp.sharedApp.delegate.setupAppearance(viewController)
+        RelistenApp.sharedApp.setupAppearance(viewController)
         
         PlaybackController.sharedInstance.viewController.applyColors(PhishODPlayerColors)
     }
@@ -64,7 +64,7 @@ public func AppColors_SwitchToRelisten(_ viewController: UINavigationController?
     if AppColors != RelistenAppColors {
         AppColors = RelistenAppColors
         
-        RelistenApp.sharedApp.delegate.setupAppearance(viewController)
+        RelistenApp.sharedApp.setupAppearance(viewController)
         
         PlaybackController.sharedInstance.viewController.applyColors(RelistenPlayerColors)
     }

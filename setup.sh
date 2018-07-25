@@ -114,9 +114,11 @@ while getopts "nhl:" o; do
 done
 
 # Belt and suspenders
+is_ci=0
 if [[ ! -z ${TRAVIS} || ! -z ${CONTINUOUS_INTEGRATION} ]]; then 
     echo "Running under continuous integration"
     podBasePath="TravisPods"
+    is_ci=1
 fi
 
 checkAndClone NapySlider https://github.com/farktronix/NapySlider.git $podBasePath
@@ -132,7 +134,11 @@ if [[ $shouldInstallPods == 1 ]]; then
         exit 1
     }
     printSuccess
-    runCmd "pod install" "Installing pods"
+    if [[ $is_ci == 1 ]]; then
+        runCmd "pod install --repo-update" "Installing pods"
+    else 
+        runCmd "pod install" "Installing pods"
+    fi
 fi
 
 printf "\n\n✅ Success! Open \033[0;33mRelisten.xcworkspace\033[0m to build the app.\n"

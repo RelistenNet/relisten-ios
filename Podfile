@@ -78,6 +78,12 @@ target 'RelistenShared' do
   end
 
   post_install do |installer|
+    # Added to work around https://github.com/TextureGroup/Texture/issues/969
+    texture = installer.pods_project.targets.find { |target| target.name == 'Texture' }
+    texture.build_configurations.each do |config|
+      config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
+    end
+
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings['ENABLE_BITCODE'] = 'NO'

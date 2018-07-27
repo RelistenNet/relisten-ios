@@ -113,12 +113,13 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     }
     
     private func reloadRecentShows(tracks: [Track]) {
+        let recentShows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: ArtistWithCounts?)]
+        
         DispatchQueue.main.async {
             self.recentlyPlayedTracks = tracks
-            self.recentShowsNode.shows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) })
+            self.recentShowsNode.shows = recentShows
             self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
         }
-        recentShowsNode.shows = recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) })
     }
     
     // MARK: UITableViewDataSource

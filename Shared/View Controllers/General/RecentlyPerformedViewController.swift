@@ -1,5 +1,5 @@
 //
-//  RecentlyAddedViewController.swift
+//  RecentlyPerformedViewController.swift
 //  Relisten
 //
 //  Created by Jacob Farkas on 7/22/18.
@@ -11,17 +11,18 @@ import UIKit
 import Siesta
 import AsyncDisplayKit
 
-class RecentlyAddedViewController: ShowListViewController<[Show]> {
-    public required init(artist: ArtistWithCounts) {
-        super.init(artist: artist, showsResource: RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: true)
-        
-        title = "Recently Added Shows"
-    }
+class RecentlyPerformedViewController: ShowListViewController<[Show]> {
+    // Show all shows performed in the last three months
+    private let recentShowInterval : TimeInterval = (60 * 60 * 24 * 30 * 3)
     
     public required init(artist: ArtistWithCounts, showsResource: Resource?, tourSections: Bool) {
         super.init(artist: artist, showsResource: (showsResource != nil) ? showsResource : RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: tourSections)
         
-        title = "Recently Added Shows"
+        title = "Recently Performed"
+    }
+    
+    public convenience init(artist: ArtistWithCounts) {
+        self.init(artist: artist, showsResource: RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: true)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -33,11 +34,12 @@ class RecentlyAddedViewController: ShowListViewController<[Show]> {
     }
     
     override func extractShowsAndSource(forData: [Show]) -> [ShowWithSingleSource] {
-        return forData.map({ ShowWithSingleSource(show: $0, source: nil) })
+        let filteredShows = forData.filter { return ($0.date.timeIntervalSinceNow > -(recentShowInterval)) }
+        return filteredShows.map({ ShowWithSingleSource(show: $0, source: nil) })
     }
     
     override func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
-        return { YearShowCellNode(show: show, showUpdateDate: true) }
+        return { YearShowCellNode(show: show, showUpdateDate: false) }
     }
     
     // MARK: Boring Overrides

@@ -21180,6 +21180,39 @@
 			};
 			name = Release;
 		};
+		51D1488C6BBA70E1FE297D78FC3446F4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6E578E33F5388F6CE538C6F6154A423 /* Texture.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/Texture/Texture-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Texture/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Texture/Texture.modulemap";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = AsyncDisplayKit;
+				PRODUCT_NAME = AsyncDisplayKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		556E6317B99EDBE323134829E0F421EA /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 291A4793A2957AF3121742D480DB2AD6 /* DownloadButton.xcconfig */;
@@ -21852,6 +21885,40 @@
 			};
 			name = Debug;
 		};
+		7BBE01C022B315A4558AEF51BC016E5B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6E578E33F5388F6CE538C6F6154A423 /* Texture.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/Texture/Texture-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Texture/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Texture/Texture.modulemap";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = AsyncDisplayKit;
+				PRODUCT_NAME = AsyncDisplayKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		7E9A7CD01BB91ECA0CADA01E9DD7FEEE /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B340C46BBAB737D87EC729A2942AA443 /* AXRatingView.xcconfig */;
@@ -22215,38 +22282,6 @@
 			};
 			name = Release;
 		};
-		9727ED302EADF93B362DAC39448CED52 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6E578E33F5388F6CE538C6F6154A423 /* Texture.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/Texture/Texture-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Texture/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Texture/Texture.modulemap";
-				PRODUCT_MODULE_NAME = AsyncDisplayKit;
-				PRODUCT_NAME = AsyncDisplayKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		998F42DC75B8F4EAA40E8ABCC7179765 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6E307243BD39304486291252204DDE74 /* gRPC.xcconfig */;
@@ -22470,39 +22505,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		A1B3FCD04B0B8CFEEB217532888651C2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6E578E33F5388F6CE538C6F6154A423 /* Texture.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/Texture/Texture-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Texture/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Texture/Texture.modulemap";
-				PRODUCT_MODULE_NAME = AsyncDisplayKit;
-				PRODUCT_NAME = AsyncDisplayKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		A2E6299BA26EBDD387F15B83658C66EC /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -24063,8 +24065,8 @@
 		BB769BE06741691BDBE9ED5DA2E8B586 /* Build configuration list for PBXNativeTarget "Texture" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9727ED302EADF93B362DAC39448CED52 /* Debug */,
-				A1B3FCD04B0B8CFEEB217532888651C2 /* Release */,
+				51D1488C6BBA70E1FE297D78FC3446F4 /* Debug */,
+				7BBE01C022B315A4558AEF51BC016E5B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -15,6 +15,7 @@ class RecentlyAddedViewController: ShowListViewController<[Show]> {
     public required init(artist: ArtistWithCounts, showsResource: Resource?, tourSections: Bool) {
         super.init(artist: artist, showsResource: (showsResource != nil) ? showsResource : RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: tourSections)
 
+        shouldSortShows = false
         title = "Recently Added"
     }
     

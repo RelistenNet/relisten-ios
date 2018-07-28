@@ -11,12 +11,12 @@ import Siesta
 import SINQ
 import AsyncDisplayKit
 
-struct ShowWithSingleSource {
+public struct ShowWithSingleSource {
     public let show : Show
     public let source : SourceFull?
 }
 
-class ShowListViewController<T> : RelistenAsyncTableController<T> {
+public class ShowListViewController<T> : RelistenAsyncTableController<T> {
     internal let artist: ArtistWithCounts
     internal let showsResource: Resource?
     internal let tourSections: Bool
@@ -37,13 +37,13 @@ class ShowListViewController<T> : RelistenAsyncTableController<T> {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
-    override var resource: Resource? { get { return showsResource } }
+    public override var resource: Resource? { get { return showsResource } }
     
     public func extractShowsAndSource(forData: T) -> [ShowWithSingleSource] {
         fatalError("need to override this")
     }
     
-    override func has(oldData: T, changed: T) -> Bool {
+    public override func has(oldData: T, changed: T) -> Bool {
         let x1 = extractShowsAndSource(forData: oldData)
         let x2 = extractShowsAndSource(forData: changed)
         
@@ -58,7 +58,7 @@ class ShowListViewController<T> : RelistenAsyncTableController<T> {
     }
     
     // MARK: Relayout
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         /*

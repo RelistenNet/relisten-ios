@@ -45,10 +45,6 @@ extension MyLibrary {
             catch {
                 print(error)
                 
-                DispatchQueue.main.async {
-                    RelistenNotificationBar.display(withMessage: error.localizedDescription, forDuration: 10)
-                }
-                
                 callback(nil)
             }
         }

@@ -9,15 +9,12 @@
 import UIKit
 
 import Siesta
-import Reachability
 import LayoutKit
 import SINQ
 import Observable
 
-fileprivate let reachability = Reachability()!
-
-public class RelistenReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
-    internal weak var relistenTableView: RelistenBaseTableViewController?
+open class RelistenReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
+    public weak var relistenTableView: RelistenBaseTableViewController?
     
     public init(tableView: RelistenBaseTableViewController, reloadableView: ReloadableView) {
         relistenTableView = tableView
@@ -61,19 +58,19 @@ public class RelistenReloadableViewLayoutAdapter : ReloadableViewLayoutAdapter {
     }
 }
 
-public class RelistenBaseTableViewController : UIViewController, ResourceObserver {
-    internal var tableView: UITableView!
-    internal var reloadableViewLayoutAdapter: RelistenReloadableViewLayoutAdapter!
+open class RelistenBaseTableViewController : UIViewController, ResourceObserver {
+    public var tableView: UITableView!
+    public var reloadableViewLayoutAdapter: RelistenReloadableViewLayoutAdapter!
     
-    internal let api = RelistenApi
+    public let api = RelistenApi
     
-    internal var isCurrentlyScrolling: Bool = false
-    internal var needsRenderAfterScrollingFinishes: Bool = false
+    public var isCurrentlyScrolling: Bool = false
+    public var needsRenderAfterScrollingFinishes: Bool = false
     
-    internal var tableViewStyle: UITableViewStyle
-    internal var cellDefaultBackgroundColor: UIColor = UIColor.clear
+    public var tableViewStyle: UITableViewStyle
+    public var cellDefaultBackgroundColor: UIColor = UIColor.clear
     
-    internal var disposal = Disposal()
+    public var disposal = Disposal()
 
     public init(style: UITableViewStyle = .plain) {
         tableViewStyle = style
@@ -85,7 +82,7 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
         fatalError()
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         if #available(iOS 11.0, *) {
@@ -111,7 +108,7 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     
     // MARK: Layout & Rendering
     
-    internal func layout(width: CGFloat? = nil, synchronous: Bool = false, batchUpdates: BatchUpdates? = nil, layout: @escaping () -> [Section<[Layout]>]) {
+    public func layout(width: CGFloat? = nil, synchronous: Bool = false, batchUpdates: BatchUpdates? = nil, layout: @escaping () -> [Section<[Layout]>]) {
         var w = width
         if w == nil {
             w = tableView.frame.width
@@ -145,10 +142,10 @@ public class RelistenBaseTableViewController : UIViewController, ResourceObserve
     }
 }
 
-public class RelistenTableViewController<TData> : RelistenBaseTableViewController {
-    internal let statusOverlay = RelistenResourceStatusOverlay()
+open class RelistenTableViewController<TData> : RelistenBaseTableViewController {
+    public let statusOverlay = RelistenResourceStatusOverlay()
     
-    internal var resource: Resource? { get { return nil } }
+    public var resource: Resource? { get { return nil } }
     
     public let useCache: Bool
     public var refreshOnAppear: Bool
@@ -164,7 +161,7 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
         fatalError("just...don't")
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         if let res = resource {
@@ -195,19 +192,19 @@ public class RelistenTableViewController<TData> : RelistenBaseTableViewControlle
     }
     
     
-    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         render()
     }
     
-    public override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         statusOverlay.positionToCoverParent()
     }
     
-    public override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if refreshOnAppear {
@@ -303,14 +300,15 @@ extension Array where Element : Layout {
     }
 }
 
+// MARK: Texture
 import AsyncDisplayKit
 
-public class RelistenBaseAsyncTableViewController : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
-    internal let tableNode: ASTableNode!
+open class RelistenBaseAsyncTableViewController : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
+    public let tableNode: ASTableNode!
     
-    internal let api = RelistenApi
+    public let api = RelistenApi
     
-    internal var disposal = Disposal()
+    public var disposal = Disposal()
     
     public init(style: UITableViewStyle = .plain) {
         let tableNode = ASTableNode(style: style)
@@ -327,13 +325,13 @@ public class RelistenBaseAsyncTableViewController : ASViewController<ASDisplayNo
         fatalError()
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.largeTitleDisplayMode = .always
     }
     
-    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         coordinator.animate(alongsideTransition: { context in
@@ -350,10 +348,10 @@ public class RelistenBaseAsyncTableViewController : ASViewController<ASDisplayNo
     // MARK: TableView "dataSource" and "delegate"
 }
 
-public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewController {
-    internal let statusOverlay = RelistenResourceStatusOverlay()
+open class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewController {
+    public let statusOverlay = RelistenResourceStatusOverlay()
     
-    internal var resource: Resource? { get { return nil } }
+    open var resource: Resource? { get { return nil } }
     
     public let useCache: Bool
     public var refreshOnAppear: Bool
@@ -369,7 +367,7 @@ public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewCon
         fatalError("just...don't")
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         if let res = resource {
@@ -401,13 +399,13 @@ public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewCon
         }
     }
     
-    public override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         statusOverlay.positionToCoverParent()
     }
     
-    public override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if refreshOnAppear {
@@ -420,15 +418,15 @@ public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewCon
     public var latestData: TData? = nil
     public var previousData: TData? = nil
     
-    internal func has(oldData old: TData, changed new: TData) -> Bool {
+    open func has(oldData old: TData, changed new: TData) -> Bool {
         return true
     }
     
-    internal func dataChanged(_ data: TData) {
+    open func dataChanged(_ data: TData) {
         
     }
     
-    public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
+    open override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
         print("event: \(event)")
         if case .error = event {
             print("Error was \(String(describing: resource.latestError))")
@@ -451,7 +449,7 @@ public class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewCon
     
     // MARK: Layout & Rendering
     
-    public func render() {
+    open func render() {
         DispatchQueue.main.async {
             print("[render] calling tableNode.reloadData()")
             self.tableNode.reloadData()

@@ -15,13 +15,13 @@ import SwiftyJSON
 let SwiftyJSONTransformer = ResponseContentTransformer(transformErrors: true) { JSON($0.content as AnyObject) }
 
 /// Provides a .json convenience accessor to get raw JSON from resources
-extension TypedContentAccessors {
+public extension TypedContentAccessors {
     var json: JSON {
         return typedContent(ifNone: JSON.null)
     }
 }
 
-extension Resource {
+public extension Resource {
     // desired functionality: always send a request but
     // get an immediate result from the cache
     @discardableResult
@@ -38,9 +38,9 @@ extension Resource {
 // Depending on your taste, a Service can be a global var, a static var singleton, or a piece of more carefully
 // controlled shared state passed between pieces of the app.
 
-let RelistenApi = _RelistenApi()
+public let RelistenApi = _RelistenApi()
 
-class _RelistenApi {
+public class _RelistenApi {
     
     // MARK: Configuration
     

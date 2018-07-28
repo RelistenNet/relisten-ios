@@ -10,8 +10,8 @@ import UIKit
 
 import LayoutKit
 import NAKPlaybackIndicatorView
-import ActionKit
 
+import ActionKit
 import Cache
 import SwiftyJSON
 

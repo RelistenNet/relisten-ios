@@ -7,53 +7,23 @@
 //
 
 import UIKit
+import RelistenShared
 
 import Siesta
-import Firebase
-import FirebaseAuth
-import DWURecyclingAlert
 import SVProgressHUD
 import AsyncDisplayKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
     var window: UIWindow?
-    
-    public static var shared: AppDelegate! = nil
-    
-    func setupThirdPartyDependencies() {
-//        Inject_DWURecyclingAlert()
-
-        FirebaseApp.configure()
-
-        // FirebaseRemoteConfig = RemoteConfig.remoteConfig()
-        // FirebaseRemoteConfig.setDefaults(["api_base": "https://api.relisten.live" as NSObject])
-        
-        if let u = Auth.auth().currentUser {
-            MyLibraryManager.shared.onUserSignedIn(u)
-        }
-        else {
-            print("No current user. Signing in.")
-            Auth.auth().signInAnonymously(completion: { (u, err) in
-                if let user = u {
-                    MyLibraryManager.shared.onUserSignedIn(user.user)
-                }
-                print("Signed into Firebase: \(String(describing: u)) \(String(describing: err))")
-            })
-        }
-    }
-    
-    var rootNavigationController: ASNavigationController! = nil
+    public var rootNavigationController: ASNavigationController! = nil
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        AppDelegate.shared = self
+        RelistenApp.sharedApp.delegate = self
         
-        setupThirdPartyDependencies()
-        setupAppearance()
-        
-        print(StandardSwitchBounds)
-        print(RatingViewStubBounds)
+        RelistenApp.sharedApp.setupThirdPartyDependencies()
+        RelistenApp.sharedApp.setupAppearance()
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
@@ -80,33 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DispatchQueue.main.async {
             let _ = RelistenDownloadManager.shared
-        }
-    }
-    
-    public func setupAppearance(_ viewController: UINavigationController? = nil) {
-        UIApplication.shared.statusBarStyle = .lightContent
-        
-        UINavigationBar.appearance().barTintColor = AppColors.primary
-        UINavigationBar.appearance().backgroundColor = AppColors.textOnPrimary
-        UINavigationBar.appearance().tintColor = AppColors.textOnPrimary
-        UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
-        
-        UIToolbar.appearance().backgroundColor = AppColors.primary
-        UIToolbar.appearance().tintColor = AppColors.textOnPrimary
-        
-        UIButton.appearance().tintColor = AppColors.primary
-        UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = AppColors.textOnPrimary
-        
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary], for: .normal)
-        
-        UISegmentedControl.appearance().tintColor = AppColors.primary
-        UITabBar.appearance().tintColor = AppColors.primary
-        
-        if let nav = viewController {
-            nav.navigationBar.barTintColor = AppColors.primary
-            nav.navigationBar.backgroundColor = AppColors.primary
-            nav.navigationBar.tintColor = AppColors.primary
         }
     }
 

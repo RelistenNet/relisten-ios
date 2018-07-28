@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */; };
 		43B534172109228000DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341C2109229200DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
@@ -46,7 +47,7 @@
 		43B5343F210922CE00DE9B1F /* YearShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowCellNode.swift */; };
 		43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551820BFB71B00F07622 /* LongTextViewController.swift */; };
 		43B53441210922CE00DE9B1F /* ShowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B0472C20FD59D000251046 /* ShowListViewController.swift */; };
-		43B53442210922CE00DE9B1F /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */; };
+		43B53442210922CE00DE9B1F /* RecentlyPerformedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */; };
 		43B53443210922CE00DE9B1F /* MyLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705420B9FC5400710E90 /* MyLibraryViewController.swift */; };
 		43B53444210922CE00DE9B1F /* DownloadedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705720B9FC7600710E90 /* DownloadedViewController.swift */; };
 		43B53445210922CE00DE9B1F /* MyRecentlyPlayedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */; };
@@ -152,8 +153,9 @@
 /* Begin PBXFileReference section */
 		276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RelistenShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAddedViewController.swift; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
-		43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyAddedViewController.swift; path = "View Controllers/General/RecentlyAddedViewController.swift"; sourceTree = "<group>"; };
+		43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyPerformedViewController.swift; path = "View Controllers/General/RecentlyPerformedViewController.swift"; sourceTree = "<group>"; };
 		43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenArtistModels.swift; sourceTree = "<group>"; };
 		43B0472C20FD59D000251046 /* ShowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListViewController.swift; path = "View Controllers/General/ShowListViewController.swift"; sourceTree = "<group>"; };
 		43B047722100049E00251046 /* YearSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YearSorting.swift; path = Helpers/YearSorting.swift; sourceTree = "<group>"; };
@@ -350,7 +352,8 @@
 			children = (
 				7C31551820BFB71B00F07622 /* LongTextViewController.swift */,
 				43B0472C20FD59D000251046 /* ShowListViewController.swift */,
-				43A6A9A82105954B00EFF3AD /* RecentlyAddedViewController.swift */,
+				430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */,
+				43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -1211,11 +1214,12 @@
 				43B53422210922CE00DE9B1F /* CompleteShowInformation.swift in Sources */,
 				43B5342B210922CE00DE9B1F /* Numeric.swift in Sources */,
 				43B5342D210922CE00DE9B1F /* RelistenMenuView.swift in Sources */,
+				430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */,
 				43B53431210922CE00DE9B1F /* OfflineIndicatorNode.swift in Sources */,
 				43B53452210922CE00DE9B1F /* ArtistViewController.swift in Sources */,
 				43B53432210922CE00DE9B1F /* ReviewLayout.swift in Sources */,
 				43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */,
-				43B53442210922CE00DE9B1F /* RecentlyAddedViewController.swift in Sources */,
+				43B53442210922CE00DE9B1F /* RecentlyPerformedViewController.swift in Sources */,
 				43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */,
 				43B5342A210922CE00DE9B1F /* String.swift in Sources */,
 				43B53459210922CE00DE9B1F /* RelistenModelCachable.swift in Sources */,
@@ -1441,7 +1445,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1502,7 +1505,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

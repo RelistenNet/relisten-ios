@@ -107,7 +107,14 @@ public class ShowListViewController<T> : RelistenAsyncTableController<T> {
     private func rebuildShowMappings() {
         dispatchPrecondition(condition: .onQueue(showMappingQueue))
         if let d = latestData {
-            showsWithSources = extractShowsAndSource(forData: d)
+            let extractedShows = extractShowsAndSource(forData: d)
+            if artist.shouldSortYearsDescending {
+                showsWithSources = extractedShows.sorted(by: { (showA, showB) in
+                    return (showA.show.date.timeIntervalSince(showB.show.date) > 0)
+                })
+            } else {
+                showsWithSources = extractedShows
+            }
             buildShowMappingAndTourSections()
         }
     }

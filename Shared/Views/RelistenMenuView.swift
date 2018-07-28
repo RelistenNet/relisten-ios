@@ -26,7 +26,8 @@ public enum RelistenMenuItem: Int {
     case DiscoverRandom
     
     case RecentlyPlayed
-    case RecentlyAdded
+    case RecentlyPerformed
+    case RecentlyUpdated
     
     case MyShowsLibrary
     case MyShowsPlaylists
@@ -71,7 +72,7 @@ public class RelistenMenuView : UIView {
         menu = [
             everything,
             discover,
-            [ .RecentlyAdded, .RecentlyPlayed ],
+            [ .RecentlyPerformed, .RecentlyUpdated, .RecentlyPlayed ],
             my
         ]
         
@@ -130,12 +131,7 @@ public class RelistenMenuView : UIView {
         uiButtons = menuCategories.map { menuButton(forButton: $0) }
         
         for (idx, categoryButton) in uiButtons.enumerated() {
-            categoryButton.addControlEvent(.touchUpInside) { (control: UIControl) in
-                guard let button = control as? UIButton else {
-                    return
-                }
-                self.menuItemTapped(button)
-            }
+            categoryButton.addTarget(self, action: #selector(menuItemTapped(_:)), for: .touchUpInside)
 
             let subItems = menu[idx]
 
@@ -148,13 +144,7 @@ public class RelistenMenuView : UIView {
             
             for subMenuItem in subItems {
                 let subButton = menuButton(forSubmenuButton: subMenuItem)
-                
-                subButton.addControlEvent(.touchUpInside) { (control: UIControl) in
-                    guard let button = control as? UIButton else {
-                        return
-                    }
-                    self.submenuItemTapped(button)
-                }
+                subButton.addTarget(self, action: #selector(submenuItemTapped(_:)), for: .touchUpInside)
                 
                 container.addSubview(subButton)
                 
@@ -198,8 +188,11 @@ public class RelistenMenuView : UIView {
 
         case .RecentlyPlayed: print(item)
             viewController.navigationController?.pushViewController(MyRecentlyPlayedViewController(artist: artist), animated: true)
+        
+        case .RecentlyPerformed: print(item)
+            viewController.navigationController?.pushViewController(RecentlyPerformedViewController(artist: artist), animated: true)
             
-        case .RecentlyAdded: print(item)
+        case .RecentlyUpdated: print(item)
             viewController.navigationController?.pushViewController(RecentlyAddedViewController(artist: artist), animated: true)
             
         case .MyShowsLibrary: print(item)
@@ -271,8 +264,9 @@ public class RelistenMenuView : UIView {
         case .DiscoverTop: return "top"
         case .DiscoverRandom: return "random"
             
-        case .RecentlyPlayed: return "recently played"
-        case .RecentlyAdded: return "recently added"
+        case .RecentlyPerformed: return "performed"
+        case .RecentlyUpdated: return "updated"
+        case .RecentlyPlayed: return "played"
             
         case .MyShowsLibrary: return "my library"
         case .MyShowsPlaylists: return "playlists"

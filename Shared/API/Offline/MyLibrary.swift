@@ -111,11 +111,15 @@ public class MyLibrary {
             DispatchQueue.global().async {
                 MyLibraryManager.shared.saveToFirestore()
             }
+            
+            shows = []
+            artistIds = Set<Int>()
+            recentlyPlayedTracks = []
+        } else {
+            shows = try json["shows"].arrayValue.map(CompleteShowInformation.init)
+            artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
+            recentlyPlayedTracks = try json["recentlyPlayedTracks"].arrayValue.map(Track.init)
         }
-        
-        shows = try json["shows"].arrayValue.map(CompleteShowInformation.init)
-        artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
-        recentlyPlayedTracks = try json["recentlyPlayedTracks"].arrayValue.map(Track.init)
         
         artistIdsChanged.value = artistIds
     }

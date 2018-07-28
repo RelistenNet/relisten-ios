@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */; };
+		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
+		430D64E6210BE379005D7F7A /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* DispatchQueue.swift */; };
 		43B534172109228000DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341C2109229200DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
@@ -154,6 +156,8 @@
 		276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RelistenShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAddedViewController.swift; sourceTree = "<group>"; };
+		430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayDataSource.swift; path = Helpers/CarPlayDataSource.swift; sourceTree = "<group>"; };
+		430D64E5210BE379005D7F7A /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DispatchQueue.swift; path = Extensions/DispatchQueue.swift; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
 		43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyPerformedViewController.swift; path = "View Controllers/General/RecentlyPerformedViewController.swift"; sourceTree = "<group>"; };
 		43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenArtistModels.swift; sourceTree = "<group>"; };
@@ -503,6 +507,7 @@
 				7C31551420BFB3DA00F07622 /* String.swift */,
 				7C31552A20C206BA00F07622 /* Numeric.swift */,
 				7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */,
+				430D64E5210BE379005D7F7A /* DispatchQueue.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -615,6 +620,7 @@
 				7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */,
 				7C8044081E6F29A800BA946E /* ArtistViewController.swift */,
 				43EF8D6720F01A41002FF970 /* CarPlayController.swift */,
+				430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1176,6 +1182,7 @@
 				43B5345A210922CE00DE9B1F /* RelistenModels.swift in Sources */,
 				43B53439210922CE00DE9B1F /* SwitchCellNode.swift in Sources */,
 				43B53426210922CE00DE9B1F /* UIFont+ChangeWeight.swift in Sources */,
+				430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */,
 				43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */,
 				43B5341E210922CE00DE9B1F /* YearSorting.swift in Sources */,
 				43B53420210922CE00DE9B1F /* TrackActions.swift in Sources */,
@@ -1192,6 +1199,7 @@
 				43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */,
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
 				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
+				430D64E6210BE379005D7F7A /* DispatchQueue.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
 				43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */,
 				43B53436210922CE00DE9B1F /* SounceFeatureIndicatorNodes.swift in Sources */,

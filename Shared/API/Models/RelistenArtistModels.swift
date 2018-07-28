@@ -12,12 +12,14 @@ import SwiftyJSON
 
 public class SlimArtist : RelistenObject, Hashable {
     public var hashValue: Int {
-        return id.hashValue
+        return uuid.hashValue
     }
     
     public static func == (lhs: SlimArtist, rhs: SlimArtist) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.uuid == rhs.uuid
     }
+    
+    public let uuid: String
     
     public let musicbrainz_id: String
     public let featured: Int
@@ -34,6 +36,8 @@ public class SlimArtist : RelistenObject, Hashable {
         }}
     
     public required init(json: JSON) throws {
+        uuid = try json["uuid"].string.required()
+        
         musicbrainz_id = try json["musicbrainz_id"].string.required()
         featured = try json["featured"].int.required()
         

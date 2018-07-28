@@ -14,7 +14,6 @@ public typealias SwJSON = JSON
 
 public class RelistenObject {
     public let id: Int
-    public let uuid: String?
     public let created_at: Date
     public let updated_at: Date
     
@@ -22,7 +21,6 @@ public class RelistenObject {
     
     public required init(json: JSON) throws {
         id = try json["id"].int.required()
-        uuid = json["uuid"].string as String?
         created_at = try json["created_at"].dateTime.required()
         updated_at = try json["updated_at"].dateTime.required()
         

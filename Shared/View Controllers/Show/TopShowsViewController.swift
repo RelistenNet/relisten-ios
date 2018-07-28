@@ -15,7 +15,6 @@ import AsyncDisplayKit
 import SINQ
 
 class TopShowsViewController: ShowListViewController<[Show]> {
-    
     public required init(artist: ArtistWithCounts) {
         super.init(
             artist: artist,
@@ -23,6 +22,7 @@ class TopShowsViewController: ShowListViewController<[Show]> {
             tourSections: false
         )
         
+        shouldSortShows = false
         title = "Top Shows"
     }
     

@@ -23,6 +23,10 @@ public class OfflineTrackMetadata : Codable {
     }
 }
 
+fileprivate enum DBVersion: Int, RawRepresentable {
+    case v1 = 1 // Added UUID to offline JSON objects. Requires wipe of previous data
+}
+
 public class MyLibrary {
     public var shows: [CompleteShowInformation] = []
     public var artistIds: Set<Int> = []
@@ -47,8 +51,13 @@ public class MyLibrary {
 
     internal let diskUseQueue : DispatchQueue = DispatchQueue(label: "live.relisten.library.diskUse")
     internal let diskUseQueueKey = DispatchSpecificKey<Int>()
+
+    public let offlineCacheVersions : Storage<Int>
     
     public let offlineTrackFileSizeCache : Storage<OfflineTrackMetadata>
+    
+    private let latestDBVersion : DBVersion = .v1
+    private let dbVersionKey : String = "offlineVersion"
     
     public init() {
         offlineCache = try! Storage(
@@ -68,6 +77,7 @@ public class MyLibrary {
         offlineCacheURLStorage = offlineCache.transformCodable(ofType: Set<URL>.self)
         offlineCacheDownloadBacklogStorage = offlineCache.transformCodable(ofType: [Track].self)
         offlineCacheSourcesMetadata = offlineCache.transformCodable(ofType: Set<OfflineSourceMetadata>.self)
+        offlineCacheVersions = offlineCache.transformCodable(ofType: Int.self)
         
         offlineTrackFileSizeCache = try! Storage(
             diskConfig: DiskConfig(
@@ -91,13 +101,31 @@ public class MyLibrary {
     public convenience init(json: SwJSON) throws {
         self.init()
         
-        shows = try json["shows"].arrayValue.map(CompleteShowInformation.init)
-        artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
-        recentlyPlayedTracks = try json["recentlyPlayedTracks"].arrayValue.map(Track.init)
-
         diskUseQueue.setSpecific(key: diskUseQueueKey, value: 1)
-
-        try loadOfflineData()
+        
+        var needsUpgrade = true
+        let version : Int? = json["version"].intValue as Int?
+        if let version = version {
+            if version == latestDBVersion.rawValue {
+                needsUpgrade = false
+            }
+        }
+        
+        // (Farkas) This is a bad layering inversion, but I'm planning on getting rid of Firebase entirely soon, so I can live with this for now.
+        if needsUpgrade {
+            print("Firebase needs an upgrade. Bombs away!")
+            DispatchQueue.global().async {
+                MyLibraryManager.shared.saveToFirestore()
+            }
+            
+            shows = []
+            artistIds = Set<Int>()
+            recentlyPlayedTracks = []
+        } else {
+            shows = try json["shows"].arrayValue.map(CompleteShowInformation.init)
+            artistIds = Set(json["artistIds"].arrayValue.map({ $0.intValue }))
+            recentlyPlayedTracks = try json["recentlyPlayedTracks"].arrayValue.map(Track.init)
+        }
         
         artistIdsChanged.value = artistIds
     }
@@ -107,6 +135,7 @@ public class MyLibrary {
         s["shows"] = SwJSON(shows.map({ $0.originalJSON }))
         s["artistIds"] = SwJSON(Array(artistIds))
         s["recentlyPlayedTracks"] = SwJSON(recentlyPlayedTracks.map({ $0.originalJSON }))
+        s["version"] = SwJSON(latestDBVersion.rawValue)
 
         return s
     }
@@ -186,6 +215,19 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
 /// boring loading and saving
 extension MyLibrary {
     public func loadOfflineData() throws {
+        var dbVersion : Int? = nil
+        do {
+            if try offlineCacheVersions.existsObject(forKey: dbVersionKey) {
+                dbVersion = try offlineCacheVersions.object(forKey: dbVersionKey)
+            }
+            if dbVersion == nil || dbVersion! < latestDBVersion.rawValue {
+                print("db version is too old (\(dbVersion ?? -1)). Wiping all entries.")
+                try offlineCache.removeAll()
+                try offlineCacheVersions.setObject(latestDBVersion.rawValue, forKey: dbVersionKey)
+            }
+        } catch CocoaError.fileReadNoSuchFile {
+        }
+        
         do {
             offlineTrackURLs = try offlineCacheURLStorage.object(forKey: "offlineTrackURLs")
         }

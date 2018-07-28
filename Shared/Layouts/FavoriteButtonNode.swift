@@ -80,10 +80,8 @@ open class FavoriteButtonNode : ASDisplayNode {
             
             button.setSelected(selected: currentlyFavorited, animated: false)
             
-            button.addControlEvent(.touchUpInside) { (control: UIControl) in
-                self.onFavorite()
-            }
-            
+            button.addTarget(self, action:#selector(onFavorite), for:.touchUpInside)
+
             didInitButton = true
         }
     }

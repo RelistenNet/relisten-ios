@@ -26,7 +26,8 @@ public enum RelistenMenuItem: Int {
     case DiscoverRandom
     
     case RecentlyPlayed
-    case RecentlyAdded
+    case RecentlyPerformed
+    case RecentlyUpdated
     
     case MyShowsLibrary
     case MyShowsPlaylists
@@ -71,7 +72,7 @@ public class RelistenMenuView : UIView {
         menu = [
             everything,
             discover,
-            [ .RecentlyAdded, .RecentlyPlayed ],
+            [ .RecentlyPerformed, .RecentlyUpdated, .RecentlyPlayed ],
             my
         ]
         
@@ -198,8 +199,11 @@ public class RelistenMenuView : UIView {
 
         case .RecentlyPlayed: print(item)
             viewController.navigationController?.pushViewController(MyRecentlyPlayedViewController(artist: artist), animated: true)
+        
+        case .RecentlyPerformed: print(item)
+            viewController.navigationController?.pushViewController(RecentlyPerformedViewController(artist: artist), animated: true)
             
-        case .RecentlyAdded: print(item)
+        case .RecentlyUpdated: print(item)
             viewController.navigationController?.pushViewController(RecentlyAddedViewController(artist: artist), animated: true)
             
         case .MyShowsLibrary: print(item)
@@ -271,8 +275,9 @@ public class RelistenMenuView : UIView {
         case .DiscoverTop: return "top"
         case .DiscoverRandom: return "random"
             
-        case .RecentlyPlayed: return "recently played"
-        case .RecentlyAdded: return "recently added"
+        case .RecentlyPerformed: return "performed"
+        case .RecentlyUpdated: return "updated"
+        case .RecentlyPlayed: return "played"
             
         case .MyShowsLibrary: return "my library"
         case .MyShowsPlaylists: return "playlists"

@@ -105,6 +105,10 @@ public class MyLibraryManager {
         })
     }
     
+    public func deleteFirestoreData() {
+        userDoc?.delete()
+    }
+    
     func saveToFirestore() {
         DispatchQueue.global(qos: .background).async {
             if let d = self.userDoc {

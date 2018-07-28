@@ -43,3 +43,21 @@ public class RelistenObject {
         return try originalJSON.rawData()
     }
 }
+
+public protocol RelistenUUIDObject : Hashable {
+    var uuid: String { get }
+    
+    var hashValue: Int { get }
+}
+
+public extension RelistenUUIDObject {
+    var hashValue: Int {
+        get {
+            return uuid.hashValue
+        }
+    }
+}
+
+public func ==<T: RelistenUUIDObject>(lhs: T, rhs: T) -> Bool {
+    return lhs.uuid == rhs.uuid
+}

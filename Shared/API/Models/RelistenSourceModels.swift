@@ -18,7 +18,7 @@ public enum FlacType : String {
     case NoPlayableFlac = "NoPlayableFlac"
 }
 
-public class SlimSource : RelistenObject {
+public class SlimSource : RelistenObject, RelistenUUIDObject {
     public let uuid: String
     
     public let artist_id: Int
@@ -195,15 +195,7 @@ public class SourceSet : RelistenObject {
     }
 }
 
-public class SourceTrack : RelistenObject, Hashable {
-    public var hashValue: Int {
-        return uuid.hashValue
-    }
-    
-    public static func == (lhs: SourceTrack, rhs: SourceTrack) -> Bool {
-        return lhs.uuid == rhs.uuid
-    }
-    
+public class SourceTrack : RelistenObject, RelistenUUIDObject {
     public let uuid: String
     
     public let source_id: Int

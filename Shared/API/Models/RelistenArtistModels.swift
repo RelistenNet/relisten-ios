@@ -10,15 +10,7 @@ import Foundation
 
 import SwiftyJSON
 
-public class SlimArtist : RelistenObject, Hashable {
-    public var hashValue: Int {
-        return uuid.hashValue
-    }
-    
-    public static func == (lhs: SlimArtist, rhs: SlimArtist) -> Bool {
-        return lhs.uuid == rhs.uuid
-    }
-    
+public class SlimArtist : RelistenObject, RelistenUUIDObject {
     public let uuid: String
     
     public let musicbrainz_id: String

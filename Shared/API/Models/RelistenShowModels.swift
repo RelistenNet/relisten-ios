@@ -10,7 +10,7 @@ import Foundation
 
 import SwiftyJSON
 
-public class Year : RelistenObject {
+public class Year : RelistenObject, RelistenUUIDObject {
     public let uuid: String
     
     public let show_count: Int
@@ -52,11 +52,7 @@ public class YearWithShows : Year {
     }
 }
 
-public class Show : RelistenObject, Equatable {
-    public static func == (lhs: Show, rhs: Show) -> Bool {
-        return lhs.uuid == rhs.uuid
-    }
-    
+public class Show : RelistenObject, RelistenUUIDObject {
     public let uuid: String
     
     public let artist_id: Int
@@ -151,7 +147,7 @@ public class ShowWithSources : Show {
     }
 }
 
-public class Venue : RelistenObject {
+public class Venue : RelistenObject, RelistenUUIDObject {
     public let uuid: String
     
     public let artist_id: Int
@@ -213,7 +209,7 @@ public class VenueWithShows : VenueWithShowCount {
     }
 }
 
-public class Tour : RelistenObject {
+public class Tour : RelistenObject, RelistenUUIDObject {
     public let uuid: String
     
     public let artist_id: Int

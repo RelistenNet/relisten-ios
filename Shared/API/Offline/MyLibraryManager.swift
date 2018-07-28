@@ -13,18 +13,18 @@ import FirebaseFirestore
 import FirebaseAuth
 import SwiftyJSON
 import Cache
-import Async
 import SINQ
 import Observable
 
 public class MyLibraryManager {
-    static let shared = MyLibraryManager()
+    public static let shared = MyLibraryManager()
     
     let db: Firestore
     
     var user: User? = nil
     var userDoc: DocumentReference? = nil
-    var library: MyLibrary = MyLibrary()
+    
+    public var library: MyLibrary = MyLibrary()
     
     public let artistFavorited = Event<ArtistWithCounts>()
     public let artistUnfavorited = Event<ArtistWithCounts>()

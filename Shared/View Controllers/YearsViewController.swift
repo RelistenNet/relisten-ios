@@ -14,10 +14,10 @@ import Siesta
 import AsyncDisplayKit
 import SINQ
 
-class YearsViewController: RelistenAsyncTableController<[Year]> {
+public class YearsViewController: RelistenAsyncTableController<[Year]> {
     
-    let artist: ArtistWithCounts
-    var years: [Year] = []
+    private let artist: ArtistWithCounts
+    private var years: [Year] = []
     
     public required init(artist: ArtistWithCounts) {
         self.artist = artist
@@ -30,23 +30,23 @@ class YearsViewController: RelistenAsyncTableController<[Year]> {
     }
 
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Years"
     }
     
-    override var resource: Resource? { get { return api.years(byArtist: artist) } }
+    public override var resource: Resource? { get { return api.years(byArtist: artist) } }
     
-    override func dataChanged(_ data: [Year]) {
+    public override func dataChanged(_ data: [Year]) {
         years = sortedYears(from: data, for: artist)
     }
     
-    override func has(oldData: [Year], changed: [Year]) -> Bool {
+    public override func has(oldData: [Year], changed: [Year]) -> Bool {
         return oldData.count != changed.count
     }
     

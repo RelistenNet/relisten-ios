@@ -6,7 +6,6 @@ PODS:
     - Interpolate
     - MarqueeLabel
     - NapySlider
-  - AsyncSwift (2.0.4)
   - AXRatingView (1.0.6)
   - BASSGaplessAudioPlayer (0.0.1)
   - BCColor (0.2)
@@ -17,8 +16,6 @@ PODS:
     - BoringSSL/Interface (= 10.0.5)
   - BoringSSL/Interface (10.0.5)
   - Cache (5.0.0)
-  - CWStatusBarNotification (2.3.5)
-  - DownloadButton (0.1.0)
   - DWURecyclingAlert (1.0.2)
   - FaveButton (2.0.4)
   - Firebase (5.0.0):
@@ -112,7 +109,6 @@ PODS:
     - PINCache (= 3.0.1-beta.6)
     - PINRemoteImage/Core
   - Protobuf (3.6.0)
-  - ReachabilitySwift (4.1.0)
   - Reveal-SDK (16)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -135,12 +131,9 @@ PODS:
 DEPENDENCIES:
   - ActionKit
   - AGAudioPlayer (from `../AGAudioPlayer`)
-  - AsyncSwift
   - AXRatingView
   - BASSGaplessAudioPlayer (from `../BASSGaplessAudioPlayer`)
   - Cache
-  - CWStatusBarNotification
-  - DownloadButton
   - DWURecyclingAlert
   - FaveButton (from `../fave-button`)
   - Firebase
@@ -154,7 +147,6 @@ DEPENDENCIES:
   - NAKPlaybackIndicatorView
   - NapySlider (from `../NapySlider`)
   - Observable (from `https://github.com/alecgorge/Observable.git`)
-  - ReachabilitySwift
   - Reveal-SDK
   - Siesta/Core (from `https://github.com/bustoutsolutions/siesta.git`)
   - Siesta/UI (from `https://github.com/bustoutsolutions/siesta.git`)
@@ -167,13 +159,10 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - ActionKit
-    - AsyncSwift
     - AXRatingView
     - BCColor
     - BoringSSL
     - Cache
-    - CWStatusBarNotification
-    - DownloadButton
     - DWURecyclingAlert
     - Firebase
     - FirebaseAnalytics
@@ -195,7 +184,6 @@ SPEC REPOS:
     - PINOperation
     - PINRemoteImage
     - Protobuf
-    - ReachabilitySwift
     - Reveal-SDK
     - SDWebImage
     - SINQ
@@ -262,14 +250,11 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   ActionKit: cf7ca5781f4a43342384d872105fadd58985f416
   AGAudioPlayer: 2044b1fa402341b646b16b2e2e6d851ddadb70db
-  AsyncSwift: 65775a7b32e740609b24969ece3de58723b9dc3e
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 5547414722926aaa7d1116557f5208df57b0caab
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
   BoringSSL: cf3f1793eb6e3c445c4d150456341f149c268a35
   Cache: fae4826ba52d7a5d9a3a0ad6fe73e3501a82964f
-  CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
-  DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   FaveButton: e26220c69725ca00f08d7494edb5765c3eaef8c7
   Firebase: 4bd804448ab2596794698773d41520a0af101e65
@@ -299,7 +284,6 @@ SPEC CHECKSUMS:
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
-  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   Reveal-SDK: ed36bdbb3cbf90b94ae5da0dbcb3c7ae6738c51f
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Siesta: feae635134e33336ff6a7048c43b993a3f7ce1b9
@@ -309,6 +293,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 071e2dcf516ddc9b2a05520e979d7b1d76e03928
 
-PODFILE CHECKSUM: d68182069da92c8e1eb07005c4610efe936a9f76
+PODFILE CHECKSUM: f52b733d6fb94146930d5fe4b93395b965f517b0
 
 COCOAPODS: 1.5.3

@@ -14,8 +14,9 @@ import UIKit
 import CoreGraphics
 
 public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayableContentDataSource, ResourceObserver {
-    static let shared = CarPlayController()
-    var disposal = Disposal()
+    public static let shared = CarPlayController()
+    
+    private var disposal = Disposal()
     
     private var recentlyPlayedShows: [CompleteShowInformation] = []
     private var offlineShows: [OfflineSourceMetadata] = []
@@ -43,7 +44,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     
     // MARK: Setup
     
-    func setup() {
+    public func setup() {
         MPPlayableContentManager.shared().delegate = self;
         MPPlayableContentManager.shared().dataSource = self;
         
@@ -286,7 +287,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         }
         
         if let track = track {
-            if let viewController = AppDelegate.shared.rootNavigationController.topViewController {
+            if let viewController = RelistenApp.sharedApp.delegate.rootNavigationController.topViewController {
                 DispatchQueue.main.async {
                     TrackActions.play(track: track, fromViewController: viewController)
                     DispatchQueue.global(qos: .userInitiated).async {

@@ -11,7 +11,6 @@ import Foundation
 import Cache
 import SwiftyJSON
 import MZDownloadManager
-import CWStatusBarNotification
 import MarqueeLabel
 
 func MD5(_ string: String) -> String? {
@@ -31,8 +30,6 @@ public protocol RelistenDownloadManagerDelegate: class {
     func trackSizeBecameKnown(_ track: Track, fileSize: UInt64)
     func trackBecameAvailableOffline(_ track: Track)
 }
-
-let RelistenNotificationBar: CWStatusBarNotification = CWStatusBarNotification()
 
 public class RelistenDownloadManager {
     public static let shared = RelistenDownloadManager()

@@ -1,7 +1,7 @@
 # Uncomment this line to define a global platform for your project
 platform :ios, '11.0'
 
-target 'Relisten' do
+target 'RelistenShared' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   inhibit_all_warnings!
@@ -10,8 +10,6 @@ target 'Relisten' do
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
   pod 'Cache'
-  pod 'ReachabilitySwift'
-  pod 'ActionKit'
 
   if ENV['TRAVIS']
       pod 'NapySlider', :path => 'TravisPods/NapySlider'
@@ -36,28 +34,33 @@ target 'Relisten' do
   pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
 # pod 'Firebase/Messaging'
 
-  pod "DownloadButton"
   pod 'AXRatingView'
   pod 'NAKPlaybackIndicatorView'
   pod 'Observable', :git => "https://github.com/alecgorge/Observable.git"
 
   pod 'LayoutKit'
-  pod 'DWURecyclingAlert'
   pod "Texture"
 
   pod 'SINQ'
-  pod 'Reveal-SDK', :configurations => ['Debug']
   pod 'KASlideShow'
   
   pod "MZDownloadManager", :git => "https://github.com/alecgorge/MZDownloadManager.git"
-  pod 'AsyncSwift'
-  pod 'CWStatusBarNotification'
   pod 'SVProgressHUD'
+  pod 'ActionKit'
+ 
+  # Debug Pods
+  pod 'Reveal-SDK', :configurations => ['Debug']
+  pod 'Wormholy', :configurations => ['Debug'], :git => "https://github.com/pmusolino/Wormholy"
+  pod 'DWURecyclingAlert', :configurations => ['Debug']
+
+  # Currently unused pods (but they might be used in the future)
+  # pod 'AsyncSwift'
+  # pod 'BFNavigationBarDrawer'
+  # pod 'CWStatusBarNotification'
+  # pod 'DownloadButton'
+  # pod 'Reachability'
   # pod 'SpinnerView'
   
-  pod 'Wormholy', :configurations => ['Debug'], :git => "https://github.com/pmusolino/Wormholy"
-
-  # pod 'BFNavigationBarDrawer'
   target 'PhishOD' do
   	inherit! :search_paths
 
@@ -66,9 +69,12 @@ target 'Relisten' do
   	end
   end
 
-  target 'RelistenUITests' do
+  target 'Relisten' do
     inherit! :search_paths
-    # Pods for testing
+
+    target 'RelistenUITests' do
+      inherit! :search_paths
+    end
   end
 
   post_install do |installer|

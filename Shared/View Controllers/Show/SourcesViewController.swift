@@ -14,7 +14,7 @@ import Siesta
 import AsyncDisplayKit
 import SINQ
 
-class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
+public class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
     
     let artist: ArtistWithCounts
     let show: Show?
@@ -46,11 +46,11 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
         super.init(useCache: false, refreshOnAppear: false)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
     
-    func presentIfNecessary(navigationController : UINavigationController?, forSource source: SourceFull? = nil) {
+    public func presentIfNecessary(navigationController : UINavigationController?, forSource source: SourceFull? = nil) {
         self.load()
         var controllerToPresent : UIViewController = self
         sourceToPresent = source
@@ -65,7 +65,7 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
         canSkipIfSingleSource = true
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         if !self.canSkipIfSingleSource {
@@ -79,13 +79,13 @@ class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
         }
     }
     
-    override var resource: Resource? {
+    public override var resource: Resource? {
         get {
             return self.show == nil ? api.randomShow(byArtist: artist) : api.showWithSources(forShow: show!, byArtist: artist)
         }
     }
     
-    override func dataChanged(_ data: ShowWithSources) {
+    public override func dataChanged(_ data: ShowWithSources) {
         var shouldReloadTitle = true
         
         sources = data.sources

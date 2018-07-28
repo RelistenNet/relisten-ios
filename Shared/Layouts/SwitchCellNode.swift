@@ -10,6 +10,7 @@ import Foundation
 
 import AsyncDisplayKit
 import Observable
+import ActionKit
 
 public let StandardSwitchBounds = { () -> CGRect in
     let s = UISwitch()
@@ -56,7 +57,12 @@ public class SwitchCellNode : ASCellNode {
         }.add(to: &disposal)
         
         if let sw = self.switchNode.view as? UISwitch {
-            sw.addTarget(self, action: #selector(changeSwitch(_:)), for: .valueChanged)
+            sw.addControlEvent(.valueChanged) { (control: UIControl) in
+                guard let sw = control as? UISwitch else {
+                    return
+                }
+                self.changeSwitch(sw)
+            }
         }
     }
     

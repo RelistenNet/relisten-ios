@@ -21,6 +21,8 @@ public class ShowListViewController<T> : RelistenAsyncTableController<T> {
     internal let showsResource: Resource?
     internal let tourSections: Bool
     
+    var shouldSortShows : Bool = true
+    
     public required init(artist: ArtistWithCounts, showsResource: Resource?, tourSections: Bool) {
         self.artist = artist
         self.showsResource = showsResource
@@ -108,7 +110,7 @@ public class ShowListViewController<T> : RelistenAsyncTableController<T> {
         dispatchPrecondition(condition: .onQueue(showMappingQueue))
         if let d = latestData {
             let extractedShows = extractShowsAndSource(forData: d)
-            if artist.shouldSortYearsDescending {
+            if artist.shouldSortYearsDescending, self.shouldSortShows {
                 showsWithSources = extractedShows.sorted(by: { (showA, showB) in
                     return (showA.show.date.timeIntervalSince(showB.show.date) > 0)
                 })

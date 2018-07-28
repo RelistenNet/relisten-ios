@@ -149,7 +149,7 @@ public class MyLibrary {
     }
     
     public func isShowInLibrary(show: ShowWithSources, byArtist: SlimArtist) -> Bool {
-        return shows.contains(where: { $0.show.display_date == show.display_date && $0.artist.id == byArtist.id })
+        return shows.contains(where: { $0.show.display_date == show.display_date && $0.artist == byArtist })
     }
     
     public func queueToBacklog(_ track: Track) {

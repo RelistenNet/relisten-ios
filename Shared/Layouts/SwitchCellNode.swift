@@ -57,12 +57,7 @@ public class SwitchCellNode : ASCellNode {
         }.add(to: &disposal)
         
         if let sw = self.switchNode.view as? UISwitch {
-            sw.addControlEvent(.valueChanged) { (control: UIControl) in
-                guard let sw = control as? UISwitch else {
-                    return
-                }
-                self.changeSwitch(sw)
-            }
+            sw.addTarget(self, action: #selector(changeSwitch(_:)), for: .valueChanged)
         }
     }
     

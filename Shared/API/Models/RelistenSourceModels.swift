@@ -18,7 +18,9 @@ public enum FlacType : String {
     case NoPlayableFlac = "NoPlayableFlac"
 }
 
-public class SlimSource : RelistenObject {
+public class SlimSource : RelistenObject, RelistenUUIDObject {
+    public let uuid: String
+    
     public let artist_id: Int
     
     // only for per-source venues
@@ -41,6 +43,8 @@ public class SlimSource : RelistenObject {
     public let upstream_identifier: String
     
     public required init(json: JSON) throws {
+        uuid = try json["uuid"].string.required()
+        
         artist_id = try json["artist_id"].int.required()
         
         venue_id = json["venue_id"].int
@@ -191,14 +195,8 @@ public class SourceSet : RelistenObject {
     }
 }
 
-public class SourceTrack : RelistenObject, Hashable {
-    public var hashValue: Int {
-        return mp3_url.hashValue ^ id.hashValue
-    }
-    
-    public static func == (lhs: SourceTrack, rhs: SourceTrack) -> Bool {
-        return lhs.mp3_url == rhs.mp3_url
-    }
+public class SourceTrack : RelistenObject, RelistenUUIDObject {
+    public let uuid: String
     
     public let source_id: Int
     public let source_set_id: Int
@@ -213,6 +211,8 @@ public class SourceTrack : RelistenObject, Hashable {
     public let md5: String?
     
     public required init(json: JSON) throws {
+        uuid = try json["uuid"].string.required()
+        
         source_id = try json["source_id"].int.required()
         source_set_id = try json["source_set_id"].int.required()
         

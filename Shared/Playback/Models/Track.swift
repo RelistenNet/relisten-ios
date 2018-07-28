@@ -27,6 +27,7 @@ public class Track : Codable, Hashable {
     // Note: This should be a complete passthrough for SourceTrack so that the properties are visible on Track.
     // Resist the temptation to change the names or alter the SourceTrack properties in the getter
     public var id : Int { get { return sourceTrack.id } }
+    public var uuid : String? { get { return sourceTrack.uuid } }
     public var source_id : Int { get { return sourceTrack.source_id } }
     public var set_id : Int { get { return sourceTrack.source_set_id } }
     public var track_position : Int { get { return sourceTrack.track_position } }

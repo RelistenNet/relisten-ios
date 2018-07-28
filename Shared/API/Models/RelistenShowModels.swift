@@ -10,7 +10,9 @@ import Foundation
 
 import SwiftyJSON
 
-public class Year : RelistenObject {
+public class Year : RelistenObject, RelistenUUIDObject {
+    public let uuid: String
+    
     public let show_count: Int
     public let source_count: Int
     
@@ -23,6 +25,8 @@ public class Year : RelistenObject {
     public let artist_id: Int
     
     public required init(json: JSON) throws {
+        uuid = try json["uuid"].string.required()
+        
         show_count = try json["show_count"].int.required()
         source_count = try json["source_count"].int.required()
         
@@ -48,10 +52,8 @@ public class YearWithShows : Year {
     }
 }
 
-public class Show : RelistenObject, Equatable {
-    public static func == (lhs: Show, rhs: Show) -> Bool {
-        return lhs.artist_id == rhs.artist_id && lhs.date == rhs.date
-    }
+public class Show : RelistenObject, RelistenUUIDObject {
+    public let uuid: String
     
     public let artist_id: Int
     
@@ -92,6 +94,8 @@ public class Show : RelistenObject, Equatable {
     }
 
     public required init(json: JSON) throws {
+        uuid = try json["uuid"].string.required()
+        
         artist_id = try json["artist_id"].int.required()
         
         venue_id = json["venue_id"].int
@@ -143,7 +147,9 @@ public class ShowWithSources : Show {
     }
 }
 
-public class Venue : RelistenObject {
+public class Venue : RelistenObject, RelistenUUIDObject {
+    public let uuid: String
+    
     public let artist_id: Int
     
     public let latitude: Double?
@@ -161,6 +167,8 @@ public class Venue : RelistenObject {
     public let past_names: String?
     
     public required init(json: JSON) throws {
+        uuid = try json["uuid"].string.required()
+        
         artist_id = try json["artist_id"].int.required()
         
         latitude = json["latitude"].double
@@ -201,7 +209,9 @@ public class VenueWithShows : VenueWithShowCount {
     }
 }
 
-public class Tour : RelistenObject {
+public class Tour : RelistenObject, RelistenUUIDObject {
+    public let uuid: String
+    
     public let artist_id: Int
     
     public let start_date: Date
@@ -213,6 +223,8 @@ public class Tour : RelistenObject {
     public let upstream_identifier: String
     
     public required init(json: JSON) throws {
+        uuid = try json["uuid"].string.required()
+        
         artist_id = try json["artist_id"].int.required()
         
         start_date = try json["start_date"].dateTime.required()

@@ -25,10 +25,13 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     
     var disposal = Disposal()
     
-    public init(source: SourceFull, inShow show: ShowWithSources, artist: ArtistWithCounts) {
+    private var shareSheetController : UIViewController?
+    
+    public init(source: SourceFull, inShow show: ShowWithSources, artist: ArtistWithCounts, shareSheetController: UIViewController? = nil) {
         self.source = source
         self.show = show
         self.artist = artist
+        self.shareSheetController = shareSheetController
         
         favoriteButton = FavoriteButtonNode()
         
@@ -49,6 +52,8 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         
         favoriteButton.currentlyFavorited = MyLibraryManager.shared.library.isShowInLibrary(show: show, byArtist: artist)
         favoriteButton.delegate = self
+        shareButton.addTarget(self, action:#selector(presentShareSheet), forControlEvents:.touchUpInside)
+        downloadButton.addTarget(self, action:#selector(downloadToggled), forControlEvents:.touchUpInside)
         
         setupLibraryObservers()
     }
@@ -64,6 +69,25 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         } else {
             let _ = MyLibraryManager.shared.removeShow(show: self.completeShowInformation)
         }
+    }
+    
+    @objc public func presentShareSheet() {
+        let show = completeShowInformation
+        let activities: [Any] = [ShareHelper.text(forSource: show), ShareHelper.url(forSource: show)]
+        
+        let shareVc = UIActivityViewController(activityItems: activities, applicationActivities: nil)
+        shareVc.modalTransitionStyle = .coverVertical
+        
+        if PlaybackController.sharedInstance.hasBarBeenAdded {
+            PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
+        }
+        else {
+            self.shareSheetController?.present(shareVc, animated: true, completion: nil)
+        }
+    }
+    
+    @objc public func downloadToggled() {
+        RelistenDownloadManager.shared.download(show: self.completeShowInformation)
     }
     
     private func setupLibraryObservers() {

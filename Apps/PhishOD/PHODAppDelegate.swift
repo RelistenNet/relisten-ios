@@ -11,6 +11,9 @@ import AsyncDisplayKit
 import RelistenShared
 import SwiftyJSON
 
+import Fabric
+import Crashlytics
+
 @UIApplicationMain
 class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
@@ -20,6 +23,9 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         RelistenApp.sharedApp.delegate = self
         
+        // cannot be in the shared library :/ https://stackoverflow.com/questions/20495064/how-to-integrate-crashlytics-with-static-library
+        Fabric.with([Crashlytics.self])
+
         RelistenApp.sharedApp.setupThirdPartyDependencies()
         RelistenApp.sharedApp.setupAppearance()
         

@@ -1,6 +1,11 @@
 # Uncomment this line to define a global platform for your project
 platform :ios, '11.0'
 
+def apply_crashlytics
+  pod 'Fabric'
+  pod 'Crashlytics'  
+end
+
 target 'RelistenShared' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
@@ -27,11 +32,11 @@ target 'RelistenShared' do
 # pod 'Firebase/Auth'
 # pod 'Firebase/RemoteConfig'
 # pod 'Firebase/DynamicLinks'
-  pod 'Firebase' # To enable Firebase module, with `@import Firebase` support
-  pod 'FirebaseCore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
-  pod 'FirebaseAuth', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
-  pod 'FirebaseDatabase', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
-  pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
+# pod 'Firebase' # To enable Firebase module, with `@import Firebase` support
+# pod 'FirebaseCore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
+# pod 'FirebaseAuth', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
+# pod 'FirebaseDatabase', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
+# pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
 # pod 'Firebase/Messaging'
 
   pod 'AXRatingView'
@@ -60,9 +65,11 @@ target 'RelistenShared' do
   # pod 'DownloadButton'
   # pod 'Reachability'
   # pod 'SpinnerView'
-  
+
   target 'PhishOD' do
   	inherit! :search_paths
+  
+    apply_crashlytics
 
   	target 'PhishODUITests' do 
   		inherit! :search_paths
@@ -71,6 +78,8 @@ target 'RelistenShared' do
 
   target 'Relisten' do
     inherit! :search_paths
+
+    apply_crashlytics
 
     target 'RelistenUITests' do
       inherit! :search_paths

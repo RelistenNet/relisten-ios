@@ -27,6 +27,20 @@ platform :ios do
     scan
   end
 
+  lane :setup_certs do
+    match(git_url: "git@bitbucket.org:relistennet/ios-certificates.git",
+      type: "development",
+      template_name: "CarPlay Audio App(Development)", 
+      readonly: true
+      )
+
+    match(git_url: "git@bitbucket.org:relistennet/ios-certificates.git",
+      type: "appstore", 
+      template_name: "CarPlay Audio App(Distribution)", 
+      readonly: true
+      )
+  end
+
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
@@ -34,14 +48,14 @@ platform :ios do
     # get_provisioning_profile   # invokes sigh
     # sync_code_signing
 
+    match(git_url: "git@bitbucket.org:relistennet/ios-certificates.git", 
+      type: "appstore",
+      template_name: "CarPlay Audio App(Distribution)"
+      )
+
     build_app(scheme: "Relisten")
 
-    changelog = prompt(
-      text: "Changelog: ",
-      multi_line_end_keyword: "END"
-    )
-
-    upload_to_testflight(changelog: changelog)
+    upload_to_testflight(changelog: File.read("./fastlane/changelog.txt"))
   end
 
 

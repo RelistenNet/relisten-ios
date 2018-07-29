@@ -8,9 +8,6 @@
 
 import Foundation
 
-import Firebase
-import FirebaseFirestore
-import FirebaseAuth
 import SwiftyJSON
 import Cache
 import SINQ
@@ -19,10 +16,12 @@ import Observable
 public class MyLibraryManager {
     public static let shared = MyLibraryManager()
     
+    /*
     let db: Firestore
     
     var user: User? = nil
     var userDoc: DocumentReference? = nil
+    */
     
     public var library: MyLibrary = MyLibrary()
     
@@ -39,12 +38,14 @@ public class MyLibraryManager {
     init() {
         RelistenDownloadManager.shared.delegate = self.library
         
+        /*
         db = Firestore.firestore()
         let settings = db.settings
         settings.areTimestampsInSnapshotsEnabled = true
         settings.isPersistenceEnabled = true
         
         db.settings = settings
+        */
         
         downloadBacklog()
     }
@@ -56,6 +57,7 @@ public class MyLibraryManager {
         }
     }
     
+    /*
     public func onUserSignedIn(_ user: User) {
         self.user = user
         
@@ -64,7 +66,7 @@ public class MyLibraryManager {
         
         loadFromFirestore()
     }
-    
+ 
     private func loadFromDocumentSnapshot(_ d: DocumentSnapshot) {
         self.library = try! MyLibrary(json: SwJSON(d.data() as Any))
         
@@ -76,8 +78,10 @@ public class MyLibraryManager {
     }
     
     private var addedFirestoreListener = false
-    
+     */
+
     func loadFromFirestore() {
+/*
         userDoc?.getDocument(completion: { (docSnapshot, err) in
             if let e = err {
                 print(e)
@@ -103,26 +107,27 @@ public class MyLibraryManager {
                 }
             }
         })
+ */
     }
     
     public func deleteFirestoreData() {
-        userDoc?.delete()
+//        userDoc?.delete()
     }
     
     func saveToFirestore() {
-        DispatchQueue.global(qos: .background).async {
-            if let d = self.userDoc {
-                do {
-                    let j = self.library.ToJSON()
-                    let json = try JSONSerialization.jsonObject(with: try j.rawData()) as! [String: Any]
-                    
-                    d.setData(json)
-                }
-                catch {
-                    print(error)
-                }
-            }
-        }
+//        DispatchQueue.global(qos: .background).async {
+//            if let d = self.userDoc {
+//                do {
+//                    let j = self.library.ToJSON()
+//                    let json = try JSONSerialization.jsonObject(with: try j.rawData()) as! [String: Any]
+//
+//                    d.setData(json)
+//                }
+//                catch {
+//                    print(error)
+//                }
+//            }
+//        }
     }
     
     func setupFirstDocument() {

@@ -14,7 +14,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EE3B7ADF7DF1C9074DD33B3FD45C2218"
+               BlueprintIdentifier = "5081A535A92B73B3F0E9A3C609E79257"
                BuildableName = "Pods_Relisten.framework"
                BlueprintName = "Pods-Relisten"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">

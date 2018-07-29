@@ -13,6 +13,9 @@ import Siesta
 import SVProgressHUD
 import AsyncDisplayKit
 
+import Fabric
+import Crashlytics
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
@@ -21,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         RelistenApp.sharedApp.delegate = self
+        
+        // cannot be in the shared library :/ https://stackoverflow.com/questions/20495064/how-to-integrate-crashlytics-with-static-library
+        Fabric.with([Crashlytics.self])
         
         RelistenApp.sharedApp.setupThirdPartyDependencies()
         RelistenApp.sharedApp.setupAppearance()

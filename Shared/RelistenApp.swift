@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 import AsyncDisplayKit
-import Firebase
-import FirebaseAuth
 //import DWURecyclingAlert
 
 public protocol RelistenAppDelegate {
@@ -27,28 +25,11 @@ public class RelistenApp {
     }
     
     public func setupThirdPartyDependencies() {
-        //        Inject_DWURecyclingAlert()
-        
-        FirebaseApp.configure()
-        
-        // FirebaseRemoteConfig = RemoteConfig.remoteConfig()
-        // FirebaseRemoteConfig.setDefaults(["api_base": "https://api.relisten.live" as NSObject])
-        
-        if let u = Auth.auth().currentUser {
-            MyLibraryManager.shared.onUserSignedIn(u)
-        }
-        else {
-            print("No current user. Signing in.")
-            Auth.auth().signInAnonymously(completion: { (u, err) in
-                if let user = u {
-                    MyLibraryManager.shared.onUserSignedIn(user.user)
-                }
-                print("Signed into Firebase: \(String(describing: u)) \(String(describing: err))")
-            })
-        }
     }
     
     public func setupAppearance(_ viewController: UINavigationController? = nil) {
+        let _ = RatingViewStubBounds
+        
         UIApplication.shared.statusBarStyle = .lightContent
         
         UINavigationBar.appearance().barTintColor = AppColors.primary

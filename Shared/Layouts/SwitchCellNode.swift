@@ -13,10 +13,14 @@ import Observable
 import ActionKit
 
 public let StandardSwitchBounds = { () -> CGRect in
-    let s = UISwitch()
-    s.sizeToFit()
-    
-    return s.bounds
+    var bounds : CGRect? = nil
+    performOnMainQueueSync {
+        let s = UISwitch()
+        s.sizeToFit()
+        
+        bounds = s.bounds
+    }
+    return bounds!
 }()
 
 public class SwitchCellNode : ASCellNode {

@@ -18,6 +18,13 @@ public extension Array {
         
         return nil
     }
+    
+    public func objectAtIndexIfInBounds(_ index: Int) -> Array.Element? {
+        if index >= 0, index < self.count {
+            return self[index]
+        }
+        return nil
+    }
 }
 
 public func ArrayNoNils<T>(_ values: T?...) -> [T] {

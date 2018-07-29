@@ -25,8 +25,6 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
     public let isInMyShows = Observable(false)
     public let isAvailableOffline = Observable(false)
 
-    private lazy var addToMyShowsNode = SwitchCellNode(observeChecked: isInMyShows, withLabel: "Part of My Shows")
-    private lazy var downloadNode = SwitchCellNode(observeChecked: isAvailableOffline, withLabel: "Make Show Available Offline")
     private lazy var completeShowInformation = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
 
     public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
@@ -62,21 +60,6 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
         }
     }
     
-    private func presentShareSheet() {
-        let show = completeShowInformation
-        let activities: [Any] = [ShareHelper.text(forSource: show), ShareHelper.url(forSource: show)]
-        
-        let shareVc = UIActivityViewController(activityItems: activities, applicationActivities: nil)
-        shareVc.modalTransitionStyle = .coverVertical
-        
-        if PlaybackController.sharedInstance.hasBarBeenAdded {
-            PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
-        }
-        else {
-            self.present(shareVc, animated: true, completion: nil)
-        }
-    }
-    
     // MARK: UITableViewDelegate
     func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 1 + source.sets.count
@@ -100,7 +83,7 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
                 return { SourceDetailsNode(source: source, inShow: show, artist: artist, atIndex: indexPath.row, isDetails: true) }
             }
             else if indexPath.row == 1 {
-                return { UserPropertiesForShowNode(source: source, inShow: show, artist: artist) }
+                return { UserPropertiesForShowNode(source: source, inShow: show, artist: artist, shareSheetController: self) }
             }
         }
         

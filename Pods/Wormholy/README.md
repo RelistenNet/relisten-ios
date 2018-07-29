@@ -46,6 +46,10 @@ If you want to disable the shake, and fire Wormholy from another point inside yo
 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
 ```
 
+You can also programmatically enable/disable the shake gesture at any time. You can do `Wormholy.shakeEnabled = false` to disable (or enable) the shake gesture. 
+
+
+
 ## Carthage
 ----------------
 

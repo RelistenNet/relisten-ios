@@ -1,0 +1,7 @@
+- Lots of bug fixes and new features to play around with!
+- Audio playback in bluetooth situations should be much improved.
+- Lock screen controls are much improved
+
+- Welcome @farktronix to the dev team! He is responsible for many of these new features and bug fixes.
+
+NOTE: favorites/my library functionality has been removed. The UI will be removed in a future beta. This feature will come back in a couple months but I would like to release a stable version without this feature.

@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIBrowsableContentSupportsSectionedBrowsing</key>
-	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -19,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>4.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>4002</string>
+	<string>4003</string>
 	<key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED</key>
 	<true/>
 	<key>FirebaseAppDelegateProxyEnabled</key>
@@ -35,6 +33,8 @@
 	<array>
 		<string>audio</string>
 	</array>
+	<key>UIBrowsableContentSupportsSectionedBrowsing</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>RLLaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -56,5 +56,19 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>Fabric</key>
+    <dict>
+        <key>APIKey</key>
+        <string>bbdd6a4df81e6b1498130a0f1fbf72d14e334fb4</string>
+        <key>Kits</key>
+        <array>
+            <dict>
+                <key>KitInfo</key>
+                <dict/>
+                <key>KitName</key>
+                <string>Crashlytics</string>
+            </dict>
+        </array>
+    </dict>
 </dict>
 </plist>

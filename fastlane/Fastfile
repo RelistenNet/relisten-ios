@@ -55,12 +55,7 @@ platform :ios do
 
     build_app(scheme: "Relisten")
 
-    changelog = prompt(
-      text: "Changelog: ",
-      multi_line_end_keyword: "END"
-    )
-
-    upload_to_testflight(changelog: changelog)
+    upload_to_testflight(changelog: File.read("./fastlane/changelog.txt"))
   end
 
 

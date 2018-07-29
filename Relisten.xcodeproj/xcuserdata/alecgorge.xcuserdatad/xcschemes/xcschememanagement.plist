@@ -14,11 +14,6 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>Relisten.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
 		<key>Relisten.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -32,6 +27,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>43B5340F2109226F00DE9B1F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>7C449E9B1D5A4F4200750D54</key>
 		<dict>
 			<key>primary</key>

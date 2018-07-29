@@ -55,7 +55,10 @@ platform :ios do
 
     build_app(scheme: "Relisten")
 
-    upload_to_testflight(changelog: File.read("./fastlane/changelog.txt"))
+    current_dir = File.expand_path File.dirname(__FILE__)
+    changelog = File.read(current_dir + "/changelog.txt")
+
+    upload_to_testflight(changelog: changelog)
   end
 
 

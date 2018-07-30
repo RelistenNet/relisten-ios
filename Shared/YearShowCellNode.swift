@@ -188,7 +188,7 @@ public class YearShowCellNode : ASCellNode {
             
             let stack = ASStackLayoutSpec(
                 direction: .horizontal,
-                spacing: 4.0,
+                spacing: 8.0,
                 justifyContent: .start,
                 alignItems: .center,
                 children: [artworkNode, textStack]

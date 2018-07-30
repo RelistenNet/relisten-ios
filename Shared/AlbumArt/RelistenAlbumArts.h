@@ -16,23 +16,27 @@
 
 // Drawing Methods
 + (void)drawShatterExplosionWithBaseColor:(UIColor * _Nonnull)color
-                                     date:(NSString * _Nullable )dateStr
-                                    venue:(NSString * _Nullable )venueStr
-                              andLocation:(NSString * _Nullable )locationStr;
+                                     date:(NSString * _Nullable)dateStr
+                                    venue:(NSString * _Nullable)venueStr
+                                 location:(NSString * _Nullable)locationStr
+                                drawLabel:(BOOL)drawLabel;
 
 + (void)drawRandomFlowersWithBaseColor:(UIColor * _Nonnull)color
-                                  date:(NSString * _Nullable )dateStr
-                                 venue:(NSString * _Nullable )venueStr
-                           andLocation:(NSString * _Nullable )locationStr;
+                                  date:(NSString * _Nullable)dateStr
+                                 venue:(NSString * _Nullable)venueStr
+                              location:(NSString * _Nullable)locationStr
+                             drawLabel:(BOOL)drawLabel;
 
 + (void)drawSplashWithBaseColor:(UIColor * _Nonnull)color
-                           date:(NSString * _Nullable )dateStr
-                          venue:(NSString * _Nullable )venueStr
-                    andLocation:(NSString * _Nullable )locationStr;
+                           date:(NSString * _Nullable)dateStr
+                          venue:(NSString * _Nullable)venueStr
+                       location:(NSString * _Nullable)locationStr
+                      drawLabel:(BOOL)drawLabel;
 
 + (void)drawCityGlittersWithBaseColor:(UIColor * _Nonnull)color
-                                 date:(NSString * _Nullable )dateStr
-                                venue:(NSString * _Nullable )venueStr
-                          andLocation:(NSString * _Nullable )locationStr;
+                                 date:(NSString * _Nullable)dateStr
+                                venue:(NSString * _Nullable)venueStr
+                             location:(NSString * _Nullable)locationStr
+                            drawLabel:(BOOL)drawLabel;
 
 @end

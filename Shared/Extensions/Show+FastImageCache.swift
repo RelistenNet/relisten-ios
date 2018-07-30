@@ -48,7 +48,7 @@ public class ShowFICWrapper : NSObject, FICEntity {
     }
     
     public func placeholderColor() -> UIColor? {
-        return AlbumArtImageCache.shared.baseColor(for: self)
+        return AlbumArtImageCache.shared.baseColor(forEntity: self)
     }
 }
 

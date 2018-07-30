@@ -8,7 +8,6 @@
 
 import Foundation
 import ChameleonFramework
-import EDColor
 import FastImageCache
 
 public enum AlbumArtImageFormat : String {
@@ -92,17 +91,17 @@ class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
         return (year, month, day)
     }
     
-    private func baseColor(year: Int, month: Int, day: Int, artistID : String?) -> UIColor {
-        return self.color(for: year, artistID: artistID).offset(withHue: 0.0, saturation:CGFloat((month - 1) *  2) / 100.0, lightness:CGFloat((month - 1) * -2) / 100.0, alpha:1.0)
+    private func baseColor(year: Int, venue: String?, day: Int, artistID : String?) -> UIColor {
+        return self.color(year: year, venue: venue, artistID: artistID)
     }
     
-    public func baseColor(for entity: FICEntity) -> UIColor? {
-        let (artistID, d, _, _) = parseShowInfo(from: entity)
+    public func baseColor(forEntity entity: FICEntity) -> UIColor? {
+        let (artistID, d, venue, _) = parseShowInfo(from: entity)
         guard let date = d else { return nil }
         
-        let (year, month, day) = parseDateComponents(from: date)
+        let (year, _, day) = parseDateComponents(from: date)
         
-        return baseColor(year: year, month: month, day: day, artistID: artistID)
+        return baseColor(year: year, venue: venue, day: day, artistID: artistID)
     }
     
     public func imageCache(_ imageCache: FICImageCache, wantsSourceImageFor entity: FICEntity, withFormatName formatName: String, completionBlock: FICImageRequestCompletionBlock? = nil) {
@@ -112,7 +111,7 @@ class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
             if let date = date {
                 let (year, month, day) = self.parseDateComponents(from: date)
                 
-                let baseColor = self.baseColor(year: year, month: month, day: day, artistID: artistID)
+                let baseColor = self.baseColor(year: year, venue: venue, day: day, artistID: artistID)
                 
                 UIGraphicsBeginImageContext(CGSize(width: 768, height: 768))
                 
@@ -187,10 +186,11 @@ class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
                                      UIColor.flatTealColorDark(),
                                      UIColor.flatWatermelonColorDark(),
                                      UIColor.flatWhiteColorDark(),
-                                     UIColor.flatYellowColorDark()]
+                                     UIColor.flatYellowColorDark()
+    ]
     
-    private func color(for year : Int, artistID : String?) -> UIColor {
-        return AlbumArtImageCache.yearColors[(year ^ (artistID?.hash ?? 0)) % AlbumArtImageCache.yearColors.count]
+    private func color(year: Int, venue : String?, artistID : String?) -> UIColor {
+        return AlbumArtImageCache.yearColors[abs(year ^ (venue?.hash ?? 1) ^ (artistID?.hash ?? 0)) % AlbumArtImageCache.yearColors.count]
     }
 }
 

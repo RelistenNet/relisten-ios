@@ -9,17 +9,23 @@
 import Foundation
 import FastImageCache
 
-extension Show : FICEntity {
-    public var fic_UUID: String { return uuid }
-    public var fic_sourceImageUUID: String { return uuid }
+public class ShowFICWrapper : NSObject, FICEntity {
+    private let show : Show
+    
+    public init(_ show: Show) {
+        self.show = show
+    }
+    
+    public var fic_UUID: String { return show.uuid }
+    public var fic_sourceImageUUID: String { return show.uuid }
     public func fic_sourceImageURL(withFormatName formatName: String) -> URL? {
         guard var components : URLComponents = URLComponents(string: "relisten://shatter") else {
             return nil
         }
-        let queryDictionary : [String : String] = ["date" : display_date,
-                                                "venue" : venue?.name ?? "",
-                                                "location" : venue?.location ?? "",
-                                                "artistID" : String(artist_id)]
+        let queryDictionary : [String : String] = ["date" : show.display_date,
+                                                   "venue" : show.venue?.name ?? "",
+                                                   "location" : show.venue?.location ?? "",
+                                                   "artistID" : String(show.artist_id)]
         var queryItems : [URLQueryItem] = []
         for (key, value) in queryDictionary {
             queryItems.append(URLQueryItem(name: key, value: value))
@@ -39,5 +45,15 @@ extension Show : FICEntity {
             image.draw(in: bounds)
             UIGraphicsPopContext()
         }
+    }
+    
+    public func placeholderColor() -> UIColor? {
+        return AlbumArtImageCache.shared.baseColor(for: self)
+    }
+}
+
+extension Show {
+    public func fastImageCacheWrapper() -> ShowFICWrapper {
+        return ShowFICWrapper(self)
     }
 }

@@ -10,30 +10,29 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <EDColor/EDColor.h>
 
 
 @interface RelistenAlbumArts : NSObject
 
 // Drawing Methods
-+ (void)drawShatterExplosionWithBaseColor:(UIColor *)color
-                                     date:(NSString *)dateStr
-                                    venue:(NSString *)venueStr
-                              andLocation:(NSString *)locationStr;
++ (void)drawShatterExplosionWithBaseColor:(UIColor * _Nonnull)color
+                                     date:(NSString * _Nullable )dateStr
+                                    venue:(NSString * _Nullable )venueStr
+                              andLocation:(NSString * _Nullable )locationStr;
 
-+ (void)drawRandomFlowersWithBaseColor:(UIColor *)color
-                                  date:(NSString *)dateStr
-                                 venue:(NSString *)venueStr
-                           andLocation:(NSString *)locationStr;
++ (void)drawRandomFlowersWithBaseColor:(UIColor * _Nonnull)color
+                                  date:(NSString * _Nullable )dateStr
+                                 venue:(NSString * _Nullable )venueStr
+                           andLocation:(NSString * _Nullable )locationStr;
 
-+ (void)drawSplashWithBaseColor:(UIColor *)color
-                           date:(NSString *)dateStr
-                          venue:(NSString *)venueStr
-                    andLocation:(NSString *)locationStr;
++ (void)drawSplashWithBaseColor:(UIColor * _Nonnull)color
+                           date:(NSString * _Nullable )dateStr
+                          venue:(NSString * _Nullable )venueStr
+                    andLocation:(NSString * _Nullable )locationStr;
 
-+ (void)drawCityGlittersWithBaseColor:(UIColor *)color
-                                 date:(NSString *)dateStr
-                                venue:(NSString *)venueStr
-                          andLocation:(NSString *)locationStr;
++ (void)drawCityGlittersWithBaseColor:(UIColor * _Nonnull)color
+                                 date:(NSString * _Nullable )dateStr
+                                venue:(NSString * _Nullable )venueStr
+                          andLocation:(NSString * _Nullable )locationStr;
 
 @end

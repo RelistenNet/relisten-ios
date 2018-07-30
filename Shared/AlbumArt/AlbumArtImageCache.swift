@@ -1,0 +1,196 @@
+//
+//  AlbumArtImageCache.swift
+//  RelistenShared
+//
+//  Created by Jacob Farkas on 7/29/18.
+//  Copyright © 2018 Alec Gorge. All rights reserved.
+//
+
+import Foundation
+import ChameleonFramework
+import EDColor
+import FastImageCache
+
+public enum AlbumArtImageFormat : String {
+    case small = "net.relisten.ios.albumart.small"
+    case medium = "net.relisten.ios.albumart.medium"
+    case full = "net.relisten.ios.albumart.full"
+}
+
+class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
+    static let shared : AlbumArtImageCache = AlbumArtImageCache()
+    public let cache : FICImageCache = FICImageCache.shared()
+    
+    public static let imageFormatSmall = "net.relisten.ios.albumart.small"
+    public static let imageFormatMedium = "net.relisten.ios.albumart.medium"
+    public static let imageFormatFull = "net.relisten.ios.albumart.full"
+    private let imageFamily = "net.relisten.ios.albumart"
+
+    public override init() {
+        let small = FICImageFormat()
+        small.name = AlbumArtImageCache.imageFormatSmall
+        small.family = imageFamily
+        small.style = .style32BitBGR
+        small.imageSize = CGSize(width: 112 * 2, height: 112 * 2)
+        small.maximumCount = 250
+        small.devices = [.phone, .pad]
+        small.protectionMode = .none
+        
+        let medium = FICImageFormat()
+        medium.name = AlbumArtImageCache.imageFormatMedium
+        medium.family = imageFamily
+        medium.style = .style32BitBGR
+        medium.imageSize = CGSize(width: 512, height: 512)
+        medium.maximumCount = 250
+        medium.devices = [.phone, .pad]
+        medium.protectionMode = .none
+        
+        let full = FICImageFormat()
+        full.name = AlbumArtImageCache.imageFormatFull
+        full.family = imageFamily
+        full.style = .style32BitBGR
+        full.imageSize = CGSize(width: 768, height: 768)
+        full.maximumCount = 3
+        full.devices = [.phone, .pad]
+        full.protectionMode = .none
+        
+        cache.setFormats([small, medium, full])
+        
+        super.init()
+        
+        cache.delegate = self
+    }
+    
+    private func components(from entity: FICEntity) -> URLComponents? {
+        guard let requestURL = entity.fic_sourceImageURL(withFormatName: AlbumArtImageCache.imageFormatMedium) else { return nil }
+        return URLComponents(url: requestURL, resolvingAgainstBaseURL: false)
+    }
+    
+    private func parseShowInfo(from entity: FICEntity) -> (artistID : String?, date : String?, venue : String?, location : String?) {
+        guard let components = components(from: entity) else { return (nil, nil, nil, nil) }
+        
+        let artistID : String? = components.queryValueForKey("artistID")
+        let date : String? = components.queryValueForKey("date")
+        let venue : String? = components.queryValueForKey("venue")
+        let location : String? = components.queryValueForKey("location")
+        
+        return (artistID, date, venue, location)
+    }
+    
+    // This returns 2000-1-1 if it can't parse the string
+    private func parseDateComponents(from date: String) -> (year : Int, month : Int, day : Int) {
+        guard date.count >= 10 else { return (2000, 1, 1) }
+        let year = Int(date[..<(date.index(date.startIndex, offsetBy:4))]) ?? 2000
+        let month = Int(date[date.index(date.startIndex, offsetBy:5)..<date.index(date.startIndex, offsetBy:7)]) ?? 1
+        let day = Int(date[date.index(date.startIndex, offsetBy:8)..<date.index(date.startIndex, offsetBy:10)]) ?? 1
+        
+        return (year, month, day)
+    }
+    
+    private func baseColor(year: Int, month: Int, day: Int, artistID : String?) -> UIColor {
+        return self.color(for: year, artistID: artistID).offset(withHue: 0.0, saturation:CGFloat((month - 1) *  2) / 100.0, lightness:CGFloat((month - 1) * -2) / 100.0, alpha:1.0)
+    }
+    
+    public func baseColor(for entity: FICEntity) -> UIColor? {
+        let (artistID, d, _, _) = parseShowInfo(from: entity)
+        guard let date = d else { return nil }
+        
+        let (year, month, day) = parseDateComponents(from: date)
+        
+        return baseColor(year: year, month: month, day: day, artistID: artistID)
+    }
+    
+    public func imageCache(_ imageCache: FICImageCache, wantsSourceImageFor entity: FICEntity, withFormatName formatName: String, completionBlock: FICImageRequestCompletionBlock? = nil) {
+        DispatchQueue.global(qos: .default).async {
+            var image : UIImage? = nil
+            let (artistID, date, venue, location) = self.parseShowInfo(from: entity)
+            if let date = date {
+                let (year, month, day) = self.parseDateComponents(from: date)
+                
+                let baseColor = self.baseColor(year: year, month: month, day: day, artistID: artistID)
+                
+                UIGraphicsBeginImageContext(CGSize(width: 768, height: 768))
+                
+                switch ((year + month + day) % 4) {
+                case 0:
+                    RelistenAlbumArts.drawShatterExplosion(withBaseColor: baseColor, date: date, venue: venue, andLocation: location)
+                case 1:
+                    RelistenAlbumArts.drawRandomFlowers(withBaseColor: baseColor, date: date, venue: venue, andLocation: location)
+                case 2:
+                    RelistenAlbumArts.drawSplash(withBaseColor: baseColor, date: date, venue: venue, andLocation: location)
+                case 3:
+                    fallthrough
+                default:
+                    RelistenAlbumArts.drawCityGlitters(withBaseColor: baseColor, date: date, venue: venue, andLocation: location)
+                }
+                
+                image = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+            }
+            
+            DispatchQueue.main.async {
+                completionBlock?(image)
+            }
+        }
+    }
+ 
+    static private let yearColors : [UIColor] = [
+                                     UIColor.flatBlack(),
+                                     UIColor.flatBlue(),
+                                     UIColor.flatBrown(),
+                                     UIColor.flatCoffee(),
+                                     UIColor.flatForestGreen(),
+                                     UIColor.flatGray(),
+                                     UIColor.flatGreen(),
+                                     UIColor.flatLime(),
+                                     UIColor.flatMagenta(),
+                                     UIColor.flatMaroon(),
+                                     UIColor.flatMint(),
+                                     UIColor.flatNavyBlue(),
+                                     UIColor.flatOrange(),
+                                     UIColor.flatPink(),
+                                     UIColor.flatPlum(),
+                                     UIColor.flatPowderBlue(),
+                                     UIColor.flatPurple(),
+                                     UIColor.flatRed(),
+                                     UIColor.flatSand(),
+                                     UIColor.flatSkyBlue(),
+                                     UIColor.flatTeal(),
+                                     UIColor.flatWatermelon(),
+                                     UIColor.flatWhite(),
+                                     UIColor.flatYellow(),
+                                     UIColor.flatBlackColorDark(),
+                                     UIColor.flatBlueColorDark(),
+                                     UIColor.flatBrownColorDark(),
+                                     UIColor.flatCoffeeColorDark(),
+                                     UIColor.flatForestGreenColorDark(),
+                                     UIColor.flatGrayColorDark(),
+                                     UIColor.flatGreenColorDark(),
+                                     UIColor.flatLimeColorDark(),
+                                     UIColor.flatMagentaColorDark(),
+                                     UIColor.flatMaroonColorDark(),
+                                     UIColor.flatMintColorDark(),
+                                     UIColor.flatNavyBlueColorDark(),
+                                     UIColor.flatOrangeColorDark(),
+                                     UIColor.flatPinkColorDark(),
+                                     UIColor.flatPlumColorDark(),
+                                     UIColor.flatPowderBlueColorDark(),
+                                     UIColor.flatPurpleColorDark(),
+                                     UIColor.flatRedColorDark(),
+                                     UIColor.flatSandColorDark(),
+                                     UIColor.flatSkyBlueColorDark(),
+                                     UIColor.flatTealColorDark(),
+                                     UIColor.flatWatermelonColorDark(),
+                                     UIColor.flatWhiteColorDark(),
+                                     UIColor.flatYellowColorDark()]
+    
+    private func color(for year : Int, artistID : String?) -> UIColor {
+        return AlbumArtImageCache.yearColors[(year ^ (artistID?.hash ?? 0)) % AlbumArtImageCache.yearColors.count]
+    }
+}
+
+extension URLComponents {
+    public func queryValueForKey(_ key : String) -> String? {
+        return self.queryItems?.filter({ $0.name == key }).first?.value
+    }
+}

@@ -74,7 +74,12 @@ public class YearShowCellNode : ASCellNode {
         
         isAvailableOffline = MyLibraryManager.shared.library.isShowAtLeastPartiallyAvailableOffline(self.show)
         
+        let showWrapper = show.fastImageCacheWrapper()
+        
         artworkNode = ASImageNode()
+        artworkNode?.style.maxWidth = .init(unit: .points, value: 100.0)
+        artworkNode?.style.maxHeight = .init(unit: .points, value: 100.0)
+        artworkNode?.placeholderColor = showWrapper.placeholderColor()
         
         super.init()
         
@@ -95,6 +100,15 @@ public class YearShowCellNode : ASCellNode {
         }
         else {
             accessoryType = .disclosureIndicator
+        }
+        
+        AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: showWrapper, withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in
+            guard let s = self else { return }
+            guard let image = i else { return }
+            guard let artwork = s.artworkNode else { return }
+            artwork.image = image
+            s.setNeedsLayout()
+            s.setNeedsDisplay()
         }
     }
     
@@ -128,14 +142,6 @@ public class YearShowCellNode : ASCellNode {
                 }
             })
             .add(to: &disposal)
-        
-        RelistenAlbumArtCache.sharedInstance().sharedCache.asynchronouslyRetrieveImage(for: show, withFormatName: RelistenImageFormatSmall) { [weak self] (_, _, i) in
-            guard let s = self else { return }
-            guard let image = i else { return }
-            guard let artwork = s.artworkNode else { return }
-            artwork.image = image
-            s.setNeedsLayout()
-        }
     }
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -175,6 +181,26 @@ public class YearShowCellNode : ASCellNode {
             
             verticalStack.append(vs)
             
+            //if let artworkNode = artworkNode { verticalStack.append(artworkNode) }
+            
+            let textStack = ASStackLayoutSpec(
+                direction: .vertical,
+                spacing: 4,
+                justifyContent: .start,
+                alignItems: .start,
+                children: verticalStack
+            )
+            textStack.style.alignSelf = .stretch
+            
+            let stack = ASStackLayoutSpec(
+                direction: .horizontal,
+                spacing: 4.0,
+                justifyContent: .start,
+                alignItems: .center,
+                children: ArrayNoNils(artworkNode, textStack)
+            )
+            stack.style.alignSelf = .stretch
+            
             // The update date doesn't fit in the current vertical size, and it's not worth changing that size for a property that nobody uses in vertical mode.
             // Uncomment this if that story changes later.
 //            if let updateDateNode = updateDateNode {
@@ -183,13 +209,7 @@ public class YearShowCellNode : ASCellNode {
             
             return ASInsetLayoutSpec(
                 insets: UIEdgeInsetsMake(12, 12, 12, 12),
-                child: ASStackLayoutSpec(
-                    direction: .vertical,
-                    spacing: 4,
-                    justifyContent: .start,
-                    alignItems: .start,
-                    children: verticalStack
-                )
+                child: stack
             )
         }
         

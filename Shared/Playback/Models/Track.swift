@@ -9,7 +9,7 @@
 import Foundation
 
 public class Track : Codable, Hashable {
-    public enum PlaybackState {
+    public enum PlaybackState : String, Codable {
         case notActive
         case paused
         case playing
@@ -27,7 +27,7 @@ public class Track : Codable, Hashable {
     // Note: This should be a complete passthrough for SourceTrack so that the properties are visible on Track.
     // Resist the temptation to change the names or alter the SourceTrack properties in the getter
     public var id : Int { get { return sourceTrack.id } }
-    public var uuid : String? { get { return sourceTrack.uuid } }
+    public var uuid : UUID { get { return sourceTrack.uuid } }
     public var source_id : Int { get { return sourceTrack.source_id } }
     public var set_id : Int { get { return sourceTrack.source_set_id } }
     public var track_position : Int { get { return sourceTrack.track_position } }
@@ -37,7 +37,7 @@ public class Track : Codable, Hashable {
     public var mp3_url : URL { get { return sourceTrack.mp3_url } }
     public var md5 : String? { get { return sourceTrack.md5 } }
     
-    private let sourceTrack: SourceTrack
+    public let sourceTrack: SourceTrack
     
     public var playbackState : PlaybackState {
         get {

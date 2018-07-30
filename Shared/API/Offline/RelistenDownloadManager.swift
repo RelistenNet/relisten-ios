@@ -27,7 +27,7 @@ func MD5(_ string: String) -> String? {
 }
 
 public protocol RelistenDownloadManagerDelegate: class {
-    func trackSizeBecameKnown(_ track: Track, fileSize: UInt64)
+    func trackSizeBecameKnown(_ track: SourceTrack, fileSize: UInt64)
     func trackBecameAvailableOffline(_ track: Track)
 }
 

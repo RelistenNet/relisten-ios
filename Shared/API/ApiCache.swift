@@ -15,6 +15,63 @@ let PersistentCacheDirectory = URL(fileURLWithPath: NSSearchPathForDirectoriesIn
                                                                                         FileManager.SearchPathDomainMask.userDomainMask,
                                                                                         true).first! + "/")
 
+public class RelistenShowCacher : ResponseTransformer {
+    static let cacheName = "RelistenShowCache"
+    
+    let diskCacheConfig = DiskConfig(
+        name: RelistenShowCacher.cacheName,
+        
+        expiry: .never,
+        
+        // 100 MB max data cache
+        maxSize: 1024 * 1024 * 100,
+        
+        directory: PersistentCacheDirectory
+    )
+    
+    let memoryCacheConfig = MemoryConfig(
+        expiry: .never,
+        countLimit: 200,
+        
+        // 25MB
+        totalCostLimit: 1024 * 1024 * 25
+    )
+    
+    public let backingCache: Storage<ShowWithSources>
+    
+    public static let shared = RelistenShowCacher()
+    
+    // private to allow for only one instance
+    private init() {
+        backingCache = try! Storage(
+            diskConfig: diskCacheConfig,
+            memoryConfig: memoryCacheConfig,
+            transformer: TransformerFactory.forCodable(ofType: ShowWithSources.self)
+        )
+    }
+    
+    public func process(_ response: Response) -> Response {
+        switch response {
+        case .success(let entity):
+            if let show: ShowWithSources = entity.typedContent() {
+                // caching
+                backingCache.async.setObject(show, forKey: show.uuid.uuidString) { (res) in
+                    switch res {
+                    case .error(let err):
+                        assertionFailure(err.localizedDescription)
+                    default:
+                        return
+                    }
+                }
+            }
+            
+            return response
+        default:
+            return response
+        }
+    }
+}
+
 class RelistenJsonCache : EntityCache {
     typealias Key = String
     
@@ -42,7 +99,11 @@ class RelistenJsonCache : EntityCache {
     let backingCache: Storage<Entity<Any>>
     
     init() {
-        backingCache = try! Storage(diskConfig: diskCacheConfig, memoryConfig: memoryCacheConfig, transformer: TransformerFactory.forCodable(ofType: Entity<Any>.self))
+        backingCache = try! Storage(
+            diskConfig: diskCacheConfig,
+            memoryConfig: memoryCacheConfig,
+            transformer: TransformerFactory.forCodable(ofType: Entity<Any>.self)
+        )
     }
     
     func key(for resource: Resource) -> String? {

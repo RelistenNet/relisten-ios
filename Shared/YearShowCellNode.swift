@@ -74,12 +74,10 @@ public class YearShowCellNode : ASCellNode {
         
         isAvailableOffline = MyLibraryManager.shared.library.isShowAtLeastPartiallyAvailableOffline(self.show)
         
-        let showWrapper = show.fastImageCacheWrapper()
-        
         artworkNode = ASImageNode()
-        artworkNode?.style.maxWidth = .init(unit: .points, value: 100.0)
-        artworkNode?.style.maxHeight = .init(unit: .points, value: 100.0)
-        artworkNode?.placeholderColor = showWrapper.placeholderColor()
+        artworkNode.style.maxWidth = .init(unit: .points, value: 100.0)
+        artworkNode.style.maxHeight = .init(unit: .points, value: 100.0)
+        artworkNode.backgroundColor = show.fastImageCacheWrapper().placeholderColor()
         
         super.init()
         
@@ -101,18 +99,9 @@ public class YearShowCellNode : ASCellNode {
         else {
             accessoryType = .disclosureIndicator
         }
-        
-        AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: showWrapper, withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in
-            guard let s = self else { return }
-            guard let image = i else { return }
-            guard let artwork = s.artworkNode else { return }
-            artwork.image = image
-            s.setNeedsLayout()
-            s.setNeedsDisplay()
-        }
     }
     
-    public let artworkNode : ASImageNode?
+    public let artworkNode : ASImageNode
     
     public let artistNode: ASTextNode?
     public let showNode: ASTextNode
@@ -142,6 +131,13 @@ public class YearShowCellNode : ASCellNode {
                 }
             })
             .add(to: &disposal)
+        
+        AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in
+            guard let s = self else { return }
+            guard let image = i else { return }
+            artworkNode.image = image
+            s.setNeedsLayout()
+        }
     }
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -180,9 +176,7 @@ public class YearShowCellNode : ASCellNode {
             vs.style.minHeight = .init(unit: .points, value: 22.0)
             
             verticalStack.append(vs)
-            
-            //if let artworkNode = artworkNode { verticalStack.append(artworkNode) }
-            
+                        
             let textStack = ASStackLayoutSpec(
                 direction: .vertical,
                 spacing: 4,
@@ -197,7 +191,7 @@ public class YearShowCellNode : ASCellNode {
                 spacing: 4.0,
                 justifyContent: .start,
                 alignItems: .center,
-                children: ArrayNoNils(artworkNode, textStack)
+                children: [artworkNode, textStack]
             )
             stack.style.alignSelf = .stretch
             
@@ -257,7 +251,7 @@ public class YearShowCellNode : ASCellNode {
             spacing: 8.0,
             justifyContent: .start,
             alignItems: .start,
-            children: ArrayNoNils(artworkNode, textStack)
+            children: [artworkNode, textStack]
         )
         stack.style.alignSelf = .stretch
 

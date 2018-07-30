@@ -135,7 +135,7 @@ public class YearShowCellNode : ASCellNode {
         AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in
             guard let s = self else { return }
             guard let image = i else { return }
-            artworkNode.image = image
+            s.artworkNode.image = image
             s.setNeedsLayout()
         }
     }

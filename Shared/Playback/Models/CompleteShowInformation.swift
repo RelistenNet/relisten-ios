@@ -24,12 +24,12 @@ public class CompleteShowInformation : Codable, Hashable  {
     }
     
     public let source: SourceFull
-    public let show: Show
+    public let show: ShowWithSources
     public let artist: ArtistWithCounts
     
     public var originalJSON: SwJSON
     
-    public required init(source: SourceFull, show: Show, artist: ArtistWithCounts) {
+    public required init(source: SourceFull, show: ShowWithSources, artist: ArtistWithCounts) {
         self.source = source
         self.show = show
         self.artist = artist
@@ -44,7 +44,7 @@ public class CompleteShowInformation : Codable, Hashable  {
     
     public required init(json: SwJSON) throws {
         source = try SourceFull(json: json["source"])
-        show = try Show(json: json["show"])
+        show = try ShowWithSources(json: json["show"])
         artist = try ArtistWithCounts(json: json["artist"])
         
         originalJSON = json

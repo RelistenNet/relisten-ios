@@ -19,7 +19,7 @@ public enum FlacType : String {
 }
 
 public class SlimSource : RelistenObject, RelistenUUIDObject {
-    public let uuid: String
+    public let uuid: UUID
     
     public let artist_id: Int
     
@@ -43,7 +43,7 @@ public class SlimSource : RelistenObject, RelistenUUIDObject {
     public let upstream_identifier: String
     
     public required init(json: JSON) throws {
-        uuid = try json["uuid"].string.required()
+        uuid = try json["uuid"].uuid.required()
         
         artist_id = try json["artist_id"].int.required()
         
@@ -196,7 +196,7 @@ public class SourceSet : RelistenObject {
 }
 
 public class SourceTrack : RelistenObject, RelistenUUIDObject {
-    public let uuid: String
+    public let uuid: UUID
     
     public let source_id: Int
     public let source_set_id: Int
@@ -211,7 +211,7 @@ public class SourceTrack : RelistenObject, RelistenUUIDObject {
     public let md5: String?
     
     public required init(json: JSON) throws {
-        uuid = try json["uuid"].string.required()
+        uuid = try json["uuid"].uuid.required()
         
         source_id = try json["source_id"].int.required()
         source_set_id = try json["source_set_id"].int.required()

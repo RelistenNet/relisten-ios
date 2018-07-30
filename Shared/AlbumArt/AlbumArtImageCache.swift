@@ -24,6 +24,11 @@ class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
     public static let imageFormatSmall = "net.relisten.ios.albumart.small"
     public static let imageFormatMedium = "net.relisten.ios.albumart.medium"
     public static let imageFormatFull = "net.relisten.ios.albumart.full"
+    
+    public static let imageFormatSmallBounds = CGSize(width: 112 * 2, height: 112 * 2)
+    public static let imageFormatMediumBounds = CGSize(width: 512, height: 512)
+    public static let imageFormatFullBounds = CGSize(width: 768, height: 768)
+    
     private let imageFamily = "net.relisten.ios.albumart"
 
     public override init() {
@@ -31,7 +36,7 @@ class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
         small.name = AlbumArtImageCache.imageFormatSmall
         small.family = imageFamily
         small.style = .style32BitBGR
-        small.imageSize = CGSize(width: 112 * 2, height: 112 * 2)
+        small.imageSize = AlbumArtImageCache.imageFormatSmallBounds
         small.maximumCount = 250
         small.devices = [.phone, .pad]
         small.protectionMode = .none
@@ -40,7 +45,7 @@ class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
         medium.name = AlbumArtImageCache.imageFormatMedium
         medium.family = imageFamily
         medium.style = .style32BitBGR
-        medium.imageSize = CGSize(width: 512, height: 512)
+        medium.imageSize = AlbumArtImageCache.imageFormatMediumBounds
         medium.maximumCount = 250
         medium.devices = [.phone, .pad]
         medium.protectionMode = .none
@@ -49,7 +54,7 @@ class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
         full.name = AlbumArtImageCache.imageFormatFull
         full.family = imageFamily
         full.style = .style32BitBGR
-        full.imageSize = CGSize(width: 768, height: 768)
+        full.imageSize = AlbumArtImageCache.imageFormatFullBounds
         full.maximumCount = 3
         full.devices = [.phone, .pad]
         full.protectionMode = .none

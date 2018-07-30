@@ -21,8 +21,8 @@ public class YearNode : ASCellNode {
         
         self.yearNameNode = ASTextNode(year.year, textStyle: .headline)
         self.ratingNode = AXRatingViewNode(value: year.avg_rating / 10.0)
-        self.showsNode = ASTextNode("\(year.show_count) shows", textStyle: .caption1)
-        self.sourceNode = ASTextNode("\(year.source_count) recordings", textStyle: .caption1)
+        self.showsNode = ASTextNode("\(year.show_count) " + "show".pluralize(year.show_count), textStyle: .caption1)
+        self.sourceNode = ASTextNode("\(year.source_count) " + "recording".pluralize(year.source_count), textStyle: .caption1)
         
         super.init()
         

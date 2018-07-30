@@ -206,7 +206,7 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
         
         if artist.features.reviews {
             let label = LabelLayout(
-                text: source.review_count.pluralize("Review", "Reviews"),
+                text: "Review".pluralize(source.review_count),
                 font: UIFont.preferredFont(forTextStyle: .body),
                 alignment: .fill,
                 flexibility: .inflexible,

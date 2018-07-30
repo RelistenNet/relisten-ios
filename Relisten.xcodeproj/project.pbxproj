@@ -26,7 +26,6 @@
 		43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */; };
 		43B53429210922CE00DE9B1F /* UInt64+HumanizeBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704320B5FE6200710E90 /* UInt64+HumanizeBytes.swift */; };
 		43B5342A210922CE00DE9B1F /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551420BFB3DA00F07622 /* String.swift */; };
-		43B5342B210922CE00DE9B1F /* Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552A20C206BA00F07622 /* Numeric.swift */; };
 		43B5342C210922CE00DE9B1F /* AsyncDisplayKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */; };
 		43B5342D210922CE00DE9B1F /* RelistenMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */; };
 		43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABACBE1EDEE178009C5E3B /* PaddingLabel.swift */; };
@@ -199,7 +198,6 @@
 		7C31552120BFC55900F07622 /* ReviewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReviewLayout.swift; path = Layouts/ReviewLayout.swift; sourceTree = "<group>"; };
 		7C31552420C09D8B00F07622 /* ShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShareHelper.swift; path = Helpers/ShareHelper.swift; sourceTree = "<group>"; };
 		7C31552720C0A08300F07622 /* ShareCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShareCellLayout.swift; path = Layouts/ShareCellLayout.swift; sourceTree = "<group>"; };
-		7C31552A20C206BA00F07622 /* Numeric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Numeric.swift; path = Extensions/Numeric.swift; sourceTree = "<group>"; };
 		7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OfflineIndicatorNode.swift; path = Layouts/OfflineIndicatorNode.swift; sourceTree = "<group>"; };
 		7C31553020C2074300F07622 /* SounceFeatureIndicatorNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SounceFeatureIndicatorNodes.swift; path = Layouts/SounceFeatureIndicatorNodes.swift; sourceTree = "<group>"; };
 		7C31553320C2076C00F07622 /* AXRatingViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AXRatingViewNode.swift; path = Layouts/AXRatingViewNode.swift; sourceTree = "<group>"; };
@@ -505,7 +503,6 @@
 				7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */,
 				7C13704320B5FE6200710E90 /* UInt64+HumanizeBytes.swift */,
 				7C31551420BFB3DA00F07622 /* String.swift */,
-				7C31552A20C206BA00F07622 /* Numeric.swift */,
 				7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */,
 				430D64E5210BE379005D7F7A /* DispatchQueue.swift */,
 			);
@@ -1210,7 +1207,6 @@
 				43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */,
 				43B53430210922CE00DE9B1F /* HorizontalShowCollectionCellNode.swift in Sources */,
 				43B53422210922CE00DE9B1F /* CompleteShowInformation.swift in Sources */,
-				43B5342B210922CE00DE9B1F /* Numeric.swift in Sources */,
 				43B5342D210922CE00DE9B1F /* RelistenMenuView.swift in Sources */,
 				430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */,
 				43B53431210922CE00DE9B1F /* OfflineIndicatorNode.swift in Sources */,

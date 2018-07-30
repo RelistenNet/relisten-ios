@@ -22,7 +22,7 @@ public class SongLayout : InsetLayout<UIView> {
         )
         
         let showsLabel = LabelLayout(
-            text: song.shows_played_at.pluralize("show", "shows"),
+            text: "show".pluralize(song.shows_played_at),
             font: UIFont.preferredFont(forTextStyle: .caption1),
             alignment: .fillTrailing,
             flexibility: .inflexible,

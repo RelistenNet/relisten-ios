@@ -266,7 +266,7 @@ extension ArtistViewController {
         switch Sections(rawValue: section)! {
         case .today:
             if let t = resourceTodayData {
-                return "\(t.count) Show\(t.count != 1 ? "s" : "") on " + ArtistViewController.dateFormatter.string(from: Date())
+                return "\(t.count) " + "Show".pluralize(t.count) + " on " + ArtistViewController.dateFormatter.string(from: Date())
             }
             else {
                 return nil

@@ -19,13 +19,15 @@ class MyRecentlyPlayedViewController: ShowListViewController<[Track]> {
         
         latestData = loadMyShows()
         
-        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe { [weak self] (_, _) in
-            let myShows = self?.loadMyShows()
-            if !(myShows == self?.latestData) {
-                self?.latestData = myShows
-                self?.render()
+        MyLibrary.shared.recentlyPlayedByArtist(artist).observe { [weak self] (changes) in
+            guard let s = self else { return }
+            
+            let myShows = s.loadMyShows()
+            if myShows != s.latestData {
+                s.latestData = myShows
+                s.render()
             }
-        }.add(to: &disposal)
+        }.dispose(to: &disposal)
     }
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {

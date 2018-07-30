@@ -11,22 +11,18 @@ import Foundation
 extension MyLibrary {
     // this can return non-nil even when isTrackAvailableOffline returns false
     // this will also be non-nil if isTrackAvailableOffline return true
-    private func offlineMetadata(forTrackURL trackURL: URL) -> OfflineTrackMetadata? {
-        do {
-            return try offlineTrackFileSizeCache.object(forKey: trackURL.absoluteString)
-        }
-        catch {
-            return nil
-        }
+    private func offlineMetadata(forTrack track: SourceTrack) -> OfflineTrack? {
+        return realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid)
     }
     
-    public func diskUsageForTrackURL(trackURL: URL, _ callback: @escaping (UInt64?) -> Void) {
-        if let meta = offlineMetadata(forTrackURL: trackURL) {
-            return callback(meta.fileSize)
+    public func diskUsageForTrackURL(track: SourceTrack, _ callback: @escaping (UInt64?) -> Void) {
+        if let meta = offlineMetadata(forTrack: track), let size = meta.file_size.value {
+            return callback(UInt64(size))
         }
+        
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                let offlinePath = RelistenDownloadManager.shared.downloadPath(forURL: trackURL)
+                let offlinePath = RelistenDownloadManager.shared.downloadPath(forURL: track.mp3_url)
                 
                 guard FileManager.default.fileExists(atPath: offlinePath) else {
                     callback(nil)
@@ -38,7 +34,7 @@ extension MyLibrary {
                 let fileSize = attributes[FileAttributeKey.size] as! UInt64
                 
                 // put it in the cache so subsequent calls are hot
-                self.trackSizeBecameKnown(trackURL: trackURL, fileSize: fileSize)
+                self.trackSizeBecameKnown(track, fileSize: fileSize)
                 
                 callback(fileSize)
             }
@@ -59,7 +55,7 @@ extension MyLibrary {
             
             for track in source.source.tracksFlattened {
                 group.enter()
-                self.diskUsageForTrackURL(trackURL: track.mp3_url, { (size) in
+                self.diskUsageForTrackURL(track: track, { (size) in
                     if let bytes = size {
                         bytesQueue.sync {
                             completeBytes += bytes

@@ -45,7 +45,7 @@ public class RelistenObject {
 }
 
 public protocol RelistenUUIDObject : Hashable {
-    var uuid: String { get }
+    var uuid: UUID { get }
     
     var hashValue: Int { get }
 }

@@ -29,17 +29,16 @@ public class YearNode : ASCellNode {
         automaticallyManagesSubnodes = true
         accessoryType = .disclosureIndicator
         
-        let library = MyLibraryManager.shared.library
-        library.observeOfflineSources
-            .observe({ [weak self] _, _ in
-                guard let s = self else { return }
-                
-                if s.isAvailableOffline != library.isYearAtLeastPartiallyAvailableOffline(s.year) {
-                    s.isAvailableOffline = !s.isAvailableOffline
-                    s.setNeedsLayout()
-                }
-            })
-            .add(to: &disposal)
+        let library = MyLibrary.shared
+        
+        library.offline.sources.observe { [weak self] (changes) in
+            guard let s = self else { return }
+            
+            if s.isAvailableOffline != library.isYearAtLeastPartiallyAvailableOffline(s.year) {
+                s.isAvailableOffline = !s.isAvailableOffline
+                s.setNeedsLayout()
+            }
+        }.dispose(to: &disposal)
     }
     
     public let yearNameNode: ASTextNode

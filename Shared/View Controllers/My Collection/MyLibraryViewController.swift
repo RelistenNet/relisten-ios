@@ -10,8 +10,9 @@ import UIKit
 
 import Siesta
 import AsyncDisplayKit
+import RealmSwift
 
-class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]> {
+class MyLibraryViewController: ShowListViewController<Results<FavoritedSource>> {
     public required init(artist: ArtistWithCounts) {
         super.init(artist: artist, showsResource: nil, tourSections: true)
         
@@ -19,13 +20,15 @@ class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]>
         
         latestData = loadMyShows()
         
-        MyLibraryManager.shared.observeMyShows.observe { [weak self] (_, _) in
-            let myShows = self?.loadMyShows()
-            if !(myShows == self?.latestData) {
-                self?.latestData = myShows
-                self?.render()
+        MyLibrary.shared.favorites.sources.observe { [weak self] (changes) in
+            guard let s = self else { return }
+
+            let myShows = s.loadMyShows()
+            if myShows != s.latestData {
+                s.latestData = myShows
+                s.render()
             }
-        }.add(to: &disposal)
+        }.dispose(to: &disposal)
     }
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
@@ -52,12 +55,12 @@ class MyLibraryViewController: ShowListViewController<[CompleteShowInformation]>
         super.relayoutIfContainsTracks(tracks)
     }
     
-    override func extractShowsAndSource(forData: [CompleteShowInformation]) -> [ShowWithSingleSource] {
+    override func extractShowsAndSource(forData: Results<FavoritedSource>) -> [ShowWithSingleSource] {
         return forData.map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
     }
     
-    func loadMyShows() -> [CompleteShowInformation] {
-        return MyLibraryManager.shared.library.favoritedShowsPlayedByArtist(artist)
+    func loadMyShows() -> Results<FavoritedSource> {
+        return MyLibrary.shared.favoritedShowsPlayedByArtist(artist)
     }
     
     // This subclass has to re-implement this method because Texture tries to perform an Obj-C respondsToSelctor: check and it's not finding the methods if they just exist on the superclass with the argument label names (numberOfSectionsIn: does exist though)

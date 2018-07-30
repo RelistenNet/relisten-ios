@@ -72,7 +72,7 @@ public class YearShowCellNode : ASCellNode {
             soundboardIndicatorNode = nil
         }
         
-        isAvailableOffline = MyLibraryManager.shared.library.isShowAtLeastPartiallyAvailableOffline(self.show)
+        isAvailableOffline = MyLibrary.shared.isShowAtLeastPartiallyAvailableOffline(self.show)
         
         super.init()
         
@@ -113,17 +113,16 @@ public class YearShowCellNode : ASCellNode {
     public override func didLoad() {
         super.didLoad()
         
-        let library = MyLibraryManager.shared.library
-        library.observeOfflineSources
-            .observe({ [weak self] _, _ in
-                guard let s = self else { return }
-                
-                if s.isAvailableOffline != library.isShowAtLeastPartiallyAvailableOffline(s.show) {
-                    s.isAvailableOffline = !s.isAvailableOffline
-                    s.setNeedsLayout()
-                }
-            })
-            .add(to: &disposal)
+        let library = MyLibrary.shared
+        
+        library.offline.sources.observe { [weak self] (changes) in
+            guard let s = self else { return }
+
+            if s.isAvailableOffline != library.isShowAtLeastPartiallyAvailableOffline(s.show) {
+                s.isAvailableOffline = !s.isAvailableOffline
+                s.setNeedsLayout()
+            }
+        }.dispose(to: &disposal)
     }
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

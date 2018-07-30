@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 public class SlimArtist : RelistenObject, RelistenUUIDObject {
-    public let uuid: String
+    public let uuid: UUID
     
     public let musicbrainz_id: String
     public let featured: Int
@@ -28,7 +28,7 @@ public class SlimArtist : RelistenObject, RelistenUUIDObject {
         }}
     
     public required init(json: JSON) throws {
-        uuid = try json["uuid"].string.required()
+        uuid = try json["uuid"].uuid.required()
         
         musicbrainz_id = try json["musicbrainz_id"].string.required()
         featured = try json["featured"].int.required()

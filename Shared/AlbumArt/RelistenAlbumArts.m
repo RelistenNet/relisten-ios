@@ -44,7 +44,8 @@ NSArray *PHODColorPalleteForBaseColor(UIColor *color) {
 + (void)drawShatterExplosionWithBaseColor:(UIColor *)color
                                      date:(NSString *)dateStr
                                     venue:(NSString *)venueStr
-                              andLocation:(NSString *)locationStr {
+                                 location:(NSString *)locationStr
+                                drawLabel:(BOOL)drawLabel {
     //// General Declarations
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -10021,63 +10022,63 @@ NSArray *PHODColorPalleteForBaseColor(UIColor *color) {
         [bezier1800Path fill];
     }
 
+    if (drawLabel) {
+        //// Rectangle Drawing
+        UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(187, 321, 600, 230) cornerRadius: 15];
+        [color27 setFill];
+        [rectanglePath fill];
 
-    //// Rectangle Drawing
-    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(187, 321, 600, 230) cornerRadius: 15];
-    [color27 setFill];
-    [rectanglePath fill];
+
+        //// date Drawing
+        CGRect dateRect = CGRectMake(227, 361, 533, 61);
+        {
+            NSString* textContent = dateStr;
+            NSMutableParagraphStyle* dateStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            dateStyle.alignment = NSTextAlignmentLeft;
+
+            NSDictionary* dateFontAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize: 64], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: dateStyle};
+
+            CGFloat dateTextHeight = [textContent boundingRectWithSize: CGSizeMake(dateRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: dateFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, dateRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(dateRect), CGRectGetMinY(dateRect) + (CGRectGetHeight(dateRect) - dateTextHeight) / 2, CGRectGetWidth(dateRect), dateTextHeight) withAttributes: dateFontAttributes];
+            CGContextRestoreGState(context);
+        }
 
 
-    //// date Drawing
-    CGRect dateRect = CGRectMake(227, 361, 533, 61);
-    {
-        NSString* textContent = dateStr;
-        NSMutableParagraphStyle* dateStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        dateStyle.alignment = NSTextAlignmentLeft;
+        //// venue Drawing
+        CGRect venueRect = CGRectMake(227, 446, 533, 31);
+        {
+            NSString* textContent = locationStr;
+            NSMutableParagraphStyle* venueStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            venueStyle.alignment = NSTextAlignmentLeft;
 
-        NSDictionary* dateFontAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize: 64], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: dateStyle};
+            NSDictionary* venueFontAttributes = @{NSFontAttributeName: [UIFont systemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: venueStyle};
 
-        CGFloat dateTextHeight = [textContent boundingRectWithSize: CGSizeMake(dateRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: dateFontAttributes context: nil].size.height;
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, dateRect);
-        [textContent drawInRect: CGRectMake(CGRectGetMinX(dateRect), CGRectGetMinY(dateRect) + (CGRectGetHeight(dateRect) - dateTextHeight) / 2, CGRectGetWidth(dateRect), dateTextHeight) withAttributes: dateFontAttributes];
-        CGContextRestoreGState(context);
+            CGFloat venueTextHeight = [textContent boundingRectWithSize: CGSizeMake(venueRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: venueFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, venueRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(venueRect), CGRectGetMinY(venueRect) + (CGRectGetHeight(venueRect) - venueTextHeight) / 2, CGRectGetWidth(venueRect), venueTextHeight) withAttributes: venueFontAttributes];
+            CGContextRestoreGState(context);
+        }
+
+
+        //// location Drawing
+        CGRect locationRect = CGRectMake(227, 480, 533, 31);
+        {
+            NSString* textContent = venueStr;
+            NSMutableParagraphStyle* locationStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            locationStyle.alignment = NSTextAlignmentLeft;
+
+            NSDictionary* locationFontAttributes = @{NSFontAttributeName: [UIFont italicSystemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: locationStyle};
+
+            CGFloat locationTextHeight = [textContent boundingRectWithSize: CGSizeMake(locationRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: locationFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, locationRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(locationRect), CGRectGetMinY(locationRect) + (CGRectGetHeight(locationRect) - locationTextHeight) / 2, CGRectGetWidth(locationRect), locationTextHeight) withAttributes: locationFontAttributes];
+            CGContextRestoreGState(context);
+        }
     }
-
-
-    //// venue Drawing
-    CGRect venueRect = CGRectMake(227, 446, 533, 31);
-    {
-        NSString* textContent = locationStr;
-        NSMutableParagraphStyle* venueStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        venueStyle.alignment = NSTextAlignmentLeft;
-
-        NSDictionary* venueFontAttributes = @{NSFontAttributeName: [UIFont systemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: venueStyle};
-
-        CGFloat venueTextHeight = [textContent boundingRectWithSize: CGSizeMake(venueRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: venueFontAttributes context: nil].size.height;
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, venueRect);
-        [textContent drawInRect: CGRectMake(CGRectGetMinX(venueRect), CGRectGetMinY(venueRect) + (CGRectGetHeight(venueRect) - venueTextHeight) / 2, CGRectGetWidth(venueRect), venueTextHeight) withAttributes: venueFontAttributes];
-        CGContextRestoreGState(context);
-    }
-
-
-    //// location Drawing
-    CGRect locationRect = CGRectMake(227, 480, 533, 31);
-    {
-        NSString* textContent = venueStr;
-        NSMutableParagraphStyle* locationStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        locationStyle.alignment = NSTextAlignmentLeft;
-
-        NSDictionary* locationFontAttributes = @{NSFontAttributeName: [UIFont italicSystemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: locationStyle};
-
-        CGFloat locationTextHeight = [textContent boundingRectWithSize: CGSizeMake(locationRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: locationFontAttributes context: nil].size.height;
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, locationRect);
-        [textContent drawInRect: CGRectMake(CGRectGetMinX(locationRect), CGRectGetMinY(locationRect) + (CGRectGetHeight(locationRect) - locationTextHeight) / 2, CGRectGetWidth(locationRect), locationTextHeight) withAttributes: locationFontAttributes];
-        CGContextRestoreGState(context);
-    }
-
 
     //// Cleanup
     CGGradientRelease(duKddiNNAdMr);
@@ -10087,7 +10088,8 @@ NSArray *PHODColorPalleteForBaseColor(UIColor *color) {
 + (void)drawRandomFlowersWithBaseColor:(UIColor *)color
                                   date:(NSString *)dateStr
                                  venue:(NSString *)venueStr
-                           andLocation:(NSString *)locationStr {
+                              location:(NSString *)locationStr
+                             drawLabel:(BOOL)drawLabel {
     //// General Declarations
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -19598,62 +19600,63 @@ NSArray *PHODColorPalleteForBaseColor(UIColor *color) {
     }
 
 
-    //// Rectangle 2 Drawing
-    UIBezierPath* rectangle2Path = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(187, 321, 600, 230) cornerRadius: 15];
-    [color27 setFill];
-    [rectangle2Path fill];
+    if (drawLabel) {
+        //// Rectangle 2 Drawing
+        UIBezierPath* rectangle2Path = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(187, 321, 600, 230) cornerRadius: 15];
+        [color27 setFill];
+        [rectangle2Path fill];
 
 
-    //// date Drawing
-    CGRect dateRect = CGRectMake(227, 361, 533, 61);
-    {
-        NSString* textContent = dateStr;
-        NSMutableParagraphStyle* dateStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        dateStyle.alignment = NSTextAlignmentLeft;
+        //// date Drawing
+        CGRect dateRect = CGRectMake(227, 361, 533, 61);
+        {
+            NSString* textContent = dateStr;
+            NSMutableParagraphStyle* dateStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            dateStyle.alignment = NSTextAlignmentLeft;
 
-        NSDictionary* dateFontAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize: 64], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: dateStyle};
+            NSDictionary* dateFontAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize: 64], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: dateStyle};
 
-        CGFloat dateTextHeight = [textContent boundingRectWithSize: CGSizeMake(dateRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: dateFontAttributes context: nil].size.height;
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, dateRect);
-        [textContent drawInRect: CGRectMake(CGRectGetMinX(dateRect), CGRectGetMinY(dateRect) + (CGRectGetHeight(dateRect) - dateTextHeight) / 2, CGRectGetWidth(dateRect), dateTextHeight) withAttributes: dateFontAttributes];
-        CGContextRestoreGState(context);
+            CGFloat dateTextHeight = [textContent boundingRectWithSize: CGSizeMake(dateRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: dateFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, dateRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(dateRect), CGRectGetMinY(dateRect) + (CGRectGetHeight(dateRect) - dateTextHeight) / 2, CGRectGetWidth(dateRect), dateTextHeight) withAttributes: dateFontAttributes];
+            CGContextRestoreGState(context);
+        }
+
+
+        //// venue Drawing
+        CGRect venueRect = CGRectMake(227, 446, 533, 31);
+        {
+            NSString* textContent = venueStr;
+            NSMutableParagraphStyle* venueStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            venueStyle.alignment = NSTextAlignmentLeft;
+
+            NSDictionary* venueFontAttributes = @{NSFontAttributeName: [UIFont systemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: venueStyle};
+
+            CGFloat venueTextHeight = [textContent boundingRectWithSize: CGSizeMake(venueRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: venueFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, venueRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(venueRect), CGRectGetMinY(venueRect) + (CGRectGetHeight(venueRect) - venueTextHeight) / 2, CGRectGetWidth(venueRect), venueTextHeight) withAttributes: venueFontAttributes];
+            CGContextRestoreGState(context);
+        }
+
+
+        //// location Drawing
+        CGRect locationRect = CGRectMake(227, 480, 533, 31);
+        {
+            NSString* textContent = locationStr;
+            NSMutableParagraphStyle* locationStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            locationStyle.alignment = NSTextAlignmentLeft;
+
+            NSDictionary* locationFontAttributes = @{NSFontAttributeName: [UIFont italicSystemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: locationStyle};
+
+            CGFloat locationTextHeight = [textContent boundingRectWithSize: CGSizeMake(locationRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: locationFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, locationRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(locationRect), CGRectGetMinY(locationRect) + (CGRectGetHeight(locationRect) - locationTextHeight) / 2, CGRectGetWidth(locationRect), locationTextHeight) withAttributes: locationFontAttributes];
+            CGContextRestoreGState(context);
+        }
     }
-
-
-    //// venue Drawing
-    CGRect venueRect = CGRectMake(227, 446, 533, 31);
-    {
-        NSString* textContent = venueStr;
-        NSMutableParagraphStyle* venueStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        venueStyle.alignment = NSTextAlignmentLeft;
-
-        NSDictionary* venueFontAttributes = @{NSFontAttributeName: [UIFont systemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: venueStyle};
-
-        CGFloat venueTextHeight = [textContent boundingRectWithSize: CGSizeMake(venueRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: venueFontAttributes context: nil].size.height;
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, venueRect);
-        [textContent drawInRect: CGRectMake(CGRectGetMinX(venueRect), CGRectGetMinY(venueRect) + (CGRectGetHeight(venueRect) - venueTextHeight) / 2, CGRectGetWidth(venueRect), venueTextHeight) withAttributes: venueFontAttributes];
-        CGContextRestoreGState(context);
-    }
-
-
-    //// location Drawing
-    CGRect locationRect = CGRectMake(227, 480, 533, 31);
-    {
-        NSString* textContent = locationStr;
-        NSMutableParagraphStyle* locationStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        locationStyle.alignment = NSTextAlignmentLeft;
-
-        NSDictionary* locationFontAttributes = @{NSFontAttributeName: [UIFont italicSystemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: locationStyle};
-
-        CGFloat locationTextHeight = [textContent boundingRectWithSize: CGSizeMake(locationRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: locationFontAttributes context: nil].size.height;
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, locationRect);
-        [textContent drawInRect: CGRectMake(CGRectGetMinX(locationRect), CGRectGetMinY(locationRect) + (CGRectGetHeight(locationRect) - locationTextHeight) / 2, CGRectGetWidth(locationRect), locationTextHeight) withAttributes: locationFontAttributes];
-        CGContextRestoreGState(context);
-    }
-
 
     //// Cleanup
     CGGradientRelease(sVGID_1_2);
@@ -19663,7 +19666,8 @@ NSArray *PHODColorPalleteForBaseColor(UIColor *color) {
 + (void)drawSplashWithBaseColor:(UIColor *)color
                            date:(NSString *)dateStr
                           venue:(NSString *)venueStr
-                    andLocation:(NSString *)locationStr {
+                       location:(NSString *)locationStr
+                      drawLabel:(BOOL)drawLabel {
     //// General Declarations
     CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -26010,7 +26014,7 @@ NSArray *PHODColorPalleteForBaseColor(UIColor *color) {
 
 
     //// Group
-    {
+    if (drawLabel) {
         //// Rectangle 3 Drawing
         UIBezierPath* rectangle3Path = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(-19, 321, 600, 230) cornerRadius: 15];
         [fillColor50 setFill];
@@ -26072,7 +26076,8 @@ NSArray *PHODColorPalleteForBaseColor(UIColor *color) {
 + (void)drawCityGlittersWithBaseColor:(UIColor *)color
                                  date:(NSString *)dateStr
                                 venue:(NSString *)venueStr
-                          andLocation:(NSString *)locationStr {
+                             location:(NSString *)locationStr
+                            drawLabel:(BOOL)drawLabel{
     //// General Declarations
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -30461,62 +30466,63 @@ NSArray *PHODColorPalleteForBaseColor(UIColor *color) {
     }
 
 
-    //// Rectangle 3 Drawing
-    UIBezierPath* rectangle3Path = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(-19, 538, 863, 230) cornerRadius: 15];
-    [color52 setFill];
-    [rectangle3Path fill];
+    if (drawLabel) {
+        //// Rectangle 3 Drawing
+        UIBezierPath* rectangle3Path = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(-19, 538, 863, 230) cornerRadius: 15];
+        [color52 setFill];
+        [rectangle3Path fill];
 
 
-    //// date Drawing
-    CGRect dateRect = CGRectMake(30, 580, 533, 61);
-    {
-        NSString* textContent = dateStr;
-        NSMutableParagraphStyle* dateStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        dateStyle.alignment = NSTextAlignmentLeft;
+        //// date Drawing
+        CGRect dateRect = CGRectMake(30, 580, 533, 61);
+        {
+            NSString* textContent = dateStr;
+            NSMutableParagraphStyle* dateStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            dateStyle.alignment = NSTextAlignmentLeft;
 
-        NSDictionary* dateFontAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize: 64], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: dateStyle};
+            NSDictionary* dateFontAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize: 64], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: dateStyle};
 
-        CGFloat dateTextHeight = [textContent boundingRectWithSize: CGSizeMake(dateRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: dateFontAttributes context: nil].size.height;
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, dateRect);
-        [textContent drawInRect: CGRectMake(CGRectGetMinX(dateRect), CGRectGetMinY(dateRect) + (CGRectGetHeight(dateRect) - dateTextHeight) / 2, CGRectGetWidth(dateRect), dateTextHeight) withAttributes: dateFontAttributes];
-        CGContextRestoreGState(context);
+            CGFloat dateTextHeight = [textContent boundingRectWithSize: CGSizeMake(dateRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: dateFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, dateRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(dateRect), CGRectGetMinY(dateRect) + (CGRectGetHeight(dateRect) - dateTextHeight) / 2, CGRectGetWidth(dateRect), dateTextHeight) withAttributes: dateFontAttributes];
+            CGContextRestoreGState(context);
+        }
+
+
+        //// venue Drawing
+        CGRect venueRect = CGRectMake(30, 665, 533, 31);
+        {
+            NSString* textContent = venueStr;
+            NSMutableParagraphStyle* venueStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            venueStyle.alignment = NSTextAlignmentLeft;
+
+            NSDictionary* venueFontAttributes = @{NSFontAttributeName: [UIFont systemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: venueStyle};
+
+            CGFloat venueTextHeight = [textContent boundingRectWithSize: CGSizeMake(venueRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: venueFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, venueRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(venueRect), CGRectGetMinY(venueRect) + (CGRectGetHeight(venueRect) - venueTextHeight) / 2, CGRectGetWidth(venueRect), venueTextHeight) withAttributes: venueFontAttributes];
+            CGContextRestoreGState(context);
+        }
+
+
+        //// location Drawing
+        CGRect locationRect = CGRectMake(30, 699, 533, 31);
+        {
+            NSString* textContent = locationStr;
+            NSMutableParagraphStyle* locationStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            locationStyle.alignment = NSTextAlignmentLeft;
+
+            NSDictionary* locationFontAttributes = @{NSFontAttributeName: [UIFont italicSystemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: locationStyle};
+
+            CGFloat locationTextHeight = [textContent boundingRectWithSize: CGSizeMake(locationRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: locationFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, locationRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(locationRect), CGRectGetMinY(locationRect) + (CGRectGetHeight(locationRect) - locationTextHeight) / 2, CGRectGetWidth(locationRect), locationTextHeight) withAttributes: locationFontAttributes];
+            CGContextRestoreGState(context);
+        }
     }
-
-
-    //// venue Drawing
-    CGRect venueRect = CGRectMake(30, 665, 533, 31);
-    {
-        NSString* textContent = venueStr;
-        NSMutableParagraphStyle* venueStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        venueStyle.alignment = NSTextAlignmentLeft;
-
-        NSDictionary* venueFontAttributes = @{NSFontAttributeName: [UIFont systemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: venueStyle};
-
-        CGFloat venueTextHeight = [textContent boundingRectWithSize: CGSizeMake(venueRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: venueFontAttributes context: nil].size.height;
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, venueRect);
-        [textContent drawInRect: CGRectMake(CGRectGetMinX(venueRect), CGRectGetMinY(venueRect) + (CGRectGetHeight(venueRect) - venueTextHeight) / 2, CGRectGetWidth(venueRect), venueTextHeight) withAttributes: venueFontAttributes];
-        CGContextRestoreGState(context);
-    }
-
-
-    //// location Drawing
-    CGRect locationRect = CGRectMake(30, 699, 533, 31);
-    {
-        NSString* textContent = locationStr;
-        NSMutableParagraphStyle* locationStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        locationStyle.alignment = NSTextAlignmentLeft;
-
-        NSDictionary* locationFontAttributes = @{NSFontAttributeName: [UIFont italicSystemFontOfSize: 24], NSForegroundColorAttributeName: color0, NSParagraphStyleAttributeName: locationStyle};
-
-        CGFloat locationTextHeight = [textContent boundingRectWithSize: CGSizeMake(locationRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: locationFontAttributes context: nil].size.height;
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, locationRect);
-        [textContent drawInRect: CGRectMake(CGRectGetMinX(locationRect), CGRectGetMinY(locationRect) + (CGRectGetHeight(locationRect) - locationTextHeight) / 2, CGRectGetWidth(locationRect), locationTextHeight) withAttributes: locationFontAttributes];
-        CGContextRestoreGState(context);
-    }
-
 
     //// Cleanup
     CGGradientRelease(sVGID_1_3);

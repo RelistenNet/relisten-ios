@@ -118,15 +118,15 @@ class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
                 
                 switch ((year + month + day) % 4) {
                 case 0:
-                    RelistenAlbumArts.drawShatterExplosion(withBaseColor: baseColor, date: date, venue: venue, andLocation: location)
+                    RelistenAlbumArts.drawShatterExplosion(withBaseColor: baseColor, date: date, venue: venue, location: location, drawLabel: true)
                 case 1:
-                    RelistenAlbumArts.drawRandomFlowers(withBaseColor: baseColor, date: date, venue: venue, andLocation: location)
+                    RelistenAlbumArts.drawRandomFlowers(withBaseColor: baseColor, date: date, venue: venue, location: location, drawLabel: true)
                 case 2:
-                    RelistenAlbumArts.drawSplash(withBaseColor: baseColor, date: date, venue: venue, andLocation: location)
+                    RelistenAlbumArts.drawSplash(withBaseColor: baseColor, date: date, venue: venue, location: location, drawLabel: true)
                 case 3:
                     fallthrough
                 default:
-                    RelistenAlbumArts.drawCityGlitters(withBaseColor: baseColor, date: date, venue: venue, andLocation: location)
+                    RelistenAlbumArts.drawCityGlitters(withBaseColor: baseColor, date: date, venue: venue, location: location, drawLabel: true)
                 }
                 
                 image = UIGraphicsGetImageFromCurrentImageContext()

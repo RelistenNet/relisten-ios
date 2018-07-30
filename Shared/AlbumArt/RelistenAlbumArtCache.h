@@ -10,10 +10,10 @@
 
 #import <FastImageCache/FICImageCache.h>
 
-static NSString *PHODImageFormatSmall = @"com.alecgorge.ios.phishod.albumart.small";
-static NSString *PHODImageFormatMedium = @"com.alecgorge.ios.phishod.albumart.medium";
-static NSString *PHODImageFormatFull = @"com.alecgorge.ios.phishod.albumart.full";
-static NSString *PHODImageFamily = @"com.alecgorge.ios.phishod.albumart";
+static NSString *RelistenImageFormatSmall = @"net.relisten.ios.albumart.small";
+static NSString *RelistenImageFormatMedium = @"net.relisten.ios.phishod.albumart.medium";
+static NSString *RelistenImageFormatFull = @"net.relisten.ios.phishod.albumart.full";
+static NSString *RelistenImageFamily = @"net.relisten.ios.phishod.albumart";
 
 @interface RelistenAlbumArtCache : NSObject <FICImageCacheDelegate>
 

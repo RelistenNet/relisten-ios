@@ -31,7 +31,7 @@
     return self;
 }
 
-- (UIColor *)colorForYear:(NSInteger)year artist:(NSString *)artist {
+- (UIColor *)colorForYear:(NSInteger)year artistID:(NSString *)artistID {
     static NSArray *sYearColors = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -87,13 +87,13 @@
                     ];
 
     });
-    return [sYearColors objectAtIndex:((year ^ artist.hash) % sYearColors.count)];
+    return [sYearColors objectAtIndex:((year ^ artistID.hash) % sYearColors.count)];
 }
 
 - (void)setupImageCache {
     FICImageFormat *small = [[FICImageFormat alloc] init];
-    small.name = PHODImageFormatSmall;
-    small.family = PHODImageFamily;
+    small.name = RelistenImageFormatSmall;
+    small.family = RelistenImageFamily;
     small.style = FICImageFormatStyle32BitBGR;
     small.imageSize = CGSizeMake(112 * 2, 112 * 2);
     small.maximumCount = 250;
@@ -101,8 +101,8 @@
     small.protectionMode = FICImageFormatProtectionModeNone;
     
     FICImageFormat *medium = [[FICImageFormat alloc] init];
-    medium.name = PHODImageFormatMedium;
-    medium.family = PHODImageFamily;
+    medium.name = RelistenImageFormatMedium;
+    medium.family = RelistenImageFamily;
     medium.style = FICImageFormatStyle32BitBGR;
     medium.imageSize = CGSizeMake(512, 512);
     medium.maximumCount = 250;
@@ -110,8 +110,8 @@
     medium.protectionMode = FICImageFormatProtectionModeNone;
     
     FICImageFormat *full = [[FICImageFormat alloc] init];
-    full.name = PHODImageFormatFull;
-    full.family = PHODImageFamily;
+    full.name = RelistenImageFormatFull;
+    full.family = RelistenImageFamily;
     full.style = FICImageFormatStyle32BitBGR;
     full.imageSize = CGSizeMake(768, 768);
     full.maximumCount = 3;
@@ -148,7 +148,7 @@ wantsSourceImageForEntity:(id<FICEntity>)entity
         NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:requestURL
                                                     resolvingAgainstBaseURL:NO];
         
-        NSString *artist = [self valueForKey:@"artist"
+        NSString *artistID = [self valueForKey:@"artistID"
                                 fromQueryItems:urlComponents.queryItems];
         NSString *date = [self valueForKey:@"date"
                             fromQueryItems:urlComponents.queryItems];
@@ -158,7 +158,7 @@ wantsSourceImageForEntity:(id<FICEntity>)entity
                                 fromQueryItems:urlComponents.queryItems];
         
         NSInteger year = [[date substringToIndex:4] integerValue];
-        UIColor *baseColor = [[self colorForYear:year artist:artist] darken:0.05];
+        UIColor *baseColor = [[self colorForYear:year artistID:artistID] darken:0.05];
         
         NSInteger month = [[date substringWithRange:NSMakeRange(5, 2)] integerValue];
         

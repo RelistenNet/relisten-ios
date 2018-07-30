@@ -14,6 +14,7 @@
 		43A035ED210ECC8000C087DD /* RelistenShardStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035E5210ECC8000C087DD /* RelistenShardStyle.m */; };
 		43A035EE210ECC8000C087DD /* RelistenShardAlbumArt.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035E7210ECC8000C087DD /* RelistenShardAlbumArt.m */; };
 		43A035EF210ECC8000C087DD /* RelistenAlbumArtCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035EB210ECC8000C087DD /* RelistenAlbumArtCache.m */; };
+		43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035F0210ED62200C087DD /* Show+FastImageCache.swift */; };
 		43B534172109228000DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341C2109229200DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
@@ -171,6 +172,7 @@
 		43A035E9210ECC8000C087DD /* RelistenShardStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelistenShardStyle.h; sourceTree = "<group>"; };
 		43A035EA210ECC8000C087DD /* RelistenAlbumArtCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelistenAlbumArtCache.h; sourceTree = "<group>"; };
 		43A035EB210ECC8000C087DD /* RelistenAlbumArtCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelistenAlbumArtCache.m; sourceTree = "<group>"; };
+		43A035F0210ED62200C087DD /* Show+FastImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Show+FastImageCache.swift"; path = "Extensions/Show+FastImageCache.swift"; sourceTree = "<group>"; };
 		43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyPerformedViewController.swift; path = "View Controllers/General/RecentlyPerformedViewController.swift"; sourceTree = "<group>"; };
 		43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenArtistModels.swift; sourceTree = "<group>"; };
 		43B0472C20FD59D000251046 /* ShowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListViewController.swift; path = "View Controllers/General/ShowListViewController.swift"; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 				7C31552A20C206BA00F07622 /* Numeric.swift */,
 				7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */,
 				430D64E5210BE379005D7F7A /* DispatchQueue.swift */,
+				43A035F0210ED62200C087DD /* Show+FastImageCache.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1231,6 +1234,7 @@
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
 				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
 				43A035ED210ECC8000C087DD /* RelistenShardStyle.m in Sources */,
+				43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */,
 				430D64E6210BE379005D7F7A /* DispatchQueue.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
 				43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */,

@@ -74,6 +74,8 @@ public class YearShowCellNode : ASCellNode {
         
         isAvailableOffline = MyLibraryManager.shared.library.isShowAtLeastPartiallyAvailableOffline(self.show)
         
+        artworkNode = ASImageNode()
+        
         super.init()
         
         if cellTransparency == 1.0 {
@@ -95,6 +97,8 @@ public class YearShowCellNode : ASCellNode {
             accessoryType = .disclosureIndicator
         }
     }
+    
+    public let artworkNode : ASImageNode?
     
     public let artistNode: ASTextNode?
     public let showNode: ASTextNode
@@ -124,6 +128,14 @@ public class YearShowCellNode : ASCellNode {
                 }
             })
             .add(to: &disposal)
+        
+        RelistenAlbumArtCache.sharedInstance().sharedCache.asynchronouslyRetrieveImage(for: show, withFormatName: RelistenImageFormatSmall) { [weak self] (_, _, i) in
+            guard let s = self else { return }
+            guard let image = i else { return }
+            guard let artwork = s.artworkNode else { return }
+            artwork.image = image
+            s.setNeedsLayout()
+        }
     }
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -211,12 +223,21 @@ public class YearShowCellNode : ASCellNode {
             footer?.style.alignSelf = .stretch
         }
         
-        let stack = ASStackLayoutSpec(
+        let textStack = ASStackLayoutSpec(
             direction: .vertical,
             spacing: 4.0,
             justifyContent: .start,
             alignItems: .start,
             children: ArrayNoNils(top, bottom, footer)
+        )
+        textStack.style.alignSelf = .stretch
+        
+        let stack = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 8.0,
+            justifyContent: .start,
+            alignItems: .start,
+            children: ArrayNoNils(artworkNode, textStack)
         )
         stack.style.alignSelf = .stretch
 

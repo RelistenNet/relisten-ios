@@ -11,10 +11,8 @@
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
 		430D64E6210BE379005D7F7A /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* DispatchQueue.swift */; };
 		43A035EC210ECC8000C087DD /* RelistenAlbumArts.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035E4210ECC7F00C087DD /* RelistenAlbumArts.m */; };
-		43A035ED210ECC8000C087DD /* RelistenShardStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035E5210ECC8000C087DD /* RelistenShardStyle.m */; };
-		43A035EE210ECC8000C087DD /* RelistenShardAlbumArt.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035E7210ECC8000C087DD /* RelistenShardAlbumArt.m */; };
-		43A035EF210ECC8000C087DD /* RelistenAlbumArtCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035EB210ECC8000C087DD /* RelistenAlbumArtCache.m */; };
 		43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035F0210ED62200C087DD /* Show+FastImageCache.swift */; };
+		43A035F3210EEDCA00C087DD /* AlbumArtImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035F2210EEDCA00C087DD /* AlbumArtImageCache.swift */; };
 		43B534172109228000DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341C2109229200DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
@@ -165,14 +163,9 @@
 		430D64E5210BE379005D7F7A /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DispatchQueue.swift; path = Extensions/DispatchQueue.swift; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
 		43A035E4210ECC7F00C087DD /* RelistenAlbumArts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelistenAlbumArts.m; sourceTree = "<group>"; };
-		43A035E5210ECC8000C087DD /* RelistenShardStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelistenShardStyle.m; sourceTree = "<group>"; };
-		43A035E6210ECC8000C087DD /* RelistenShardAlbumArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelistenShardAlbumArt.h; sourceTree = "<group>"; };
-		43A035E7210ECC8000C087DD /* RelistenShardAlbumArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelistenShardAlbumArt.m; sourceTree = "<group>"; };
 		43A035E8210ECC8000C087DD /* RelistenAlbumArts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelistenAlbumArts.h; sourceTree = "<group>"; };
-		43A035E9210ECC8000C087DD /* RelistenShardStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelistenShardStyle.h; sourceTree = "<group>"; };
-		43A035EA210ECC8000C087DD /* RelistenAlbumArtCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelistenAlbumArtCache.h; sourceTree = "<group>"; };
-		43A035EB210ECC8000C087DD /* RelistenAlbumArtCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelistenAlbumArtCache.m; sourceTree = "<group>"; };
 		43A035F0210ED62200C087DD /* Show+FastImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Show+FastImageCache.swift"; path = "Extensions/Show+FastImageCache.swift"; sourceTree = "<group>"; };
+		43A035F2210EEDCA00C087DD /* AlbumArtImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtImageCache.swift; sourceTree = "<group>"; };
 		43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyPerformedViewController.swift; path = "View Controllers/General/RecentlyPerformedViewController.swift"; sourceTree = "<group>"; };
 		43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenArtistModels.swift; sourceTree = "<group>"; };
 		43B0472C20FD59D000251046 /* ShowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListViewController.swift; path = "View Controllers/General/ShowListViewController.swift"; sourceTree = "<group>"; };
@@ -334,14 +327,9 @@
 		43A035D7210ECC4D00C087DD /* AlbumArt */ = {
 			isa = PBXGroup;
 			children = (
-				43A035EA210ECC8000C087DD /* RelistenAlbumArtCache.h */,
-				43A035EB210ECC8000C087DD /* RelistenAlbumArtCache.m */,
+				43A035F2210EEDCA00C087DD /* AlbumArtImageCache.swift */,
 				43A035E8210ECC8000C087DD /* RelistenAlbumArts.h */,
 				43A035E4210ECC7F00C087DD /* RelistenAlbumArts.m */,
-				43A035E9210ECC8000C087DD /* RelistenShardStyle.h */,
-				43A035E5210ECC8000C087DD /* RelistenShardStyle.m */,
-				43A035E6210ECC8000C087DD /* RelistenShardAlbumArt.h */,
-				43A035E7210ECC8000C087DD /* RelistenShardAlbumArt.m */,
 			);
 			path = AlbumArt;
 			sourceTree = "<group>";
@@ -1199,6 +1187,7 @@
 			files = (
 				43B5341F210922CE00DE9B1F /* Events.swift in Sources */,
 				43B53455210922CE00DE9B1F /* MyLibraryManager.swift in Sources */,
+				43A035F3210EEDCA00C087DD /* AlbumArtImageCache.swift in Sources */,
 				43B5345C210922CE00DE9B1F /* RelistenShowModels.swift in Sources */,
 				43B5343F210922CE00DE9B1F /* YearShowCellNode.swift in Sources */,
 				43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */,
@@ -1230,10 +1219,8 @@
 				43B53457210922CE00DE9B1F /* MyLibrary+DiskUsage.swift in Sources */,
 				43B5344B210922CE00DE9B1F /* YearViewController.swift in Sources */,
 				43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */,
-				43A035EE210ECC8000C087DD /* RelistenShardAlbumArt.m in Sources */,
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
 				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
-				43A035ED210ECC8000C087DD /* RelistenShardStyle.m in Sources */,
 				43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */,
 				430D64E6210BE379005D7F7A /* DispatchQueue.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
@@ -1254,7 +1241,6 @@
 				43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */,
 				43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */,
 				43B5344D210922CE00DE9B1F /* SourceViewController.swift in Sources */,
-				43A035EF210ECC8000C087DD /* RelistenAlbumArtCache.m in Sources */,
 				43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */,
 				43B53430210922CE00DE9B1F /* HorizontalShowCollectionCellNode.swift in Sources */,
 				43B53422210922CE00DE9B1F /* CompleteShowInformation.swift in Sources */,

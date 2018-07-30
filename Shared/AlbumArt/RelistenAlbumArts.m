@@ -9,6 +9,7 @@
 //
 
 #import "RelistenAlbumArts.h"
+#import <EDColor/EDColor.h>
 
 static CGFloat baseColorTransform[5][3] = {
     {-11.3280589,-9.818462023,-8.794142144},

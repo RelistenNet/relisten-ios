@@ -43,6 +43,9 @@ def apply_pods
 
   pod 'SINQ'
   pod 'KASlideShow'
+  pod 'ChameleonFramework'
+  pod 'EDColor'
+  pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git"
   
   pod "MZDownloadManager", :git => "https://github.com/alecgorge/MZDownloadManager.git"
   pod 'SVProgressHUD'

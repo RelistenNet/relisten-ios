@@ -207,23 +207,32 @@ public class YearShowCellNode : ASCellNode {
             )
         }
         
-        let top = ASStackLayoutSpec(
+        let showAndSBD = ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 8,
             justifyContent: .start,
             alignItems: .center,
-            children: ArrayNoNils(showNode, soundboardIndicatorNode, SpacerNode(), ratingNode)
+            children: ArrayNoNils(showNode, soundboardIndicatorNode)
         )
-        top.style.alignSelf = .stretch
+        showAndSBD.style.alignSelf = .stretch
         
-        let bottom = ASStackLayoutSpec(
+        let venueLayout = ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 8,
-            justifyContent: .spaceBetween,
-            alignItems: .baselineFirst,
-            children: ArrayNoNils(venueNode, metaNode)
+            justifyContent: .start,
+            alignItems: .center,
+            children: ArrayNoNils(venueNode)
         )
-        bottom.style.alignSelf = .stretch
+        venueLayout.style.alignSelf = .stretch
+        
+        let ratingAndMeta = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 8,
+            justifyContent: .end,
+            alignItems: .baselineLast,
+            children: ArrayNoNils(ratingNode, SpacerNode(), metaNode)
+        )
+        ratingAndMeta.style.alignSelf = .stretch
         
         var footer : ASStackLayoutSpec? = nil
         if let updateDateNode = updateDateNode {
@@ -242,7 +251,7 @@ public class YearShowCellNode : ASCellNode {
             spacing: 4.0,
             justifyContent: .start,
             alignItems: .start,
-            children: ArrayNoNils(top, bottom, footer)
+            children: ArrayNoNils(showAndSBD, venueLayout, ratingAndMeta, footer)
         )
         textStack.style.alignSelf = .stretch
         

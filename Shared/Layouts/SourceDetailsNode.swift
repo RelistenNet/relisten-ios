@@ -119,6 +119,11 @@ public class SourceDetailsNode : ASCellNode {
         
         detailsNode = ASTextNode("See details, taper notes, reviews & more ›", textStyle: .caption1, color: .gray)
         
+        artworkNode = ASImageNode()
+        artworkNode.style.maxWidth = .init(unit: .points, value: 100.0)
+        artworkNode.style.maxHeight = .init(unit: .points, value: 100.0)
+        artworkNode.backgroundColor = show.fastImageCacheWrapper().placeholderColor()
+        
         super.init()
         
         automaticallyManagesSubnodes = true
@@ -137,6 +142,13 @@ public class SourceDetailsNode : ASCellNode {
                 })
                 .add(to: &disposal)
         }
+        
+        AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in
+            guard let s = self else { return }
+            guard let image = i else { return }
+            s.artworkNode.image = image
+            s.setNeedsLayout()
+        }
     }
     
     public let showNameNode: ASTextNode
@@ -145,6 +157,7 @@ public class SourceDetailsNode : ASCellNode {
     public let locationNode: ASTextNode
     public let metaNode: ASTextNode
     public let detailsNode: ASTextNode
+    public let artworkNode: ASImageNode
     
     public let sourcePeopleNode: ASStackLayoutSpec?
     public let sourceNode: ASTextNode?

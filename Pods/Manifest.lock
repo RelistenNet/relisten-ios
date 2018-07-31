@@ -10,10 +10,15 @@ PODS:
   - BASSGaplessAudioPlayer (0.0.1)
   - BCColor (0.2)
   - Cache (5.0.0)
+  - ChameleonFramework (2.1.0):
+    - ChameleonFramework/Default (= 2.1.0)
+  - ChameleonFramework/Default (2.1.0)
   - Crashlytics (3.10.5):
     - Fabric (~> 1.7.9)
   - DWURecyclingAlert (1.0.2)
+  - EDColor (1.0.1)
   - Fabric (1.7.9)
+  - FastImageCache (1.5.1)
   - FaveButton (2.0.4)
   - Interpolate (1.0.0)
   - KASlideShow (3.0.0):
@@ -66,9 +71,12 @@ DEPENDENCIES:
   - AXRatingView
   - BASSGaplessAudioPlayer (from `../BASSGaplessAudioPlayer`)
   - Cache
+  - ChameleonFramework
   - Crashlytics
   - DWURecyclingAlert
+  - EDColor
   - Fabric
+  - FastImageCache (from `https://github.com/mallorypaine/FastImageCache.git`)
   - FaveButton (from `../fave-button`)
   - KASlideShow
   - LayoutKit
@@ -91,8 +99,10 @@ SPEC REPOS:
     - AXRatingView
     - BCColor
     - Cache
+    - ChameleonFramework
     - Crashlytics
     - DWURecyclingAlert
+    - EDColor
     - Fabric
     - Interpolate
     - KASlideShow
@@ -114,6 +124,8 @@ EXTERNAL SOURCES:
     :path: "../AGAudioPlayer"
   BASSGaplessAudioPlayer:
     :path: "../BASSGaplessAudioPlayer"
+  FastImageCache:
+    :git: https://github.com/mallorypaine/FastImageCache.git
   FaveButton:
     :path: "../fave-button"
   MZDownloadManager:
@@ -128,6 +140,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/pmusolino/Wormholy
 
 CHECKOUT OPTIONS:
+  FastImageCache:
+    :commit: a196da2ef8646ad310f696e64f675e9a942d2ea9
+    :git: https://github.com/mallorypaine/FastImageCache.git
   MZDownloadManager:
     :commit: 68c2c4b68c5e417bb9fb695ee6e014ff535d7e4e
     :git: https://github.com/alecgorge/MZDownloadManager.git
@@ -148,9 +163,12 @@ SPEC CHECKSUMS:
   BASSGaplessAudioPlayer: 5547414722926aaa7d1116557f5208df57b0caab
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
   Cache: fae4826ba52d7a5d9a3a0ad6fe73e3501a82964f
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
+  EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
   Fabric: a2917d3895e4c1569b9c3170de7320ea1b1e6661
+  FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
   FaveButton: e26220c69725ca00f08d7494edb5765c3eaef8c7
   Interpolate: cd0ab81375ff3ec7d9e6023e032f4a29f53df4ad
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
@@ -172,6 +190,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 681207f9880fb7cc23875bd786af0e21bf5fe7cc
 
-PODFILE CHECKSUM: b93937fa299609fb9bdb4cae342c958cf44152ff
+PODFILE CHECKSUM: 5d3a574fa4e790156875804072c5add3ce0949b1
 
 COCOAPODS: 1.5.3

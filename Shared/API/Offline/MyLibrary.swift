@@ -95,13 +95,13 @@ public class MyLibrary {
             transformer: TransformerFactory.forCodable(ofType: OfflineTrackMetadata.self)
         )
         
+        diskUseQueue.setSpecific(key: diskUseQueueKey, value: 1)
+        
         try! loadOfflineData()
     }
     
     public convenience init(json: SwJSON) throws {
         self.init()
-        
-        diskUseQueue.setSpecific(key: diskUseQueueKey, value: 1)
         
         var needsUpgrade = true
         let version : Int? = json["version"].intValue as Int?

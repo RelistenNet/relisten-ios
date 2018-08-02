@@ -10,6 +10,9 @@
 		430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */; };
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
 		430D64E6210BE379005D7F7A /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* DispatchQueue.swift */; };
+		43A035EC210ECC8000C087DD /* RelistenAlbumArts.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035E4210ECC7F00C087DD /* RelistenAlbumArts.m */; };
+		43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035F0210ED62200C087DD /* Show+FastImageCache.swift */; };
+		43A035F3210EEDCA00C087DD /* AlbumArtImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035F2210EEDCA00C087DD /* AlbumArtImageCache.swift */; };
 		43B534172109228000DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341C2109229200DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
@@ -159,6 +162,10 @@
 		430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayDataSource.swift; path = Helpers/CarPlayDataSource.swift; sourceTree = "<group>"; };
 		430D64E5210BE379005D7F7A /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DispatchQueue.swift; path = Extensions/DispatchQueue.swift; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
+		43A035E4210ECC7F00C087DD /* RelistenAlbumArts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelistenAlbumArts.m; sourceTree = "<group>"; };
+		43A035E8210ECC8000C087DD /* RelistenAlbumArts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelistenAlbumArts.h; sourceTree = "<group>"; };
+		43A035F0210ED62200C087DD /* Show+FastImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Show+FastImageCache.swift"; path = "Extensions/Show+FastImageCache.swift"; sourceTree = "<group>"; };
+		43A035F2210EEDCA00C087DD /* AlbumArtImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtImageCache.swift; sourceTree = "<group>"; };
 		43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyPerformedViewController.swift; path = "View Controllers/General/RecentlyPerformedViewController.swift"; sourceTree = "<group>"; };
 		43A6A9AA2105B1EF00EFF3AD /* RelistenArtistModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenArtistModels.swift; sourceTree = "<group>"; };
 		43B0472C20FD59D000251046 /* ShowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListViewController.swift; path = "View Controllers/General/ShowListViewController.swift"; sourceTree = "<group>"; };
@@ -317,6 +324,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43A035D7210ECC4D00C087DD /* AlbumArt */ = {
+			isa = PBXGroup;
+			children = (
+				43A035F2210EEDCA00C087DD /* AlbumArtImageCache.swift */,
+				43A035E8210ECC8000C087DD /* RelistenAlbumArts.h */,
+				43A035E4210ECC7F00C087DD /* RelistenAlbumArts.m */,
+			);
+			path = AlbumArt;
+			sourceTree = "<group>";
+		};
 		7C03A4B81E60FB52006F2912 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,6 +415,7 @@
 			children = (
 				7C13704F20B9E8A100710E90 /* Helpers */,
 				7CCE0DEA1F9BDE3900041D47 /* Events */,
+				43A035D7210ECC4D00C087DD /* AlbumArt */,
 				7C61C7CC1F18DB160094E0AF /* Assets */,
 				7CA94EA51F0A6C53004663F3 /* Playback */,
 				7C8044101E6F454A00BA946E /* Extensions */,
@@ -508,6 +526,7 @@
 				7C31552A20C206BA00F07622 /* Numeric.swift */,
 				7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */,
 				430D64E5210BE379005D7F7A /* DispatchQueue.swift */,
+				43A035F0210ED62200C087DD /* Show+FastImageCache.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -956,7 +975,10 @@
 				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
+				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
 				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
 				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
 				"${BUILT_PRODUCTS_DIR}/KASlideShow/KASlideShow.framework",
@@ -986,7 +1008,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KASlideShow.framework",
@@ -1090,7 +1115,10 @@
 				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
+				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
 				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
 				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
 				"${BUILT_PRODUCTS_DIR}/KASlideShow/KASlideShow.framework",
@@ -1120,7 +1148,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KASlideShow.framework",
@@ -1156,6 +1187,7 @@
 			files = (
 				43B5341F210922CE00DE9B1F /* Events.swift in Sources */,
 				43B53455210922CE00DE9B1F /* MyLibraryManager.swift in Sources */,
+				43A035F3210EEDCA00C087DD /* AlbumArtImageCache.swift in Sources */,
 				43B5345C210922CE00DE9B1F /* RelistenShowModels.swift in Sources */,
 				43B5343F210922CE00DE9B1F /* YearShowCellNode.swift in Sources */,
 				43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */,
@@ -1189,6 +1221,7 @@
 				43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */,
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
 				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
+				43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */,
 				430D64E6210BE379005D7F7A /* DispatchQueue.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
 				43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */,
@@ -1196,6 +1229,7 @@
 				43B53447210922CE00DE9B1F /* SongViewController.swift in Sources */,
 				43B53451210922CE00DE9B1F /* RelistenTableViewController.swift in Sources */,
 				43B53433210922CE00DE9B1F /* ShareCellLayout.swift in Sources */,
+				43A035EC210ECC8000C087DD /* RelistenAlbumArts.m in Sources */,
 				43B53450210922CE00DE9B1F /* ReviewsViewController.swift in Sources */,
 				43B53441210922CE00DE9B1F /* ShowListViewController.swift in Sources */,
 				43B53446210922CE00DE9B1F /* SongsViewController.swift in Sources */,

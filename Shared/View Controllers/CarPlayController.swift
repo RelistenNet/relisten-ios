@@ -713,6 +713,7 @@ extension OfflineSourceMetadata {
         }
         contentItem.isContainer = true
         contentItem.isPlayable = false
+        contentItem.artwork = MPMediaItemArtwork(forShow: self.show)
         
         return contentItem
     }
@@ -735,6 +736,7 @@ extension CompleteShowInformation {
         }
         contentItem.isContainer = true
         contentItem.isPlayable = false
+        contentItem.artwork = MPMediaItemArtwork(forShow: self.show)
         
         return contentItem
     }
@@ -755,6 +757,7 @@ extension Show {
         }
         contentItem.isContainer = true
         contentItem.isPlayable = false
+        contentItem.artwork = MPMediaItemArtwork(forShow: self)
         
         return contentItem
     }
@@ -776,5 +779,21 @@ extension Year {
         contentItem.isPlayable = false
         
         return contentItem
+    }
+}
+
+extension MPMediaItemArtwork {
+    public convenience init(forShow show : Show) {
+        self.init(boundsSize: AlbumArtImageCache.imageFormatSmallBounds, requestHandler: { (size) -> UIImage in
+            var image : UIImage? = nil
+            // I'm pretty unhappy with this. I wish CarPlay provided an escaping closure for returning the UIImage
+            let sem = DispatchSemaphore(value: 0)
+            AlbumArtImageCache.shared.cache.retrieveImage(for: show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatSmall, completionBlock: { (_, _, blockImage) in
+                image = blockImage
+                sem.signal()
+            })
+            sem.wait()
+            return image!
+        })
     }
 }

@@ -683,11 +683,7 @@ extension Artist {
         let contentItem = MPContentItem(identifier: self.carPlayIdentifier + "\(showCount ?? 0)")
         contentItem.title = self.name
         if let showCount = showCount {
-            var subtitle = "\(showCount) show"
-            if showCount > 1 {
-                subtitle = subtitle + "s"
-            }
-            contentItem.subtitle = subtitle
+            contentItem.subtitle = "\(showCount) " + "show".pluralize(showCount)
         }
         contentItem.isContainer = true
         contentItem.isPlayable = false
@@ -773,8 +769,7 @@ extension Year {
     public func asMPContentItem() -> MPContentItem {
         let contentItem = MPContentItem(identifier: self.carPlayIdentifier)
         contentItem.title = self.year
-        let showString = (show_count > 1) ? "shows" : "show"
-        contentItem.subtitle = "\(show_count) \(showString)"
+        contentItem.subtitle = "\(show_count) " + "show".pluralize(show_count)
         contentItem.isContainer = true
         contentItem.isPlayable = false
         

@@ -56,5 +56,16 @@ extension String {
         
         return mut
     }
+    
+    public func pluralize(_ count: Int, pluralization : String? = nil) -> String {
+        if count == 1 {
+            return self
+        }
+        if let pluralization = pluralization {
+            return pluralization
+        } else {
+            return self + "s"
+        }
+    }
 }
 

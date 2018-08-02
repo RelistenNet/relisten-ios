@@ -34,7 +34,7 @@ public class ReviewsViewController : RelistenTableViewController<[SourceReview]>
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = source.review_count.pluralize("Review", "Reviews")
+        title = "Review".pluralize(source.review_count)
         cellDefaultBackgroundColor = UIColor.white
     }
     

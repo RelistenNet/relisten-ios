@@ -57,7 +57,7 @@ public class VenueLayout : InsetLayout<UIView> {
             )
         ]
         
-        var showText = venue.shows_at_venue.pluralize("show", "shows")
+        var showText = "show".pluralize(venue.shows_at_venue)
         if useViewLanguage {
             showText = "View \(showText) ›"
         }

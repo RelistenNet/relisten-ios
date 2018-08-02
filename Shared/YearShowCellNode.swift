@@ -44,7 +44,7 @@ public class YearShowCellNode : ASCellNode {
         
         var metaText = "\(show.avg_duration == nil ? "" : show.avg_duration!.humanize())"
         if !verticalLayout {
-            metaText += "\n\(show.source_count) recordings"
+            metaText += "\n\(show.source_count) " + "recording".pluralize(show.source_count)
         }
         
         metaNode = ASTextNode(metaText, textStyle: .caption1, color: nil, alignment: vertical ? nil : NSTextAlignment.right)

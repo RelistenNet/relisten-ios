@@ -48,6 +48,10 @@ public class MyLibrary {
     public let offlineCacheURLStorage : Storage<Set<URL>>
     public let offlineCacheDownloadBacklogStorage : Storage<[Track]>
     public let offlineCacheSourcesMetadata : Storage<Set<OfflineSourceMetadata>>
+
+    internal let diskUseQueue : DispatchQueue = DispatchQueue(label: "live.relisten.library.diskUse")
+    internal let diskUseQueueKey = DispatchSpecificKey<Int>()
+
     public let offlineCacheVersions : Storage<Int>
     
     public let offlineTrackFileSizeCache : Storage<OfflineTrackMetadata>
@@ -90,6 +94,8 @@ public class MyLibrary {
             ),
             transformer: TransformerFactory.forCodable(ofType: OfflineTrackMetadata.self)
         )
+        
+        diskUseQueue.setSpecific(key: diskUseQueueKey, value: 1)
         
         try! loadOfflineData()
     }

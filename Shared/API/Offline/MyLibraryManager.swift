@@ -53,7 +53,7 @@ public class MyLibraryManager {
     private func downloadBacklog() {
         let i = min(library.downloadBacklog.count, 3)
         for track in library.downloadBacklog[0..<i] {
-            RelistenDownloadManager.shared.download(track: track)
+            let _ = RelistenDownloadManager.shared.download(track: track)
         }
     }
     

@@ -82,16 +82,16 @@ public class RelistenDownloadManager {
             delete(track: track, saveOffline: false)
         }
         
-        MyLibraryManager.shared.library.saveOfflineTrackUrls()
+        MyLibrary.shared.saveOfflineTrackUrls()
         eventTracksDeleted.raise(tracks)
-        MyLibraryManager.shared.library.saveDownloadBacklog()
+        MyLibrary.shared.saveDownloadBacklog()
     }
     
     public func delete(track: Track, saveOffline: Bool = true) {
-        MyLibraryManager.shared.library.URLNotAvailableOffline(track, save: saveOffline)
+        MyLibrary.shared.URLNotAvailableOffline(track, save: saveOffline)
         
-        if let index = MyLibraryManager.shared.library.downloadBacklog.index(of: track) {
-            MyLibraryManager.shared.library.downloadBacklog.remove(at: index)
+        if let index = MyLibrary.shared.downloadBacklog.index(of: track) {
+            MyLibrary.shared.downloadBacklog.remove(at: index)
         }
         
         if track.downloadState == .downloading {
@@ -105,7 +105,7 @@ public class RelistenDownloadManager {
         if saveOffline {
             eventTracksDeleted.raise([track])
             
-            MyLibraryManager.shared.library.saveDownloadBacklog()
+            MyLibrary.shared.saveDownloadBacklog()
         }
         
         DispatchQueue.global(qos: .background).async {
@@ -121,7 +121,7 @@ public class RelistenDownloadManager {
     }
     
     private func trackNeedsDownload(_ track : Track) -> Bool {
-        let availableOffline = MyLibraryManager.shared.library.isTrackAvailableOffline(track)
+        let availableOffline = MyLibrary.shared.isTrackAvailableOffline(track)
         let currentlyDownloading = isTrackQueuedToDownload(track) || isTrackActivelyDownloading(track)
         
         return !availableOffline && !currentlyDownloading
@@ -156,7 +156,7 @@ public class RelistenDownloadManager {
             addDownloadTask(track)
         }
         else {
-            MyLibraryManager.shared.library.queueToBacklog(track)
+            MyLibrary.shared.queueToBacklog(track)
         }
         
         if raiseEvent {
@@ -195,7 +195,7 @@ public class RelistenDownloadManager {
     }
     
     public func offlineURL(forTrack track: Track) -> URL? {
-        if MyLibraryManager.shared.library.isTrackAvailableOffline(track) {
+        if MyLibrary.shared.isTrackAvailableOffline(track) {
             return URL(fileURLWithPath: downloadPath(forTrack: track))
         }
         
@@ -209,7 +209,7 @@ public class RelistenDownloadManager {
             }
         }
         
-        for backlogTrack in MyLibraryManager.shared.library.downloadBacklog {
+        for backlogTrack in MyLibrary.shared.downloadBacklog {
             if backlogTrack.mp3_url == track.mp3_url {
                 return true
             }
@@ -282,7 +282,7 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
             urlToTrackMap.removeValue(forKey: url)
         }
         
-        if let nextTrack = MyLibraryManager.shared.library.dequeueFromBacklog() {
+        if let nextTrack = MyLibrary.shared.dequeueFromBacklog() {
             urlToTrackMap[nextTrack.mp3_url] = nextTrack
 
             addDownloadTask(nextTrack)

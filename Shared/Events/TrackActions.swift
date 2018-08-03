@@ -40,7 +40,7 @@ public class TrackActions {
             }
             else {
                 a.addAction(UIAlertAction(title: "Make Available Offline", style: .default, handler: { _ in
-                    RelistenDownloadManager.shared.download(track: track)
+                    let _ = RelistenDownloadManager.shared.download(track: track)
                 }))
             }
             

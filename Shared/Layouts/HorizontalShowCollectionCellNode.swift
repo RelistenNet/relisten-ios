@@ -29,7 +29,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 16
         flowLayout.scrollDirection = .horizontal
-        flowLayout.estimatedItemSize = CGSize(width: 170, height: 145)
+        flowLayout.estimatedItemSize = CGSize(width: 280, height: 145)
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 4, 4, 4)
         
         collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)

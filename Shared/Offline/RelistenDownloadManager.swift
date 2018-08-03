@@ -29,12 +29,18 @@ func MD5(_ string: String) -> String? {
 public protocol RelistenDownloadManagerDelegate: class {
     func trackSizeBecameKnown(_ track: SourceTrack, fileSize: UInt64)
     func trackBecameAvailableOffline(_ track: Track)
+    func trackBecameUnavailableOffline(_ track: Track)
+}
+
+public protocol RelistenDownloadManagerDataSource : class {
+    func removeOfflineTrack(_ track: Track, saveImmediately : Bool)
 }
 
 public class RelistenDownloadManager {
     public static let shared = RelistenDownloadManager()
     
     public weak var delegate: RelistenDownloadManagerDelegate? = nil
+    public weak var dataSource: RelistenDownloadManagerDataSource? = nil
     
     public let eventTrackStartedDownloading = Event<Track>()
     public let eventTracksQueuedToDownload = Event<[Track]>()
@@ -79,7 +85,7 @@ public class RelistenDownloadManager {
         let tracks = showInfo.completeTracksFlattened
         
         for track in tracks {
-            delete(track: track, saveOffline: false)
+            delete(track: track, saveImmediately: false)
         }
         
         MyLibrary.shared.saveOfflineTrackUrls()
@@ -87,12 +93,9 @@ public class RelistenDownloadManager {
         MyLibrary.shared.saveDownloadBacklog()
     }
     
-    public func delete(track: Track, saveOffline: Bool = true) {
-        MyLibrary.shared.URLNotAvailableOffline(track, save: saveOffline)
-        
-        if let index = MyLibrary.shared.downloadBacklog.index(of: track) {
-            MyLibrary.shared.downloadBacklog.remove(at: index)
-        }
+    public func delete(track: Track, saveImmediately: Bool = true) {
+        self.delegate?.trackBecameUnavailableOffline(track)
+        self.dataSource?.removeOfflineTrack(track, saveImmediately: saveImmediately)
         
         if track.downloadState == .downloading {
             for (idx, downloadModel) in downloadManager.downloadingArray.enumerated() {
@@ -102,7 +105,7 @@ public class RelistenDownloadManager {
             }
         }
 
-        if saveOffline {
+        if saveImmediately {
             eventTracksDeleted.raise([track])
             
             MyLibrary.shared.saveDownloadBacklog()

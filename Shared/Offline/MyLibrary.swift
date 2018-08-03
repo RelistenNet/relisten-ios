@@ -48,8 +48,14 @@ public class MyLibraryOffline {
 public class MyLibrary {
     public static let shared = MyLibrary()
     
-    internal let realm: Realm
-    public let recentlyPlayed: Results<RecentlyPlayedShow>
+    public var recentlyPlayed: Results<RecentlyPlayedShow> {
+        get {
+            let realm = try! Realm()
+            return realm
+                .objects(RecentlyPlayedShow.self)
+                .sorted(byKeyPath: "updated_at", ascending: false)
+        }
+    }
     
     public let offline = MyLibraryOffline()
     public let favorites = MyLibraryFavorites()
@@ -62,15 +68,10 @@ public class MyLibrary {
     public let offlineCacheDownloadBacklogStorage : Storage<[Track]>
     public let offlineCacheSourcesMetadata : Storage<Set<OfflineSourceMetadata>>
 
-    internal let diskUseQueue : DispatchQueue = DispatchQueue(label: "live.relisten.library.diskUse")
-    internal let diskUseQueueKey = DispatchSpecificKey<Int>()
+    internal let realmQueue : ReentrantDispatchQueue = ReentrantDispatchQueue(label: "live.relisten.library.realm")
+    internal let diskUseQueue : ReentrantDispatchQueue = ReentrantDispatchQueue(label: "live.relisten.library.diskUse")
     
     private init() {
-        realm = try! Realm()
-        
-        recentlyPlayed = realm
-            .objects(RecentlyPlayedShow.self)
-            .sorted(byKeyPath: "updated_at", ascending: false)
         
         offlineCache = try! Storage(
             diskConfig: DiskConfig(
@@ -89,31 +90,7 @@ public class MyLibrary {
         
         offlineCacheDownloadBacklogStorage = offlineCache.transformCodable(ofType: [Track].self)
         
-        diskUseQueue.setSpecific(key: diskUseQueueKey, value: 1)
-        
         try! loadOfflineData()
-    }
-    
-    public func URLNotAvailableOffline(_ track: Track, save: Bool = true) {
-        let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.sourceTrack.uuid)
-        
-        guard let offlineTrack = offlineTrackQuery else {
-            return
-        }
-        
-        try! realm.write {
-            realm.delete(offlineTrack)
-        }
-        
-        if !isSourceAtLeastPartiallyAvailableOffline(track.showInfo.source) {
-            let offlineSourceQuery = realm.object(ofType: OfflineSource.self, forPrimaryKey: track.showInfo.source.uuid)
-            
-            if let offlineSource = offlineSourceQuery {
-                try! realm.write {
-                    realm.delete(offlineSource)
-                }
-            }
-        }
     }
     
     public func isShowInLibrary(show: ShowWithSources, byArtist: SlimArtist) -> Bool {
@@ -139,51 +116,45 @@ public class MyLibrary {
     }
 }
 
-extension MyLibrary : RelistenDownloadManagerDelegate {
-    public func trackBecameAvailableOffline(_ track: Track) {
-        let trackMeta = OfflineTrack()
-        trackMeta.track_uuid = track.sourceTrack.uuid
-        trackMeta.show_uuid = track.showInfo.show.uuid
-        trackMeta.source_uuid = track.showInfo.source.uuid
-        trackMeta.artist_uuid = track.showInfo.artist.uuid
-        trackMeta.created_at = Date()
-
-        try! realm.write {
-            realm.add(trackMeta)
-        }
-
-        // add the source information if it doesn't exist
-        let offlineSourceQuery = realm.object(ofType: OfflineSource.self, forPrimaryKey: track.showInfo.source.uuid)
-        
-        if offlineSourceQuery == nil {
-            try! realm.write {
-                let sourceMeta = OfflineSource()
-                sourceMeta.show_uuid = track.showInfo.show.uuid
-                sourceMeta.source_uuid = track.showInfo.source.uuid
-                sourceMeta.artist_uuid = track.showInfo.artist.uuid
-                sourceMeta.year_uuid = track.showInfo.show.year.uuid
-                sourceMeta.created_at = Date()
-
-                realm.add(sourceMeta)
-            }
-        }
+// MARK: Recently Played
+extension MyLibrary {
+    public func recentlyPlayedByArtist(_ artist: SlimArtist) -> Results<RecentlyPlayedShow> {
+        let realm = try! Realm()
+        return realm
+            .objects(RecentlyPlayedShow.self)
+            .filter("artist_uuid = %@", artist.uuid)
+            .sorted(byKeyPath: "updated_at", ascending: false)
     }
     
-    public func trackSizeBecameKnown(_ track: SourceTrack, fileSize: UInt64) {
-        let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid)
+    public func trackWasPlayed(_ track: Track) -> Bool {
+        let recentShowQuery = realm.object(ofType: RecentlyPlayedShow.self, forPrimaryKey: track.showInfo.show.uuid)
         
-        if let offlineTrack = offlineTrackQuery {
+        if let recentShow = recentShowQuery {
+            // set updated_at
             try! realm.write {
-                offlineTrack.file_size.value = Int(fileSize)
+                recentShow.updated_at = Date()
             }
         }
         else {
-            assertionFailure("!!! ERROR: OFFLINE TRACK SIZE BECAME KNOWN BEFORE BEING STORED IN REALM !!!")
+            // insert
+            let recentShow = RecentlyPlayedShow()
+            recentShow.show_uuid = track.showInfo.show.uuid
+            recentShow.source_uuid = track.showInfo.source.uuid
+            recentShow.artist_uuid = track.showInfo.artist.uuid
+            
+            recentShow.created_at = Date()
+            recentShow.updated_at = Date()
+            
+            try! realm.write {
+                realm.add(recentShow)
+            }
         }
+        
+        return true
     }
 }
 
-/// boring loading and saving
+// MARK: Offline Tracks
 extension MyLibrary {
     public func loadOfflineData() throws {
         do {
@@ -201,10 +172,13 @@ extension MyLibrary {
     public func saveDownloadBacklog() {
         offlineCacheDownloadBacklogStorage.async.setObject(downloadBacklog, forKey: "downloadBacklog", completion: { _ in })
     }
-}
 
-/// offline checks
-extension MyLibrary {
+    public func offlinePlayedByArtist(_ artist: SlimArtist) -> Results<OfflineSource> {
+        return offline.sources
+            .filter("artist_uuid = %@", artist.uuid)
+            .sorted(byKeyPath: "created_at", ascending: false)
+    }
+    
     public func isTrackAvailableOffline(_ track: Track) -> Bool {
         return isTrackAvailableOffline(track.sourceTrack)
     }
@@ -238,56 +212,86 @@ extension MyLibrary {
     }
 }
 
+
+extension MyLibrary : RelistenDownloadManagerDelegate {
+    public func trackBecameAvailableOffline(_ track: Track) {
+        let trackMeta = OfflineTrack()
+        trackMeta.track_uuid = track.sourceTrack.uuid
+        trackMeta.show_uuid = track.showInfo.show.uuid
+        trackMeta.source_uuid = track.showInfo.source.uuid
+        trackMeta.artist_uuid = track.showInfo.artist.uuid
+        trackMeta.created_at = Date()
+        
+        try! realm.write {
+            realm.add(trackMeta)
+        }
+        
+        // add the source information if it doesn't exist
+        let offlineSourceQuery = realm.object(ofType: OfflineSource.self, forPrimaryKey: track.showInfo.source.uuid)
+        
+        if offlineSourceQuery == nil {
+            try! realm.write {
+                let sourceMeta = OfflineSource()
+                sourceMeta.show_uuid = track.showInfo.show.uuid
+                sourceMeta.source_uuid = track.showInfo.source.uuid
+                sourceMeta.artist_uuid = track.showInfo.artist.uuid
+                sourceMeta.year_uuid = track.showInfo.show.year.uuid
+                sourceMeta.created_at = Date()
+                
+                realm.add(sourceMeta)
+            }
+        }
+    }
+    
+    public func trackSizeBecameKnown(_ track: SourceTrack, fileSize: UInt64) {
+        let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid)
+        
+        if let offlineTrack = offlineTrackQuery {
+            try! realm.write {
+                offlineTrack.file_size.value = Int(fileSize)
+            }
+        }
+        else {
+            assertionFailure("!!! ERROR: OFFLINE TRACK SIZE BECAME KNOWN BEFORE BEING STORED IN REALM !!!")
+        }
+    }
+    
+    public func URLNotAvailableOffline(_ track: Track, save: Bool = true) {
+        if let index = downloadBacklog.index(of: track) {
+            downloadBacklog.remove(at: index)
+        }
+        
+        let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.sourceTrack.uuid)
+        
+        guard let offlineTrack = offlineTrackQuery else {
+            return
+        }
+        
+        try! realm.write {
+            realm.delete(offlineTrack)
+        }
+        
+        if !isSourceAtLeastPartiallyAvailableOffline(track.showInfo.source) {
+            let offlineSourceQuery = realm.object(ofType: OfflineSource.self, forPrimaryKey: track.showInfo.source.uuid)
+            
+            if let offlineSource = offlineSourceQuery {
+                try! realm.write {
+                    realm.delete(offlineSource)
+                }
+            }
+        }
+    }
+    
+}
+
+// MARK: Favorites
 extension MyLibrary {
-    public func recentlyPlayedByArtist(_ artist: SlimArtist) -> Results<RecentlyPlayedShow> {
-        return recentlyPlayed
-            .filter("artist_uuid = %@", artist.uuid)
-            .sorted(byKeyPath: "updated_at", ascending: false)
-    }
-    
-    public func offlinePlayedByArtist(_ artist: SlimArtist) -> Results<OfflineSource> {
-        return offline.sources
-            .filter("artist_uuid = %@", artist.uuid)
-            .sorted(byKeyPath: "created_at", ascending: false)
-    }
-    
     public func favoritedShowsPlayedByArtist(_ artist: SlimArtist) -> Results<FavoritedSource> {
         return favorites.shows
             .filter("artist_uuid = %@", artist.uuid)
             .sorted(byKeyPath: "show_date", ascending: false)
     }
-}
-
-extension MyLibrary {
-    public func trackWasPlayed(_ track: Track) -> Bool {
-        let recentShowQuery = realm.object(ofType: RecentlyPlayedShow.self, forPrimaryKey: track.showInfo.show.uuid)
-        
-        if let recentShow = recentShowQuery {
-            // set updated_at
-            try! realm.write {
-                recentShow.updated_at = Date()
-            }
-        }
-        else {
-            // insert
-            let recentShow = RecentlyPlayedShow()
-            recentShow.show_uuid = track.showInfo.show.uuid
-            recentShow.source_uuid = track.showInfo.source.uuid
-            recentShow.artist_uuid = track.showInfo.artist.uuid
-            
-            recentShow.created_at = Date()
-            recentShow.updated_at = Date()
-            
-            try! realm.write {
-                realm.add(recentShow)
-            }
-        }
-        
-        return true
-    }
-}
-
-extension MyLibrary {
+    
     public func favoriteSource(show: CompleteShowInformation) {
         let favoritedSource = FavoritedSource()
         favoritedSource.artist_uuid = show.artist.uuid

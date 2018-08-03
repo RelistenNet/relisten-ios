@@ -20,20 +20,22 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     let isAvailableOffline = Observable(false)
     
     private var numberOfDownloadedTracks : Int = 0
+    private var sizeOfDownloadedTracks : UInt64 = 0
     
     public var favoriteButtonAccessibilityLabel : String { get { return "Favorite Show" } }
     
     var disposal = Disposal()
     
-    private var shareSheetController : UIViewController?
+    private var myViewController : UIViewController?
     
-    public init(source: SourceFull, inShow show: ShowWithSources, artist: ArtistWithCounts, shareSheetController: UIViewController? = nil) {
+    public init(source: SourceFull, inShow show: ShowWithSources, artist: ArtistWithCounts, viewController: UIViewController? = nil) {
         self.source = source
         self.show = show
         self.artist = artist
-        self.shareSheetController = shareSheetController
+        self.myViewController = viewController
         
         favoriteButton = FavoriteButtonNode()
+        favoriteButton.normalColor = UIColor.black
         
         shareButton = ASButtonNode()
         // TODO: Use a proper share icon
@@ -42,6 +44,10 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         downloadText = ASTextNode("Download", textStyle: .footnote)
         downloadButton = ASButtonNode()
         downloadButton.setImage(#imageLiteral(resourceName: "download-outline"), for: .normal)
+        
+        deleteButton = ASButtonNode()
+        deleteButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
+        deleteButton.isHidden = true
         
         super.init()
         
@@ -54,6 +60,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         favoriteButton.delegate = self
         shareButton.addTarget(self, action:#selector(presentShareSheet), forControlEvents:.touchUpInside)
         downloadButton.addTarget(self, action:#selector(downloadToggled), forControlEvents:.touchUpInside)
+        deleteButton.addTarget(self, action:#selector(deletePressed), forControlEvents:.touchUpInside)
         
         setupLibraryObservers()
     }
@@ -62,6 +69,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     public let shareButton : ASButtonNode
     public let downloadText : ASTextNode
     public let downloadButton : ASButtonNode
+    public let deleteButton : ASButtonNode
     
     public func didFavorite(currentlyFavorited : Bool) {
         if currentlyFavorited {
@@ -82,12 +90,32 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
             PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
         }
         else {
-            self.shareSheetController?.present(shareVc, animated: true, completion: nil)
+            self.myViewController?.present(shareVc, animated: true, completion: nil)
         }
     }
     
     @objc public func downloadToggled() {
-        RelistenDownloadManager.shared.download(show: self.completeShowInformation)
+        let _ = RelistenDownloadManager.shared.download(show: self.completeShowInformation)
+    }
+    
+    @objc public func deletePressed() {
+        let alertController = UIAlertController(
+            title: "Delete all downloaded tracks?",
+            message: "This will delete \(numberOfDownloadedTracks) song" + (numberOfDownloadedTracks > 1 ? "s" : "") +  " and free up \(sizeOfDownloadedTracks.humanizeBytes())",
+            preferredStyle: .alert
+        )
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+        
+        let destroyAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            RelistenDownloadManager.shared.delete(showInfo: self.completeShowInformation)
+            self.deleteButton.isHidden = true
+            self.downloadButton.setImage(#imageLiteral(resourceName: "download-outline"), for: .normal)
+            self.setNeedsLayout()
+        }
+        alertController.addAction(destroyAction)
+        
+        self.myViewController?.present(alertController, animated: true)
     }
     
     private func setupLibraryObservers() {
@@ -128,15 +156,24 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     
     private func rebuildOfflineStatus(_ sourceSize: UInt64, numberOfTracks: Int) {
         var txt = "Make Show Available Offline"
+        var downloadButtonImage : UIImage = #imageLiteral(resourceName: "download-outline")
+        var deleteButtonHidden = true
+        
         numberOfDownloadedTracks = numberOfTracks
+        sizeOfDownloadedTracks = sourceSize
         if numberOfTracks > 0 {
+            deleteButtonHidden = false
             let totalNumberOfTracks = source.tracksFlattened.count
             if numberOfTracks == totalNumberOfTracks {
+                downloadButtonImage = #imageLiteral(resourceName: "download-complete")
                 txt = "All songs downloaded (\(sourceSize.humanizeBytes()))"
             } else {
                 txt = "\(numberOfTracks)/\(totalNumberOfTracks) song" + (totalNumberOfTracks > 1 ? "s" : "") + " (\(sourceSize.humanizeBytes()))"
             }
         }
+        
+        deleteButton.isHidden = deleteButtonHidden
+        downloadButton.setImage(downloadButtonImage, for: .normal)
         downloadText.attributedText = RelistenAttributedString(txt, textStyle: .footnote)
         self.setNeedsLayout()
     }
@@ -152,7 +189,8 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
                 SpacerNode(),
                 shareButton,
                 SpacerNode(),
-                downloadButton
+                downloadButton,
+                deleteButton.isHidden ? nil : deleteButton
             )
         )
         buttonBar.style.alignSelf = .stretch

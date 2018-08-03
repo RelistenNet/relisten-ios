@@ -17,7 +17,7 @@ public protocol FavoriteButtonDelegate {
     var favoriteButtonAccessibilityLabel : String { get }
 }
 
-open class FavoriteButtonNode : ASDisplayNode {
+open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
     private static let image = UIImage(named: "heart")
     
     private var _currentlyFavorited : Bool = false
@@ -39,6 +39,25 @@ open class FavoriteButtonNode : ASDisplayNode {
     
     open var delegate : FavoriteButtonDelegate? = nil
     private var didInitButton : Bool = false
+    
+    open var normalColor : UIColor? {
+        get {
+            var color : UIColor? = nil
+            performOnMainQueueSync {
+                if let button = faveButtonNode.view as? FaveButton {
+                    color = button.normalColor
+                }
+            }
+            return color
+        }
+        set {
+            performOnMainQueueSync {
+                if let button = faveButtonNode.view as? FaveButton, let color = newValue {
+                    button.normalColor = color
+                }
+            }
+        }
+    }
     
     public override init() {
         faveButtonNode = ASDisplayNode(viewBlock: { FaveButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32)) })
@@ -74,14 +93,12 @@ open class FavoriteButtonNode : ASDisplayNode {
                 button.accessibilityLabel = accessibilityLabelString
             }
             
-            button.delegate = RelistenFaveButtonDelegate.sharedDelegate
+            button.delegate = self
             
             button.applyInit()
             
             button.setSelected(selected: currentlyFavorited, animated: false)
             
-            button.addTarget(self, action:#selector(onFavorite), for:.touchUpInside)
-
             didInitButton = true
         }
     }
@@ -96,11 +113,36 @@ open class FavoriteButtonNode : ASDisplayNode {
         )
     }
     
-    @objc open func onFavorite() {
+    // MARK: FaveButtonDelegate
+    public func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
         _currentlyFavorited = !_currentlyFavorited
         if let delegate = delegate {
             delegate.didFavorite(currentlyFavorited : _currentlyFavorited)
         }
+    }
+    
+    private static func color(_ rgbColor: Int) -> UIColor{
+        return UIColor(
+            red:   CGFloat((rgbColor & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbColor & 0x00FF00) >> 8 ) / 255.0,
+            blue:  CGFloat((rgbColor & 0x0000FF) >> 0 ) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
+    private let colors = [
+        DotColors(first: color(0x7DC2F4), second: color(0xE2264D)),
+        DotColors(first: color(0xF8CC61), second: color(0x9BDFBA)),
+        DotColors(first: color(0xAF90F4), second: color(0x90D1F9)),
+        DotColors(first: color(0xE9A966), second: color(0xF8C852)),
+        DotColors(first: color(0xF68FA7), second: color(0xF6A2B8))
+    ]
+    
+    public func faveButtonDotColors(_ faveButton: FaveButton) -> [DotColors]?{
+        return colors
+    }
+    
+    public func instantCallback(_ faveButton: FaveButton, didSelected selected: Bool) {
     }
 }
 

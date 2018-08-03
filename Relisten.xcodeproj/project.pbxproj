@@ -429,6 +429,7 @@
 				7C80440C1E6F29AF00BA946E /* Views */,
 				7C80440B1E6F29AB00BA946E /* DisplayNodes */,
 				7CC0953E1E6C6D370067FD39 /* View Controllers */,
+				7C68279A1F99240A00E260B1 /* Offline */,
 				7C449EBE1D5A513800750D54 /* API */,
 				7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */,
 				7C8044141E6F4B1E00BA946E /* AppColors.swift */,
@@ -442,7 +443,6 @@
 		7C449EBE1D5A513800750D54 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				7C68279A1F99240A00E260B1 /* Offline */,
 				7C03A4B81E60FB52006F2912 /* Models */,
 				7C03A4C31E621836006F2912 /* ApiCache.swift */,
 				7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */,

@@ -83,7 +83,7 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
                 return { SourceDetailsNode(source: source, inShow: show, artist: artist, atIndex: indexPath.row, isDetails: true) }
             }
             else if indexPath.row == 1 {
-                return { UserPropertiesForShowNode(source: source, inShow: show, artist: artist, shareSheetController: self) }
+                return { UserPropertiesForShowNode(source: source, inShow: show, artist: artist, viewController: self) }
             }
         }
         

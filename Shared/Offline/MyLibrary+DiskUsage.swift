@@ -19,7 +19,7 @@ extension MyLibrary {
         if let meta = offlineMetadata(forTrack: track), let size = meta.file_size.value {
             return callback(UInt64(size))
         }
-        let filesizeBlock = {
+        diskUseQueue.async {
             do {
                 let offlinePath = RelistenDownloadManager.shared.downloadPath(forURL: track.mp3_url)
                 
@@ -41,12 +41,6 @@ extension MyLibrary {
                 
                 callback(nil)
             }
-        }
-        
-        if DispatchQueue.getSpecific(key: diskUseQueueKey) != nil {
-            filesizeBlock()
-        } else {
-            diskUseQueue.async(execute: filesizeBlock)
         }
     }
     

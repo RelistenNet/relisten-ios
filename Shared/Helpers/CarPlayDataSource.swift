@@ -83,31 +83,31 @@ class CarPlayDataSource {
         _sortedArtistsWithFavorites = LockableDataItem<[ArtistWithCounts]>([], queue: queue, delegate: delegate)
         lockableDataItems = [_recentlyPlayedShows, _favoriteShowsByArtist, _offlineShowsByArtist, _sortedArtistsWithFavorites]
         
-        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe({ [weak self] tracks, _ in
+        MyLibrary.shared.observeRecentlyPlayedTracks.observe({ [weak self] tracks, _ in
             guard let s = self else { return }
             s.queue.async {
                 s.reloadRecentTracks(tracks: tracks)
             }
         }).add(to: &disposal)
         
-        MyLibraryManager.shared.library.observeOfflineSources.observe({ [weak self] shows, _ in
+        MyLibrary.shared.observeOfflineSources.observe({ [weak self] shows, _ in
             guard let s = self else { return }
             s.queue.async {
                 s.reloadOfflineSources(shows: shows)
             }
         }).add(to: &disposal)
         
-        MyLibraryManager.shared.observeFavoriteArtistIds.observe({ [weak self] artistIds, _ in
+        MyLibrary.shared.observeFavoriteArtistIds.observe({ [weak self] artistIds, _ in
             guard let s = self else { return }
             s.queue.async {
                 s.reloadFavoriteArtistIds(artistIds: Array(artistIds))
             }
         }).add(to: &disposal)
         
-        MyLibraryManager.shared.observeMyShows.observe({ [weak self] shows, _ in
+        MyLibrary.shared.observeMyShows.observe({ [weak self] shows, _ in
             guard let s = self else { return }
             s.queue.async {
-                s.reloadFavorites(shows: MyLibraryManager.shared.library.shows)
+                s.reloadFavorites(shows: MyLibrary.shared.shows)
             }
         }).add(to: &disposal)
         

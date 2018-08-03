@@ -76,7 +76,11 @@ public class MyLibrary {
     
     public let offlineCache : Storage<Set<URL>>
     public let offlineCacheDownloadBacklogStorage : Storage<[Track]>
-    
+    public let offlineCacheSourcesMetadata : Storage<Set<OfflineSourceMetadata>>
+
+    internal let diskUseQueue : DispatchQueue = DispatchQueue(label: "live.relisten.library.diskUse")
+    internal let diskUseQueueKey = DispatchSpecificKey<Int>()
+        
     private let latestDBVersion : DBVersion = .v1
     private let dbVersionKey : String = "offlineVersion"
     
@@ -103,6 +107,8 @@ public class MyLibrary {
         )
         
         offlineCacheDownloadBacklogStorage = offlineCache.transformCodable(ofType: [Track].self)
+        
+        diskUseQueue.setSpecific(key: diskUseQueueKey, value: 1)
         
         try! loadOfflineData()
     }

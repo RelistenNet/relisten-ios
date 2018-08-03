@@ -26,7 +26,7 @@ public class YearShowCellNode : ASCellNode {
         vertical = verticalLayout
         
         if let artist = showingArtist {
-            artistNode = ASTextNode(artist.name, textStyle: .caption1, color: AppColors.mutedText)
+            artistNode = ASTextNode(artist.name, textStyle: .caption1)
         }
         else {
             artistNode = nil
@@ -74,6 +74,11 @@ public class YearShowCellNode : ASCellNode {
         
         isAvailableOffline = MyLibrary.shared.isShowAtLeastPartiallyAvailableOffline(self.show)
         
+        artworkNode = ASImageNode()
+        artworkNode.style.maxWidth = .init(unit: .points, value: 100.0)
+        artworkNode.style.maxHeight = .init(unit: .points, value: 100.0)
+        artworkNode.backgroundColor = show.fastImageCacheWrapper().placeholderColor()
+        
         super.init()
         
         if cellTransparency == 1.0 {
@@ -95,6 +100,8 @@ public class YearShowCellNode : ASCellNode {
             accessoryType = .disclosureIndicator
         }
     }
+    
+    public let artworkNode : ASImageNode
     
     public let artistNode: ASTextNode?
     public let showNode: ASTextNode
@@ -123,15 +130,18 @@ public class YearShowCellNode : ASCellNode {
                 s.setNeedsLayout()
             }
         }.dispose(to: &disposal)
+        
+        AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in
+            guard let s = self else { return }
+            guard let image = i else { return }
+            s.artworkNode.image = image
+            s.setNeedsLayout()
+        }
     }
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         if vertical {
             var verticalStack: [ASLayoutElement] = []
-            
-            if let art = artistNode {
-                verticalStack.append(art)
-            }
             
             verticalStack.append(contentsOf: [
                 showNode,
@@ -161,6 +171,33 @@ public class YearShowCellNode : ASCellNode {
             vs.style.minHeight = .init(unit: .points, value: 22.0)
             
             verticalStack.append(vs)
+                        
+            let textStack = ASStackLayoutSpec(
+                direction: .vertical,
+                spacing: 2,
+                justifyContent: .end,
+                alignItems: .start,
+                children: verticalStack
+            )
+            textStack.style.alignSelf = .stretch
+            
+            let artworkStack = ASStackLayoutSpec(
+                direction: .vertical,
+                spacing: 4,
+                justifyContent: .start,
+                alignItems: .start,
+                children: ArrayNoNils(artistNode, artworkNode)
+            )
+            artworkStack.style.alignSelf = .stretch
+            
+            let stack = ASStackLayoutSpec(
+                direction: .horizontal,
+                spacing: 8.0,
+                justifyContent: .start,
+                alignItems: .center,
+                children: [artworkStack, textStack]
+            )
+            stack.style.alignSelf = .stretch
             
             // The update date doesn't fit in the current vertical size, and it's not worth changing that size for a property that nobody uses in vertical mode.
             // Uncomment this if that story changes later.
@@ -170,33 +207,36 @@ public class YearShowCellNode : ASCellNode {
             
             return ASInsetLayoutSpec(
                 insets: UIEdgeInsetsMake(12, 12, 12, 12),
-                child: ASStackLayoutSpec(
-                    direction: .vertical,
-                    spacing: 4,
-                    justifyContent: .start,
-                    alignItems: .start,
-                    children: verticalStack
-                )
+                child: stack
             )
         }
         
-        let top = ASStackLayoutSpec(
+        let showAndSBD = ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 8,
             justifyContent: .start,
             alignItems: .center,
-            children: ArrayNoNils(showNode, soundboardIndicatorNode, SpacerNode(), ratingNode)
+            children: ArrayNoNils(showNode, soundboardIndicatorNode)
         )
-        top.style.alignSelf = .stretch
+        showAndSBD.style.alignSelf = .stretch
         
-        let bottom = ASStackLayoutSpec(
+        let venueLayout = ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 8,
-            justifyContent: .spaceBetween,
-            alignItems: .baselineFirst,
-            children: ArrayNoNils(venueNode, metaNode)
+            justifyContent: .start,
+            alignItems: .center,
+            children: ArrayNoNils(venueNode)
         )
-        bottom.style.alignSelf = .stretch
+        venueLayout.style.alignSelf = .stretch
+        
+        let ratingAndMeta = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 8,
+            justifyContent: .end,
+            alignItems: .baselineLast,
+            children: ArrayNoNils(ratingNode, SpacerNode(), metaNode)
+        )
+        ratingAndMeta.style.alignSelf = .stretch
         
         var footer : ASStackLayoutSpec? = nil
         if let updateDateNode = updateDateNode {
@@ -210,12 +250,21 @@ public class YearShowCellNode : ASCellNode {
             footer?.style.alignSelf = .stretch
         }
         
-        let stack = ASStackLayoutSpec(
+        let textStack = ASStackLayoutSpec(
             direction: .vertical,
             spacing: 4.0,
             justifyContent: .start,
             alignItems: .start,
-            children: ArrayNoNils(top, bottom, footer)
+            children: ArrayNoNils(showAndSBD, venueLayout, ratingAndMeta, footer)
+        )
+        textStack.style.alignSelf = .stretch
+        
+        let stack = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 8.0,
+            justifyContent: .start,
+            alignItems: .start,
+            children: [artworkNode, textStack]
         )
         stack.style.alignSelf = .stretch
 

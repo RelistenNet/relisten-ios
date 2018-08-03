@@ -45,6 +45,12 @@ public class SourceTrackAudioItem : AGAudioItem {
         else {
             self.playbackURL = track.mp3_url
         }
+        
+        AlbumArtImageCache.shared.cache.retrieveImage(for: track.showInfo.show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatMedium) { [weak self] (_, _, i) in
+            guard let s = self else { return }
+            guard let image = i else { return }
+            s.albumArt = image
+        }
 
         self.metadataLoaded = true
     }

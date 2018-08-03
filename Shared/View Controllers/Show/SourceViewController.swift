@@ -25,8 +25,7 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
     public let isInMyShows = Observable(false)
     public let isAvailableOffline = Observable(false)
 
-    private lazy var addToMyShowsNode = SwitchCellNode(observeChecked: isInMyShows, withLabel: "Part of My Shows")
-    private lazy var downloadNode = SwitchCellNode(observeChecked: isAvailableOffline, withLabel: "Fully Available Offline")
+    private lazy var completeShowInformation = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
 
     public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
@@ -45,75 +44,6 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
         self.idx = idx
         
         super.init()
-        
-        addSwitchListeners()
-        
-        let library = MyLibraryManager.shared.library
-        
-        library.observeOfflineSources.observe { [weak self] (new, old) in
-            self?.isAvailableOffline.value = library.isSourceFullyAvailableOffline(source)
-        }.add(to: &disposal)
-
-        MyLibraryManager.shared.observeMyShows.observe { [weak self] (new, old) in
-            guard let s = self else { return }
-            
-            s.isInMyShows.value = library.isShowInLibrary(show: s.show, byArtist: s.artist)
-        }.add(to: &disposal)
-        
-        RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler({ [weak self] track in
-            guard let s = self else { return }
-            
-            if track.showInfo.source.id == s.source.id {
-                MyLibraryManager.shared.library.diskUsageForSource(source: s.completeShowInformation) { (size) in
-                    s.rebuildOfflineSwitch(size)
-                }
-            }
-        }).add(to: &disposal)
-        
-        RelistenDownloadManager.shared.eventTracksDeleted.addHandler({ [weak self] tracks in
-            guard let s = self else { return }
-            
-            if tracks.any(match: { $0.showInfo.source.id == s.source.id }) {
-                MyLibraryManager.shared.library.diskUsageForSource(source: s.completeShowInformation) { (size) in
-                    s.rebuildOfflineSwitch(size)
-                }
-            }
-        }).add(to: &disposal)
-    }
-    
-    func rebuildOfflineSwitch(_ sourceSize: UInt64?) {
-        let txt = "Fully Available Offline" + (sourceSize == nil ? "" : " (\(sourceSize!.humanizeBytes()))")
-        downloadNode = SwitchCellNode(observeChecked: isAvailableOffline, withLabel: txt)
-        addSwitchListeners()
-        
-        DispatchQueue.main.async {
-            self.tableNode.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
-        }
-    }
-    
-    func addSwitchListeners() {
-        addToMyShowsNode.observeUserChecked.removeAllObservers()
-        downloadNode.observeUserChecked.removeAllObservers()
-        
-        addToMyShowsNode.observeUserChecked.observe(includingInitial: false) { (newValue, old) in
-            if newValue {
-                MyLibraryManager.shared.addShow(show: self.completeShowInformation)
-            }
-            else {
-                let _ = MyLibraryManager.shared.removeShow(show: self.completeShowInformation)
-            }
-        }.add(to: &disposal)
-        
-        downloadNode.observeUserChecked.observe(includingInitial: false) { (newValue, old) in
-            if newValue {
-                // download whole show
-                RelistenDownloadManager.shared.download(show: self.completeShowInformation)
-            }
-            else {
-                // remove any downloaded tracks
-                RelistenDownloadManager.shared.delete(showInfo: self.completeShowInformation)
-            }
-        }.add(to: &disposal)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -130,51 +60,6 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
         }
     }
     
-    /*
-    func doLayout(sourceSize: UInt64?) {
-        let str = sourceSize == nil ? "" : " (\(sourceSize!.humanizeBytes()))"
-        
-        layout {
-            var sections: [Section<[Layout]>] = [
-                Section(items: [
-                    SourceDetailsLayout(source: self.source, inShow: self.show, artist: self.artist, atIndex: self.idx),
-                    SwitchCellLayout(title: "Part of My Shows", checkedByDefault: { self.isShowInLibrary }, onSwitch: self.onToggleAddToMyShows!),
-                    SwitchCellLayout(title: "Fully Available Offline" + str, checkedByDefault: { self.isAvailableOffline }, onSwitch: self.onToggleOffline!),
-                    ShareCellLayout()
-                    ])
-            ]
-            
-            sections.append(contentsOf: self.source.sets.map({ (set: SourceSet) -> Section<[Layout]> in
-     let layouts = set.tracks.map({ TrackStatusLayout(withTrack: Track(sourceTrack: $0, showInfo: CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)), withHandler: self) })
-                return LayoutsAsSingleSection(items: layouts, title: self.artist.features.sets ? set.name : "Tracks")
-            }))
-            
-            return sections
-        }
-    }
-     */
-    
-    var completeShowInformation: CompleteShowInformation {
-        get {
-            return CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
-        }
-    }
-    
-    private func presentShareSheet() {
-        let show = completeShowInformation
-        let activities: [Any] = [ShareHelper.text(forSource: show), ShareHelper.url(forSource: show)]
-        
-        let shareVc = UIActivityViewController(activityItems: activities, applicationActivities: nil)
-        shareVc.modalTransitionStyle = .coverVertical
-        
-        if PlaybackController.sharedInstance.hasBarBeenAdded {
-            PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
-        }
-        else {
-            self.present(shareVc, animated: true, completion: nil)
-        }
-    }
-    
     // MARK: UITableViewDelegate
     func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 1 + source.sets.count
@@ -182,7 +67,7 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 4
+            return 2
         }
         
         return source.sets[section - 1].tracks.count
@@ -198,13 +83,7 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
                 return { SourceDetailsNode(source: source, inShow: show, artist: artist, atIndex: indexPath.row, isDetails: true) }
             }
             else if indexPath.row == 1 {
-                return { self.addToMyShowsNode }
-            }
-            else if indexPath.row == 2 {
-                return { self.downloadNode }
-            }
-            else if indexPath.row == 3 {
-                return { ShareCellNode() }
+                return { UserPropertiesForShowNode(source: source, inShow: show, artist: artist, viewController: self) }
             }
         }
         
@@ -217,7 +96,7 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         // Don't highlight taps on the "my shows"/downloads cells, since they require a tap on the switch
-        if indexPath.section == 0, indexPath.row > 0, indexPath.row < 3 {
+        if indexPath.section == 0, indexPath.row == 1 {
             return false
         } else {
             return true
@@ -231,8 +110,6 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
             switch indexPath.row {
                 case 0:
                     navigationController?.pushViewController(SourceDetailsViewController(artist: artist, show: show, source: source), animated: true)
-                case 3:
-                    presentShareSheet()
                 default:
                     break
             }

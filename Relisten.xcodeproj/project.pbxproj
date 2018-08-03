@@ -377,7 +377,6 @@
 				7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */,
 				7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */,
 				7C4F1BE71F73186500C592BD /* RelistenSongModels.swift */,
-				43B047742100626200251046 /* OfflineSourceMetadata.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -500,6 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */,
+				43B047742100626200251046 /* OfflineSourceMetadata.swift */,
 				7C13704620B62C2D00710E90 /* MyLibrary.swift */,
 				7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */,
 			);

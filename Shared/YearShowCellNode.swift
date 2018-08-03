@@ -26,7 +26,7 @@ public class YearShowCellNode : ASCellNode {
         vertical = verticalLayout
         
         if let artist = showingArtist {
-            artistNode = ASTextNode(artist.name, textStyle: .caption1, color: AppColors.mutedText)
+            artistNode = ASTextNode(artist.name, textStyle: .caption1)
         }
         else {
             artistNode = nil
@@ -144,10 +144,6 @@ public class YearShowCellNode : ASCellNode {
         if vertical {
             var verticalStack: [ASLayoutElement] = []
             
-            if let art = artistNode {
-                verticalStack.append(art)
-            }
-            
             verticalStack.append(contentsOf: [
                 showNode,
                 venueNode,
@@ -179,19 +175,28 @@ public class YearShowCellNode : ASCellNode {
                         
             let textStack = ASStackLayoutSpec(
                 direction: .vertical,
-                spacing: 4,
-                justifyContent: .start,
+                spacing: 2,
+                justifyContent: .end,
                 alignItems: .start,
                 children: verticalStack
             )
             textStack.style.alignSelf = .stretch
+            
+            let artworkStack = ASStackLayoutSpec(
+                direction: .vertical,
+                spacing: 4,
+                justifyContent: .start,
+                alignItems: .start,
+                children: ArrayNoNils(artistNode, artworkNode)
+            )
+            artworkStack.style.alignSelf = .stretch
             
             let stack = ASStackLayoutSpec(
                 direction: .horizontal,
                 spacing: 8.0,
                 justifyContent: .start,
                 alignItems: .center,
-                children: [artworkNode, textStack]
+                children: [artworkStack, textStack]
             )
             stack.style.alignSelf = .stretch
             

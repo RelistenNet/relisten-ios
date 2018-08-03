@@ -175,7 +175,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         deleteButton.isHidden = deleteButtonHidden
         downloadButton.setImage(downloadButtonImage, for: .normal)
         downloadText.attributedText = RelistenAttributedString(txt, textStyle: .footnote)
-        self.setNeedsLayout()
+        DispatchQueue.main.async { self.setNeedsLayout() }
     }
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

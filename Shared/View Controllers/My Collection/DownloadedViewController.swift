@@ -20,7 +20,7 @@ class DownloadedViewController: ShowListViewController<[OfflineSourceMetadata]> 
         
         latestData = loadOffline()
         
-        MyLibraryManager.shared.library.observeOfflineSources.observe { [weak self] (_, _) in
+        MyLibrary.shared.observeOfflineSources.observe { [weak self] (_, _) in
             let offlineSources = self?.loadOffline()
             if !(offlineSources == self?.latestData) {
                 self?.latestData = offlineSources
@@ -58,7 +58,7 @@ class DownloadedViewController: ShowListViewController<[OfflineSourceMetadata]> 
     }
     
     func loadOffline() -> [OfflineSourceMetadata] {
-        return MyLibraryManager.shared.library.offlinePlayedByArtist(artist)
+        return MyLibrary.shared.offlinePlayedByArtist(artist)
     }
     
     // This subclass has to re-implement this method because Texture tries to perform an Obj-C respondsToSelctor: check and it's not finding the methods if they just exist on the superclass with the argument label names (numberOfSectionsIn: does exist though)

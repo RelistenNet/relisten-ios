@@ -49,17 +49,17 @@ public class ArtistCellNode : ASCellNode, FavoriteButtonDelegate {
     }
     
     private func setupFavoriteObservers() {
-        MyLibraryManager.shared.artistFavorited.addHandler({ [weak self] artist in
+        MyLibrary.shared.artistFavorited.addHandler({ [weak self] artist in
             self?.favoriteNode.currentlyFavorited = (self?.artist.id == artist.id)
         }).add(to: &disposal)
         
-        MyLibraryManager.shared.artistUnfavorited.addHandler({ [weak self] artist in
+        MyLibrary.shared.artistUnfavorited.addHandler({ [weak self] artist in
             if self?.artist.id == artist.id {
                 self?.favoriteNode.currentlyFavorited = false
             }
         }).add(to: &disposal)
         
-        MyLibraryManager.shared.observeFavoriteArtistIds.observe({ [weak self] ids, _ in
+        MyLibrary.shared.observeFavoriteArtistIds.observe({ [weak self] ids, _ in
             guard let s = self else { return }
             
             s.favoriteNode.currentlyFavorited = ids.contains(s.artist.id)
@@ -68,10 +68,10 @@ public class ArtistCellNode : ASCellNode, FavoriteButtonDelegate {
     
     public func didFavorite(currentlyFavorited : Bool) {
         if currentlyFavorited {
-            MyLibraryManager.shared.favoriteArtist(artist: self.artist)
+            MyLibrary.shared.favoriteArtist(artist: self.artist)
         }
         else {
-            let _ = MyLibraryManager.shared.removeArtist(artist: self.artist)
+            let _ = MyLibrary.shared.removeArtist(artist: self.artist)
         }
     }
     

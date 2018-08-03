@@ -130,7 +130,7 @@ public class SourceDetailsNode : ASCellNode {
         accessoryType = isDetails ? .none : .disclosureIndicator
         
         if !isDetails {
-            let library = MyLibraryManager.shared.library
+            let library = MyLibrary.shared
             library.observeOfflineSources
                 .observe({ [weak self] _, _ in
                     guard let s = self else { return }

@@ -63,7 +63,7 @@ public class Track : Codable, Hashable {
                 return .downloading
             } else if RelistenDownloadManager.shared.isTrackQueuedToDownload(self) {
                 return .queued
-            } else if MyLibraryManager.shared.library.isTrackAvailableOffline(self) {
+            } else if MyLibrary.shared.isTrackAvailableOffline(self) {
                 return .downloaded
             }
             return .none

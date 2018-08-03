@@ -60,7 +60,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(cb).add(to: &disposal)
         RelistenDownloadManager.shared.eventTracksDeleted.addHandler(cb).add(to: &disposal)
 
-        MyLibraryManager.shared.observeFavoriteArtistIds
+        MyLibrary.shared.observeFavoriteArtistIds
             .observe({ [weak self] artistIds, _ in
                 DispatchQueue.main.async {
                     self?.favoriteArtists = Array(artistIds);
@@ -69,13 +69,13 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             })
             .add(to: &disposal)
         
-        MyLibraryManager.shared.observeRecentlyPlayedTracks
+        MyLibrary.shared.observeRecentlyPlayedTracks
             .observe({ [weak self] tracks, _ in
                 self?.reloadRecentShows(tracks: tracks)
             })
             .add(to: &disposal)
         
-        MyLibraryManager.shared.library.observeOfflineSources
+        MyLibrary.shared.observeOfflineSources
             .observe({ [weak self] shows, _ in
                 self?.reloadOfflineSources(shows: shows)
             })
@@ -84,7 +84,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let library = MyLibraryManager.shared.library
+        let library = MyLibrary.shared
         reloadOfflineSources(shows: library.offlineSourcesMetadata)
         reloadRecentShows(tracks: library.recentlyPlayedTracks)
         

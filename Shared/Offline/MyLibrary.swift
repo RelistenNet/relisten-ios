@@ -15,20 +15,6 @@ import Observable
 
 import RealmSwift
 
-/// This is used for information that doens't come from Relisten.
-/// It is like a "sidecar" set of data that provides device-specific info
-public class OfflineTrackMetadata : Codable {
-    public let fileSize: UInt64
-    
-    public init(fileSize: UInt64) {
-        self.fileSize = fileSize
-    }
-}
-
-fileprivate enum DBVersion: Int, RawRepresentable {
-    case v1 = 1 // Added UUID to offline JSON objects. Requires wipe of previous data
-}
-
 public class MyLibraryFavorites {
     public let artists: Results<FavoritedArtist>
     public let shows: Results<FavoritedShow>
@@ -62,8 +48,6 @@ public class MyLibraryOffline {
 public class MyLibrary {
     public static let shared = MyLibrary()
     
-    public static let MaxRecentlyPlayedShows: Int = 25
-
     internal let realm: Realm
     public let recentlyPlayed: Results<RecentlyPlayedShow>
     
@@ -80,9 +64,6 @@ public class MyLibrary {
 
     internal let diskUseQueue : DispatchQueue = DispatchQueue(label: "live.relisten.library.diskUse")
     internal let diskUseQueueKey = DispatchSpecificKey<Int>()
-        
-    private let latestDBVersion : DBVersion = .v1
-    private let dbVersionKey : String = "offlineVersion"
     
     private init() {
         realm = try! Realm()

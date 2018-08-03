@@ -134,7 +134,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler({ [weak self] track in
             guard let s = self else { return}
             if track.showInfo.source.id == s.source.id {
-                MyLibrary.shared.diskUsageForSource(source: s.completeShowInformation) { (size, numberOfTracks) in
+                MyLibrary.shared.diskUsageForSource(source: s.source) { (size, numberOfTracks) in
                     s.rebuildOfflineStatus(size, numberOfTracks: numberOfTracks)
                 }
             }
@@ -143,13 +143,13 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         RelistenDownloadManager.shared.eventTracksDeleted.addHandler({ [weak self] tracks in
             guard let s = self else { return}
             if tracks.any(match: { $0.showInfo.source.id == s.source.id }) {
-                MyLibrary.shared.diskUsageForSource(source: s.completeShowInformation) { (size, numberOfTracks) in
+                MyLibrary.shared.diskUsageForSource(source: s.source) { (size, numberOfTracks) in
                     s.rebuildOfflineStatus(size, numberOfTracks: numberOfTracks)
                 }
             }
         }).add(to: &disposal)
         
-        MyLibrary.shared.diskUsageForSource(source: completeShowInformation) { (size, numberOfTracks) in
+        MyLibrary.shared.diskUsageForSource(source: source) { (size, numberOfTracks) in
             self.rebuildOfflineStatus(size, numberOfTracks: numberOfTracks)
         }
     }

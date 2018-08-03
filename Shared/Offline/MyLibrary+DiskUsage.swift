@@ -50,7 +50,7 @@ extension MyLibrary {
         }
     }
     
-    public func diskUsageForSource(source: CompleteShowInformation, _ callback: @escaping (_ diskUsage: UInt64, _ numberOfTracks: Int) -> Void) {
+    public func diskUsageForSource(source: SourceFull, _ callback: @escaping (_ diskUsage: UInt64, _ numberOfTracks: Int) -> Void) {
         diskUseQueue.async {
             var completeBytes: UInt64 = 0
             var numberOfTracks: Int = 0
@@ -58,7 +58,7 @@ extension MyLibrary {
             let group = DispatchGroup()
             let bytesQueue = DispatchQueue(label: "live.relisten.library.diskUsage.bytesQueue")
             
-            for track in source.source.tracksFlattened {
+            for track in source.tracksFlattened {
                 group.enter()
                 self.diskUsageForTrackURL(track: track, { (size) in
                     if let bytes = size {

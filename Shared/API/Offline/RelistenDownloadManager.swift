@@ -120,26 +120,36 @@ public class RelistenDownloadManager {
         }
     }
     
+    private func trackNeedsDownload(_ track : Track) -> Bool {
+        let availableOffline = MyLibraryManager.shared.library.isTrackAvailableOffline(track)
+        let currentlyDownloading = isTrackQueuedToDownload(track) || isTrackActivelyDownloading(track)
+        
+        return !availableOffline && !currentlyDownloading
+    }
+    
     public func download(show: CompleteShowInformation) {
-        let tracks = show.completeTracksFlattened
+        let tracks : [Track] = show.completeTracksFlattened
+        var queuedTracks : [Track]  = []
         
         for track in tracks {
-            let availableOffline = MyLibraryManager.shared.library.isTrackAvailableOffline(track)
-            let currentlyDownloading = isTrackQueuedToDownload(track) || isTrackActivelyDownloading(track)
-            
-            if !availableOffline && !currentlyDownloading {
-                download(track: track, raiseEvent: false)
+            let willDownload = download(track: track, raiseEvent: false)
+            if willDownload {
+                queuedTracks.append(track)
             }
         }
         
-        eventTracksQueuedToDownload.raise(tracks)
+        eventTracksQueuedToDownload.raise(queuedTracks)
     }
     
     private func addDownloadTask(_ track: Track) {
         downloadManager.addDownloadTask(downloadFilename(forTrack: track), fileURL: track.mp3_url.absoluteString, destinationPath: downloadFolder)
     }
     
-    public func download(track: Track, raiseEvent: Bool = true) {
+    public func download(track: Track, raiseEvent: Bool = true) -> Bool {
+        if !trackNeedsDownload(track) {
+            return false
+        }
+        
         if downloadManager.downloadingArray.count < 3 {
             urlToTrackMap[track.mp3_url] = track
 
@@ -149,7 +159,11 @@ public class RelistenDownloadManager {
             MyLibraryManager.shared.library.queueToBacklog(track)
         }
         
-        eventTracksQueuedToDownload.raise([ track ])
+        if raiseEvent {
+            eventTracksQueuedToDownload.raise([ track ])
+        }
+        
+        return true
     }
     
     let downloadFolder: String

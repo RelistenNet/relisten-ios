@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */; };
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
-		430D64E6210BE379005D7F7A /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* DispatchQueue.swift */; };
+		430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */; };
+		43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43524ADA2114DFC700DC70CD /* RelistenTests.swift */; };
+		43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */; };
 		43A035D2210D255700C087DD /* FavoriteButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035D0210D255700C087DD /* FavoriteButtonNode.swift */; };
 		43A035EC210ECC8000C087DD /* RelistenAlbumArts.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035E4210ECC7F00C087DD /* RelistenAlbumArts.m */; };
@@ -115,6 +117,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		43524ADE2114DFC700DC70CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C8EF1051D5A49C200004B5C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 43B5340F2109226F00DE9B1F;
+			remoteInfo = RelistenShared;
+		};
 		43B534182109228700DE9B1F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7C8EF1051D5A49C200004B5C /* Project object */;
@@ -162,7 +171,10 @@
 		2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishOD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAddedViewController.swift; sourceTree = "<group>"; };
 		430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayDataSource.swift; path = Helpers/CarPlayDataSource.swift; sourceTree = "<group>"; };
-		430D64E5210BE379005D7F7A /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DispatchQueue.swift; path = Extensions/DispatchQueue.swift; sourceTree = "<group>"; };
+		430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReentrantDispatchQueue.swift; path = Extensions/ReentrantDispatchQueue.swift; sourceTree = "<group>"; };
+		43524AD82114DFC700DC70CD /* RelistenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		43524ADA2114DFC700DC70CD /* RelistenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenTests.swift; sourceTree = "<group>"; };
+		43524ADC2114DFC700DC70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
 		43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPropertiesForShowNode.swift; path = Layouts/UserPropertiesForShowNode.swift; sourceTree = "<group>"; };
 		43A035D0210D255700C087DD /* FavoriteButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FavoriteButtonNode.swift; path = Layouts/FavoriteButtonNode.swift; sourceTree = "<group>"; };
@@ -283,6 +295,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		43524AD52114DFC700DC70CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		43B5340D2109226F00DE9B1F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -328,6 +348,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43524AD92114DFC700DC70CD /* RelistenTests */ = {
+			isa = PBXGroup;
+			children = (
+				43524ADA2114DFC700DC70CD /* RelistenTests.swift */,
+				43524ADC2114DFC700DC70CD /* Info.plist */,
+			);
+			path = RelistenTests;
+			sourceTree = "<group>";
+		};
 		43A035D7210ECC4D00C087DD /* AlbumArt */ = {
 			isa = PBXGroup;
 			children = (
@@ -531,7 +560,7 @@
 				7C31551420BFB3DA00F07622 /* String.swift */,
 				7C31552A20C206BA00F07622 /* Numeric.swift */,
 				7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */,
-				430D64E5210BE379005D7F7A /* DispatchQueue.swift */,
+				430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */,
 				43A035F0210ED62200C087DD /* Show+FastImageCache.swift */,
 			);
 			name = Extensions;
@@ -542,6 +571,7 @@
 			children = (
 				7C449EBC1D5A511C00750D54 /* Apps */,
 				7C449EBD1D5A513300750D54 /* Shared */,
+				43524AD92114DFC700DC70CD /* RelistenTests */,
 				FBC463F999487576B5C823F4 /* Frameworks */,
 				C4F5A2683057A5DAFFCCFB82 /* Pods */,
 				7C8EF10E1D5A49C300004B5C /* Products */,
@@ -557,6 +587,7 @@
 				7C449E9C1D5A4F4200750D54 /* PhishOD.app */,
 				7C449EAF1D5A4F4300750D54 /* PhishODUITests.xctest */,
 				43B534102109226F00DE9B1F /* libRelistenShared.a */,
+				43524AD82114DFC700DC70CD /* RelistenTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -699,6 +730,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		43524AD72114DFC700DC70CD /* RelistenTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43524AE22114DFC700DC70CD /* Build configuration list for PBXNativeTarget "RelistenTests" */;
+			buildPhases = (
+				43524AD42114DFC700DC70CD /* Sources */,
+				43524AD52114DFC700DC70CD /* Frameworks */,
+				43524AD62114DFC700DC70CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				43524ADF2114DFC700DC70CD /* PBXTargetDependency */,
+			);
+			name = RelistenTests;
+			productName = RelistenTests;
+			productReference = 43524AD82114DFC700DC70CD /* RelistenTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		43B5340F2109226F00DE9B1F /* RelistenShared */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 43B534162109227000DE9B1F /* Build configuration list for PBXNativeTarget "RelistenShared" */;
@@ -807,6 +856,11 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Alec Gorge";
 				TargetAttributes = {
+					43524AD72114DFC700DC70CD = {
+						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = HT7ELV3Q35;
+						ProvisioningStyle = Automatic;
+					};
 					43B5340F2109226F00DE9B1F = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = HT7ELV3Q35;
@@ -867,11 +921,19 @@
 				7C449E9B1D5A4F4200750D54 /* PhishOD */,
 				7C449EAE1D5A4F4300750D54 /* PhishODUITests */,
 				43B5340F2109226F00DE9B1F /* RelistenShared */,
+				43524AD72114DFC700DC70CD /* RelistenTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		43524AD62114DFC700DC70CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7C449E9A1D5A4F4200750D54 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1195,6 +1257,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		43524AD42114DFC700DC70CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		43B5340C2109226F00DE9B1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1237,7 +1307,7 @@
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
 				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
 				43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */,
-				430D64E6210BE379005D7F7A /* DispatchQueue.swift in Sources */,
+				430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
 				43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */,
 				43B53436210922CE00DE9B1F /* SounceFeatureIndicatorNodes.swift in Sources */,
@@ -1320,6 +1390,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		43524ADF2114DFC700DC70CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 43B5340F2109226F00DE9B1F /* RelistenShared */;
+			targetProxy = 43524ADE2114DFC700DC70CD /* PBXContainerItemProxy */;
+		};
 		43B534192109228700DE9B1F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 43B5340F2109226F00DE9B1F /* RelistenShared */;
@@ -1364,6 +1439,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		43524AE02114DFC700DC70CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HT7ELV3Q35;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = RelistenTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		43524AE12114DFC700DC70CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HT7ELV3Q35;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = RelistenTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		43B534142109227000DE9B1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2C92D744AC05BD2FF4DA8A4 /* Pods-RelistenShared.debug.xcconfig */;
@@ -1641,6 +1760,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		43524AE22114DFC700DC70CD /* Build configuration list for PBXNativeTarget "RelistenTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43524AE02114DFC700DC70CD /* Debug */,
+				43524AE12114DFC700DC70CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		43B534162109227000DE9B1F /* Build configuration list for PBXNativeTarget "RelistenShared" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

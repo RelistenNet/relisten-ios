@@ -44,7 +44,7 @@
 		43B53433210922CE00DE9B1F /* ShareCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552720C0A08300F07622 /* ShareCellLayout.swift */; };
 		43B53434210922CE00DE9B1F /* ShareCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554220C2343000F07622 /* ShareCellNode.swift */; };
 		43B53435210922CE00DE9B1F /* SongLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BEA1F731A5900C592BD /* SongLayout.swift */; };
-		43B53436210922CE00DE9B1F /* SounceFeatureIndicatorNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553020C2074300F07622 /* SounceFeatureIndicatorNodes.swift */; };
+		43B53436210922CE00DE9B1F /* SourceFeatureIndicatorNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553020C2074300F07622 /* SourceFeatureIndicatorNodes.swift */; };
 		43B53437210922CE00DE9B1F /* SourceDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553C20C2199500F07622 /* SourceDetailsNode.swift */; };
 		43B53438210922CE00DE9B1F /* SwitchCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */; };
 		43B53439210922CE00DE9B1F /* SwitchCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553F20C224F500F07622 /* SwitchCellNode.swift */; };
@@ -224,7 +224,7 @@
 		7C31552720C0A08300F07622 /* ShareCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShareCellLayout.swift; path = Layouts/ShareCellLayout.swift; sourceTree = "<group>"; };
 		7C31552A20C206BA00F07622 /* Numeric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Numeric.swift; path = Extensions/Numeric.swift; sourceTree = "<group>"; };
 		7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OfflineIndicatorNode.swift; path = Layouts/OfflineIndicatorNode.swift; sourceTree = "<group>"; };
-		7C31553020C2074300F07622 /* SounceFeatureIndicatorNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SounceFeatureIndicatorNodes.swift; path = Layouts/SounceFeatureIndicatorNodes.swift; sourceTree = "<group>"; };
+		7C31553020C2074300F07622 /* SourceFeatureIndicatorNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourceFeatureIndicatorNodes.swift; path = Layouts/SourceFeatureIndicatorNodes.swift; sourceTree = "<group>"; };
 		7C31553320C2076C00F07622 /* AXRatingViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AXRatingViewNode.swift; path = Layouts/AXRatingViewNode.swift; sourceTree = "<group>"; };
 		7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HorizontalShowCollectionCellNode.swift; path = Layouts/HorizontalShowCollectionCellNode.swift; sourceTree = "<group>"; };
 		7C31553920C2081A00F07622 /* YearNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YearNode.swift; path = Layouts/YearNode.swift; sourceTree = "<group>"; };
@@ -525,7 +525,7 @@
 				7C31552720C0A08300F07622 /* ShareCellLayout.swift */,
 				7C31554220C2343000F07622 /* ShareCellNode.swift */,
 				7C4F1BEA1F731A5900C592BD /* SongLayout.swift */,
-				7C31553020C2074300F07622 /* SounceFeatureIndicatorNodes.swift */,
+				7C31553020C2074300F07622 /* SourceFeatureIndicatorNodes.swift */,
 				7C31553C20C2199500F07622 /* SourceDetailsNode.swift */,
 				7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */,
 				7C31553F20C224F500F07622 /* SwitchCellNode.swift */,
@@ -1302,7 +1302,7 @@
 				430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
 				43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */,
-				43B53436210922CE00DE9B1F /* SounceFeatureIndicatorNodes.swift in Sources */,
+				43B53436210922CE00DE9B1F /* SourceFeatureIndicatorNodes.swift in Sources */,
 				43B53447210922CE00DE9B1F /* SongViewController.swift in Sources */,
 				43B53451210922CE00DE9B1F /* RelistenTableViewController.swift in Sources */,
 				43B53433210922CE00DE9B1F /* ShareCellLayout.swift in Sources */,

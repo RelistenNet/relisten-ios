@@ -32,7 +32,7 @@ public class SourceDetailsNode : ASCellNode {
             textStyle: .headline
         )
         self.ratingNode = AXRatingViewNode(value: source.avg_rating / 10.0)
-        self.locationNode = ASTextNode(source.venue?.location ?? show.venue?.location ?? "", textStyle: .subheadline, color: UIColor.gray)
+        self.locationNode = ASTextNode(source.venue?.location ?? show.venue?.location ?? "", textStyle: .subheadline, color: AppColors.mutedText)
         
         var metaText = "\(source.duration == nil ? "" : source.duration!.humanize())"
         
@@ -117,7 +117,11 @@ public class SourceDetailsNode : ASCellNode {
             sourcePeopleNode = nil
         }
         
-        detailsNode = ASTextNode("See details, taper notes, reviews & more ›", textStyle: .caption1, color: .gray)
+        detailsNode = ASTextNode("See details, taper notes, reviews & more ›", textStyle: .caption1, color: AppColors.mutedText)
+        
+        let updateDate = DateFormatter.localizedString(from: source.updated_at, dateStyle: .long, timeStyle: .none)
+        let updateDateText = "Updated " + updateDate
+        updateDateNode = ASTextNode(updateDateText, textStyle: .footnote, color: AppColors.mutedText)
         
         artworkNode = ASImageNode()
         artworkNode.style.maxWidth = .init(unit: .points, value: 100.0)
@@ -157,6 +161,7 @@ public class SourceDetailsNode : ASCellNode {
     public let locationNode: ASTextNode
     public let metaNode: ASTextNode
     public let detailsNode: ASTextNode
+    public let updateDateNode : ASTextNode
     public let artworkNode: ASImageNode
     
     public let sourcePeopleNode: ASStackLayoutSpec?
@@ -234,7 +239,8 @@ public class SourceDetailsNode : ASCellNode {
                 children: ArrayNoNils(
                     top,
                     sourcePeopleNode,
-                    sourceNode
+                    sourceNode,
+                    updateDateNode
                 )
             )
         }

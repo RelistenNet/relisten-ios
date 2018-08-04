@@ -70,16 +70,29 @@ public class SourcesViewController: RelistenAsyncTableController<ShowWithSources
                 recentSources.append(sourcesSortedByUpdate[1])
             }
             if recentSources.count > 0 {
-                for i in 0..<sources.count {
-                    for j in 0..<recentSources.count {
-                        if sources[i] === recentSources[j] {
-                            retval.remove(at: i)
-                            break
-                        }
+                var topSourceArray : [SourceFull] = []
+                let topSource = retval.remove(at: 0)
+                var topSourceIsRecent = false
+                for i in 0..<recentSources.count {
+                    if recentSources[i] === topSource {
+                        topSourceIsRecent = true
+                        break
                     }
                 }
-                let topSource = retval.remove(at: 0)
-                retval = [topSource] + Array(sourcesSortedByUpdate[0..<2]) + retval
+                if !topSourceIsRecent {
+                    topSourceArray.append(topSource)
+                }
+                
+                retval = retval.filter({ (curSource) -> Bool in
+                    for i in 0..<recentSources.count {
+                        if curSource === recentSources[i] {
+                            return false
+                        }
+                    }
+                    return true
+                })
+                
+                retval = topSourceArray + Array(sourcesSortedByUpdate[0..<2]) + retval
             }
         }
         return retval

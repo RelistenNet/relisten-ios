@@ -33,7 +33,8 @@ public protocol RelistenDownloadManagerDelegate: class {
 }
 
 public protocol RelistenDownloadManagerDataSource : class {
-    func removeOfflineTrack(_ track: Track, saveImmediately : Bool)
+    func offlineTrackWillBeDeleted(_ track: Track)
+    func offlineTrackWasDeleted(_ track: Track)
 }
 
 public class RelistenDownloadManager {
@@ -49,10 +50,10 @@ public class RelistenDownloadManager {
 
     fileprivate var urlToTrackMap: [URL: Track] = [:]
     
-    private let initQueue : DispatchQueue = DispatchQueue(label: "live.relisten.ios.mp3-offline.queue")
+    private let queue : ReentrantDispatchQueue = ReentrantDispatchQueue(label: "live.relisten.ios.mp3-offline.queue")
     private var backingDownloadManager : MZDownloadManager?
     lazy var downloadManager: MZDownloadManager = {
-        initQueue.sync {
+        queue.sync {
             if (backingDownloadManager == nil) {
                 backingDownloadManager = MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self)
             }
@@ -60,21 +61,13 @@ public class RelistenDownloadManager {
         return backingDownloadManager!
     }()
     
-    private func downloadModelForTrack(_ track: Track) -> MZDownloadModel? {
-        for dlModel in downloadManager.downloadingArray {
-            if URL(string: dlModel.fileURL)! == track.mp3_url {
-                return dlModel
-            }
-        }
-        
-        return nil
-    }
+    
+    private let downloadFolder: String = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                                     FileManager.SearchPathDomainMask.userDomainMask,
+                                                                     true).first! + "/" + "offline-mp3s"
+    private let statusLabel: MarqueeLabel
     
     public init() {
-        downloadFolder = NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                             FileManager.SearchPathDomainMask.userDomainMask,
-                                                             true).first! + "/" + "offline-mp3s"
-        
         statusLabel = MarqueeLabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
         statusLabel.font = UIFont.systemFont(ofSize: 12.0)
         
@@ -82,43 +75,44 @@ public class RelistenDownloadManager {
     }
     
     public func delete(showInfo: CompleteShowInformation) {
-        let tracks = showInfo.completeTracksFlattened
-        
-        for track in tracks {
-            delete(track: track, saveImmediately: false)
+        queue.async {
+            let tracks = showInfo.completeTracksFlattened
+            
+            for track in tracks {
+                self.delete(track: track, shouldNotify: false)
+            }
+            
+            self.eventTracksDeleted.raise(tracks)
         }
-        
-        MyLibrary.shared.saveOfflineTrackUrls()
-        eventTracksDeleted.raise(tracks)
-        MyLibrary.shared.saveDownloadBacklog()
     }
     
-    public func delete(track: Track, saveImmediately: Bool = true) {
-        self.delegate?.trackBecameUnavailableOffline(track)
-        self.dataSource?.removeOfflineTrack(track, saveImmediately: saveImmediately)
-        
-        if track.downloadState == .downloading {
-            for (idx, downloadModel) in downloadManager.downloadingArray.enumerated() {
-                if downloadModel.downloadingURL == track.mp3_url {
-                    downloadManager.cancelTaskAtIndex(idx)
+    public func delete(track: Track, shouldNotify: Bool = true) {
+        queue.async {
+            self.delegate?.trackBecameUnavailableOffline(track)
+            self.dataSource?.offlineTrackWillBeDeleted(track)
+            
+            if track.downloadState == .downloading {
+                for (idx, downloadModel) in self.downloadManager.downloadingArray.enumerated() {
+                    if downloadModel.downloadingURL == track.mp3_url {
+                        self.downloadManager.cancelTaskAtIndex(idx)
+                    }
                 }
             }
-        }
-
-        if saveImmediately {
-            eventTracksDeleted.raise([track])
             
-            MyLibrary.shared.saveDownloadBacklog()
-        }
-        
-        DispatchQueue.global(qos: .background).async {
-            let file = self.downloadPath(forTrack: track)
-            
-            do {
-                try FileManager.default.removeItem(atPath: file)
-            }
-            catch {
-                print(error)
+            DispatchQueue.global(qos: .background).async {
+                let file = self.downloadPath(forTrack: track)
+                
+                do {
+                    try FileManager.default.removeItem(atPath: file)
+                    self.dataSource?.offlineTrackWasDeleted(track)
+                    
+                    if shouldNotify {
+                        self.eventTracksDeleted.raise([track])
+                    }
+                }
+                catch {
+                    print(error)
+                }
             }
         }
     }
@@ -168,9 +162,6 @@ public class RelistenDownloadManager {
         
         return true
     }
-    
-    let downloadFolder: String
-    let statusLabel: MarqueeLabel
 
     func downloadFilename(forURL url: URL) -> String {
         let filename = MD5(url.absoluteString)! + ".mp3"
@@ -205,6 +196,16 @@ public class RelistenDownloadManager {
         return nil
     }
     
+    private func downloadModelForTrack(_ track: Track) -> MZDownloadModel? {
+        for dlModel in downloadManager.downloadingArray {
+            if URL(string: dlModel.fileURL)! == track.mp3_url {
+                return dlModel
+            }
+        }
+        
+        return nil
+    }
+    
     public func isTrackQueuedToDownload(_ track: Track) -> Bool {
         if let dl = downloadModelForTrack(track) {
             if dl.status != TaskStatus.downloading.description() {
@@ -232,6 +233,7 @@ public class RelistenDownloadManager {
     }
 }
 
+// MARK: MZDownloadManagerDelegate
 extension RelistenDownloadManager : MZDownloadManagerDelegate {
     public func downloadRequestDidUpdateProgress(_ downloadModel: MZDownloadModel, index: Int) {
         let txt = "Downloading \"\(downloadModel.fileName!)\" \((downloadModel.progress * 100.0).rounded())% (\(downloadManager.downloadingArray.count - index) left)"

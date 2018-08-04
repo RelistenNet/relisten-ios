@@ -127,6 +127,7 @@ extension MyLibrary {
     }
     
     public func trackWasPlayed(_ track: Track) -> Bool {
+        let realm = try! Realm()
         let recentShowQuery = realm.object(ofType: RecentlyPlayedShow.self, forPrimaryKey: track.showInfo.show.uuid)
         
         if let recentShow = recentShowQuery {
@@ -215,6 +216,8 @@ extension MyLibrary {
 
 extension MyLibrary : RelistenDownloadManagerDelegate {
     public func trackBecameAvailableOffline(_ track: Track) {
+        let realm = try! Realm()
+        
         let trackMeta = OfflineTrack()
         trackMeta.track_uuid = track.sourceTrack.uuid
         trackMeta.show_uuid = track.showInfo.show.uuid
@@ -244,6 +247,7 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
     }
     
     public func trackSizeBecameKnown(_ track: SourceTrack, fileSize: UInt64) {
+        let realm = try! Realm()
         let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid)
         
         if let offlineTrack = offlineTrackQuery {
@@ -256,11 +260,12 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
         }
     }
     
-    public func URLNotAvailableOffline(_ track: Track, save: Bool = true) {
+    func trackBecameUnavailableOffline(_ track: Track) {
         if let index = downloadBacklog.index(of: track) {
             downloadBacklog.remove(at: index)
         }
         
+        let realm = try! Realm()
         let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.sourceTrack.uuid)
         
         guard let offlineTrack = offlineTrackQuery else {
@@ -293,6 +298,8 @@ extension MyLibrary {
     }
     
     public func favoriteSource(show: CompleteShowInformation) {
+        let realm = try! Realm()
+        
         let favoritedSource = FavoritedSource()
         favoritedSource.artist_uuid = show.artist.uuid
         favoritedSource.show_date = show.show.date
@@ -307,6 +314,8 @@ extension MyLibrary {
     }
     
     public func unfavoriteSource(show: CompleteShowInformation) -> Bool {
+        let realm = try! Realm()
+        
         let favoritedSourceQuery = realm.object(ofType: FavoritedSource.self, forPrimaryKey: show.show.uuid)
 
         if let favoritedSource = favoritedSourceQuery {
@@ -321,6 +330,8 @@ extension MyLibrary {
     }
     
     public func favoriteArtist(artist: ArtistWithCounts) {
+        let realm = try! Realm()
+        
         let favoritedArtist = FavoritedArtist()
         favoritedArtist.uuid = artist.uuid
         favoritedArtist.created_at = Date()
@@ -331,6 +342,8 @@ extension MyLibrary {
     }
     
     public func removeArtist(artist: ArtistWithCounts) -> Bool {
+        let realm = try! Realm()
+        
         let favoritedArtistQuery = realm.object(ofType: FavoritedArtist.self, forPrimaryKey: artist.uuid)
         
         if let favoritedArtist = favoritedArtistQuery {

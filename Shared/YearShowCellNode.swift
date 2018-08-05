@@ -122,14 +122,16 @@ public class YearShowCellNode : ASCellNode {
         
         let library = MyLibrary.shared
         
-        library.offline.sources.observe { [weak self] (changes) in
-            guard let s = self else { return }
-
-            if s.isAvailableOffline != library.isShowAtLeastPartiallyAvailableOffline(s.show) {
-                s.isAvailableOffline = !s.isAvailableOffline
-                s.setNeedsLayout()
-            }
-        }.dispose(to: &disposal)
+        DispatchQueue.main.async {
+            library.offline.sources.observeWithValue { [weak self] _, changes in
+                guard let s = self else { return }
+                
+                if s.isAvailableOffline != library.isShowAtLeastPartiallyAvailableOffline(s.show) {
+                    s.isAvailableOffline = !s.isAvailableOffline
+                    s.setNeedsLayout()
+                }
+            }.dispose(to: &self.disposal)
+        }
         
         AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in
             guard let s = self else { return }

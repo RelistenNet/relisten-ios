@@ -11,6 +11,7 @@ import RelistenShared
 
 import Siesta
 import AsyncDisplayKit
+import RealmSwift
 
 class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, ASCollectionDelegate {
     enum Sections: Int, RawRepresentable {
@@ -64,27 +65,27 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         
         library.favorites.artists.observeWithValue { [weak self] artists, changes in
             guard let s = self else { return }
-            
-            DispatchQueue.main.async {
-                s.favoriteArtists = Array(artists.map({ $0.artist_uuid }))
 
-                switch changes {
-                case .initial:
-                    s.tableNode.reloadData()
-                case .update(_, let deletions, let insertions, let modifications):
-                    s.tableNode.performBatch(animated: true, updates: {
-                        s.tableNode.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
-                                               with: .automatic)
-                        s.tableNode.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
-                                               with: .automatic)
-                        s.tableNode.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
-                                               with: .automatic)
-                    }, completion: nil)
-                case .error(let error):
-                    fatalError(error.localizedDescription)
-                }
+            s.favoriteArtists = Array(artists.map({ UUID(uuidString: $0.artist_uuid)! }))
+
+            switch changes {
+            case .initial:
+                s.tableNode.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                s.tableNode.performBatch(animated: true, updates: {
+                    s.tableNode.insertRows(at: insertions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
+                                           with: .automatic)
+                    s.tableNode.deleteRows(at: deletions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue)}),
+                                           with: .automatic)
+                    s.tableNode.reloadRows(at: modifications.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
+                                           with: .automatic)
+                }, completion: nil)
+            case .error(let error):
+                fatalError(error.localizedDescription)
             }
         }.dispose(to: &disposal)
+        
+//        favoriteArtists = Array(library.favorites.artists.map({ UUID(uuidString: $0.artist_uuid)! }))
 
         library.recentlyPlayed.observeWithValue { [weak self] recentlyPlayed, changes in
             guard let s = self else { return }
@@ -154,7 +155,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         case .availableOffline:
             return offlineShows.count > 0 ? 1 : 0
         case .favorited:
-            return favoriteArtists.count
+            return allArtists.count == 0 ? 0 : favoriteArtists.count
         case .featured:
             return featuredArtists.count
         case .all:

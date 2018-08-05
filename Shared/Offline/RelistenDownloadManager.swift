@@ -71,7 +71,10 @@ public class RelistenDownloadManager {
         statusLabel = MarqueeLabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
         statusLabel.font = UIFont.systemFont(ofSize: 12.0)
         
-        try! FileManager.default.createDirectory(atPath: downloadFolder, withIntermediateDirectories: true, attributes: nil)        
+        // do some file IO and setup in the background
+        DispatchQueue.global(qos: .background).async {
+            try! FileManager.default.createDirectory(atPath: self.downloadFolder, withIntermediateDirectories: true, attributes: nil)
+        }
     }
     
     public func delete(showInfo: CompleteShowInformation) {

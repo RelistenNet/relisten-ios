@@ -86,32 +86,40 @@ class CarPlayDataSource {
         MyLibrary.shared.recentlyPlayed.observeWithValue { [weak self] (recentlyPlayed, changes) in
             guard let s = self else { return }
 
+            let tracks = recentlyPlayed.asTracks()
+            
             s.queue.async {
-                s.reloadRecentTracks(tracks: recentlyPlayed.asTracks())
+                s.reloadRecentTracks(tracks: tracks)
             }
         }.dispose(to: &disposal)
         
         MyLibrary.shared.offline.sources.observeWithValue { [weak self] (offline, changes) in
             guard let s = self else { return }
             
+            let shows = offline.asCompleteShows()
+            
             s.queue.async {
-                s.reloadOfflineSources(shows: offline.asCompleteShows())
+                s.reloadOfflineSources(shows: shows)
             }
         }.dispose(to: &disposal)
         
         MyLibrary.shared.favorites.artists.observeWithValue { [weak self] (favArtists, changes) in
             guard let s = self else { return }
             
+            let ids = Array(favArtists.map({ $0.artist.id }))
+            
             s.queue.async {
-                s.reloadFavoriteArtistIds(artistIds: Array(favArtists.map({ $0.artist.id })))
+                s.reloadFavoriteArtistIds(artistIds: ids)
             }
         }.dispose(to: &disposal)
         
         MyLibrary.shared.favorites.sources.observeWithValue { [weak self] (favoriteShows, changes) in
             guard let s = self else { return }
             
+            let favs = favoriteShows.asCompleteShows()
+            
             s.queue.async {
-                s.reloadFavorites(shows: favoriteShows.asCompleteShows())
+                s.reloadFavorites(shows: favs)
             }
         }.dispose(to: &disposal)
         

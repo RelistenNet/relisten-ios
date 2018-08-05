@@ -11,7 +11,7 @@ import UIKit
 import Siesta
 import AsyncDisplayKit
 
-class DownloadedViewController: ShowListViewController<[OfflineSourceMetadata]> {
+class DownloadedViewController: ShowListViewController<[CompleteShowInformation]> {
     public required init(artist: ArtistWithCounts) {
         super.init(artist: artist, showsResource: nil, tourSections: true)
         
@@ -20,13 +20,15 @@ class DownloadedViewController: ShowListViewController<[OfflineSourceMetadata]> 
         
         latestData = loadOffline()
         
-        MyLibrary.shared.observeOfflineSources.observe { [weak self] (_, _) in
-            let offlineSources = self?.loadOffline()
-            if !(offlineSources == self?.latestData) {
-                self?.latestData = offlineSources
-                self?.render()
+        MyLibrary.shared.offline.sources.observeWithValue { [weak self] (os, changes) in
+            guard let s = self else { return }
+            
+            let offlineSources = os.asCompleteShows()
+            if !(offlineSources == s.latestData) {
+                s.latestData = offlineSources
+                s.render()
             }
-        }.add(to: &disposal)
+        }.dispose(to: &disposal)
     }
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
@@ -53,12 +55,12 @@ class DownloadedViewController: ShowListViewController<[OfflineSourceMetadata]> 
         super.relayoutIfContainsTracks(tracks)
     }
     
-    override func extractShowsAndSource(forData: [OfflineSourceMetadata]) -> [ShowWithSingleSource] {
+    override func extractShowsAndSource(forData: [CompleteShowInformation]) -> [ShowWithSingleSource] {
         return forData.map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
     }
     
-    func loadOffline() -> [OfflineSourceMetadata] {
-        return MyLibrary.shared.offlinePlayedByArtist(artist)
+    func loadOffline() -> [CompleteShowInformation] {
+        return MyLibrary.shared.offline.sources.asCompleteShows()
     }
     
     // This subclass has to re-implement this method because Texture tries to perform an Obj-C respondsToSelctor: check and it's not finding the methods if they just exist on the superclass with the argument label names (numberOfSectionsIn: does exist though)

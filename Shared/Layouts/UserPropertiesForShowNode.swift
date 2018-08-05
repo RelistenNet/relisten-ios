@@ -73,9 +73,9 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     
     public func didFavorite(currentlyFavorited : Bool) {
         if currentlyFavorited {
-            MyLibrary.shared.addShow(show: self.completeShowInformation)
+            MyLibrary.shared.favoriteSource(show: self.completeShowInformation)
         } else {
-            let _ = MyLibrary.shared.removeShow(show: self.completeShowInformation)
+            let _ = MyLibrary.shared.unfavoriteSource(show: self.completeShowInformation)
         }
     }
     

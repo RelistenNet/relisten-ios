@@ -14,6 +14,7 @@ import SINQ
 import Observable
 
 import RealmSwift
+import EasyRealm
 
 public class MyLibraryFavorites {
     public let artists: Results<FavoritedArtist>
@@ -48,11 +49,11 @@ public class MyLibraryOffline {
 public class MyLibrary {
     public static let shared = MyLibrary()
     
-    public var recentlyPlayed: Results<RecentlyPlayedShow> {
+    public var recentlyPlayed: Results<RecentlyPlayedTrack> {
         get {
             let realm = try! Realm()
             return realm
-                .objects(RecentlyPlayedShow.self)
+                .objects(RecentlyPlayedTrack.self)
                 .sorted(byKeyPath: "updated_at", ascending: false)
         }
     }
@@ -62,73 +63,30 @@ public class MyLibrary {
     
     public var downloadBacklog: [Track] = []
     
-    private static let offlineCacheName = "offline"
-    
-    public let offlineCache : Storage<Set<URL>>
-    public let offlineCacheDownloadBacklogStorage : Storage<[Track]>
-    public let offlineCacheSourcesMetadata : Storage<Set<OfflineSourceMetadata>>
-
     internal let realmQueue : ReentrantDispatchQueue = ReentrantDispatchQueue(label: "live.relisten.library.realm")
     internal let diskUseQueue : ReentrantDispatchQueue = ReentrantDispatchQueue(label: "live.relisten.library.diskUse")
     
     private init() {
-        
-        offlineCache = try! Storage(
-            diskConfig: DiskConfig(
-                name: MyLibrary.offlineCacheName,
-                expiry: .never,
-                maxSize: 1024 * 1024 * 250,
-                directory: PersistentCacheDirectory
-            ),
-            memoryConfig: MemoryConfig(
-                expiry: .never,
-                countLimit: 4000,
-                totalCostLimit: 1024 * 1024 * 2
-            ),
-            transformer: TransformerFactory.forCodable(ofType: Set<URL>.self)
-        )
-        
-        offlineCacheDownloadBacklogStorage = offlineCache.transformCodable(ofType: [Track].self)
-        
-        try! loadOfflineData()
     }
     
     public func isShowInLibrary(show: ShowWithSources, byArtist: SlimArtist) -> Bool {
         return favorites.shows.contains(where: { $0.show_uuid == show.uuid })
     }
-    
-    public func queueToBacklog(_ track: Track) {
-        downloadBacklog.append(track)
-        
-        saveDownloadBacklog()
-    }
-    
-    public func dequeueFromBacklog() -> Track? {
-        if downloadBacklog.count == 0 {
-            return nil
-        }
-        
-        let first = downloadBacklog.removeFirst()
-        
-        saveDownloadBacklog()
-        
-        return first
-    }
 }
 
 // MARK: Recently Played
 extension MyLibrary {
-    public func recentlyPlayedByArtist(_ artist: SlimArtist) -> Results<RecentlyPlayedShow> {
+    public func recentlyPlayedByArtist(_ artist: SlimArtist) -> Results<RecentlyPlayedTrack> {
         let realm = try! Realm()
         return realm
-            .objects(RecentlyPlayedShow.self)
-            .filter("artist_uuid = %@", artist.uuid)
+            .objects(RecentlyPlayedTrack.self)
+            .filter("artist_uuid == %@", artist.uuid)
             .sorted(byKeyPath: "updated_at", ascending: false)
     }
     
     public func trackWasPlayed(_ track: Track) -> Bool {
         let realm = try! Realm()
-        let recentShowQuery = realm.object(ofType: RecentlyPlayedShow.self, forPrimaryKey: track.showInfo.show.uuid)
+        let recentShowQuery = realm.object(ofType: RecentlyPlayedTrack.self, forPrimaryKey: track.showInfo.show.uuid)
         
         if let recentShow = recentShowQuery {
             // set updated_at
@@ -138,11 +96,12 @@ extension MyLibrary {
         }
         else {
             // insert
-            let recentShow = RecentlyPlayedShow()
+            let recentShow = RecentlyPlayedTrack()
             recentShow.show_uuid = track.showInfo.show.uuid
             recentShow.source_uuid = track.showInfo.source.uuid
             recentShow.artist_uuid = track.showInfo.artist.uuid
-            
+            recentShow.track_uuid = track.sourceTrack.uuid
+
             recentShow.created_at = Date()
             recentShow.updated_at = Date()
             
@@ -157,26 +116,9 @@ extension MyLibrary {
 
 // MARK: Offline Tracks
 extension MyLibrary {
-    public func loadOfflineData() throws {
-        do {
-            downloadBacklog = try offlineCacheDownloadBacklogStorage.object(forKey: "downloadBacklog")
-        }
-        catch CocoaError.fileReadNoSuchFile {
-            downloadBacklog = []
-        }
-    }
-    
-    public func saveOfflineData() {
-        saveDownloadBacklog()
-    }
-    
-    public func saveDownloadBacklog() {
-        offlineCacheDownloadBacklogStorage.async.setObject(downloadBacklog, forKey: "downloadBacklog", completion: { _ in })
-    }
-
     public func offlinePlayedByArtist(_ artist: SlimArtist) -> Results<OfflineSource> {
         return offline.sources
-            .filter("artist_uuid = %@", artist.uuid)
+            .filter("artist_uuid == %@", artist.uuid)
             .sorted(byKeyPath: "created_at", ascending: false)
     }
     
@@ -197,25 +139,35 @@ extension MyLibrary {
     }
     
     public func isArtistAtLeastPartiallyAvailableOffline(_ artist: SlimArtist) -> Bool {
-        return offline.sources.filter("artist_uuid = %@", artist.uuid).count > 0
+        return offline.tracks.filter("artist_uuid == %@ AND state >= %d", artist.uuid, OfflineTrackState.downloaded).count > 0
     }
     
     public func isShowAtLeastPartiallyAvailableOffline(_ show: Show) -> Bool {
-        return offline.sources.filter("show_uuid = %@", show.uuid).count > 0
+        return offline.tracks.filter("show_uuid == %@ AND state >= %d", show.uuid, OfflineTrackState.downloaded).count > 0
     }
     
     public func isSourceAtLeastPartiallyAvailableOffline(_ source: SourceFull) -> Bool {
-        return offline.sources.filter("source_uuid = %@", source.uuid).count > 0
+        return offline.tracks.filter("source_uuid == %@ AND state >= %d", source.uuid, OfflineTrackState.downloaded).count > 0
     }
     
     public func isYearAtLeastPartiallyAvailableOffline(_ year: Year) -> Bool {
-        return offline.sources.filter("year_uuid = %@", year.uuid).count > 0
+        return offline.sources.filter("year_uuid == %@", year.uuid).count > 0
     }
 }
 
 
-extension MyLibrary : RelistenDownloadManagerDelegate {
-    public func trackBecameAvailableOffline(_ track: Track) {
+extension MyLibrary : RelistenDownloadManagerDataSource {
+    public func nextTrackToDownload() -> Track? {
+        let realm = try! Realm()
+        
+        return realm.objects(OfflineTrack.self)
+            .filter("state == %d", OfflineTrackState.downloadQueued)
+            .sorted(byKeyPath: "created_at", ascending: true)
+            .first?
+            .track
+    }
+
+    public func offlineTrackQueuedToBacklog(_ track: Track) {
         let realm = try! Realm()
         
         let trackMeta = OfflineTrack()
@@ -223,10 +175,42 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
         trackMeta.show_uuid = track.showInfo.show.uuid
         trackMeta.source_uuid = track.showInfo.source.uuid
         trackMeta.artist_uuid = track.showInfo.artist.uuid
+        trackMeta.state = .downloadQueued
         trackMeta.created_at = Date()
         
         try! realm.write {
             realm.add(trackMeta)
+        }
+    }
+    
+    public func offlineTrackBeganDownloading(_ track: Track) {
+        let realm = try! Realm()
+        
+        let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid)
+        
+        if let offlineTrack = offlineTrackQuery {
+            try! realm.write {
+                offlineTrack.state = .downloading
+            }
+        }
+        else {
+            assertionFailure("!!! ERROR: track began downloading BEFORE BEING STORED IN REALM !!!")
+        }
+    }
+    
+    public func offlineTrackFinishedDownloading(_ track: Track, withSize fileSize: UInt64) {
+        let realm = try! Realm()
+        
+        let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid)
+        
+        if let offlineTrack = offlineTrackQuery {
+            try! realm.write {
+                offlineTrack.state = .downloaded
+                offlineTrack.file_size.value = Int(fileSize)
+            }
+        }
+        else {
+            assertionFailure("!!! ERROR: track finished downloading BEFORE BEING STORED IN REALM !!!")
         }
         
         // add the source information if it doesn't exist
@@ -246,13 +230,13 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
         }
     }
     
-    public func trackSizeBecameKnown(_ track: SourceTrack, fileSize: UInt64) {
+    public func offlineTrackWillBeDeleted(_ track: Track) {
         let realm = try! Realm()
         let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid)
         
         if let offlineTrack = offlineTrackQuery {
             try! realm.write {
-                offlineTrack.file_size.value = Int(fileSize)
+                offlineTrack.state = .deleting
             }
         }
         else {
@@ -260,11 +244,7 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
         }
     }
     
-    func trackBecameUnavailableOffline(_ track: Track) {
-        if let index = downloadBacklog.index(of: track) {
-            downloadBacklog.remove(at: index)
-        }
-        
+    public func offlineTrackWasDeleted(_ track: Track) {
         let realm = try! Realm()
         let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.sourceTrack.uuid)
         
@@ -291,8 +271,8 @@ extension MyLibrary : RelistenDownloadManagerDelegate {
 
 // MARK: Favorites
 extension MyLibrary {
-    public func favoritedShowsPlayedByArtist(_ artist: SlimArtist) -> Results<FavoritedSource> {
-        return favorites.shows
+    public func favoritedSourcesPlayedByArtist(_ artist: SlimArtist) -> Results<FavoritedSource> {
+        return favorites.sources
             .filter("artist_uuid = %@", artist.uuid)
             .sorted(byKeyPath: "show_date", ascending: false)
     }

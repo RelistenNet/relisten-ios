@@ -56,7 +56,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         automaticallyManagesSubnodes = true
         accessoryType = .none
         
-        favoriteButton.currentlyFavorited = MyLibrary.shared.isShowInLibrary(show: show, byArtist: artist)
+        favoriteButton.currentlyFavorited = MyLibrary.shared.isFavorite(show: show, byArtist: artist)
         favoriteButton.delegate = self
         shareButton.addTarget(self, action:#selector(presentShareSheet), forControlEvents:.touchUpInside)
         downloadButton.addTarget(self, action:#selector(downloadToggled), forControlEvents:.touchUpInside)
@@ -121,15 +121,15 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     private func setupLibraryObservers() {
         let library = MyLibrary.shared
         
-        library.observeOfflineSources.observe { [weak self] (new, old) in
+        library.offline.sources.observeWithValue { [weak self] (new, changes) in
             guard let s = self else { return}
             s.isAvailableOffline.value = library.isSourceFullyAvailableOffline(s.source)
-        }.add(to: &disposal)
+        }.dispose(to: &disposal)
         
-        MyLibrary.shared.observeMyShows.observe { [weak self] (new, old) in
+        library.favorites.sources.observeWithValue { [weak self] (new, changes) in
             guard let s = self else { return}
-            s.isInMyShows.value = library.isShowInLibrary(show: s.show, byArtist: s.artist)
-        }.add(to: &disposal)
+            s.isInMyShows.value = library.isFavorite(source: s.source)
+        }.dispose(to: &disposal)
         
         RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler({ [weak self] track in
             guard let s = self else { return}

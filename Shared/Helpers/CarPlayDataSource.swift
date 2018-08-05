@@ -208,7 +208,7 @@ class CarPlayDataSource {
         return shows
     }
     
-    public func completeShow(forArtist artist : ArtistWithCounts, show : ShowWithSources) -> CompleteShowInformation? {
+    public func completeShow(forArtist artist : ArtistWithCounts, show : Show) -> CompleteShowInformation? {
         var completeShowInfo : CompleteShowInformation? = nil
         let showWithSources : ShowWithSources? = RelistenApi.showWithSources(forShow: show, byArtist: artist).latestData?.typedContent()
         if let showWithSources = showWithSources {

@@ -18,7 +18,7 @@ import ActionKit
 
 public class ArtistCellNode : ASCellNode, FavoriteButtonDelegate {
     public let artist: ArtistWithCounts
-    public let favoriteArtists: [Int]
+    public let favoriteArtists: [UUID]
         
     let nameNode: ASTextNode
     let showsNode: ASTextNode
@@ -29,7 +29,7 @@ public class ArtistCellNode : ASCellNode, FavoriteButtonDelegate {
     
     var disposal = Disposal()
     
-    public init(artist: ArtistWithCounts, withFavoritedArtists: [Int]) {
+    public init(artist: ArtistWithCounts, withFavoritedArtists: [UUID]) {
         self.artist = artist
         self.favoriteArtists = withFavoritedArtists
         
@@ -43,27 +43,19 @@ public class ArtistCellNode : ASCellNode, FavoriteButtonDelegate {
         automaticallyManagesSubnodes = true
         accessoryType = .disclosureIndicator
         
-        favoriteNode.currentlyFavorited = withFavoritedArtists.contains(artist.id)
+        favoriteNode.currentlyFavorited = withFavoritedArtists.contains(artist.uuid)
         favoriteNode.delegate = self
         setupFavoriteObservers()
     }
     
     private func setupFavoriteObservers() {
-        MyLibrary.shared.artistFavorited.addHandler({ [weak self] artist in
-            self?.favoriteNode.currentlyFavorited = (self?.artist.id == artist.id)
-        }).add(to: &disposal)
+        let library = MyLibrary.shared
         
-        MyLibrary.shared.artistUnfavorited.addHandler({ [weak self] artist in
-            if self?.artist.id == artist.id {
-                self?.favoriteNode.currentlyFavorited = false
-            }
-        }).add(to: &disposal)
-        
-        MyLibrary.shared.observeFavoriteArtistIds.observe({ [weak self] ids, _ in
+        library.favorites.artists.observeWithValue { [weak self] artists, changes in
             guard let s = self else { return }
             
-            s.favoriteNode.currentlyFavorited = ids.contains(s.artist.id)
-        }).add(to: &disposal)
+            s.favoriteNode.currentlyFavorited = library.isFavorite(artist: s.artist)
+        }.dispose(to: &disposal)
     }
     
     public func didFavorite(currentlyFavorited : Bool) {

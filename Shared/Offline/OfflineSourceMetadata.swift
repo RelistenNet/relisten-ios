@@ -11,25 +11,25 @@ import Foundation
 import RealmSwift
 
 @objc public protocol HasArtist {
-    @objc var artist_uuid: UUID! { get }
+    @objc var artist_uuid: String! { get }
 }
 
 @objc public protocol HasShow : HasArtist {
-    @objc var show_uuid: UUID! { get }
+    @objc var show_uuid: String! { get }
 }
 
 @objc public protocol HasSourceAndShow : HasShow {
-    @objc var source_uuid: UUID! { get }
+    @objc var source_uuid: String! { get }
 }
 
 @objc public protocol HasTrackSourceAndShow : HasSourceAndShow {
-    @objc var track_uuid: UUID! { get }
+    @objc var track_uuid: String! { get }
 }
 
 public extension HasArtist {
     public var artist: ArtistWithCounts {
         get {
-            return try! RelistenCacher.shared.artistBackingCache.object(forKey: artist_uuid.uuidString)
+            return try! RelistenCacher.shared.artistBackingCache.object(forKey: artist_uuid)
         }
     }
 }
@@ -37,7 +37,7 @@ public extension HasArtist {
 public extension HasShow {
     public var show: ShowWithSources {
         get {
-            return try! RelistenCacher.shared.showBackingCache.object(forKey: show_uuid.uuidString)
+            return try! RelistenCacher.shared.showBackingCache.object(forKey: show_uuid)
         }
     }
 }
@@ -45,14 +45,14 @@ public extension HasShow {
 public extension HasSourceAndShow {
     public var source: SourceFull {
         get {
-            return show.sources.first(where: { $0.uuid == source_uuid })!
+            return show.sources.first(where: { $0.uuid.uuidString == source_uuid })!
         }
     }
     
     public var completeShowInformation: CompleteShowInformation {
         get {
             let show = self.show
-            let source = show.sources.first(where: { $0.uuid == source_uuid })!
+            let source = show.sources.first(where: { $0.uuid.uuidString == source_uuid })!
             
             return CompleteShowInformation(source: source, show: show, artist: artist)
         }
@@ -62,14 +62,14 @@ public extension HasSourceAndShow {
 public extension HasTrackSourceAndShow {
     public var sourceTrack: SourceTrack {
         get {
-            return source.tracksFlattened.first(where: { $0.uuid == track_uuid })!
+            return source.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid })!
         }
     }
     
     public var track: Track {
         get {
             let show = completeShowInformation
-            let sourceTrack = show.source.tracksFlattened.first(where: { $0.uuid == track_uuid })!
+            let sourceTrack = show.source.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid })!
             
             return Track(sourceTrack: sourceTrack, showInfo: completeShowInformation)
         }
@@ -90,24 +90,22 @@ public extension Results where Element : HasSourceAndShow {
 
 public extension Results {
     public func observeWithValue(_ block: @escaping (Results<Element>, RealmCollectionChange<Results<Element>>) -> Void) -> NotificationToken {
-        return self.observe { [weak self] changes in
-            guard let s = self else { return }
-            
-            block(s, changes)
+        return self.observe { changes in
+            block(self, changes)
         }
     }
 }
 
 public protocol FavoritedItem {
-    var uuid: UUID! { get set }
+    var uuid: String! { get set }
     var created_at: Date! { get set }
 }
 
 public class FavoritedArtist : Object, FavoritedItem, HasArtist {
-    @objc public dynamic var uuid: UUID!
+    @objc public dynamic var uuid: String!
     @objc public dynamic var created_at: Date!
 
-    @objc public dynamic var artist_uuid: UUID! { get { return uuid }}
+    @objc public dynamic var artist_uuid: String! { get { return uuid }}
     
     public override static func primaryKey() -> String? {
         return "uuid"
@@ -115,12 +113,12 @@ public class FavoritedArtist : Object, FavoritedItem, HasArtist {
 }
 
 public class FavoritedShow: Object, FavoritedItem, HasShow {
-    @objc public dynamic var uuid: UUID!
+    @objc public dynamic var uuid: String!
     @objc public dynamic var created_at: Date!
     @objc public dynamic var show_date: Date!
-    @objc public dynamic var artist_uuid: UUID!
+    @objc public dynamic var artist_uuid: String!
     
-    @objc public dynamic var show_uuid: UUID! { get { return uuid }}
+    @objc public dynamic var show_uuid: String! { get { return uuid }}
     
     public override static func primaryKey() -> String? {
         return "uuid"
@@ -132,13 +130,13 @@ public class FavoritedShow: Object, FavoritedItem, HasShow {
 }
 
 public class FavoritedSource: Object, FavoritedItem, HasSourceAndShow {
-    @objc public dynamic var uuid: UUID!
+    @objc public dynamic var uuid: String!
     @objc public dynamic var created_at: Date!
-    @objc public dynamic var artist_uuid: UUID!
-    @objc public dynamic var show_uuid: UUID!
+    @objc public dynamic var artist_uuid: String!
+    @objc public dynamic var show_uuid: String!
     @objc public dynamic var show_date: Date!
 
-    @objc public dynamic var source_uuid: UUID! { get { return uuid }}
+    @objc public dynamic var source_uuid: String! { get { return uuid }}
     
     public override static func primaryKey() -> String? {
         return "uuid"
@@ -150,13 +148,13 @@ public class FavoritedSource: Object, FavoritedItem, HasSourceAndShow {
 }
 
 public class FavoritedTrack: Object, FavoritedItem, HasTrackSourceAndShow {
-    @objc public dynamic var uuid: UUID!
+    @objc public dynamic var uuid: String!
     @objc public dynamic var created_at: Date!
-    @objc public dynamic var show_uuid: UUID!
-    @objc public dynamic var source_uuid: UUID!
-    @objc public dynamic var artist_uuid: UUID!
+    @objc public dynamic var show_uuid: String!
+    @objc public dynamic var source_uuid: String!
+    @objc public dynamic var artist_uuid: String!
 
-    @objc public dynamic var track_uuid: UUID! { get { return uuid }}
+    @objc public dynamic var track_uuid: String! { get { return uuid }}
 
     public override static func primaryKey() -> String? {
         return "uuid"
@@ -168,10 +166,10 @@ public class FavoritedTrack: Object, FavoritedItem, HasTrackSourceAndShow {
 }
 
 public class RecentlyPlayedTrack: Object, HasTrackSourceAndShow {
-    @objc public dynamic var show_uuid: UUID!
-    @objc public dynamic var source_uuid: UUID!
-    @objc public dynamic var track_uuid: UUID!
-    @objc public dynamic var artist_uuid: UUID!
+    @objc public dynamic var show_uuid: String!
+    @objc public dynamic var source_uuid: String!
+    @objc public dynamic var track_uuid: String!
+    @objc public dynamic var artist_uuid: String!
 
     @objc public dynamic var created_at: Date!
     @objc public dynamic var updated_at: Date!
@@ -194,10 +192,10 @@ public class RecentlyPlayedTrack: Object, HasTrackSourceAndShow {
 }
 
 public class OfflineTrack: Object, HasTrackSourceAndShow {
-    @objc public dynamic var track_uuid: UUID!
-    @objc public dynamic var source_uuid: UUID!
-    @objc public dynamic var show_uuid: UUID!
-    @objc public dynamic var artist_uuid: UUID!
+    @objc public dynamic var track_uuid: String!
+    @objc public dynamic var source_uuid: String!
+    @objc public dynamic var show_uuid: String!
+    @objc public dynamic var artist_uuid: String!
     @objc public dynamic var created_at: Date!
     
     // default value because objc enums can't be !'d
@@ -216,10 +214,10 @@ public class OfflineTrack: Object, HasTrackSourceAndShow {
 }
 
 public class OfflineSource: Object, HasSourceAndShow {
-    @objc public dynamic var source_uuid: UUID!
-    @objc public dynamic var show_uuid: UUID!
-    @objc public dynamic var artist_uuid: UUID!
-    @objc public dynamic var year_uuid: UUID!
+    @objc public dynamic var source_uuid: String!
+    @objc public dynamic var show_uuid: String!
+    @objc public dynamic var artist_uuid: String!
+    @objc public dynamic var year_uuid: String!
     @objc public dynamic var created_at: Date!
 
     public override static func primaryKey() -> String? {

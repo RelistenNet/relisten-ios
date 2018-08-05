@@ -49,13 +49,15 @@ public class ArtistCellNode : ASCellNode, FavoriteButtonDelegate {
     }
     
     private func setupFavoriteObservers() {
-        let library = MyLibrary.shared
-        
-        library.favorites.artists.observeWithValue { [weak self] artists, changes in
-            guard let s = self else { return }
+        DispatchQueue.main.async {
+            let library = MyLibrary.shared
             
-            s.favoriteNode.currentlyFavorited = library.isFavorite(artist: s.artist)
-        }.dispose(to: &disposal)
+            library.favorites.artists.observeWithValue { [weak self] artists, changes in
+                guard let s = self else { return }
+                
+                s.favoriteNode.currentlyFavorited = library.isFavorite(artist: s.artist)
+            }.dispose(to: &self.disposal)
+        }
     }
     
     public func didFavorite(currentlyFavorited : Bool) {

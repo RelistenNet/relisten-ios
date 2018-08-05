@@ -22,9 +22,16 @@ public class RelistenApp {
     
     public init(delegate: RelistenAppDelegate) {
         self.delegate = delegate
+        
+        RelistenDownloadManager.shared.dataSource = MyLibrary.shared
     }
     
     public func setupThirdPartyDependencies() {
+        #if targetEnvironment(simulator)
+        if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
+            print("Documents Directory: \(documentsPath)")
+        }
+        #endif
     }
     
     public func setupAppearance(_ viewController: UINavigationController? = nil) {

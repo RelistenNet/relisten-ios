@@ -16,7 +16,7 @@ extension MyLibrary {
     private func offlineMetadata(forTrack track: SourceTrack) -> OfflineTrack? {
         let realm = try! Realm()
         
-        return realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid)
+        return realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid.uuidString)
     }
     
     public func diskUsageForTrackURL(track: SourceTrack, _ callback: @escaping (UInt64?) -> Void) {

@@ -12,7 +12,7 @@ import UIKit
 import FaveButton
 import Observable
 
-public protocol FavoriteButtonDelegate {
+public protocol FavoriteButtonDelegate : class {
     func didFavorite(currentlyFavorited : Bool)
     var favoriteButtonAccessibilityLabel : String { get }
 }
@@ -37,7 +37,7 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
     
     open var accessibilityLabelString = "Favorite"
     
-    open var delegate : FavoriteButtonDelegate? = nil
+    open weak var delegate : FavoriteButtonDelegate? = nil
     private var didInitButton : Bool = false
     
     open var normalColor : UIColor? {

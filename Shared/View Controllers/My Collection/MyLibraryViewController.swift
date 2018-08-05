@@ -20,7 +20,7 @@ class MyLibraryViewController: ShowListViewController<Results<FavoritedSource>> 
         
         latestData = loadMyShows()
         
-        MyLibrary.shared.favorites.sources.observe { [weak self] (changes) in
+        MyLibrary.shared.favorites.sources.observeWithValue { [weak self] _, changes in
             guard let s = self else { return }
 
             let myShows = s.loadMyShows()

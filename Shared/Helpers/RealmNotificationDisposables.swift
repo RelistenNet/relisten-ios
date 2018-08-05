@@ -13,8 +13,8 @@ import Observable
 
 extension NotificationToken {
     public func disposable() -> Disposable {
-        return Disposable { [weak self] in
-            self?.invalidate()
+        return Disposable {
+            self.invalidate()
         }
     }
     

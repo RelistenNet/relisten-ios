@@ -62,7 +62,9 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         downloadButton.addTarget(self, action:#selector(downloadToggled), forControlEvents:.touchUpInside)
         deleteButton.addTarget(self, action:#selector(deletePressed), forControlEvents:.touchUpInside)
         
-        setupLibraryObservers()
+        DispatchQueue.main.async {
+            self.setupLibraryObservers()
+        }
     }
     
     public let favoriteButton : FavoriteButtonNode

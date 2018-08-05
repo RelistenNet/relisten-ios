@@ -8,10 +8,14 @@
 
 import Foundation
 
+import RealmSwift
+
 extension MyLibrary {
     // this can return non-nil even when isTrackAvailableOffline returns false
     // this will also be non-nil if isTrackAvailableOffline return true
     private func offlineMetadata(forTrack track: SourceTrack) -> OfflineTrack? {
+        let realm = try! Realm()
+        
         return realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid)
     }
     
@@ -19,29 +23,8 @@ extension MyLibrary {
         if let meta = offlineMetadata(forTrack: track), let size = meta.file_size.value {
             return callback(UInt64(size))
         }
-        diskUseQueue.async {
-            do {
-                let offlinePath = RelistenDownloadManager.shared.downloadPath(forURL: track.mp3_url)
-                
-                guard FileManager.default.fileExists(atPath: offlinePath) else {
-                    callback(nil)
-                    
-                    return
-                }
-                
-                let attributes = try FileManager.default.attributesOfItem(atPath: offlinePath)
-                let fileSize = attributes[FileAttributeKey.size] as! UInt64
-                
-                // put it in the cache so subsequent calls are hot
-                self.trackSizeBecameKnown(track, fileSize: fileSize)
-                callback(fileSize)
-            }
-            catch {
-                print(error)
-                
-                callback(nil)
-            }
-        }
+        
+        return callback(nil)
     }
     
     public func diskUsageForSource(source: SourceFull, _ callback: @escaping (_ diskUsage: UInt64, _ numberOfTracks: Int) -> Void) {

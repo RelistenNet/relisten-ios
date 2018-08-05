@@ -131,8 +131,8 @@ public class SourceDetailsNode : ASCellNode {
         
         if !isDetails {
             let library = MyLibrary.shared
-            library.observeOfflineSources
-                .observe({ [weak self] _, _ in
+            library.offline.sources
+                .observe({ [weak self] _ in
                     guard let s = self else { return }
                     
                     if s.isAvailableOffline != library.isSourceAtLeastPartiallyAvailableOffline(s.source) {
@@ -140,7 +140,7 @@ public class SourceDetailsNode : ASCellNode {
                         s.setNeedsLayout()
                     }
                 })
-                .add(to: &disposal)
+                .dispose(to: &disposal)
         }
         
         AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in

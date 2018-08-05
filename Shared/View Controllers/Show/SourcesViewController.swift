@@ -20,7 +20,14 @@ public class SourcesViewController: RelistenAsyncTableController<ShowWithSources
     let show: Show?
     let isRandom: Bool
     
-    var sources: [SourceFull] = []
+    private var _sources : [SourceFull] = []
+    var sources: [SourceFull] {
+        get { return _sources }
+        set {
+            _sources = sortSources(newValue)
+        }
+    }
+    
     var sourceToPresent : SourceFull?
     var canSkipIfSingleSource : Bool
     
@@ -48,6 +55,47 @@ public class SourcesViewController: RelistenAsyncTableController<ShowWithSources
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError()
+    }
+    
+    private func sortSources(_ sources : [SourceFull]) -> [SourceFull] {
+        // The order from the server is fine, but the two most recently updated sources updated within the last three months should be displayed near the top
+        var retval : [SourceFull] = sources
+        if sources.count > 1 {
+            var sourcesSortedByUpdate = sources.sorted(by: { return $0.updated_at > $1.updated_at })
+            var recentSources : [SourceFull] = []
+            if -(sourcesSortedByUpdate[0].updated_at.timeIntervalSinceNow) < (60*60*24*30*3) { // Approximately three months
+                recentSources.append(sourcesSortedByUpdate[0])
+            }
+            if -(sourcesSortedByUpdate[1].updated_at.timeIntervalSinceNow) < (60*60*24*30*3) { // Approximately three months
+                recentSources.append(sourcesSortedByUpdate[1])
+            }
+            if recentSources.count > 0 {
+                var topSourceArray : [SourceFull] = []
+                let topSource = retval.remove(at: 0)
+                var topSourceIsRecent = false
+                for i in 0..<recentSources.count {
+                    if recentSources[i] === topSource {
+                        topSourceIsRecent = true
+                        break
+                    }
+                }
+                if !topSourceIsRecent {
+                    topSourceArray.append(topSource)
+                }
+                
+                retval = retval.filter({ (curSource) -> Bool in
+                    for i in 0..<recentSources.count {
+                        if curSource === recentSources[i] {
+                            return false
+                        }
+                    }
+                    return true
+                })
+                
+                retval = topSourceArray + Array(sourcesSortedByUpdate[0..<2]) + retval
+            }
+        }
+        return retval
     }
     
     public func presentIfNecessary(navigationController : UINavigationController?, forSource source: SourceFull? = nil) {

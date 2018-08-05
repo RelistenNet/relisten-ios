@@ -15,11 +15,11 @@ let PersistentCacheDirectory = URL(fileURLWithPath: NSSearchPathForDirectoriesIn
                                                                                         FileManager.SearchPathDomainMask.userDomainMask,
                                                                                         true).first! + "/")
 
-public class RelistenShowCacher : ResponseTransformer {
-    static let cacheName = "RelistenShowCache"
+public class RelistenCacher : ResponseTransformer {
+    static let cacheName = "RelistenCache"
     
     let diskCacheConfig = DiskConfig(
-        name: RelistenShowCacher.cacheName,
+        name: RelistenCacher.cacheName,
         
         expiry: .never,
         
@@ -37,16 +37,23 @@ public class RelistenShowCacher : ResponseTransformer {
         totalCostLimit: 1024 * 1024 * 25
     )
     
-    public let backingCache: Storage<ShowWithSources>
-    
-    public static let shared = RelistenShowCacher()
+    public let showBackingCache: Storage<ShowWithSources>
+    public let artistBackingCache: Storage<ArtistWithCounts>
+
+    public static let shared = RelistenCacher()
     
     // private to allow for only one instance
     private init() {
-        backingCache = try! Storage(
+        showBackingCache = try! Storage(
             diskConfig: diskCacheConfig,
             memoryConfig: memoryCacheConfig,
             transformer: TransformerFactory.forCodable(ofType: ShowWithSources.self)
+        )
+
+        artistBackingCache = try! Storage(
+            diskConfig: diskCacheConfig,
+            memoryConfig: memoryCacheConfig,
+            transformer: TransformerFactory.forCodable(ofType: ArtistWithCounts.self)
         )
     }
     
@@ -55,12 +62,25 @@ public class RelistenShowCacher : ResponseTransformer {
         case .success(let entity):
             if let show: ShowWithSources = entity.typedContent() {
                 // caching
-                backingCache.async.setObject(show, forKey: show.uuid.uuidString) { (res) in
+                showBackingCache.async.setObject(show, forKey: show.uuid.uuidString) { (res) in
                     switch res {
                     case .error(let err):
                         assertionFailure(err.localizedDescription)
                     default:
                         return
+                    }
+                }
+            }
+            else if let artists: [ArtistWithCounts] = entity.typedContent() {
+                // caching
+                for artist in artists {
+                    artistBackingCache.async.setObject(artist, forKey: artist.uuid.uuidString) { (res) in
+                        switch res {
+                        case .error(let err):
+                            assertionFailure(err.localizedDescription)
+                        default:
+                            return
+                        }
                     }
                 }
             }

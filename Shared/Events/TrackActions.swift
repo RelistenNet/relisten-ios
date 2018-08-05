@@ -35,7 +35,7 @@ public class TrackActions {
         MyLibrary.shared.diskUsageForTrackURL(track: track.sourceTrack) { (size) in
             if let s = size {
                 a.addAction(UIAlertAction(title: "Remove Downloaded File" + " (\(s.humanizeBytes()))", style: .default, handler: { _ in
-                    RelistenDownloadManager.shared.delete(track: track, saveOffline: true)
+                    RelistenDownloadManager.shared.delete(track: track)
                 }))
             }
             else {

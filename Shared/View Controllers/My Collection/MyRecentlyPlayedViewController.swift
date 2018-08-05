@@ -10,8 +10,9 @@ import UIKit
 
 import Siesta
 import AsyncDisplayKit
+import RealmSwift
 
-class MyRecentlyPlayedViewController: ShowListViewController<[Track]> {
+class MyRecentlyPlayedViewController: ShowListViewController<Results<RecentlyPlayedTrack>> {
     public required init(artist: ArtistWithCounts) {
         super.init(artist: artist, showsResource: nil, tourSections: true)
         
@@ -54,11 +55,11 @@ class MyRecentlyPlayedViewController: ShowListViewController<[Track]> {
         super.relayoutIfContainsTracks(tracks)
     }
     
-    override func extractShowsAndSource(forData: [Track]) -> [ShowWithSingleSource] {
-        return forData.map({ ShowWithSingleSource(show: $0.showInfo.show, source: $0.showInfo.source) })
+    override func extractShowsAndSource(forData: Results<RecentlyPlayedTrack>) -> [ShowWithSingleSource] {
+        return Array(forData.map({ ShowWithSingleSource(show: $0.show, source: $0.source) }))
     }
     
-    func loadMyShows() -> [Track] {
+    func loadMyShows() -> Results<RecentlyPlayedTrack> {
         return MyLibrary.shared.recentlyPlayedByArtist(artist)
     }
     

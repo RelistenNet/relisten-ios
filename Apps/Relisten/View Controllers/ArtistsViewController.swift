@@ -24,7 +24,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     
     public var recentlyPlayedTracks: [Track] = []
     public var favoriteArtists: [Int] = []
-    public var offlineShows: Set<OfflineSourceMetadata> = []
+    public var offlineShows: [CompleteShowInformation] = []
     
     public var allArtists: [ArtistWithCounts] = []
     public var featuredArtists: [ArtistWithCounts] = []
@@ -102,7 +102,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
 
     override var resource: Resource? { get { return api.artists() } }
     
-    private func reloadOfflineSources(shows: Set<OfflineSourceMetadata>) {
+    private func reloadOfflineSources(shows: [CompleteShowInformation]) {
         if !(shows == offlineShows) {
             
             DispatchQueue.main.async {

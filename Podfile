@@ -34,7 +34,6 @@ def apply_pods
 # pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
 # pod 'Firebase/Messaging'
   pod 'RealmSwift'
-  pod 'EasyRealm', :git => 'https://github.com/alecgorge/EasyRealm.git' 
 
   pod 'AXRatingView'
   pod 'NAKPlaybackIndicatorView'

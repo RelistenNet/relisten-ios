@@ -13,6 +13,8 @@ import SwiftyJSON
 import MZDownloadManager
 import MarqueeLabel
 
+import RealmSwift
+
 func MD5(_ string: String) -> String? {
     let length = Int(CC_MD5_DIGEST_LENGTH)
     var digest = [UInt8](repeating: 0, count: length)
@@ -26,21 +28,19 @@ func MD5(_ string: String) -> String? {
     }
 }
 
-public protocol RelistenDownloadManagerDelegate: class {
-    func trackSizeBecameKnown(_ track: SourceTrack, fileSize: UInt64)
-    func trackBecameAvailableOffline(_ track: Track)
-    func trackBecameUnavailableOffline(_ track: Track)
-}
-
 public protocol RelistenDownloadManagerDataSource : class {
     func offlineTrackWillBeDeleted(_ track: Track)
+    func offlineTrackQueuedToBacklog(_ track: Track)
     func offlineTrackWasDeleted(_ track: Track)
+    func offlineTrackBeganDownloading(_ track: Track)
+    func offlineTrackFinishedDownloading(_ track: Track, withSize fileSize: UInt64)
+    
+    func nextTrackToDownload() -> Track?
 }
 
 public class RelistenDownloadManager {
     public static let shared = RelistenDownloadManager()
     
-    public weak var delegate: RelistenDownloadManagerDelegate? = nil
     public weak var dataSource: RelistenDownloadManagerDataSource? = nil
     
     public let eventTrackStartedDownloading = Event<Track>()
@@ -88,7 +88,6 @@ public class RelistenDownloadManager {
     
     public func delete(track: Track, shouldNotify: Bool = true) {
         queue.async {
-            self.delegate?.trackBecameUnavailableOffline(track)
             self.dataSource?.offlineTrackWillBeDeleted(track)
             
             if track.downloadState == .downloading {
@@ -147,13 +146,12 @@ public class RelistenDownloadManager {
             return false
         }
         
+        self.dataSource?.offlineTrackQueuedToBacklog(track)
+
         if downloadManager.downloadingArray.count < 3 {
             urlToTrackMap[track.mp3_url] = track
 
             addDownloadTask(track)
-        }
-        else {
-            MyLibrary.shared.queueToBacklog(track)
         }
         
         if raiseEvent {
@@ -268,6 +266,7 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
         
         if let t = urlToTrackMap[downloadModel.downloadingURL] {
             eventTrackStartedDownloading.raise(t)
+            self.dataSource?.offlineTrackBeganDownloading(t)
         }
     }
     
@@ -277,17 +276,14 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
         let url = downloadModel.downloadingURL
         
         if let t = urlToTrackMap[url] {
-            if let f = downloadModel.file {
-                delegate?.trackSizeBecameKnown(t, fileSize: UInt64(fileToActualBytes(f)))
-            }
-            delegate?.trackBecameAvailableOffline(t)
+            dataSource?.offlineTrackFinishedDownloading(t, withSize: UInt64(fileToActualBytes(downloadModel.file!)))
 
             eventTrackFinishedDownloading.raise(t)
             
             urlToTrackMap.removeValue(forKey: url)
         }
         
-        if let nextTrack = MyLibrary.shared.dequeueFromBacklog() {
+        if let nextTrack = MyLibrary.shared.nextTrackToDownload() {
             urlToTrackMap[nextTrack.mp3_url] = nextTrack
 
             addDownloadTask(nextTrack)

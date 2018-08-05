@@ -69,7 +69,7 @@ public class _RelistenApi {
             $0.pipeline[.parsing].cacheUsing(RelistenJsonCache())
             // $0.pipeline[.model].cacheUsing(RelistenRealmCache())
             
-            $0.pipeline[.cleanup].add(RelistenShowCacher.shared)
+            $0.pipeline[.cleanup].add(RelistenCacher.shared)
             
             // Custom transformers can change any response into any other — in this case, replacing the default error
             // message with the one provided by the Github API.

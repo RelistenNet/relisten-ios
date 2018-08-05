@@ -79,7 +79,7 @@ public class Track : Codable, Hashable {
         sourceTrack = try SourceTrack(json: json["track"])
         
         let source = try SourceFull(json: json["source"])
-        let sourceShow = try Show(json: json["show"])
+        let sourceShow = try ShowWithSources(json: json["show"])
         let artist = try ArtistWithCounts(json: json["artist"])
         
         showInfo = CompleteShowInformation(source: source, show: sourceShow, artist: artist)

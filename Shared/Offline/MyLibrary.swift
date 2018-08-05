@@ -68,10 +68,6 @@ public class MyLibrary {
     
     private init() {
     }
-    
-    public func isShowInLibrary(show: ShowWithSources, byArtist: SlimArtist) -> Bool {
-        return favorites.shows.contains(where: { $0.show_uuid == show.uuid })
-    }
 }
 
 // MARK: Recently Played
@@ -86,28 +82,18 @@ extension MyLibrary {
     
     public func trackWasPlayed(_ track: Track) -> Bool {
         let realm = try! Realm()
-        let recentShowQuery = realm.object(ofType: RecentlyPlayedTrack.self, forPrimaryKey: track.showInfo.show.uuid)
         
-        if let recentShow = recentShowQuery {
-            // set updated_at
-            try! realm.write {
-                recentShow.updated_at = Date()
-            }
-        }
-        else {
-            // insert
-            let recentShow = RecentlyPlayedTrack()
-            recentShow.show_uuid = track.showInfo.show.uuid
-            recentShow.source_uuid = track.showInfo.source.uuid
-            recentShow.artist_uuid = track.showInfo.artist.uuid
-            recentShow.track_uuid = track.sourceTrack.uuid
-
-            recentShow.created_at = Date()
-            recentShow.updated_at = Date()
-            
-            try! realm.write {
-                realm.add(recentShow)
-            }
+        let recentShow = RecentlyPlayedTrack()
+        recentShow.show_uuid = track.showInfo.show.uuid
+        recentShow.source_uuid = track.showInfo.source.uuid
+        recentShow.artist_uuid = track.showInfo.artist.uuid
+        recentShow.track_uuid = track.sourceTrack.uuid
+        
+        recentShow.created_at = Date()
+        recentShow.updated_at = Date()
+        
+        try! realm.write {
+            realm.add(recentShow)
         }
         
         return true
@@ -127,7 +113,7 @@ extension MyLibrary {
     }
     
     public func isTrackAvailableOffline(_ track: SourceTrack) -> Bool {
-        return offline.tracks.contains(where: { $0.track_uuid == track.uuid })
+        return offline.tracks.filter("uuid == %@ AND state >= %d", track.uuid, OfflineTrackState.downloaded).count > 0
     }
     
     public func isSourceFullyAvailableOffline(_ source: SourceFull) -> Bool {
@@ -273,7 +259,7 @@ extension MyLibrary : RelistenDownloadManagerDataSource {
 extension MyLibrary {
     public func favoritedSourcesPlayedByArtist(_ artist: SlimArtist) -> Results<FavoritedSource> {
         return favorites.sources
-            .filter("artist_uuid = %@", artist.uuid)
+            .filter("artist_uuid == %@", artist.uuid)
             .sorted(byKeyPath: "show_date", ascending: false)
     }
     
@@ -335,5 +321,24 @@ extension MyLibrary {
         }
         
         return false
+    }
+}
+
+// MARK: Favorite queries
+public extension MyLibrary {
+    public func isFavorite(artist: SlimArtist) -> Bool {
+        return favorites.artists.filter("uuid == %@", artist.uuid).count > 0
+    }
+    
+    public func isFavorite(show: ShowWithSources, byArtist: SlimArtist) -> Bool {
+        return favorites.shows.filter("uuid == %@", show.uuid).count > 0
+    }
+    
+    public func isFavorite(source: SourceFull) -> Bool {
+        return favorites.sources.filter("uuid == %@", source.uuid).count > 0
+    }
+
+    public func isFavorite(track: SourceTrack) -> Bool {
+        return favorites.tracks.filter("uuid == %@", track.uuid).count > 0
     }
 }

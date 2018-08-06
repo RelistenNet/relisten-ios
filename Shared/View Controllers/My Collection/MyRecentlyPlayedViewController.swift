@@ -10,8 +10,9 @@ import UIKit
 
 import Siesta
 import AsyncDisplayKit
+import RealmSwift
 
-class MyRecentlyPlayedViewController: ShowListViewController<[Track]> {
+class MyRecentlyPlayedViewController: ShowListViewController<Results<RecentlyPlayedTrack>> {
     public required init(artist: ArtistWithCounts) {
         super.init(artist: artist, showsResource: nil, tourSections: true)
         
@@ -19,13 +20,15 @@ class MyRecentlyPlayedViewController: ShowListViewController<[Track]> {
         
         latestData = loadMyShows()
         
-        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe { [weak self] (_, _) in
-            let myShows = self?.loadMyShows()
-            if !(myShows == self?.latestData) {
-                self?.latestData = myShows
-                self?.render()
+        MyLibrary.shared.recentlyPlayedByArtist(artist).observeWithValue { [weak self] _, changes in
+            guard let s = self else { return }
+            
+            let myShows = s.loadMyShows()
+            if myShows != s.latestData {
+                s.latestData = myShows
+                s.render()
             }
-        }.add(to: &disposal)
+        }.dispose(to: &disposal)
     }
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
@@ -52,12 +55,12 @@ class MyRecentlyPlayedViewController: ShowListViewController<[Track]> {
         super.relayoutIfContainsTracks(tracks)
     }
     
-    override func extractShowsAndSource(forData: [Track]) -> [ShowWithSingleSource] {
-        return forData.map({ ShowWithSingleSource(show: $0.showInfo.show, source: $0.showInfo.source) })
+    override func extractShowsAndSource(forData: Results<RecentlyPlayedTrack>) -> [ShowWithSingleSource] {
+        return Array(forData.map({ ShowWithSingleSource(show: $0.show, source: $0.source) }))
     }
     
-    func loadMyShows() -> [Track] {
-        return MyLibraryManager.shared.library.recentlyPlayedByArtist(artist)
+    func loadMyShows() -> Results<RecentlyPlayedTrack> {
+        return MyLibrary.shared.recentlyPlayedByArtist(artist)
     }
     
     // This subclass has to re-implement this method because Texture tries to perform an Obj-C respondsToSelctor: check and it's not finding the methods if they just exist on the superclass with the argument label names (numberOfSectionsIn: does exist though)

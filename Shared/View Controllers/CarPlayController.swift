@@ -207,11 +207,11 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         return (showInfo, track)
     }
     
-    private func offlineItems(at indexPath: IndexPath) -> (Artist?, showCount: Int?, OfflineSourceMetadata?, Track?) {
+    private func offlineItems(at indexPath: IndexPath) -> (Artist?, showCount: Int?, CompleteShowInformation?, Track?) {
         var artist : Artist?
         var showCount : Int?
-        var allShows : [OfflineSourceMetadata]?
-        var offlineMetadata : OfflineSourceMetadata?
+        var allShows : [CompleteShowInformation]?
+        var offlineMetadata : CompleteShowInformation?
         var track : Track?
         if carPlaySection(from: indexPath) == .availableOffline {
             if indexPath.count > 1 {
@@ -231,7 +231,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             if indexPath.count > 3 {
                 if let offlineMetadata = offlineMetadata {
                     if let sourceTrack = offlineMetadata.source.tracksFlattened.objectAtIndexIfInBounds(indexPath[3]) {
-                        track = Track(sourceTrack: sourceTrack, showInfo: offlineMetadata.completeShowInformation)
+                        track = Track(sourceTrack: sourceTrack, showInfo: offlineMetadata)
                     }
                 }
             }

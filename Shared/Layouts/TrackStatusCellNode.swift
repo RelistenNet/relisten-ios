@@ -13,6 +13,8 @@ import NAKPlaybackIndicatorView
 import AsyncDisplayKit
 import Observable
 
+import RealmSwift
+
 public class TrackStatusCellNode : ASCellNode {
     public let track: Track
     public weak var delegate: TrackStatusActionHandler?
@@ -20,6 +22,8 @@ public class TrackStatusCellNode : ASCellNode {
     public let showArtistInformation: Bool
     
     var disposal = Disposal()
+    
+    var trackQuery: Results<OfflineTrack>!
     
     public init(withTrack track: Track, withHandler handler: TrackStatusActionHandler, usingExplicitTrackNumber: Int? = nil, showingArtistInformation: Bool = false) {
         self.track = track
@@ -64,39 +68,39 @@ public class TrackStatusCellNode : ASCellNode {
         actionButtonNode?.addTarget(self, action: #selector(buttonPressed(_:)), forControlEvents: .touchUpInside)
         automaticallyManagesSubnodes = true
         
-        let dl = RelistenDownloadManager.shared
-        
-        dl.eventTracksDeleted.addHandler { [weak self] (tracks) in
-            if let s = self, let _ = tracks.first(where: { $0 == s.track }) {
-                s.downloadState = .none
-                s.downloadingNode.stopAnimating()
-                s.setNeedsLayout()
-            }
-        }.add(to: &disposal)
-
-        dl.eventTracksQueuedToDownload.addHandler { [weak self] (tracks) in
-            if let s = self, let _ = tracks.first(where: { $0 == s.track }) {
-                s.downloadState = .queued
-                s.downloadingNode.stopAnimating()
-                s.setNeedsLayout()
-            }
-        }.add(to: &disposal)
-
-        dl.eventTrackStartedDownloading.addHandler { [weak self] (track) in
-            if let s = self, track == s.track {
-                s.downloadState = .downloading
-                s.downloadingNode.startAnimating()
-                s.setNeedsLayout()
-            }
-        }.add(to: &disposal)
-
-        dl.eventTrackFinishedDownloading.addHandler { [weak self] (track) in
-            if let s = self, track == s.track {
-                s.downloadState = .downloaded
-                s.downloadingNode.stopAnimating()
-                s.setNeedsLayout()
-            }
-        }.add(to: &disposal)
+        DispatchQueue.main.async {
+            self.trackQuery = MyLibrary.shared.offline.tracks.filter("track_uuid == %@", self.track.uuid.uuidString)
+            self.trackQuery.observeWithValue { [weak self] trackResults, changes in
+                guard let s = self else { return }
+                
+                if let track = trackResults.first, track.state != .unknown, track.state != .deleting {
+                    switch track.state {
+                    case .downloaded:
+                        s.downloadState = .downloaded
+                        s.downloadingNode.stopAnimating()
+                        
+                    case .downloadQueued:
+                        s.downloadState = .queued
+                        s.downloadingNode.stopAnimating()
+                        
+                    case .downloading:
+                        s.downloadState = .downloading
+                        s.downloadingNode.startAnimating()
+                        
+                    default:
+                        // this doesn't happen here because of the if
+                        break
+                    }
+                    
+                    s.setNeedsLayout()
+                }
+                else {
+                    s.downloadState = .none
+                    s.downloadingNode.stopAnimating()
+                    s.setNeedsLayout()
+                }
+            }.dispose(to: &self.disposal)
+        }
         
         PlaybackController.sharedInstance.observeCurrentTrack.observe { [weak self] (current, previous) in
             if let s = self {

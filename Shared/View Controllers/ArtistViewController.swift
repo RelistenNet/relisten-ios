@@ -95,10 +95,10 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         
         setupBackgroundSlideshow()
         
-        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe({ [weak self] tracks, _ in
+        MyLibrary.shared.recentlyPlayed.observeWithValue { [weak self] tracks, _ in
             guard let s = self else { return }
-            s.reloadRecentShows(tracks: tracks)
-        }).add(to: &disposal)
+            s.reloadRecentShows(tracks: tracks.asTracks())
+        }.dispose(to: &disposal)
     }
     
     public override func viewWillAppear(_ animated: Bool) {

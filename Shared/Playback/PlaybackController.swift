@@ -322,7 +322,7 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, passedHalfWayFor audioItem: AGAudioItem) {
         let completeInfo = (audioItem as! SourceTrackAudioItem).track
         
-        MyLibraryManager.shared.trackWasPlayed(completeInfo)
+        MyLibrary.shared.trackWasPlayed(completeInfo)
         eventTrackWasPlayed.raise(completeInfo)
     }
 }

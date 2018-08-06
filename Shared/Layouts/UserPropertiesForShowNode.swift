@@ -133,30 +133,23 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
             s.isInMyShows.value = library.isFavorite(source: s.source)
         }.dispose(to: &disposal)
         
-        RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler({ [weak self] track in
-            guard let s = self else { return}
-            if track.showInfo.source.id == s.source.id {
-                MyLibrary.shared.diskUsageForSource(source: s.source) { (size, numberOfTracks) in
-                    s.rebuildOfflineStatus(size, numberOfTracks: numberOfTracks)
-                }
-            }
-        }).add(to: &disposal)
-        
-        RelistenDownloadManager.shared.eventTracksDeleted.addHandler({ [weak self] tracks in
-            guard let s = self else { return}
-            if tracks.any(match: { $0.showInfo.source.id == s.source.id }) {
-                MyLibrary.shared.diskUsageForSource(source: s.source) { (size, numberOfTracks) in
-                    s.rebuildOfflineStatus(size, numberOfTracks: numberOfTracks)
-                }
-            }
-        }).add(to: &disposal)
-        
-        MyLibrary.shared.diskUsageForSource(source: source) { (size, numberOfTracks) in
-            self.rebuildOfflineStatus(size, numberOfTracks: numberOfTracks)
-        }
+        library.offline.tracks
+            .filter("source_uuid == %@ && state == %d", source.uuid.uuidString, OfflineTrackState.downloaded.rawValue)
+            .observeWithValue { [weak self] tracks, changes in
+                guard let s = self else { return }
+                
+                let totalSize: Int = tracks.sum(ofProperty: "file_size")
+                let count = tracks.count
+                
+                s.rebuildOfflineStatus(UInt64(totalSize), numberOfTracks: count)
+            }.dispose(to: &disposal)
     }
     
     private func rebuildOfflineStatus(_ sourceSize: UInt64, numberOfTracks: Int) {
+        guard sizeOfDownloadedTracks != sourceSize || numberOfDownloadedTracks != numberOfTracks else {
+            return
+        }
+        
         var txt = "Make Show Available Offline"
         var downloadButtonImage : UIImage = #imageLiteral(resourceName: "download-outline")
         var deleteButtonHidden = true

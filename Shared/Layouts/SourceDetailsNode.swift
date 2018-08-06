@@ -134,17 +134,19 @@ public class SourceDetailsNode : ASCellNode {
         accessoryType = isDetails ? .none : .disclosureIndicator
         
         if !isDetails {
-            let library = MyLibraryManager.shared.library
-            library.observeOfflineSources
-                .observe({ [weak self] _, _ in
-                    guard let s = self else { return }
-                    
-                    if s.isAvailableOffline != library.isSourceAtLeastPartiallyAvailableOffline(s.source) {
-                        s.isAvailableOffline = !s.isAvailableOffline
-                        s.setNeedsLayout()
-                    }
-                })
-                .add(to: &disposal)
+            DispatchQueue.main.async {
+                let library = MyLibrary.shared
+                library.offline.sources
+                    .observeWithValue({ [weak self] _, _ in
+                        guard let s = self else { return }
+                        
+                        if s.isAvailableOffline != library.isSourceAtLeastPartiallyAvailableOffline(s.source) {
+                            s.isAvailableOffline = !s.isAvailableOffline
+                            s.setNeedsLayout()
+                        }
+                    })
+                    .dispose(to: &self.disposal)
+            }
         }
         
         AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in
@@ -184,6 +186,8 @@ public class SourceDetailsNode : ASCellNode {
                 ratingNode
             )
         )
+        
+        showNameNode.style.flexShrink = 0.5
         
         let top = ASStackLayoutSpec(
             direction: .horizontal,

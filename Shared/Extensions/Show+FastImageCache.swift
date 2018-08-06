@@ -16,8 +16,8 @@ public class ShowFICWrapper : NSObject, FICEntity {
         self.show = show
     }
     
-    public var fic_UUID: String { return show.uuid }
-    public var fic_sourceImageUUID: String { return show.uuid }
+    public var fic_UUID: String { return show.uuid.uuidString }
+    public var fic_sourceImageUUID: String { return show.uuid.uuidString }
     public func fic_sourceImageURL(withFormatName formatName: String) -> URL? {
         guard var components : URLComponents = URLComponents(string: "relisten://shatter") else {
             return nil

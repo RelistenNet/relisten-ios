@@ -11,7 +11,7 @@ import Foundation
 import SwiftyJSON
 
 public class Year : RelistenObject, RelistenUUIDObject {
-    public let uuid: String
+    public let uuid: UUID
     
     public let show_count: Int
     public let source_count: Int
@@ -25,7 +25,7 @@ public class Year : RelistenObject, RelistenUUIDObject {
     public let artist_id: Int
     
     public required init(json: JSON) throws {
-        uuid = try json["uuid"].string.required()
+        uuid = try json["uuid"].uuid.required()
         
         show_count = try json["show_count"].int.required()
         source_count = try json["source_count"].int.required()
@@ -53,7 +53,7 @@ public class YearWithShows : Year {
 }
 
 public class Show : RelistenObject, RelistenUUIDObject {
-    public let uuid: String
+    public let uuid: UUID
     
     public let artist_id: Int
     
@@ -64,8 +64,8 @@ public class Show : RelistenObject, RelistenUUIDObject {
     public let tour: Tour?
     
     public let year_id: Int
-    // public let year (Year, optional),
-    
+    public let year: Year
+
     public let era_id: Int?
     public let era: Era?
     
@@ -94,7 +94,7 @@ public class Show : RelistenObject, RelistenUUIDObject {
     }
 
     public required init(json: JSON) throws {
-        uuid = try json["uuid"].string.required()
+        uuid = try json["uuid"].uuid.required()
         
         artist_id = try json["artist_id"].int.required()
         
@@ -121,6 +121,8 @@ public class Show : RelistenObject, RelistenUUIDObject {
         has_soundboard_source = try json["has_soundboard_source"].bool.required()
         has_streamable_flac_source = try json["has_soundboard_source"].bool.required()
         
+        year = try Year(json: json["year"])
+
         try super.init(json: json)
     }
 }
@@ -137,18 +139,16 @@ public class ShowWithArtist : Show {
 
 public class ShowWithSources : Show {
     public let sources: [SourceFull]
-    public let year: Year
     
     public required init(json: JSON) throws {
         sources = try json["sources"].arrayValue.map(SourceFull.init)
-        year = try Year(json: json["year"])
         
         try super.init(json: json)
     }
 }
 
 public class Venue : RelistenObject, RelistenUUIDObject {
-    public let uuid: String
+    public let uuid: UUID
     
     public let artist_id: Int
     
@@ -167,7 +167,7 @@ public class Venue : RelistenObject, RelistenUUIDObject {
     public let past_names: String?
     
     public required init(json: JSON) throws {
-        uuid = try json["uuid"].string.required()
+        uuid = try json["uuid"].uuid.required()
         
         artist_id = try json["artist_id"].int.required()
         
@@ -210,7 +210,7 @@ public class VenueWithShows : VenueWithShowCount {
 }
 
 public class Tour : RelistenObject, RelistenUUIDObject {
-    public let uuid: String
+    public let uuid: UUID
     
     public let artist_id: Int
     
@@ -223,7 +223,7 @@ public class Tour : RelistenObject, RelistenUUIDObject {
     public let upstream_identifier: String
     
     public required init(json: JSON) throws {
-        uuid = try json["uuid"].string.required()
+        uuid = try json["uuid"].uuid.required()
         
         artist_id = try json["artist_id"].int.required()
         

@@ -46,6 +46,11 @@ PODS:
   - PINRemoteImage/PINCache (3.0.0-beta.13):
     - PINCache (= 3.0.1-beta.6)
     - PINRemoteImage/Core
+  - Realm (3.7.5):
+    - Realm/Headers (= 3.7.5)
+  - Realm/Headers (3.7.5)
+  - RealmSwift (3.7.5):
+    - Realm (= 3.7.5)
   - Reveal-SDK (16)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -84,6 +89,7 @@ DEPENDENCIES:
   - NAKPlaybackIndicatorView
   - NapySlider (from `../NapySlider`)
   - Observable (from `https://github.com/alecgorge/Observable.git`)
+  - RealmSwift
   - Reveal-SDK
   - Siesta/Core (from `https://github.com/bustoutsolutions/siesta.git`)
   - Siesta/UI (from `https://github.com/bustoutsolutions/siesta.git`)
@@ -112,6 +118,8 @@ SPEC REPOS:
     - PINCache
     - PINOperation
     - PINRemoteImage
+    - Realm
+    - RealmSwift
     - Reveal-SDK
     - SDWebImage
     - SINQ
@@ -181,6 +189,8 @@ SPEC CHECKSUMS:
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
+  Realm: c286caf4dbf346ce24aad49ca76c7ce622d4a082
+  RealmSwift: 2a9281e37d6de55f66f76254d49d28aeb1b729e4
   Reveal-SDK: ed36bdbb3cbf90b94ae5da0dbcb3c7ae6738c51f
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Siesta: feae635134e33336ff6a7048c43b993a3f7ce1b9
@@ -190,6 +200,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 681207f9880fb7cc23875bd786af0e21bf5fe7cc
 
-PODFILE CHECKSUM: 5d3a574fa4e790156875804072c5add3ce0949b1
+PODFILE CHECKSUM: 3c9060ca034714df0375fab515320f8cc19dcfa4
 
 COCOAPODS: 1.5.3

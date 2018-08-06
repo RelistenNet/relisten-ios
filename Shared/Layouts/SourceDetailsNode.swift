@@ -182,6 +182,8 @@ public class SourceDetailsNode : ASCellNode {
             )
         )
         
+        showNameNode.style.flexShrink = 0.5
+        
         let top = ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 8,

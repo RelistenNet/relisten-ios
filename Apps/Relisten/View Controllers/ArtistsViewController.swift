@@ -11,6 +11,7 @@ import RelistenShared
 
 import Siesta
 import AsyncDisplayKit
+import RealmSwift
 
 class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, ASCollectionDelegate {
     enum Sections: Int, RawRepresentable {
@@ -23,8 +24,8 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     }
     
     public var recentlyPlayedTracks: [Track] = []
-    public var favoriteArtists: [Int] = []
-    public var offlineShows: Set<OfflineSourceMetadata> = []
+    public var favoriteArtists: [UUID] = []
+    public var offlineShows: [CompleteShowInformation] = []
     
     public var allArtists: [ArtistWithCounts] = []
     public var featuredArtists: [ArtistWithCounts] = []
@@ -60,33 +61,51 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(cb).add(to: &disposal)
         RelistenDownloadManager.shared.eventTracksDeleted.addHandler(cb).add(to: &disposal)
 
-        MyLibraryManager.shared.observeFavoriteArtistIds
-            .observe({ [weak self] artistIds, _ in
-                DispatchQueue.main.async {
-                    self?.favoriteArtists = Array(artistIds);
-                    self?.tableNode.reloadSections([ Sections.favorited.rawValue ], with: .automatic)
-                }
-            })
-            .add(to: &disposal)
+        let library = MyLibrary.shared
         
-        MyLibraryManager.shared.observeRecentlyPlayedTracks
-            .observe({ [weak self] tracks, _ in
-                self?.reloadRecentShows(tracks: tracks)
-            })
-            .add(to: &disposal)
+        library.favorites.artists.observeWithValue { [weak self] artists, changes in
+            guard let s = self else { return }
+
+            s.favoriteArtists = Array(artists.map({ UUID(uuidString: $0.artist_uuid)! }))
+
+            switch changes {
+            case .initial:
+                s.tableNode.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                s.tableNode.performBatch(animated: true, updates: {
+                    s.tableNode.insertRows(at: insertions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
+                                           with: .automatic)
+                    s.tableNode.deleteRows(at: deletions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue)}),
+                                           with: .automatic)
+                    s.tableNode.reloadRows(at: modifications.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
+                                           with: .automatic)
+                }, completion: nil)
+            case .error(let error):
+                fatalError(error.localizedDescription)
+            }
+        }.dispose(to: &disposal)
         
-        MyLibraryManager.shared.library.observeOfflineSources
-            .observe({ [weak self] shows, _ in
-                self?.reloadOfflineSources(shows: shows)
-            })
-            .add(to: &disposal)
+//        favoriteArtists = Array(library.favorites.artists.map({ UUID(uuidString: $0.artist_uuid)! }))
+
+        library.recentlyPlayed.observeWithValue { [weak self] recentlyPlayed, changes in
+            guard let s = self else { return }
+            
+            s.reloadRecentShows(tracks: recentlyPlayed.asTracks())
+        }.dispose(to: &disposal)
+
+        library.offline.sources.observeWithValue { [weak self] offlineSources, changes in
+            guard let s = self else { return }
+            
+            s.reloadOfflineSources(shows: offlineSources.asCompleteShows())
+        }.dispose(to: &disposal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let library = MyLibraryManager.shared.library
-        reloadOfflineSources(shows: library.offlineSourcesMetadata)
-        reloadRecentShows(tracks: library.recentlyPlayedTracks)
+        let library = MyLibrary.shared
+        
+        reloadOfflineSources(shows: library.offline.sources.asCompleteShows())
+        reloadRecentShows(tracks: library.recentlyPlayed.asTracks())
         
         AppColors_SwitchToRelisten(navigationController)
     }
@@ -102,7 +121,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
 
     override var resource: Resource? { get { return api.artists() } }
     
-    private func reloadOfflineSources(shows: Set<OfflineSourceMetadata>) {
+    private func reloadOfflineSources(shows: [CompleteShowInformation]) {
         if !(shows == offlineShows) {
             
             DispatchQueue.main.async {
@@ -136,7 +155,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         case .availableOffline:
             return offlineShows.count > 0 ? 1 : 0
         case .favorited:
-            return favoriteArtists.count
+            return allArtists.count == 0 ? 0 : favoriteArtists.count
         case .featured:
             return featuredArtists.count
         case .all:
@@ -157,7 +176,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             let n = offlineShowsNode
             return { n }
         case .favorited:
-            let artist = allArtists.first(where: { art in art.id == favoriteArtists[row] })!
+            let artist = allArtists.first(where: { art in art.uuid == favoriteArtists[row] })!
             
             return { ArtistCellNode(artist: artist, withFavoritedArtists: self.favoriteArtists) }
         case .featured:
@@ -180,7 +199,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         
         switch Sections(rawValue: indexPath.section)! {
         case .favorited:
-            let artist = allArtists.first(where: { art in art.id == favoriteArtists[row] })!
+            let artist = allArtists.first(where: { art in art.uuid == favoriteArtists[row] })!
             
             navigationController?.pushViewController(ArtistViewController(artist: artist), animated: true)
         case .featured:
@@ -224,7 +243,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             show = recentlyPlayedTracks[indexPath.item].showInfo
         }
         else if collectionNode === offlineShowsNode.collectionNode {
-            show = Array(offlineShows)[indexPath.item].completeShowInformation
+            show = Array(offlineShows)[indexPath.item]
         }
         else {
             show = nil

@@ -75,7 +75,6 @@
 		43B53452210922CE00DE9B1F /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
 		43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EF8D6720F01A41002FF970 /* CarPlayController.swift */; };
 		43B53454210922CE00DE9B1F /* RelistenDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */; };
-		43B53455210922CE00DE9B1F /* MyLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */; };
 		43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704620B62C2D00710E90 /* MyLibrary.swift */; };
 		43B53457210922CE00DE9B1F /* MyLibrary+DiskUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */; };
 		43B53458210922CE00DE9B1F /* RelistenJsonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */; };
@@ -99,6 +98,7 @@
 		7C31550F20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
 		7C31554920C2D21800F07622 /* ArtistCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554820C2D21800F07622 /* ArtistCellNode.swift */; };
 		7C31554A20C2D21800F07622 /* ArtistCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554820C2D21800F07622 /* ArtistCellNode.swift */; };
+		7C34D854210ED59400813C00 /* RealmNotificationDisposables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C34D853210ED59400813C00 /* RealmNotificationDisposables.swift */; };
 		7C449E9F1D5A4F4300750D54 /* PHODAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */; };
 		7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */; };
 		7C449EA91D5A4F4300750D54 /* PHODLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C449EA71D5A4F4300750D54 /* PHODLaunchScreen.storyboard */; };
@@ -234,7 +234,7 @@
 		7C31554520C2350800F07622 /* TrackStatusCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackStatusCellNode.swift; path = Layouts/TrackStatusCellNode.swift; sourceTree = "<group>"; };
 		7C31554820C2D21800F07622 /* ArtistCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistCellNode.swift; path = Layouts/ArtistCellNode.swift; sourceTree = "<group>"; };
 		7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AsyncDisplayKit.swift; path = Extensions/AsyncDisplayKit.swift; sourceTree = "<group>"; };
-		7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibraryManager.swift; sourceTree = "<group>"; };
+		7C34D853210ED59400813C00 /* RealmNotificationDisposables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RealmNotificationDisposables.swift; path = Helpers/RealmNotificationDisposables.swift; sourceTree = "<group>"; };
 		7C449E9C1D5A4F4200750D54 /* PhishOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhishOD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHODAppDelegate.swift; sourceTree = "<group>"; };
 		7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PHODAssets.xcassets; sourceTree = "<group>"; };
@@ -377,7 +377,6 @@
 				7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */,
 				7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */,
 				7C4F1BE71F73186500C592BD /* RelistenSongModels.swift */,
-				43B047742100626200251046 /* OfflineSourceMetadata.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -387,6 +386,7 @@
 			children = (
 				7C31552420C09D8B00F07622 /* ShareHelper.swift */,
 				43B047722100049E00251046 /* YearSorting.swift */,
+				7C34D853210ED59400813C00 /* RealmNotificationDisposables.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -455,6 +455,7 @@
 				7C80440C1E6F29AF00BA946E /* Views */,
 				7C80440B1E6F29AB00BA946E /* DisplayNodes */,
 				7CC0953E1E6C6D370067FD39 /* View Controllers */,
+				7C68279A1F99240A00E260B1 /* Offline */,
 				7C449EBE1D5A513800750D54 /* API */,
 				7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */,
 				7C8044141E6F4B1E00BA946E /* AppColors.swift */,
@@ -468,7 +469,6 @@
 		7C449EBE1D5A513800750D54 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				7C68279A1F99240A00E260B1 /* Offline */,
 				7C03A4B81E60FB52006F2912 /* Models */,
 				7C03A4C31E621836006F2912 /* ApiCache.swift */,
 				7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */,
@@ -499,7 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */,
-				7C3474DD1F9BB42900BD40AF /* MyLibraryManager.swift */,
+				43B047742100626200251046 /* OfflineSourceMetadata.swift */,
 				7C13704620B62C2D00710E90 /* MyLibrary.swift */,
 				7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */,
 			);
@@ -1059,6 +1059,8 @@
 				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
 				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
 				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-16/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1092,6 +1094,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SINQ.framework",
@@ -1199,6 +1203,8 @@
 				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
 				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
 				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-16/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1232,6 +1238,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SINQ.framework",
@@ -1262,12 +1270,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				43B5341F210922CE00DE9B1F /* Events.swift in Sources */,
-				43B53455210922CE00DE9B1F /* MyLibraryManager.swift in Sources */,
 				43A035F3210EEDCA00C087DD /* AlbumArtImageCache.swift in Sources */,
 				43B5345C210922CE00DE9B1F /* RelistenShowModels.swift in Sources */,
 				43B5343F210922CE00DE9B1F /* YearShowCellNode.swift in Sources */,
 				43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */,
 				43B5345E210922CE00DE9B1F /* RelistenSongModels.swift in Sources */,
+				7C34D854210ED59400813C00 /* RealmNotificationDisposables.swift in Sources */,
 				43B53458210922CE00DE9B1F /* RelistenJsonUtils.swift in Sources */,
 				43B5344A210922CE00DE9B1F /* YearsViewController.swift in Sources */,
 				43B53461210922CE00DE9B1F /* RelistenApi.swift in Sources */,

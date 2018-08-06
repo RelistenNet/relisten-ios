@@ -79,37 +79,49 @@ class CarPlayDataSource {
         
         _recentlyPlayedShows = LockableDataItem<[CompleteShowInformation]>([], queue: queue, delegate: delegate)
         _favoriteShowsByArtist = LockableDataItem<[Artist : [CompleteShowInformation]]>([:], queue: queue, delegate: delegate)
-        _offlineShowsByArtist = LockableDataItem<[Artist : [OfflineSourceMetadata]]>([:], queue: queue, delegate: delegate)
+        _offlineShowsByArtist = LockableDataItem<[Artist : [CompleteShowInformation]]>([:], queue: queue, delegate: delegate)
         _sortedArtistsWithFavorites = LockableDataItem<[ArtistWithCounts]>([], queue: queue, delegate: delegate)
         lockableDataItems = [_recentlyPlayedShows, _favoriteShowsByArtist, _offlineShowsByArtist, _sortedArtistsWithFavorites]
-        
-        MyLibraryManager.shared.observeRecentlyPlayedTracks.observe({ [weak self] tracks, _ in
+
+        MyLibrary.shared.recentlyPlayed.observeWithValue { [weak self] (recentlyPlayed, changes) in
             guard let s = self else { return }
+
+            let tracks = recentlyPlayed.asTracks()
+            
             s.queue.async {
                 s.reloadRecentTracks(tracks: tracks)
             }
-        }).add(to: &disposal)
+        }.dispose(to: &disposal)
         
-        MyLibraryManager.shared.library.observeOfflineSources.observe({ [weak self] shows, _ in
+        MyLibrary.shared.offline.sources.observeWithValue { [weak self] (offline, changes) in
             guard let s = self else { return }
+            
+            let shows = offline.asCompleteShows()
+            
             s.queue.async {
                 s.reloadOfflineSources(shows: shows)
             }
-        }).add(to: &disposal)
+        }.dispose(to: &disposal)
         
-        MyLibraryManager.shared.observeFavoriteArtistIds.observe({ [weak self] artistIds, _ in
+        MyLibrary.shared.favorites.artists.observeWithValue { [weak self] (favArtists, changes) in
             guard let s = self else { return }
+            
+            let ids = Array(favArtists.map({ $0.artist.id }))
+            
             s.queue.async {
-                s.reloadFavoriteArtistIds(artistIds: Array(artistIds))
+                s.reloadFavoriteArtistIds(artistIds: ids)
             }
-        }).add(to: &disposal)
+        }.dispose(to: &disposal)
         
-        MyLibraryManager.shared.observeMyShows.observe({ [weak self] shows, _ in
+        MyLibrary.shared.favorites.sources.observeWithValue { [weak self] (favoriteShows, changes) in
             guard let s = self else { return }
+            
+            let favs = favoriteShows.asCompleteShows()
+            
             s.queue.async {
-                s.reloadFavorites(shows: MyLibraryManager.shared.library.shows)
+                s.reloadFavorites(shows: favs)
             }
-        }).add(to: &disposal)
+        }.dispose(to: &disposal)
         
         loadArtists()
     }
@@ -149,8 +161,8 @@ class CarPlayDataSource {
         return retval!
     }
     
-    public func offlineShowsForArtist(_ artist: Artist) -> [OfflineSourceMetadata]? {
-        var retval : [OfflineSourceMetadata]? = nil
+    public func offlineShowsForArtist(_ artist: Artist) -> [CompleteShowInformation]? {
+        var retval : [CompleteShowInformation]? = nil
         queue.sync {
             retval = _offlineShowsByArtist.item[artist]
         }
@@ -249,7 +261,7 @@ class CarPlayDataSource {
     
     private var lockableDataItems : [Lockable]
     private var _recentlyPlayedShows: LockableDataItem<[CompleteShowInformation]>
-    private var _offlineShowsByArtist: LockableDataItem<[Artist : [OfflineSourceMetadata]]>
+    private var _offlineShowsByArtist: LockableDataItem<[Artist : [CompleteShowInformation]]>
     private var _favoriteShowsByArtist: LockableDataItem<[Artist : [CompleteShowInformation]]>
     
     private var _sortedArtistsWithFavorites : LockableDataItem<[ArtistWithCounts]>
@@ -277,9 +289,9 @@ class CarPlayDataSource {
         }
     }
     
-    private func reloadOfflineSources(shows: Set<OfflineSourceMetadata>) {
+    private func reloadOfflineSources(shows: [CompleteShowInformation]) {
         dispatchPrecondition(condition: .onQueue(queue))
-        var offlineShowsByArtist : [Artist : [OfflineSourceMetadata]] = [:]
+        var offlineShowsByArtist : [Artist : [CompleteShowInformation]] = [:]
         shows.forEach { (show) in
             var artistShows = offlineShowsByArtist[show.artist]
             if artistShows == nil {

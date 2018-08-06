@@ -40,6 +40,8 @@ public class YearShowCellNode : ASCellNode {
         }
         
         venueNode = ASTextNode(venueText, textStyle: .caption1)
+        venueNode.maximumNumberOfLines = 0
+        
         ratingNode = AXRatingViewNode(value: show.avg_rating / 10.0)
         
         var metaText = "\(show.avg_duration == nil ? "" : show.avg_duration!.humanize())"
@@ -72,7 +74,7 @@ public class YearShowCellNode : ASCellNode {
             soundboardIndicatorNode = nil
         }
         
-        isAvailableOffline = MyLibraryManager.shared.library.isShowAtLeastPartiallyAvailableOffline(self.show)
+        isAvailableOffline = MyLibrary.shared.isShowAtLeastPartiallyAvailableOffline(self.show)
         
         artworkNode = ASImageNode()
         artworkNode.style.maxWidth = .init(unit: .points, value: 100.0)
@@ -120,17 +122,18 @@ public class YearShowCellNode : ASCellNode {
     public override func didLoad() {
         super.didLoad()
         
-        let library = MyLibraryManager.shared.library
-        library.observeOfflineSources
-            .observe({ [weak self] _, _ in
+        let library = MyLibrary.shared
+        
+        DispatchQueue.main.async {
+            library.offline.sources.observeWithValue { [weak self] _, changes in
                 guard let s = self else { return }
                 
                 if s.isAvailableOffline != library.isShowAtLeastPartiallyAvailableOffline(s.show) {
                     s.isAvailableOffline = !s.isAvailableOffline
                     s.setNeedsLayout()
                 }
-            })
-            .add(to: &disposal)
+            }.dispose(to: &self.disposal)
+        }
         
         AlbumArtImageCache.shared.cache.asynchronouslyRetrieveImage(for: show.fastImageCacheWrapper(), withFormatName: AlbumArtImageCache.imageFormatSmall) { [weak self] (_, _, i) in
             guard let s = self else { return }
@@ -229,12 +232,15 @@ public class YearShowCellNode : ASCellNode {
             children: ArrayNoNils(venueNode)
         )
         venueLayout.style.alignSelf = .stretch
+//        venueLayout.style.flexShrink = 1.0
+        venueNode.style.flexShrink = 1.0
+//        venueLayout.style.maxWidth = ASDimensionMake(.fraction, 1.0)
         
         let ratingAndMeta = ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 8,
             justifyContent: .end,
-            alignItems: .baselineLast,
+            alignItems: .center,
             children: ArrayNoNils(ratingNode, SpacerNode(), metaNode)
         )
         ratingAndMeta.style.alignSelf = .stretch
@@ -259,7 +265,9 @@ public class YearShowCellNode : ASCellNode {
             children: ArrayNoNils(showAndSBD, venueLayout, ratingAndMeta, footer)
         )
         textStack.style.alignSelf = .stretch
-        
+        textStack.style.flexShrink = 1.0
+        textStack.style.flexGrow = 1.0
+
         let stack = ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 8.0,
@@ -268,12 +276,17 @@ public class YearShowCellNode : ASCellNode {
             children: [artworkNode, textStack]
         )
         stack.style.alignSelf = .stretch
+        stack.style.flexShrink = 1.0
+        stack.style.flexGrow = 1.0
+        
+        //        stack.style.width = ASDimensionMake(.fraction, 1.0)
 
         let inset = ASInsetLayoutSpec(
             insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 8),
             child: stack
         )
         inset.style.alignSelf = .stretch
+        inset.style.flexShrink = 1.0
         
         return inset
         

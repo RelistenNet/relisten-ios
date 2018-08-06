@@ -33,6 +33,7 @@ def apply_pods
 # pod 'FirebaseDatabase', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
 # pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
 # pod 'Firebase/Messaging'
+  pod 'RealmSwift'
 
   pod 'AXRatingView'
   pod 'NAKPlaybackIndicatorView'
@@ -65,7 +66,7 @@ def apply_pods
   # pod 'SpinnerView'
 
   pod 'Fabric'
-  pod 'Crashlytics'  
+  pod 'Crashlytics'
 end
 
 target 'RelistenShared' do

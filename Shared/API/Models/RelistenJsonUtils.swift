@@ -60,6 +60,17 @@ extension JSON {
         }
     }
     
+    public var uuid: UUID? {
+        get {
+            switch self.type {
+            case .string:
+                return UUID(uuidString: self.object as! String)
+            default:
+                return nil
+            }
+        }
+    }
+    
     public var toURL: URL? {
         get {
             switch self.type {

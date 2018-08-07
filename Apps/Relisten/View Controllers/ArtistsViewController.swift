@@ -87,7 +87,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         
 //        favoriteArtists = Array(library.favorites.artists.map({ UUID(uuidString: $0.artist_uuid)! }))
 
-        library.recentlyPlayed.observeWithValue { [weak self] recentlyPlayed, changes in
+        library.recent.shows.observeWithValue { [weak self] recentlyPlayed, changes in
             guard let s = self else { return }
             
             s.reloadRecentShows(tracks: recentlyPlayed.asTracks())
@@ -102,10 +102,6 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let library = MyLibrary.shared
-        
-        reloadOfflineSources(shows: library.offline.sources.asCompleteShows())
-        reloadRecentShows(tracks: library.recentlyPlayed.asTracks())
         
         AppColors_SwitchToRelisten(navigationController)
     }
@@ -133,10 +129,11 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     }
     
     private func reloadRecentShows(tracks: [Track]) {
-        let recentShows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: ArtistWithCounts?)]
-        
         DispatchQueue.main.async {
             self.recentlyPlayedTracks = tracks
+            
+            let recentShows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: ArtistWithCounts?)]
+            
             self.recentShowsNode.shows = recentShows
             self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
         }

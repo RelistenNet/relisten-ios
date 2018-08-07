@@ -11,6 +11,8 @@ import UIKit
 import AsyncDisplayKit
 //import DWURecyclingAlert
 
+import RealmSwift
+
 public protocol RelistenAppDelegate {
     var rootNavigationController: ASNavigationController! { get }
 }

@@ -83,7 +83,7 @@ class CarPlayDataSource {
         _sortedArtistsWithFavorites = LockableDataItem<[ArtistWithCounts]>([], queue: queue, delegate: delegate)
         lockableDataItems = [_recentlyPlayedShows, _favoriteShowsByArtist, _offlineShowsByArtist, _sortedArtistsWithFavorites]
 
-        MyLibrary.shared.recentlyPlayed.observeWithValue { [weak self] (recentlyPlayed, changes) in
+        MyLibrary.shared.recent.shows.observeWithValue { [weak self] (recentlyPlayed, changes) in
             guard let s = self else { return }
 
             let tracks = recentlyPlayed.asTracks()

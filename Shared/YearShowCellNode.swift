@@ -287,7 +287,7 @@ public class YearShowCellNode : ASCellNode {
         )
         inset.style.alignSelf = .stretch
         inset.style.flexShrink = 1.0
-        
+                
         return inset
         
     }

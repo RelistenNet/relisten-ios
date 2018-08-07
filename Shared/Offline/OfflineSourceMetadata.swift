@@ -166,6 +166,8 @@ public class FavoritedTrack: Object, FavoritedItem, HasTrackSourceAndShow {
 }
 
 public class RecentlyPlayedTrack: Object, HasTrackSourceAndShow {
+    @objc public dynamic var uuid: String! = UUID().uuidString
+    
     @objc public dynamic var show_uuid: String!
     @objc public dynamic var source_uuid: String!
     @objc public dynamic var track_uuid: String!
@@ -175,11 +177,11 @@ public class RecentlyPlayedTrack: Object, HasTrackSourceAndShow {
     @objc public dynamic var updated_at: Date!
 
     public override static func primaryKey() -> String? {
-        return "show_uuid"
+        return "uuid"
     }
     
     public override static func indexedProperties() -> [String] {
-        return ["source_uuid", "artist_uuid"]
+        return ["source_uuid", "artist_uuid", "show_uuid", "tack_uuid"]
     }
 }
 

@@ -11,7 +11,7 @@ import Foundation
 public class ShareHelper {
     public static func url(forTrack track: Track) -> URL {
         let urlText = String(
-            format: "https://relisten.live/%@/%@/%@/%@/%@?source=%d",
+            format: "https://relisten.net/%@/%@/%@/%@/%@?source=%d",
             track.showInfo.artist.slug,
             track.showInfo.show.yearFromDate,
             track.showInfo.show.monthFromDate,
@@ -25,7 +25,7 @@ public class ShareHelper {
     
     public static func url(forSource info: CompleteShowInformation) -> URL {
         let urlText = String(
-            format: "https://relisten.live/%@/%@/%@/%@?source=%d",
+            format: "https://relisten.net/%@/%@/%@/%@?source=%d",
             info.artist.slug,
             info.show.yearFromDate,
             info.show.monthFromDate,
@@ -62,5 +62,23 @@ public class ShareHelper {
         }
 
         return text
+    }
+    
+    public static func shareViewController(forTrack track: Track) -> UIViewController {
+        let items: [Any] = [text(forTrack: track), url(forTrack: track)]
+        let vc = VisualActivityViewController(activityItems: items, applicationActivities: nil)
+        vc.previewNumberOfLines = 10
+        vc.modalTransitionStyle = .coverVertical
+        
+        return vc
+    }
+    
+    public static func shareViewController(forSource: CompleteShowInformation) -> UIViewController {
+        let items: [Any] = [text(forSource: forSource), url(forSource: forSource)]
+        let vc = VisualActivityViewController(activityItems: items, applicationActivities: nil)
+        vc.previewNumberOfLines = 10
+        vc.modalTransitionStyle = .coverVertical
+        
+        return vc
     }
 }

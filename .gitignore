@@ -4,6 +4,8 @@
 
 /Assets/Build/
 
+/vendor/
+
 .DS_Store
 ## Build generated
 build/

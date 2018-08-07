@@ -17,14 +17,7 @@ public struct _AppColors : Equatable {
     public let remaster: UIColor
     
     public let mutedText: UIColor
-    
-    public init(primary: UIColor, textOnPrimary: UIColor, soundboard: UIColor, remaster: UIColor, mutedText: UIColor) {
-        self.primary = primary
-        self.textOnPrimary = textOnPrimary
-        self.soundboard = soundboard
-        self.mutedText = mutedText
-        self.remaster = remaster
-    }
+    public let lightGreyBackground: UIColor
 }
 
 public let RelistenAppColors = _AppColors(
@@ -32,7 +25,8 @@ public let RelistenAppColors = _AppColors(
     textOnPrimary: UIColor.white,
     soundboard: UIColor(red:0.0/255.0, green:128.0/255.0, blue:95.0/255.0, alpha:1.0),
     remaster: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
-    mutedText: UIColor.gray
+    mutedText: UIColor.gray,
+    lightGreyBackground: UIColor(white: 0.97, alpha: 1.0)
 )
 
 public let RelistenPlayerColors = AGAudioPlayerColors(main: RelistenAppColors.primary, accent: RelistenAppColors.textOnPrimary)
@@ -42,7 +36,8 @@ public let PhishODAppColors = _AppColors(
     textOnPrimary: UIColor.white,
     soundboard: UIColor(red:0.0/255.0, green:128.0/255.0, blue:95.0/255.0, alpha:1.0),
     remaster: UIColor(red:0, green:0.616, blue:0.753, alpha:1),
-    mutedText: UIColor.gray
+    mutedText: UIColor.gray,
+    lightGreyBackground: UIColor(white: 0.97, alpha: 1.0)
 )
 
 public let PhishODPlayerColors = AGAudioPlayerColors(main: PhishODAppColors.primary, accent: PhishODAppColors.textOnPrimary)

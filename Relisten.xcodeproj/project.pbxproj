@@ -109,6 +109,7 @@
 		7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1171D5A49C300004B5C /* RLAssets.xcassets */; };
 		7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */; };
 		7C8EF1261D5A49C300004B5C /* RelistenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */; };
+		7C9FC1EF211A184300A8579B /* VisualActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FC1EE211A184300A8579B /* VisualActivityViewController.swift */; };
 		7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */; };
 		7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
 		7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
@@ -263,6 +264,7 @@
 		7C8EF1211D5A49C300004B5C /* RelistenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenUITests.swift; sourceTree = "<group>"; };
 		7C8EF1271D5A49C300004B5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C9FC1EE211A184300A8579B /* VisualActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VisualActivityViewController.swift; path = Vendor/VisualActivityViewController.swift; sourceTree = "<group>"; };
 		7CA3CD131F71763400E936AB /* VenuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenuesViewController.swift; path = "View Controllers/Venues/VenuesViewController.swift"; sourceTree = "<group>"; };
 		7CA3CD161F71766E00E936AB /* VenueLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueLayout.swift; path = Layouts/VenueLayout.swift; sourceTree = "<group>"; };
 		7CA94EA71F0A6C74004663F3 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Track.swift; path = Playback/Models/Track.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 		7C449EBD1D5A513300750D54 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				7C9FC1ED211A181500A8579B /* Vendor */,
 				7C13704F20B9E8A100710E90 /* Helpers */,
 				7CCE0DEA1F9BDE3900041D47 /* Events */,
 				43A035D7210ECC4D00C087DD /* AlbumArt */,
@@ -613,6 +616,14 @@
 				7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */,
 			);
 			path = RelistenUITests;
+			sourceTree = "<group>";
+		};
+		7C9FC1ED211A181500A8579B /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				7C9FC1EE211A184300A8579B /* VisualActivityViewController.swift */,
+			);
+			name = Vendor;
 			sourceTree = "<group>";
 		};
 		7CA3CD121F71761B00E936AB /* Venues */ = {
@@ -1318,6 +1329,7 @@
 				43B53450210922CE00DE9B1F /* ReviewsViewController.swift in Sources */,
 				43B53441210922CE00DE9B1F /* ShowListViewController.swift in Sources */,
 				43B53446210922CE00DE9B1F /* SongsViewController.swift in Sources */,
+				7C9FC1EF211A184300A8579B /* VisualActivityViewController.swift in Sources */,
 				43B53429210922CE00DE9B1F /* UInt64+HumanizeBytes.swift in Sources */,
 				43B53463210922CE00DE9B1F /* AppColors.swift in Sources */,
 				43B53438210922CE00DE9B1F /* SwitchCellLayout.swift in Sources */,

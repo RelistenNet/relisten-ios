@@ -114,7 +114,7 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
     }
     
     // MARK: FaveButtonDelegate
-    public func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
+    public func instantCallback(_ faveButton: FaveButton, didSelected selected: Bool) {
         _currentlyFavorited = !_currentlyFavorited
         if let delegate = delegate {
             delegate.didFavorite(currentlyFavorited : _currentlyFavorited)
@@ -142,7 +142,7 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
         return colors
     }
     
-    public func instantCallback(_ faveButton: FaveButton, didSelected selected: Bool) {
+    public func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
     }
 }
 

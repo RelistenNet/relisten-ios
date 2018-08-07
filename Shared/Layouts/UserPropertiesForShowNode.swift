@@ -16,9 +16,6 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     public let artist: ArtistWithCounts
     private lazy var completeShowInformation = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
     
-    let isInMyShows = Observable(false)
-    let isAvailableOffline = Observable(false)
-    
     private var numberOfDownloadedTracks : Int = 0
     private var sizeOfDownloadedTracks : UInt64 = 0
     
@@ -51,7 +48,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         
         super.init()
         
-        self.backgroundColor = AppColors.primary
+        self.backgroundColor = AppColors.lightGreyBackground
         
         automaticallyManagesSubnodes = true
         accessoryType = .none
@@ -69,7 +66,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     
     public let favoriteButton : FavoriteButtonNode
     public let shareButton : ASButtonNode
-    public let downloadText : ASTextNode
+    public var downloadText : ASTextNode
     public let downloadButton : ASButtonNode
     public let deleteButton : ASButtonNode
     
@@ -82,11 +79,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     }
     
     @objc public func presentShareSheet() {
-        let show = completeShowInformation
-        let activities: [Any] = [ShareHelper.text(forSource: show), ShareHelper.url(forSource: show)]
-        
-        let shareVc = UIActivityViewController(activityItems: activities, applicationActivities: nil)
-        shareVc.modalTransitionStyle = .coverVertical
+        let shareVc = ShareHelper.shareViewController(forSource: completeShowInformation)
         
         if PlaybackController.sharedInstance.hasBarBeenAdded {
             PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
@@ -101,15 +94,17 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     }
     
     @objc public func deletePressed() {
+        let songs = "\(numberOfDownloadedTracks) song" + (numberOfDownloadedTracks > 1 ? "s" : "")
+        
         let alertController = UIAlertController(
             title: "Delete all downloaded tracks?",
-            message: "This will delete \(numberOfDownloadedTracks) song" + (numberOfDownloadedTracks > 1 ? "s" : "") +  " and free up \(sizeOfDownloadedTracks.humanizeBytes())",
-            preferredStyle: .alert
+            message: "This will delete " + songs +  " and free up \(sizeOfDownloadedTracks.humanizeBytes())",
+            preferredStyle: .actionSheet
         )
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAction)
         
-        let destroyAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+        let destroyAction = UIAlertAction(title: "Delete " + songs, style: .destructive) { (action) in
             RelistenDownloadManager.shared.delete(showInfo: self.completeShowInformation)
             self.deleteButton.isHidden = true
             self.downloadButton.setImage(#imageLiteral(resourceName: "download-outline"), for: .normal)
@@ -123,14 +118,10 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     private func setupLibraryObservers() {
         let library = MyLibrary.shared
         
-        library.offline.sources.observeWithValue { [weak self] (new, changes) in
-            guard let s = self else { return}
-            s.isAvailableOffline.value = library.isSourceFullyAvailableOffline(s.source)
-        }.dispose(to: &disposal)
-        
         library.favorites.sources.observeWithValue { [weak self] (new, changes) in
-            guard let s = self else { return}
-            s.isInMyShows.value = library.isFavorite(source: s.source)
+            guard let s = self else { return }
+            
+            s.favoriteButton.currentlyFavorited = library.isFavorite(source: s.source)
         }.dispose(to: &disposal)
         
         library.offline.tracks
@@ -142,7 +133,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
                 let count = tracks.count
                 
                 s.rebuildOfflineStatus(UInt64(totalSize), numberOfTracks: count)
-            }.dispose(to: &disposal)
+        }.dispose(to: &disposal)
     }
     
     private func rebuildOfflineStatus(_ sourceSize: UInt64, numberOfTracks: Int) {
@@ -161,7 +152,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
             let totalNumberOfTracks = source.tracksFlattened.count
             if numberOfTracks == totalNumberOfTracks {
                 downloadButtonImage = #imageLiteral(resourceName: "download-complete")
-                txt = "All songs downloaded (\(sourceSize.humanizeBytes()))"
+                txt = "All \(numberOfTracks) songs downloaded (\(sourceSize.humanizeBytes()))"
             } else {
                 txt = "\(numberOfTracks)/\(totalNumberOfTracks) song" + (totalNumberOfTracks > 1 ? "s" : "") + " (\(sourceSize.humanizeBytes()))"
             }
@@ -169,7 +160,14 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         
         deleteButton.isHidden = deleteButtonHidden
         downloadButton.setImage(downloadButtonImage, for: .normal)
-        downloadText.attributedText = RelistenAttributedString(txt, textStyle: .footnote)
+        
+        downloadText = ASTextNode(txt, textStyle: .footnote, color: .darkGray, alignment: .center)
+        downloadText.maximumNumberOfLines = 0
+        downloadText.style.alignSelf = .stretch
+        downloadText.style.flexGrow = 1.0
+        
+        self.clipsToBounds = false;
+        
         DispatchQueue.main.async { self.setNeedsLayout() }
     }
     
@@ -182,40 +180,28 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
             children: ArrayNoNils(
                 favoriteButton,
                 SpacerNode(),
-                shareButton,
-                SpacerNode(),
                 downloadButton,
-                deleteButton.isHidden ? nil : deleteButton
+                deleteButton.isHidden ? nil : deleteButton,
+                SpacerNode(),
+                shareButton
             )
         )
         buttonBar.style.alignSelf = .stretch
-        
-        let footnote = ASStackLayoutSpec(
-            direction: .horizontal,
-            spacing: 8,
-            justifyContent: .start,
-            alignItems: .center,
-            children: ArrayNoNils(
-                SpacerNode(),
-                downloadText
-            )
-        )
-        footnote.style.alignSelf = .stretch
         
         let vert = ASStackLayoutSpec(
             direction: .vertical,
             spacing: 8,
             justifyContent: .start,
-            alignItems: .start,
+            alignItems: .center,
             children: ArrayNoNils(
-                buttonBar,
-                numberOfDownloadedTracks > 0 ? footnote : nil
+                numberOfDownloadedTracks > 0 ? downloadText : nil,
+                buttonBar
             )
         )
         vert.style.alignSelf = .stretch
-        
+
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(16, 16, 16, 16),
+            insets: UIEdgeInsetsMake(8, 16, 8, 16),
             child: vert
         )
         l.style.alignSelf = .stretch

@@ -89,7 +89,7 @@ extension AppDelegate {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
             let url = userActivity.webpageURL!
             
-            // https://relisten.live/grateful-dead/1967/02/12/smokestack-lightning?source=87690
+            // https://relisten.net/grateful-dead/1967/02/12/smokestack-lightning?source=87690
             
             let parts = url.pathComponents
             

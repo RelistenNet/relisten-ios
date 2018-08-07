@@ -63,10 +63,20 @@ public class MyLibraryOffline {
     }
 }
 
-public class MyLibrary {
-    public static let shared = MyLibrary()
+public class MyLibraryRecentlyPlayed {
+    public var shows: Results<RecentlyPlayedTrack> {
+        get {
+            let realm = try! Realm()
+            return realm
+                .objects(RecentlyPlayedTrack.self)
+                .sorted(by: [SortDescriptor(keyPath: "show_uuid", ascending: true), SortDescriptor(keyPath: "updated_at", ascending: false)])
+                .sorted(byKeyPath: "updated_at", ascending: false)
+                .distinct(by: ["show_uuid"])
+            
+        }
+    }
     
-    public var recentlyPlayed: Results<RecentlyPlayedTrack> {
+    public var tracks: Results<RecentlyPlayedTrack> {
         get {
             let realm = try! Realm()
             return realm
@@ -74,7 +84,12 @@ public class MyLibrary {
                 .sorted(byKeyPath: "updated_at", ascending: false)
         }
     }
-    
+}
+
+public class MyLibrary {
+    public static let shared = MyLibrary()
+
+    public let recent = MyLibraryRecentlyPlayed()
     public let offline = MyLibraryOffline()
     public let favorites = MyLibraryFavorites()
     
@@ -299,7 +314,7 @@ extension MyLibrary {
     public func unfavoriteSource(show: CompleteShowInformation) -> Bool {
         let realm = try! Realm()
         
-        let favoritedSourceQuery = realm.object(ofType: FavoritedSource.self, forPrimaryKey: show.show.uuid.uuidString)
+        let favoritedSourceQuery = realm.object(ofType: FavoritedSource.self, forPrimaryKey: show.source.uuid.uuidString)
 
         if let favoritedSource = favoritedSourceQuery {
             try! realm.write {

@@ -99,7 +99,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         let alertController = UIAlertController(
             title: "Delete all downloaded tracks?",
             message: "This will delete " + songs +  " and free up \(sizeOfDownloadedTracks.humanizeBytes())",
-            preferredStyle: .actionSheet
+            preferredStyle: UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
         )
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAction)

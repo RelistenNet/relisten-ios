@@ -15,7 +15,7 @@ public class TrackActions {
         let a = UIAlertController(
             title: "\(track.title) \((duration == nil ? "" : "(\(duration!)" )))",
             message: "\(track.showInfo.source.display_date) • \(track.showInfo.artist.name)",
-            preferredStyle: .actionSheet
+            preferredStyle: UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
         )
         
         a.addAction(UIAlertAction(title: "Play Now", style: .default, handler: { _ in

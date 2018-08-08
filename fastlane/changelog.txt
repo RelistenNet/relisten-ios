@@ -1,7 +1,12 @@
+- Favorites are back!
+- Downloading for offline is much more stable and has a new UI!
+
+If you experience crashes on launch please uninstall the beta and reinstall it. This should be the last time you lose any data from an update.
+
+Things from last time:
+
 - Lots of bug fixes and new features to play around with!
 - Audio playback in bluetooth situations should be much improved.
 - Lock screen controls are much improved
 
 - Welcome @farktronix to the dev team! He is responsible for many of these new features and bug fixes.
-
-NOTE: favorites/my library functionality has been removed. The UI will be removed in a future beta. This feature will come back in a couple months but I would like to release a stable version without this feature.

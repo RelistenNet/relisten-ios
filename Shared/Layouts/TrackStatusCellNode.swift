@@ -9,6 +9,7 @@
 import UIKit
 
 import NAKPlaybackIndicatorView
+import DownloadButton
 
 import AsyncDisplayKit
 import Observable
@@ -85,6 +86,11 @@ public class TrackStatusCellNode : ASCellNode {
                         
                     case .downloading:
                         s.downloadState = .downloading
+                        DownloadManager.shared.observeProgressForTrack(s.track, observer: { [weak self] progress in
+                            if let s = self {
+                                print("Progress is \(progress)")
+                            }
+                        })
                         s.downloadingNode.startAnimating()
                         
                     default:
@@ -136,6 +142,8 @@ public class TrackStatusCellNode : ASCellNode {
     
     public let offlineNode = OfflineIndicatorNode()
     public let downloadingNode = OfflineDownloadingIndicatorNode()
+    public let downloadButtonNode = PKDownloadButton()
+    
     
     var trackState : Track.PlaybackState = .notActive
     var downloadState : Track.DownloadState = .none

@@ -70,7 +70,7 @@ public class ShowListViewController<T> : RelistenAsyncTableController<T> {
     }
     
     public func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
-        return { YearShowCellNode(show: show) }
+        return { ShowCellNode(show: show) }
     }
 
     func relayoutIfContainsTrack(_ track: Track) {

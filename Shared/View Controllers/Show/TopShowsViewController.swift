@@ -39,7 +39,7 @@ class TopShowsViewController: ShowListViewController<[Show]> {
     }    
         
     override func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
-        return { YearShowCellNode(show: show, withRank: atIndex.row + 1, verticalLayout: false) }
+        return { ShowCellNode(show: show, withRank: atIndex.row + 1, verticalLayout: false) }
     }
     
     override func extractShowsAndSource(forData: [Show]) -> [ShowWithSingleSource] {

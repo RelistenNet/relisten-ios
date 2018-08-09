@@ -39,7 +39,7 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]> {
     }
     
     override func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
-        return { YearShowCellNode(show: show, showUpdateDate: false) }
+        return { ShowCellNode(show: show, showUpdateDate: false) }
     }
     
     // MARK: Boring Overrides

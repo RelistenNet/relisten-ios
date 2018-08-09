@@ -174,7 +174,7 @@ extension MyLibrary {
 }
 
 
-extension MyLibrary : RelistenDownloadManagerDataSource {
+extension MyLibrary : DownloadManagerDataSource {
     public func nextTrackToDownload() -> Track? {
         let realm = try! Realm()
         

@@ -67,7 +67,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         let _ = PlaybackController.sharedInstance
         
         DispatchQueue.main.async {
-            let _ = RelistenDownloadManager.shared
+            let _ = DownloadManager.shared
         }
     }
 

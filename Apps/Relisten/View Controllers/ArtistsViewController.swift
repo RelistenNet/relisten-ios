@@ -66,7 +66,9 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         library.favorites.artists.observeWithValue { [weak self] artists, changes in
             guard let s = self else { return }
 
+            let previousFavoriteCount = s.favoriteArtists.count
             s.favoriteArtists = Array(artists.map({ UUID(uuidString: $0.artist_uuid)! }))
+            let newFavoriteCount = s.favoriteArtists.count
 
             switch changes {
             case .initial:
@@ -79,6 +81,10 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
                                            with: .automatic)
                     s.tableNode.reloadRows(at: modifications.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
                                            with: .automatic)
+                    
+                    if previousFavoriteCount == 0, newFavoriteCount > 0 {
+                        s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
+                    }
                 }, completion: nil)
             case .error(let error):
                 fatalError(error.localizedDescription)

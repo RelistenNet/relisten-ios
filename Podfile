@@ -51,6 +51,7 @@ def apply_pods
   pod "MZDownloadManager", :git => "https://github.com/alecgorge/MZDownloadManager.git"
   pod 'SVProgressHUD'
   pod 'ActionKit'
+  pod 'DownloadButton'
  
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']
@@ -61,7 +62,6 @@ def apply_pods
   # pod 'AsyncSwift'
   # pod 'BFNavigationBarDrawer'
   # pod 'CWStatusBarNotification'
-  # pod 'DownloadButton'
   # pod 'Reachability'
   # pod 'SpinnerView'
 

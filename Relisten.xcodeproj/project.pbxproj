@@ -53,7 +53,7 @@
 		43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */; };
 		43B5343D210922CE00DE9B1F /* VenueLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD161F71766E00E936AB /* VenueLayout.swift */; };
 		43B5343E210922CE00DE9B1F /* YearNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553920C2081A00F07622 /* YearNode.swift */; };
-		43B5343F210922CE00DE9B1F /* YearShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* YearShowCellNode.swift */; };
+		43B5343F210922CE00DE9B1F /* ShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* ShowCellNode.swift */; };
 		43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551820BFB71B00F07622 /* LongTextViewController.swift */; };
 		43B53441210922CE00DE9B1F /* ShowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B0472C20FD59D000251046 /* ShowListViewController.swift */; };
 		43B53442210922CE00DE9B1F /* RecentlyPerformedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */; };
@@ -286,7 +286,7 @@
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishOD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.debug.xcconfig"; sourceTree = "<group>"; };
 		8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenResourceStatusOverlay.swift; sourceTree = "<group>"; };
-		8E91C1703DD1522098B0957F /* YearShowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearShowCellNode.swift; sourceTree = "<group>"; };
+		8E91C1703DD1522098B0957F /* ShowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCellNode.swift; sourceTree = "<group>"; };
 		A82930F25AEEDCD2C5F101AD /* Pods-Relisten.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Relisten.release.xcconfig"; path = "Pods/Target Support Files/Pods-Relisten/Pods-Relisten.release.xcconfig"; sourceTree = "<group>"; };
 		D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhishODUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0263F8B06570DBB1399A78F /* Pods-RelistenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -527,9 +527,10 @@
 				7C31552120BFC55900F07622 /* ReviewLayout.swift */,
 				7C31552720C0A08300F07622 /* ShareCellLayout.swift */,
 				7C31554220C2343000F07622 /* ShareCellNode.swift */,
+				8E91C1703DD1522098B0957F /* ShowCellNode.swift */,
 				7C4F1BEA1F731A5900C592BD /* SongLayout.swift */,
-				7C31553020C2074300F07622 /* SourceFeatureIndicatorNodes.swift */,
 				7C31553C20C2199500F07622 /* SourceDetailsNode.swift */,
+				7C31553020C2074300F07622 /* SourceFeatureIndicatorNodes.swift */,
 				7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */,
 				7C31553F20C224F500F07622 /* SwitchCellNode.swift */,
 				7C31554520C2350800F07622 /* TrackStatusCellNode.swift */,
@@ -538,7 +539,6 @@
 				43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */,
 				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 				7C31553920C2081A00F07622 /* YearNode.swift */,
-				8E91C1703DD1522098B0957F /* YearShowCellNode.swift */,
 			);
 			name = DisplayNodes;
 			sourceTree = "<group>";
@@ -1283,7 +1283,7 @@
 				43B5341F210922CE00DE9B1F /* Events.swift in Sources */,
 				43A035F3210EEDCA00C087DD /* AlbumArtImageCache.swift in Sources */,
 				43B5345C210922CE00DE9B1F /* RelistenShowModels.swift in Sources */,
-				43B5343F210922CE00DE9B1F /* YearShowCellNode.swift in Sources */,
+				43B5343F210922CE00DE9B1F /* ShowCellNode.swift in Sources */,
 				43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */,
 				43B5345E210922CE00DE9B1F /* RelistenSongModels.swift in Sources */,
 				7C34D854210ED59400813C00 /* RealmNotificationDisposables.swift in Sources */,

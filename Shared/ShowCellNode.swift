@@ -11,7 +11,7 @@ import AXRatingView
 import AsyncDisplayKit
 import Observable
 
-public class YearShowCellNode : ASCellNode {
+public class ShowCellNode : ASCellNode {
     public let show: Show
     public let artist: SlimArtist?
     public let rank: Int?

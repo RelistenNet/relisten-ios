@@ -17,7 +17,7 @@ import SINQ
 
 public class SourceViewController: RelistenBaseAsyncTableViewController {
     
-    private let artist: ArtistWithCounts
+    private let artist: Artist
     private let show: ShowWithSources
     private let source: SourceFull
     private let idx: Int
@@ -27,7 +27,7 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
 
     private lazy var completeShowInformation = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
 
-    public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
+    public required init(artist: Artist, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
         self.show = show
         self.source = source

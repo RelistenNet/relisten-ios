@@ -20,7 +20,7 @@ class MyRecentlyPlayedViewController: ShowListViewController<Results<RecentlyPla
         
         latestData = loadMyShows()
         
-        MyLibrary.shared.recentlyPlayedByArtist(artist).observeWithValue { [weak self] _, changes in
+        MyLibrary.shared.recent.shows(byArtist: artist).observeWithValue { [weak self] _, changes in
             guard let s = self else { return }
             
             let myShows = s.loadMyShows()
@@ -60,7 +60,7 @@ class MyRecentlyPlayedViewController: ShowListViewController<Results<RecentlyPla
     }
     
     func loadMyShows() -> Results<RecentlyPlayedTrack> {
-        return MyLibrary.shared.recentlyPlayedByArtist(artist)
+        return MyLibrary.shared.recent.shows(byArtist: artist)
     }
     
     // This subclass has to re-implement this method because Texture tries to perform an Obj-C respondsToSelctor: check and it's not finding the methods if they just exist on the superclass with the argument label names (numberOfSectionsIn: does exist though)

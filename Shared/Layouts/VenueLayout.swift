@@ -103,7 +103,7 @@ func getCoordinate( addressString : String,
 }
 
 public class VenueLayoutWithMap : InsetLayout<UIView> {
-    public init(venue: VenueWithShowCount, forArtist: ArtistWithCounts) {
+    public init(venue: VenueWithShowCount, forArtist: Artist) {
         var layouts: [Layout] = []
         
         let mapLayout = SizeLayout<MKMapView>(

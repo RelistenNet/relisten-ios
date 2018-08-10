@@ -20,7 +20,7 @@ class DownloadedViewController: ShowListViewController<[CompleteShowInformation]
         
         latestData = loadOffline()
         
-        MyLibrary.shared.offline.sources.observeWithValue { [weak self] (os, changes) in
+        MyLibrary.shared.offline.sources(byArtist: artist).observeWithValue { [weak self] (os, changes) in
             guard let s = self else { return }
             
             let offlineSources = os.asCompleteShows()

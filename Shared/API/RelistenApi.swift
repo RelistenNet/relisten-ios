@@ -111,6 +111,18 @@ public class _RelistenApi {
             return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
         }
         
+        service.configureTransformer("/artists/*/shows/recently-updated") {
+            return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
+        }
+        
+        service.configureTransformer("/artists/*/shows/recently-performed") {
+            return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
+        }
+        
+        service.configureTransformer("/shows/*") {
+            return try ($0.content as JSON).arrayValue.map(ShowWithArtist.init)
+        }
+        
         service.configureTransformer("/artists/*/shows/random") {
             return try ShowWithSources(json: $0.content)
         }
@@ -271,39 +283,44 @@ public class _RelistenApi {
             .withParam("month", String(calendar.component(.month, from: date)))
             .withParam("day", String(calendar.component(.day, from: date)))
     }
-
-    /*
-    func repository(_ repositoryModel: Repository) -> Resource {
-        return repository(
-            ownedBy: repositoryModel.owner.login,
-            named: repositoryModel.name)
+    
+    public func recentlyUpdated(byArtist: SlimArtist) -> Resource {
+        return artistResource(byArtist)
+            .child("shows")
+            .child("recently-updated")
     }
     
-    func currentUserStarred(_ repositoryModel: Repository) -> Resource {
+    public func recentlyPerformed(byArtist: SlimArtist) -> Resource {
+        return artistResource(byArtist)
+            .child("shows")
+            .child("recently-performed")
+    }
+    
+    public func recentlyPerformed(byArtists: [UUID]) -> Resource {
         return service
-            .resource("/user/starred")
-            .child(repositoryModel.owner.login)
-            .child(repositoryModel.name)
+            .resource("shows")
+            .child("recently-performed")
+            .withParam("artistIds", json(from: byArtists.map { $0.uuidString }))
+    }
+
+    public func recentlyUpdated() -> Resource {
+        return service
+            .resource("shows")
+            .child("recently-updated")
     }
     
-    func setStarred(_ isStarred: Bool, repository repositoryModel: Repository) -> Request {
-        let starredResource = currentUserStarred(repositoryModel)
-        return starredResource
-            .request(isStarred ? .put : .delete)
-            .onSuccess { _ in
-                // Update succeeded. Directly update the locally cached “starred / not starred” state.
-                
-                starredResource.overrideLocalContent(with: isStarred)
-                
-                // Ask server for an updated star count. Note that we only need to trigger the load here, not handle
-                // the response! Any UI that is displaying the star count will be observing this resource, and thus
-                // will pick up the change. The code that knows _when_ to trigger the load is decoupled from the code
-                // that knows _what_ to do with the updated data. This is the magic of Siesta.
-                
-                self.repository(repositoryModel).load()
-        }
+    public func recentlyPerformed() -> Resource {
+        return service
+            .resource("shows")
+            .child("recently-performed")
     }
-    */
+}
+
+func json(from object:Any) -> String? {
+    guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
+        return nil
+    }
+    return String(data: data, encoding: String.Encoding.utf8)
 }
 
 /// If the response is JSON and has a "message" value, use it as the user-visible error message.

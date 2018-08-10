@@ -12,14 +12,14 @@ import Siesta
 import AsyncDisplayKit
 
 class RecentlyAddedViewController: ShowListViewController<[Show]> {
-    public required init(artist: ArtistWithCounts, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: Artist, showsResource: Resource?, tourSections: Bool) {
         super.init(artist: artist, showsResource: (showsResource != nil) ? showsResource : RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: tourSections)
 
         shouldSortShows = false
         title = "Recently Added"
     }
     
-    public convenience init(artist: ArtistWithCounts) {
+    public convenience init(artist: Artist) {
         self.init(artist: artist, showsResource: RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: true)
     }
     

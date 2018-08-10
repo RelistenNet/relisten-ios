@@ -14,9 +14,9 @@ import Siesta
 
 public class ReviewsViewController : RelistenTableViewController<[SourceReview]> {
     let source: SourceFull
-    let artist: ArtistWithCounts
+    let artist: Artist
     
-    public required init(reviewsForSource source: SourceFull, byArtist artist: ArtistWithCounts) {
+    public required init(reviewsForSource source: SourceFull, byArtist artist: Artist) {
         self.source = source
         self.artist = artist
         

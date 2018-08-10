@@ -12,12 +12,12 @@ import LayoutKit
 import SafariServices
 
 public class SourceDetailsViewController : RelistenBaseTableViewController {
-    let artist: ArtistWithCounts
+    let artist: Artist
     let show: ShowWithSources
     let source: SourceFull
     var hasSourceInformation : Bool = false
     
-    public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
+    public required init(artist: Artist, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
         self.show = show
         self.source = source

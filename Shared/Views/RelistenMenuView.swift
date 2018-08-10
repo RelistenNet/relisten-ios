@@ -53,7 +53,7 @@ public class RelistenMenuView : UIView {
         
         var everything: [RelistenMenuItem] = []
         var discover: [RelistenMenuItem] = []
-        let my: [RelistenMenuItem] = [.MyShowsLibrary, /* .MyShowsPlaylists, */ .MyShowsDownloaded]
+        let my: [RelistenMenuItem] = [.MyShowsLibrary, .RecentlyPlayed, /* .MyShowsPlaylists, */ .MyShowsDownloaded]
         
         if artist.features.years { everything.append(.EverythingYears) }
         if artist.features.songs { everything.append(.EverythingSongs) }
@@ -72,7 +72,7 @@ public class RelistenMenuView : UIView {
         menu = [
             everything,
             discover,
-            [ .RecentlyPerformed, .RecentlyUpdated, .RecentlyPlayed ],
+            [ .RecentlyPerformed, .RecentlyUpdated ],
             my
         ]
         
@@ -101,10 +101,11 @@ public class RelistenMenuView : UIView {
     private func layoutSubviews(forWidth width: CGFloat) {
         for (idx, categoryButton) in uiButtons.enumerated() {
             var categoryButtonFrame = categoryButton.frame
+            categoryButtonFrame.origin.x = width
             categoryButtonFrame.origin.y = CGFloat(idx) * categoryButtonFrame.size.height + CGFloat(idx) * size_MenuLineSpacing
             categoryButton.frame = categoryButtonFrame
             
-            let containerFrame = CGRect(x: -width * 2,
+            let containerFrame = CGRect(x: -width,
                                         y: categoryButton.frame.origin.y,
                                         width: width * 2,
                                         height: categoryButton.frame.size.height)
@@ -266,9 +267,9 @@ public class RelistenMenuView : UIView {
             
         case .RecentlyPerformed: return "performed"
         case .RecentlyUpdated: return "updated"
-        case .RecentlyPlayed: return "played"
             
-        case .MyShowsLibrary: return "my library"
+        case .MyShowsLibrary: return "my favorites"
+        case .RecentlyPlayed: return "my recents"
         case .MyShowsPlaylists: return "playlists"
         case .MyShowsDownloaded: return "downloaded"
         }

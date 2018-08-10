@@ -260,7 +260,7 @@ public struct OfflineSourceMetadata : Codable, Hashable {
         return completeShowInformation.source
     }
     
-    public var artist: ArtistWithCounts {
+    public var artist: Artist {
         return completeShowInformation.artist
     }
     

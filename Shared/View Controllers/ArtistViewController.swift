@@ -23,6 +23,10 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
     enum Sections: Int, RawRepresentable {
         case today = 0
         case recentlyPlayed
+        case recentlyPerformed
+        case recentlyUpdated
+        case favorited
+        case offline
         case count
     }
 
@@ -31,30 +35,52 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
     public let artist: ArtistWithCounts
     
     let resourceToday: Resource
-    var resourceTodayData: [Show]? = nil
+    let resourceRecentlyPerformed: Resource
+    let resourceRecentlyUpdated: Resource
+    
     private var lastTodayShowsUpdateDay : Int
     
     public var recentlyPlayedTracks: [Track] = []
+    public var offlineSources: [CompleteShowInformation] = []
+    public var favoritedSources: [CompleteShowInformation] = []
+    public var todayShows: [ShowWithArtist] = []
+    public var recentlyPerformedShows: [ShowWithArtist] = []
+    public var recentlyUpdatedShows: [ShowWithArtist] = []
+
     public let recentShowsNode: HorizontalShowCollectionCellNode
     public let todayShowsNode: HorizontalShowCollectionCellNode
+    public let recentlyPerformedNode: HorizontalShowCollectionCellNode
+    public let recentlyUpdatedNode: HorizontalShowCollectionCellNode
+    public let favoritedNode: HorizontalShowCollectionCellNode
+    public let offlineNode: HorizontalShowCollectionCellNode
 
     public required init(artist: ArtistWithCounts) {
         self.artist = artist
         
         recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         todayShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
-        
+        recentlyPerformedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+        recentlyUpdatedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+        favoritedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+        offlineNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+
         recentShowsNode.cellTransparency = 0.9
         todayShowsNode.cellTransparency = 0.9
 
         resourceToday = RelistenApi.onThisDay(byArtist: artist)
-        
+        resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtist: artist)
+        resourceRecentlyUpdated = RelistenApi.recentlyUpdated(byArtist: artist)
+
         lastTodayShowsUpdateDay = Calendar.currentDayOfMonth()
         
         super.init()
         
         recentShowsNode.collectionNode.delegate = self
         todayShowsNode.collectionNode.delegate = self
+        recentlyPerformedNode.collectionNode.delegate = self
+        recentlyUpdatedNode.collectionNode.delegate = self
+        favoritedNode.collectionNode.delegate = self
+        offlineNode.collectionNode.delegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -65,11 +91,9 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
     public override func viewDidLoad() {
         if artist.name == "Phish" {
             AppColors_SwitchToPhishOD(navigationController)
-//            cellDefaultBackgroundColor = UIColor.clear
         }
         else {
             AppColors_SwitchToRelisten(navigationController)
-//            cellDefaultBackgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1.0)
         }
         
         navigationItem.largeTitleDisplayMode = .always
@@ -80,9 +104,11 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         
         title = artist.name
         
-        resourceToday.addObserver(self)
-            .addObserver(statusOverlay)
-        resourceToday.loadFromCacheThenUpdate()
+        for res in [resourceToday, resourceRecentlyPerformed, resourceRecentlyUpdated] {
+            res.addObserver(self)
+            res.addObserver(statusOverlay)
+            res.loadFromCacheThenUpdate()
+        }
         
         av = RelistenMenuView(artist: artist, inViewController: self)
         av.frame.origin = CGPoint(x: 0, y: 16)
@@ -95,9 +121,37 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         
         setupBackgroundSlideshow()
         
-        MyLibrary.shared.recent.shows.observeWithValue { [weak self] shows, _ in
+        MyLibrary.shared.recent.shows(byArtist: artist).observeWithValue { [weak self] shows, _ in
             guard let s = self else { return }
-            s.reloadRecentShows(tracks: shows.asTracks())
+            
+            DispatchQueue.main.async {
+                s.recentlyPlayedTracks = shows.asTracks()
+                s.recentShowsNode.shows = s.recentlyPlayedTracks.map { (show: $0.showInfo.show, artist: nil) }
+
+                s.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+            }
+        }.dispose(to: &disposal)
+        
+        MyLibrary.shared.offline.sources(byArtist: artist).observeWithValue { [weak self] sources, _ in
+            guard let s = self else { return }
+            
+            DispatchQueue.main.async {
+                s.offlineSources = sources.asCompleteShows()
+                s.offlineNode.shows = s.offlineSources.map { (show: $0.show, artist: nil) }
+
+                s.tableNode.reloadSections([ Sections.offline.rawValue ], with: .automatic)
+            }
+        }.dispose(to: &disposal)
+        
+        MyLibrary.shared.favorites.sources(byArtist: artist).observeWithValue { [weak self] sources, _ in
+            guard let s = self else { return }
+            
+            DispatchQueue.main.async {
+                s.favoritedSources = sources.asCompleteShows()
+                s.favoritedNode.shows = s.favoritedSources.map { (show: $0.show, artist: nil) }
+
+                s.tableNode.reloadSections([ Sections.favorited.rawValue ], with: .automatic)
+            }
         }.dispose(to: &disposal)
     }
     
@@ -122,34 +176,6 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         viewWillDisappear_SlideShow(animated)
     }
     
-    private func reloadRecentShows(tracks: [Track]) {
-        let filteredTracks = tracks.filter { (track) -> Bool in
-            return track.showInfo.artist == artist
-        }
-        if !(filteredTracks == recentlyPlayedTracks) {
-            DispatchQueue.main.async {
-                self.recentlyPlayedTracks = filteredTracks
-                self.recentShowsNode.shows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) })
-                self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
-            }
-        }
-    }
-    
-    private func reloadShowsOnThisDate(todaysShows: [Show]) {
-        if !(todaysShows == resourceTodayData) {
-            var shows : [(show: Show, artist: ArtistWithCounts?)] = []
-            todaysShows.forEach { (show) in
-                shows.append((show: show, artist: artist))
-            }
-            
-            DispatchQueue.main.async {
-                self.resourceTodayData = todaysShows
-                self.todayShowsNode.shows = todaysShows.map({ ($0, nil) })
-                self.tableNode.reloadSections([ Sections.today.rawValue ], with: .automatic)
-            }
-        }
-    }
-    
     static var dateFormatter: DateFormatter = {
         let d = DateFormatter()
         d.dateFormat = "MMM d"
@@ -157,8 +183,29 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
     }()
     
     public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
-        if let todaysShows : [Show] = resource.latestData?.typedContent() {
-            reloadShowsOnThisDate(todaysShows: todaysShows)
+        switch event {
+        case .newData(_):
+            break
+        default:
+            return
+        }
+        
+        DispatchQueue.main.async {
+            if resource == self.resourceToday, let shows: [ShowWithArtist] = self.resourceToday.typedContent(ifNone: []) {
+                self.todayShows = shows
+                self.todayShowsNode.shows = shows.map { (show: $0, artist: nil) }
+                self.tableNode.reloadSections([ Sections.today.rawValue ], with: .automatic)
+            }
+            else if resource == self.resourceRecentlyPerformed, let shows: [ShowWithArtist] = self.resourceRecentlyPerformed.typedContent(ifNone: []) {
+                self.recentlyPerformedShows = shows
+                self.recentlyPerformedNode.shows = shows.map { (show: $0, artist: nil) }
+                self.tableNode.reloadSections([ Sections.recentlyPerformed.rawValue ], with: .automatic)
+            }
+            else if resource == self.resourceRecentlyUpdated, let shows: [ShowWithArtist] = self.resourceRecentlyUpdated.typedContent(ifNone: []) {
+                self.recentlyUpdatedShows = shows
+                self.recentlyUpdatedNode.shows = shows.map { (show: $0, artist: nil) }
+                self.tableNode.reloadSections([ Sections.recentlyUpdated.rawValue ], with: .automatic)
+            }
         }
     }
     
@@ -169,6 +216,125 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
     var shuffledImageNames: [NSString] = []
     var slider: KASlideShow! = nil
 }
+
+extension ArtistViewController {
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return Sections.count.rawValue
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        switch Sections(rawValue: section)! {
+        case .today:
+            return todayShows.count > 0 ? 1 : 0
+        case .recentlyUpdated:
+            return recentlyUpdatedShows.count > 0 ? 1 : 0
+        case .recentlyPerformed:
+            return recentlyPerformedShows.count > 0 ? 1 : 0
+        case .favorited:
+            return favoritedSources.count > 0 ? 1 : 0
+        case .offline:
+            return offlineSources.count > 0 ? 1 : 0
+        case .recentlyPlayed:
+            return recentlyPlayedTracks.count > 0 ? 1 : 0
+        case .count:
+            fatalError()
+        }
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        var n: ASCellNode
+        
+        switch Sections(rawValue: indexPath.section)! {
+        case .today:
+            n = todayShowsNode
+        case .recentlyPlayed:
+            n = recentShowsNode
+        case .recentlyPerformed:
+            n = recentlyPerformedNode
+        case .recentlyUpdated:
+            n = recentlyUpdatedNode
+        case .favorited:
+            n = favoritedNode
+        case .offline:
+            n = offlineNode
+
+        case .count:
+            fatalError()
+        }
+        
+        return { n }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch Sections(rawValue: section)! {
+        case .today:
+            if todayShows.count > 0 {
+                return "\(todayShows.count) Show\(todayShows.count != 1 ? "s" : "") on " + ArtistViewController.dateFormatter.string(from: Date())
+            }
+            else {
+                return nil
+            }
+        case .recentlyPlayed:
+            return recentlyPlayedTracks.count > 0 ? "My Recently Played" : nil
+        case .recentlyUpdated:
+            return recentlyUpdatedShows.count > 0 ? "Recently Updated" : nil
+        case .recentlyPerformed:
+            return recentlyPerformedShows.count > 0 ? "Recently Performed" : nil
+        case .favorited:
+            return favoritedSources.count > 0 ? "My Favorites" : nil
+        case .offline:
+            return offlineSources.count > 0 ? "Available Offline" : nil
+
+        case .count:
+            fatalError()
+        }
+    }
+}
+
+extension ArtistViewController : ASCollectionDelegate {
+    public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        var show: Show!
+        var source: SourceFull? = nil
+        
+        if collectionNode === todayShowsNode.collectionNode {
+            show = todayShows[indexPath.row]
+        }
+        else if collectionNode === recentShowsNode.collectionNode {
+            let s = recentlyPlayedTracks[indexPath.row].showInfo
+            show = s.show
+            source = s.source
+        }
+        else if collectionNode == recentlyPerformedNode.collectionNode {
+            show = recentlyPerformedShows[indexPath.row]
+        }
+        else if collectionNode == favoritedNode.collectionNode {
+            let s = favoritedSources[indexPath.row]
+            
+            show = s.show
+            source = s.source
+        }
+        else if collectionNode == offlineNode.collectionNode {
+            let s = offlineSources[indexPath.row]
+            
+            show = s.show
+            source = s.source
+        }
+        else if collectionNode == recentlyUpdatedNode.collectionNode {
+            show = recentlyUpdatedShows[indexPath.row]
+        }
+
+        let vc = SourcesViewController(artist: self.artist, show: show)
+        
+        if let src = source {
+            vc.presentIfNecessary(navigationController: navigationController, forSource: src)
+        }
+        else {
+            vc.presentIfNecessary(navigationController: navigationController)
+        }
+    }
+}
+
+// MARK: Phish Slideshow
 
 extension ArtistViewController : KASlideShowDataSource {
     public func slideShow(_ slideShow: KASlideShow!, objectAt index: UInt) -> NSObject! {
@@ -229,67 +395,6 @@ extension ArtistViewController : KASlideShowDataSource {
     public func viewDidAppear_SlideShow(_ animated: Bool) {
         if let s = slider {
             s.start()
-        }
-    }
-}
-
-extension ArtistViewController {
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return Sections.count.rawValue
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        switch Sections(rawValue: section)! {
-        case .today:
-            return (resourceTodayData?.count ?? 0) > 0 ? 1 : 0
-        case .recentlyPlayed:
-            return recentlyPlayedTracks.count > 0 ? 1 : 0
-        case .count:
-            fatalError()
-        }
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        switch Sections(rawValue: indexPath.section)! {
-        case .today:
-            let n = todayShowsNode
-            return { n }
-        case .recentlyPlayed:
-            let n = recentShowsNode
-            return { n }
-        case .count:
-            fatalError()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch Sections(rawValue: section)! {
-        case .today:
-            if let t = resourceTodayData {
-                return "\(t.count) Show\(t.count != 1 ? "s" : "") on " + ArtistViewController.dateFormatter.string(from: Date())
-            }
-            else {
-                return nil
-            }
-        case .recentlyPlayed:
-            return recentlyPlayedTracks.count > 0 ? "My Recently Played Shows" : nil
-        default:
-            return nil
-        }
-    }
-}
-
-extension ArtistViewController : ASCollectionDelegate {
-    public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        if collectionNode === todayShowsNode.collectionNode, let today = resourceTodayData {
-            let item = today[indexPath.row]
-            let vc = SourcesViewController(artist: self.artist, show: item)
-            vc.presentIfNecessary(navigationController: navigationController)
-        }
-        else if collectionNode === recentShowsNode.collectionNode {
-            let item = recentlyPlayedTracks[indexPath.row]
-            let vc = SourcesViewController(artist: self.artist, show: item.showInfo.show)
-            vc.presentIfNecessary(navigationController: navigationController)
         }
     }
 }

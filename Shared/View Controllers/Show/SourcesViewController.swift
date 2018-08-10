@@ -16,7 +16,7 @@ import SINQ
 
 public class SourcesViewController: RelistenAsyncTableController<ShowWithSources> {
     
-    let artist: ArtistWithCounts
+    let artist: Artist
     let show: Show?
     let isRandom: Bool
     
@@ -31,7 +31,7 @@ public class SourcesViewController: RelistenAsyncTableController<ShowWithSources
     var sourceToPresent : SourceFull?
     var canSkipIfSingleSource : Bool
     
-    public required init(artist: ArtistWithCounts, show: Show) {
+    public required init(artist: Artist, show: Show) {
         self.artist = artist
         self.show = show
         self.isRandom = false
@@ -44,7 +44,7 @@ public class SourcesViewController: RelistenAsyncTableController<ShowWithSources
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
 
-    public required init(artist: ArtistWithCounts) {
+    public required init(artist: Artist) {
         self.show = nil
         self.artist = artist
         self.isRandom = true

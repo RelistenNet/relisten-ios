@@ -18,6 +18,8 @@ public class SoundboardIndicatorNode: ASDisplayNode {
         
         backgroundColor = AppColors.soundboard
         automaticallyManagesSubnodes = true
+        
+        cornerRadius = 3.0
     }
     
     let sbdNode: ASTextNode
@@ -35,6 +37,8 @@ public class RemasterIndicatorNode: ASDisplayNode {
         
         backgroundColor = AppColors.remaster
         automaticallyManagesSubnodes = true
+        
+        cornerRadius = 3.0
     }
     
     let sbdNode: ASTextNode

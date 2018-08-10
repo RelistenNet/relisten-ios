@@ -17,7 +17,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     var disposal = Disposal()
     
-    public var shows: [(show: Show, artist: ArtistWithCounts?)] {
+    public var shows: [(show: Show, artist: Artist?)] {
         didSet {
             DispatchQueue.main.async {
                 self.collectionNode.reloadData()
@@ -25,11 +25,11 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         }
     }
     
-    public init(forShows shows: [(show: Show, artist: ArtistWithCounts?)], delegate: ASCollectionDelegate?) {
+    public init(forShows shows: [(show: Show, artist: Artist?)], delegate: ASCollectionDelegate?) {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 16
         flowLayout.scrollDirection = .horizontal
-        flowLayout.estimatedItemSize = CGSize(width: 280, height: 145)
+        flowLayout.estimatedItemSize = CGSize(width: 280, height: 85)
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 4, 4, 4)
         
         collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
@@ -48,12 +48,19 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         collectionNode.style.alignSelf = .stretch
-        collectionNode.style.preferredLayoutSize = ASLayoutSizeMake(.init(unit: .fraction, value: 1.0), .init(unit: .points, value: 165))
+        collectionNode.style.preferredLayoutSize = ASLayoutSizeMake(.init(unit: .fraction, value: 1.0), .init(unit: .points, value: 114.0 /* height + 8px padding on top and bottom */))
         
-        let l = ASAbsoluteLayoutSpec(sizing: .default, children: [collectionNode])
-        l.style.minHeight = .init(unit: .points, value: 165)
+//        let l = ASAbsoluteLayoutSpec(sizing: .default, children: [collectionNode])
+//        l.style.minHeight = .init(unit: .fraction, value: 1.0)
+//        l.style.alignSelf = .stretch
         
-        return l
+        let i = ASInsetLayoutSpec(
+            insets: UIEdgeInsetsMake(0,0,0,0),
+            child: collectionNode
+        )
+        i.style.alignSelf = .stretch
+        
+        return i
     }
     
     public func numberOfSections(in collectionNode: ASCollectionNode) -> Int {

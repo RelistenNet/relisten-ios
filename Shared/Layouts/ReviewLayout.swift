@@ -19,7 +19,7 @@ public class ReviewLayout: InsetLayout<UIView> {
         return d
     }()
     
-    public init(review: SourceReview, forArtist artist: ArtistWithCounts) {
+    public init(review: SourceReview, forArtist artist: Artist) {
         var verticalStack: [Layout] = []
         
         if artist.features.review_titles {

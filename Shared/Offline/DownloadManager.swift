@@ -37,6 +37,8 @@ public protocol DownloadManagerDataSource : class {
     func offlineTrackFinishedDownloading(_ track: Track, withSize fileSize: UInt64)
     
     func nextTrackToDownload() -> Track?
+    func tracksToDownload(_ count : Int) -> [Track]?
+    func currentlyDownloadingTracks() -> [Track]?
 }
 
 public class TrackDownload {
@@ -58,7 +60,13 @@ public class TrackDownload {
 public class DownloadManager {
     public static let shared = DownloadManager()
     
-    public weak var dataSource: DownloadManagerDataSource? = nil
+    public weak var dataSource: DownloadManagerDataSource? = nil {
+        didSet {
+            self.queue.async {
+                self.startQueuedDownloads()
+            }
+        }
+    }
     
     public let eventTrackStartedDownloading = Event<Track>()
     public let eventTracksQueuedToDownload = Event<[Track]>()
@@ -78,15 +86,26 @@ public class DownloadManager {
         return backingDownloadManager!
     }()
     
+    private lazy var downloadFolder: String = {
+        let folder = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                         FileManager.SearchPathDomainMask.userDomainMask,
+                                                         true).first! + "/" + "offline-mp3s"
+        // This would probably be better done on a background queue, but I'm afraid of the race conditions on the first download attempt
+        try! FileManager.default.createDirectory(atPath: folder, withIntermediateDirectories: true, attributes: nil)
+        return folder
+    }()
     
-    private let downloadFolder: String = NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                                     FileManager.SearchPathDomainMask.userDomainMask,
-                                                                     true).first! + "/" + "offline-mp3s"
-    public init() {
-        // do some file IO and setup in the background
-        DispatchQueue.global(qos: .background).async {
-            try! FileManager.default.createDirectory(atPath: self.downloadFolder, withIntermediateDirectories: true, attributes: nil)
+    private func startQueuedDownloads() {
+        queue.assertQueue()
+        
+        // Reset anything marked as downloading that isn't in our download manager. These were probably left over from an app crash
+        if let downloadingTracks = dataSource?.currentlyDownloadingTracks() {
+            for track in downloadingTracks {
+                self.dataSource?.offlineTrackQueuedToBacklog(track)
+            }
         }
+        
+        fillDownloadQueue()
     }
     
     public func delete(showInfo: CompleteShowInformation) {
@@ -162,6 +181,25 @@ public class DownloadManager {
         downloadManager.addDownloadTask(downloadFilename(forTrack: track), fileURL: url.absoluteString, destinationPath: downloadFolder)
     }
     
+    private func fillDownloadQueue(withTrack track : Track? = nil) {
+        queue.assertQueue()
+        if let track = track, downloadManager.downloadingArray.count < 3 {
+            addDownloadTask(track)
+        }
+        
+        let downloadQueueSlots = 3 - downloadManager.downloadingArray.count
+        // Resume any queued downloads
+        if downloadQueueSlots > 0 {
+            if let tracksToDownload = dataSource?.tracksToDownload(downloadQueueSlots) {
+                for track in tracksToDownload {
+                    addDownloadTask(track)
+                }
+                
+                eventTracksQueuedToDownload.raise(tracksToDownload)
+            }
+        }
+    }
+    
     public func download(track: Track, raiseEvent: Bool = true) -> Bool {
         var retval = true
         queue.sync {
@@ -171,9 +209,7 @@ public class DownloadManager {
             
             self.dataSource?.offlineTrackQueuedToBacklog(track)
 
-            if downloadManager.downloadingArray.count < 3 {
-                addDownloadTask(track)
-            }
+            fillDownloadQueue(withTrack: track)
             
             if raiseEvent {
                 eventTracksQueuedToDownload.raise([ track ])
@@ -335,10 +371,8 @@ extension DownloadManager : MZDownloadManagerDelegate {
             self.removeTrackForDownloadModel(downloadModel)
         }
         
-        if let nextTrack = MyLibrary.shared.nextTrackToDownload() {
-            queue.async {
-                self.addDownloadTask(nextTrack)
-            }
+        queue.async {
+            self.fillDownloadQueue()
         }
     }
     
@@ -346,11 +380,14 @@ extension DownloadManager : MZDownloadManagerDelegate {
         print(error)
 
         self.removeTrackForDownloadModel(downloadModel)
-        /*
-        if let t = urlToTrackMap[URL(string: downloadModel.fileURL)!] {
-            eventTrackFinishedDownloading.raise(data: t)
+        
+        if let t = trackForDownloadModel(downloadModel) {
+            eventTrackFinishedDownloading.raise(t)
         }
-        */
+        
+        queue.async {
+            self.fillDownloadQueue()
+        }
     }
     
     public func downloadRequestDestinationDoestNotExists(_ downloadModel: MZDownloadModel, index: Int, location: URL) {

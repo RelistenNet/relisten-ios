@@ -87,7 +87,6 @@ public class TrackStatusCellNode : ASCellNode {
                         
                         DownloadManager.shared.observeProgressForTrack(s.track, observer: { [weak self] progress in
                             if let s = self {
-                                print("Progress is \(progress)")
                                 s.downloadProgressNode.updateProgress(progress)
                             }
                         })
@@ -169,7 +168,7 @@ public class TrackStatusCellNode : ASCellNode {
     }
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let downloadProgressToShow : DownloadProgressNode? = downloadProgressNode
+        let downloadProgressToShow : DownloadProgressNode? = downloadState == .none ? nil : downloadProgressNode
 
         titleNode.style.flexShrink = 1.0
         trackNumberNode.style.minWidth = .init(unit: .points, value: 24)

@@ -275,12 +275,10 @@ public class DownloadManager {
     
     public func observeProgressForTrack(_ track: Track, observer: @escaping (Float) -> Void) {
         queue.sync {
-            for trackDownload in urlToTrackDownloadMap.values {
-                if trackDownload.track == track {
-                    trackDownload.progress.observe({ (progress, _) in
-                        observer(progress)
-                    }).add(to: &trackDownload.disposal)
-                }
+            if let trackDownload = urlToTrackDownloadMap[track.mp3_url] {
+                trackDownload.progress.observe({ (progress, _) in
+                    observer(progress)
+                }).add(to: &trackDownload.disposal)
             }
         }
     }
@@ -338,7 +336,9 @@ extension DownloadManager : MZDownloadManagerDelegate {
         }
         
         if let nextTrack = MyLibrary.shared.nextTrackToDownload() {
-            addDownloadTask(nextTrack)
+            queue.async {
+                self.addDownloadTask(nextTrack)
+            }
         }
     }
     

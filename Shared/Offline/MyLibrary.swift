@@ -258,7 +258,7 @@ extension MyLibrary : DownloadManagerDataSource {
             }
         }
         else {
-            assertionFailure("!!! ERROR: OFFLINE TRACK SIZE BECAME KNOWN BEFORE BEING STORED IN REALM !!!")
+            //assertionFailure("!!! ERROR: OFFLINE TRACK SIZE BECAME KNOWN BEFORE BEING STORED IN REALM !!!")
         }
     }
     

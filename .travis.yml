@@ -1,7 +1,15 @@
 language: swift
+cache:
+    - bundler
+    - cocoapods
 xcode_workspace: Relisten.xcworkspace
 xcode_scheme: Relisten
 os: osx
 osx_image: xcode9.4
-install: ./setup.sh 
-script: ./xcodebuild.sh 
+before_script:
+    - ./setup.sh
+script: 
+    - ./xcodebuild.sh
+
+before_install:
+    - gem install cocoapods

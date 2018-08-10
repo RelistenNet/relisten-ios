@@ -37,6 +37,11 @@ public class MyLibraryFavorites {
         }
     }
     
+    public func sources(byArtist artist: SlimArtist) -> Results<FavoritedSource> {
+        return sources
+            .filter("artist_uuid == %@", artist.uuid.uuidString)
+    }
+    
     public var tracks: Results<FavoritedTrack> {
         get {
             let realm = try! Realm()
@@ -53,6 +58,11 @@ public class MyLibraryOffline {
             let realm = try! Realm()
             return realm.objects(OfflineSource.self)
         }
+    }
+    
+    public func sources(byArtist artist: SlimArtist) -> Results<OfflineSource> {
+        return sources
+            .filter("artist_uuid == %@", artist.uuid.uuidString)
     }
     
     public var tracks: Results<OfflineTrack> {
@@ -74,6 +84,11 @@ public class MyLibraryRecentlyPlayed {
                 .distinct(by: ["show_uuid"])
             
         }
+    }
+    
+    public func shows(byArtist artist: SlimArtist) -> Results<RecentlyPlayedTrack> {
+        return shows
+            .filter("artist_uuid == %@", artist.uuid.uuidString)
     }
     
     public var tracks: Results<RecentlyPlayedTrack> {
@@ -104,14 +119,6 @@ public class MyLibrary {
 
 // MARK: Recently Played
 extension MyLibrary {
-    public func recentlyPlayedByArtist(_ artist: SlimArtist) -> Results<RecentlyPlayedTrack> {
-        let realm = try! Realm()
-        return realm
-            .objects(RecentlyPlayedTrack.self)
-            .filter("artist_uuid == %@", artist.uuid.uuidString)
-            .sorted(byKeyPath: "updated_at", ascending: false)
-    }
-    
     public func trackWasPlayed(_ track: Track) -> Bool {
         let realm = try! Realm()
         

@@ -15,13 +15,13 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]> {
     // Show all shows performed in the last three months
     private let recentShowInterval : TimeInterval = (60 * 60 * 24 * 30 * 3)
     
-    public required init(artist: ArtistWithCounts, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: Artist, showsResource: Resource?, tourSections: Bool) {
         super.init(artist: artist, showsResource: (showsResource != nil) ? showsResource : RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: tourSections)
         
         title = "Recently Performed"
     }
     
-    public convenience init(artist: ArtistWithCounts) {
+    public convenience init(artist: Artist) {
         self.init(artist: artist, showsResource: RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: true)
     }
     

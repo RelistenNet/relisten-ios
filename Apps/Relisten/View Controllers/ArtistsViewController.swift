@@ -16,7 +16,10 @@ import RealmSwift
 class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, ASCollectionDelegate {
     enum Sections: Int, RawRepresentable {
         case recentlyPlayed = 0
+        case favoritedShows
         case availableOffline
+        case recentlyPerformed
+        case allRecentlyUpdated
         case favorited
         case featured
         case all
@@ -26,21 +29,41 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     public var recentlyPlayedTracks: [Track] = []
     public var favoriteArtists: [UUID] = []
     public var offlineShows: [CompleteShowInformation] = []
-    
+    public var favoriteShows: [CompleteShowInformation] = []
+    public var allRecentlyUpdatedShows: [ShowWithArtist] = []
+    public var recentlyPerformedShows: [ShowWithArtist] = []
+
     public var allArtists: [ArtistWithCounts] = []
     public var featuredArtists: [ArtistWithCounts] = []
     
     public let recentShowsNode: HorizontalShowCollectionCellNode
     public let offlineShowsNode: HorizontalShowCollectionCellNode
+    public let favoritedSourcesNode: HorizontalShowCollectionCellNode
+    public let recentlyPerformedNode: HorizontalShowCollectionCellNode
+    public let allRecentlyUpdatedNode: HorizontalShowCollectionCellNode
+    
+    public var resourceRecentlyPerformed: Resource? = nil
+    public let resourceRecentlyUpdated: Resource
 
     public init() {
         recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         offlineShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+        favoritedSourcesNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+        recentlyPerformedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+        allRecentlyUpdatedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
+
+        resourceRecentlyUpdated = RelistenApi.recentlyUpdated()
 
         super.init(useCache: true, refreshOnAppear: true)
         
         recentShowsNode.collectionNode.delegate = self
         offlineShowsNode.collectionNode.delegate = self
+        favoritedSourcesNode.collectionNode.delegate = self
+        recentlyPerformedNode.collectionNode.delegate = self
+        allRecentlyUpdatedNode.collectionNode.delegate = self
+        
+        resourceRecentlyUpdated.addObserver(self)
+        resourceRecentlyUpdated.loadFromCacheThenUpdate()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -68,8 +91,13 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
 
             let previousFavoriteCount = s.favoriteArtists.count
             s.favoriteArtists = Array(artists.map({ UUID(uuidString: $0.artist_uuid)! }))
+
             let newFavoriteCount = s.favoriteArtists.count
 
+            s.resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtists: s.favoriteArtists)
+            s.resourceRecentlyPerformed?.addObserver(s)
+            s.resourceRecentlyPerformed?.loadFromCacheThenUpdate()
+            
             switch changes {
             case .initial:
                 s.tableNode.reloadData()
@@ -104,6 +132,12 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             
             s.reloadOfflineSources(shows: offlineSources.asCompleteShows())
         }.dispose(to: &disposal)
+        
+        library.favorites.sources.observeWithValue{ [weak self] favoriteSources, changes in
+            guard let s = self else { return }
+            
+            s.reloadFavoriteSources(shows: favoriteSources.asCompleteShows())
+        }.dispose(to: &disposal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -125,7 +159,6 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     
     private func reloadOfflineSources(shows: [CompleteShowInformation]) {
         if !(shows == offlineShows) {
-            
             DispatchQueue.main.async {
                 self.offlineShows = shows
                 self.offlineShowsNode.shows = self.offlineShows.map({ ($0.show, $0.artist) })
@@ -134,14 +167,52 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         }
     }
     
+    private func reloadFavoriteSources(shows: [CompleteShowInformation]) {
+        if !(shows == favoriteShows) {
+            DispatchQueue.main.async {
+                self.favoriteShows = shows
+                self.favoritedSourcesNode.shows = self.favoriteShows.map({ ($0.show, $0.artist) })
+                self.tableNode.reloadSections([ Sections.favoritedShows.rawValue ], with: .automatic)
+            }
+        }
+    }
+
     private func reloadRecentShows(tracks: [Track]) {
         DispatchQueue.main.async {
             self.recentlyPlayedTracks = tracks
             
-            let recentShows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: ArtistWithCounts?)]
+            let recentShows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: Artist?)]
             
             self.recentShowsNode.shows = recentShows
             self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+        }
+    }
+    
+    // MARK: Resource
+    override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
+        if resource == resourceRecentlyPerformed || resource == resourceRecentlyUpdated {
+            switch event {
+            case .newData(_):
+                break
+            default:
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if resource == self.resourceRecentlyPerformed {
+                    self.recentlyPerformedShows = resource.typedContent(ifNone: [])
+                    self.recentlyPerformedNode.shows = self.recentlyPerformedShows.map { (show: $0, artist: $0.artist) }
+                    self.tableNode.reloadSections([ Sections.recentlyPerformed.rawValue ], with: .automatic)
+                }
+                else if resource == self.resourceRecentlyUpdated {
+                    self.allRecentlyUpdatedShows = resource.typedContent(ifNone: [])
+                    self.allRecentlyUpdatedNode.shows = self.allRecentlyUpdatedShows.map { (show: $0, artist: $0.artist) }
+                    self.tableNode.reloadSections([ Sections.allRecentlyUpdated.rawValue ], with: .automatic)
+                }
+            }
+        }
+        else {
+            return super.resourceChanged(resource, event: event)
         }
     }
     
@@ -163,6 +234,12 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             return featuredArtists.count
         case .all:
             return allArtists.count
+        case .favoritedShows:
+            return favoriteShows.count > 0 ? 1 : 0
+        case .recentlyPerformed:
+            return recentlyPerformedShows.count > 0 ? 1 : 0
+        case .allRecentlyUpdated:
+            return allRecentlyUpdatedShows.count > 0 ? 1 : 0
         case .count:
             fatalError()
         }
@@ -178,6 +255,16 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         case .availableOffline:
             let n = offlineShowsNode
             return { n }
+        case .favoritedShows:
+            let n = favoritedSourcesNode
+            return { n }
+        case .recentlyPerformed:
+            let n = recentlyPerformedNode
+            return { n }
+        case .allRecentlyUpdated:
+            let n = allRecentlyUpdatedNode
+            return { n }
+        
         case .favorited:
             let artist = allArtists.first(where: { art in art.uuid == favoriteArtists[row] })!
             
@@ -234,27 +321,65 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             }
             
             return "All Artists"
-        default:
-            return nil
+        case .favoritedShows:
+            return favoriteShows.count > 0 ? "My Favorites" : nil
+        case .recentlyPerformed:
+            return recentlyPerformedShows.count > 0 ? "Recently by Favorites" : nil
+        case .allRecentlyUpdated:
+            return allRecentlyUpdatedShows.count > 0 ? "Latest Recordings" : nil
+        
+        case .count:
+            fatalError()
         }
     }
 
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        let show: CompleteShowInformation?
+        let show: Show?
+        let artist: Artist?
+        var source: SourceFull? = nil
         
         if collectionNode === recentShowsNode.collectionNode {
-            show = recentlyPlayedTracks[indexPath.item].showInfo
+            let s = recentlyPlayedTracks[indexPath.item]
+            show = s.showInfo.show
+            artist = s.showInfo.artist
+            source = s.showInfo.source
         }
         else if collectionNode === offlineShowsNode.collectionNode {
-            show = Array(offlineShows)[indexPath.item]
+            let s = offlineShows[indexPath.item]
+            show = s.show
+            artist = s.artist
+            source = s.source
+        }
+        else if collectionNode === favoritedSourcesNode.collectionNode {
+            let s = favoriteShows[indexPath.item]
+            show = s.show
+            artist = s.artist
+            source = s.source
+        }
+        else if collectionNode === recentlyPerformedNode.collectionNode {
+            let s = recentlyPerformedShows[indexPath.item]
+            show = s
+            artist = s.artist
+        }
+        else if collectionNode === allRecentlyUpdatedNode.collectionNode {
+            let s = allRecentlyUpdatedShows[indexPath.item]
+            show = s
+            artist = s.artist
         }
         else {
             show = nil
+            artist = nil
         }
         
-        if let s = show {
-            let sourcesController = SourcesViewController(artist: s.artist, show: s.show)
-            sourcesController.presentIfNecessary(navigationController: navigationController, forSource: s.source)
+        if let s = show, let a = artist {
+            let sourcesController = SourcesViewController(artist: a, show: s)
+            
+            if let src = source {
+                sourcesController.presentIfNecessary(navigationController: navigationController, forSource: src)
+            }
+            else {
+                sourcesController.presentIfNecessary(navigationController: navigationController)
+            }
         }
     }
 }

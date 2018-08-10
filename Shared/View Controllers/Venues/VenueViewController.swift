@@ -17,7 +17,7 @@ import SINQ
 class VenueViewController: ShowListViewController<VenueWithShows> {
     let venue: Venue
     
-    public required init(artist: ArtistWithCounts, venue: Venue) {
+    public required init(artist: Artist, venue: Venue) {
         self.venue = venue
         
         super.init(

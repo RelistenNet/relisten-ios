@@ -36,13 +36,22 @@ public class ShowCellNode : ASCellNode {
         
         var venueText = " \n "
         if let v = show.venue {
-            venueText = "\(v.name)\n\(v.location)"
+            if v.location.count > 0 && verticalLayout {
+                venueText = v.location
+            }
+            else if v.name.count > 0 && verticalLayout {
+                venueText = v.name
+            }
+            else {
+                venueText = "\(v.name)\n\(v.location)"
+            }
         }
         
         venueNode = ASTextNode(venueText, textStyle: .caption1)
         venueNode.maximumNumberOfLines = 0
         
         ratingNode = AXRatingViewNode(value: show.avg_rating / 10.0)
+        ratingTextNode = ASTextNode(String(format: "%.2f ★", show.avg_rating / 10.0 * 5.0), textStyle: .caption1)
         
         var metaText = "\(show.avg_duration == nil ? "" : show.avg_duration!.humanize())"
         if !verticalLayout {
@@ -77,9 +86,12 @@ public class ShowCellNode : ASCellNode {
         isAvailableOffline = MyLibrary.shared.isShowAtLeastPartiallyAvailableOffline(self.show)
         
         artworkNode = ASImageNode()
-        artworkNode.style.maxWidth = .init(unit: .points, value: 100.0)
-        artworkNode.style.maxHeight = .init(unit: .points, value: 100.0)
+        artworkNode.style.maxWidth = .init(unit: .points, value: verticalLayout ? 60.0 : 100)
+        artworkNode.style.maxHeight = .init(unit: .points, value: verticalLayout ? 60.0 : 100)
+        artworkNode.style.preferredSize = CGSize(width: artworkNode.style.maxWidth.value, height: artworkNode.style.maxHeight.value)
+        
         artworkNode.backgroundColor = show.fastImageCacheWrapper().placeholderColor()
+        artworkNode.style.flexShrink = 1.0
         
         super.init()
         
@@ -108,6 +120,7 @@ public class ShowCellNode : ASCellNode {
     public let artistNode: ASTextNode?
     public let showNode: ASTextNode
     public let ratingNode: AXRatingViewNode
+    public let ratingTextNode: ASTextNode
     
     public let venueNode: ASTextNode
     public let metaNode: ASTextNode
@@ -145,26 +158,29 @@ public class ShowCellNode : ASCellNode {
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         if vertical {
-            var verticalStack: [ASLayoutElement] = []
+            let showAndOffline = ASStackLayoutSpec(
+                direction: .horizontal,
+                spacing: 8,
+                justifyContent: .start,
+                alignItems: .center,
+                children: [ showNode]
+            )
+            showAndOffline.style.alignSelf = .stretch
             
-            verticalStack.append(contentsOf: [
-                showNode,
-                venueNode,
-                ratingNode
-            ])
+            var verticalStack: [ASLayoutElement] = [
+                showAndOffline,
+                venueNode
+            ]
             
             var metaStack: [ASLayoutElement] = []
-
-            if isAvailableOffline {
-                metaStack.append(offlineIndicatorNode)
-            }
-            
-            if let sbd = soundboardIndicatorNode {
-                metaStack.append(sbd)
-            }
             
             metaStack.append(metaNode)
             
+            if show.avg_rating > 0.0 {
+                metaStack.append(SpacerNode())
+                metaStack.append(ratingTextNode)
+            }
+
             let vs = ASStackLayoutSpec(
                 direction: .horizontal,
                 spacing: 8,
@@ -173,6 +189,7 @@ public class ShowCellNode : ASCellNode {
                 children: metaStack
             )
             vs.style.minHeight = .init(unit: .points, value: 22.0)
+            vs.style.alignSelf = .stretch
             
             verticalStack.append(vs)
                         
@@ -185,23 +202,33 @@ public class ShowCellNode : ASCellNode {
             )
             textStack.style.alignSelf = .stretch
             
-            let artworkStack = ASStackLayoutSpec(
-                direction: .vertical,
-                spacing: 4,
-                justifyContent: .start,
-                alignItems: .start,
-                children: ArrayNoNils(artistNode, artworkNode)
-            )
-            artworkStack.style.alignSelf = .stretch
+            if let sbd = soundboardIndicatorNode {
+                sbd.style.layoutPosition = CGPoint(x: 3, y: 3)
+            }
+            
+            let artSize = artworkNode.style.preferredSize
+            offlineIndicatorNode.style.layoutPosition = CGPoint(x: 3, y: artSize.height - offlineIndicatorNode.style.preferredSize.height - 3)
+            artworkNode.style.layoutPosition = CGPoint(x: 0, y: 0)
+
+            let artWithOverlay = ASAbsoluteLayoutSpec(children: ArrayNoNils(artworkNode, soundboardIndicatorNode, isAvailableOffline ? offlineIndicatorNode : nil))
             
             let stack = ASStackLayoutSpec(
                 direction: .horizontal,
                 spacing: 8.0,
                 justifyContent: .start,
-                alignItems: .center,
-                children: [artworkStack, textStack]
+                alignItems: .start,
+                children: [artWithOverlay, textStack]
             )
             stack.style.alignSelf = .stretch
+            
+            let s = ASStackLayoutSpec(
+                direction: .vertical,
+                spacing: 4,
+                justifyContent: .start,
+                alignItems: .start,
+                children: ArrayNoNils(artistNode, stack)
+            )
+            s.style.alignSelf = .center
             
             // The update date doesn't fit in the current vertical size, and it's not worth changing that size for a property that nobody uses in vertical mode.
             // Uncomment this if that story changes later.
@@ -209,10 +236,13 @@ public class ShowCellNode : ASCellNode {
 //                verticalStack.append(updateDateNode)
 //            }
             
-            return ASInsetLayoutSpec(
+            let i = ASInsetLayoutSpec(
                 insets: UIEdgeInsetsMake(12, 12, 12, 12),
-                child: stack
+                child: s
             )
+            i.style.alignSelf = .stretch
+            
+            return i
         }
         
         let showAndSBD = ASStackLayoutSpec(

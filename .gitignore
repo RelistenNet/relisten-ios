@@ -6,6 +6,7 @@
 
 /vendor/
 
+/fastlane/report.xml
 .DS_Store
 ## Build generated
 build/

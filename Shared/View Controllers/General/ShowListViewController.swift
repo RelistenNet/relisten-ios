@@ -17,13 +17,13 @@ public struct ShowWithSingleSource {
 }
 
 public class ShowListViewController<T> : RelistenAsyncTableController<T> {
-    internal let artist: ArtistWithCounts
+    internal let artist: Artist
     internal let showsResource: Resource?
     internal let tourSections: Bool
     
     var shouldSortShows : Bool = true
     
-    public required init(artist: ArtistWithCounts, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: Artist, showsResource: Resource?, tourSections: Bool) {
         self.artist = artist
         self.showsResource = showsResource
         self.tourSections = artist.features.tours && tourSections

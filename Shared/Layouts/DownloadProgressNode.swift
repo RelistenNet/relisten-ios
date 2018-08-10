@@ -21,7 +21,7 @@ public protocol DownloadProgressDelegate : class {
 }
 
 public class DownloadProgressNode : ASDisplayNode {
-    private static let buttonSize : Int = 32
+    private static let buttonSize : Int = 20
 
     public let downloadProgressNode: ASDisplayNode
     public weak var delegate : DownloadProgressDelegate? = nil
@@ -77,6 +77,7 @@ public class DownloadProgressNode : ASDisplayNode {
             button.stopDownloadButton.filledLineStyleOuter = true
             
             button.pendingView.tintColor = AppColors.primary
+            button.pendingView.radius = (CGFloat(DownloadProgressNode.buttonSize) - (2.0 * button.pendingView.lineWidth)) / 2.0
             
             button.startDownloadButton.cleanDefaultAppearance()
             button.startDownloadButton.setImage(#imageLiteral(resourceName: "download-outline"), for: .normal)

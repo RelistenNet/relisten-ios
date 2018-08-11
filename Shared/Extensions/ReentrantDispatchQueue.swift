@@ -54,6 +54,10 @@ public class ReentrantDispatchQueue {
             self.queue.async(execute: block)
         }
     }
+    
+    public func assertQueue() {
+        dispatchPrecondition(condition: .onQueue(self.queue))
+    }
 }
 
 public func performOnMainQueueSync(_ block: () -> Swift.Void) {

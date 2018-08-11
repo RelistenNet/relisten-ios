@@ -25,7 +25,7 @@ public class RelistenApp {
     public init(delegate: RelistenAppDelegate) {
         self.delegate = delegate
         
-        RelistenDownloadManager.shared.dataSource = MyLibrary.shared
+        DownloadManager.shared.dataSource = MyLibrary.shared
     }
     
     public func setupThirdPartyDependencies() {

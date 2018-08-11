@@ -211,6 +211,23 @@ extension MyLibrary : DownloadManagerDataSource {
         
         return objects.map({ $0.track })
     }
+    
+    public func importDownloadedTrack(_ track : Track, withSize fileSize: UInt64) {
+        let realm = try! Realm()
+        
+        let trackMeta = OfflineTrack()
+        trackMeta.track_uuid = track.sourceTrack.uuid.uuidString
+        trackMeta.show_uuid = track.showInfo.show.uuid.uuidString
+        trackMeta.source_uuid = track.showInfo.source.uuid.uuidString
+        trackMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
+        trackMeta.state = .downloaded
+        trackMeta.file_size.value = Int(fileSize)
+        trackMeta.created_at = Date()
+        
+        try! realm.write {
+            realm.add(trackMeta)
+        }
+    }
 
     public func offlineTrackQueuedToBacklog(_ track: Track) {
         let realm = try! Realm()

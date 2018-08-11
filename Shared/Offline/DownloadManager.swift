@@ -35,6 +35,7 @@ public protocol DownloadManagerDataSource : class {
     func offlineTrackWasDeleted(_ track: Track)
     func offlineTrackBeganDownloading(_ track: Track)
     func offlineTrackFinishedDownloading(_ track: Track, withSize fileSize: UInt64)
+    func importDownloadedTrack(_ track : Track, withSize fileSize: UInt64)
     
     func nextTrackToDownload() -> Track?
     func tracksToDownload(_ count : Int) -> [Track]?
@@ -217,6 +218,13 @@ public class DownloadManager {
         }
         
         return retval
+    }
+    
+    func importDownloadedTrack(_ track : Track, withSize fileSize: UInt64) {
+        queue.sync {
+            self.dataSource?.importDownloadedTrack(track, withSize: fileSize)
+            self.eventTrackFinishedDownloading.raise(track)
+        }
     }
 
     func downloadFilename(forURL url: URL) -> String {

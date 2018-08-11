@@ -83,6 +83,10 @@ public class _RelistenApi {
             return try ($0.content as JSON).arrayValue.map(ArtistWithCounts.init)
         }
         
+        service.configureTransformer("/artists/*") {
+            return try ($0.content as JSON).arrayValue.map(SlimArtist.init)
+        }
+        
         service.configureTransformer("/artists/*/years") {
             return try ($0.content as JSON).arrayValue.map(Year.init)
         }
@@ -197,10 +201,14 @@ public class _RelistenApi {
         return service.resource("/artists")
     }
     
-    private func artistResource(_ forArtist: SlimArtist) -> Resource {
+    public func artist(withSlug slug: String) -> Resource {
         return service
             .resource("/artists")
-            .child(forArtist.slug)
+            .child(slug)
+    }
+    
+    private func artistResource(_ forArtist: SlimArtist) -> Resource {
+        return artist(withSlug: forArtist.slug)
     }
     
     public func years(byArtist: SlimArtist) -> Resource {

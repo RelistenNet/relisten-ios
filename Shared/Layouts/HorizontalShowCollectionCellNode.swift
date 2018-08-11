@@ -75,7 +75,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         let show = shows[indexPath.row]
         let cellTransparency = self.cellTransparency
         
-        return { ShowCellNode(show: show.show, withRank: nil, verticalLayout: true, showingArtist: show.artist, cellTransparency: cellTransparency) }
+        return { ShowCellNode(show: show.show, withRank: nil, useCellLayout: true, showingArtist: show.artist, cellTransparency: cellTransparency) }
     }
 }
 

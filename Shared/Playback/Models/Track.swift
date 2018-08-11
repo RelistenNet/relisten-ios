@@ -59,9 +59,9 @@ public class Track : Codable, Hashable {
     
     public var downloadState : DownloadState {
         get {
-            if RelistenDownloadManager.shared.isTrackActivelyDownloading(self) {
+            if DownloadManager.shared.isTrackActivelyDownloading(self) {
                 return .downloading
-            } else if RelistenDownloadManager.shared.isTrackQueuedToDownload(self) {
+            } else if DownloadManager.shared.isTrackQueuedToDownload(self) {
                 return .queued
             } else if MyLibrary.shared.isTrackAvailableOffline(self) {
                 return .downloaded

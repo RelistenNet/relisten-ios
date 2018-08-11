@@ -81,8 +81,8 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         
         let cb: Event<Any>.EventHandler = { [weak self] _ in self?.render() }
         
-        RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(cb).add(to: &disposal)
-        RelistenDownloadManager.shared.eventTracksDeleted.addHandler(cb).add(to: &disposal)
+        DownloadManager.shared.eventTrackFinishedDownloading.addHandler(cb).add(to: &disposal)
+        DownloadManager.shared.eventTracksDeleted.addHandler(cb).add(to: &disposal)
 
         let library = MyLibrary.shared
         

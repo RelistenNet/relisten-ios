@@ -9,6 +9,7 @@
 import UIKit
 
 import NAKPlaybackIndicatorView
+import DownloadButton
 
 import AsyncDisplayKit
 import Observable
@@ -77,15 +78,18 @@ public class TrackStatusCellNode : ASCellNode {
                     switch track.state {
                     case .downloaded:
                         s.downloadState = .downloaded
-                        s.downloadingNode.stopAnimating()
                         
                     case .downloadQueued:
                         s.downloadState = .queued
-                        s.downloadingNode.stopAnimating()
                         
                     case .downloading:
                         s.downloadState = .downloading
-                        s.downloadingNode.startAnimating()
+                        
+                        DownloadManager.shared.observeProgressForTrack(s.track, observer: { [weak self] progress in
+                            if let s = self {
+                                s.downloadProgressNode.updateProgress(progress)
+                            }
+                        })
                         
                     default:
                         // this doesn't happen here because of the if
@@ -96,7 +100,6 @@ public class TrackStatusCellNode : ASCellNode {
                 }
                 else {
                     s.downloadState = .none
-                    s.downloadingNode.stopAnimating()
                     s.setNeedsLayout()
                 }
             }.dispose(to: &self.disposal)
@@ -121,6 +124,7 @@ public class TrackStatusCellNode : ASCellNode {
     
         downloadState = track.downloadState
         trackState = track.playbackState
+        downloadProgressNode.delegate = self
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
@@ -135,10 +139,14 @@ public class TrackStatusCellNode : ASCellNode {
     public let actionButtonNode: ASButtonNode?
     
     public let offlineNode = OfflineIndicatorNode()
-    public let downloadingNode = OfflineDownloadingIndicatorNode()
+    public let downloadProgressNode = DownloadProgressNode()
     
     var trackState : Track.PlaybackState = .notActive
-    var downloadState : Track.DownloadState = .none
+    var downloadState : Track.DownloadState = .none {
+        didSet {
+            downloadProgressNode.state = downloadState
+        }
+    }
 
     func updateTrackState() {
         if let nak = nowPlayingNode.view as? NAKPlaybackIndicatorView {
@@ -160,21 +168,8 @@ public class TrackStatusCellNode : ASCellNode {
     }
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let dlNodeToUse: ASDisplayNode?
-        
-        switch downloadState {
-        case .queued:
-            downloadingNode.stopAnimating()
-            dlNodeToUse = downloadingNode
-        case .downloading:
-            downloadingNode.startAnimating()
-            dlNodeToUse = downloadingNode
-        case .downloaded:
-            dlNodeToUse = offlineNode
-        default:
-            dlNodeToUse = nil
-        }
-        
+        let downloadProgressToShow : DownloadProgressNode? = downloadState == .none ? nil : downloadProgressNode
+
         titleNode.style.flexShrink = 1.0
         trackNumberNode.style.minWidth = .init(unit: .points, value: 24)
         
@@ -192,7 +187,7 @@ public class TrackStatusCellNode : ASCellNode {
             alignItems: .center,
             children: ArrayNoNils(
                 trackState != .notActive ? nowPlayingInset : trackNumberNode,
-                dlNodeToUse,
+                downloadProgressToShow,
                 titleNode,
                 SpacerNode(),
                 durationNode,
@@ -209,5 +204,18 @@ public class TrackStatusCellNode : ASCellNode {
         inset.style.alignSelf = .stretch
         
         return inset
+    }
+}
+
+extension TrackStatusCellNode : DownloadProgressDelegate {
+    public func downloadButtonTapped() {
+        switch downloadProgressNode.state {
+        case .none:
+            let _ = DownloadManager.shared.download(track: track)
+        case .queued, .downloading:
+            DownloadManager.shared.delete(track: track)
+        case .downloaded:
+            break
+        }
     }
 }

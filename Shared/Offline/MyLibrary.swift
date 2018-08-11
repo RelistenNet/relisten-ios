@@ -181,7 +181,7 @@ extension MyLibrary {
 }
 
 
-extension MyLibrary : RelistenDownloadManagerDataSource {
+extension MyLibrary : DownloadManagerDataSource {
     public func nextTrackToDownload() -> Track? {
         let realm = try! Realm()
         
@@ -191,20 +191,47 @@ extension MyLibrary : RelistenDownloadManagerDataSource {
             .first?
             .track
     }
+    
+    public func tracksToDownload(_ count : Int) -> [Track]? {
+        let realm = try! Realm()
+        
+        let objects = realm.objects(OfflineTrack.self)
+            .filter("state == %d", OfflineTrackState.downloadQueued.rawValue)
+            .sorted(byKeyPath: "created_at", ascending: true)
+        
+        return objects[0..<min(objects.count, count)].map({ $0.track })
+    }
+    
+    public func currentlyDownloadingTracks() -> [Track]? {
+        let realm = try! Realm()
+        
+        let objects = realm.objects(OfflineTrack.self)
+            .filter("state == %d", OfflineTrackState.downloading.rawValue)
+            .sorted(byKeyPath: "created_at", ascending: true)
+        
+        return objects.map({ $0.track })
+    }
 
     public func offlineTrackQueuedToBacklog(_ track: Track) {
         let realm = try! Realm()
         
-        let trackMeta = OfflineTrack()
-        trackMeta.track_uuid = track.sourceTrack.uuid.uuidString
-        trackMeta.show_uuid = track.showInfo.show.uuid.uuidString
-        trackMeta.source_uuid = track.showInfo.source.uuid.uuidString
-        trackMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
-        trackMeta.state = .downloadQueued
-        trackMeta.created_at = Date()
+        let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid.uuidString)
+        if let offlineTrack = offlineTrackQuery {
+            try! realm.write {
+                offlineTrack.state = .downloadQueued
+            }
+        } else {
+            let trackMeta = OfflineTrack()
+            trackMeta.track_uuid = track.sourceTrack.uuid.uuidString
+            trackMeta.show_uuid = track.showInfo.show.uuid.uuidString
+            trackMeta.source_uuid = track.showInfo.source.uuid.uuidString
+            trackMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
+            trackMeta.state = .downloadQueued
+            trackMeta.created_at = Date()
         
-        try! realm.write {
-            realm.add(trackMeta)
+            try! realm.write {
+                realm.add(trackMeta)
+            }
         }
     }
     
@@ -264,9 +291,7 @@ extension MyLibrary : RelistenDownloadManagerDataSource {
                 offlineTrack.state = .deleting
             }
         }
-        else {
-            assertionFailure("!!! ERROR: OFFLINE TRACK SIZE BECAME KNOWN BEFORE BEING STORED IN REALM !!!")
-        }
+        // If we didn't find a track in Realm it's ok. Someone probably just tried to delete a whole show and only some of the tracks in that show were downloaded
     }
     
     public func offlineTrackWasDeleted(_ track: Track) {

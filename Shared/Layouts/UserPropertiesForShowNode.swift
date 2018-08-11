@@ -90,7 +90,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     }
     
     @objc public func downloadToggled() {
-        let _ = RelistenDownloadManager.shared.download(show: self.completeShowInformation)
+        let _ = DownloadManager.shared.download(show: self.completeShowInformation)
     }
     
     @objc public func deletePressed() {
@@ -105,7 +105,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         alertController.addAction(cancelAction)
         
         let destroyAction = UIAlertAction(title: "Delete " + songs, style: .destructive) { (action) in
-            RelistenDownloadManager.shared.delete(showInfo: self.completeShowInformation)
+            DownloadManager.shared.delete(showInfo: self.completeShowInformation)
             self.deleteButton.isHidden = true
             self.downloadButton.setImage(#imageLiteral(resourceName: "download-outline"), for: .normal)
             self.setNeedsLayout()

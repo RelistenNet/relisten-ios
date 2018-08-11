@@ -8,16 +8,42 @@
 
 import UIKit
 import AGAudioPlayer
+import ChameleonFramework
 
-public struct _AppColors : Equatable {
+public class _AppColors : Equatable {
+    
     public let primary: UIColor
     public let textOnPrimary: UIColor
+    public let highlight : UIColor
     
     public let soundboard: UIColor
     public let remaster: UIColor
     
     public let mutedText: UIColor
     public let lightGreyBackground: UIColor
+    
+    private let complements : [UIColor]
+    
+    public static func == (lhs: _AppColors, rhs: _AppColors) -> Bool {
+        return lhs === rhs
+    }
+    
+    public init(primary: UIColor, textOnPrimary: UIColor, highlight: UIColor? = nil, soundboard: UIColor, remaster: UIColor, mutedText: UIColor, lightGreyBackground: UIColor) {
+        self.primary = primary
+        self.textOnPrimary = textOnPrimary
+        self.soundboard = soundboard
+        self.remaster = remaster
+        self.mutedText = mutedText
+        self.lightGreyBackground = lightGreyBackground
+        
+        self.complements = NSArray(ofColorsWith: .complementary, using: self.primary, withFlatScheme: false) as! [UIColor]
+        
+        if let highlight = highlight {
+            self.highlight = highlight
+        } else {
+            self.highlight = self.complements[0]
+        }
+    }
 }
 
 public let RelistenAppColors = _AppColors(

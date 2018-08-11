@@ -1,5 +1,5 @@
 //
-//  RelistenDownloadManager.swift
+//  DownloadManager.swift
 //  Relisten
 //
 //  Created by Alec Gorge on 10/19/17.
@@ -12,6 +12,7 @@ import Cache
 import SwiftyJSON
 import MZDownloadManager
 import MarqueeLabel
+import Observable
 
 import RealmSwift
 
@@ -28,7 +29,7 @@ func MD5(_ string: String) -> String? {
     }
 }
 
-public protocol RelistenDownloadManagerDataSource : class {
+public protocol DownloadManagerDataSource : class {
     func offlineTrackWillBeDeleted(_ track: Track)
     func offlineTrackQueuedToBacklog(_ track: Track)
     func offlineTrackWasDeleted(_ track: Track)
@@ -36,19 +37,43 @@ public protocol RelistenDownloadManagerDataSource : class {
     func offlineTrackFinishedDownloading(_ track: Track, withSize fileSize: UInt64)
     
     func nextTrackToDownload() -> Track?
+    func tracksToDownload(_ count : Int) -> [Track]?
+    func currentlyDownloadingTracks() -> [Track]?
 }
 
-public class RelistenDownloadManager {
-    public static let shared = RelistenDownloadManager()
+public class TrackDownload {
+    public let track : Track
+    public var url : URL { get { return self.track.mp3_url } }
+    public let progress = Observable<Float>(0.0)
+    public weak var model : MZDownloadModel?
+    public var disposal = Disposal()
     
-    public weak var dataSource: RelistenDownloadManagerDataSource? = nil
+    public init(track: Track) {
+        self.track = track
+    }
+    
+    public func setProgress(_ progress : Float) {
+        self.progress.value = progress
+    }
+}
+
+public class DownloadManager {
+    public static let shared = DownloadManager()
+    
+    public weak var dataSource: DownloadManagerDataSource? = nil {
+        didSet {
+            self.queue.async {
+                self.startQueuedDownloads()
+            }
+        }
+    }
     
     public let eventTrackStartedDownloading = Event<Track>()
     public let eventTracksQueuedToDownload = Event<[Track]>()
     public let eventTrackFinishedDownloading = Event<Track>()
     public let eventTracksDeleted = Event<[Track]>()
 
-    fileprivate var urlToTrackMap: [URL: Track] = [:]
+    fileprivate var urlToTrackDownloadMap: [URL: TrackDownload] = [:]
     
     private let queue : ReentrantDispatchQueue = ReentrantDispatchQueue(label: "live.relisten.ios.mp3-offline.queue")
     private var backingDownloadManager : MZDownloadManager?
@@ -61,20 +86,26 @@ public class RelistenDownloadManager {
         return backingDownloadManager!
     }()
     
+    private lazy var downloadFolder: String = {
+        let folder = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                         FileManager.SearchPathDomainMask.userDomainMask,
+                                                         true).first! + "/" + "offline-mp3s"
+        // This would probably be better done on a background queue, but I'm afraid of the race conditions on the first download attempt
+        try! FileManager.default.createDirectory(atPath: folder, withIntermediateDirectories: true, attributes: nil)
+        return folder
+    }()
     
-    private let downloadFolder: String = NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                                     FileManager.SearchPathDomainMask.userDomainMask,
-                                                                     true).first! + "/" + "offline-mp3s"
-    private let statusLabel: MarqueeLabel
-    
-    public init() {
-        statusLabel = MarqueeLabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
-        statusLabel.font = UIFont.systemFont(ofSize: 12.0)
+    private func startQueuedDownloads() {
+        queue.assertQueue()
         
-        // do some file IO and setup in the background
-        DispatchQueue.global(qos: .background).async {
-            try! FileManager.default.createDirectory(atPath: self.downloadFolder, withIntermediateDirectories: true, attributes: nil)
+        // Reset anything marked as downloading that isn't in our download manager. These were probably left over from an app crash
+        if let downloadingTracks = dataSource?.currentlyDownloadingTracks() {
+            for track in downloadingTracks {
+                self.dataSource?.offlineTrackQueuedToBacklog(track)
+            }
         }
+        
+        fillDownloadQueue()
     }
     
     public func delete(showInfo: CompleteShowInformation) {
@@ -130,10 +161,12 @@ public class RelistenDownloadManager {
         let tracks : [Track] = show.completeTracksFlattened
         var queuedTracks : [Track]  = []
         
-        for track in tracks {
-            let willDownload = download(track: track, raiseEvent: false)
-            if willDownload {
-                queuedTracks.append(track)
+        queue.sync {
+            for track in tracks {
+                let willDownload = download(track: track, raiseEvent: false)
+                if willDownload {
+                    queuedTracks.append(track)
+                }
             }
         }
         
@@ -141,27 +174,49 @@ public class RelistenDownloadManager {
     }
     
     private func addDownloadTask(_ track: Track) {
-        downloadManager.addDownloadTask(downloadFilename(forTrack: track), fileURL: track.mp3_url.absoluteString, destinationPath: downloadFolder)
+        queue.assertQueue()
+        
+        let url = track.mp3_url
+        urlToTrackDownloadMap[url] = TrackDownload(track: track)
+        downloadManager.addDownloadTask(downloadFilename(forTrack: track), fileURL: url.absoluteString, destinationPath: downloadFolder)
     }
     
-    public func download(track: Track, raiseEvent: Bool = true) -> Bool {
-        if !trackNeedsDownload(track) {
-            return false
-        }
-        
-        self.dataSource?.offlineTrackQueuedToBacklog(track)
-
-        if downloadManager.downloadingArray.count < 3 {
-            urlToTrackMap[track.mp3_url] = track
-
+    private func fillDownloadQueue(withTrack track : Track? = nil) {
+        queue.assertQueue()
+        if let track = track, downloadManager.downloadingArray.count < 3 {
             addDownloadTask(track)
         }
         
-        if raiseEvent {
-            eventTracksQueuedToDownload.raise([ track ])
+        let downloadQueueSlots = 3 - downloadManager.downloadingArray.count
+        // Resume any queued downloads
+        if downloadQueueSlots > 0 {
+            if let tracksToDownload = dataSource?.tracksToDownload(downloadQueueSlots) {
+                for track in tracksToDownload {
+                    addDownloadTask(track)
+                }
+                
+                eventTracksQueuedToDownload.raise(tracksToDownload)
+            }
+        }
+    }
+    
+    public func download(track: Track, raiseEvent: Bool = true) -> Bool {
+        var retval = true
+        queue.sync {
+            if !trackNeedsDownload(track) {
+                retval = false
+            }
+            
+            self.dataSource?.offlineTrackQueuedToBacklog(track)
+
+            fillDownloadQueue(withTrack: track)
+            
+            if raiseEvent {
+                eventTracksQueuedToDownload.raise([ track ])
+            }
         }
         
-        return true
+        return retval
     }
 
     func downloadFilename(forURL url: URL) -> String {
@@ -198,13 +253,34 @@ public class RelistenDownloadManager {
     }
     
     private func downloadModelForTrack(_ track: Track) -> MZDownloadModel? {
-        for dlModel in downloadManager.downloadingArray {
-            if URL(string: dlModel.fileURL)! == track.mp3_url {
-                return dlModel
+        var retval : MZDownloadModel? = nil
+        
+        queue.sync {
+            for dlModel in downloadManager.downloadingArray {
+                if URL(string: dlModel.fileURL)! == track.mp3_url {
+                    retval = dlModel
+                    break
+                }
             }
         }
         
-        return nil
+        return retval
+    }
+    
+    private func trackForDownloadModel(_ model: MZDownloadModel) -> Track? {
+        var retval : Track? = nil
+        queue.sync {
+            if let trackDownload = urlToTrackDownloadMap[model.downloadingURL] {
+                retval = trackDownload.track
+            }
+        }
+        return retval
+    }
+    
+    private func removeTrackForDownloadModel(_ model: MZDownloadModel) {
+        queue.sync {
+            urlToTrackDownloadMap.removeValue(forKey: model.downloadingURL)
+        }
     }
     
     public func isTrackQueuedToDownload(_ track: Track) -> Bool {
@@ -232,15 +308,26 @@ public class RelistenDownloadManager {
         
         return false
     }
+    
+    public func observeProgressForTrack(_ track: Track, observer: @escaping (Float) -> Void) {
+        queue.sync {
+            if let trackDownload = urlToTrackDownloadMap[track.mp3_url] {
+                trackDownload.progress.observe({ (progress, _) in
+                    observer(progress)
+                }).add(to: &trackDownload.disposal)
+            }
+        }
+    }
 }
 
 // MARK: MZDownloadManagerDelegate
-extension RelistenDownloadManager : MZDownloadManagerDelegate {
+extension DownloadManager : MZDownloadManagerDelegate {
     public func downloadRequestDidUpdateProgress(_ downloadModel: MZDownloadModel, index: Int) {
-        let txt = "Downloading \"\(downloadModel.fileName!)\" \((downloadModel.progress * 100.0).rounded())% (\(downloadManager.downloadingArray.count - index) left)"
-        
-        statusLabel.text = txt
-        print(txt)
+        queue.sync {
+            if let trackDownload = urlToTrackDownloadMap[downloadModel.downloadingURL] {
+                trackDownload.progress.value = downloadModel.progress
+            }
+        }
     }
     
     public func downloadRequestDidPopulatedInterruptedTasks(_ downloadModel: [MZDownloadModel]) {
@@ -267,7 +354,7 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
     public func downloadRequestStarted(_ downloadModel: MZDownloadModel, index: Int) {
         print("Started downloading: \(downloadModel)")
         
-        if let t = urlToTrackMap[downloadModel.downloadingURL] {
+        if let t = self.trackForDownloadModel(downloadModel) {
             eventTrackStartedDownloading.raise(t)
             self.dataSource?.offlineTrackBeganDownloading(t)
         }
@@ -276,32 +363,31 @@ extension RelistenDownloadManager : MZDownloadManagerDelegate {
     public func downloadRequestFinished(_ downloadModel: MZDownloadModel, index: Int) {
         print("Finished downloading: \(downloadModel)")
         
-        let url = downloadModel.downloadingURL
-        
-        if let t = urlToTrackMap[url] {
+        if let t = self.trackForDownloadModel(downloadModel) {
             dataSource?.offlineTrackFinishedDownloading(t, withSize: UInt64(fileToActualBytes(downloadModel.file!)))
 
             eventTrackFinishedDownloading.raise(t)
             
-            urlToTrackMap.removeValue(forKey: url)
+            self.removeTrackForDownloadModel(downloadModel)
         }
         
-        if let nextTrack = MyLibrary.shared.nextTrackToDownload() {
-            urlToTrackMap[nextTrack.mp3_url] = nextTrack
-
-            addDownloadTask(nextTrack)
+        queue.async {
+            self.fillDownloadQueue()
         }
     }
     
     public func downloadRequestDidFailedWithError(_ error: NSError, downloadModel: MZDownloadModel, index: Int) {
         print(error)
 
-        urlToTrackMap.removeValue(forKey: downloadModel.downloadingURL)
-        /*
-        if let t = urlToTrackMap[URL(string: downloadModel.fileURL)!] {
-            eventTrackFinishedDownloading.raise(data: t)
+        self.removeTrackForDownloadModel(downloadModel)
+        
+        if let t = trackForDownloadModel(downloadModel) {
+            eventTrackFinishedDownloading.raise(t)
         }
-        */
+        
+        queue.async {
+            self.fillDownloadQueue()
+        }
     }
     
     public func downloadRequestDestinationDoestNotExists(_ downloadModel: MZDownloadModel, index: Int, location: URL) {

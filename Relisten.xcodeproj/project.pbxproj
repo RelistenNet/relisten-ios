@@ -10,6 +10,7 @@
 		430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */; };
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
 		430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */; };
+		4330E72C211E0CA200329ED7 /* DownloadProgressNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */; };
 		43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43524ADA2114DFC700DC70CD /* RelistenTests.swift */; };
 		43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */; };
@@ -74,7 +75,7 @@
 		43B53451210922CE00DE9B1F /* RelistenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */; };
 		43B53452210922CE00DE9B1F /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044081E6F29A800BA946E /* ArtistViewController.swift */; };
 		43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EF8D6720F01A41002FF970 /* CarPlayController.swift */; };
-		43B53454210922CE00DE9B1F /* RelistenDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */; };
+		43B53454210922CE00DE9B1F /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C68279B1F99241C00E260B1 /* DownloadManager.swift */; };
 		43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704620B62C2D00710E90 /* MyLibrary.swift */; };
 		43B53457210922CE00DE9B1F /* MyLibrary+DiskUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */; };
 		43B53458210922CE00DE9B1F /* RelistenJsonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */; };
@@ -173,6 +174,7 @@
 		430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAddedViewController.swift; sourceTree = "<group>"; };
 		430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayDataSource.swift; path = Helpers/CarPlayDataSource.swift; sourceTree = "<group>"; };
 		430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReentrantDispatchQueue.swift; path = Extensions/ReentrantDispatchQueue.swift; sourceTree = "<group>"; };
+		4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadProgressNode.swift; path = Layouts/DownloadProgressNode.swift; sourceTree = "<group>"; };
 		43524AD82114DFC700DC70CD /* RelistenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43524ADA2114DFC700DC70CD /* RelistenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenTests.swift; sourceTree = "<group>"; };
 		43524ADC2114DFC700DC70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -250,7 +252,7 @@
 		7C4F1BED1F733A0700C592BD /* SongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongViewController.swift; path = "View Controllers/Songs/SongViewController.swift"; sourceTree = "<group>"; };
 		7C5076321EE701D500BE3CE7 /* SourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceViewController.swift; path = "View Controllers/Show/SourceViewController.swift"; sourceTree = "<group>"; };
 		7C61C7CD1F18DB320094E0AF /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = SharedAssets.xcassets; path = Assets/SharedAssets.xcassets; sourceTree = "<group>"; };
-		7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenDownloadManager.swift; sourceTree = "<group>"; };
+		7C68279B1F99241C00E260B1 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		7C8044081E6F29A800BA946E /* ArtistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistViewController.swift; path = "View Controllers/ArtistViewController.swift"; sourceTree = "<group>"; };
 		7C80440D1E6F34AF00BA946E /* RelistenMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelistenMenuView.swift; path = Views/RelistenMenuView.swift; sourceTree = "<group>"; };
 		7C8044111E6F456000BA946E /* UIFont+ChangeWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIFont+ChangeWeight.swift"; path = "Extensions/UIFont+ChangeWeight.swift"; sourceTree = "<group>"; };
@@ -501,7 +503,7 @@
 		7C68279A1F99240A00E260B1 /* Offline */ = {
 			isa = PBXGroup;
 			children = (
-				7C68279B1F99241C00E260B1 /* RelistenDownloadManager.swift */,
+				7C68279B1F99241C00E260B1 /* DownloadManager.swift */,
 				43B047742100626200251046 /* OfflineSourceMetadata.swift */,
 				7C13704620B62C2D00710E90 /* MyLibrary.swift */,
 				7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */,
@@ -521,6 +523,7 @@
 			isa = PBXGroup;
 			children = (
 				7C31553320C2076C00F07622 /* AXRatingViewNode.swift */,
+				4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */,
 				43A035D0210D255700C087DD /* FavoriteButtonNode.swift */,
 				7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */,
 				7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */,
@@ -1056,6 +1059,7 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
 				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
@@ -1091,6 +1095,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
@@ -1200,6 +1205,7 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
 				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
@@ -1235,6 +1241,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
@@ -1356,7 +1363,8 @@
 				43B53427210922CE00DE9B1F /* TimeInterval+Humanize.swift in Sources */,
 				43B5343D210922CE00DE9B1F /* VenueLayout.swift in Sources */,
 				43B53421210922CE00DE9B1F /* Track.swift in Sources */,
-				43B53454210922CE00DE9B1F /* RelistenDownloadManager.swift in Sources */,
+				4330E72C211E0CA200329ED7 /* DownloadProgressNode.swift in Sources */,
+				43B53454210922CE00DE9B1F /* DownloadManager.swift in Sources */,
 				43B53448210922CE00DE9B1F /* VenuesViewController.swift in Sources */,
 				43B53437210922CE00DE9B1F /* SourceDetailsNode.swift in Sources */,
 				43B5344E210922CE00DE9B1F /* TopShowsViewController.swift in Sources */,

@@ -48,7 +48,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         collectionNode.style.alignSelf = .stretch
-        collectionNode.style.preferredLayoutSize = ASLayoutSizeMake(.init(unit: .fraction, value: 1.0), .init(unit: .points, value: 114.0 /* height + 8px padding on top and bottom */))
+        collectionNode.style.preferredLayoutSize = ASLayoutSizeMake(.init(unit: .fraction, value: 1.0), .init(unit: .points, value: 150.0 /* height + 8px padding on top and bottom */))
         
 //        let l = ASAbsoluteLayoutSpec(sizing: .default, children: [collectionNode])
 //        l.style.minHeight = .init(unit: .fraction, value: 1.0)
@@ -75,7 +75,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         let show = shows[indexPath.row]
         let cellTransparency = self.cellTransparency
         
-        return { ShowCellNode(show: show.show, withRank: nil, verticalLayout: true, showingArtist: show.artist, cellTransparency: cellTransparency) }
+        return { ShowCellNode(show: show.show, withRank: nil, useCellLayout: true, showingArtist: show.artist, cellTransparency: cellTransparency) }
     }
 }
 

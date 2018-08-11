@@ -15,15 +15,15 @@ public class ShowCellNode : ASCellNode {
     public let show: Show
     public let artist: SlimArtist?
     public let rank: Int?
-    public let vertical: Bool
+    public let useCellLayout: Bool
     
     var disposal = Disposal()
     
-    public init(show: Show, withRank: Int? = nil, verticalLayout: Bool = false, showingArtist: SlimArtist? = nil, showUpdateDate : Bool = false, cellTransparency : CGFloat = 1.0) {
+    public init(show: Show, withRank: Int? = nil, useCellLayout: Bool = false, showingArtist: SlimArtist? = nil, showUpdateDate : Bool = false, cellTransparency : CGFloat = 1.0) {
         self.show = show
         artist = showingArtist
         rank = withRank
-        vertical = verticalLayout
+        self.useCellLayout = useCellLayout
         
         if let artist = showingArtist {
             artistNode = ASTextNode(artist.name, textStyle: .caption1)
@@ -36,10 +36,10 @@ public class ShowCellNode : ASCellNode {
         
         var venueText = " \n "
         if let v = show.venue {
-            if v.location.count > 0 && verticalLayout {
+            if v.location.count > 0 && useCellLayout {
                 venueText = v.location
             }
-            else if v.name.count > 0 && verticalLayout {
+            else if v.name.count > 0 && useCellLayout {
                 venueText = v.name
             }
             else {
@@ -54,11 +54,11 @@ public class ShowCellNode : ASCellNode {
         ratingTextNode = ASTextNode(String(format: "%.2f ★", show.avg_rating / 10.0 * 5.0), textStyle: .caption1)
         
         var metaText = "\(show.avg_duration == nil ? "" : show.avg_duration!.humanize())"
-        if !verticalLayout {
+        if !useCellLayout {
             metaText += "\n\(show.source_count) recordings"
         }
         
-        metaNode = ASTextNode(metaText, textStyle: .caption1, color: nil, alignment: vertical ? nil : NSTextAlignment.right)
+        metaNode = ASTextNode(metaText, textStyle: .caption1, color: nil, alignment: useCellLayout ? nil : NSTextAlignment.right)
         
         if showUpdateDate {
             let updateDate = DateFormatter.localizedString(from: show.most_recent_source_updated_at, dateStyle: .long, timeStyle: .none)
@@ -86,8 +86,8 @@ public class ShowCellNode : ASCellNode {
         isAvailableOffline = MyLibrary.shared.isShowAtLeastPartiallyAvailableOffline(self.show)
         
         artworkNode = ASImageNode()
-        artworkNode.style.maxWidth = .init(unit: .points, value: verticalLayout ? 60.0 : 100)
-        artworkNode.style.maxHeight = .init(unit: .points, value: verticalLayout ? 60.0 : 100)
+        artworkNode.style.maxWidth = .init(unit: .points, value: useCellLayout ? 60.0 : 100)
+        artworkNode.style.maxHeight = .init(unit: .points, value: useCellLayout ? 60.0 : 100)
         artworkNode.style.preferredSize = CGSize(width: artworkNode.style.maxWidth.value, height: artworkNode.style.maxHeight.value)
         
         artworkNode.backgroundColor = show.fastImageCacheWrapper().placeholderColor()
@@ -105,7 +105,7 @@ public class ShowCellNode : ASCellNode {
         
         automaticallyManagesSubnodes = true
         
-        if verticalLayout {
+        if useCellLayout {
             borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
             borderWidth = 1.0
             cornerRadius = 3.0
@@ -156,95 +156,95 @@ public class ShowCellNode : ASCellNode {
         }
     }
     
-    public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        if vertical {
-            let showAndOffline = ASStackLayoutSpec(
-                direction: .horizontal,
-                spacing: 8,
-                justifyContent: .start,
-                alignItems: .center,
-                children: [ showNode]
-            )
-            showAndOffline.style.alignSelf = .stretch
-            
-            var verticalStack: [ASLayoutElement] = [
-                showAndOffline,
-                venueNode
-            ]
-            
-            var metaStack: [ASLayoutElement] = []
-            
-            metaStack.append(metaNode)
-            
-            if show.avg_rating > 0.0 {
-                metaStack.append(SpacerNode())
-                metaStack.append(ratingTextNode)
-            }
-
-            let vs = ASStackLayoutSpec(
-                direction: .horizontal,
-                spacing: 8,
-                justifyContent: .start,
-                alignItems: .center,
-                children: metaStack
-            )
-            vs.style.minHeight = .init(unit: .points, value: 22.0)
-            vs.style.alignSelf = .stretch
-            
-            verticalStack.append(vs)
-                        
-            let textStack = ASStackLayoutSpec(
-                direction: .vertical,
-                spacing: 2,
-                justifyContent: .end,
-                alignItems: .start,
-                children: verticalStack
-            )
-            textStack.style.alignSelf = .stretch
-            
-            if let sbd = soundboardIndicatorNode {
-                sbd.style.layoutPosition = CGPoint(x: 3, y: 3)
-            }
-            
-            let artSize = artworkNode.style.preferredSize
-            offlineIndicatorNode.style.layoutPosition = CGPoint(x: 3, y: artSize.height - offlineIndicatorNode.style.preferredSize.height - 3)
-            artworkNode.style.layoutPosition = CGPoint(x: 0, y: 0)
-
-            let artWithOverlay = ASAbsoluteLayoutSpec(children: ArrayNoNils(artworkNode, soundboardIndicatorNode, isAvailableOffline ? offlineIndicatorNode : nil))
-            
-            let stack = ASStackLayoutSpec(
-                direction: .horizontal,
-                spacing: 8.0,
-                justifyContent: .start,
-                alignItems: .start,
-                children: [artWithOverlay, textStack]
-            )
-            stack.style.alignSelf = .stretch
-            
-            let s = ASStackLayoutSpec(
-                direction: .vertical,
-                spacing: 4,
-                justifyContent: .start,
-                alignItems: .start,
-                children: ArrayNoNils(artistNode, stack)
-            )
-            s.style.alignSelf = .center
-            
-            // The update date doesn't fit in the current vertical size, and it's not worth changing that size for a property that nobody uses in vertical mode.
-            // Uncomment this if that story changes later.
-//            if let updateDateNode = updateDateNode {
-//                verticalStack.append(updateDateNode)
-//            }
-            
-            let i = ASInsetLayoutSpec(
-                insets: UIEdgeInsetsMake(12, 12, 12, 12),
-                child: s
-            )
-            i.style.alignSelf = .stretch
-            
-            return i
+    private func cellLayoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        let showAndOffline = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 8,
+            justifyContent: .start,
+            alignItems: .center,
+            children: [ showNode]
+        )
+        showAndOffline.style.alignSelf = .stretch
+        
+        var verticalStack: [ASLayoutElement] = [
+            showAndOffline,
+            venueNode
+        ]
+        
+        var metaStack: [ASLayoutElement] = []
+        
+        metaStack.append(metaNode)
+        
+        if show.avg_rating > 0.0 {
+            metaStack.append(SpacerNode())
+            metaStack.append(ratingTextNode)
         }
         
+        let vs = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 8,
+            justifyContent: .start,
+            alignItems: .center,
+            children: metaStack
+        )
+        vs.style.minHeight = .init(unit: .points, value: 22.0)
+        vs.style.alignSelf = .stretch
+        
+        verticalStack.append(vs)
+        
+        let textStack = ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 2,
+            justifyContent: .end,
+            alignItems: .start,
+            children: verticalStack
+        )
+        textStack.style.alignSelf = .stretch
+        
+        if let sbd = soundboardIndicatorNode {
+            sbd.style.layoutPosition = CGPoint(x: 3, y: 3)
+        }
+        
+        let artSize = artworkNode.style.preferredSize
+        offlineIndicatorNode.style.layoutPosition = CGPoint(x: 3, y: artSize.height - offlineIndicatorNode.style.preferredSize.height - 3)
+        artworkNode.style.layoutPosition = CGPoint(x: 0, y: 0)
+        
+        let artWithOverlay = ASAbsoluteLayoutSpec(children: ArrayNoNils(artworkNode, soundboardIndicatorNode, isAvailableOffline ? offlineIndicatorNode : nil))
+        
+        let stack = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 8.0,
+            justifyContent: .start,
+            alignItems: .start,
+            children: [artWithOverlay, textStack]
+        )
+        stack.style.alignSelf = .stretch
+        
+        let s = ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 4,
+            justifyContent: .start,
+            alignItems: .start,
+            children: ArrayNoNils(artistNode, stack)
+        )
+        s.style.alignSelf = .center
+        
+        // The update date doesn't fit in the current vertical size, and it's not worth changing that size for a property that nobody uses in vertical mode.
+        // Uncomment this if that story changes later.
+        //            if let updateDateNode = updateDateNode {
+        //                verticalStack.append(updateDateNode)
+        //            }
+        
+        let i = ASInsetLayoutSpec(
+            insets: UIEdgeInsetsMake(12, 12, 12, 12),
+            child: s
+        )
+        i.style.alignSelf = .stretch
+        
+        return i
+    }
+    
+    private func tableLayoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let showAndSBD = ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 8,
@@ -262,9 +262,9 @@ public class ShowCellNode : ASCellNode {
             children: ArrayNoNils(venueNode)
         )
         venueLayout.style.alignSelf = .stretch
-//        venueLayout.style.flexShrink = 1.0
+        //        venueLayout.style.flexShrink = 1.0
         venueNode.style.flexShrink = 1.0
-//        venueLayout.style.maxWidth = ASDimensionMake(.fraction, 1.0)
+        //        venueLayout.style.maxWidth = ASDimensionMake(.fraction, 1.0)
         
         let ratingAndMeta = ASStackLayoutSpec(
             direction: .horizontal,
@@ -297,7 +297,7 @@ public class ShowCellNode : ASCellNode {
         textStack.style.alignSelf = .stretch
         textStack.style.flexShrink = 1.0
         textStack.style.flexGrow = 1.0
-
+        
         let stack = ASStackLayoutSpec(
             direction: .horizontal,
             spacing: 8.0,
@@ -310,15 +310,22 @@ public class ShowCellNode : ASCellNode {
         stack.style.flexGrow = 1.0
         
         //        stack.style.width = ASDimensionMake(.fraction, 1.0)
-
+        
         let inset = ASInsetLayoutSpec(
             insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 8),
             child: stack
         )
         inset.style.alignSelf = .stretch
         inset.style.flexShrink = 1.0
-                
-        return inset
         
+        return inset
+    }
+    
+    public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        if useCellLayout {
+            return cellLayoutSpecThatFits(constrainedSize)
+        } else {
+            return tableLayoutSpecThatFits(constrainedSize)
+        }
     }
 }

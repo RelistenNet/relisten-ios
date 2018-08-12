@@ -12,6 +12,8 @@
 		430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */; };
 		4330E72C211E0CA200329ED7 /* DownloadProgressNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */; };
 		4330E732211E7EB900329ED7 /* LegacyOfflineTrackImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E731211E7EB900329ED7 /* LegacyOfflineTrackImporter.swift */; };
+		4330E7372120A90400329ED7 /* RelistenLegacyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */; };
+		4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */; };
 		43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43524ADA2114DFC700DC70CD /* RelistenTests.swift */; };
 		43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */; };
@@ -177,6 +179,8 @@
 		430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReentrantDispatchQueue.swift; path = Extensions/ReentrantDispatchQueue.swift; sourceTree = "<group>"; };
 		4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadProgressNode.swift; path = Layouts/DownloadProgressNode.swift; sourceTree = "<group>"; };
 		4330E731211E7EB900329ED7 /* LegacyOfflineTrackImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyOfflineTrackImporter.swift; sourceTree = "<group>"; };
+		4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyAPI.swift; sourceTree = "<group>"; };
+		4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyModels.swift; sourceTree = "<group>"; };
 		43524AD82114DFC700DC70CD /* RelistenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43524ADA2114DFC700DC70CD /* RelistenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenTests.swift; sourceTree = "<group>"; };
 		43524ADC2114DFC700DC70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -358,6 +362,8 @@
 			isa = PBXGroup;
 			children = (
 				4330E731211E7EB900329ED7 /* LegacyOfflineTrackImporter.swift */,
+				4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */,
+				4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */,
 			);
 			path = Legacy;
 			sourceTree = "<group>";
@@ -1307,11 +1313,13 @@
 				7C34D854210ED59400813C00 /* RealmNotificationDisposables.swift in Sources */,
 				43B53458210922CE00DE9B1F /* RelistenJsonUtils.swift in Sources */,
 				43B5344A210922CE00DE9B1F /* YearsViewController.swift in Sources */,
+				4330E7372120A90400329ED7 /* RelistenLegacyAPI.swift in Sources */,
 				43B53461210922CE00DE9B1F /* RelistenApi.swift in Sources */,
 				43B53449210922CE00DE9B1F /* VenueViewController.swift in Sources */,
 				43B53443210922CE00DE9B1F /* MyLibraryViewController.swift in Sources */,
 				43B53445210922CE00DE9B1F /* MyRecentlyPlayedViewController.swift in Sources */,
 				43B5343E210922CE00DE9B1F /* YearNode.swift in Sources */,
+				4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */,
 				43B5342C210922CE00DE9B1F /* AsyncDisplayKit.swift in Sources */,
 				43B53425210922CE00DE9B1F /* Array.swift in Sources */,
 				43B5345A210922CE00DE9B1F /* RelistenModels.swift in Sources */,

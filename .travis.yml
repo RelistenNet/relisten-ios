@@ -11,5 +11,6 @@ before_script:
 script: 
     - ./xcodebuild.sh
 
+rvm: 1.9.3
 before_install:
     - gem install cocoapods

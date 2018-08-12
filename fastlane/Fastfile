@@ -58,7 +58,10 @@ platform :ios do
     current_dir = File.expand_path File.dirname(__FILE__)
     changelog = File.read(current_dir + "/changelog.txt")
 
-    upload_to_testflight(changelog: changelog)
+    upload_to_testflight(
+      changelog: changelog,
+      distribute_external: true
+    )
   end
 
 

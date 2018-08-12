@@ -25,7 +25,7 @@ public class SlimArtist : RelistenObject, RelistenUUIDObject {
             return slug == "phish"
         }
         return apiValue
-        }}
+    }}
     
     public required init(json: JSON) throws {
         uuid = try json["uuid"].uuid.required()

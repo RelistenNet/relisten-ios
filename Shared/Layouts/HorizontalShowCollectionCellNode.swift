@@ -17,9 +17,39 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     var disposal = Disposal()
     
+    var height: CGFloat = 0
+    
     public var shows: [(show: Show, artist: Artist?)] {
         didSet {
             DispatchQueue.main.async {
+                // based on: https://github.com/TextureGroup/Texture/issues/108#issuecomment-298416171
+                if self.shows.count > 0 {
+                    // [node layoutThatFits:element.constrainedSize].size.height;
+                    let nodeCount = self.collectionNode.numberOfItems(inSection: 0)
+                    
+                    let sizeRange = ASSizeRange(min: CGSize.zero, max: CGSize(width: UIScreen.main.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
+                    
+                    let maxSize = (0..<nodeCount).map {
+                        self.collectionNode
+                            .nodeForItem(at: IndexPath(row: 0, section: $0))?
+                            .calculateLayoutThatFits(sizeRange)
+                            .size
+                            .height
+                    }
+                        .filter { $0 != nil }
+                        .map { $0! }
+                        .max()
+                    
+                    if let max = maxSize {
+                        self.collectionNode.style.minHeight = ASDimension(unit: .points, value: max)
+                    }
+                }
+                else {
+                    self.collectionNode.style.minHeight = ASDimension(unit: .points, value: 0)
+                }
+                
+                self.collectionNode.setNeedsLayout()
+                
                 self.collectionNode.reloadData()
             }
         }
@@ -27,10 +57,11 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     public init(forShows shows: [(show: Show, artist: Artist?)], delegate: ASCollectionDelegate?) {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumInteritemSpacing = 16
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
         flowLayout.scrollDirection = .horizontal
-        flowLayout.estimatedItemSize = CGSize(width: 280, height: 85)
-        flowLayout.sectionInset = UIEdgeInsetsMake(0, 4, 4, 4)
+//        flowLayout.estimatedItemSize = CGSize(width: 280, height: 85)
+//        flowLayout.sectionInset = UIEdgeInsetsMake(0, 4, 4, 4)
         
         collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
         collectionNode.backgroundColor = UIColor.clear
@@ -48,19 +79,18 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         collectionNode.style.alignSelf = .stretch
-        collectionNode.style.preferredLayoutSize = ASLayoutSizeMake(.init(unit: .fraction, value: 1.0), .init(unit: .points, value: 150.0 /* height + 8px padding on top and bottom */))
-        
+
+        collectionNode.style.preferredLayoutSize = ASLayoutSizeMake(.init(unit: .fraction, value: 1.0), .init(unit: .points, value: height))
+
 //        let l = ASAbsoluteLayoutSpec(sizing: .default, children: [collectionNode])
 //        l.style.minHeight = .init(unit: .fraction, value: 1.0)
 //        l.style.alignSelf = .stretch
         
-        let i = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(0,0,0,0),
-            child: collectionNode
-        )
-        i.style.alignSelf = .stretch
+//        return collectionNode.layoutSpecThatFits(constrainedSize)
         
-        return i
+        let wrapper = ASWrapperLayoutSpec(layoutElement: collectionNode)
+        
+        return wrapper
     }
     
     public func numberOfSections(in collectionNode: ASCollectionNode) -> Int {

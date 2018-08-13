@@ -47,6 +47,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         // Initialize CarPlay
         CarPlayController.shared.setup()
         
+        // Import data from pre-4.0 versions of the app
+        let relistenImporter = LegacyRelistenImporter()
+        relistenImporter.importLegacyOfflineTracks { (error) in
+            relistenImporter.cleanupLegacyFiles()
+            print("Relisten import completed")
+        }
+        
         return true
     }
     

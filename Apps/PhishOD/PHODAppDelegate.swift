@@ -45,6 +45,13 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         // Initialize CarPlay
         CarPlayController.shared.setup()
         
+        // Import data from pre-4.0 versions of the app
+        let phishImporter = LegacyPhishOfflineTrackImporter()
+        phishImporter.importLegacyOfflineTracks { (error) in
+            phishImporter.cleanupLegacyFiles()
+            print("PhishOD import completed")
+        }
+        
         return true
     }
     

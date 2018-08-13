@@ -1,5 +1,5 @@
 //
-//  LegacyRelistenOfflineTrackImporter.swift
+//  LegacyRelistenImporter.swift
 //  RelistenShared
 //
 //  Created by Jacob Farkas on 8/12/18.
@@ -9,7 +9,7 @@
 import Foundation
 import Siesta
 
-public class LegacyRelistenOfflineTrackImporter {
+public class LegacyRelistenImporter {
     private let cacheSubDir = "relisten.net"
     private lazy var cachePath : String = {
         return NSSearchPathForDirectoriesInDomains(.documentDirectory,
@@ -18,6 +18,13 @@ public class LegacyRelistenOfflineTrackImporter {
             "/com.alecgorge.phish.cache" +
             "/" + self.cacheSubDir
     }()
+    private lazy var persistedObjectsPath : String = {
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                   FileManager.SearchPathDomainMask.userDomainMask,
+                                                   true).first! +
+        "/persisted_objects"
+    }()
+    
     private let legacyMapper = LegacyMapper()
     private let fm = FileManager.default
     
@@ -27,6 +34,12 @@ public class LegacyRelistenOfflineTrackImporter {
         DispatchQueue.global(qos: .background).async {
             self.backgroundImportLegacyOfflineTracks(completion: completion)
         }
+    }
+    
+    public func cleanupLegacyFiles() {
+        do {
+            try fm.removeItem(atPath: persistedObjectsPath)
+        } catch { }
     }
 
     public func backgroundImportLegacyOfflineTracks(completion: @escaping (Error?) -> Void) {
@@ -107,17 +120,15 @@ public class LegacyRelistenOfflineTrackImporter {
     }
     
     private func handleImportOfTrack(atPath filePath : String, track : Track, completion: @escaping (Error?) -> Void) {
-        var error : Error? = nil
-        
         DownloadManager.shared.importDownloadedTrack(track, filePath: filePath)
         
         do {
             try fm.removeItem(atPath: filePath)
-        } catch let blockError {
+        } catch {
             // This isn't necessarily an error since the DownloadManager should have performed a move of the file
         }
         
-        completion(error)
+        completion(nil)
     }
     
     // MARK: Filesystem helpers

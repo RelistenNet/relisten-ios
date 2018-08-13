@@ -151,8 +151,10 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     }
     
     override func dataChanged(_ data: [ArtistWithCounts]) {
-        allArtists = data
-        featuredArtists = data.filter({ $0.featured > 0 })
+        DispatchQueue.main.async {
+            self.allArtists = data
+            self.featuredArtists = data.filter({ $0.featured > 0 })
+        }
     }
 
     override var resource: Resource? { get { return api.artists() } }
@@ -212,7 +214,9 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             }
         }
         else {
-            return super.resourceChanged(resource, event: event)
+            DispatchQueue.main.async {
+                super.resourceChanged(resource, event: event)
+            }
         }
     }
     

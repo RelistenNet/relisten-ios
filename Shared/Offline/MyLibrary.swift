@@ -227,6 +227,8 @@ extension MyLibrary : DownloadManagerDataSource {
         try! realm.write {
             realm.add(trackMeta)
         }
+        
+        addOfflineSourceInfoForDownloadedTrack(track)
     }
 
     public func offlineTrackQueuedToBacklog(_ track: Track) {
@@ -267,6 +269,24 @@ extension MyLibrary : DownloadManagerDataSource {
         }
     }
     
+    private func addOfflineSourceInfoForDownloadedTrack(_ track: Track) {
+        let realm = try! Realm()
+        let offlineSourceQuery = realm.object(ofType: OfflineSource.self, forPrimaryKey: track.showInfo.source.uuid.uuidString)
+        
+        if offlineSourceQuery == nil {
+            try! realm.write {
+                let sourceMeta = OfflineSource()
+                sourceMeta.show_uuid = track.showInfo.show.uuid.uuidString
+                sourceMeta.source_uuid = track.showInfo.source.uuid.uuidString
+                sourceMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
+                sourceMeta.year_uuid = track.showInfo.show.year.uuid.uuidString
+                sourceMeta.created_at = Date()
+                
+                realm.add(sourceMeta)
+            }
+        }
+    }
+    
     public func offlineTrackFinishedDownloading(_ track: Track, withSize fileSize: UInt64) {
         let realm = try! Realm()
         
@@ -283,20 +303,7 @@ extension MyLibrary : DownloadManagerDataSource {
         }
         
         // add the source information if it doesn't exist
-        let offlineSourceQuery = realm.object(ofType: OfflineSource.self, forPrimaryKey: track.showInfo.source.uuid.uuidString)
-        
-        if offlineSourceQuery == nil {
-            try! realm.write {
-                let sourceMeta = OfflineSource()
-                sourceMeta.show_uuid = track.showInfo.show.uuid.uuidString
-                sourceMeta.source_uuid = track.showInfo.source.uuid.uuidString
-                sourceMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
-                sourceMeta.year_uuid = track.showInfo.show.year.uuid.uuidString
-                sourceMeta.created_at = Date()
-                
-                realm.add(sourceMeta)
-            }
-        }
+        addOfflineSourceInfoForDownloadedTrack(track)
     }
     
     public func offlineTrackWillBeDeleted(_ track: Track) {

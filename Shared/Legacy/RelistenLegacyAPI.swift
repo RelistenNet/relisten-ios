@@ -10,13 +10,12 @@ import Foundation
 
 import Siesta
 import SwiftyJSON
+import Cache
 
-public let RelistenLegacyAPI = _RelistenLegacyAPI()
-
-public class _RelistenLegacyAPI {
-    private let service = Service(baseURL:"http://iguana.app.alecgorge.com/" + "/api")
+public class RelistenLegacyAPI {
+    private let service = Service(baseURL:"http://iguana.app.alecgorge.com/api")
     
-    fileprivate init() {
+    public init() {
         #if DEBUG
         // Bare-bones logging of which network calls Siesta makes:
         SiestaLog.Category.enabled = [] // [.network]
@@ -35,6 +34,7 @@ public class _RelistenLegacyAPI {
             $0.expirationTime = 60 * 60 * 24 * 365 * 10 as TimeInterval
             
             $0.pipeline[.parsing].add(SwiftyJSONTransformer, contentTypes: ["*/json"])
+            $0.pipeline[.parsing].cacheUsing(RelistenLegacyJSONCache())
             
             //$0.pipeline[.parsing].cacheUsing(RelistenJsonCache())
         }
@@ -45,11 +45,7 @@ public class _RelistenLegacyAPI {
             return LegacyArtist(json: ($0.content as JSON)["data"])
         }
         
-        service.configureTransformer("/artists/*/years/*") {
-            return LegacyYear(json: ($0.content as JSON)["data"])
-        }
-        
-        service.configureTransformer("/artists/*/years/*/shows/*") {
+        service.configureTransformer("/artists/*/shows/*") {
             return ($0.content as JSON).arrayValue.map(LegacyShowWithTracks.init)
         }
     }
@@ -60,17 +56,25 @@ public class _RelistenLegacyAPI {
             .child(slug)
     }
     
-    public func shows(byArtist slug: String, inYear year: Int) -> Resource {
+    public func fullShow(byArtist slug: String, showID: Int) -> Resource {
         return artist(slug)
-            .child("years")
-            .child(String(year))
-    }
-    
-    public func fullShow(byArtist slug: String, inYear year: Int, displayDate: String) -> Resource {
-        return artist(slug)
-            .child("years")
-            .child(String(year))
             .child("shows")
-            .child(displayDate)
+            .child(String(showID))
+    }
+}
+
+class RelistenLegacyJSONCache : RelistenCache {
+    let backingCache: AnyStorageAware<Entity<Any>>
+    
+    let memoryCacheConfig = MemoryConfig(
+        expiry: .never,
+        countLimit: 1000,
+        
+        // 4MB
+        totalCostLimit: 1024 * 1024 * 4
+    )
+    
+    public init() {
+        backingCache = AnyStorageAware(MemoryStorage(config: memoryCacheConfig))
     }
 }

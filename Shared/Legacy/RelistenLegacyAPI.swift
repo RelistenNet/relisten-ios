@@ -46,7 +46,7 @@ public class RelistenLegacyAPI {
         }
         
         service.configureTransformer("/artists/*/shows/*") {
-            return ($0.content as JSON).arrayValue.map(LegacyShowWithTracks.init)
+            return LegacyShowWithTracks(json: ($0.content as JSON)["data"])
         }
     }
     

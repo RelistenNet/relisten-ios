@@ -52,10 +52,18 @@ public class LegacyYear : LegacyObject {
 public class LegacyShow : LegacyObject {
     public let date : Date?
     public let displayDate : String?
+    public let source : String?
+    public let lineage : String?
+    public let taper : String?
+    public let transferer : String?
     
     public required init(json: JSON) {
         date = json["date"].dateTime
         displayDate = json["display_date"].string
+        source = json["source"].string
+        taper = json["taper"].string
+        transferer = json["transferer"].string
+        lineage = json["lineage"].string
         
         super.init(json: json)
     }

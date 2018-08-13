@@ -11,9 +11,11 @@
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
 		430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */; };
 		4330E72C211E0CA200329ED7 /* DownloadProgressNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */; };
-		4330E732211E7EB900329ED7 /* LegacyOfflineTrackImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E731211E7EB900329ED7 /* LegacyOfflineTrackImporter.swift */; };
 		4330E7372120A90400329ED7 /* RelistenLegacyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */; };
 		4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */; };
+		4330E73B2120C61400329ED7 /* LegacyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E73A2120C61400329ED7 /* LegacyMapper.swift */; };
+		4330E73D2120E1AC00329ED7 /* StorageAware+Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E73C2120E1AC00329ED7 /* StorageAware+Box.swift */; };
+		4330E73F2120E72200329ED7 /* LegacyPhishOfflineTrackImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E73E2120E72200329ED7 /* LegacyPhishOfflineTrackImporter.swift */; };
 		43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43524ADA2114DFC700DC70CD /* RelistenTests.swift */; };
 		43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */; };
@@ -178,9 +180,11 @@
 		430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayDataSource.swift; path = Helpers/CarPlayDataSource.swift; sourceTree = "<group>"; };
 		430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReentrantDispatchQueue.swift; path = Extensions/ReentrantDispatchQueue.swift; sourceTree = "<group>"; };
 		4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadProgressNode.swift; path = Layouts/DownloadProgressNode.swift; sourceTree = "<group>"; };
-		4330E731211E7EB900329ED7 /* LegacyOfflineTrackImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyOfflineTrackImporter.swift; sourceTree = "<group>"; };
 		4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyAPI.swift; sourceTree = "<group>"; };
 		4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyModels.swift; sourceTree = "<group>"; };
+		4330E73A2120C61400329ED7 /* LegacyMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyMapper.swift; sourceTree = "<group>"; };
+		4330E73C2120E1AC00329ED7 /* StorageAware+Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StorageAware+Box.swift"; path = "Extensions/StorageAware+Box.swift"; sourceTree = "<group>"; };
+		4330E73E2120E72200329ED7 /* LegacyPhishOfflineTrackImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyPhishOfflineTrackImporter.swift; sourceTree = "<group>"; };
 		43524AD82114DFC700DC70CD /* RelistenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43524ADA2114DFC700DC70CD /* RelistenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenTests.swift; sourceTree = "<group>"; };
 		43524ADC2114DFC700DC70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -361,7 +365,8 @@
 		4330E730211E7E8B00329ED7 /* Legacy */ = {
 			isa = PBXGroup;
 			children = (
-				4330E731211E7EB900329ED7 /* LegacyOfflineTrackImporter.swift */,
+				4330E73E2120E72200329ED7 /* LegacyPhishOfflineTrackImporter.swift */,
+				4330E73A2120C61400329ED7 /* LegacyMapper.swift */,
 				4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */,
 				4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */,
 			);
@@ -585,6 +590,7 @@
 				7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */,
 				430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */,
 				43A035F0210ED62200C087DD /* Show+FastImageCache.swift */,
+				4330E73C2120E1AC00329ED7 /* StorageAware+Box.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1318,6 +1324,7 @@
 				43B53449210922CE00DE9B1F /* VenueViewController.swift in Sources */,
 				43B53443210922CE00DE9B1F /* MyLibraryViewController.swift in Sources */,
 				43B53445210922CE00DE9B1F /* MyRecentlyPlayedViewController.swift in Sources */,
+				4330E73D2120E1AC00329ED7 /* StorageAware+Box.swift in Sources */,
 				43B5343E210922CE00DE9B1F /* YearNode.swift in Sources */,
 				4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */,
 				43B5342C210922CE00DE9B1F /* AsyncDisplayKit.swift in Sources */,
@@ -1341,6 +1348,7 @@
 				43B53457210922CE00DE9B1F /* MyLibrary+DiskUsage.swift in Sources */,
 				43B5344B210922CE00DE9B1F /* YearViewController.swift in Sources */,
 				43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */,
+				4330E73B2120C61400329ED7 /* LegacyMapper.swift in Sources */,
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
 				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
 				43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */,
@@ -1361,6 +1369,7 @@
 				43B53438210922CE00DE9B1F /* SwitchCellLayout.swift in Sources */,
 				43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */,
 				43B53423210922CE00DE9B1F /* SourceTrackAudioItem.swift in Sources */,
+				4330E73F2120E72200329ED7 /* LegacyPhishOfflineTrackImporter.swift in Sources */,
 				43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */,
 				43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */,
 				43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */,
@@ -1383,7 +1392,6 @@
 				43B5343D210922CE00DE9B1F /* VenueLayout.swift in Sources */,
 				43B53421210922CE00DE9B1F /* Track.swift in Sources */,
 				4330E72C211E0CA200329ED7 /* DownloadProgressNode.swift in Sources */,
-				4330E732211E7EB900329ED7 /* LegacyOfflineTrackImporter.swift in Sources */,
 				43B53454210922CE00DE9B1F /* DownloadManager.swift in Sources */,
 				43B53448210922CE00DE9B1F /* VenuesViewController.swift in Sources */,
 				43B53437210922CE00DE9B1F /* SourceDetailsNode.swift in Sources */,

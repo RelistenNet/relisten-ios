@@ -134,10 +134,10 @@ public class DownloadManager {
             }
             
             DispatchQueue.global(qos: .background).async {
-                let file = self.downloadPath(forTrack: track)
+                let filePath = track.downloadPath
                 
                 do {
-                    try FileManager.default.removeItem(atPath: file)
+                    try FileManager.default.removeItem(atPath: filePath)
                     self.dataSource?.offlineTrackWasDeleted(track)
                     
                     if shouldNotify {
@@ -179,7 +179,7 @@ public class DownloadManager {
         
         let url = track.mp3_url
         urlToTrackDownloadMap[url] = TrackDownload(track: track)
-        downloadManager.addDownloadTask(downloadFilename(forTrack: track), fileURL: url.absoluteString, destinationPath: downloadFolder)
+        downloadManager.addDownloadTask(track.downloadFilename, fileURL: url.absoluteString, destinationPath: downloadFolder)
     }
     
     private func fillDownloadQueue(withTrack track : Track? = nil) {
@@ -220,10 +220,28 @@ public class DownloadManager {
         return retval
     }
     
-    func importDownloadedTrack(_ track : Track, withSize fileSize: UInt64) {
+    func importDownloadedTrack(_ track : Track, filePath : String) {
         queue.sync {
-            self.dataSource?.importDownloadedTrack(track, withSize: fileSize)
-            self.eventTrackFinishedDownloading.raise(track)
+            print("Importing track \"\(track.title) - (\(track.showInfo.artist.name) \(track.showInfo.show.display_date))\" from \(filePath)...")
+            
+            let fm = FileManager.default
+            do {
+                
+                var fileSize : UInt64 = 0
+                do {
+                    var attributes = try fm.attributesOfItem(atPath: filePath)
+                    fileSize = attributes[.size] as! UInt64
+                } catch {
+                    print("Error getting file size for file at \(filePath): \(error)")
+                }
+                
+                try fm.moveItem(atPath: filePath, toPath: track.downloadPath)
+                
+                self.dataSource?.importDownloadedTrack(track, withSize: fileSize)
+                self.eventTrackFinishedDownloading.raise(track)
+            } catch {
+                print("Error importing track: \(error)")
+            }
         }
     }
 
@@ -232,32 +250,8 @@ public class DownloadManager {
         return filename
     }
     
-    func downloadFilename(forTrack track: Track) -> String {
-        return downloadFilename(forURL: track.mp3_url)
-    }
-    
-    func downloadFilename(forSourceTrack sourceTrack: SourceTrack) -> String {
-        return downloadFilename(forURL: sourceTrack.mp3_url)
-    }
-    
     func downloadPath(forURL url: URL) -> String {
         return downloadFolder + "/" + downloadFilename(forURL: url)
-    }
-    
-    func downloadPath(forTrack track: Track) -> String {
-        return downloadPath(forURL: track.mp3_url)
-    }
-    
-    func downloadPath(forSourceTrack sourceTrack: SourceTrack) -> String {
-        return downloadPath(forURL: sourceTrack.mp3_url)
-    }
-    
-    public func offlineURL(forTrack track: Track) -> URL? {
-        if MyLibrary.shared.isTrackAvailableOffline(track) {
-            return URL(fileURLWithPath: downloadPath(forTrack: track))
-        }
-        
-        return nil
     }
     
     private func downloadModelForTrack(_ track: Track) -> MZDownloadModel? {
@@ -406,5 +400,53 @@ extension DownloadManager : MZDownloadManagerDelegate {
 extension MZDownloadModel {
     public var downloadingURL: URL {
         return URL(string: fileURL)!
+    }
+}
+
+extension Track {
+    public var downloadFilename : String {
+        get {
+            return DownloadManager.shared.downloadFilename(forURL: self.mp3_url)
+        }
+    }
+    
+    public var downloadPath : String {
+        get {
+            return DownloadManager.shared.downloadPath(forURL: self.mp3_url)
+        }
+    }
+        
+    
+    public var offlineURL : URL? {
+        get {
+            if MyLibrary.shared.isTrackAvailableOffline(self) {
+                return URL(fileURLWithPath: self.downloadPath)
+            }
+            return nil
+        }
+    }
+}
+
+extension SourceTrack {
+    public var downloadFilename : String {
+        get {
+            return DownloadManager.shared.downloadFilename(forURL: self.mp3_url)
+        }
+    }
+    
+    public var downloadPath : String {
+        get {
+            return DownloadManager.shared.downloadPath(forURL: self.mp3_url)
+        }
+    }
+    
+    
+    public var offlineURL : URL? {
+        get {
+            if MyLibrary.shared.isTrackAvailableOffline(self) {
+                return URL(fileURLWithPath: self.downloadPath)
+            }
+            return nil
+        }
     }
 }

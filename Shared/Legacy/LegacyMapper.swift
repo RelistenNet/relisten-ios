@@ -175,6 +175,10 @@ class LegacyMapper {
 
 extension SourceFull {
     fileprivate func matchesLegacyShow(_ legacyShow : LegacyShow) -> Bool {
+        if let archiveIdentifier = legacyShow.archive_identifier {
+            if self.upstream_identifier == archiveIdentifier { return true }
+        }
+        
         if let source = self.source, let legacySource = legacyShow.source {
             if source != legacySource { return false }
         }

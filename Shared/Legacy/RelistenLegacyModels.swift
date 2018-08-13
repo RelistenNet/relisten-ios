@@ -56,6 +56,7 @@ public class LegacyShow : LegacyObject {
     public let lineage : String?
     public let taper : String?
     public let transferer : String?
+    public let archive_identifier : String?
     
     public required init(json: JSON) {
         date = json["date"].dateTime
@@ -64,6 +65,7 @@ public class LegacyShow : LegacyObject {
         taper = json["taper"].string
         transferer = json["transferer"].string
         lineage = json["lineage"].string
+        archive_identifier = json["archive_identifier"].string
         
         super.init(json: json)
     }

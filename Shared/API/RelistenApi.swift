@@ -84,7 +84,7 @@ public class _RelistenApi {
         }
         
         service.configureTransformer("/artists/*") {
-            return try ($0.content as JSON).arrayValue.map(SlimArtist.init)
+            return try SlimArtistWithFeatures(json: $0.content as JSON)
         }
         
         service.configureTransformer("/artists/*/years") {

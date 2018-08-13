@@ -106,9 +106,9 @@ public class ShowCellNode : ASCellNode {
         automaticallyManagesSubnodes = true
         
         if useCellLayout {
-            borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
-            borderWidth = 1.0
-            cornerRadius = 3.0
+//            borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
+//            borderWidth = 1.0
+//            cornerRadius = 3.0
         }
         else {
             accessoryType = .disclosureIndicator
@@ -236,7 +236,7 @@ public class ShowCellNode : ASCellNode {
         //            }
         
         let i = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(12, 12, 12, 12),
+            insets: UIEdgeInsetsMake(12, 16, 12, 16),
             child: s
         )
         i.style.alignSelf = .stretch

@@ -1,5 +1,5 @@
 //
-//  LegacyPhishOfflineTrackImporter.swift
+//  LegacyPhishODImporter.swift
 //  RelistenShared
 //
 //  Created by Jacob Farkas on 8/10/18.
@@ -8,14 +8,20 @@
 
 import Foundation
 
-public class LegacyPhishOfflineTrackImporter {
+public class LegacyPhishODImporter {
     private let cacheSubDir = "phish.in"
-    private lazy var cacheDir : String = {
+    private lazy var cachePath : String = {
         return NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                    FileManager.SearchPathDomainMask.userDomainMask,
                                                    true).first! +
             "/com.alecgorge.phish.cache" +
             "/" + self.cacheSubDir
+    }()
+    private lazy var persistedObjectsPath : String = {
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                   FileManager.SearchPathDomainMask.userDomainMask,
+                                                   true).first! +
+            "/persisted_objects"
     }()
     
     private let artistSlug = "phish"
@@ -30,10 +36,16 @@ public class LegacyPhishOfflineTrackImporter {
         }
     }
     
+    public func cleanupLegacyFiles() {
+        do {
+            try fm.removeItem(atPath: persistedObjectsPath)
+        } catch { }
+    }
+    
     private func backgroundImportLegacyOfflineTracks(completion: @escaping (Error?) -> Void) {
         let error : Error? = nil
         let group = DispatchGroup()
-        if (legacyCacheDirectoryExists()) {
+        if (legacyCachePathExists()) {
             debug("Starting import of legacy offline Phish tracks")
             group.enter()
             self.fetchPhishArtist { (phishArtist) in
@@ -49,7 +61,7 @@ public class LegacyPhishOfflineTrackImporter {
         
         group.notify(queue: DispatchQueue.global(qos: .background)) {
             self.debug("Import complete")
-            self.deleteDirectoryIfEmpty(self.cacheDir)
+            self.deleteDirectoryIfEmpty(self.cachePath)
             completion(error)
         }
     }
@@ -60,9 +72,9 @@ public class LegacyPhishOfflineTrackImporter {
         print("[Import] " + str)
     }
     
-    private func legacyCacheDirectoryExists() -> Bool {
+    private func legacyCachePathExists() -> Bool {
         var isDir : ObjCBool = false
-        return (fm.fileExists(atPath: cacheDir, isDirectory: &isDir) && isDir.boolValue)
+        return (fm.fileExists(atPath: cachePath, isDirectory: &isDir) && isDir.boolValue)
     }
     
     private func deleteDirectoryIfEmpty(_ path : String) {
@@ -92,16 +104,16 @@ public class LegacyPhishOfflineTrackImporter {
         var retval : [String] = []
         
         do {
-            if legacyCacheDirectoryExists() {
-                for showDirectory in try fm.contentsOfDirectory(atPath: self.cacheDir) {
+            if legacyCachePathExists() {
+                for showDirectory in try fm.contentsOfDirectory(atPath: self.cachePath) {
                     var isDir : ObjCBool = false
-                    if fm.fileExists(atPath: cacheDir + "/" + showDirectory, isDirectory: &isDir), isDir.boolValue {
+                    if fm.fileExists(atPath: cachePath + "/" + showDirectory, isDirectory: &isDir), isDir.boolValue {
                         retval.append(showDirectory)
                     }
                 }
             }
         } catch let error as NSError {
-            debug("Exception while searching for shows at \(cacheDir): \(error)")
+            debug("Exception while searching for shows at \(cachePath): \(error)")
         }
         
         return retval
@@ -119,7 +131,7 @@ public class LegacyPhishOfflineTrackImporter {
         }
         
         do {
-            let showDir = cacheDir + "/" + show.display_date
+            let showDir = cachePath + "/" + show.display_date
             var isDir : ObjCBool = false
             if fm.fileExists(atPath: showDir, isDirectory: &isDir), isDir.boolValue {
                 debug("[Import] Processing show at \(showDir)...")
@@ -142,7 +154,7 @@ public class LegacyPhishOfflineTrackImporter {
 
             }
         } catch let error as NSError {
-            debug("[Import] Error while searching for shows at \(cacheDir): \(error)")
+            debug("[Import] Error while searching for shows at \(cachePath): \(error)")
         }
     }
     

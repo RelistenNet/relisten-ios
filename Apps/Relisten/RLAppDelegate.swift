@@ -48,8 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         CarPlayController.shared.setup()
         
         // Import data from pre-4.0 versions of the app
-        let phishImporter = LegacyRelistenOfflineTrackImporter()
-        phishImporter.importLegacyOfflineTracks { (error) in
+        let relistenImporter = LegacyRelistenImporter()
+        relistenImporter.importLegacyOfflineTracks { (error) in
+            relistenImporter.cleanupLegacyFiles()
             print("Relisten import completed")
         }
         

@@ -15,22 +15,15 @@ class LegacyMapper {
     private let callbackQueue : DispatchQueue = DispatchQueue(label: "net.relisten.importer")
     
     // (farkas) Holy crap this is a mess. I'm hoping to replace this with a state machine soon. If you're reading this I failed at doing that :(
-    public func matchLegacyTrack(artist artistSlug: String, showID: Int, trackID: Int, completion: @escaping (Track?, Error?) -> Void) {
+    public func matchLegacyTrack(_ trackID: Int, artist artistSlug: String, showID: Int, completion: @escaping (Track?, Error?) -> Void) {
         let group = DispatchGroup()
         var error : Error? = nil
         var fullArtist : ArtistWithCounts? = nil
-        var slimArtist : SlimArtist? = nil
         var legacyShow : LegacyShowWithTracks? = nil
         
         group.enter()
         fetchArtist(artistSlug) { (artist) in
             fullArtist = artist
-            group.leave()
-        }
-        
-        group.enter()
-        fetchSlimArtist(withArtistSlug: artistSlug) { (blockSlimArtist) in
-            slimArtist = blockSlimArtist
             group.leave()
         }
         
@@ -45,16 +38,15 @@ class LegacyMapper {
             }
         }
         
-        group.notify(queue: DispatchQueue.global(qos: .background)) {
+        group.notify(queue: self.callbackQueue) {
             if error == nil,
                 let fullArtist = fullArtist,
-                let slimArtist = slimArtist,
                 let legacyShow = legacyShow
             {
                 print("[Import] Fetched artist and legacy show information for track \(trackID) in show \(showID)")
-                self.continueMatchingLegacyTrack(trackID: trackID, slimArtist: slimArtist, legacyShow: legacyShow, fullArtist: fullArtist, completion: completion)
+                self.continueMatchingLegacyTrack(trackID: trackID, legacyShow: legacyShow, fullArtist: fullArtist, completion: completion)
             } else {
-                print("[Import] Couldn't fetch \(slimArtist == nil ? "artist" : "") \(legacyShow == nil ? "legacy show" : "") \(fullArtist == nil ? "full artist" : "") for \(artistSlug)-\(showID)")
+                print("[Import] Couldn't fetch \(legacyShow == nil ? "legacy show" : "") \(fullArtist == nil ? "full artist" : "") for \(artistSlug)-\(showID)")
                 // TODO: Create an error here if one doesn't exist
                 if error == nil { error = GenericImportError() }
                 completion(nil, error)
@@ -62,7 +54,7 @@ class LegacyMapper {
         }
     }
     
-    private func continueMatchingLegacyTrack(trackID: Int, slimArtist : SlimArtist, legacyShow : LegacyShowWithTracks, fullArtist : ArtistWithCounts, completion: @escaping (Track?, Error?) -> Void) {
+    private func continueMatchingLegacyTrack(trackID: Int, legacyShow : LegacyShowWithTracks, fullArtist : ArtistWithCounts, completion: @escaping (Track?, Error?) -> Void) {
         var legacyTrack : LegacyTrack? = nil
         if let matchingTracksByID = legacyShow.tracks?.filter({ $0.id == trackID }) {
             if matchingTracksByID.count == 1 {
@@ -75,7 +67,7 @@ class LegacyMapper {
         if let displayDate = legacyShow.displayDate,
             let legacyTrack = legacyTrack {
             performOnMainQueueSync {
-                RelistenApi.show(onDate: displayDate, byArtist: slimArtist).getLatestDataOrFetchIfNeeded { (latestData, blockError) in
+                RelistenApi.show(onDate: displayDate, byArtist: fullArtist).getLatestDataOrFetchIfNeeded { (latestData, blockError) in
                     self.callbackQueue.async {
                         if let newShow : ShowWithSources = latestData?.typedContent() {
                             if let matchingSource = self.findSource(inShow: newShow, fromLegacyShow: legacyShow) {
@@ -86,15 +78,15 @@ class LegacyMapper {
                                     let track = Track(sourceTrack: matchingTrack, showInfo: completeShowInfo)
                                     completion(track, nil)
                                 } else {
-                                    print("[Import] Couldn't find a matching track to match \(slimArtist.name)-\(legacyShow.displayDate ?? "?").\(legacyTrack.title ?? String(trackID))")
+                                    print("[Import] Couldn't find a matching track to match \(fullArtist.name)-\(legacyShow.displayDate ?? "?").\(legacyTrack.title ?? String(trackID))")
                                     completion(nil, GenericImportError())
                                 }
                             } else {
-                                print("[Import] Couldn't find a matching show from the new API to match \(slimArtist.name)-\(legacyShow.displayDate ?? "?")")
+                                print("[Import] Couldn't find a matching show from the new API to match \(fullArtist.name)-\(legacyShow.displayDate ?? "?")")
                                 completion(nil, GenericImportError())
                             }
                         } else {
-                            print("[Import] Couldn't get a show from the new API to match \(slimArtist.name)-\(legacyShow.displayDate ?? "?")")
+                            print("[Import] Couldn't get a show from the new API to match \(fullArtist.name)-\(legacyShow.displayDate ?? "?")")
                             var error = blockError
                             if error == nil { error = GenericImportError() }
                             completion(nil, error)
@@ -105,6 +97,43 @@ class LegacyMapper {
         } else {
             print("[Import] legacy show has no \(legacyShow.displayDate == nil ? "display date" : "") \(legacyTrack == nil ? "matching track" : "")")
             completion(nil, GenericImportError())
+        }
+    }
+    
+    public func getCompleteShowForDate(_ showDate: String, artist artistSlug: String, completion: @escaping (CompleteShowInformation?, Error?) -> Void) {
+        let group = DispatchGroup()
+        var error : Error? = nil
+        var showInfo : CompleteShowInformation? = nil
+        
+        group.enter()
+        fetchArtist(artistSlug) { (artist) in
+            if let artist = artist {
+                performOnMainQueueSync {
+                    RelistenApi.show(onDate: showDate, byArtist: artist).getLatestDataOrFetchIfNeeded { (latestData, blockError) in
+                        self.callbackQueue.async {
+                            if let newShow : ShowWithSources = latestData?.typedContent() {
+                                // The old version of relisten just saved the show date, not a specific source. We'll need to pick one here- let's just pick the highest rated source.
+                                if let bestSource = newShow.bestSource() {
+                                    showInfo = CompleteShowInformation(source: bestSource, show: newShow, artist: artist)
+                                } else {
+                                    error = GenericImportError()
+                                }
+                                group.leave()
+                            } else {
+                                error = GenericImportError()
+                                group.leave()
+                            }
+                        }
+                    }
+                }
+            } else {
+                error = GenericImportError()
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: self.callbackQueue) {
+            completion(showInfo, error)
         }
     }
     
@@ -170,6 +199,20 @@ class LegacyMapper {
                 }
             }
         }
+    }
+}
+    
+extension ShowWithSources {
+    fileprivate func bestSource() -> SourceFull? {
+        var bestRating : Float = -1.0
+        var bestSource : SourceFull? = nil
+        for source in self.sources {
+            if source.avg_rating_weighted > bestRating {
+                bestRating = source.avg_rating_weighted
+                bestSource = source
+            }
+        }
+        return bestSource
     }
 }
 

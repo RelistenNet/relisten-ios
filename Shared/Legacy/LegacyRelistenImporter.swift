@@ -8,41 +8,15 @@
 
 import Foundation
 import Siesta
+import SDCloudUserDefaults
 
-public class LegacyRelistenImporter {
-    private let cacheSubDir = "relisten.net"
-    private lazy var cachePath : String = {
-        return NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                   FileManager.SearchPathDomainMask.userDomainMask,
-                                                   true).first! +
-            "/com.alecgorge.phish.cache" +
-            "/" + self.cacheSubDir
-    }()
-    private lazy var persistedObjectsPath : String = {
-        return NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                   FileManager.SearchPathDomainMask.userDomainMask,
-                                                   true).first! +
-        "/persisted_objects"
-    }()
-    
-    private let legacyMapper = LegacyMapper()
-    private let fm = FileManager.default
-    
-    public init() { }
-    
-    public func importLegacyOfflineTracks(completion: @escaping (Error?) -> Void) {
-        DispatchQueue.global(qos: .background).async {
-            self.backgroundImportLegacyOfflineTracks(completion: completion)
-        }
+public class LegacyRelistenImporter : LegacyImporter {
+    override public init() {
+        super.init()
+        cacheSubDir = "relisten.net"
     }
     
-    public func cleanupLegacyFiles() {
-        do {
-            try fm.removeItem(atPath: persistedObjectsPath)
-        } catch { }
-    }
-
-    public func backgroundImportLegacyOfflineTracks(completion: @escaping (Error?) -> Void) {
+    override func importLegacyOfflineTracks(completion: @escaping (Error?) -> Void) {
         var error : Error? = nil
         let group = DispatchGroup()
         if (legacyCachePathExists()) {
@@ -78,6 +52,28 @@ public class LegacyRelistenImporter {
         }
     }
     
+    override func importLegacyFavoriteShows(completion: @escaping (Error?) -> Void) {
+        let group = DispatchGroup()
+        var error : Error? = nil
+        
+        if let favoritesDict = SDCloudUserDefaults.object(forKey: favoritesKey) as? [String : [String]] {
+            for (artist, _) in favoritesDict {
+                group.enter()
+                self.importLegacyFavoriteShowsForArtist(artist) { (blockError) in
+                    if blockError != nil {
+                        error = blockError
+                    }
+                    group.leave()
+                }
+            }
+        }
+        
+        group.notify(queue: DispatchQueue.global(qos: .background)) {
+            self.debug("Favorites import complete")
+            completion(error)
+        }
+    }
+    
     // MARK: Internals
     private func importLegacyOfflineShow(withID showID : Int, artistSlug : String, completion: @escaping (Error?) -> Void) {
         let group = DispatchGroup()
@@ -92,7 +88,7 @@ public class LegacyRelistenImporter {
                 if let trackIDString = trackString.split(separator: ".").map(String.init).first, let trackID = Int(trackIDString) {
                     group.enter()
                     debug("Importing track \(trackID) for show \(showID)")
-                    legacyMapper.matchLegacyTrack(artist: artistSlug, showID: showID, trackID: trackID) { (track, blockError) in
+                    legacyMapper.matchLegacyTrack(trackID, artist: artistSlug, showID: showID) { (track, blockError) in
                         if let track = track {
                             self.handleImportOfTrack(atPath: trackPath, track: track) { (blockError) in
                                 if blockError != nil {
@@ -130,51 +126,4 @@ public class LegacyRelistenImporter {
         
         completion(nil)
     }
-    
-    // MARK: Filesystem helpers
-    private func legacyCachePathExists() -> Bool {
-        var isDir : ObjCBool = false
-        return (fm.fileExists(atPath: cachePath, isDirectory: &isDir) && isDir.boolValue)
-    }
-    
-    private func deleteDirectoryIfEmpty(_ path : String) {
-        do {
-            var filesFound = false
-            for file in try fm.contentsOfDirectory(atPath: path) {
-                if !file.hasPrefix(".") {
-                    filesFound = true
-                    break
-                }
-            }
-            if !filesFound {
-                try fm.removeItem(atPath: path)
-            }
-        } catch {
-            debug("Error while removing show directory at \(path): \(error)")
-        }
-    }
-    
-    private func allSubdirsAtPath(_ path : String) -> [String] {
-        var retval : [String] = []
-        
-        do {
-            for subdirectory in try fm.contentsOfDirectory(atPath: path) {
-                var isDir : ObjCBool = false
-                if fm.fileExists(atPath: path + "/" + subdirectory, isDirectory: &isDir), isDir.boolValue {
-                    retval.append(subdirectory)
-                }
-            }
-        } catch let error {
-            debug("Exception while getting subdirectories at \(path): \(error)")
-        }
-        
-        return retval
-    }
-    
-    // MARK: Debugging
-    private func debug(_ str : String) {
-        print("[Import] " + str)
-    }
-    
-
 }

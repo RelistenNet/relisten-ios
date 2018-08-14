@@ -8,41 +8,15 @@
 
 import Foundation
 
-public class LegacyPhishODImporter {
-    private let cacheSubDir = "phish.in"
-    private lazy var cachePath : String = {
-        return NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                   FileManager.SearchPathDomainMask.userDomainMask,
-                                                   true).first! +
-            "/com.alecgorge.phish.cache" +
-            "/" + self.cacheSubDir
-    }()
-    private lazy var persistedObjectsPath : String = {
-        return NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                   FileManager.SearchPathDomainMask.userDomainMask,
-                                                   true).first! +
-            "/persisted_objects"
-    }()
-    
+public class LegacyPhishODImporter : LegacyImporter {
     private let artistSlug = "phish"
-    private let legacyMapper = LegacyMapper()
-    private let fm = FileManager.default
     
-    public init() { }
-    
-    public func importLegacyOfflineTracks(completion: @escaping (Error?) -> Void) {
-        DispatchQueue.global(qos: .background).async {
-            self.backgroundImportLegacyOfflineTracks(completion: completion)
-        }
+    override public init() {
+        super.init()
+        cacheSubDir = "phish.in"
     }
     
-    public func cleanupLegacyFiles() {
-        do {
-            try fm.removeItem(atPath: persistedObjectsPath)
-        } catch { }
-    }
-    
-    private func backgroundImportLegacyOfflineTracks(completion: @escaping (Error?) -> Void) {
+    override func importLegacyOfflineTracks(completion: @escaping (Error?) -> Void) {
         let error : Error? = nil
         let group = DispatchGroup()
         if (legacyCachePathExists()) {
@@ -60,33 +34,17 @@ public class LegacyPhishODImporter {
         }
         
         group.notify(queue: DispatchQueue.global(qos: .background)) {
-            self.debug("Import complete")
+            self.debug("Download import complete")
             self.deleteDirectoryIfEmpty(self.cachePath)
             completion(error)
         }
     }
     
+    override func importLegacyFavoriteShows(completion: @escaping (Error?) -> Void) {
+        self.importLegacyFavoriteShowsForArtist("phish", completion: completion)
+    }
+    
     // MARK: Internals
-    
-    private func debug(_ str : String) {
-        print("[Import] " + str)
-    }
-    
-    private func legacyCachePathExists() -> Bool {
-        var isDir : ObjCBool = false
-        return (fm.fileExists(atPath: cachePath, isDirectory: &isDir) && isDir.boolValue)
-    }
-    
-    private func deleteDirectoryIfEmpty(_ path : String) {
-        do {
-            if try fm.contentsOfDirectory(atPath: path).count == 0 {
-                try fm.removeItem(atPath: path)
-            }
-        } catch {
-            debug("Error while removing show directory at \(path): \(error)")
-        }
-    }
-    
     private func continueImportLegacyOfflineTracks(phishArtist: ArtistWithCounts, group: DispatchGroup) {
         let showDates : [String] = allLegacyCachedShowDates()
         for showDate in showDates {

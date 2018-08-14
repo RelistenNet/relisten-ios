@@ -10,6 +10,7 @@
 		430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */; };
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
 		430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */; };
+		4325A45221238FEB00A0414B /* LegacyImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325A45121238FEB00A0414B /* LegacyImporter.swift */; };
 		4330E72C211E0CA200329ED7 /* DownloadProgressNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */; };
 		4330E7372120A90400329ED7 /* RelistenLegacyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */; };
 		4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */; };
@@ -181,6 +182,7 @@
 		430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAddedViewController.swift; sourceTree = "<group>"; };
 		430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayDataSource.swift; path = Helpers/CarPlayDataSource.swift; sourceTree = "<group>"; };
 		430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReentrantDispatchQueue.swift; path = Extensions/ReentrantDispatchQueue.swift; sourceTree = "<group>"; };
+		4325A45121238FEB00A0414B /* LegacyImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyImporter.swift; sourceTree = "<group>"; };
 		4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadProgressNode.swift; path = Layouts/DownloadProgressNode.swift; sourceTree = "<group>"; };
 		4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyAPI.swift; sourceTree = "<group>"; };
 		4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyModels.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 		4330E730211E7E8B00329ED7 /* Legacy */ = {
 			isa = PBXGroup;
 			children = (
+				4325A45121238FEB00A0414B /* LegacyImporter.swift */,
 				4330E73E2120E72200329ED7 /* LegacyPhishODImporter.swift */,
 				4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */,
 				4330E73A2120C61400329ED7 /* LegacyMapper.swift */,
@@ -1326,6 +1329,7 @@
 				43B5343F210922CE00DE9B1F /* ShowCellNode.swift in Sources */,
 				43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */,
 				43B5345E210922CE00DE9B1F /* RelistenSongModels.swift in Sources */,
+				4325A45221238FEB00A0414B /* LegacyImporter.swift in Sources */,
 				7C34D854210ED59400813C00 /* RealmNotificationDisposables.swift in Sources */,
 				43B53458210922CE00DE9B1F /* RelistenJsonUtils.swift in Sources */,
 				43B5344A210922CE00DE9B1F /* YearsViewController.swift in Sources */,

@@ -47,8 +47,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         
         // Import data from pre-4.0 versions of the app
         let phishImporter = LegacyPhishOfflineTrackImporter()
-        phishImporter.importLegacyOfflineTracks { (error) in
-            phishImporter.cleanupLegacyFiles()
+        phishImporter.performLegacyImport { (error) in
             print("PhishOD import completed")
         }
         

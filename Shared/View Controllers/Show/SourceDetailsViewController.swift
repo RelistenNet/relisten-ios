@@ -220,13 +220,17 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
         sections.append(LayoutsAsSingleSection(items: section))
         
         let credits = source.links
-            .map({ link -> LinkLayout in
-                let upstream = artist.upstream_sources.first(where: { $0.upstream_source_id == link.upstream_source_id })
-                
-                return LinkLayout(link: link, forUpstreamSource: upstream!.upstream_source!)
+            .compactMap({ link -> LinkLayout? in
+                if let upstream = artist.upstream_sources.first(where: { $0.upstream_source_id == link.upstream_source_id }),
+                   let upstreamSource = upstream.upstream_source {
+                    return LinkLayout(link: link, forUpstreamSource: upstreamSource)
+                }
+                return nil
             })
         
-        sections.append(LayoutsAsSingleSection(items: credits, title: "Credits"))
+        if credits.count > 0 {
+            sections.append(LayoutsAsSingleSection(items: credits, title: "Credits"))
+        }
         
         return sections
     }

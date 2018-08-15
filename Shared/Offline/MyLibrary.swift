@@ -250,6 +250,18 @@ extension MyLibrary : DownloadManagerDataSource {
         }
     }
     
+    public func offlineTrackFailedDownloading(_ track: Track, error: Error?) {
+        let realm = try! Realm()
+        
+        let offlineTrackQuery = realm.object(ofType: OfflineTrack.self, forPrimaryKey: track.uuid.uuidString)
+        
+        if let offlineTrack = offlineTrackQuery {
+            try! realm.write {
+                realm.delete(offlineTrack)
+            }
+        }
+    }
+    
     public func offlineTrackFinishedDownloading(_ track: Track, withSize fileSize: UInt64) {
         let realm = try! Realm()
         

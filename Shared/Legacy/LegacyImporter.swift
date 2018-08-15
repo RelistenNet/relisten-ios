@@ -8,8 +8,16 @@
 
 import Foundation
 import SDCloudUserDefaults
+import SwiftyJSON
 
-public class LegacyImporter {
+public class LegacyImporter : NSObject {
+    public struct ImportError : Error {
+        let reason : String
+        public init(_ reason : String = "") {
+            self.reason = reason
+        }
+    }
+    
     var cacheSubDir : String
     
     lazy var cachePath : String = {
@@ -30,7 +38,7 @@ public class LegacyImporter {
     let legacyMapper = LegacyMapper()
     let fm = FileManager.default
     
-    public init() {
+    public override init() {
         SDCloudUserDefaults.registerForNotifications()
         cacheSubDir = ""
     }
@@ -59,9 +67,18 @@ public class LegacyImporter {
             })
         }
         
+        group.enter()
+        DispatchQueue.global(qos: .background).async {
+            self.importRecentlyListenedShows(completion: { blockError in
+                if blockError != nil {
+                    error = blockError
+                }
+                group.leave()
+            })
+        }
+        
         group.notify(queue: DispatchQueue.global(qos: .background)) {
             self.debug("PhishOD legacy import complete")
-            self.cleanupLegacyFiles()
             completion(error)
         }
     }
@@ -72,6 +89,107 @@ public class LegacyImporter {
     
     func importLegacyFavoriteShows(completion: @escaping (Error?) -> Void) {
         fatalError("Must be implemented by subclass")
+    }
+    
+    private func stringForArtistAndDate(artistSlug : String, displayDate : String) -> String {
+        return "\(artistSlug).\(displayDate)"
+    }
+    
+    func loadHistoryData() -> Data? {
+        var history : Data? = nil
+        
+        do {
+            let historyPath = persistedObjectsPath + "/current.history"
+            let historyURL = URL(fileURLWithPath: historyPath)
+            history = try Data(contentsOf: historyURL)
+        } catch { }
+        
+        return history
+    }
+    
+    func importRecentlyListenedShows(completion: @escaping (Error?) -> Void) {
+        var error : Error? = nil
+        let completionGroup = DispatchGroup()
+        let mappingGroup = DispatchGroup()
+        
+        let artistsAndShows : [(String, String)]
+        do {
+            artistsAndShows = try loadRecentlyListenedShowsFromDisk()
+        } catch {
+            completion(ImportError("Couldn't load recently listened shows from disk"))
+            return
+        }
+        var artistAndDateStringToCompleteShow : [String : CompleteShowInformation] = [:]
+        
+        // First build up all of the CompleteShowInformations for the favorites
+        completionGroup.enter()
+        for (artistSlug, displayDate) in artistsAndShows {
+            mappingGroup.enter()
+            self.legacyMapper.getCompleteShowForDate(displayDate, artist: artistSlug) { (showInfo, blockError) in
+                if let showInfo = showInfo {
+                    let showKey = self.stringForArtistAndDate(artistSlug: artistSlug, displayDate: displayDate)
+                    artistAndDateStringToCompleteShow[showKey] = showInfo
+                } else {
+                    if blockError != nil {
+                        error = blockError
+                    } else {
+                        error = LegacyMapper.GenericImportError()
+                    }
+                }
+                mappingGroup.leave()
+            }
+        }
+        
+        mappingGroup.notify(queue: DispatchQueue.global(qos: .background)) {
+            // Run the import in order
+            for (artistSlug, displayDate) in artistsAndShows {
+                let showKey = self.stringForArtistAndDate(artistSlug: artistSlug, displayDate: displayDate)
+                self.debug("Importing recently listened show \(showKey)")
+                if let showInfo = artistAndDateStringToCompleteShow[showKey] {
+                    let imported = MyLibrary.shared.importRecentlyPlayedShow(showInfo)
+                    if imported == false {
+                        error = LegacyMapper.GenericImportError()
+                    }
+                } else {
+                    if error == nil {
+                        error = LegacyMapper.GenericImportError()
+                    }
+                }
+                
+            }
+            completionGroup.leave()
+        }
+        
+        completionGroup.notify(queue: DispatchQueue.global(qos: .background)) {
+            self.debug("Import for recently played shows is complete")
+            if error == nil {
+                self.cleanupLegacyFiles()
+            }
+            completion(error)
+        }
+    }
+    
+    private func loadRecentlyListenedShowsFromDisk() throws -> [(String, String)] {
+        var retval : [(String, String)] = []
+        if let historyData = self.loadHistoryData() {
+            let decoder = NSKeyedUnarchiver(forReadingWith: historyData)
+            decoder.setClass(IGShow.self, forClassName: "IGShow")
+            decoder.setClass(PHODHistory.self, forClassName: "PHODHistory")
+            decoder.setClass(PhishinShow.self, forClassName: "PhishinShow")
+            if let history : PHODHistory = try decoder.decodeTopLevelObject(forKey: "root") as? PHODHistory {
+                retval = history.shows.compactMap({
+                    if let artistSlug = $0.artistSlug,
+                        let displayDate = $0.displayDate {
+                        return (artistSlug, displayDate)
+                    } else {
+                        return nil
+                    }
+                })
+            }
+        } else {
+            throw LegacyMapper.GenericImportError()
+        }
+        return retval
     }
     
     func importLegacyFavoriteShowsForArtist(_ artistSlug : String, completion: @escaping (Error?) -> Void) {
@@ -153,5 +271,59 @@ public class LegacyImporter {
         }
         
         return retval
+    }
+}
+
+protocol LegacyShowWrapper : class {
+    var displayDate : String? { get }
+    var artistSlug : String? { get }
+}
+
+@objc(IGShow) public class IGShow : NSObject, NSCoding, LegacyShowWrapper {
+    var json : SwJSON?
+    var artistID : Int?
+    var artistSlug : String?
+    var displayDate : String? { get { return legacyShow?.displayDate } }
+    var legacyShow : LegacyShow?
+    
+    required public init?(coder aDecoder: NSCoder) {
+        let jsonString = aDecoder.decodeObject(forKey: "json") as? String
+        if let jsonString = jsonString {
+            json = JSON(parseJSON: jsonString)
+            if let json = json {
+                artistID = json["artist"]["id"].int
+                artistSlug = json["artist"]["slug"].string
+                legacyShow = LegacyShow(json: json)
+            }
+        }
+    }
+    
+    public func encode(with aCoder: NSCoder) { }
+}
+
+@objc(PhishinShow) public class PhishinShow : NSObject, NSCoding, LegacyShowWrapper {
+    var artistSlug : String? = "phish"
+    var displayDate: String?
+    
+    required public init?(coder aDecoder: NSCoder) {
+        displayDate = aDecoder.decodeObject(forKey: "date") as? String
+    }
+    
+    public func encode(with aCoder: NSCoder) { }
+}
+
+extension LegacyShow {
+    public convenience init(_ show : IGShow) {
+        self.init(json: JSON())
+    }
+}
+
+@objc(PHODHistory) public class PHODHistory : NSObject, NSCoding {
+    let shows : [LegacyShowWrapper]
+    required public init?(coder aDecoder: NSCoder) {
+        shows = aDecoder.decodeObject(forKey: "history") as? [LegacyShowWrapper] ?? []
+    }
+    
+    public func encode(with aCoder: NSCoder) {
     }
 }

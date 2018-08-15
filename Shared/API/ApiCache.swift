@@ -15,6 +15,63 @@ let PersistentCacheDirectory = URL(fileURLWithPath: NSSearchPathForDirectoriesIn
                                                                                         FileManager.SearchPathDomainMask.userDomainMask,
                                                                                         true).first! + "/")
 
+protocol RelistenCache : EntityCache {
+    var backingCache: AnyStorageAware<Entity<Any>> {get}
+}
+
+extension RelistenCache {
+    func key(for resource: Resource) -> String? {
+        return resource.url.absoluteString
+    }
+    
+    func readEntity(forKey key: String) -> Entity<Any>? {
+        do {
+            let val = try backingCache.object(forKey: key)
+            
+            print("[cache] readEntity(forKey \(key)) = *snip*")//\(String(describing: val))")
+            
+            return val
+        }
+        catch {
+            if let sError = error as? StorageError {
+                if sError != StorageError.notFound {
+                    print(error)
+                }
+            }
+            
+            return nil
+        }
+    }
+    
+    func writeEntity(_ entity: Entity<Any>, forKey key: String) {
+        print("[cache] writeEntity(forKey \(key)) = *snip*")//\(entity)")
+        
+        // lets not cache non-json responses for now
+        guard entity.content is SwJSON else {
+            print("trying to cache non json response!")
+            return
+        }
+        
+        do {
+            try backingCache.setObject(entity, forKey: key)
+        }
+        catch {
+            print("error caching entity!")
+        }
+    }
+    
+    func removeEntity(forKey key: String) {
+        print("[cache] removeEntity(forKey \(key))")
+        
+        do {
+            try backingCache.removeObject(forKey: key)
+        }
+        catch {
+            print("error removing entity!")
+        }
+    }
+}
+
 public class RelistenCacher : ResponseTransformer {
     static let cacheName = "RelistenCache"
     
@@ -92,9 +149,7 @@ public class RelistenCacher : ResponseTransformer {
     }
 }
 
-class RelistenJsonCache : EntityCache {
-    typealias Key = String
-    
+class RelistenJsonCache : RelistenCache {
     static let cacheName = "RelistenApiCache"
     
     let diskCacheConfig = DiskConfig(
@@ -116,65 +171,14 @@ class RelistenJsonCache : EntityCache {
         totalCostLimit: 1024 * 1024 * 4
     )
     
-    let backingCache: Storage<Entity<Any>>
+    let backingCache: AnyStorageAware<Entity<Any>>
     
     init() {
-        backingCache = try! Storage(
+        backingCache = try! AnyStorageAware(Storage(
             diskConfig: diskCacheConfig,
             memoryConfig: memoryCacheConfig,
-            transformer: TransformerFactory.forCodable(ofType: Entity<Any>.self)
+            transformer: TransformerFactory.forCodable(ofType: Entity<Any>.self))
         )
-    }
-    
-    func key(for resource: Resource) -> String? {
-        return resource.url.absoluteString
-    }
-    
-    func readEntity(forKey key: String) -> Entity<Any>? {
-        do {
-            let val = try backingCache.object(forKey: key)
-            
-            print("[cache] readEntity(forKey \(key)) = *snip*")//\(String(describing: val))")
-            
-            return val
-        }
-        catch {
-            if let sError = error as? StorageError {
-                if sError != StorageError.notFound {
-                    print(error)
-                }
-            }
-            
-            return nil
-        }
-    }
-    
-    func writeEntity(_ entity: Entity<Any>, forKey key: String) {
-        print("[cache] writeEntity(forKey \(key)) = *snip*")//\(entity)")
-        
-        // lets not cache non-json responses for now
-        guard entity.content is SwJSON else {
-            print("trying to cache non json response!")
-            return
-        }
-        
-        do {
-            try backingCache.setObject(entity, forKey: key)
-        }
-        catch {
-            print("error caching entity!")
-        }
-    }
-    
-    func removeEntity(forKey key: String) {
-        print("[cache] removeEntity(forKey \(key))")
-        
-        do {
-            try backingCache.removeObject(forKey: key)
-        }
-        catch {
-            print("error removing entity!")
-        }
     }
 }
 

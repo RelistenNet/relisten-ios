@@ -49,8 +49,15 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
     public required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
-
+    
     public override func viewDidLoad() {
+        if artist.name == "Phish" {
+            AppColors_SwitchToPhishOD(navigationController)
+        }
+        else {
+            AppColors_SwitchToRelisten(navigationController)
+        }
+        
         super.viewDidLoad()
         
         if show.sources.count == 1 {

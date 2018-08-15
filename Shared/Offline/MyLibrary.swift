@@ -137,6 +137,31 @@ extension MyLibrary {
         
         return true
     }
+    
+    public func importRecentlyPlayedShow(_ showInfo: CompleteShowInformation) -> Bool {
+        let realm = try! Realm()
+        
+        let existingFavoritedShow = realm.objects(RecentlyPlayedTrack.self).filter("show_uuid == %@ AND source_uuid == %@", showInfo.show.uuid.uuidString, showInfo.source.uuid.uuidString).first
+        
+        if existingFavoritedShow == nil,
+           let trackUUID = showInfo.source.tracksFlattened.first?.uuid.uuidString
+        {
+            let recentShow = RecentlyPlayedTrack()
+            recentShow.show_uuid = showInfo.show.uuid.uuidString
+            recentShow.source_uuid = showInfo.source.uuid.uuidString
+            recentShow.artist_uuid = showInfo.artist.uuid.uuidString
+            recentShow.track_uuid = trackUUID
+            
+            recentShow.created_at = Date()
+            recentShow.updated_at = Date()
+            
+            try! realm.write {
+                realm.add(recentShow)
+            }
+        }
+        
+        return true
+    }
 }
 
 // MARK: Offline Tracks
@@ -354,16 +379,20 @@ extension MyLibrary {
     public func favoriteSource(show: CompleteShowInformation) {
         let realm = try! Realm()
         
-        let favoritedSource = FavoritedSource()
-        favoritedSource.artist_uuid = show.artist.uuid.uuidString
-        favoritedSource.show_date = show.show.date
-        favoritedSource.uuid = show.source.uuid.uuidString
-        favoritedSource.show_uuid = show.show.uuid.uuidString
-        
-        favoritedSource.created_at = Date()
-        
-        try! realm.write {
-            realm.add(favoritedSource)
+        let favoritedSourceQuery = realm.object(ofType: FavoritedSource.self, forPrimaryKey: show.source.uuid.uuidString)
+        let existingFavoriteSource = favoritedSourceQuery
+        if existingFavoriteSource == nil {
+            let favoritedSource = FavoritedSource()
+            favoritedSource.artist_uuid = show.artist.uuid.uuidString
+            favoritedSource.show_date = show.show.date
+            favoritedSource.uuid = show.source.uuid.uuidString
+            favoritedSource.show_uuid = show.show.uuid.uuidString
+            
+            favoritedSource.created_at = Date()
+            
+            try! realm.write {
+                realm.add(favoritedSource)
+            }
         }
     }
     

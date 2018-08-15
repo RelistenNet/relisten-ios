@@ -9,6 +9,7 @@
 import Foundation
 import Siesta
 import SDCloudUserDefaults
+import SwiftyJSON
 
 public class LegacyRelistenImporter : LegacyImporter {
     override public init() {

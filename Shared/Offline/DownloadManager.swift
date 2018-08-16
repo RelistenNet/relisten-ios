@@ -35,6 +35,7 @@ public protocol DownloadManagerDataSource : class {
     func offlineTrackWasDeleted(_ track: Track)
     func offlineTrackBeganDownloading(_ track: Track)
     func offlineTrackFinishedDownloading(_ track: Track, withSize fileSize: UInt64)
+    func offlineTrackFailedDownloading(_ track: Track, error: Error?)
     func importDownloadedTrack(_ track : Track, withSize fileSize: UInt64)
     
     func nextTrackToDownload() -> Track?
@@ -206,14 +207,14 @@ public class DownloadManager {
         queue.sync {
             if !trackNeedsDownload(track) {
                 retval = false
-            }
-            
-            self.dataSource?.offlineTrackQueuedToBacklog(track)
+            } else {
+                self.dataSource?.offlineTrackQueuedToBacklog(track)
 
-            fillDownloadQueue(withTrack: track)
-            
-            if raiseEvent {
-                eventTracksQueuedToDownload.raise([ track ])
+                fillDownloadQueue(withTrack: track)
+                
+                if raiseEvent {
+                    eventTracksQueuedToDownload.raise([ track ])
+                }
             }
         }
         
@@ -380,12 +381,36 @@ extension DownloadManager : MZDownloadManagerDelegate {
     
     public func downloadRequestDidFailedWithError(_ error: NSError, downloadModel: MZDownloadModel, index: Int) {
         print(error)
-
-        self.removeTrackForDownloadModel(downloadModel)
+        var didReplaceFile = false
+        
+        // Handle cases where a file is getting redownloaded but it already exists in the offline directory
+        if error.domain == NSCocoaErrorDomain, error.code == 516 {
+            if let sourceFile = error.userInfo["NSSourceFilePathErrorKey"] as? String,
+               let destinationFile = error.userInfo["NSDestinationFilePath"] as? String{
+                let fm = FileManager.default
+                do {
+                    let sourceFileURL = URL(fileURLWithPath: sourceFile)
+                    let destinationFileURL = URL(fileURLWithPath: destinationFile)
+                    let destinationFileName = destinationFileURL.lastPathComponent + ".bak"
+                    let _ = try fm.replaceItemAt(sourceFileURL, withItemAt: destinationFileURL, backupItemName: destinationFileName, options: .usingNewMetadataOnly)
+                    didReplaceFile = true
+                } catch {
+                    print("Couldn't replace item at \(destinationFile) with \(sourceFile)")
+                }
+            }
+        }
         
         if let t = trackForDownloadModel(downloadModel) {
+            if didReplaceFile {
+                dataSource?.offlineTrackFinishedDownloading(t, withSize: UInt64(fileToActualBytes(downloadModel.file!)))
+            } else {
+                dataSource?.offlineTrackFailedDownloading(t, error: error)
+            }
+            
             eventTrackFinishedDownloading.raise(t)
         }
+        
+        self.removeTrackForDownloadModel(downloadModel)
         
         queue.async {
             self.fillDownloadQueue()

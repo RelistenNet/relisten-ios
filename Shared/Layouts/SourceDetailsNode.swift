@@ -14,13 +14,14 @@ import Observable
 public class SourceDetailsNode : ASCellNode {
     public let source: SourceFull
     public let show: ShowWithSources
-    public let artist: SlimArtistWithFeatures
+    public let artist: Artist
     public let index: Int
     public let isDetails: Bool
+    private lazy var completeShowInformation = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
     
     var disposal = Disposal()
     
-    public init(source: SourceFull, inShow show: ShowWithSources, artist: SlimArtistWithFeatures, atIndex: Int, isDetails: Bool) {
+    public init(source: SourceFull, inShow show: ShowWithSources, artist: Artist, atIndex: Int, isDetails: Bool) {
         self.source = source
         self.show = show
         self.artist = artist
@@ -31,6 +32,9 @@ public class SourceDetailsNode : ASCellNode {
             isDetails ? (source.venue?.name ?? show.venue?.name ?? "") : "Source \(atIndex + 1) of \(show.sources.count)",
             textStyle: .headline
         )
+        
+        favoriteButton = FavoriteButtonNode()
+        
         self.ratingNode = AXRatingViewNode(value: source.avg_rating / 10.0)
         self.locationNode = ASTextNode(source.venue?.location ?? show.venue?.location ?? "", textStyle: .subheadline, color: AppColors.mutedText)
         
@@ -132,20 +136,13 @@ public class SourceDetailsNode : ASCellNode {
         
         automaticallyManagesSubnodes = true
         accessoryType = isDetails ? .none : .disclosureIndicator
+        favoriteButton.delegate = self
         
         if !isDetails {
             DispatchQueue.main.async {
-                let library = MyLibrary.shared
-                library.offline.sources
-                    .observeWithValue({ [weak self] _, _ in
-                        guard let s = self else { return }
-                        
-                        if s.isAvailableOffline != library.isSourceAtLeastPartiallyAvailableOffline(s.source) {
-                            s.isAvailableOffline = !s.isAvailableOffline
-                            s.setNeedsLayout()
-                        }
-                    })
-                    .dispose(to: &self.disposal)
+                self.favoriteButton.currentlyFavorited = MyLibrary.shared.isFavorite(show: show, byArtist: artist)
+                self.favoriteButton.normalColor = UIColor.black
+                self.setupNonDetailObservers()
             }
         }
         
@@ -157,7 +154,28 @@ public class SourceDetailsNode : ASCellNode {
         }
     }
     
+    private func setupNonDetailObservers() {
+        let library = MyLibrary.shared
+        library.offline.sources
+            .observeWithValue({ [weak self] _, _ in
+                guard let s = self else { return }
+                
+                if s.isAvailableOffline != library.isSourceAtLeastPartiallyAvailableOffline(s.source) {
+                    s.isAvailableOffline = !s.isAvailableOffline
+                    s.setNeedsLayout()
+                }
+            })
+            .dispose(to: &self.disposal)
+        
+        library.favorites.sources.observeWithValue { [weak self] (new, changes) in
+            guard let s = self else { return }
+            
+            s.favoriteButton.currentlyFavorited = library.isFavorite(source: s.source)
+        }.dispose(to: &disposal)
+    }
+    
     public let showNameNode: ASTextNode
+    public let favoriteButton : FavoriteButtonNode
     public let ratingNode: AXRatingViewNode
     public let ratingCountNode: ASTextNode
     public let locationNode: ASTextNode
@@ -235,6 +253,19 @@ public class SourceDetailsNode : ASCellNode {
                     )
                 )
         } else {
+            let updateDate = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 8,
+            justifyContent: .start,
+            alignItems: .center,
+            children: ArrayNoNils(
+                updateDateNode,
+                SpacerNode(),
+                favoriteButton
+                )
+            )
+            updateDate.style.alignSelf = .stretch
+            
             vert = ASStackLayoutSpec(
                 direction: .vertical,
                 spacing: 8,
@@ -244,7 +275,7 @@ public class SourceDetailsNode : ASCellNode {
                     top,
                     sourcePeopleNode,
                     sourceNode,
-                    updateDateNode
+                    updateDate
                 )
             )
         }
@@ -257,5 +288,17 @@ public class SourceDetailsNode : ASCellNode {
         l.style.alignSelf = .stretch
         
         return l
+    }
+}
+
+extension SourceDetailsNode : FavoriteButtonDelegate {
+    public var favoriteButtonAccessibilityLabel : String { get { return "Favorite Source" } }
+    
+    public func didFavorite(currentlyFavorited : Bool) {
+        if currentlyFavorited {
+            MyLibrary.shared.favoriteSource(show: self.completeShowInformation)
+        } else {
+            let _ = MyLibrary.shared.unfavoriteSource(show: self.completeShowInformation)
+        }
     }
 }

@@ -11,6 +11,7 @@ command -v xcpretty >/dev/null 2>&1 || {
     }
 }
 
+gem install xcpretty
 xcpretty -v
 set -o pipefail && xcodebuild clean build -sdk iphonesimulator -workspace Relisten.xcworkspace -scheme Relisten CODE_SIGNING_REQUIRED=NO | xcpretty -f `xcpretty-travis-formatter`
 

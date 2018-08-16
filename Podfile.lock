@@ -53,6 +53,7 @@ PODS:
   - RealmSwift (3.7.5):
     - Realm (= 3.7.5)
   - Reveal-SDK (16)
+  - SDCloudUserDefaults (1.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -93,6 +94,7 @@ DEPENDENCIES:
   - Observable (from `https://github.com/alecgorge/Observable.git`)
   - RealmSwift
   - Reveal-SDK
+  - SDCloudUserDefaults
   - Siesta/Core (from `https://github.com/bustoutsolutions/siesta.git`)
   - Siesta/UI (from `https://github.com/bustoutsolutions/siesta.git`)
   - SINQ
@@ -124,6 +126,7 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - Reveal-SDK
+    - SDCloudUserDefaults
     - SDWebImage
     - SINQ
     - SVProgressHUD
@@ -196,6 +199,7 @@ SPEC CHECKSUMS:
   Realm: c286caf4dbf346ce24aad49ca76c7ce622d4a082
   RealmSwift: 2a9281e37d6de55f66f76254d49d28aeb1b729e4
   Reveal-SDK: ed36bdbb3cbf90b94ae5da0dbcb3c7ae6738c51f
+  SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Siesta: feae635134e33336ff6a7048c43b993a3f7ce1b9
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
@@ -204,6 +208,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 681207f9880fb7cc23875bd786af0e21bf5fe7cc
 
-PODFILE CHECKSUM: 502be57d52398df54b8e336ccf4291bd2359ec85
+PODFILE CHECKSUM: 9125306324cea22ea22c07841a1d1b8d9721c141
 
 COCOAPODS: 1.5.3

@@ -52,6 +52,7 @@ def apply_pods
   pod 'SVProgressHUD'
   pod 'ActionKit'
   pod 'DownloadButton'
+  pod 'SDCloudUserDefaults'
  
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']

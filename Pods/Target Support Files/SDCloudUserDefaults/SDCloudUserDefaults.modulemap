@@ -1,0 +1,6 @@
+framework module SDCloudUserDefaults {
+  umbrella header "SDCloudUserDefaults-umbrella.h"
+
+  export *
+  module * { export * }
+}

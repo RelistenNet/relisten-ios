@@ -49,8 +49,15 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
     public required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
-
+    
     public override func viewDidLoad() {
+        if artist.name == "Phish" {
+            AppColors_SwitchToPhishOD(navigationController)
+        }
+        else {
+            AppColors_SwitchToRelisten(navigationController)
+        }
+        
         super.viewDidLoad()
         
         if show.sources.count == 1 {
@@ -58,6 +65,18 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
         } else {
             title = "\(show.display_date) #\(idx + 1)"
         }
+        
+        if show.sources.count > 1 {
+            if let navigationController = navigationController,
+               !(navigationController.viewControllers[navigationController.viewControllers.count - 2] is SourcesViewController) {
+                let sourcesItem = UIBarButtonItem(title: "All Sources", style: .plain, target: self, action: #selector(sourcesNavItemTapped(_:)))
+                self.navigationItem.rightBarButtonItem = sourcesItem
+            }
+        }
+    }
+    
+    @objc public func sourcesNavItemTapped(_ sender: UINavigationBar?) {
+        navigationController?.pushViewController(SourcesViewController(artist: artist, show: show), animated: true)
     }
     
     // MARK: UITableViewDelegate

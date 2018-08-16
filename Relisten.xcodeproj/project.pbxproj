@@ -10,7 +10,15 @@
 		430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */; };
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
 		430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */; };
+		4325A45221238FEB00A0414B /* LegacyImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325A45121238FEB00A0414B /* LegacyImporter.swift */; };
 		4330E72C211E0CA200329ED7 /* DownloadProgressNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */; };
+		4330E7372120A90400329ED7 /* RelistenLegacyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */; };
+		4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */; };
+		4330E73B2120C61400329ED7 /* LegacyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E73A2120C61400329ED7 /* LegacyMapper.swift */; };
+		4330E73D2120E1AC00329ED7 /* StorageAware+Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E73C2120E1AC00329ED7 /* StorageAware+Box.swift */; };
+		4330E73F2120E72200329ED7 /* LegacyPhishODImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E73E2120E72200329ED7 /* LegacyPhishODImporter.swift */; };
+		4330E7412121470C00329ED7 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7402121470C00329ED7 /* Resource.swift */; };
+		4330E7432121474900329ED7 /* LegacyRelistenImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */; };
 		43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43524ADA2114DFC700DC70CD /* RelistenTests.swift */; };
 		43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */; };
@@ -174,7 +182,15 @@
 		430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAddedViewController.swift; sourceTree = "<group>"; };
 		430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayDataSource.swift; path = Helpers/CarPlayDataSource.swift; sourceTree = "<group>"; };
 		430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReentrantDispatchQueue.swift; path = Extensions/ReentrantDispatchQueue.swift; sourceTree = "<group>"; };
+		4325A45121238FEB00A0414B /* LegacyImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyImporter.swift; sourceTree = "<group>"; };
 		4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadProgressNode.swift; path = Layouts/DownloadProgressNode.swift; sourceTree = "<group>"; };
+		4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyAPI.swift; sourceTree = "<group>"; };
+		4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyModels.swift; sourceTree = "<group>"; };
+		4330E73A2120C61400329ED7 /* LegacyMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyMapper.swift; sourceTree = "<group>"; };
+		4330E73C2120E1AC00329ED7 /* StorageAware+Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StorageAware+Box.swift"; path = "Extensions/StorageAware+Box.swift"; sourceTree = "<group>"; };
+		4330E73E2120E72200329ED7 /* LegacyPhishODImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyPhishODImporter.swift; sourceTree = "<group>"; };
+		4330E7402121470C00329ED7 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = Extensions/Resource.swift; sourceTree = "<group>"; };
+		4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRelistenImporter.swift; sourceTree = "<group>"; };
 		43524AD82114DFC700DC70CD /* RelistenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43524ADA2114DFC700DC70CD /* RelistenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenTests.swift; sourceTree = "<group>"; };
 		43524ADC2114DFC700DC70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -352,6 +368,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4330E730211E7E8B00329ED7 /* Legacy */ = {
+			isa = PBXGroup;
+			children = (
+				4325A45121238FEB00A0414B /* LegacyImporter.swift */,
+				4330E73E2120E72200329ED7 /* LegacyPhishODImporter.swift */,
+				4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */,
+				4330E73A2120C61400329ED7 /* LegacyMapper.swift */,
+				4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */,
+				4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */,
+			);
+			path = Legacy;
+			sourceTree = "<group>";
+		};
 		43524AD92114DFC700DC70CD /* RelistenTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,6 +417,7 @@
 		7C13704F20B9E8A100710E90 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4330E730211E7E8B00329ED7 /* Legacy */,
 				7C31552420C09D8B00F07622 /* ShareHelper.swift */,
 				43B047722100049E00251046 /* YearSorting.swift */,
 				7C34D853210ED59400813C00 /* RealmNotificationDisposables.swift */,
@@ -568,6 +598,8 @@
 				7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */,
 				430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */,
 				43A035F0210ED62200C087DD /* Show+FastImageCache.swift */,
+				4330E73C2120E1AC00329ED7 /* StorageAware+Box.swift */,
+				4330E7402121470C00329ED7 /* Resource.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1077,6 +1109,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-16/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
@@ -1113,6 +1146,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDCloudUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SINQ.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
@@ -1223,6 +1257,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${PODS_ROOT}/Reveal-SDK/RevealServer-16/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
@@ -1259,6 +1294,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDCloudUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SINQ.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
@@ -1293,14 +1329,18 @@
 				43B5343F210922CE00DE9B1F /* ShowCellNode.swift in Sources */,
 				43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */,
 				43B5345E210922CE00DE9B1F /* RelistenSongModels.swift in Sources */,
+				4325A45221238FEB00A0414B /* LegacyImporter.swift in Sources */,
 				7C34D854210ED59400813C00 /* RealmNotificationDisposables.swift in Sources */,
 				43B53458210922CE00DE9B1F /* RelistenJsonUtils.swift in Sources */,
 				43B5344A210922CE00DE9B1F /* YearsViewController.swift in Sources */,
+				4330E7372120A90400329ED7 /* RelistenLegacyAPI.swift in Sources */,
 				43B53461210922CE00DE9B1F /* RelistenApi.swift in Sources */,
 				43B53449210922CE00DE9B1F /* VenueViewController.swift in Sources */,
 				43B53443210922CE00DE9B1F /* MyLibraryViewController.swift in Sources */,
 				43B53445210922CE00DE9B1F /* MyRecentlyPlayedViewController.swift in Sources */,
+				4330E73D2120E1AC00329ED7 /* StorageAware+Box.swift in Sources */,
 				43B5343E210922CE00DE9B1F /* YearNode.swift in Sources */,
+				4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */,
 				43B5342C210922CE00DE9B1F /* AsyncDisplayKit.swift in Sources */,
 				43B53425210922CE00DE9B1F /* Array.swift in Sources */,
 				43B5345A210922CE00DE9B1F /* RelistenModels.swift in Sources */,
@@ -1309,12 +1349,14 @@
 				430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */,
 				43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */,
 				43B5341E210922CE00DE9B1F /* YearSorting.swift in Sources */,
+				4330E7412121470C00329ED7 /* Resource.swift in Sources */,
 				43A035D2210D255700C087DD /* FavoriteButtonNode.swift in Sources */,
 				43B53420210922CE00DE9B1F /* TrackActions.swift in Sources */,
 				43B53460210922CE00DE9B1F /* ApiCache.swift in Sources */,
 				43B53435210922CE00DE9B1F /* SongLayout.swift in Sources */,
 				43B53434210922CE00DE9B1F /* ShareCellNode.swift in Sources */,
 				43B53444210922CE00DE9B1F /* DownloadedViewController.swift in Sources */,
+				4330E7432121474900329ED7 /* LegacyRelistenImporter.swift in Sources */,
 				43B5343B210922CE00DE9B1F /* TrackStatusLayout.swift in Sources */,
 				43B5345B210922CE00DE9B1F /* RelistenArtistModels.swift in Sources */,
 				43B5344F210922CE00DE9B1F /* SourceDetailsViewController.swift in Sources */,
@@ -1322,6 +1364,7 @@
 				43B53457210922CE00DE9B1F /* MyLibrary+DiskUsage.swift in Sources */,
 				43B5344B210922CE00DE9B1F /* YearViewController.swift in Sources */,
 				43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */,
+				4330E73B2120C61400329ED7 /* LegacyMapper.swift in Sources */,
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
 				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
 				43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */,
@@ -1342,6 +1385,7 @@
 				43B53438210922CE00DE9B1F /* SwitchCellLayout.swift in Sources */,
 				43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */,
 				43B53423210922CE00DE9B1F /* SourceTrackAudioItem.swift in Sources */,
+				4330E73F2120E72200329ED7 /* LegacyPhishODImporter.swift in Sources */,
 				43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */,
 				43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */,
 				43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */,

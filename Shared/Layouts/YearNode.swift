@@ -20,9 +20,10 @@ public class YearNode : ASCellNode {
         self.year = year
         
         self.yearNameNode = ASTextNode(year.year, textStyle: .headline)
-        self.ratingNode = AXRatingViewNode(value: year.avg_rating / 10.0)
-        self.showsNode = ASTextNode("\(year.show_count) shows", textStyle: .caption1)
-        self.sourceNode = ASTextNode("\(year.source_count) recordings", textStyle: .caption1)
+        self.ratingTextNode = ASTextNode(String(format: "%.2f ★", year.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
+//        self.ratingNode = AXRatingViewNode(value: year.avg_rating / 10.0)
+        self.showsNode = ASTextNode(year.show_count.pluralize("show", "shows"), textStyle: .caption1)
+        self.sourceNode = ASTextNode(year.source_count.pluralize("recording", "recordings"), textStyle: .caption1)
         
         super.init()
         
@@ -44,7 +45,8 @@ public class YearNode : ASCellNode {
     }
     
     public let yearNameNode: ASTextNode
-    public let ratingNode: AXRatingViewNode
+//    public let ratingNode: AXRatingViewNode
+    public let ratingTextNode: ASTextNode
     public let showsNode: ASTextNode
     public let sourceNode: ASTextNode
     public let offlineNode: OfflineIndicatorNode = OfflineIndicatorNode()
@@ -59,7 +61,7 @@ public class YearNode : ASCellNode {
             alignItems: .center,
             children: [
                 yearNameNode,
-                ratingNode
+                ratingTextNode
             ]
         )
         top.style.alignSelf = .stretch

@@ -20,8 +20,22 @@ public protocol DownloadProgressDelegate : class {
     func downloadButtonTapped()
 }
 
+func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
+    let scale = newWidth / image.size.width
+    let newHeight = image.size.height * scale
+    UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+    image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return newImage!
+}
+
 public class DownloadProgressNode : ASDisplayNode {
-    private static let buttonSize : Int = 20
+    private static let buttonSize: CGFloat = 16
+    private static var buttonImage = {
+        return resizeImage(image: #imageLiteral(resourceName: "download-complete"), newWidth: DownloadProgressNode.buttonSize * 3.0)
+    }()
 
     public let downloadProgressNode: ASDisplayNode
     public weak var delegate : DownloadProgressDelegate? = nil
@@ -69,7 +83,7 @@ public class DownloadProgressNode : ASDisplayNode {
             
             button.downloadedButton.cleanDefaultAppearance()
             button.downloadedButton.tintColor = AppColors.primary
-            button.downloadedButton.setImage(#imageLiteral(resourceName: "download-complete"), for: .normal)
+            button.downloadedButton.setImage(DownloadProgressNode.buttonImage, for: .normal)
             button.downloadedButton.setTitleColor(AppColors.primary, for: .normal)
             button.downloadedButton.setTitleColor(AppColors.highlight, for: .highlighted)
             
@@ -82,6 +96,9 @@ public class DownloadProgressNode : ASDisplayNode {
             button.startDownloadButton.cleanDefaultAppearance()
             button.startDownloadButton.setImage(#imageLiteral(resourceName: "download-outline"), for: .normal)
             button.startDownloadButton.tintColor = AppColors.primary
+            button.stopDownloadButton.radius = (CGFloat(DownloadProgressNode.buttonSize) - (2.0 * button.pendingView.lineWidth)) / 2.0
+            button.stopDownloadButton.stopButtonWidth = 4.0
+            button.stopDownloadButton.filledLineWidth = 1.5
         }
     }
     

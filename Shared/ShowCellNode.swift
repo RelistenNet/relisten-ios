@@ -50,12 +50,12 @@ public class ShowCellNode : ASCellNode {
         venueNode = ASTextNode(venueText, textStyle: .caption1)
         venueNode.maximumNumberOfLines = 0
         
-        ratingNode = AXRatingViewNode(value: show.avg_rating / 10.0)
+//        ratingNode = AXRatingViewNode(value: show.avg_rating / 10.0)
         ratingTextNode = ASTextNode(String(format: "%.2f ★", show.avg_rating / 10.0 * 5.0), textStyle: .caption1)
         
         var metaText = "\(show.avg_duration == nil ? "" : show.avg_duration!.humanize())"
         if !useCellLayout {
-            metaText += "\n\(show.source_count) recordings"
+            metaText += "\n\(show.source_count.pluralize("recording", "recordings"))"
         }
         
         metaNode = ASTextNode(metaText, textStyle: .caption1, color: nil, alignment: useCellLayout ? nil : NSTextAlignment.right)
@@ -86,8 +86,8 @@ public class ShowCellNode : ASCellNode {
         isAvailableOffline = MyLibrary.shared.isShowAtLeastPartiallyAvailableOffline(self.show)
         
         artworkNode = ASImageNode()
-        artworkNode.style.maxWidth = .init(unit: .points, value: useCellLayout ? 60.0 : 100)
-        artworkNode.style.maxHeight = .init(unit: .points, value: useCellLayout ? 60.0 : 100)
+        artworkNode.style.maxWidth = .init(unit: .points, value: useCellLayout ? 60.0 : 90)
+        artworkNode.style.maxHeight = .init(unit: .points, value: useCellLayout ? 60.0 : 90)
         artworkNode.style.preferredSize = CGSize(width: artworkNode.style.maxWidth.value, height: artworkNode.style.maxHeight.value)
         
         artworkNode.backgroundColor = show.fastImageCacheWrapper().placeholderColor()
@@ -119,7 +119,7 @@ public class ShowCellNode : ASCellNode {
     
     public let artistNode: ASTextNode?
     public let showNode: ASTextNode
-    public let ratingNode: AXRatingViewNode
+//    public let ratingNode: AXRatingViewNode
     public let ratingTextNode: ASTextNode
     
     public let venueNode: ASTextNode
@@ -271,7 +271,7 @@ public class ShowCellNode : ASCellNode {
             spacing: 8,
             justifyContent: .end,
             alignItems: .center,
-            children: ArrayNoNils(ratingNode, SpacerNode(), metaNode)
+            children: ArrayNoNils(ratingTextNode, SpacerNode(), metaNode)
         )
         ratingAndMeta.style.alignSelf = .stretch
         

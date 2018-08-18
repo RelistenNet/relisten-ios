@@ -1,5 +1,3 @@
-- Crash fixes
-- New download progress indicators
-- New mini-show style
-- More ways to access your favorite shows!
-- New ways to discover new artsts
+- better tray!
+- better offline support!
+- more detailed rating information!

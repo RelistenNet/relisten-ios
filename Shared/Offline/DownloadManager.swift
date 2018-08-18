@@ -156,7 +156,16 @@ public class DownloadManager {
         let availableOffline = MyLibrary.shared.isTrackAvailableOffline(track)
         let currentlyDownloading = isTrackQueuedToDownload(track) || isTrackActivelyDownloading(track)
         
-        return !availableOffline && !currentlyDownloading
+        if currentlyDownloading {
+            return false
+        }
+        
+        if availableOffline {
+            // make sure the file exists returning true to indicate download is needed if not
+            return !FileManager.default.fileExists(atPath: track.downloadPath)
+        }
+        
+        return true
     }
     
     public func download(show: CompleteShowInformation) {

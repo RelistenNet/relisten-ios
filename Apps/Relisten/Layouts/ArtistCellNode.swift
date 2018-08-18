@@ -34,8 +34,8 @@ public class ArtistCellNode : ASCellNode, FavoriteButtonDelegate {
         self.favoriteArtists = withFavoritedArtists
         
         nameNode = ASTextNode(artist.name, textStyle: .headline)
-        showsNode = ASTextNode("\(artist.show_count) shows", textStyle: .caption1)
-        sourcesNode = ASTextNode("\(artist.source_count) recordings", textStyle: .caption1)
+        showsNode = ASTextNode(artist.show_count.pluralize("show", "shows"), textStyle: .caption1)
+        sourcesNode = ASTextNode(artist.source_count.pluralize("recording", "recordings"), textStyle: .caption1)
         favoriteNode = FavoriteButtonNode()
 
         super.init()

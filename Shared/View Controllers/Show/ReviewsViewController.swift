@@ -51,4 +51,8 @@ public class ReviewsViewController : RelistenTableViewController<[SourceReview]>
         
         return [ LayoutsAsSingleSection(items: reviewLayouts) ]
     }
+    
+    public override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
 }

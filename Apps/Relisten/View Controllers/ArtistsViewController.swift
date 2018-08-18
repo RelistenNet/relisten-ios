@@ -15,13 +15,13 @@ import RealmSwift
 
 class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, ASCollectionDelegate {
     enum Sections: Int, RawRepresentable {
-        case recentlyPlayed = 0
+        case favorited = 0
+        case recentlyPlayed
         case favoritedShows
         case availableOffline
+        case featured
         case recentlyPerformed
         case allRecentlyUpdated
-        case favorited
-        case featured
         case all
         case count
     }
@@ -94,13 +94,20 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
 
             let newFavoriteCount = s.favoriteArtists.count
 
-            s.resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtists: s.favoriteArtists)
-            s.resourceRecentlyPerformed?.addObserver(s)
-            s.resourceRecentlyPerformed?.loadFromCacheThenUpdate()
+            if s.favoriteArtists.count == 0 {
+                s.resourceRecentlyPerformed = nil
+                s.recentlyPerformedShows = []
+                s.recentlyPerformedNode.shows = []
+            }
+            else {
+                s.resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtists: s.favoriteArtists)
+                s.resourceRecentlyPerformed?.addObserver(s)
+                s.resourceRecentlyPerformed?.loadFromCacheThenUpdate()
+            }
             
             switch changes {
             case .initial:
-                s.tableNode.reloadData()
+                s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
             case .update(_, let deletions, let insertions, let modifications):
                 s.tableNode.performBatch(animated: true, updates: {
                     s.tableNode.insertRows(at: insertions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),

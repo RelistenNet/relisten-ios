@@ -35,7 +35,8 @@ public class SourceDetailsNode : ASCellNode {
         
         favoriteButton = FavoriteButtonNode()
         
-        self.ratingNode = AXRatingViewNode(value: source.avg_rating / 10.0)
+        ratingTextNode = ASTextNode(String(format: "%.2f ★", source.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
+//        self.ratingNode = AXRatingViewNode(value: source.avg_rating / 10.0)
         self.locationNode = ASTextNode(source.venue?.location ?? show.venue?.location ?? "", textStyle: .subheadline, color: AppColors.mutedText)
         
         var metaText = "\(source.duration == nil ? "" : source.duration!.humanize())"
@@ -47,12 +48,14 @@ public class SourceDetailsNode : ASCellNode {
         }
         
         self.metaNode = ASTextNode(metaText, textStyle: .caption1, color: nil, alignment: .right)
+        /*
         self.ratingCountNode = ASTextNode(
             String(source.num_ratings != nil ? source.num_ratings! : source.num_reviews) + " " + (source.num_ratings != nil ? "ratings" : "reviews"),
             textStyle: .caption1,
             color: nil,
             alignment: .right
         )
+         */
         
         if source.is_soundboard {
             sbdNode = SoundboardIndicatorNode()
@@ -176,13 +179,14 @@ public class SourceDetailsNode : ASCellNode {
     
     public let showNameNode: ASTextNode
     public let favoriteButton : FavoriteButtonNode
-    public let ratingNode: AXRatingViewNode
-    public let ratingCountNode: ASTextNode
+//    public let ratingNode: AXRatingViewNode
+//    public let ratingCountNode: ASTextNode
     public let locationNode: ASTextNode
     public let metaNode: ASTextNode
     public let detailsNode: ASTextNode
     public let updateDateNode : ASTextNode
     public let artworkNode: ASImageNode
+    public let ratingTextNode: ASTextNode
     
     public let sourcePeopleNode: ASStackLayoutSpec?
     public let sourceNode: ASTextNode?
@@ -200,8 +204,9 @@ public class SourceDetailsNode : ASCellNode {
             justifyContent: .start,
             alignItems: .end,
             children: ArrayNoNils(
-                isDetails ? nil : ratingCountNode,
-                ratingNode
+//                isDetails ? nil : ratingCountNode,
+//                ratingNode
+                ratingTextNode
             )
         )
         

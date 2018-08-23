@@ -56,7 +56,7 @@ def apply_pods
  
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']
-  pod 'Wormholy', :configurations => ['Debug'], :git => "https://github.com/pmusolino/Wormholy"
+  pod 'Wormholy', :configurations => ['Debug'], :git => "https://github.com/pmusolino/Wormholy.git"
   pod 'DWURecyclingAlert', :configurations => ['Debug']
 
   # Currently unused pods (but they might be used in the future)

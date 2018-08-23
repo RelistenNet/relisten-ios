@@ -289,9 +289,6 @@ extension MyLibrary : DownloadManagerDataSource {
                 offlineTrack.state = .downloading
             }
         }
-        else {
-            assertionFailure("!!! ERROR: track began downloading BEFORE BEING STORED IN REALM !!!")
-        }
     }
     
     public func offlineTrackFailedDownloading(_ track: Track, error: Error?) {
@@ -334,13 +331,10 @@ extension MyLibrary : DownloadManagerDataSource {
                 offlineTrack.state = .downloaded
                 offlineTrack.file_size.value = Int(fileSize)
             }
+            
+            // add the source information if it doesn't exist
+            addOfflineSourceInfoForDownloadedTrack(track)
         }
-        else {
-            assertionFailure("!!! ERROR: track finished downloading BEFORE BEING STORED IN REALM !!!")
-        }
-        
-        // add the source information if it doesn't exist
-        addOfflineSourceInfoForDownloadedTrack(track)
     }
     
     public func offlineTrackWillBeDeleted(_ track: Track) {

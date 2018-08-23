@@ -70,7 +70,7 @@ PODS:
     - PINRemoteImage/iOS (= 3.0.0-beta.13)
     - PINRemoteImage/PINCache
     - Texture/Core
-  - Wormholy (1.1.2)
+  - Wormholy (1.1.3)
 
 DEPENDENCIES:
   - ActionKit
@@ -101,7 +101,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwiftyJSON
   - Texture
-  - Wormholy (from `https://github.com/pmusolino/Wormholy`)
+  - Wormholy (from `https://github.com/pmusolino/Wormholy.git`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -151,7 +151,7 @@ EXTERNAL SOURCES:
   Siesta:
     :git: https://github.com/bustoutsolutions/siesta.git
   Wormholy:
-    :git: https://github.com/pmusolino/Wormholy
+    :git: https://github.com/pmusolino/Wormholy.git
 
 CHECKOUT OPTIONS:
   FastImageCache:
@@ -167,8 +167,8 @@ CHECKOUT OPTIONS:
     :commit: 360861a1a604b8bc8f7219c2596e30bac3b6d212
     :git: https://github.com/bustoutsolutions/siesta.git
   Wormholy:
-    :commit: 21e58f20382f1bcf009dd013041ed8b8a10c0026
-    :git: https://github.com/pmusolino/Wormholy
+    :commit: 50ceb490fcfe99116b0a08c78e7d7a640c8176ad
+    :git: https://github.com/pmusolino/Wormholy.git
 
 SPEC CHECKSUMS:
   ActionKit: cf7ca5781f4a43342384d872105fadd58985f416
@@ -206,8 +206,8 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
-  Wormholy: 681207f9880fb7cc23875bd786af0e21bf5fe7cc
+  Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: 9125306324cea22ea22c07841a1d1b8d9721c141
+PODFILE CHECKSUM: 2f3d73705c3d6f7f36423ccccda51c29710a69e8
 
 COCOAPODS: 1.5.3

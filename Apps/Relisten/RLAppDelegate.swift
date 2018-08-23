@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         window?.makeKeyAndVisible()
         
         setupPlayback()
+        setupWormholy()
         
         // Initialize CarPlay
         CarPlayController.shared.setup()

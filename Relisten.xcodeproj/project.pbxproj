@@ -19,6 +19,7 @@
 		4330E73F2120E72200329ED7 /* LegacyPhishODImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E73E2120E72200329ED7 /* LegacyPhishODImporter.swift */; };
 		4330E7412121470C00329ED7 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7402121470C00329ED7 /* Resource.swift */; };
 		4330E7432121474900329ED7 /* LegacyRelistenImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */; };
+		434066AC212FBE1A00FB1D94 /* Wormholy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AB212FBE1A00FB1D94 /* Wormholy.swift */; };
 		43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43524ADA2114DFC700DC70CD /* RelistenTests.swift */; };
 		43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */; };
@@ -191,6 +192,7 @@
 		4330E73E2120E72200329ED7 /* LegacyPhishODImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyPhishODImporter.swift; sourceTree = "<group>"; };
 		4330E7402121470C00329ED7 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = Extensions/Resource.swift; sourceTree = "<group>"; };
 		4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRelistenImporter.swift; sourceTree = "<group>"; };
+		434066AB212FBE1A00FB1D94 /* Wormholy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Wormholy.swift; path = Helpers/Wormholy.swift; sourceTree = "<group>"; };
 		43524AD82114DFC700DC70CD /* RelistenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43524ADA2114DFC700DC70CD /* RelistenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenTests.swift; sourceTree = "<group>"; };
 		43524ADC2114DFC700DC70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				7C31552420C09D8B00F07622 /* ShareHelper.swift */,
 				43B047722100049E00251046 /* YearSorting.swift */,
 				7C34D853210ED59400813C00 /* RealmNotificationDisposables.swift */,
+				434066AB212FBE1A00FB1D94 /* Wormholy.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1335,6 +1338,7 @@
 				43B5344A210922CE00DE9B1F /* YearsViewController.swift in Sources */,
 				4330E7372120A90400329ED7 /* RelistenLegacyAPI.swift in Sources */,
 				43B53461210922CE00DE9B1F /* RelistenApi.swift in Sources */,
+				434066AC212FBE1A00FB1D94 /* Wormholy.swift in Sources */,
 				43B53449210922CE00DE9B1F /* VenueViewController.swift in Sources */,
 				43B53443210922CE00DE9B1F /* MyLibraryViewController.swift in Sources */,
 				43B53445210922CE00DE9B1F /* MyRecentlyPlayedViewController.swift in Sources */,

@@ -88,7 +88,7 @@ public class DownloadManager {
         return backingDownloadManager!
     }()
     
-    private lazy var downloadFolder: String = {
+    lazy var downloadFolder: String = {
         let folder = NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                          FileManager.SearchPathDomainMask.userDomainMask,
                                                          true).first! + "/" + "offline-mp3s"

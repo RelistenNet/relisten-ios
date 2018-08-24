@@ -15,6 +15,7 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - Crashlytics (3.10.5):
     - Fabric (~> 1.7.9)
+  - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.0)
   - DWURecyclingAlert (1.0.2)
   - EDColor (1.0.1)
@@ -84,6 +85,7 @@ DEPENDENCIES:
   - Cache
   - ChameleonFramework
   - Crashlytics
+  - CWStatusBarNotification
   - DownloadButton
   - DWURecyclingAlert
   - EDColor
@@ -117,6 +119,7 @@ SPEC REPOS:
     - Cache
     - ChameleonFramework
     - Crashlytics
+    - CWStatusBarNotification
     - DownloadButton
     - DWURecyclingAlert
     - EDColor
@@ -186,6 +189,7 @@ SPEC CHECKSUMS:
   Cache: fae4826ba52d7a5d9a3a0ad6fe73e3501a82964f
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
+  CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
@@ -216,6 +220,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: d9b9990408d2e2000d158eb62cb3bedfce7c7d53
+PODFILE CHECKSUM: 5169cc43b11023fb6e1227f0664285e2d78bf19a
 
 COCOAPODS: 1.5.3

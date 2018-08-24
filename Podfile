@@ -69,7 +69,7 @@ def apply_pods
   pod 'Crashlytics'
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'
-  #pod 'CWStatusBarNotification'
+  pod 'CWStatusBarNotification'
 end
 
 target 'RelistenShared' do

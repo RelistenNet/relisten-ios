@@ -63,10 +63,17 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         recentlyUpdatedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         favoritedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         offlineNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
-
-        recentShowsNode.cellTransparency = 0.9
-        todayShowsNode.cellTransparency = 0.9
-
+        
+        if artist.name == "Phish" {
+            let cellTransparency : CGFloat = 0.9
+            recentShowsNode.cellTransparency = cellTransparency
+            todayShowsNode.cellTransparency = cellTransparency
+            recentlyPerformedNode.cellTransparency = cellTransparency
+            recentlyUpdatedNode.cellTransparency = cellTransparency
+            favoritedNode.cellTransparency = cellTransparency
+            offlineNode.cellTransparency = cellTransparency
+        }
+        
         resourceToday = RelistenApi.onThisDay(byArtist: artist)
         resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtist: artist)
         resourceRecentlyUpdated = RelistenApi.recentlyUpdated(byArtist: artist)

@@ -136,7 +136,7 @@ public class VenueLayoutWithMap : InsetLayout<UIView> {
                                     addressString: venue.location,
                                     completionHandler: { (coord, err) in
                                         guard err == nil else {
-                                            print(err!)
+                                            LogWarn("Error getting coordinates for address: \(err!)")
                                             return
                                         }
                                         

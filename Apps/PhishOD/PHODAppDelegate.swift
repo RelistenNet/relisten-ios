@@ -19,8 +19,15 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
     var window: UIWindow?
     public var rootNavigationController: RelistenNavigationController! = nil
+    
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        SetupLogging()
+        
+        return true
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        LogDebug("⭕️⭕️⭕️ PhishOD is launching ⭕️⭕️⭕️")
         RelistenApp.sharedApp.delegate = self
         
         // cannot be in the shared library :/ https://stackoverflow.com/questions/20495064/how-to-integrate-crashlytics-with-static-library
@@ -50,7 +57,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         // Import data from pre-4.0 versions of the app
         let phishImporter = LegacyPhishODImporter()
         phishImporter.performLegacyImport { (error) in
-            print("PhishOD import completed")
+            LogDebug("PhishOD import completed")
         }
         
         return true
@@ -65,7 +72,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
                 return artist
             }
         } catch {
-            print(error)
+            LogError(error)
         }
         fatalError("Couldn't load the Phish artist JSON data")
     }

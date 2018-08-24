@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "436C221120F7AF350088F563"
+               BlueprintIdentifier = "43524AD72114DFC700DC70CD"
                BuildableName = "RelistenTests.xctest"
                BlueprintName = "RelistenTests"
                ReferencedContainer = "container:Relisten.xcodeproj">

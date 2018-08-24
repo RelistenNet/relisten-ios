@@ -222,9 +222,9 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
     }
 
     public override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
-        print("event: \(event)")
+        LogDebug("event: \(event)")
         if case .error = event {
-            print("Error was \(String(describing: resource.latestError))")
+            LogWarn("Siesta error was \(String(describing: resource.latestError))")
         }
         
         if let data: TData = resource.latestData?.typedContent() {
@@ -236,7 +236,7 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
             || previousData != nil && latestData == nil
             || (previousData != nil && latestData != nil && self.has(oldData: previousData!, changed: latestData!)
             ) {
-            print("---> data changed")
+            LogDebug("---> data changed")
             render()
         }
     }
@@ -259,7 +259,7 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
         }
         
         if let data = latestData {
-            print("calling render(forData:)")
+            LogDebug("calling render(forData:)")
             render(forData: data)
         }
         else {
@@ -427,9 +427,9 @@ open class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewContr
     }
     
     open override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
-        print("event: \(event)")
+        LogDebug("event: \(event)")
         if case .error = event {
-            print("Error was \(String(describing: resource.latestError))")
+            LogWarn("Error was \(String(describing: resource.latestError))")
         }
         
         if let data: TData = resource.latestData?.typedContent() {
@@ -441,7 +441,7 @@ open class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewContr
             || previousData != nil && latestData == nil
             || (previousData != nil && latestData != nil && self.has(oldData: previousData!, changed: latestData!)
             ) {
-            print("---> data changed")
+            LogDebug("---> data changed")
             dataChanged(latestData!)
             render()
         }
@@ -451,7 +451,7 @@ open class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewContr
     
     open func render() {
         DispatchQueue.main.async {
-            print("[render] calling tableNode.reloadData()")
+            LogDebug("[render] calling tableNode.reloadData()")
             self.tableNode.reloadData()
         }
     }

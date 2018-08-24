@@ -146,7 +146,7 @@ public class DownloadManager {
                     }
                 }
                 catch {
-                    print(error)
+                    LogWarning("Error when removing downloaded track: \(error)")
                 }
             }
         }
@@ -232,7 +232,7 @@ public class DownloadManager {
     
     func importDownloadedTrack(_ track : Track, filePath : String) {
         queue.sync {
-            print("Importing track \"\(track.title) - (\(track.showInfo.artist.name) \(track.showInfo.show.display_date))\" from \(filePath)...")
+            LogDebug("Importing track \"\(track.title) - (\(track.showInfo.artist.name) \(track.showInfo.show.display_date))\" from \(filePath)...")
             
             let fm = FileManager.default
             do {
@@ -242,7 +242,7 @@ public class DownloadManager {
                     var attributes = try fm.attributesOfItem(atPath: filePath)
                     fileSize = attributes[.size] as! UInt64
                 } catch {
-                    print("Error getting file size for file at \(filePath): \(error)")
+                    LogWarn("Error getting file size for file at \(filePath): \(error)")
                 }
                 
                 try fm.moveItem(atPath: filePath, toPath: track.downloadPath)
@@ -250,7 +250,7 @@ public class DownloadManager {
                 self.dataSource?.importDownloadedTrack(track, withSize: fileSize)
                 self.eventTrackFinishedDownloading.raise(track)
             } catch {
-                print("Error importing track: \(error)")
+                LogWarn("Error importing track: \(error)")
             }
         }
     }
@@ -364,7 +364,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
     }
     
     public func downloadRequestStarted(_ downloadModel: MZDownloadModel, index: Int) {
-        print("Started downloading: \(downloadModel)")
+        LogDebug("Started downloading: \(downloadModel)")
         
         if let t = self.trackForDownloadModel(downloadModel) {
             eventTrackStartedDownloading.raise(t)
@@ -373,7 +373,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
     }
     
     public func downloadRequestFinished(_ downloadModel: MZDownloadModel, index: Int) {
-        print("Finished downloading: \(downloadModel)")
+        LogDebug("Finished downloading: \(downloadModel)")
         
         if let t = self.trackForDownloadModel(downloadModel) {
             dataSource?.offlineTrackFinishedDownloading(t, withSize: UInt64(fileToActualBytes(downloadModel.file!)))
@@ -389,7 +389,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
     }
     
     public func downloadRequestDidFailedWithError(_ error: NSError, downloadModel: MZDownloadModel, index: Int) {
-        print(error)
+        LogDebug("Download request failed with error: \(error)")
         var didReplaceFile = false
         
         // Handle cases where a file is getting redownloaded but it already exists in the offline directory
@@ -404,7 +404,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
                     let _ = try fm.replaceItemAt(sourceFileURL, withItemAt: destinationFileURL, backupItemName: destinationFileName, options: .usingNewMetadataOnly)
                     didReplaceFile = true
                 } catch {
-                    print("Couldn't replace item at \(destinationFile) with \(sourceFile)")
+                    LogWarn("Couldn't replace item at \(destinationFile) with \(sourceFile)")
                 }
             }
         }

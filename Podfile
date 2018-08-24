@@ -68,6 +68,7 @@ def apply_pods
 
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'PinpointKit'
 end
 
 target 'RelistenShared' do

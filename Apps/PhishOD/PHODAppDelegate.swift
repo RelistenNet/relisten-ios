@@ -18,7 +18,7 @@ import Crashlytics
 class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
     var window: UIWindow?
-    public var rootNavigationController: ASNavigationController! = nil
+    public var rootNavigationController: RelistenNavigationController! = nil
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         RelistenApp.sharedApp.delegate = self
@@ -31,7 +31,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        rootNavigationController = ASNavigationController(rootViewController: ArtistViewController(artist: loadPhishArtist()))
+        rootNavigationController = RelistenNavigationController(rootViewController: ArtistViewController(artist: loadPhishArtist()))
         
         rootNavigationController.navigationBar.prefersLargeTitles = true
         rootNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
@@ -42,6 +42,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         
         setupPlayback()
         setupWormholy()
+        UserFeedback.shared.setup()
         
         // Initialize CarPlay
         CarPlayController.shared.setup()

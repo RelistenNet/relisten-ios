@@ -62,13 +62,14 @@ def apply_pods
   # Currently unused pods (but they might be used in the future)
   # pod 'AsyncSwift'
   # pod 'BFNavigationBarDrawer'
-  # pod 'CWStatusBarNotification'
   # pod 'Reachability'
   # pod 'SpinnerView'
 
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'PinpointKit'
+  pod 'PinpointKit/ScreenshotDetector'
+  #pod 'CWStatusBarNotification'
 end
 
 target 'RelistenShared' do

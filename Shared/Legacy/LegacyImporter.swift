@@ -224,6 +224,7 @@ public class LegacyImporter : NSObject {
                     var favorites = favoritesDict
                     favorites[artistSlug] = nil
                     SDCloudUserDefaults.setObject(favorites, forKey: self.favoritesKey)
+                    SDCloudUserDefaults.synchronize()
                 }
             }
             completion(error)
@@ -238,7 +239,11 @@ public class LegacyImporter : NSObject {
 
     // MARK: Helpers
     func debug(_ str : String) {
-        print("[Import] " + str)
+        LogDebug("[Import] " + str)
+    }
+    
+    func warning(_ str : String) {
+        LogWarn("[Import] " + str)
     }
     
     func legacyCachePathExists() -> Bool {
@@ -252,7 +257,7 @@ public class LegacyImporter : NSObject {
                 try fm.removeItem(atPath: path)
             }
         } catch {
-            debug("Error while removing show directory at \(path): \(error)")
+            warning("Error while removing show directory at \(path): \(error)")
         }
     }
     
@@ -267,7 +272,7 @@ public class LegacyImporter : NSObject {
                 }
             }
         } catch let error {
-            debug("Exception while getting subdirectories at \(path): \(error)")
+            warning("Exception while getting subdirectories at \(path): \(error)")
         }
         
         return retval

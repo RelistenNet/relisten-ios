@@ -169,39 +169,39 @@ public class RelistenMenuView : UIView {
         }
         
         switch item {
-        case .EverythingYears: print(item)
+        case .EverythingYears:
             viewController.navigationController?.pushViewController(YearsViewController(artist: artist), animated: true)
 
-        case .EverythingSongs: print(item)
+        case .EverythingSongs:
             viewController.navigationController?.pushViewController(SongsViewController(artist: artist), animated: true)
             
-        case .EverythingVenues: print(item)
+        case .EverythingVenues:
             viewController.navigationController?.pushViewController(VenuesViewController(artist: artist), animated: true)
             
-        case .EverythingTours: print(item)
-            
-        case .DiscoverTop: print(item)
+        case .EverythingTours:
+            break
+        case .DiscoverTop:
             viewController.navigationController?.pushViewController(TopShowsViewController(artist: artist), animated: true)
             
-        case .DiscoverRandom: print(item)
+        case .DiscoverRandom:
             let sourcesViewController = SourcesViewController(artist: artist)
             sourcesViewController.presentIfNecessary(navigationController: viewController.navigationController)
 
-        case .RecentlyPlayed: print(item)
+        case .RecentlyPlayed:
             viewController.navigationController?.pushViewController(MyRecentlyPlayedViewController(artist: artist), animated: true)
         
-        case .RecentlyPerformed: print(item)
+        case .RecentlyPerformed:
             viewController.navigationController?.pushViewController(RecentlyPerformedViewController(artist: artist), animated: true)
             
-        case .RecentlyUpdated: print(item)
+        case .RecentlyUpdated:
             viewController.navigationController?.pushViewController(RecentlyAddedViewController(artist: artist), animated: true)
             
-        case .MyShowsLibrary: print(item)
+        case .MyShowsLibrary:
             viewController.navigationController?.pushViewController(MyLibraryViewController(artist: artist), animated: true)
 
-        case .MyShowsPlaylists: print(item)
-            
-        case .MyShowsDownloaded: print(item)
+        case .MyShowsPlaylists:
+            break
+        case .MyShowsDownloaded:
             viewController.navigationController?.pushViewController(DownloadedViewController(artist: artist), animated: true)
         }
         

@@ -21,6 +21,11 @@ public class RelistenApp {
     public static let sharedApp = RelistenApp(delegate: RelistenDummyAppDelegate())
     
     public var delegate : RelistenAppDelegate
+    public lazy var logDirectory : String = {
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                   FileManager.SearchPathDomainMask.userDomainMask,
+                                                   true).first! + "/Logs"
+    }()
     
     public init(delegate: RelistenAppDelegate) {
         self.delegate = delegate
@@ -31,7 +36,7 @@ public class RelistenApp {
     public func setupThirdPartyDependencies() {
         #if targetEnvironment(simulator)
         if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
-            print("Documents Directory: \(documentsPath)")
+            LogDebug("Documents Directory: \(documentsPath)")
         }
         #endif
     }

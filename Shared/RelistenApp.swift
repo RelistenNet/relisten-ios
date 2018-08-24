@@ -14,7 +14,7 @@ import AsyncDisplayKit
 import RealmSwift
 
 public protocol RelistenAppDelegate {
-    var rootNavigationController: ASNavigationController! { get }
+    var rootNavigationController: RelistenNavigationController! { get }
 }
 
 public class RelistenApp {
@@ -67,7 +67,7 @@ public class RelistenApp {
 }
 
 public class RelistenDummyAppDelegate : RelistenAppDelegate {
-    public var rootNavigationController: ASNavigationController! {
+    public var rootNavigationController: RelistenNavigationController! {
         get {
             fatalError("An application delegate hasn't been set yet!")
         }

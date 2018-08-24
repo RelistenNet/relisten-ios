@@ -22,7 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     var window: UIWindow?
     public var rootNavigationController: RelistenNavigationController! = nil
 
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        SetupLogging()
+        
+        return true
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        LogDebug("🔊🔊🔊 Relisten is launching 🔊🔊🔊")
         RelistenApp.sharedApp.delegate = self
         
         // cannot be in the shared library :/ https://stackoverflow.com/questions/20495064/how-to-integrate-crashlytics-with-static-library
@@ -52,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         // Import data from pre-4.0 versions of the app
         let relistenImporter = LegacyRelistenImporter()
         relistenImporter.performLegacyImport { (error) in
-            print("Relisten import completed")
+            LogDebug("Relisten import completed")
         }
         
         return true
@@ -182,7 +189,7 @@ extension AppDelegate {
                 res.load()
             }
             
-            print(url.absoluteString)
+            LogDebug("Handled URL \(url.absoluteString)")
             //handle url
         }
         return true

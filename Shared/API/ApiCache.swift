@@ -28,14 +28,14 @@ extension RelistenCache {
         do {
             let val = try backingCache.object(forKey: key)
             
-            print("[cache] readEntity(forKey \(key)) = *snip*")//\(String(describing: val))")
+            //LogDebug("[cache] readEntity(forKey \(key)) = *snip*")//\(String(describing: val))")
             
             return val
         }
         catch {
             if let sError = error as? StorageError {
                 if sError != StorageError.notFound {
-                    print(error)
+                    LogWarn("Error reading from the cache: \(error)")
                 }
             }
             
@@ -44,11 +44,11 @@ extension RelistenCache {
     }
     
     func writeEntity(_ entity: Entity<Any>, forKey key: String) {
-        print("[cache] writeEntity(forKey \(key)) = *snip*")//\(entity)")
+        //LogDebug("[cache] writeEntity(forKey \(key)) = *snip*")//\(entity)")
         
         // lets not cache non-json responses for now
         guard entity.content is SwJSON else {
-            print("trying to cache non json response!")
+            LogWarn("trying to cache non json response!")
             return
         }
         
@@ -56,18 +56,18 @@ extension RelistenCache {
             try backingCache.setObject(entity, forKey: key)
         }
         catch {
-            print("error caching entity!")
+            LogWarn("error caching entity! \(error)")
         }
     }
     
     func removeEntity(forKey key: String) {
-        print("[cache] removeEntity(forKey \(key))")
+        //LogDebug("[cache] removeEntity(forKey \(key))")
         
         do {
             try backingCache.removeObject(forKey: key)
         }
         catch {
-            print("error removing entity!")
+            LogWarn("error removing entity! \(error)")
         }
     }
 }

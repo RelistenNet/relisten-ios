@@ -70,6 +70,7 @@ def apply_pods
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'
   pod 'CWStatusBarNotification'
+  pod 'CleanroomLogger', :git => "https://github.com/500px/CleanroomLogger"
 end
 
 target 'RelistenShared' do

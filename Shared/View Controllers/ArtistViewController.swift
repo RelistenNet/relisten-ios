@@ -373,7 +373,7 @@ extension ArtistViewController : KASlideShowDataSource {
         
         slider.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        view.addSubview(slider)
+        tableNode.view.backgroundView = slider
         
         let fog = UIView(frame: view.bounds)
         fog.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -381,16 +381,7 @@ extension ArtistViewController : KASlideShowDataSource {
         
         slider.addSubview(fog)
         
-        view.sendSubview(toBack: fog)
-        view.sendSubview(toBack: slider)
-        
         tableNode.backgroundColor = UIColor.clear
-    }
-    
-    public override func viewWillLayoutSubviews() {
-        if let slider = slider {
-            view.sendSubview(toBack: slider)
-        }
     }
     
     public func viewWillDisappear_SlideShow(_ animated: Bool) {

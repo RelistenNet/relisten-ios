@@ -26,7 +26,7 @@ public class LegacyPhishODImporter : LegacyImporter {
                 if let phishArtist = phishArtist {
                     self.continueImportLegacyOfflineTracks(phishArtist: phishArtist, group: group)
                 } else {
-                    self.debug("Abandoning import because we couldn't fetch the artist object for Phish")
+                    self.warning("Abandoning import because we couldn't fetch the artist object for Phish")
                     // (farkas) TODO: Error handling 🙃
                 }
                 group.leave()

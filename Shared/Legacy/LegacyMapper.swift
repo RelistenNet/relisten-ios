@@ -43,10 +43,10 @@ class LegacyMapper {
                 let fullArtist = fullArtist,
                 let legacyShow = legacyShow
             {
-                print("[Import] Fetched artist and legacy show information for track \(trackID) in show \(showID)")
+                LogDebug("[Import] Fetched artist and legacy show information for track \(trackID) in show \(showID)")
                 self.continueMatchingLegacyTrack(trackID: trackID, legacyShow: legacyShow, fullArtist: fullArtist, completion: completion)
             } else {
-                print("[Import] Couldn't fetch \(legacyShow == nil ? "legacy show" : "") \(fullArtist == nil ? "full artist" : "") for \(artistSlug)-\(showID)")
+                LogWarning("[Import] Couldn't fetch \(legacyShow == nil ? "legacy show" : "") \(fullArtist == nil ? "full artist" : "") for \(artistSlug)-\(showID)")
                 // TODO: Create an error here if one doesn't exist
                 if error == nil { error = GenericImportError() }
                 completion(nil, error)
@@ -60,7 +60,7 @@ class LegacyMapper {
             if matchingTracksByID.count == 1 {
                 legacyTrack = matchingTracksByID.first
             } else {
-                print("Too many tracks matched the track with ID \(trackID). What gives?")
+                LogWarning("Too many tracks matched the track with ID \(trackID). What gives?")
             }
         }
         
@@ -73,20 +73,20 @@ class LegacyMapper {
                             if let matchingSource = self.findSource(inShow: newShow, fromLegacyShow: legacyShow) {
                                 if let matchingTrack = matchingSource.findMatchingTrack(legacyTrack) {
                                     // We finally did it!
-                                    print("[Import] Found a matching track in the new API for track \(trackID) in show \(legacyShow.id ?? -1)")
+                                    LogDebug("[Import] Found a matching track in the new API for track \(trackID) in show \(legacyShow.id ?? -1)")
                                     let completeShowInfo = CompleteShowInformation(source: matchingSource, show: newShow, artist: fullArtist)
                                     let track = Track(sourceTrack: matchingTrack, showInfo: completeShowInfo)
                                     completion(track, nil)
                                 } else {
-                                    print("[Import] Couldn't find a matching track to match \(fullArtist.name)-\(legacyShow.displayDate ?? "?").\(legacyTrack.title ?? String(trackID))")
+                                    LogWarning("[Import] Couldn't find a matching track to match \(fullArtist.name)-\(legacyShow.displayDate ?? "?").\(legacyTrack.title ?? String(trackID))")
                                     completion(nil, GenericImportError())
                                 }
                             } else {
-                                print("[Import] Couldn't find a matching show from the new API to match \(fullArtist.name)-\(legacyShow.displayDate ?? "?")")
+                                LogWarning("[Import] Couldn't find a matching show from the new API to match \(fullArtist.name)-\(legacyShow.displayDate ?? "?")")
                                 completion(nil, GenericImportError())
                             }
                         } else {
-                            print("[Import] Couldn't get a show from the new API to match \(fullArtist.name)-\(legacyShow.displayDate ?? "?")")
+                            LogWarning("[Import] Couldn't get a show from the new API to match \(fullArtist.name)-\(legacyShow.displayDate ?? "?")")
                             var error = blockError
                             if error == nil { error = GenericImportError() }
                             completion(nil, error)
@@ -95,7 +95,7 @@ class LegacyMapper {
                 }
             }
         } else {
-            print("[Import] legacy show has no \(legacyShow.displayDate == nil ? "display date" : "") \(legacyTrack == nil ? "matching track" : "")")
+            LogWarning("[Import] legacy show has no \(legacyShow.displayDate == nil ? "display date" : "") \(legacyTrack == nil ? "matching track" : "")")
             completion(nil, GenericImportError())
         }
     }

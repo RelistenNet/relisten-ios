@@ -40,6 +40,9 @@ PODS:
   - PINCache/Core (3.0.1-beta.6):
     - PINOperation (~> 1.1.0)
   - PINOperation (1.1.1)
+  - PinpointKit (1.2.0):
+    - PinpointKit/Core (= 1.2.0)
+  - PinpointKit/Core (1.2.0)
   - PINRemoteImage/Core (3.0.0-beta.13):
     - PINOperation
   - PINRemoteImage/iOS (3.0.0-beta.13):
@@ -92,6 +95,7 @@ DEPENDENCIES:
   - NAKPlaybackIndicatorView
   - NapySlider (from `../NapySlider`)
   - Observable (from `https://github.com/alecgorge/Observable.git`)
+  - PinpointKit
   - RealmSwift
   - Reveal-SDK
   - SDCloudUserDefaults
@@ -122,6 +126,7 @@ SPEC REPOS:
     - NAKPlaybackIndicatorView
     - PINCache
     - PINOperation
+    - PinpointKit
     - PINRemoteImage
     - Realm
     - RealmSwift
@@ -195,6 +200,7 @@ SPEC CHECKSUMS:
   Observable: 360b0132cef970a50bc69611df7fcbda46e91c34
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
+  PinpointKit: d1196cba6acc77fb76af50155f816228f03eaa9c
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   Realm: c286caf4dbf346ce24aad49ca76c7ce622d4a082
   RealmSwift: 2a9281e37d6de55f66f76254d49d28aeb1b729e4
@@ -208,6 +214,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: 2f3d73705c3d6f7f36423ccccda51c29710a69e8
+PODFILE CHECKSUM: 8a04e7f9079f04469c1d714e20872ba51523190f
 
 COCOAPODS: 1.5.3

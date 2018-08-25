@@ -8,33 +8,7 @@
 
 import Foundation
 import CleanroomLogger
-
-public func SetupLogging() {
-    var configs : [LogConfiguration] = []
-    
-#if DEBUG
-    let severity : LogSeverity = .debug
-    configs.append(XcodeLogConfiguration(debugMode: true))
-#else
-    let severity : LogSeverity = .info
-#endif
-    
-    let logDir = RelistenApp.sharedApp.logDirectory
-    let rotatingConfig = RotatingLogFileConfiguration(minimumSeverity: severity,
-                                                      daysToKeep: 3,
-                                                      directoryPath: logDir,
-                                                      formatters: [ReadableLogFormatter()])
-    do {
-        try rotatingConfig.createLogDirectory()
-    } catch {
-        print("Couldn't create log directory at \"\(logDir)\": \(error)")
-        return
-    }
-    
-    configs.append(rotatingConfig)
-    
-    Log.enable(configuration: configs)
-}
+import Crashlytics
 
 // (farkas) I've intentionally omitted the info level here. In my experience the distinction between debug and info is too fuzzy and I'm never consistent about separating the two levels. It's simpler to just have three levels with the following meanings:
 //   Error: Something went really wrong and the app is about to crash (or would be better off crashing)
@@ -61,4 +35,54 @@ public func LogDebug(_ msg: String, function: String = #function, filePath: Stri
 
 public func Trace(_ function: String = #function, filePath: String = #file, fileLine: Int = #line) {
     Log.debug?.trace(function, filePath: filePath, fileLine: fileLine)
+}
+
+public func SetupLogging() {
+    var configs : [LogConfiguration] = []
+    
+#if DEBUG
+    let severity : LogSeverity = .debug
+    configs.append(XcodeLogConfiguration(debugMode: true))
+#else
+    let severity : LogSeverity = .info
+#endif
+    
+    let logDir = RelistenApp.sharedApp.logDirectory
+    let rotatingConfig = RotatingLogFileConfiguration(minimumSeverity: severity,
+                                                      daysToKeep: 3,
+                                                      directoryPath: logDir,
+                                                      formatters: [ReadableLogFormatter()])
+    do {
+        try rotatingConfig.createLogDirectory()
+    } catch {
+        print("Couldn't create log directory at \"\(logDir)\": \(error)")
+        return
+    }
+    
+    configs.append(rotatingConfig)
+    
+    let crashlyticsConfig = BasicLogConfiguration(minimumSeverity: severity,
+                                                  filters: [],
+                                                  recorders: [CrashlyticsLogRecorder()],
+                                                  synchronousMode: false,
+                                                  configurations: nil)
+    configs.append(crashlyticsConfig)
+    
+    Log.enable(configuration: configs)
+}
+
+class CrashlyticsLogRecorder : LogRecorder {
+    let formatters: [LogFormatter]
+    lazy var queue: DispatchQueue = {
+        return DispatchQueue(label: "net.relisten.logging.crashlytics", qos: .background, autoreleaseFrequency: .workItem, target: nil)
+    }()
+
+    public init(formatters: [LogFormatter] = [ReadableLogFormatter()]) {
+        self.formatters = formatters
+    }
+    
+    func record(message: String, for entry: LogEntry, currentQueue: DispatchQueue, synchronousMode: Bool) {
+        CLSLogv("%@", getVaList([message]))
+    }
+    
 }

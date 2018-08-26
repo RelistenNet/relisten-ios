@@ -9,7 +9,6 @@
 import UIKit
 
 import Siesta
-import LayoutKit
 import KASlideShow
 import AsyncDisplayKit
 

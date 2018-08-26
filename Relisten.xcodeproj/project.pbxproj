@@ -19,6 +19,8 @@
 		4330E73F2120E72200329ED7 /* LegacyPhishODImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E73E2120E72200329ED7 /* LegacyPhishODImporter.swift */; };
 		4330E7412121470C00329ED7 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7402121470C00329ED7 /* Resource.swift */; };
 		4330E7432121474900329ED7 /* LegacyRelistenImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */; };
+		433A4402213361040059D251 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A4401213361040059D251 /* SettingsViewController.swift */; };
+		433A4404213361E50059D251 /* RelistenTableViewController-LayoutKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A4403213361E50059D251 /* RelistenTableViewController-LayoutKit.swift */; };
 		434066AC212FBE1A00FB1D94 /* Wormholy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AB212FBE1A00FB1D94 /* Wormholy.swift */; };
 		434066AE212FC88900FB1D94 /* UserFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AD212FC88900FB1D94 /* UserFeedback.swift */; };
 		434066B0212FD27800FB1D94 /* RelistenNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */; };
@@ -199,6 +201,8 @@
 		4330E7402121470C00329ED7 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = Extensions/Resource.swift; sourceTree = "<group>"; };
 		4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRelistenImporter.swift; sourceTree = "<group>"; };
 		433A44002132728F0059D251 /* PhishOD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhishOD.entitlements; sourceTree = "<group>"; };
+		433A4401213361040059D251 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = "View Controllers/SettingsViewController.swift"; sourceTree = "<group>"; };
+		433A4403213361E50059D251 /* RelistenTableViewController-LayoutKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RelistenTableViewController-LayoutKit.swift"; path = "View Controllers/RelistenTableViewController-LayoutKit.swift"; sourceTree = "<group>"; };
 		434066AB212FBE1A00FB1D94 /* Wormholy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Wormholy.swift; path = Helpers/Wormholy.swift; sourceTree = "<group>"; };
 		434066AD212FC88900FB1D94 /* UserFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFeedback.swift; path = Helpers/UserFeedback.swift; sourceTree = "<group>"; };
 		434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RelistenNavigationController.swift; path = "View Controllers/RelistenNavigationController.swift"; sourceTree = "<group>"; };
@@ -742,10 +746,12 @@
 				7CABACC81EDF141E009C5E3B /* Year */,
 				7CABACC71EDF1419009C5E3B /* Show */,
 				7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */,
+				433A4403213361E50059D251 /* RelistenTableViewController-LayoutKit.swift */,
 				7C8044081E6F29A800BA946E /* ArtistViewController.swift */,
 				43EF8D6720F01A41002FF970 /* CarPlayController.swift */,
 				430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */,
 				434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */,
+				433A4401213361040059D251 /* SettingsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1531,7 +1537,9 @@
 				43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */,
 				434066B0212FD27800FB1D94 /* RelistenNavigationController.swift in Sources */,
 				43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */,
+				433A4404213361E50059D251 /* RelistenTableViewController-LayoutKit.swift in Sources */,
 				43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */,
+				433A4402213361040059D251 /* SettingsViewController.swift in Sources */,
 				43B5344D210922CE00DE9B1F /* SourceViewController.swift in Sources */,
 				43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */,
 				43B53430210922CE00DE9B1F /* HorizontalShowCollectionCellNode.swift in Sources */,

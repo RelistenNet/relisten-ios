@@ -112,7 +112,12 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         }
         alertController.addAction(destroyAction)
         
-        self.myViewController?.present(alertController, animated: true)
+        if PlaybackController.sharedInstance.hasBarBeenAdded {
+            PlaybackController.sharedInstance.viewController.present(alertController, animated: true, completion: nil)
+        }
+        else {
+            self.myViewController?.present(alertController, animated: true)
+        }
     }
     
     private func setupLibraryObservers() {

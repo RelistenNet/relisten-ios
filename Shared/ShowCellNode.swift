@@ -77,7 +77,7 @@ public class ShowCellNode : ASCellNode {
         }
         
         if show.has_soundboard_source {
-            soundboardIndicatorNode = SoundboardIndicatorNode()
+            soundboardIndicatorNode = useCellLayout ? SmallSoundboardIndicatorNode() : SoundboardIndicatorNode()
         }
         else {
             soundboardIndicatorNode = nil
@@ -128,7 +128,7 @@ public class ShowCellNode : ASCellNode {
     
     public let rankNode: ASTextNode?
     public let offlineIndicatorNode = OfflineIndicatorNode()
-    public let soundboardIndicatorNode: SoundboardIndicatorNode?
+    public let soundboardIndicatorNode: ASDisplayNode?
     
     var isAvailableOffline = false
     

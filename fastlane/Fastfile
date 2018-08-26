@@ -64,6 +64,10 @@ platform :ios do
     )
   end
 
+  lane :screenshots do
+    capture_screenshots
+    # upload_to_app_store
+  end
 
   # desc "Deploy a new version to the App Store"
   # lane :appstore do

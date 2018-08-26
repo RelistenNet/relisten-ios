@@ -224,7 +224,6 @@ public class LegacyImporter : NSObject {
                     var favorites = favoritesDict
                     favorites[artistSlug] = nil
                     SDCloudUserDefaults.setObject(favorites, forKey: self.favoritesKey)
-                    SDCloudUserDefaults.synchronize()
                 }
             }
             completion(error)

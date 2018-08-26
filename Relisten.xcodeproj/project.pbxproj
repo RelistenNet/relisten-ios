@@ -195,6 +195,7 @@
 		4330E73E2120E72200329ED7 /* LegacyPhishODImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyPhishODImporter.swift; sourceTree = "<group>"; };
 		4330E7402121470C00329ED7 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Resource.swift; path = Extensions/Resource.swift; sourceTree = "<group>"; };
 		4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRelistenImporter.swift; sourceTree = "<group>"; };
+		433A44002132728F0059D251 /* PhishOD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhishOD.entitlements; sourceTree = "<group>"; };
 		434066AB212FBE1A00FB1D94 /* Wormholy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Wormholy.swift; path = Helpers/Wormholy.swift; sourceTree = "<group>"; };
 		434066AD212FC88900FB1D94 /* UserFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFeedback.swift; path = Helpers/UserFeedback.swift; sourceTree = "<group>"; };
 		434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RelistenNavigationController.swift; path = "View Controllers/RelistenNavigationController.swift"; sourceTree = "<group>"; };
@@ -618,6 +619,7 @@
 		7C8EF1041D5A49C200004B5C = {
 			isa = PBXGroup;
 			children = (
+				433A44002132728F0059D251 /* PhishOD.entitlements */,
 				7C449EBC1D5A511C00750D54 /* Apps */,
 				7C449EBD1D5A513300750D54 /* Shared */,
 				43524AD92114DFC700DC70CD /* RelistenTests */,
@@ -932,6 +934,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
 						};
 					};
 					7C449EAE1D5A4F4300750D54 = {
@@ -949,6 +954,9 @@
 								enabled = 1;
 							};
 							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -1618,6 +1626,7 @@
 			baseConfigurationReference = 8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
+				CODE_SIGN_ENTITLEMENTS = PhishOD.entitlements;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1634,6 +1643,7 @@
 			baseConfigurationReference = F199D81BECAC074CFA1DBE22 /* Pods-PhishOD.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
+				CODE_SIGN_ENTITLEMENTS = PhishOD.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;

@@ -133,9 +133,7 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
             
             DispatchQueue.main.async {
                 s.recentlyPlayedTracks = shows.asTracks()
-                s.recentShowsNode.shows = s.recentlyPlayedTracks.map { (show: $0.showInfo.show, artist: nil) }
-
-                s.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+                s.recentShowsNode.updateShows(s.recentlyPlayedTracks.map { CellShowWithArtist(show: $0.showInfo.show, artist: nil) })
             }
         }.dispose(to: &disposal)
         
@@ -144,9 +142,7 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
             
             DispatchQueue.main.async {
                 s.offlineSources = sources.asCompleteShows()
-                s.offlineNode.shows = s.offlineSources.map { (show: $0.show, artist: nil) }
-
-                s.tableNode.reloadSections([ Sections.offline.rawValue ], with: .automatic)
+                s.offlineNode.updateShows(s.offlineSources.map { CellShowWithArtist(show: $0.show, artist: nil) })
             }
         }.dispose(to: &disposal)
         
@@ -155,9 +151,7 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
             
             DispatchQueue.main.async {
                 s.favoritedSources = sources.asCompleteShows()
-                s.favoritedNode.shows = s.favoritedSources.map { (show: $0.show, artist: nil) }
-
-                s.tableNode.reloadSections([ Sections.favorited.rawValue ], with: .automatic)
+                s.favoritedNode.updateShows(s.favoritedSources.map { CellShowWithArtist(show: $0.show, artist: nil) })
             }
         }.dispose(to: &disposal)
     }
@@ -200,18 +194,15 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         DispatchQueue.main.async {
             if resource == self.resourceToday, let shows: [ShowWithArtist] = self.resourceToday.typedContent(ifNone: []) {
                 self.todayShows = shows
-                self.todayShowsNode.shows = shows.map { (show: $0, artist: nil) }
-                self.tableNode.reloadSections([ Sections.today.rawValue ], with: .automatic)
+                self.todayShowsNode.updateShows(shows.map { CellShowWithArtist(show: $0, artist: nil) })
             }
             else if resource == self.resourceRecentlyPerformed, let shows: [ShowWithArtist] = self.resourceRecentlyPerformed.typedContent(ifNone: []) {
                 self.recentlyPerformedShows = shows
-                self.recentlyPerformedNode.shows = shows.map { (show: $0, artist: nil) }
-                self.tableNode.reloadSections([ Sections.recentlyPerformed.rawValue ], with: .automatic)
+                self.recentlyPerformedNode.updateShows(shows.map { CellShowWithArtist(show: $0, artist: nil) })
             }
             else if resource == self.resourceRecentlyUpdated, let shows: [ShowWithArtist] = self.resourceRecentlyUpdated.typedContent(ifNone: []) {
                 self.recentlyUpdatedShows = shows
-                self.recentlyUpdatedNode.shows = shows.map { (show: $0, artist: nil) }
-                self.tableNode.reloadSections([ Sections.recentlyUpdated.rawValue ], with: .automatic)
+                self.recentlyUpdatedNode.updateShows(shows.map { CellShowWithArtist(show: $0, artist: nil) })
             }
         }
     }
@@ -232,17 +223,17 @@ extension ArtistViewController {
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .today:
-            return todayShows.count > 0 ? 1 : 0
+            fallthrough
         case .recentlyUpdated:
-            return recentlyUpdatedShows.count > 0 ? 1 : 0
+            fallthrough
         case .recentlyPerformed:
-            return recentlyPerformedShows.count > 0 ? 1 : 0
+            fallthrough
         case .favorited:
-            return favoritedSources.count > 0 ? 1 : 0
+            fallthrough
         case .offline:
-            return offlineSources.count > 0 ? 1 : 0
+            fallthrough
         case .recentlyPlayed:
-            return recentlyPlayedTracks.count > 0 ? 1 : 0
+            return 1
         case .count:
             fatalError()
         }

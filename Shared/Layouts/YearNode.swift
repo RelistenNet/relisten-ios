@@ -71,7 +71,7 @@ public class YearNode : ASCellNode {
             spacing: 8,
             justifyContent: .start,
             alignItems: .center,
-            children: ArrayNoNils(isAvailableOffline ? offlineNode : nil, showsNode, SpacerNode(), sourceNode)
+            children: ArrayNoNils(showsNode, isAvailableOffline ? offlineNode : nil, SpacerNode(), sourceNode)
         )
         bottom.style.alignSelf = .stretch
         

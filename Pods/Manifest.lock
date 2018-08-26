@@ -17,6 +17,7 @@ PODS:
   - Crashlytics (3.10.5):
     - Fabric (~> 1.7.9)
   - CWStatusBarNotification (2.3.5)
+  - DifferenceKit/Core (0.1.0)
   - DownloadButton (0.1.0)
   - DWURecyclingAlert (1.0.2)
   - EDColor (1.0.1)
@@ -88,6 +89,7 @@ DEPENDENCIES:
   - CleanroomLogger (from `https://github.com/500px/CleanroomLogger`)
   - Crashlytics
   - CWStatusBarNotification
+  - DifferenceKit/Core
   - DownloadButton
   - DWURecyclingAlert
   - EDColor
@@ -122,6 +124,7 @@ SPEC REPOS:
     - ChameleonFramework
     - Crashlytics
     - CWStatusBarNotification
+    - DifferenceKit
     - DownloadButton
     - DWURecyclingAlert
     - EDColor
@@ -198,6 +201,7 @@ SPEC CHECKSUMS:
   CleanroomLogger: 895a856dd3fa4c8d0494514a51d4a0ce193f1e63
   Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
+  DifferenceKit: 6ac57d26979c152c571821704e69c0be3de310b6
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
@@ -228,6 +232,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: ad2e311901b27fc30b624426a64ab6d1d5066752
+PODFILE CHECKSUM: 5efb18210d47283568183ba2229f2cd97c6312f7
 
 COCOAPODS: 1.5.3

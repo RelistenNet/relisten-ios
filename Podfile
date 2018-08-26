@@ -71,6 +71,9 @@ def apply_pods
   pod 'PinpointKit/ScreenshotDetector'
   pod 'CWStatusBarNotification'
   pod 'CleanroomLogger', :git => "https://github.com/500px/CleanroomLogger"
+  
+  # Only core because we need wrappers for ASCollectionNode, not UICollectionView
+  pod 'DifferenceKit/Core'
 end
 
 target 'RelistenShared' do

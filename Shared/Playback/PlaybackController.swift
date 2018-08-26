@@ -13,7 +13,7 @@ import Observable
 
 extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
-        TrackActions.showActionOptions(fromViewController: self, forTrack: track)
+        TrackActions.showActionOptions(fromViewController: self, inView: button, forTrack: track)
     }
 }
 
@@ -240,7 +240,7 @@ extension PlaybackController : AGAudioPlayerViewControllerPresentationDelegate {
 
 extension PlaybackController : TrackStatusActionHandler {
     public func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
-        TrackActions.showActionOptions(fromViewController: viewController, forTrack: track)
+        TrackActions.showActionOptions(fromViewController: viewController, inView: button, forTrack: track)
     }
 }
 
@@ -312,7 +312,7 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedDotsForAudioItem audioItem: AGAudioItem) {
         let completeInfo = (audioItem as! SourceTrackAudioItem).track
         
-        TrackActions.showActionOptions(fromViewController: agAudio, forTrack: completeInfo)
+        TrackActions.showActionOptions(fromViewController: agAudio, inView: agAudio.uiMiniButtonDots, forTrack: completeInfo)
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedPlusForAudioItem audioItem: AGAudioItem) {

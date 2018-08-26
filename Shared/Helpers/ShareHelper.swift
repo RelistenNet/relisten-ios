@@ -64,8 +64,14 @@ public class ShareHelper {
         return text
     }
     
-    public static func shareViewController(forTrack track: Track) -> UIViewController {
-        let items: [Any] = [text(forTrack: track), url(forTrack: track)]
+    static func viewController(activityItems items: [Any]) -> UIActivityViewController {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let vc = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            vc.modalTransitionStyle = .coverVertical
+            
+            return vc
+        }
+        
         let vc = VisualActivityViewController(activityItems: items, applicationActivities: nil)
         vc.previewNumberOfLines = 10
         vc.modalTransitionStyle = .coverVertical
@@ -73,12 +79,15 @@ public class ShareHelper {
         return vc
     }
     
+    public static func shareViewController(forTrack track: Track) -> UIViewController {
+        let items: [Any] = [text(forTrack: track), url(forTrack: track)]
+        
+        return viewController(activityItems: items)
+    }
+    
     public static func shareViewController(forSource: CompleteShowInformation) -> UIViewController {
         let items: [Any] = [text(forSource: forSource), url(forSource: forSource)]
-        let vc = VisualActivityViewController(activityItems: items, applicationActivities: nil)
-        vc.previewNumberOfLines = 10
-        vc.modalTransitionStyle = .coverVertical
         
-        return vc
+        return viewController(activityItems: items)
     }
 }

@@ -7,16 +7,24 @@
 //
 
 import UIKit
+import AsyncDisplayKit
 
 public class TrackActions {
-    public static func showActionOptions(fromViewController vc: UIViewController, forTrack track: Track) {
+    public static func showActionOptions(fromViewController vc: UIViewController, inView view: UIView, forTrack track: Track) {
         let duration = track.duration?.humanize()
         
         let a = UIAlertController(
             title: "\(track.title) \((duration == nil ? "" : "(\(duration!)" )))",
             message: "\(track.showInfo.source.display_date) • \(track.showInfo.artist.name)",
-            preferredStyle: UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
+            preferredStyle: .actionSheet
         )
+        
+        let sourceView = ASFindClosestViewOfLayer(view.layer)!
+        
+        if let popoverController = a.popoverPresentationController {
+            popoverController.sourceView = sourceView
+            popoverController.sourceRect = sourceView.bounds
+        }
         
         a.addAction(UIAlertAction(title: "Play Now", style: .default, handler: { _ in
             self.play(track: track, fromViewController: vc)
@@ -47,6 +55,11 @@ public class TrackActions {
             a.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
                 let shareVc = ShareHelper.shareViewController(forTrack: track)
 
+                if let popoverController = shareVc.popoverPresentationController {
+                    popoverController.sourceView = sourceView
+                    popoverController.sourceRect = sourceView.bounds
+                }
+                
                 if PlaybackController.sharedInstance.hasBarBeenAdded {
                     PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
                 }

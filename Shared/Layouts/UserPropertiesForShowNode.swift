@@ -81,6 +81,11 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     @objc public func presentShareSheet() {
         let shareVc = ShareHelper.shareViewController(forSource: completeShowInformation)
         
+        if let popoverController = shareVc.popoverPresentationController {
+            popoverController.sourceView = shareButton.view
+            popoverController.sourceRect = shareButton.view.bounds
+        }
+        
         if PlaybackController.sharedInstance.hasBarBeenAdded {
             PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
         }
@@ -99,7 +104,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         let alertController = UIAlertController(
             title: "Delete all downloaded tracks?",
             message: "This will delete " + songs +  " and free up \(sizeOfDownloadedTracks.humanizeBytes())",
-            preferredStyle: UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
+            preferredStyle: .actionSheet
         )
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAction)
@@ -111,6 +116,11 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
             self.setNeedsLayout()
         }
         alertController.addAction(destroyAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = deleteButton.view
+            popoverController.sourceRect = deleteButton.view.bounds
+        }
         
         if PlaybackController.sharedInstance.hasBarBeenAdded {
             PlaybackController.sharedInstance.viewController.present(alertController, animated: true, completion: nil)

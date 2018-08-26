@@ -154,6 +154,6 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
 
 extension SourceViewController : TrackStatusActionHandler {
     public func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
-        TrackActions.showActionOptions(fromViewController: self, forTrack: track)
+        TrackActions.showActionOptions(fromViewController: self, inView: button, forTrack: track)
     }
 }

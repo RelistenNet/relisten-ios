@@ -29,6 +29,25 @@ public class SoundboardIndicatorNode: ASDisplayNode {
     }
 }
 
+public class SmallSoundboardIndicatorNode: ASDisplayNode {
+    public override init() {
+        sbdNode = ASTextNode("SBD", textStyle: .caption2, color: AppColors.textOnPrimary)
+        
+        super.init()
+        
+        backgroundColor = AppColors.soundboard
+        automaticallyManagesSubnodes = true
+        
+        cornerRadius = 2.0
+    }
+    
+    let sbdNode: ASTextNode
+    
+    public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        return ASInsetLayoutSpec(insets: UIEdgeInsetsMake(1, 1, 1, 1), child: sbdNode)
+    }
+}
+
 public class RemasterIndicatorNode: ASDisplayNode {
     public override init() {
         sbdNode = ASTextNode("Remast", textStyle: .subheadline, color: AppColors.textOnPrimary)

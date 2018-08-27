@@ -72,7 +72,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
                 return artist
             }
         } catch {
-            LogError(error)
+            LogError("\(error)")
         }
         fatalError("Couldn't load the Phish artist JSON data")
     }

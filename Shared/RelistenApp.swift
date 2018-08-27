@@ -16,6 +16,7 @@ import RealmSwift
 public protocol RelistenAppDelegate {
     var rootNavigationController: RelistenNavigationController! { get }
     var appIcon : UIImage { get }
+    var isPhishOD : Bool { get }
 }
 
 public class RelistenApp {
@@ -35,9 +36,11 @@ public class RelistenApp {
         return retval
     }()
     
-    public lazy var appIcon : UIImage = {
-        return delegate.appIcon
-    }()
+    public var appIcon : UIImage {
+        get {
+            return delegate.appIcon
+        }
+    }
     
     public lazy var appVersion : String = {
         guard let retval = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
@@ -52,6 +55,12 @@ public class RelistenApp {
         }
         return retval
     }()
+    
+    public var isPhishOD : Bool  {
+        get {
+            return delegate.isPhishOD
+        }
+    }
     
     public init(delegate: RelistenAppDelegate) {
         self.delegate = delegate
@@ -103,7 +112,14 @@ public class RelistenDummyAppDelegate : RelistenAppDelegate {
             fatalError("An application delegate hasn't been set yet!")
         }
     }
+    
     public var appIcon : UIImage {
+        get {
+            fatalError("An application delegate hasn't been set yet!")
+        }
+    }
+    
+    public var isPhishOD : Bool {
         get {
             fatalError("An application delegate hasn't been set yet!")
         }

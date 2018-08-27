@@ -5,3 +5,4 @@ Images
 "artist" by Gregor Cresnar from the [Noun Project](http://thenounproject.com)
 "Share" by Nick Holroyd from the [Noun Project](http://thenounproject.com)
 "Delete" by Fantastic from the [Noun Project](http://thenounproject.com)
+"Gear" by Sergey Demushkin from the [Noun Project](http://thenounproject.com)

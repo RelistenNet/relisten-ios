@@ -15,6 +15,7 @@ import RealmSwift
 
 public protocol RelistenAppDelegate {
     var rootNavigationController: RelistenNavigationController! { get }
+    var appIcon : UIImage { get }
 }
 
 public class RelistenApp {
@@ -25,6 +26,31 @@ public class RelistenApp {
         return NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                    FileManager.SearchPathDomainMask.userDomainMask,
                                                    true).first! + "/Logs"
+    }()
+    
+    public lazy var appName : String = {
+        guard let retval = Bundle.main.infoDictionary?["CFBundleName"] as? String else {
+            return "Relisten"
+        }
+        return retval
+    }()
+    
+    public lazy var appIcon : UIImage = {
+        return delegate.appIcon
+    }()
+    
+    public lazy var appVersion : String = {
+        guard let retval = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+            return "1.0"
+        }
+        return retval
+    }()
+    
+    public lazy var appBuildVersion : String = {
+        guard let retval = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else {
+            return "0"
+        }
+        return retval
     }()
     
     public init(delegate: RelistenAppDelegate) {
@@ -73,6 +99,11 @@ public class RelistenApp {
 
 public class RelistenDummyAppDelegate : RelistenAppDelegate {
     public var rootNavigationController: RelistenNavigationController! {
+        get {
+            fatalError("An application delegate hasn't been set yet!")
+        }
+    }
+    public var appIcon : UIImage {
         get {
             fatalError("An application delegate hasn't been set yet!")
         }

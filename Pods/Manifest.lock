@@ -86,7 +86,7 @@ DEPENDENCIES:
   - BASSGaplessAudioPlayer (from `../BASSGaplessAudioPlayer`)
   - Cache
   - ChameleonFramework
-  - CleanroomLogger (from `https://github.com/500px/CleanroomLogger`)
+  - CleanroomLogger (from `https://github.com/farktronix/CleanroomLogger`)
   - Crashlytics
   - CWStatusBarNotification
   - DifferenceKit/Core
@@ -154,7 +154,7 @@ EXTERNAL SOURCES:
   BASSGaplessAudioPlayer:
     :path: "../BASSGaplessAudioPlayer"
   CleanroomLogger:
-    :git: https://github.com/500px/CleanroomLogger
+    :git: https://github.com/farktronix/CleanroomLogger
   FastImageCache:
     :git: https://github.com/mallorypaine/FastImageCache.git
   FaveButton:
@@ -172,8 +172,8 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CleanroomLogger:
-    :commit: dc88d876184d114701cbbc8a3ec04face6b83961
-    :git: https://github.com/500px/CleanroomLogger
+    :commit: e68286255bf79290dc206b46aecaef6438834bba
+    :git: https://github.com/farktronix/CleanroomLogger
   FastImageCache:
     :commit: a196da2ef8646ad310f696e64f675e9a942d2ea9
     :git: https://github.com/mallorypaine/FastImageCache.git
@@ -198,7 +198,7 @@ SPEC CHECKSUMS:
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
   Cache: fae4826ba52d7a5d9a3a0ad6fe73e3501a82964f
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  CleanroomLogger: 895a856dd3fa4c8d0494514a51d4a0ce193f1e63
+  CleanroomLogger: f165bae4f3c9a15a22ec2fad9b0826f27fb047d5
   Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DifferenceKit: 6ac57d26979c152c571821704e69c0be3de310b6
@@ -232,6 +232,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: 5efb18210d47283568183ba2229f2cd97c6312f7
+PODFILE CHECKSUM: 1a474834c2c5b86785ef0668ec5e43a94e2ffa69
 
 COCOAPODS: 1.5.3

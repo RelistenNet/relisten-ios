@@ -12,7 +12,7 @@ CleanroomLogger is part of [the Cleanroom Project](https://github.com/gilt/Clean
 
 ### Swift compatibility
 
-This is the `master` branch. It uses **Swift 4.0** and **requires Xcode 9.0** to compile.
+This is the `master` branch. It uses **Swift 4.1** and **requires Xcode 9.3** to compile.
 
 
 #### Current status
@@ -554,7 +554,7 @@ In the meantime, we’ll be tracking the latest releases of Swift & Xcode, and [
 
 CleanroomLogger is in active development, and we welcome your contributions.
 
-If you’d like to contribute to this or any other Cleanroom Project repo, please read [the contribution guidelines](https://github.com/gilt/Cleanroom#contributing-to-the-cleanroom-project).
+If you’d like to contribute to this or any other Cleanroom Project repo, please read [the contribution guidelines](https://github.com/gilt/Cleanroom#contributing-to-the-cleanroom-project). If you have any questions, please reach out to project owner [Paul Lee](http://github.com/pauljlee).
 
 
 ### Acknowledgements

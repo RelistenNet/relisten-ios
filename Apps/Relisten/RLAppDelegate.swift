@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     public lazy var appIcon : UIImage = {
         return UIImage(named: "Relisten App Icon")!
     }()
+    public let isPhishOD : Bool = false
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         SetupLogging()

@@ -52,6 +52,10 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
     public let recentlyUpdatedNode: HorizontalShowCollectionCellNode
     public let favoritedNode: HorizontalShowCollectionCellNode
     public let offlineNode: HorizontalShowCollectionCellNode
+    
+    lazy var settingsViewController : SettingsViewController = {
+        return SettingsViewController()
+    }()
 
     public required init(artist: ArtistWithCounts) {
         self.artist = artist
@@ -87,10 +91,19 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
         recentlyUpdatedNode.collectionNode.delegate = self
         favoritedNode.collectionNode.delegate = self
         offlineNode.collectionNode.delegate = self
+        
+        if RelistenApp.sharedApp.isPhishOD {
+            let settingsItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain, target: self, action: #selector(presentSettings(_:)))
+            self.navigationItem.rightBarButtonItem = settingsItem
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("NSCoding not supported...like at all.")
+    }
+    
+    @objc func presentSettings(_ sender: UINavigationBar?) {
+        navigationController?.pushViewController(settingsViewController, animated: true)
     }
 
     private var av: RelistenMenuView! = nil

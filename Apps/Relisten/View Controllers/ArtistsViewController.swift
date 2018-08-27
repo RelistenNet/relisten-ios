@@ -44,6 +44,8 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     
     public var resourceRecentlyPerformed: Resource? = nil
     public let resourceRecentlyUpdated: Resource
+    
+    public let settingsViewController : SettingsViewController
 
     public init() {
         recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
@@ -53,6 +55,8 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         allRecentlyUpdatedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
 
         resourceRecentlyUpdated = RelistenApi.recentlyUpdated()
+        
+        settingsViewController = SettingsViewController()
 
         super.init(useCache: true, refreshOnAppear: true)
         
@@ -64,6 +68,9 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         
         resourceRecentlyUpdated.addObserver(self)
         resourceRecentlyUpdated.loadFromCacheThenUpdate()
+        
+        let settingsItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain, target: self, action: #selector(presentSettings(_:)))
+        self.navigationItem.rightBarButtonItem = settingsItem
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -162,6 +169,10 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         super.viewWillAppear(animated)
         
         AppColors_SwitchToRelisten(navigationController)
+    }
+    
+    @objc func presentSettings(_ sender: UINavigationBar?) {
+        navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
     override func has(oldData old: [ArtistWithCounts], changed new: [ArtistWithCounts]) -> Bool {

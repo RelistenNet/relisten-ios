@@ -21,6 +21,9 @@
 		4330E7432121474900329ED7 /* LegacyRelistenImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */; };
 		433A4402213361040059D251 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A4401213361040059D251 /* SettingsViewController.swift */; };
 		433A4404213361E50059D251 /* RelistenTableViewController-LayoutKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A4403213361E50059D251 /* RelistenTableViewController-LayoutKit.swift */; };
+		433A44062133AA380059D251 /* CreditsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A44052133AA380059D251 /* CreditsNode.swift */; };
+		433A44092133B43A0059D251 /* ManageOfflineMusicNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A44082133B43A0059D251 /* ManageOfflineMusicNode.swift */; };
+		433A440B2133B4B10059D251 /* BugReportingSettingsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A440A2133B4B10059D251 /* BugReportingSettingsNode.swift */; };
 		434066AC212FBE1A00FB1D94 /* Wormholy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AB212FBE1A00FB1D94 /* Wormholy.swift */; };
 		434066AE212FC88900FB1D94 /* UserFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AD212FC88900FB1D94 /* UserFeedback.swift */; };
 		434066B0212FD27800FB1D94 /* RelistenNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */; };
@@ -203,6 +206,9 @@
 		433A44002132728F0059D251 /* PhishOD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhishOD.entitlements; sourceTree = "<group>"; };
 		433A4401213361040059D251 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = "View Controllers/SettingsViewController.swift"; sourceTree = "<group>"; };
 		433A4403213361E50059D251 /* RelistenTableViewController-LayoutKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RelistenTableViewController-LayoutKit.swift"; path = "View Controllers/RelistenTableViewController-LayoutKit.swift"; sourceTree = "<group>"; };
+		433A44052133AA380059D251 /* CreditsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreditsNode.swift; path = Layouts/CreditsNode.swift; sourceTree = "<group>"; };
+		433A44082133B43A0059D251 /* ManageOfflineMusicNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManageOfflineMusicNode.swift; path = Layouts/ManageOfflineMusicNode.swift; sourceTree = "<group>"; };
+		433A440A2133B4B10059D251 /* BugReportingSettingsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BugReportingSettingsNode.swift; path = Layouts/BugReportingSettingsNode.swift; sourceTree = "<group>"; };
 		434066AB212FBE1A00FB1D94 /* Wormholy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Wormholy.swift; path = Helpers/Wormholy.swift; sourceTree = "<group>"; };
 		434066AD212FC88900FB1D94 /* UserFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFeedback.swift; path = Helpers/UserFeedback.swift; sourceTree = "<group>"; };
 		434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RelistenNavigationController.swift; path = "View Controllers/RelistenNavigationController.swift"; sourceTree = "<group>"; };
@@ -400,6 +406,16 @@
 			path = Legacy;
 			sourceTree = "<group>";
 		};
+		433A44072133B41D0059D251 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				433A44052133AA380059D251 /* CreditsNode.swift */,
+				433A44082133B43A0059D251 /* ManageOfflineMusicNode.swift */,
+				433A440A2133B4B10059D251 /* BugReportingSettingsNode.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		43524AD92114DFC700DC70CD /* RelistenTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -576,6 +592,7 @@
 		7C80440B1E6F29AB00BA946E /* DisplayNodes */ = {
 			isa = PBXGroup;
 			children = (
+				433A44072133B41D0059D251 /* Settings */,
 				7C31553320C2076C00F07622 /* AXRatingViewNode.swift */,
 				4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */,
 				43A035D0210D255700C087DD /* FavoriteButtonNode.swift */,
@@ -1495,6 +1512,7 @@
 				43B53426210922CE00DE9B1F /* UIFont+ChangeWeight.swift in Sources */,
 				430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */,
 				43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */,
+				433A44062133AA380059D251 /* CreditsNode.swift in Sources */,
 				43B5341E210922CE00DE9B1F /* YearSorting.swift in Sources */,
 				4330E7412121470C00329ED7 /* Resource.swift in Sources */,
 				43A035D2210D255700C087DD /* FavoriteButtonNode.swift in Sources */,
@@ -1532,6 +1550,7 @@
 				43B53463210922CE00DE9B1F /* AppColors.swift in Sources */,
 				43B53438210922CE00DE9B1F /* SwitchCellLayout.swift in Sources */,
 				43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */,
+				433A44092133B43A0059D251 /* ManageOfflineMusicNode.swift in Sources */,
 				43B53423210922CE00DE9B1F /* SourceTrackAudioItem.swift in Sources */,
 				4330E73F2120E72200329ED7 /* LegacyPhishODImporter.swift in Sources */,
 				43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */,
@@ -1549,6 +1568,7 @@
 				430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */,
 				43B53431210922CE00DE9B1F /* OfflineIndicatorNode.swift in Sources */,
 				43B53452210922CE00DE9B1F /* ArtistViewController.swift in Sources */,
+				433A440B2133B4B10059D251 /* BugReportingSettingsNode.swift in Sources */,
 				43B53432210922CE00DE9B1F /* ReviewLayout.swift in Sources */,
 				43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */,
 				43B53442210922CE00DE9B1F /* RecentlyPerformedViewController.swift in Sources */,

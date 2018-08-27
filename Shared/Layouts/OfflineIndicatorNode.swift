@@ -11,6 +11,7 @@ import UIKit
 import AsyncDisplayKit
 
 public let OfflineIndicatorImage = UIImage(named: "download-complete")!
+public let OfflineIndicatorFilledImage = UIImage(named: "download-complete-filled")!
 public let OfflineDownloadingIndicatorImage = UIImage(named: "download-active")!
 
 public class OfflineIndicatorNode : ASImageNode {
@@ -18,6 +19,17 @@ public class OfflineIndicatorNode : ASImageNode {
         super.init()
         
         image = OfflineIndicatorImage
+        contentMode = .scaleAspectFit
+        style.preferredSize = CGSize(width: 12, height: 12)
+        automaticallyManagesSubnodes = true
+    }
+}
+
+public class OfflineIndicatorFilledNode : ASImageNode {
+    public override init() {
+        super.init()
+        
+        image = OfflineIndicatorFilledImage
         contentMode = .scaleAspectFit
         style.preferredSize = CGSize(width: 12, height: 12)
         automaticallyManagesSubnodes = true

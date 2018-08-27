@@ -90,10 +90,10 @@ end
 
 target 'Relisten' do
   apply_pods
+end
 
-  target 'RelistenUITests' do
-    inherit! :search_paths
-  end
+target 'RelistenUITests' do
+  apply_pods
 end
 
 post_install do |installer|

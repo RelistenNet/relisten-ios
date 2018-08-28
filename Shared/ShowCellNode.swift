@@ -126,7 +126,7 @@ public class ShowCellNode : ASCellNode {
     public let updateDateNode : ASTextNode?
     
     public let rankNode: ASTextNode?
-    public let offlineIndicatorNode = OfflineIndicatorNode()
+    public let offlineIndicatorNode = OfflineIndicatorFilledNode()
     public let soundboardIndicatorNode: ASDisplayNode?
     
     var isAvailableOffline = false

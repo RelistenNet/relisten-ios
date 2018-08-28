@@ -40,12 +40,11 @@ public func Trace(_ function: String = #function, filePath: String = #file, file
 public func SetupLogging() {
     var configs : [LogConfiguration] = []
     
-#if DEBUG
     let severity : LogSeverity = .debug
+    
+    #if DEBUG
     configs.append(XcodeLogConfiguration(debugMode: true))
-#else
-    let severity : LogSeverity = .info
-#endif
+    #endif
     
     let logDir = RelistenApp.sharedApp.logDirectory
     let rotatingConfig = RotatingLogFileConfiguration(minimumSeverity: severity,

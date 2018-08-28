@@ -17,7 +17,7 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     }
 }
 
-public class PlaybackController {
+@objc public class PlaybackController : NSObject {
     public let playbackQueue: AGAudioPlayerUpNextQueue
     public let player: AGAudioPlayer
     public let viewController: AGAudioPlayerViewController
@@ -33,12 +33,15 @@ public class PlaybackController {
     
     public static let sharedInstance = PlaybackController()
     
-    public required init() {
+    public required override init() {
         playbackQueue = AGAudioPlayerUpNextQueue()
         player = AGAudioPlayer(queue: playbackQueue)
         viewController = AGAudioPlayerViewController(player: player)
         
         shrinker = PlaybackMinibarShrinker(window: PlaybackController.window, barHeight: viewController.barHeight)
+        
+        super.init()
+        
         viewController.presentationDelegate = self
         viewController.cellDataSource = self
         viewController.delegate = self
@@ -363,3 +366,12 @@ extension PlaybackController : AGAudioPlayerViewControllerCellDataSource {
     }
 }
 
+extension PlaybackController : AGAudioPlayerLoggingDelegate {
+    public func audioPlayer(_ audioPlayer: AGAudioPlayer, loggedLine line: String) {
+        LogDebug(line)
+    }
+    
+    public func audioPlayer(_ audioPlayer: AGAudioPlayer, loggedErrorLine line: String) {
+        LogError(line)
+    }
+}

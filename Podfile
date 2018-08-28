@@ -70,7 +70,7 @@ def apply_pods
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'
   pod 'CWStatusBarNotification'
-  pod 'CleanroomLogger', :git => "https://github.com/500px/CleanroomLogger"
+  pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger"
   
   # Only core because we need wrappers for ASCollectionNode, not UICollectionView
   pod 'DifferenceKit/Core'
@@ -90,10 +90,10 @@ end
 
 target 'Relisten' do
   apply_pods
+end
 
-  target 'RelistenUITests' do
-    inherit! :search_paths
-  end
+target 'RelistenUITests' do
+  apply_pods
 end
 
 post_install do |installer|

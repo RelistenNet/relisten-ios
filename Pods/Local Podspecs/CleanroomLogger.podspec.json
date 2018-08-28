@@ -11,6 +11,6 @@
   "platforms": {
     "ios": "9.0"
   },
-  "source_files": "Sources/*",
+  "source_files": "Sources/*.swift",
   "license": "MIT"
 }

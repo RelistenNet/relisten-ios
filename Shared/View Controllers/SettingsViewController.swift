@@ -30,7 +30,10 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let manageOfflineMusicNode : ManageOfflineMusicNode = ManageOfflineMusicNode()
+    lazy var manageOfflineMusicNode : ManageOfflineMusicNode = {
+        return ManageOfflineMusicNode(viewController: self)
+    }()
+    
     let bugReportingNode : BugReportingSettingsNode = BugReportingSettingsNode()
     
     lazy var creditsNode : CreditsNode = {

@@ -41,6 +41,8 @@ public protocol DownloadManagerDataSource : class {
     func nextTrackToDownload() -> Track?
     func tracksToDownload(_ count : Int) -> [Track]?
     func currentlyDownloadingTracks() -> [Track]?
+    
+    func deleteAllTracks(_ completion : @escaping () -> Void)
 }
 
 public class TrackDownload {
@@ -147,6 +149,46 @@ public class DownloadManager {
                 }
                 catch {
                     LogWarning("Error when removing downloaded track: \(error)")
+                }
+            }
+        }
+    }
+    
+    public func deleteAllDownloads(_ completion: @escaping () -> Void) {
+        queue.async {
+            LogDebug("⚠️🗑 Deleting all downloaded tracks!")
+            
+            // Cancel all outstanding downloads
+            for i in 0..<self.downloadManager.downloadingArray.count {
+                self.downloadManager.cancelTaskAtIndex(i)
+            }
+            
+            // Delete everything in the db
+            let group = DispatchGroup()
+            if let dataSource = self.dataSource {
+                group.enter()
+                dataSource.deleteAllTracks {
+                    group.leave()
+                }
+            }
+            
+            
+            group.notify(queue: self.queue.queue) {
+                // Delete everything on the filesystem just to be sure
+                do {
+                    try FileManager.default.removeItem(atPath: self.downloadFolder)
+                } catch {
+                    LogWarn("Error deleting downloaded tracks from the filesystem: \(error)")
+                }
+                do {
+                    try FileManager.default.createDirectory(atPath: self.downloadFolder, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                    LogWarn("Error creating download directory on the filesystem: \(error)")
+                }
+                
+                DispatchQueue.global().async {
+                    LogDebug("⚠️🗑 Finished deleting all tracks")
+                    completion()
                 }
             }
         }

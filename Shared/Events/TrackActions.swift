@@ -41,7 +41,7 @@ public class TrackActions {
         }))
         
         a.addAction(UIAlertAction(title: "Go to Show", style: .default, handler: { _ in
-            vc.navigationController?.pushViewController(SourcesViewController(artist: track.showInfo.artist, show: track.showInfo.show), animated: true)
+            SourcesViewController(artist: track.showInfo.artist, show: track.showInfo.show).presentIfNecessary(navigationController: RelistenApp.sharedApp.delegate.rootNavigationController)
         }))
 
         MyLibrary.shared.diskUsageForTrackURL(track: track.sourceTrack) { (size) in

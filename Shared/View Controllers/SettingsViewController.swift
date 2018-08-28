@@ -19,11 +19,12 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
     }
     
     public init() {
-        
         super.init()
         
         self.tableNode.view.separatorStyle = .none
         self.tableNode.view.backgroundColor = AppColors.lightGreyBackground
+        
+        title = "Settings"
     }
     
     public required init?(coder aDecoder: NSCoder) {

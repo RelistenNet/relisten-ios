@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import AsyncDisplayKit
-//import DWURecyclingAlert
+import Observable
 
 import RealmSwift
 
@@ -21,6 +21,8 @@ public protocol RelistenAppDelegate {
 
 public class RelistenApp {
     public static let sharedApp = RelistenApp(delegate: RelistenDummyAppDelegate())
+    
+    public let shakeToReportBugEnabled = Observable<Bool>(true)
     
     public var delegate : RelistenAppDelegate
     public lazy var logDirectory : String = {
@@ -62,10 +64,19 @@ public class RelistenApp {
         }
     }
     
+    let bugReportingKey = "EnableBugReporting"
+    var disposal = Disposal()
     public init(delegate: RelistenAppDelegate) {
+        if let enableBugReporting = UserDefaults.standard.object(forKey: bugReportingKey) as! Bool? {
+            shakeToReportBugEnabled.value = enableBugReporting
+        }
         self.delegate = delegate
         
         DownloadManager.shared.dataSource = MyLibrary.shared
+        
+        shakeToReportBugEnabled.observe { (new, _) in
+            UserDefaults.standard.set(new, forKey: self.bugReportingKey)
+        }.add(to: &disposal)
     }
     
     public func setupThirdPartyDependencies() {

@@ -21,6 +21,7 @@ def apply_pods
   pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git"
   pod 'KASlideShow'
   pod 'LayoutKit'
+  pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git"
   pod 'LicensesViewController'
   pod 'MZDownloadManager', :git => "https://github.com/alecgorge/MZDownloadManager.git"
   pod 'NAKPlaybackIndicatorView'

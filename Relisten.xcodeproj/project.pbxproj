@@ -24,6 +24,8 @@
 		433A44062133AA380059D251 /* CreditsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A44052133AA380059D251 /* CreditsNode.swift */; };
 		433A44092133B43A0059D251 /* ManageOfflineMusicNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A44082133B43A0059D251 /* ManageOfflineMusicNode.swift */; };
 		433A440B2133B4B10059D251 /* BugReportingSettingsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A440A2133B4B10059D251 /* BugReportingSettingsNode.swift */; };
+		433A440E2134E9A60059D251 /* Credits.plist in Resources */ = {isa = PBXBuildFile; fileRef = 433A440D2134E9A50059D251 /* Credits.plist */; };
+		433A440F2134E9A60059D251 /* Credits.plist in Resources */ = {isa = PBXBuildFile; fileRef = 433A440D2134E9A50059D251 /* Credits.plist */; };
 		434066AC212FBE1A00FB1D94 /* Wormholy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AB212FBE1A00FB1D94 /* Wormholy.swift */; };
 		434066AE212FC88900FB1D94 /* UserFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AD212FC88900FB1D94 /* UserFeedback.swift */; };
 		434066B0212FD27800FB1D94 /* RelistenNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */; };
@@ -209,6 +211,7 @@
 		433A44052133AA380059D251 /* CreditsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreditsNode.swift; path = Layouts/CreditsNode.swift; sourceTree = "<group>"; };
 		433A44082133B43A0059D251 /* ManageOfflineMusicNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManageOfflineMusicNode.swift; path = Layouts/ManageOfflineMusicNode.swift; sourceTree = "<group>"; };
 		433A440A2133B4B10059D251 /* BugReportingSettingsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BugReportingSettingsNode.swift; path = Layouts/BugReportingSettingsNode.swift; sourceTree = "<group>"; };
+		433A440D2134E9A50059D251 /* Credits.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Credits.plist; path = LicenseGenerator/Credits.plist; sourceTree = SOURCE_ROOT; };
 		434066AB212FBE1A00FB1D94 /* Wormholy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Wormholy.swift; path = Helpers/Wormholy.swift; sourceTree = "<group>"; };
 		434066AD212FC88900FB1D94 /* UserFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFeedback.swift; path = Helpers/UserFeedback.swift; sourceTree = "<group>"; };
 		434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RelistenNavigationController.swift; path = "View Controllers/RelistenNavigationController.swift"; sourceTree = "<group>"; };
@@ -537,6 +540,7 @@
 				43CBE10F2109296A003FAF51 /* RelistenApp.swift */,
 				7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */,
 				43EF8D6920F099DC002FF970 /* CREDITS */,
+				433A440D2134E9A50059D251 /* Credits.plist */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1043,6 +1047,7 @@
 				7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */,
 				7C31550F20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */,
 				7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */,
+				433A440F2134E9A60059D251 /* Credits.plist in Resources */,
 				7C61C7CF1F18DB320094E0AF /* SharedAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1059,6 +1064,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */,
+				433A440E2134E9A60059D251 /* Credits.plist in Resources */,
 				7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */,
 				7C31550E20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */,
 				7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */,

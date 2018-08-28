@@ -232,7 +232,7 @@
 		43CBE10F2109296A003FAF51 /* RelistenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenApp.swift; sourceTree = "<group>"; };
 		43CBE11421093C9B003FAF51 /* Phish.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Phish.json; sourceTree = "<group>"; };
 		43EF8D6720F01A41002FF970 /* CarPlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayController.swift; path = "View Controllers/CarPlayController.swift"; sourceTree = "<group>"; };
-		43EF8D6920F099DC002FF970 /* CREDITS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CREDITS.md; sourceTree = "<group>"; };
+		43EF8D6920F099DC002FF970 /* CREDITS */ = {isa = PBXFileReference; lastKnownFileType = text; name = CREDITS; path = ../LicenseGenerator/Artwork/CREDITS; sourceTree = "<group>"; };
 		4768B6B0073CD79A919BDF7F /* Pods-RelistenShared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenShared.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenShared/Pods-RelistenShared.release.xcconfig"; sourceTree = "<group>"; };
 		598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Relisten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3DAE0BE91F9DD1D3300EE2 /* Pods-PhishODUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -536,7 +536,7 @@
 				7C8044141E6F4B1E00BA946E /* AppColors.swift */,
 				43CBE10F2109296A003FAF51 /* RelistenApp.swift */,
 				7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */,
-				43EF8D6920F099DC002FF970 /* CREDITS.md */,
+				43EF8D6920F099DC002FF970 /* CREDITS */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -847,6 +847,7 @@
 				341E653D3A759453FC2BCF46 /* [CP] Check Pods Manifest.lock */,
 				43B5340C2109226F00DE9B1F /* Sources */,
 				43B5340D2109226F00DE9B1F /* Frameworks */,
+				433A440C2134E7B00059D251 /* Generate Credits */,
 				43B5340E2109226F00DE9B1F /* CopyFiles */,
 			);
 			buildRules = (
@@ -1111,6 +1112,20 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		433A440C2134E7B00059D251 /* Generate Credits */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Credits";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./LicenseGenerator/credits.py -s \"$SRCROOT\" -o \"$SRCROOT/LicenseGenerator/Credits.plist\"";
+		};
 		48F37C6B2241DF7F332C59B2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1154,6 +1169,7 @@
 				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
 				"${BUILT_PRODUCTS_DIR}/KASlideShow/KASlideShow.framework",
 				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
+				"${BUILT_PRODUCTS_DIR}/LicensesViewController/LicensesViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/MZDownloadManager/MZDownloadManager.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView.framework",
@@ -1195,6 +1211,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KASlideShow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LicensesViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZDownloadManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NAKPlaybackIndicatorView.framework",
@@ -1246,6 +1263,7 @@
 				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
 				"${BUILT_PRODUCTS_DIR}/KASlideShow/KASlideShow.framework",
 				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
+				"${BUILT_PRODUCTS_DIR}/LicensesViewController/LicensesViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/MZDownloadManager/MZDownloadManager.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView.framework",
@@ -1287,6 +1305,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KASlideShow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LicensesViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZDownloadManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NAKPlaybackIndicatorView.framework",
@@ -1402,6 +1421,7 @@
 				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
 				"${BUILT_PRODUCTS_DIR}/KASlideShow/KASlideShow.framework",
 				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
+				"${BUILT_PRODUCTS_DIR}/LicensesViewController/LicensesViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/MZDownloadManager/MZDownloadManager.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView.framework",
@@ -1443,6 +1463,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KASlideShow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LicensesViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZDownloadManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NAKPlaybackIndicatorView.framework",

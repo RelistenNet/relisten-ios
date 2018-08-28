@@ -8,6 +8,7 @@
 
 import Foundation
 import AsyncDisplayKit
+import LicensesViewController
 
 public class SettingsViewController : RelistenBaseAsyncTableViewController {
     enum Sections: Int, RawRepresentable {
@@ -18,9 +19,6 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
     }
     
     public init() {
-        manageOfflineMusicNode = ManageOfflineMusicNode()
-        bugReportingNode = BugReportingSettingsNode()
-        creditsNode = CreditsNode()
         
         super.init()
         
@@ -32,9 +30,21 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let manageOfflineMusicNode : ManageOfflineMusicNode
-    let bugReportingNode : BugReportingSettingsNode
-    let creditsNode : CreditsNode
+    let manageOfflineMusicNode : ManageOfflineMusicNode = ManageOfflineMusicNode()
+    let bugReportingNode : BugReportingSettingsNode = BugReportingSettingsNode()
+    
+    lazy var creditsNode : CreditsNode = {
+        return CreditsNode(viewController: self)
+    }()
+    
+    lazy var licensesNode : ASTextCellNode = {
+        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10))
+        licensesNode.text = "Acknowledgements"
+        licensesNode.accessoryType = .disclosureIndicator
+        return licensesNode
+    }()
+    
+    let licensesController = LicensesViewController()
 }
 
 // MARK: ASTableDataSource
@@ -50,7 +60,7 @@ extension SettingsViewController {
         case .bugReporting:
             return 1
         case .credits:
-            return 1
+            return 2
         case .count:
             fatalError()
         }
@@ -65,7 +75,14 @@ extension SettingsViewController {
         case .bugReporting:
             n = bugReportingNode
         case .credits:
-            n = creditsNode
+            switch indexPath.row {
+            case 0:
+                n = creditsNode
+            case 1:
+                n = licensesNode
+            default:
+                fatalError()
+            }
             
         case .count:
             fatalError()
@@ -88,6 +105,36 @@ extension SettingsViewController {
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
+        switch Sections(rawValue: indexPath.section)! {
+        case .credits:
+            switch indexPath.row {
+            case 1:
+                return true
+            case 0:
+                fallthrough
+            default:
+                return false
+            }
+        default:
+            return false
+        }
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        switch Sections(rawValue: indexPath.section)! {
+        case .credits:
+            switch indexPath.row {
+            case 1:
+                licensesController.loadPlist(Bundle.main, resourceName: "Credits")
+                self.navigationController?.pushViewController(licensesController, animated: true)
+            case 0:
+                fallthrough
+            default:
+                fatalError()
+            }
+        default:
+            fatalError()
+        }
+        tableNode.deselectRow(at: indexPath, animated: true)
     }
 }

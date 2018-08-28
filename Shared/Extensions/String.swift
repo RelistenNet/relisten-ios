@@ -58,3 +58,12 @@ extension String {
     }
 }
 
+extension NSMutableAttributedString {
+    func addLink(link : URL, string: String, attributes: [NSAttributedStringKey : Any] = [:]) {
+        var mAttributes = attributes
+        mAttributes[NSAttributedStringKey.link] = link
+        if let range = self.string.range(of: string) {
+            self.addAttributes(mAttributes, range: NSRange(range, in: self.string))
+        }
+    }
+}

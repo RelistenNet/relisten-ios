@@ -9,6 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 import LicensesViewController
+import SafariServices
 
 public class SettingsViewController : RelistenBaseAsyncTableViewController {
     enum Sections: Int, RawRepresentable {
@@ -42,12 +43,33 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
     }()
     
     lazy var licensesNode : ASTextCellNode = {
-        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10))
+        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         licensesNode.text = "Acknowledgements"
         licensesNode.accessoryType = .disclosureIndicator
         return licensesNode
     }()
     
+    lazy var websiteNode : ASTextCellNode = {
+        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        licensesNode.text = "Desktop listening with relisten.net"
+        licensesNode.accessoryType = .disclosureIndicator
+        return licensesNode
+    }()
+    
+    lazy var githubNode : ASTextCellNode = {
+        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        licensesNode.text = "View project on Github"
+        licensesNode.accessoryType = .disclosureIndicator
+        return licensesNode
+    }()
+    
+    lazy var sonosNode : ASTextCellNode = {
+        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        licensesNode.text = "Use Relisten on Sonos"
+        licensesNode.accessoryType = .disclosureIndicator
+        return licensesNode
+    }()
+
     let licensesController = LicensesViewController()
 }
 
@@ -64,7 +86,7 @@ extension SettingsViewController {
         case .bugReporting:
             return 1
         case .credits:
-            return 2
+            return 5
         case .count:
             fatalError()
         }
@@ -84,6 +106,12 @@ extension SettingsViewController {
                 n = creditsNode
             case 1:
                 n = licensesNode
+            case 2:
+                n = websiteNode
+            case 3:
+                n = githubNode
+            case 4:
+                n = sonosNode
             default:
                 fatalError()
             }
@@ -113,6 +141,10 @@ extension SettingsViewController {
         case .credits:
             switch indexPath.row {
             case 1:
+                fallthrough
+            case 2:
+                fallthrough
+            case 3:
                 return true
             case 0:
                 fallthrough
@@ -131,6 +163,15 @@ extension SettingsViewController {
             case 1:
                 licensesController.loadPlist(Bundle.main, resourceName: "Credits")
                 self.navigationController?.pushViewController(licensesController, animated: true)
+            case 2:
+                let url = URL(string: "https://relisten.net")!
+                navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+            case 3:
+                let url = URL(string: "https://github.com/relistennet/relisten-ios")!
+                navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+            case 4:
+                let url = URL(string: "https://twitter.com/relistenapp/status/1017138507956084736")!
+                navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
             case 0:
                 fallthrough
             default:

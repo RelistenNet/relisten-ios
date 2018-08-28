@@ -20,8 +20,8 @@ public class ManageOfflineMusicNode : ASCellNode {
         downloadStatsNode = ASTextNode("0 tracks saved offline (0 bytes)", textStyle: .body)
         
         deleteAllDownloadsNode = ASButtonNode()
-        deleteAllDownloadsNode.setTitle("Delete all downloaded tracks", with: UIFont.preferredFont(forTextStyle: .title2), with: UIColor.flatRed(), for: .normal)
-        deleteAllDownloadsNode.setTitle("No tracks to delete", with: UIFont.preferredFont(forTextStyle: .title2), with: AppColors.mutedText, for: .disabled)
+        deleteAllDownloadsNode.setTitle("Delete all downloaded tracks »", with: UIFont.preferredFont(forTextStyle: .body), with: UIColor.flatRed(), for: .normal)
+        deleteAllDownloadsNode.setTitle("No tracks to delete", with: UIFont.preferredFont(forTextStyle: .body), with: AppColors.mutedText, for: .disabled)
         deleteAllDownloadsNode.isEnabled = false
         
         dbOfflineTrackCount = MyLibrary.shared.offline.tracks.filter("state >= %d", OfflineTrackState.downloaded.rawValue).count
@@ -129,9 +129,9 @@ public class ManageOfflineMusicNode : ASCellNode {
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let vert = ASStackLayoutSpec(
             direction: .vertical,
-            spacing: 4,
+            spacing: 16,
             justifyContent: .center,
-            alignItems: .center,
+            alignItems: .start,
             children: [
                 downloadStatsNode,
                 deleteAllDownloadsNode
@@ -140,7 +140,7 @@ public class ManageOfflineMusicNode : ASCellNode {
         vert.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16),
             child: vert
         )
         l.style.alignSelf = .stretch

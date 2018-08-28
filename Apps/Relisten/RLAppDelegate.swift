@@ -22,7 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     var window: UIWindow?
     public var rootNavigationController: RelistenNavigationController! = nil
     public lazy var appIcon : UIImage = {
-        return UIImage(named: "Relisten App Icon")!
+        let infoDictionary = Bundle.main.infoDictionary
+        
+        if let icons = infoDictionary?["CFBundleIcons"] as? [String: Any],
+            let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
+            let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
+            let lastIcon = iconFiles.last {
+            return UIImage(named: lastIcon)!
+        }
+        
+        fatalError()
     }()
     public let isPhishOD : Bool = false
     

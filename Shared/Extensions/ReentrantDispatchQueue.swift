@@ -14,7 +14,7 @@ public class ReentrantDispatchQueue {
     static public let main : ReentrantDispatchQueue = ReentrantDispatchQueue.init(withMainQueue: true)
     
     private let queueKey = DispatchSpecificKey<Int>()
-    private let queue : DispatchQueue
+    let queue : DispatchQueue
     
     public init(queue: DispatchQueue) {
         self.queue = queue
@@ -32,6 +32,10 @@ public class ReentrantDispatchQueue {
         } else {
             self.init("net.relisten.reentrantQueue")
         }
+    }
+    
+    deinit {
+        self.queue.setSpecific(key: queueKey, value: nil)
     }
     
     public convenience init(label: String, qos: DispatchQoS = .default, attributes: DispatchQueue.Attributes = DispatchQueue.Attributes(), autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency = .inherit, target: DispatchQueue? = nil) {

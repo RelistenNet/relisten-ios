@@ -372,6 +372,18 @@ extension MyLibrary : DownloadManagerDataSource {
         }
     }
     
+    public func deleteAllTracks(_ completion : @escaping () -> Void) {
+        let realm = try! Realm()
+        
+        let offlineTracks = realm.objects(OfflineTrack.self)
+        let offlineSources = realm.objects(OfflineSource.self)
+        
+        try! realm.write {
+            realm.delete(offlineTracks)
+            realm.delete(offlineSources)
+        }
+        completion()
+    }
 }
 
 // MARK: Favorites

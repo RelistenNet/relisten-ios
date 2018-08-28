@@ -43,48 +43,51 @@ public extension HasShow {
 }
 
 public extension HasSourceAndShow {
-    public var source: SourceFull {
+    public var source: SourceFull? {
         get {
-            return show.sources.first(where: { $0.uuid.uuidString == source_uuid })!
+            return show.sources.first(where: { $0.uuid.uuidString == source_uuid })
         }
     }
     
-    public var completeShowInformation: CompleteShowInformation {
+    public var completeShowInformation: CompleteShowInformation? {
         get {
             let show = self.show
-            let source = show.sources.first(where: { $0.uuid.uuidString == source_uuid })!
-            
-            return CompleteShowInformation(source: source, show: show, artist: artist)
+            if let source = show.sources.first(where: { $0.uuid.uuidString == source_uuid }) {
+                return CompleteShowInformation(source: source, show: show, artist: artist)
+            }
+            return nil
         }
     }
 }
 
 public extension HasTrackSourceAndShow {
-    public var sourceTrack: SourceTrack {
+    public var sourceTrack: SourceTrack? {
         get {
-            return source.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid })!
+            return source?.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid })
         }
     }
     
-    public var track: Track {
+    public var track: Track? {
         get {
-            let show = completeShowInformation
-            let sourceTrack = show.source.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid })!
-            
-            return Track(sourceTrack: sourceTrack, showInfo: completeShowInformation)
+            if let completeShowInformation = completeShowInformation {
+                if let sourceTrack = completeShowInformation.source.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid }) {
+                    return Track(sourceTrack: sourceTrack, showInfo: completeShowInformation)
+                }
+            }
+            return nil
         }
     }
 }
 
 public extension Results where Element : HasTrackSourceAndShow {
     public func asTracks() -> [Track] {
-        return Array(map({ (el: HasTrackSourceAndShow) -> Track in el.track }))
+        return Array(compactMap({ (el: HasTrackSourceAndShow) -> Track? in el.track }))
     }
 }
 
 public extension Results where Element : HasSourceAndShow {
     public func asCompleteShows() -> [CompleteShowInformation] {
-        return Array(map({ (el: HasSourceAndShow) -> CompleteShowInformation in el.completeShowInformation }))
+        return Array(compactMap({ (el: HasSourceAndShow) -> CompleteShowInformation? in el.completeShowInformation }))
     }
 }
 

@@ -224,7 +224,7 @@ extension MyLibrary : DownloadManagerDataSource {
             .filter("state == %d", OfflineTrackState.downloadQueued.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
         
-        return objects[0..<min(objects.count, count)].map({ $0.track })
+        return objects[0..<min(objects.count, count)].compactMap({ $0.track })
     }
     
     public func currentlyDownloadingTracks() -> [Track]? {
@@ -234,7 +234,7 @@ extension MyLibrary : DownloadManagerDataSource {
             .filter("state == %d", OfflineTrackState.downloading.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
         
-        return objects.map({ $0.track })
+        return objects.compactMap({ $0.track })
     }
     
     public func importDownloadedTrack(_ track : Track, withSize fileSize: UInt64) {

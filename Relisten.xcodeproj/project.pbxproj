@@ -66,7 +66,6 @@
 		43B53435210922CE00DE9B1F /* SongLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BEA1F731A5900C592BD /* SongLayout.swift */; };
 		43B53436210922CE00DE9B1F /* SourceFeatureIndicatorNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553020C2074300F07622 /* SourceFeatureIndicatorNodes.swift */; };
 		43B53437210922CE00DE9B1F /* SourceDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553C20C2199500F07622 /* SourceDetailsNode.swift */; };
-		43B53438210922CE00DE9B1F /* SwitchCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */; };
 		43B53439210922CE00DE9B1F /* SwitchCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553F20C224F500F07622 /* SwitchCellNode.swift */; };
 		43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554520C2350800F07622 /* TrackStatusCellNode.swift */; };
 		43B5343B210922CE00DE9B1F /* TrackStatusLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */; };
@@ -327,7 +326,6 @@
 		7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RelistenShared-Bridging-Header.h"; sourceTree = "<group>"; };
 		7CCE0DEB1F9BDE4A00041D47 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Events.swift; path = Events/Events.swift; sourceTree = "<group>"; };
 		7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Handler.swift"; sourceTree = "<group>"; };
-		7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwitchCellLayout.swift; path = Layouts/SwitchCellLayout.swift; sourceTree = "<group>"; };
 		7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishOD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.debug.xcconfig"; sourceTree = "<group>"; };
@@ -609,7 +607,6 @@
 				7C4F1BEA1F731A5900C592BD /* SongLayout.swift */,
 				7C31553C20C2199500F07622 /* SourceDetailsNode.swift */,
 				7C31553020C2074300F07622 /* SourceFeatureIndicatorNodes.swift */,
-				7CCE0DF11F9CD6F200041D47 /* SwitchCellLayout.swift */,
 				7C31553F20C224F500F07622 /* SwitchCellNode.swift */,
 				7C31554520C2350800F07622 /* TrackStatusCellNode.swift */,
 				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
@@ -1575,7 +1572,6 @@
 				7C9FC1EF211A184300A8579B /* VisualActivityViewController.swift in Sources */,
 				43B53429210922CE00DE9B1F /* UInt64+HumanizeBytes.swift in Sources */,
 				43B53463210922CE00DE9B1F /* AppColors.swift in Sources */,
-				43B53438210922CE00DE9B1F /* SwitchCellLayout.swift in Sources */,
 				43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */,
 				433A44092133B43A0059D251 /* ManageOfflineMusicNode.swift in Sources */,
 				43B53423210922CE00DE9B1F /* SourceTrackAudioItem.swift in Sources */,

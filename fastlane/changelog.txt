@@ -1,4 +1,5 @@
 - Added a shake gesture to report a bug. Please report any bugs you find- we're getting close to releasing 4.0 in the app store!
+- Added a settings view
 - Fixed a crash and hang on iPads when showing alerts
 - Fixed some crashes when downloading shows
 - Added better logging support

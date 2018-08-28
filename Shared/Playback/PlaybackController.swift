@@ -319,7 +319,21 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedPlusForAudioItem audioItem: AGAudioItem) {
+        let completeInfo = (audioItem as! SourceTrackAudioItem).track
+
+        let a = UIAlertController(
+            title: "Favorite \(completeInfo.showInfo.show.display_date)?",
+            message: "Would you like to add \(completeInfo.showInfo.show.display_date) to your favorites?",
+            preferredStyle: .actionSheet
+        )
         
+        a.addAction(UIAlertAction(title: "Favorite ❤️", style: .default, handler: { (action) in
+            MyLibrary.shared.favoriteSource(show: completeInfo.showInfo)
+        }))
+        
+        a.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        viewController.present(a, animated: true, completion: nil)
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, passedHalfWayFor audioItem: AGAudioItem) {

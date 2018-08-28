@@ -356,7 +356,7 @@ extension ArtistViewController : KASlideShowDataSource {
     }
     
     public func setupBackgroundSlideshow() {
-        guard artist.name == "Phish" else {
+        guard artist.name == "Phish - disabled" else {
             return
         }
         

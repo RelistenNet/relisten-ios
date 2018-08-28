@@ -18,7 +18,7 @@ public class UserFeedback  {
     var currentNotification : CWStatusBarNotification?
     
     public init() {
-        let feedbackConfig = FeedbackConfiguration(recipients: ["feedback@relisten.net"])
+        let feedbackConfig = FeedbackConfiguration(recipients: ["team@relisten.net"])
         let config = Configuration(logCollector: RelistenLogCollector(), feedbackConfiguration: feedbackConfig)
         pinpointKit = PinpointKit(configuration: config)
     }

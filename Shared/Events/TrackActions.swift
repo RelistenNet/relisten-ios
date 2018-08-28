@@ -40,6 +40,10 @@ public class TrackActions {
             PlaybackController.sharedInstance.playbackQueue.append(ai)
         }))
         
+        a.addAction(UIAlertAction(title: "Go to Show", style: .default, handler: { _ in
+            vc.navigationController?.pushViewController(SourcesViewController(artist: track.showInfo.artist, show: track.showInfo.show), animated: true)
+        }))
+
         MyLibrary.shared.diskUsageForTrackURL(track: track.sourceTrack) { (size) in
             if let s = size {
                 a.addAction(UIAlertAction(title: "Remove Downloaded File" + " (\(s.humanizeBytes()))", style: .default, handler: { _ in

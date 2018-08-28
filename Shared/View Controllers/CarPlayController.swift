@@ -15,6 +15,7 @@ import CoreGraphics
 
 public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayableContentDataSource, CarPlayDataSourceDelegate {
     public static let shared = CarPlayController()
+    public static let albumArtEnabled = false
     
     private let dataSource : CarPlayDataSource
     
@@ -713,7 +714,10 @@ extension OfflineSourceMetadata {
         }
         contentItem.isContainer = true
         contentItem.isPlayable = false
-        contentItem.artwork = MPMediaItemArtwork(forShow: self.show)
+        
+        if CarPlayController.albumArtEnabled {
+            contentItem.artwork = MPMediaItemArtwork(forShow: self.show)
+        }
         
         return contentItem
     }
@@ -736,8 +740,11 @@ extension CompleteShowInformation {
         }
         contentItem.isContainer = true
         contentItem.isPlayable = false
-        contentItem.artwork = MPMediaItemArtwork(forShow: self.show)
         
+        if CarPlayController.albumArtEnabled {
+            contentItem.artwork = MPMediaItemArtwork(forShow: self.show)
+        }
+
         return contentItem
     }
 }
@@ -757,8 +764,11 @@ extension Show {
         }
         contentItem.isContainer = true
         contentItem.isPlayable = false
-        contentItem.artwork = MPMediaItemArtwork(forShow: self)
         
+        if CarPlayController.albumArtEnabled {
+            contentItem.artwork = MPMediaItemArtwork(forShow: self)
+        }
+
         return contentItem
     }
 }

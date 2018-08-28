@@ -9,16 +9,20 @@
 import Foundation
 import UIKit
 import AsyncDisplayKit
-//import DWURecyclingAlert
+import Observable
 
 import RealmSwift
 
 public protocol RelistenAppDelegate {
     var rootNavigationController: RelistenNavigationController! { get }
+    var appIcon : UIImage { get }
+    var isPhishOD : Bool { get }
 }
 
 public class RelistenApp {
     public static let sharedApp = RelistenApp(delegate: RelistenDummyAppDelegate())
+    
+    public let shakeToReportBugEnabled = Observable<Bool>(true)
     
     public var delegate : RelistenAppDelegate
     public lazy var logDirectory : String = {
@@ -27,10 +31,52 @@ public class RelistenApp {
                                                    true).first! + "/Logs"
     }()
     
+    public lazy var appName : String = {
+        guard let retval = Bundle.main.infoDictionary?["CFBundleName"] as? String else {
+            return "Relisten"
+        }
+        return retval
+    }()
+    
+    public var appIcon : UIImage {
+        get {
+            return delegate.appIcon
+        }
+    }
+    
+    public lazy var appVersion : String = {
+        guard let retval = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+            return "1.0"
+        }
+        return retval
+    }()
+    
+    public lazy var appBuildVersion : String = {
+        guard let retval = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else {
+            return "0"
+        }
+        return retval
+    }()
+    
+    public var isPhishOD : Bool  {
+        get {
+            return delegate.isPhishOD
+        }
+    }
+    
+    let bugReportingKey = "EnableBugReporting"
+    var disposal = Disposal()
     public init(delegate: RelistenAppDelegate) {
+        if let enableBugReporting = UserDefaults.standard.object(forKey: bugReportingKey) as! Bool? {
+            shakeToReportBugEnabled.value = enableBugReporting
+        }
         self.delegate = delegate
         
         DownloadManager.shared.dataSource = MyLibrary.shared
+        
+        shakeToReportBugEnabled.observe { (new, _) in
+            UserDefaults.standard.set(new, forKey: self.bugReportingKey)
+        }.add(to: &disposal)
     }
     
     public func setupThirdPartyDependencies() {
@@ -73,6 +119,18 @@ public class RelistenApp {
 
 public class RelistenDummyAppDelegate : RelistenAppDelegate {
     public var rootNavigationController: RelistenNavigationController! {
+        get {
+            fatalError("An application delegate hasn't been set yet!")
+        }
+    }
+    
+    public var appIcon : UIImage {
+        get {
+            fatalError("An application delegate hasn't been set yet!")
+        }
+    }
+    
+    public var isPhishOD : Bool {
         get {
             fatalError("An application delegate hasn't been set yet!")
         }

@@ -13,6 +13,7 @@ extension UInt64 {
         let bcf = ByteCountFormatter()
         bcf.allowedUnits = [.useAll]
         bcf.countStyle = .file
+        bcf.isAdaptive = true
         
         return bcf.string(fromByteCount: Int64(self))
     }

@@ -28,6 +28,7 @@ PODS:
   - KASlideShow (3.0.0):
     - SDWebImage (~> 3.8)
   - LayoutKit (8.0.2)
+  - LicensesViewController (0.6.5)
   - MarqueeLabel (3.1.6):
     - MarqueeLabel/ObjC (= 3.1.6)
   - MarqueeLabel/ObjC (3.1.6)
@@ -98,6 +99,7 @@ DEPENDENCIES:
   - FaveButton (from `../fave-button`)
   - KASlideShow
   - LayoutKit
+  - LicensesViewController
   - MZDownloadManager (from `https://github.com/alecgorge/MZDownloadManager.git`)
   - NAKPlaybackIndicatorView
   - NapySlider (from `../NapySlider`)
@@ -132,6 +134,7 @@ SPEC REPOS:
     - Interpolate
     - KASlideShow
     - LayoutKit
+    - LicensesViewController
     - MarqueeLabel
     - NAKPlaybackIndicatorView
     - PINCache
@@ -211,6 +214,7 @@ SPEC CHECKSUMS:
   Interpolate: cd0ab81375ff3ec7d9e6023e032f4a29f53df4ad
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
   LayoutKit: 8617c896833e1dad89f2b179f4f8a5ebfaca9eab
+  LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   MZDownloadManager: 8e9f186b2e804ffaeaf782c0cd3e22f27625cb7b
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
@@ -232,6 +236,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: b6e473b8c49499b51d8c3228b2aa5017b683114f
+PODFILE CHECKSUM: 2e7d6618c793d1f632ed5d8094362e0624b82b0a
 
 COCOAPODS: 1.5.3

@@ -19,6 +19,10 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
     var window: UIWindow?
     public var rootNavigationController: RelistenNavigationController! = nil
+    public lazy var appIcon : UIImage = {
+        return UIImage(named: "PhishOD App Icon")!
+    }()
+    public let isPhishOD : Bool = true
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         SetupLogging()

@@ -26,7 +26,6 @@ public let StandardSwitchBounds = { () -> CGRect in
 public class SwitchCellNode : ASCellNode {
     let observeChecked: Observable<Bool>
     
-    public let observeUserChecked: Observable<Bool> 
     var disposal = Disposal()
     
     public init(observeChecked: Observable<Bool>, withLabel label: String) {
@@ -37,12 +36,11 @@ public class SwitchCellNode : ASCellNode {
             let s = UISwitch()
             s.sizeToFit()
             s.backgroundColor = .clear
+            s.onTintColor = AppColors.primary
             return s
         })
         self.switchNode.isUserInteractionEnabled = true
         self.switchNode.backgroundColor = .clear
-        
-        self.observeUserChecked = Observable(observeChecked.value)
         
         super.init()
         
@@ -66,7 +64,7 @@ public class SwitchCellNode : ASCellNode {
     }
     
     @objc func changeSwitch(_ sw: UISwitch) {
-        observeUserChecked.value = sw.isOn
+        observeChecked.value = sw.isOn
     }
     
     public let labelNode: ASTextNode
@@ -80,12 +78,12 @@ public class SwitchCellNode : ASCellNode {
             spacing: 0,
             justifyContent: .spaceBetween,
             alignItems: .center,
-            children: [labelNode, switchNode]
+            children: [labelNode, SpacerNode(), switchNode]
         )
         stack.style.alignSelf = .stretch
 
         let insets = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(8, 16, 8, 16),
+            insets: UIEdgeInsetsMake(0, 0, 0, 0),
             child: stack
         )
         insets.style.alignSelf = .stretch

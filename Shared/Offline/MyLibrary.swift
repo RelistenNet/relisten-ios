@@ -224,7 +224,7 @@ extension MyLibrary : DownloadManagerDataSource {
             .filter("state == %d", OfflineTrackState.downloadQueued.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
         
-        return objects[0..<min(objects.count, count)].map({ $0.track })
+        return objects[0..<min(objects.count, count)].compactMap({ $0.track })
     }
     
     public func currentlyDownloadingTracks() -> [Track]? {
@@ -234,7 +234,7 @@ extension MyLibrary : DownloadManagerDataSource {
             .filter("state == %d", OfflineTrackState.downloading.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
         
-        return objects.map({ $0.track })
+        return objects.compactMap({ $0.track })
     }
     
     public func importDownloadedTrack(_ track : Track, withSize fileSize: UInt64) {
@@ -372,6 +372,18 @@ extension MyLibrary : DownloadManagerDataSource {
         }
     }
     
+    public func deleteAllTracks(_ completion : @escaping () -> Void) {
+        let realm = try! Realm()
+        
+        let offlineTracks = realm.objects(OfflineTrack.self)
+        let offlineSources = realm.objects(OfflineSource.self)
+        
+        try! realm.write {
+            realm.delete(offlineTracks)
+            realm.delete(offlineSources)
+        }
+        completion()
+    }
 }
 
 // MARK: Favorites

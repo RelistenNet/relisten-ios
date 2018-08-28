@@ -6,11 +6,37 @@ def apply_pods
   use_frameworks!
   inhibit_all_warnings!
 
+  pod 'AXRatingView'
+  pod 'ActionKit'
+  pod 'CWStatusBarNotification'
+  pod 'Cache'
+  pod 'ChameleonFramework'
+  pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger"
+  pod 'Crashlytics'
+  # Only core because we need wrappers for ASCollectionNode, not UICollectionView
+  pod 'DifferenceKit/Core'
+  pod 'DownloadButton'
+  pod 'EDColor'
+  pod 'Fabric'
+  pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git"
+  pod 'KASlideShow'
+  pod 'LayoutKit'
+  pod 'LicensesViewController'
+  pod 'MZDownloadManager', :git => "https://github.com/alecgorge/MZDownloadManager.git"
+  pod 'NAKPlaybackIndicatorView'
+  pod 'Observable', :git => "https://github.com/alecgorge/Observable.git"
+  pod 'PinpointKit'
+  pod 'PinpointKit/ScreenshotDetector'
+  pod 'RealmSwift'
+  pod 'SDCloudUserDefaults'
+  pod 'SINQ'
+  pod 'SVProgressHUD'
   pod 'Siesta/Core', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
-  pod 'Cache'
-
+  pod 'Texture'
+ 
+  # Development pods (checked out locally)
   if ENV['TRAVIS']
       pod 'NapySlider', :path => 'TravisPods/NapySlider'
       pod 'BASSGaplessAudioPlayer', :path => 'TravisPods/BASSGaplessAudioPlayer'
@@ -23,37 +49,6 @@ def apply_pods
       pod 'FaveButton', :path => '../fave-button'
   end
 
-# pod 'Firebase/Database'
-# pod 'Firebase/Auth'
-# pod 'Firebase/RemoteConfig'
-# pod 'Firebase/DynamicLinks'
-# pod 'Firebase' # To enable Firebase module, with `@import Firebase` support
-# pod 'FirebaseCore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
-# pod 'FirebaseAuth', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
-# pod 'FirebaseDatabase', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
-# pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :tag => '5.0.0'
-# pod 'Firebase/Messaging'
-  pod 'RealmSwift'
-
-  pod 'AXRatingView'
-  pod 'NAKPlaybackIndicatorView'
-  pod 'Observable', :git => "https://github.com/alecgorge/Observable.git"
-
-  pod 'LayoutKit'
-  pod "Texture"
-
-  pod 'SINQ'
-  pod 'KASlideShow'
-  pod 'ChameleonFramework'
-  pod 'EDColor'
-  pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git"
-  
-  pod "MZDownloadManager", :git => "https://github.com/alecgorge/MZDownloadManager.git"
-  pod 'SVProgressHUD'
-  pod 'ActionKit'
-  pod 'DownloadButton'
-  pod 'SDCloudUserDefaults'
- 
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']
   pod 'Wormholy', :configurations => ['Debug'], :git => "https://github.com/pmusolino/Wormholy.git"
@@ -65,15 +60,6 @@ def apply_pods
   # pod 'Reachability'
   # pod 'SpinnerView'
 
-  pod 'Fabric'
-  pod 'Crashlytics'
-  pod 'PinpointKit'
-  pod 'PinpointKit/ScreenshotDetector'
-  pod 'CWStatusBarNotification'
-  pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger"
-  
-  # Only core because we need wrappers for ASCollectionNode, not UICollectionView
-  pod 'DifferenceKit/Core'
 end
 
 target 'RelistenShared' do

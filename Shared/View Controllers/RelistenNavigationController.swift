@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 public class RelistenNavigationController : ASNavigationController {
     open override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
-        if motion == .motionShake {
+        if motion == .motionShake, RelistenApp.sharedApp.shakeToReportBugEnabled.value {
             UserFeedback.shared.requestUserFeedback(from: self)
         }
     }

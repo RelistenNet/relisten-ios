@@ -1,0 +1,6 @@
+framework module LicensesViewController {
+  umbrella header "LicensesViewController-umbrella.h"
+
+  export *
+  module * { export * }
+}

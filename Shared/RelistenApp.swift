@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import AsyncDisplayKit
 import Observable
-
 import RealmSwift
 
 public protocol RelistenAppDelegate {
@@ -63,14 +62,28 @@ public class RelistenApp {
             return delegate.isPhishOD
         }
     }
+    public var launchCount : Int {
+        if let launchCount = UserDefaults.standard.object(forKey: launchCountKey) as! Int? {
+            return launchCount
+        }
+        return 0
+    }
     
     let bugReportingKey = "EnableBugReporting"
+    let launchCountKey = "LaunchCount"
+    
     var disposal = Disposal()
     public init(delegate: RelistenAppDelegate) {
         if let enableBugReporting = UserDefaults.standard.object(forKey: bugReportingKey) as! Bool? {
             shakeToReportBugEnabled.value = enableBugReporting
         }
         self.delegate = delegate
+        
+        if let launchCount = UserDefaults.standard.object(forKey: launchCountKey) as! Int? {
+            UserDefaults.standard.set(launchCount + 1, forKey: launchCountKey)
+        } else {
+            UserDefaults.standard.set(1, forKey: launchCountKey)
+        }
         
         DownloadManager.shared.dataSource = MyLibrary.shared
         

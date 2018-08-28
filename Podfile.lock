@@ -27,6 +27,9 @@ PODS:
   - Interpolate (1.0.0)
   - KASlideShow (3.0.0):
     - SDWebImage (~> 3.8)
+  - KissXML (5.2.3)
+  - LastFm (1.18.0):
+    - KissXML (~> 5.2.3)
   - LayoutKit (8.0.2)
   - LicensesViewController (0.6.5)
   - MarqueeLabel (3.1.6):
@@ -98,6 +101,7 @@ DEPENDENCIES:
   - FastImageCache (from `https://github.com/mallorypaine/FastImageCache.git`)
   - FaveButton (from `../fave-button`)
   - KASlideShow
+  - LastFm (from `https://github.com/farktronix/LastFm.git`)
   - LayoutKit
   - LicensesViewController
   - MZDownloadManager (from `https://github.com/alecgorge/MZDownloadManager.git`)
@@ -133,6 +137,7 @@ SPEC REPOS:
     - Fabric
     - Interpolate
     - KASlideShow
+    - KissXML
     - LayoutKit
     - LicensesViewController
     - MarqueeLabel
@@ -162,6 +167,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/mallorypaine/FastImageCache.git
   FaveButton:
     :path: "../fave-button"
+  LastFm:
+    :git: https://github.com/farktronix/LastFm.git
   MZDownloadManager:
     :git: https://github.com/alecgorge/MZDownloadManager.git
   NapySlider:
@@ -180,6 +187,9 @@ CHECKOUT OPTIONS:
   FastImageCache:
     :commit: a196da2ef8646ad310f696e64f675e9a942d2ea9
     :git: https://github.com/mallorypaine/FastImageCache.git
+  LastFm:
+    :commit: 2428d9e0217e61c10b6a0f3d531d78570160c7bc
+    :git: https://github.com/farktronix/LastFm.git
   MZDownloadManager:
     :commit: 68c2c4b68c5e417bb9fb695ee6e014ff535d7e4e
     :git: https://github.com/alecgorge/MZDownloadManager.git
@@ -213,6 +223,8 @@ SPEC CHECKSUMS:
   FaveButton: e26220c69725ca00f08d7494edb5765c3eaef8c7
   Interpolate: cd0ab81375ff3ec7d9e6023e032f4a29f53df4ad
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
+  KissXML: 09f88ff8161fd058d67b70740b8b516687b52823
+  LastFm: fc248fd296726d267e3c5ff98cc68fe378d1af9e
   LayoutKit: 8617c896833e1dad89f2b179f4f8a5ebfaca9eab
   LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
@@ -236,6 +248,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: 2e7d6618c793d1f632ed5d8094362e0624b82b0a
+PODFILE CHECKSUM: f6d1be1e9d2b15bd56a53775d33f07996eb10f66
 
 COCOAPODS: 1.5.3

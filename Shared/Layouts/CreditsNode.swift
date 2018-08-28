@@ -19,8 +19,9 @@ public class CreditsNode : ASCellNode {
         
         appIconNode = ASImageNode()
         appIconNode.image = RelistenApp.sharedApp.appIcon
-        appIconNode.style.maxWidth = .init(unit: .points, value: 120)
-        appIconNode.style.maxHeight = .init(unit: .points, value: 120)
+        appIconNode.cornerRadius = 13 // eh...close enough
+        appIconNode.style.maxWidth = .init(unit: .points, value: 60)
+        appIconNode.style.maxHeight = .init(unit: .points, value: 60)
         appIconNode.style.preferredSize = CGSize(width: appIconNode.style.maxWidth.value, height: appIconNode.style.maxHeight.value)
         appIconNode.style.flexShrink = 1.0
         

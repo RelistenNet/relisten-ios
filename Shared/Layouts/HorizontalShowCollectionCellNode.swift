@@ -66,7 +66,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         if self.shows.count > 0 {
             let nodeCount = self.shows.count
             
-            let sizeRange = ASSizeRange(min: CGSize.zero, max: CGSize(width: UIScreen.main.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
+            let sizeRange = ASSizeRange(min: CGSize.zero, max: CGSize(width: UIScreen.main.bounds.size.width, height: 1024))
             
             maxSize = (0..<nodeCount).map {
                 self.collectionNode
@@ -114,13 +114,8 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
 
         collectionNode.style.preferredLayoutSize = ASLayoutSizeMake(.init(unit: .fraction, value: 1.0), .init(unit: .points, value: height))
 
-//        let l = ASAbsoluteLayoutSpec(sizing: .default, children: [collectionNode])
-//        l.style.minHeight = .init(unit: .fraction, value: 1.0)
-//        l.style.alignSelf = .stretch
-        
-//        return collectionNode.layoutSpecThatFits(constrainedSize)
-        
         let wrapper = ASWrapperLayoutSpec(layoutElement: collectionNode)
+        wrapper.style.alignSelf = .stretch
         
         return wrapper
     }

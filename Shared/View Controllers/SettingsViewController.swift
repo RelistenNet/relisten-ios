@@ -13,7 +13,8 @@ import SafariServices
 
 public class SettingsViewController : RelistenBaseAsyncTableViewController {
     enum Sections: Int, RawRepresentable {
-        case downloads = 0
+        case lastFM = 0
+        case downloads
         case bugReporting
         case credits
         case count
@@ -31,6 +32,10 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    lazy var lastFMLoginNode : LastFMAccountNode = {
+        return LastFMAccountNode(viewController: self)
+    }()
     
     lazy var manageOfflineMusicNode : ManageOfflineMusicNode = {
         return ManageOfflineMusicNode(viewController: self)
@@ -81,6 +86,8 @@ extension SettingsViewController {
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
+        case .lastFM:
+            return 1
         case .downloads:
             return 1
         case .bugReporting:
@@ -96,6 +103,8 @@ extension SettingsViewController {
         var n: ASCellNode
         
         switch Sections(rawValue: indexPath.section)! {
+        case .lastFM:
+            n = lastFMLoginNode
         case .downloads:
             n = manageOfflineMusicNode
         case .bugReporting:
@@ -125,6 +134,8 @@ extension SettingsViewController {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Sections(rawValue: section)! {
+        case .lastFM:
+            return "last.fm"
         case .downloads:
             return "Offline Music"
         case .bugReporting:

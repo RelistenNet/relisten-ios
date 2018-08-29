@@ -78,6 +78,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
     }
     
+    /*
     var hasReloaded: Bool = false
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -88,6 +89,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             hasReloaded = true
         }
     }
+     */
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -28,6 +28,7 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public let trackWasPlayed = Observable<Track?>(nil)
     
     public let eventTrackPlaybackChanged = Event<Track?>()
+    public let eventTrackPlaybackStarted = Event<Track?>()
     public let eventTrackWasPlayed = Event<Track>()
 
     public static var window: UIWindow? = nil
@@ -309,7 +310,7 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, changedTrackTo audioItem: AGAudioItem?) {
         let completeInfo = (audioItem as? SourceTrackAudioItem)?.track
 
-        eventTrackPlaybackChanged.raise(completeInfo)
+        eventTrackPlaybackStarted.raise(completeInfo)
         observeCurrentTrack.value = completeInfo
     }
     
@@ -342,6 +343,7 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
         
         let _ = MyLibrary.shared.trackWasPlayed(completeInfo)
         eventTrackWasPlayed.raise(completeInfo)
+        trackWasPlayed.value = completeInfo
         
         if RelistenApp.sharedApp.launchCount > 2 {
             // If the app has been launched at least three full times and the user is halfway through a song they probably like the app.

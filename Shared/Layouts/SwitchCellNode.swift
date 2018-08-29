@@ -10,17 +10,35 @@ import Foundation
 
 import AsyncDisplayKit
 import Observable
-import ActionKit
 
-public let StandardSwitchBounds = { () -> CGRect in
-    var bounds : CGRect? = nil
-    performOnMainQueueSync {
+// (farkas) This code was deadlocking due to texture trying to load a switch node on the global queue
+//  while the main queue was blocked waiting for the table view to update so it could reload.
+// This code tries to mitigate that by asynchronously loading the bounds on the main thread,
+//  then blocking whichever thread first asks for the bounds if they haven't loaded yet.
+// We try to avoid deadlocks further by prefetching these bounds in SwitchCellNode.init.
+// This is pretty ugly and probably too clever for its own good, but it seems to work.
+// Better solutions are gladly welcomed!
+var _standardSwitchBounds : CGRect?
+var StandardSwitchBounds : CGRect {
+    get {
+        standardSwitchBoundsGroup.wait()
+        return _standardSwitchBounds!
+    }
+    set {
+        _standardSwitchBounds = newValue
+    }
+}
+// This is the part that's a little weird- fetching the group also fetches the bounds
+let standardSwitchBoundsGroup : DispatchGroup = {
+    let group = DispatchGroup()
+    group.enter()
+    DispatchQueue.main.async {
         let s = UISwitch()
         s.sizeToFit()
-        
-        bounds = s.bounds
+        _standardSwitchBounds = s.bounds
+        group.leave()
     }
-    return bounds!
+    return group
 }()
 
 public class SwitchCellNode : ASCellNode {
@@ -29,6 +47,11 @@ public class SwitchCellNode : ASCellNode {
     var disposal = Disposal()
     
     public init(observeChecked: Observable<Bool>, withLabel label: String) {
+        // Prefetch the standard switch bounds
+        DispatchQueue.global().async {
+            let _ = StandardSwitchBounds
+        }
+        
         self.observeChecked = observeChecked
         
         self.labelNode = ASTextNode(label, textStyle: .body)

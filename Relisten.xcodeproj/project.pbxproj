@@ -135,8 +135,6 @@
 		7CAAF42821334A9F009A03D9 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAF42721334A9F009A03D9 /* SnapshotHelper.swift */; };
 		7CAAF42A21334AD7009A03D9 /* RelistenUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAF42921334AD7009A03D9 /* RelistenUiTests.swift */; };
 		7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */; };
-		7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
-		7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */; };
 		AC66B4F5C4BD9C01138EEBB8 /* Pods_PhishOD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */; };
 		CC04E2FFA276A84027E27D73 /* Pods_RelistenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD98604195220F1A82FB9F0 /* Pods_RelistenUITests.framework */; };
 /* End PBXBuildFile section */
@@ -330,7 +328,6 @@
 		7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RelistenShared-Bridging-Header.h"; sourceTree = "<group>"; };
 		7CCE0DEB1F9BDE4A00041D47 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Events.swift; path = Events/Events.swift; sourceTree = "<group>"; };
 		7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Handler.swift"; sourceTree = "<group>"; };
-		7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishOD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishOD/Pods-PhishOD.debug.xcconfig"; sourceTree = "<group>"; };
 		8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenResourceStatusOverlay.swift; sourceTree = "<group>"; };
@@ -539,7 +536,6 @@
 				7CC0953E1E6C6D370067FD39 /* View Controllers */,
 				7C68279A1F99240A00E260B1 /* Offline */,
 				7C449EBE1D5A513800750D54 /* API */,
-				7CD78D151E6C60F2001D097D /* GoogleService-Info.plist */,
 				7C8044141E6F4B1E00BA946E /* AppColors.swift */,
 				43CBE10F2109296A003FAF51 /* RelistenApp.swift */,
 				7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */,
@@ -1049,7 +1045,6 @@
 				7C449EA91D5A4F4300750D54 /* PHODLaunchScreen.storyboard in Resources */,
 				7C449EA61D5A4F4300750D54 /* PHODAssets.xcassets in Resources */,
 				7C31550F20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */,
-				7CD78D171E6C60F2001D097D /* GoogleService-Info.plist in Resources */,
 				433A440F2134E9A60059D251 /* Credits.plist in Resources */,
 				7C61C7CF1F18DB320094E0AF /* SharedAssets.xcassets in Resources */,
 			);
@@ -1070,7 +1065,6 @@
 				433A440E2134E9A60059D251 /* Credits.plist in Resources */,
 				7C8EF1181D5A49C300004B5C /* RLAssets.xcassets in Resources */,
 				7C31550E20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */,
-				7CD78D161E6C60F2001D097D /* GoogleService-Info.plist in Resources */,
 				7C61C7CE1F18DB320094E0AF /* SharedAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

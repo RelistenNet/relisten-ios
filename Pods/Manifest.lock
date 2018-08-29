@@ -9,28 +9,32 @@ PODS:
   - AXRatingView (1.0.6)
   - BASSGaplessAudioPlayer (0.0.1)
   - BCColor (0.2)
-  - Cache (5.0.0)
+  - Cache (5.1.0)
   - ChameleonFramework (2.1.0):
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - CleanroomLogger (6.0.2)
-  - Crashlytics (3.10.5):
-    - Fabric (~> 1.7.9)
+  - Crashlytics (3.10.7):
+    - Fabric (~> 1.7.11)
   - CWStatusBarNotification (2.3.5)
-  - DifferenceKit/Core (0.1.0)
+  - DifferenceKit/Core (0.5.2)
   - DownloadButton (0.1.0)
   - DWURecyclingAlert (1.0.2)
   - EDColor (1.0.1)
-  - Fabric (1.7.9)
+  - Fabric (1.7.11)
   - FastImageCache (1.5.1)
   - FaveButton (2.0.4)
   - Interpolate (1.0.0)
   - KASlideShow (3.0.0):
     - SDWebImage (~> 3.8)
-  - KissXML (5.2.3)
-  - LastFm (1.18.0):
-    - KissXML (~> 5.2.3)
-  - LayoutKit (8.0.2)
+  - KissXML (5.0.3):
+    - KissXML/Standard (= 5.0.3)
+  - KissXML/Core (5.0.3)
+  - KissXML/Standard (5.0.3):
+    - KissXML/Core
+  - LastFm (1.17.0):
+    - KissXML (~> 5.0.3)
+  - LayoutKit (9.0.0)
   - LicensesViewController (0.6.5)
   - MarqueeLabel (3.1.6):
     - MarqueeLabel/ObjC (= 3.1.6)
@@ -58,18 +62,18 @@ PODS:
   - PINRemoteImage/PINCache (3.0.0-beta.13):
     - PINCache (= 3.0.1-beta.6)
     - PINRemoteImage/Core
-  - Realm (3.7.5):
-    - Realm/Headers (= 3.7.5)
-  - Realm/Headers (3.7.5)
-  - RealmSwift (3.7.5):
-    - Realm (= 3.7.5)
-  - Reveal-SDK (16)
+  - Realm (3.7.6):
+    - Realm/Headers (= 3.7.6)
+  - Realm/Headers (3.7.6)
+  - RealmSwift (3.7.6):
+    - Realm (= 3.7.6)
+  - Reveal-SDK (17)
   - SDCloudUserDefaults (1.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - Siesta/Core (1.4.0)
-  - Siesta/UI (1.4.0):
+  - Siesta/Core (1.4.1)
+  - Siesta/UI (1.4.1):
     - Siesta/Core
   - SINQ (0.7.0)
   - SVProgressHUD (2.2.5)
@@ -188,7 +192,7 @@ CHECKOUT OPTIONS:
     :commit: a196da2ef8646ad310f696e64f675e9a942d2ea9
     :git: https://github.com/mallorypaine/FastImageCache.git
   LastFm:
-    :commit: 2428d9e0217e61c10b6a0f3d531d78570160c7bc
+    :commit: 19725dec9bdb91026b7ba808d5c61adb1afef9bb
     :git: https://github.com/farktronix/LastFm.git
   MZDownloadManager:
     :commit: 68c2c4b68c5e417bb9fb695ee6e014ff535d7e4e
@@ -197,7 +201,7 @@ CHECKOUT OPTIONS:
     :commit: afd5d63e9c6e544681b3bd6d25973f160a5d01a3
     :git: https://github.com/alecgorge/Observable.git
   Siesta:
-    :commit: 360861a1a604b8bc8f7219c2596e30bac3b6d212
+    :commit: ecf8cbda2c797c52e8634e7317ec51837992d958
     :git: https://github.com/bustoutsolutions/siesta.git
   Wormholy:
     :commit: 50ceb490fcfe99116b0a08c78e7d7a640c8176ad
@@ -209,23 +213,23 @@ SPEC CHECKSUMS:
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 5547414722926aaa7d1116557f5208df57b0caab
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
-  Cache: fae4826ba52d7a5d9a3a0ad6fe73e3501a82964f
+  Cache: 7737c595aae7d94c7c0feca2c887288624e3b07e
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: f165bae4f3c9a15a22ec2fad9b0826f27fb047d5
-  Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
+  Crashlytics: ccaac42660eb9351b9960c0d66106b0bcf99f4fa
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
-  DifferenceKit: 6ac57d26979c152c571821704e69c0be3de310b6
+  DifferenceKit: 3999ddee5146dbd12d7418e2b907c6f5e2673805
   DownloadButton: 49a21a89e0d7d1b42d9134f79aaa40e727cd57c3
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
-  Fabric: a2917d3895e4c1569b9c3170de7320ea1b1e6661
+  Fabric: f233c9492b3bbc1f04e3882986740f7988a58edb
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
   FaveButton: e26220c69725ca00f08d7494edb5765c3eaef8c7
   Interpolate: cd0ab81375ff3ec7d9e6023e032f4a29f53df4ad
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
-  KissXML: 09f88ff8161fd058d67b70740b8b516687b52823
-  LastFm: fc248fd296726d267e3c5ff98cc68fe378d1af9e
-  LayoutKit: 8617c896833e1dad89f2b179f4f8a5ebfaca9eab
+  KissXML: d19dd6dc65e0dc721ba92b3077b8ebdd240f1c1e
+  LastFm: a624fa250bbda5950fccbd068ea7950dcba2da1f
+  LayoutKit: 867d9c5c237552be78c9c0cf0d9f5ca2bf5f704c
   LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   MZDownloadManager: 8e9f186b2e804ffaeaf782c0cd3e22f27625cb7b
@@ -236,12 +240,12 @@ SPEC CHECKSUMS:
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
   PinpointKit: d1196cba6acc77fb76af50155f816228f03eaa9c
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
-  Realm: c286caf4dbf346ce24aad49ca76c7ce622d4a082
-  RealmSwift: 2a9281e37d6de55f66f76254d49d28aeb1b729e4
-  Reveal-SDK: ed36bdbb3cbf90b94ae5da0dbcb3c7ae6738c51f
+  Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
+  RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
+  Reveal-SDK: a6df49f47319bd19a110c960c498af32df72c0af
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  Siesta: feae635134e33336ff6a7048c43b993a3f7ce1b9
+  Siesta: 867050feecf44d163f83272d9fc21553319c6dc0
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3

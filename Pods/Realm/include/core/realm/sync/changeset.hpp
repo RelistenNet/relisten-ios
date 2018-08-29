@@ -29,7 +29,7 @@
 namespace realm {
 namespace sync {
 
-using InternStrings = std::unordered_map<uint32_t, StringBufferRange>;
+using InternStrings = std::vector<StringBufferRange>;
 
 struct BadChangesetError : std::exception {
     const char* message;
@@ -168,6 +168,7 @@ private:
     struct MultiInstruction {
         std::vector<Instruction> instructions;
     };
+    static_assert(sizeof(MultiInstruction) <= Instruction::max_instruction_size, "Instruction::max_instruction_size too low");
 
     // In order to achieve iterator semi-stability (just enough to be able to
     // run the merge algorithm while maintaining a ChangesetIndex), a Changeset
@@ -451,10 +452,9 @@ inline void Changeset::clear() noexcept
 
 inline util::Optional<StringBufferRange> Changeset::try_get_intern_string(InternString string) const noexcept
 {
-    auto it = m_strings->find(string.value);
-    if (it == m_strings->end())
+    if (string.value >= m_strings->size())
         return util::none;
-    return it->second;
+    return (*m_strings)[string.value];
 }
 
 inline StringBufferRange Changeset::get_intern_string(InternString string) const noexcept

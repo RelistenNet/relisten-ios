@@ -1,6 +1,6 @@
 {
   "name": "LastFm",
-  "version": "1.18.0",
+  "version": "1.17.0",
   "summary": "Block based Last.fm SDK for iOS and Mac OS X.",
   "homepage": "https://github.com/gangverk/LastFm",
   "license": "MIT",
@@ -9,11 +9,11 @@
   },
   "source": {
     "git": "https://github.com/gangverk/LastFm.git",
-    "tag": "1.18.0"
+    "tag": "1.17.0"
   },
   "platforms": {
-    "ios": "8.0",
-    "osx": "10.9",
+    "ios": "6.0",
+    "osx": "10.8",
     "tvos": "9.0"
   },
   "source_files": "LastFm/*.{h,m}",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "KissXML": [
-      "~> 5.2.3"
+      "~> 5.0.3"
     ]
   }
 }

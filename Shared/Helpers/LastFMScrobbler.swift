@@ -25,6 +25,7 @@ public class LastFMScrobbler {
     
     public var username : String? {
         didSet {
+            self.observeUsername.value = username
             self.lastFM.username = username
             
             if username != nil {
@@ -34,6 +35,7 @@ public class LastFMScrobbler {
             }
         }
     }
+    public let observeUsername = Observable<String?>(nil)
     
     private var sessionKey : String?{
         didSet {
@@ -50,6 +52,7 @@ public class LastFMScrobbler {
     public var isLoggedIn : Bool {
         return sessionKey != nil
     }
+    public let observeLoggedIn = Observable<Bool>(false)
     
     private let lastFM : LastFm = LastFm.sharedInstance()!
     private var disposal = Disposal()

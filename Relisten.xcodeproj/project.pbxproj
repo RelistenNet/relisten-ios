@@ -111,6 +111,7 @@
 		43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CBE10F2109296A003FAF51 /* RelistenApp.swift */; };
 		43CBE11521093D01003FAF51 /* Phish.json in Resources */ = {isa = PBXBuildFile; fileRef = 43CBE11421093C9B003FAF51 /* Phish.json */; };
 		43D53C2E21365A65008B407D /* LastFMScrobbler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D53C2D21365A65008B407D /* LastFMScrobbler.swift */; };
+		43D53C3021366F59008B407D /* LastFMAccountNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D53C2F21366F59008B407D /* LastFMAccountNode.swift */; };
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
 		7B38C27DC32DC3C13586FC48 /* Pods_RelistenShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */; };
@@ -235,6 +236,7 @@
 		43CBE10F2109296A003FAF51 /* RelistenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenApp.swift; sourceTree = "<group>"; };
 		43CBE11421093C9B003FAF51 /* Phish.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Phish.json; sourceTree = "<group>"; };
 		43D53C2D21365A65008B407D /* LastFMScrobbler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LastFMScrobbler.swift; path = Helpers/LastFMScrobbler.swift; sourceTree = "<group>"; };
+		43D53C2F21366F59008B407D /* LastFMAccountNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LastFMAccountNode.swift; path = Layouts/LastFMAccountNode.swift; sourceTree = "<group>"; };
 		43EF8D6720F01A41002FF970 /* CarPlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayController.swift; path = "View Controllers/CarPlayController.swift"; sourceTree = "<group>"; };
 		43EF8D6920F099DC002FF970 /* CREDITS */ = {isa = PBXFileReference; lastKnownFileType = text; name = CREDITS; path = ../LicenseGenerator/Artwork/CREDITS; sourceTree = "<group>"; };
 		4768B6B0073CD79A919BDF7F /* Pods-RelistenShared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenShared.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenShared/Pods-RelistenShared.release.xcconfig"; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				433A44052133AA380059D251 /* CreditsNode.swift */,
 				433A44082133B43A0059D251 /* ManageOfflineMusicNode.swift */,
 				433A440A2133B4B10059D251 /* BugReportingSettingsNode.swift */,
+				43D53C2F21366F59008B407D /* LastFMAccountNode.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1585,6 +1588,7 @@
 				43B53450210922CE00DE9B1F /* ReviewsViewController.swift in Sources */,
 				43B53441210922CE00DE9B1F /* ShowListViewController.swift in Sources */,
 				43B53446210922CE00DE9B1F /* SongsViewController.swift in Sources */,
+				43D53C3021366F59008B407D /* LastFMAccountNode.swift in Sources */,
 				7C9FC1EF211A184300A8579B /* VisualActivityViewController.swift in Sources */,
 				43B53429210922CE00DE9B1F /* UInt64+HumanizeBytes.swift in Sources */,
 				43B53463210922CE00DE9B1F /* AppColors.swift in Sources */,

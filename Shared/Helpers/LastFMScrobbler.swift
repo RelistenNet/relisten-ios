@@ -104,6 +104,13 @@ public class LastFMScrobbler {
         })
     }
     
+    public func logout() {
+        lastFM.logout()
+        
+        username = nil
+        sessionKey = nil
+    }
+    
     public func trackStartedPlaying(_ track: Track) {
         guard self.isLoggedIn else { return }
         

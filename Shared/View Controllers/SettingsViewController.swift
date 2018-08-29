@@ -9,6 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 import LicensesViewController
+import SVProgressHUD
 import SafariServices
 
 public class SettingsViewController : RelistenBaseAsyncTableViewController {
@@ -23,7 +24,7 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
     public init() {
         super.init()
         
-        self.tableNode.view.separatorStyle = .none
+        self.tableNode.view.separatorStyle = .singleLine
         self.tableNode.view.backgroundColor = AppColors.lightGreyBackground
         
         title = "Settings"
@@ -76,6 +77,22 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
     }()
 
     let licensesController = LicensesViewController()
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        LastFMScrobbler.shared.observeUsername.observe { (username, _) in
+            DispatchQueue.main.async {
+                self.tableNode.reloadSections(IndexSet(integer: Sections.lastFM.rawValue), with: .none)
+            }
+        }.add(to: &disposal)
+        
+        LastFMScrobbler.shared.observeLoggedIn.observe { (current, previous) in
+            if (current == previous) { return }
+            
+            self.tableNode.reloadSections(IndexSet(integer: Sections.lastFM.rawValue), with: .none)
+        }.add(to: &disposal)
+    }
 }
 
 // MARK: ASTableDataSource
@@ -87,7 +104,7 @@ extension SettingsViewController {
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .lastFM:
-            return 1
+            return 2
         case .downloads:
             return 1
         case .bugReporting:
@@ -104,7 +121,45 @@ extension SettingsViewController {
         
         switch Sections(rawValue: indexPath.section)! {
         case .lastFM:
-            n = lastFMLoginNode
+            switch indexPath.row {
+            case 0:
+                let cell = ASTextCellNode(
+                    attributes: [
+                        NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body),
+                        NSAttributedStringKey.foregroundColor : UIColor.darkGray
+                    ],
+                    insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+                )
+                
+                cell.accessoryType = .none
+                
+                if LastFMScrobbler.shared.isLoggedIn {
+                    cell.text = "You are signed in as @\(LastFMScrobbler.shared.username!)"
+                }
+                else {
+                    cell.text = "You haven't connected your account"
+                }
+                
+                n = cell
+            case 1:
+                let cell = ASTextCellNode(
+                    attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)],
+                    insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+                )
+                
+                cell.accessoryType = .disclosureIndicator
+                
+                if LastFMScrobbler.shared.isLoggedIn {
+                    cell.text = "Sign Out"
+                }
+                else {
+                    cell.text = "Sign In"
+                }
+                
+                n = cell
+            default:
+                fatalError()
+            }
         case .downloads:
             n = manageOfflineMusicNode
         case .bugReporting:
@@ -149,6 +204,13 @@ extension SettingsViewController {
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         switch Sections(rawValue: indexPath.section)! {
+        case .lastFM:
+            switch indexPath.row {
+            case 1:
+                return true
+            default:
+                return false
+            }
         case .credits:
             switch indexPath.row {
             case 1:
@@ -188,9 +250,97 @@ extension SettingsViewController {
             default:
                 fatalError()
             }
+        case .lastFM:
+            switch indexPath.row {
+            case 1:
+                if LastFMScrobbler.shared.isLoggedIn {
+                    lastFMSignOut()
+                }
+                else {
+                    lastFMSignIn()
+                }
+            default:
+                fatalError()
+            }
         default:
             fatalError()
         }
         tableNode.deselectRow(at: indexPath, animated: true)
+    }
+    
+    public func lastFMSignIn() {
+        let a = UIAlertController(
+            title: "Sign into Last.FM",
+            message: nil,
+            preferredStyle: .alert
+        )
+        
+        a.addTextField { (textField) in
+            textField.placeholder = "Username"
+            textField.autocorrectionType = .no
+        }
+        
+        a.addTextField { (textField) in
+            textField.placeholder = "Password"
+            textField.isSecureTextEntry = true
+        }
+        
+        a.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        a.addAction(UIAlertAction(title: "Sign In", style: .default, handler: { (action) in
+            SVProgressHUD.show()
+            
+            LastFMScrobbler.shared.login(
+                username: a.textFields![0].text!,
+                password: a.textFields![1].text!,
+                completion: { (err) in
+                    SVProgressHUD.dismiss()
+
+                    guard let e = err else {
+                        return
+                    }
+                    
+                    let err = UIAlertController(
+                        title: "Last.FM Error",
+                        message: e.localizedDescription,
+                        preferredStyle: .alert
+                    )
+                    
+                    err.addAction(UIAlertAction(
+                        title: "Okay",
+                        style: .default,
+                        handler: nil
+                    ))
+                    
+                    self.present(err, animated: true, completion: nil)
+                }
+            )
+        }))
+        
+        present(a, animated: true, completion: nil)
+    }
+    
+    public func lastFMSignOut() {
+        let err = UIAlertController(
+            title: "Sign out of Last.FM?",
+            message: "You are currently signed in as @\(LastFMScrobbler.shared.username!)",
+            preferredStyle: .alert
+        )
+        
+        err.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .default,
+            handler: nil
+        ))
+        
+        err.addAction(UIAlertAction(
+            title: "Sign Out",
+            style: .destructive,
+            handler: { (action) in
+                LastFMScrobbler.shared.logout()
+            }
+        ))
+        
+        present(err, animated: true, completion: nil)
     }
 }

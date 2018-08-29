@@ -19,7 +19,7 @@ class RelistenUiTests: XCTestCase {
         setupSnapshot(app)
         app.launch()
         
-        continueAfterFailure = false
+        continueAfterFailure = true
     }
     
     override func tearDown() {
@@ -30,25 +30,47 @@ class RelistenUiTests: XCTestCase {
     func testExample() {
         let tablesQuery = app.tables
         
-        sleep(5)
-        snapshot("main screen")
-        tablesQuery.children(matching: .cell).element(boundBy: 3).staticTexts["Grateful Dead"].tap()
-        
-        sleep(5)
-        snapshot("artist")
+        tablesQuery.staticTexts["Grateful Dead"].firstMatch.tap()
+        sleep(1)
         tablesQuery.buttons["years"].tap()
+        sleep(1)
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["1970"]/*[[".cells.staticTexts[\"1970\"]",".staticTexts[\"1970\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        sleep(1)
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["1970-01-03"]/*[[".cells.staticTexts[\"1970-01-03\"]",".staticTexts[\"1970-01-03\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        sleep(1)
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Source 1 of 5"]/*[[".cells.staticTexts[\"Source 1 of 5\"]",".staticTexts[\"Source 1 of 5\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        sleep(1)
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Me and My Uncle"]/*[[".cells.staticTexts[\"Me and My Uncle\"]",".staticTexts[\"Me and My Uncle\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        sleep(5)
         
-        sleep(5)
-        snapshot("years")
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["1973"]/*[[".cells.staticTexts[\"1973\"]",".staticTexts[\"1973\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        snapshot("0_source")
+        app.navigationBars["1970-01-03 #1"].buttons["1970-01-03 Sources"].tap()
+        
+        sleep(1)
+        snapshot("1_sources")
+        
+        app.navigationBars["1970-01-03 Sources"].buttons["1970"].tap()
+        
+        sleep(1)
+        snapshot("5_year")
+        
+        app.navigationBars["1970"].buttons["Years"].tap()
+        
+        sleep(1)
+        snapshot("4_years")
+        
+        app.navigationBars["Years"].buttons["Grateful Dead"].tap()
+        
+        sleep(1)
+        snapshot("3_artist")
+        
+        app.navigationBars["Grateful Dead"].buttons["Relisten"].tap()
+        
+        sleep(1)
+        snapshot("2_artists")
+        
+        app.terminate()
 
-        sleep(5)
-        snapshot("sources")
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["1973-02-15"]/*[[".cells.staticTexts[\"1973-02-15\"]",".staticTexts[\"1973-02-15\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-
-        sleep(5)
-        snapshot("source")
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Source 2 of 7"]/*[[".cells.staticTexts[\"Source 2 of 7\"]",".staticTexts[\"Source 2 of 7\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.

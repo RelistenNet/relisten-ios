@@ -110,6 +110,7 @@
 		43B53463210922CE00DE9B1F /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044141E6F4B1E00BA946E /* AppColors.swift */; };
 		43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CBE10F2109296A003FAF51 /* RelistenApp.swift */; };
 		43CBE11521093D01003FAF51 /* Phish.json in Resources */ = {isa = PBXBuildFile; fileRef = 43CBE11421093C9B003FAF51 /* Phish.json */; };
+		43D53C2E21365A65008B407D /* LastFMScrobbler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D53C2D21365A65008B407D /* LastFMScrobbler.swift */; };
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
 		7B38C27DC32DC3C13586FC48 /* Pods_RelistenShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */; };
@@ -233,6 +234,7 @@
 		43B534102109226F00DE9B1F /* libRelistenShared.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRelistenShared.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43CBE10F2109296A003FAF51 /* RelistenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenApp.swift; sourceTree = "<group>"; };
 		43CBE11421093C9B003FAF51 /* Phish.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Phish.json; sourceTree = "<group>"; };
+		43D53C2D21365A65008B407D /* LastFMScrobbler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LastFMScrobbler.swift; path = Helpers/LastFMScrobbler.swift; sourceTree = "<group>"; };
 		43EF8D6720F01A41002FF970 /* CarPlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayController.swift; path = "View Controllers/CarPlayController.swift"; sourceTree = "<group>"; };
 		43EF8D6920F099DC002FF970 /* CREDITS */ = {isa = PBXFileReference; lastKnownFileType = text; name = CREDITS; path = ../LicenseGenerator/Artwork/CREDITS; sourceTree = "<group>"; };
 		4768B6B0073CD79A919BDF7F /* Pods-RelistenShared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenShared.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenShared/Pods-RelistenShared.release.xcconfig"; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				434066AB212FBE1A00FB1D94 /* Wormholy.swift */,
 				434066AD212FC88900FB1D94 /* UserFeedback.swift */,
 				434066B1212FF37600FB1D94 /* Logging.swift */,
+				43D53C2D21365A65008B407D /* LastFMScrobbler.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1574,6 +1577,7 @@
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
 				43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */,
 				43B53436210922CE00DE9B1F /* SourceFeatureIndicatorNodes.swift in Sources */,
+				43D53C2E21365A65008B407D /* LastFMScrobbler.swift in Sources */,
 				43B53447210922CE00DE9B1F /* SongViewController.swift in Sources */,
 				43B53451210922CE00DE9B1F /* RelistenTableViewController.swift in Sources */,
 				43B53433210922CE00DE9B1F /* ShareCellLayout.swift in Sources */,

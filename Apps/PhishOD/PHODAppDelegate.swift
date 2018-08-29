@@ -51,12 +51,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         
         window?.makeKeyAndVisible()
         
-        setupPlayback()
-        setupWormholy()
-        UserFeedback.shared.setup()
-        
-        // Initialize CarPlay
-        CarPlayController.shared.setup()
+        RelistenApp.sharedApp.sharedSetup()
         
         // Import data from pre-4.0 versions of the app
         let phishImporter = LegacyPhishODImporter()
@@ -80,16 +75,6 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         }
         fatalError("Couldn't load the Phish artist JSON data")
     }
-    
-    func setupPlayback() {
-        PlaybackController.window = window
-        let _ = PlaybackController.sharedInstance
-        
-        DispatchQueue.main.async {
-            let _ = DownloadManager.shared
-        }
-    }
-
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -12,6 +12,7 @@ import RelistenShared
 import Siesta
 import AsyncDisplayKit
 import RealmSwift
+import SVProgressHUD
 
 class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, ASCollectionDelegate {
     enum Sections: Int, RawRepresentable {
@@ -45,8 +46,6 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     public var resourceRecentlyPerformed: Resource? = nil
     public let resourceRecentlyUpdated: Resource
     
-    public let settingsViewController : SettingsViewController
-
     public init() {
         recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         offlineShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
@@ -56,8 +55,6 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
 
         resourceRecentlyUpdated = RelistenApi.recentlyUpdated()
         
-        settingsViewController = SettingsViewController()
-
         super.init(useCache: true, refreshOnAppear: true)
         
         recentShowsNode.collectionNode.delegate = self
@@ -174,7 +171,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     }
     
     @objc func presentSettings(_ sender: UINavigationBar?) {
-        navigationController?.pushViewController(settingsViewController, animated: true)
+        navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
     
     override func has(oldData old: [ArtistWithCounts], changed new: [ArtistWithCounts]) -> Bool {

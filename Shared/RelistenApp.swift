@@ -13,7 +13,9 @@ import Observable
 import RealmSwift
 
 public protocol RelistenAppDelegate {
+    var window : UIWindow? { get }
     var rootNavigationController: RelistenNavigationController! { get }
+    
     var appIcon : UIImage { get }
     var isPhishOD : Bool { get }
 }
@@ -92,6 +94,23 @@ public class RelistenApp {
         }.add(to: &disposal)
     }
     
+    public func sharedSetup() {
+        if let window = delegate.window {
+            PlaybackController.window = window
+        }
+        let _ = PlaybackController.sharedInstance
+        
+        DispatchQueue.main.async {
+            let _ = DownloadManager.shared
+        }
+        
+        setupWormholy()
+        UserFeedback.shared.setup()
+        
+        // Initialize CarPlay
+        CarPlayController.shared.setup()
+    }
+    
     public func setupThirdPartyDependencies() {
         #if targetEnvironment(simulator)
         if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
@@ -131,6 +150,12 @@ public class RelistenApp {
 }
 
 public class RelistenDummyAppDelegate : RelistenAppDelegate {
+    public var window: UIWindow? {
+        get {
+            fatalError("An application delegate hasn't been set yet!")
+        }
+    }
+    
     public var rootNavigationController: RelistenNavigationController! {
         get {
             fatalError("An application delegate hasn't been set yet!")

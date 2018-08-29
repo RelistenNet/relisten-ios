@@ -90,7 +90,9 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
         LastFMScrobbler.shared.observeLoggedIn.observe { (current, previous) in
             if (current == previous) { return }
             
-            self.tableNode.reloadSections(IndexSet(integer: Sections.lastFM.rawValue), with: .none)
+            DispatchQueue.main.async {
+                self.tableNode.reloadSections(IndexSet(integer: Sections.lastFM.rawValue), with: .none)
+            }
         }.add(to: &disposal)
     }
 }

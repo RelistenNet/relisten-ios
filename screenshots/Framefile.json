@@ -1,0 +1,55 @@
+{
+  "device_frame_version": "latest",
+  "default": {
+    "keyword": {
+      "color": "#009DC0"
+    },
+    "title": {
+      "color": "#009DC0"
+    },
+    "background": "./background.jpg",
+    "padding": 30,
+    "show_complete_frame": true,
+    "stack_title" : false,
+    "title_below_image": false
+  },
+
+  "data": [
+    {
+      "filter": "source",
+      "title": {
+        "text": "10000s of concerts at your fingertips"
+      }
+    },
+    {
+      "filter": "sources",
+      "title": {
+        "text": "Find the best source for your favorite show"
+      }
+    },
+    {
+      "filter": "artists",
+      "title": {
+        "text": "Listen to over 100 artists"
+      }
+    },
+    {
+      "filter": "artist",
+      "title": {
+        "text": "Find your favorite version of a song"
+      }
+    },
+    {
+      "filter": "year",
+      "title": {
+        "text": "Generated album art to help you find shows"
+      }
+    },
+    {
+      "filter": "years",
+      "title": {
+        "text": "Find the best year!"
+      }
+    }
+  ]
+}

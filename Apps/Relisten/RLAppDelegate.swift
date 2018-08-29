@@ -62,12 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         
         window?.makeKeyAndVisible()
         
-        setupPlayback()
-        setupWormholy()
-        UserFeedback.shared.setup()
-        
-        // Initialize CarPlay
-        CarPlayController.shared.setup()
+        RelistenApp.sharedApp.sharedSetup()
         
         // Import data from pre-4.0 versions of the app
         let relistenImporter = LegacyRelistenImporter()
@@ -76,15 +71,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         }
         
         return true
-    }
-    
-    func setupPlayback() {
-        PlaybackController.window = window
-        let _ = PlaybackController.sharedInstance
-        
-        DispatchQueue.main.async {
-            let _ = DownloadManager.shared
-        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

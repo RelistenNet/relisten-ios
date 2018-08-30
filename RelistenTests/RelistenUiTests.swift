@@ -41,27 +41,40 @@ class RelistenUiTests: XCTestCase {
         sleep(1)
         tablesQuery.buttons["years"].tap()
         sleep(1)
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["1970"]/*[[".cells.staticTexts[\"1970\"]",".staticTexts[\"1970\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        var cell = tablesQuery.cells.containing(.staticText, identifier: "1977").element
+        app.tables.element.scrollToElement(element: cell)
+        cell.tap()
         sleep(1)
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["1970-01-03"]/*[[".cells.staticTexts[\"1970-01-03\"]",".staticTexts[\"1970-01-03\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        cell = tablesQuery.cells.containing(.staticText, identifier: "1977-05-08").element
+        app.tables.element.scrollToElement(element: cell)
+        cell.tap()
         sleep(1)
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Source 1 of 5"]/*[[".cells.staticTexts[\"Source 1 of 5\"]",".staticTexts[\"Source 1 of 5\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        cell = tablesQuery.cells.containing(.staticText, identifier: "Source 1 of 16").element
+        app.tables.element.scrollToElement(element: cell)
+        cell.tap()
         sleep(1)
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Me and My Uncle"]/*[[".cells.staticTexts[\"Me and My Uncle\"]",".staticTexts[\"Me and My Uncle\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        cell = tablesQuery.cells.containing(.staticText, identifier: "Morning Dew").element
+        app.tables.element.scrollToElement(element: cell)
+        cell.tap()
+        app.tables.element(boundBy: 1).swipeDown()
         sleep(5)
         
         snapshot("0_source")
-        app.navigationBars["1970-01-03 #1"].buttons["1970-01-03 Sources"].tap()
+        app.navigationBars["1977-05-08 #1"].buttons["1977-05-08 Sources"].tap()
         
         sleep(1)
         snapshot("1_sources")
         
-        app.navigationBars["1970-01-03 Sources"].buttons["1970"].tap()
+        app.navigationBars["1977-05-08 Sources"].buttons["1977"].tap()
         
         sleep(1)
         snapshot("5_year")
         
-        app.navigationBars["1970"].buttons["Years"].tap()
+        app.navigationBars["1977"].buttons["Years"].tap()
         
         sleep(1)
         snapshot("4_years")

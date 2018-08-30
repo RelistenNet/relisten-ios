@@ -13,8 +13,6 @@ def apply_pods
   pod 'ChameleonFramework'
   pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger"
   pod 'Crashlytics'
-  # Only core because we need wrappers for ASCollectionNode, not UICollectionView
-  pod 'DifferenceKit/Core'
   pod 'DownloadButton'
   pod 'EDColor'
   pod 'Fabric'

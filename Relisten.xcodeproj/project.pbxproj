@@ -131,7 +131,6 @@
 		7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */; };
 		7C8EF1261D5A49C300004B5C /* RelistenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8EF1251D5A49C300004B5C /* RelistenUITests.swift */; };
 		7C9FC1EF211A184300A8579B /* VisualActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FC1EE211A184300A8579B /* VisualActivityViewController.swift */; };
-		7CAAF4262133333F009A03D9 /* ASCollectionNode+DifferenceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAF4252133333F009A03D9 /* ASCollectionNode+DifferenceKit.swift */; };
 		7CAAF42821334A9F009A03D9 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAF42721334A9F009A03D9 /* SnapshotHelper.swift */; };
 		7CAAF42A21334AD7009A03D9 /* RelistenUiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAF42921334AD7009A03D9 /* RelistenUiTests.swift */; };
 		7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */; };
@@ -313,7 +312,6 @@
 		7CA3CD161F71766E00E936AB /* VenueLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueLayout.swift; path = Layouts/VenueLayout.swift; sourceTree = "<group>"; };
 		7CA94EA71F0A6C74004663F3 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Track.swift; path = Playback/Models/Track.swift; sourceTree = "<group>"; };
 		7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackStatusLayout.swift; path = Layouts/TrackStatusLayout.swift; sourceTree = "<group>"; };
-		7CAAF4252133333F009A03D9 /* ASCollectionNode+DifferenceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ASCollectionNode+DifferenceKit.swift"; path = "Extensions/ASCollectionNode+DifferenceKit.swift"; sourceTree = "<group>"; };
 		7CAAF42721334A9F009A03D9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		7CAAF42921334AD7009A03D9 /* RelistenUiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenUiTests.swift; sourceTree = "<group>"; };
 		7CABACBE1EDEE178009C5E3B /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaddingLabel.swift; path = Views/PaddingLabel.swift; sourceTree = "<group>"; };
@@ -644,7 +642,6 @@
 				43A035F0210ED62200C087DD /* Show+FastImageCache.swift */,
 				4330E73C2120E1AC00329ED7 /* StorageAware+Box.swift */,
 				4330E7402121470C00329ED7 /* Resource.swift */,
-				7CAAF4252133333F009A03D9 /* ASCollectionNode+DifferenceKit.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1164,7 +1161,6 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
-				"${BUILT_PRODUCTS_DIR}/DifferenceKit/DifferenceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
@@ -1208,7 +1204,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanroomLogger.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DifferenceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
@@ -1262,7 +1257,6 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
-				"${BUILT_PRODUCTS_DIR}/DifferenceKit/DifferenceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
@@ -1306,7 +1300,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanroomLogger.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DifferenceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
@@ -1424,7 +1417,6 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
-				"${BUILT_PRODUCTS_DIR}/DifferenceKit/DifferenceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
@@ -1468,7 +1460,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanroomLogger.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DifferenceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
@@ -1525,7 +1516,6 @@
 				43B5345C210922CE00DE9B1F /* RelistenShowModels.swift in Sources */,
 				43B5343F210922CE00DE9B1F /* ShowCellNode.swift in Sources */,
 				43B53453210922CE00DE9B1F /* CarPlayController.swift in Sources */,
-				7CAAF4262133333F009A03D9 /* ASCollectionNode+DifferenceKit.swift in Sources */,
 				43B5345E210922CE00DE9B1F /* RelistenSongModels.swift in Sources */,
 				4325A45221238FEB00A0414B /* LegacyImporter.swift in Sources */,
 				7C34D854210ED59400813C00 /* RealmNotificationDisposables.swift in Sources */,

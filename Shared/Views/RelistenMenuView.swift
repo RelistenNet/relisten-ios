@@ -101,11 +101,10 @@ public class RelistenMenuView : UIView {
     private func layoutSubviews(forWidth width: CGFloat) {
         for (idx, categoryButton) in uiButtons.enumerated() {
             var categoryButtonFrame = categoryButton.frame
-            categoryButtonFrame.origin.x = width
             categoryButtonFrame.origin.y = CGFloat(idx) * categoryButtonFrame.size.height + CGFloat(idx) * size_MenuLineSpacing
             categoryButton.frame = categoryButtonFrame
             
-            let containerFrame = CGRect(x: -width,
+            let containerFrame = CGRect(x: -width * 2,
                                         y: categoryButton.frame.origin.y,
                                         width: width * 2,
                                         height: categoryButton.frame.size.height)

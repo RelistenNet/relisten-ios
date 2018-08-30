@@ -11,6 +11,7 @@ import UIKit
 import AsyncDisplayKit
 import Observable
 import RealmSwift
+import Crashlytics
 
 public protocol RelistenAppDelegate {
     var window : UIWindow? { get }
@@ -71,8 +72,21 @@ public class RelistenApp {
         return 0
     }
     
+    public var crashlyticsUserIdentifier : String {
+        get {
+            if let retval = UserDefaults.standard.object(forKey: crashlyticsUserIdentifierKey) as! String? {
+                return retval
+            } else {
+                let userIdentifier = UUID().uuidString
+                UserDefaults.standard.set(userIdentifier, forKey: crashlyticsUserIdentifierKey)
+                return userIdentifier
+            }
+        }
+    }
+    
     let bugReportingKey = "EnableBugReporting"
     let launchCountKey = "LaunchCount"
+    let crashlyticsUserIdentifierKey = "UserIdentifier"
     
     var disposal = Disposal()
     public init(delegate: RelistenAppDelegate) {
@@ -106,6 +120,10 @@ public class RelistenApp {
         
         setupWormholy()
         UserFeedback.shared.setup()
+        
+        let userIdentifier = self.crashlyticsUserIdentifier
+        LogDebug("Setting Crashlytics user identifier to \(userIdentifier)")
+        Crashlytics.sharedInstance().setUserIdentifier(userIdentifier)
         
         // Initialize CarPlay
         CarPlayController.shared.setup()

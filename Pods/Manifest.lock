@@ -74,6 +74,7 @@ PODS:
   - Siesta/Core (1.4.1)
   - Siesta/UI (1.4.1):
     - Siesta/Core
+  - SimulatorStatusMagic (2.2)
   - SINQ (0.7.0)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (4.1.0)
@@ -117,6 +118,7 @@ DEPENDENCIES:
   - SDCloudUserDefaults
   - Siesta/Core (from `https://github.com/bustoutsolutions/siesta.git`)
   - Siesta/UI (from `https://github.com/bustoutsolutions/siesta.git`)
+  - SimulatorStatusMagic
   - SINQ
   - SVProgressHUD
   - SwiftyJSON
@@ -152,6 +154,7 @@ SPEC REPOS:
     - Reveal-SDK
     - SDCloudUserDefaults
     - SDWebImage
+    - SimulatorStatusMagic
     - SINQ
     - SVProgressHUD
     - SwiftyJSON
@@ -242,12 +245,13 @@ SPEC CHECKSUMS:
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Siesta: 867050feecf44d163f83272d9fc21553319c6dc0
+  SimulatorStatusMagic: 0389a805fa8bd001e2977c4046730bdbd6642861
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: f7151fc8179558f548b4b5384dae5892ee970b07
+PODFILE CHECKSUM: 704af5b8d5ab8db8ed14720526eb9391558cd299
 
 COCOAPODS: 1.5.3

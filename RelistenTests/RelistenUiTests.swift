@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import SimulatorStatusMagic
 
 class RelistenUiTests: XCTestCase {
     var app: XCUIApplication!
@@ -19,12 +20,16 @@ class RelistenUiTests: XCTestCase {
         setupSnapshot(app)
         app.launch()
         
+        SDStatusBarManager.sharedInstance().enableOverrides()
+        
         continueAfterFailure = true
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        
+        SDStatusBarManager.sharedInstance().disableOverrides()
     }
     
     func testExample() {

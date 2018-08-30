@@ -79,6 +79,7 @@ end
 
 target 'RelistenUITests' do
   apply_pods
+  pod 'SimulatorStatusMagic'
 end
 
 post_install do |installer|

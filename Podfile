@@ -67,10 +67,10 @@ end
 
 target 'PhishOD' do
   apply_pods
+end
 
-  target 'PhishODUITests' do 
-    inherit! :search_paths
-  end
+target 'PhishODUITests' do 
+  apply_pods
 end
 
 target 'Relisten' do

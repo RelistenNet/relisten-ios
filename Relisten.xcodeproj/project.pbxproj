@@ -32,6 +32,9 @@
 		434066B2212FF37600FB1D94 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066B1212FF37600FB1D94 /* Logging.swift */; };
 		43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43524ADA2114DFC700DC70CD /* RelistenTests.swift */; };
 		43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
+		436D1AB72138659700FA41D5 /* XCUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436D1AB62138659700FA41D5 /* XCUITest.swift */; };
+		436D1AB82138659700FA41D5 /* XCUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436D1AB62138659700FA41D5 /* XCUITest.swift */; };
+		436D1AB92138659700FA41D5 /* XCUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436D1AB62138659700FA41D5 /* XCUITest.swift */; };
 		43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */; };
 		43A035D2210D255700C087DD /* FavoriteButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A035D0210D255700C087DD /* FavoriteButtonNode.swift */; };
 		43A035EC210ECC8000C087DD /* RelistenAlbumArts.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A035E4210ECC7F00C087DD /* RelistenAlbumArts.m */; };
@@ -225,6 +228,7 @@
 		43524AD82114DFC700DC70CD /* RelistenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43524ADA2114DFC700DC70CD /* RelistenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenTests.swift; sourceTree = "<group>"; };
 		43524ADC2114DFC700DC70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		436D1AB62138659700FA41D5 /* XCUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITest.swift; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
 		43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPropertiesForShowNode.swift; path = Layouts/UserPropertiesForShowNode.swift; sourceTree = "<group>"; };
 		43A035D0210D255700C087DD /* FavoriteButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FavoriteButtonNode.swift; path = Layouts/FavoriteButtonNode.swift; sourceTree = "<group>"; };
@@ -432,6 +436,7 @@
 				43524ADA2114DFC700DC70CD /* RelistenTests.swift */,
 				43524ADC2114DFC700DC70CD /* Info.plist */,
 				7CAAF42921334AD7009A03D9 /* RelistenUiTests.swift */,
+				436D1AB62138659700FA41D5 /* XCUITest.swift */,
 			);
 			path = RelistenTests;
 			sourceTree = "<group>";
@@ -1609,6 +1614,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				436D1AB92138659700FA41D5 /* XCUITest.swift in Sources */,
 				43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1734,6 +1740,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C449EB41D5A4F4300750D54 /* PhishODUITests.swift in Sources */,
+				436D1AB82138659700FA41D5 /* XCUITest.swift in Sources */,
 				43A4839521385738009507AF /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1754,6 +1761,7 @@
 			files = (
 				7C8EF1261D5A49C300004B5C /* RelistenUITests.swift in Sources */,
 				7CAAF42821334A9F009A03D9 /* SnapshotHelper.swift in Sources */,
+				436D1AB72138659700FA41D5 /* XCUITest.swift in Sources */,
 				7CAAF42A21334AD7009A03D9 /* RelistenUiTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

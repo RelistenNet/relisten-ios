@@ -37,6 +37,8 @@ class RelistenUiTests: XCTestCase {
         
         tablesQuery.staticTexts["Grateful Dead"].firstMatch.tap()
         sleep(1)
+        tablesQuery.buttons["everything"].tap()
+        sleep(1)
         tablesQuery.buttons["years"].tap()
         sleep(1)
         tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["1970"]/*[[".cells.staticTexts[\"1970\"]",".staticTexts[\"1970\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()

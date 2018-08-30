@@ -10,33 +10,6 @@ import Foundation
 
 import AsyncDisplayKit
 import Observable
-import DifferenceKit
-
-public struct CellShowWithArtist {
-    let show: Show
-    let artist: Artist?
-    
-    public init(show: Show, artist: Artist?) {
-        self.show = show
-        self.artist = artist
-    }
-}
-
-extension CellShowWithArtist : Hashable {
-    public var hashValue: Int {
-        if let a = artist {
-            return show.hashValue ^ a.hashValue
-        }
-        
-        return show.hashValue
-    }
-}
-
-public func ==(lhs: CellShowWithArtist, rhs: CellShowWithArtist) -> Bool {
-    return lhs.show == rhs.show && lhs.artist == rhs.artist
-}
-
-extension CellShowWithArtist : Differentiable {}
 
 public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSource {
     public let collectionNode: ASCollectionNode
@@ -46,48 +19,43 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     var height: CGFloat = 0
     
-    public func updateShows(_ shows: [CellShowWithArtist]) {
-        let changeset = StagedChangeset(source: self.shows, target: shows)
-        
-        DispatchQueue.main.async {
-            self.collectionNode.reload(using: changeset) { _ in
-                self.shows = shows
-            }
-            
-            self.calculateCollectionHeight()
-            self.collectionNode.setNeedsLayout()
-        }
-    }
-    
-    private func calculateCollectionHeight() {
-        var maxSize: CGFloat? = 0
-        
-        // based on: https://github.com/TextureGroup/Texture/issues/108#issuecomment-298416171
-        if self.shows.count > 0 {
-            let nodeCount = self.shows.count
-            
-            let sizeRange = ASSizeRange(min: CGSize.zero, max: CGSize(width: UIScreen.main.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
-            
-            maxSize = (0..<nodeCount).map {
-                self.collectionNode
-                    .nodeForItem(at: IndexPath(item: $0, section: 0))?
-                    .calculateLayoutThatFits(sizeRange)
-                    .size
-                    .height
+    public var shows: [(show: Show, artist: Artist?)] {
+        didSet {
+            DispatchQueue.main.async {
+                // based on: https://github.com/TextureGroup/Texture/issues/108#issuecomment-298416171
+                if self.shows.count > 0 {
+                    // [node layoutThatFits:element.constrainedSize].size.height;
+                    let nodeCount = self.collectionNode.numberOfItems(inSection: 0)
+                    
+                    let sizeRange = ASSizeRange(min: CGSize.zero, max: CGSize(width: UIScreen.main.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
+                    
+                    let maxSize = (0..<nodeCount).map {
+                        self.collectionNode
+                            .nodeForItem(at: IndexPath(row: 0, section: $0))?
+                            .calculateLayoutThatFits(sizeRange)
+                            .size
+                            .height
+                    }
+                        .filter { $0 != nil }
+                        .map { $0! }
+                        .max()
+                    
+                    if let max = maxSize {
+                        self.collectionNode.style.minHeight = ASDimension(unit: .points, value: max)
+                    }
                 }
-                .filter { $0 != nil }
-                .map { $0! }
-                .max()
-        }
-            
-        if let max = maxSize {
-            self.collectionNode.style.minHeight = ASDimension(unit: .points, value: max)
+                else {
+                    self.collectionNode.style.minHeight = ASDimension(unit: .points, value: 0)
+                }
+                
+                self.collectionNode.setNeedsLayout()
+                
+                self.collectionNode.reloadData()
+            }
         }
     }
     
-    public private(set) var shows: [CellShowWithArtist] = []
-    
-    public init(forShows shows: [CellShowWithArtist], delegate: ASCollectionDelegate?) {
+    public init(forShows shows: [(show: Show, artist: Artist?)], delegate: ASCollectionDelegate?) {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0

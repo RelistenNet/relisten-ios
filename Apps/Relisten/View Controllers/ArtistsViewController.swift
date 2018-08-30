@@ -114,7 +114,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             if s.favoriteArtists.count == 0 {
                 s.resourceRecentlyPerformed = nil
                 s.recentlyPerformedShows = []
-                s.recentlyPerformedNode.updateShows([])
+                s.recentlyPerformedNode.shows = []
             }
             else {
                 s.resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtists: s.favoriteArtists)
@@ -191,7 +191,8 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         if !(shows == offlineShows) {
             DispatchQueue.main.async {
                 self.offlineShows = shows
-                self.offlineShowsNode.updateShows(self.offlineShows.map({ CellShowWithArtist(show: $0.show, artist: $0.artist) }))
+                self.offlineShowsNode.shows = self.offlineShows.map({ ($0.show, $0.artist) })
+                self.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
             }
         }
     }
@@ -200,7 +201,8 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         if !(shows == favoriteShows) {
             DispatchQueue.main.async {
                 self.favoriteShows = shows
-                self.favoritedSourcesNode.updateShows(self.favoriteShows.map({ CellShowWithArtist(show: $0.show, artist: $0.artist) }))
+                self.favoritedSourcesNode.shows = self.favoriteShows.map({ ($0.show, $0.artist) })
+                self.tableNode.reloadSections([ Sections.favoritedShows.rawValue ], with: .automatic)
             }
         }
     }
@@ -209,9 +211,10 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         DispatchQueue.main.async {
             self.recentlyPlayedTracks = tracks
             
-            let recentShows = self.recentlyPlayedTracks.map({ CellShowWithArtist(show: $0.showInfo.show, artist: $0.showInfo.artist) })
+            let recentShows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: Artist?)]
             
-            self.recentShowsNode.updateShows(recentShows)
+            self.recentShowsNode.shows = recentShows
+            self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
         }
     }
     
@@ -228,11 +231,13 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
             DispatchQueue.main.async {
                 if resource == self.resourceRecentlyPerformed {
                     self.recentlyPerformedShows = resource.typedContent(ifNone: [])
-                    self.recentlyPerformedNode.updateShows(self.recentlyPerformedShows.map { CellShowWithArtist(show: $0, artist: $0.artist) })
+                    self.recentlyPerformedNode.shows = self.recentlyPerformedShows.map { (show: $0, artist: $0.artist) }
+                    self.tableNode.reloadSections([ Sections.recentlyPerformed.rawValue ], with: .automatic)
                 }
                 else if resource == self.resourceRecentlyUpdated {
                     self.allRecentlyUpdatedShows = resource.typedContent(ifNone: [])
-                    self.allRecentlyUpdatedNode.updateShows(self.allRecentlyUpdatedShows.map { CellShowWithArtist(show: $0, artist: $0.artist) })
+                    self.allRecentlyUpdatedNode.shows = self.allRecentlyUpdatedShows.map { (show: $0, artist: $0.artist) }
+                    self.tableNode.reloadSections([ Sections.allRecentlyUpdated.rawValue ], with: .automatic)
                 }
             }
         }
@@ -252,9 +257,9 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .recentlyPlayed:
-            return 1
+            return recentlyPlayedTracks.count > 0 ? 1 : 0
         case .availableOffline:
-            return 1
+            return offlineShows.count > 0 ? 1 : 0
         case .favorited:
             return allArtists.count == 0 ? 0 : favoriteArtists.count
         case .featured:
@@ -262,11 +267,11 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         case .all:
             return allArtists.count
         case .favoritedShows:
-            return 1
+            return favoriteShows.count > 0 ? 1 : 0
         case .recentlyPerformed:
-            return 1
+            return recentlyPerformedShows.count > 0 ? 1 : 0
         case .allRecentlyUpdated:
-            return 1
+            return allRecentlyUpdatedShows.count > 0 ? 1 : 0
         case .count:
             fatalError()
         }

@@ -125,8 +125,10 @@ public class RelistenApp {
         LogDebug("Setting Crashlytics user identifier to \(userIdentifier)")
         Crashlytics.sharedInstance().setUserIdentifier(userIdentifier)
         
-        // Initialize CarPlay
-        CarPlayController.shared.setup()
+        if !self.isPhishOD {
+            // Initialize CarPlay
+            CarPlayController.shared.setup()
+        }
     }
     
     public func setupThirdPartyDependencies() {

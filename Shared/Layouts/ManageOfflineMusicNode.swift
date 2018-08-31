@@ -12,7 +12,7 @@ import Observable
 
 public class ManageOfflineMusicNode : ASCellNode {
     var disposal = Disposal()
-    var myViewController : UIViewController?
+    weak var myViewController : UIViewController?
     
     public init(viewController : UIViewController? = nil) {
         myViewController = viewController

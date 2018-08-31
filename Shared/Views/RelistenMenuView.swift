@@ -36,7 +36,7 @@ public enum RelistenMenuItem: Int {
 
 public class RelistenMenuView : UIView {
     public let artist: ArtistWithCounts
-    public let viewController: UIViewController
+    public weak var viewController: UIViewController?
     
     private let size_MenuLineSpacing: CGFloat = 16.0 as CGFloat
     private let size_ButtonVerticalPadding: CGFloat = 8.0 as CGFloat
@@ -162,6 +162,10 @@ public class RelistenMenuView : UIView {
         layoutSubviews(forWidth: 320)
     }
     
+    private func pushViewController(_ vc : UIViewController, animated : Bool = true) {
+        self.viewController?.navigationController?.pushViewController(vc, animated: animated)
+    }
+    
     @objc public func submenuItemTapped(_ sender: UIButton?) {
         guard let btn = sender, let item = decodeMenuItem(forTag: btn.tag) else {
             return
@@ -169,39 +173,39 @@ public class RelistenMenuView : UIView {
         
         switch item {
         case .EverythingYears:
-            viewController.navigationController?.pushViewController(YearsViewController(artist: artist), animated: true)
+            self.pushViewController(YearsViewController(artist: artist))
 
         case .EverythingSongs:
-            viewController.navigationController?.pushViewController(SongsViewController(artist: artist), animated: true)
+            self.pushViewController(SongsViewController(artist: artist))
             
         case .EverythingVenues:
-            viewController.navigationController?.pushViewController(VenuesViewController(artist: artist), animated: true)
+            self.pushViewController(VenuesViewController(artist: artist))
             
         case .EverythingTours:
             break
         case .DiscoverTop:
-            viewController.navigationController?.pushViewController(TopShowsViewController(artist: artist), animated: true)
+            self.pushViewController(TopShowsViewController(artist: artist))
             
         case .DiscoverRandom:
             let sourcesViewController = SourcesViewController(artist: artist)
-            sourcesViewController.presentIfNecessary(navigationController: viewController.navigationController)
+            sourcesViewController.presentIfNecessary(navigationController: viewController?.navigationController)
 
         case .RecentlyPlayed:
-            viewController.navigationController?.pushViewController(MyRecentlyPlayedViewController(artist: artist), animated: true)
+            self.pushViewController(MyRecentlyPlayedViewController(artist: artist))
         
         case .RecentlyPerformed:
-            viewController.navigationController?.pushViewController(RecentlyPerformedViewController(artist: artist), animated: true)
+            self.pushViewController(RecentlyPerformedViewController(artist: artist))
             
         case .RecentlyUpdated:
-            viewController.navigationController?.pushViewController(RecentlyAddedViewController(artist: artist), animated: true)
+            self.pushViewController(RecentlyAddedViewController(artist: artist))
             
         case .MyShowsLibrary:
-            viewController.navigationController?.pushViewController(MyLibraryViewController(artist: artist), animated: true)
+            self.pushViewController(MyLibraryViewController(artist: artist))
 
         case .MyShowsPlaylists:
             break
         case .MyShowsDownloaded:
-            viewController.navigationController?.pushViewController(DownloadedViewController(artist: artist), animated: true)
+            self.pushViewController(DownloadedViewController(artist: artist))
         }
         
     }

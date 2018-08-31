@@ -12,7 +12,7 @@ import AsyncDisplayKit
 import SafariServices
 
 public class CreditsNode : ASCellNode {
-    private var myViewController : UIViewController?
+    private weak var myViewController : UIViewController?
     
     public init(viewController : UIViewController? = nil) {
         myViewController = viewController

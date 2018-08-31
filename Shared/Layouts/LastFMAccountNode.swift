@@ -11,7 +11,7 @@ import AsyncDisplayKit
 import Observable
 
 public class LastFMAccountNode : ASCellNode {
-    private var myViewController : UIViewController?
+    private weak var myViewController : UIViewController?
     
     var disposal = Disposal()
     public init(viewController : UIViewController? = nil) {

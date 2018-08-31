@@ -23,7 +23,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     
     var disposal = Disposal()
     
-    private var myViewController : UIViewController?
+    private weak var myViewController : UIViewController?
     
     public init(source: SourceFull, inShow show: ShowWithSources, artist: Artist, viewController: UIViewController? = nil) {
         self.source = source

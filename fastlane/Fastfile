@@ -64,6 +64,21 @@ platform :ios do
     )
   end
 
+  lane :upload do
+    match(git_url: "git@bitbucket.org:relistennet/ios-certificates.git", 
+      type: "appstore",
+      template_name: "CarPlay Audio App(Distribution)"
+      )
+
+    build_app(scheme: "Relisten")
+
+    upload_to_app_store(
+      skip_screenshots: true,
+      skip_metadata: true,
+      skip_app_version_update: true
+    )
+  end
+
   lane :screenshots do
     capture_screenshots
     # upload_to_app_store

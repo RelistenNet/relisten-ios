@@ -56,17 +56,24 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
     }()
     
     lazy var websiteNode : ASTextCellNode = {
-        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
-        licensesNode.text = "Desktop listening with relisten.net"
-        licensesNode.accessoryType = .disclosureIndicator
-        return licensesNode
+        let websiteNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        websiteNode.text = "Desktop listening with relisten.net"
+        websiteNode.accessoryType = .disclosureIndicator
+        return websiteNode
+    }()
+    
+    lazy var discordNode : ASTextCellNode = {
+        let discordNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        discordNode.text = "Discuss Relisten on Discord"
+        discordNode.accessoryType = .disclosureIndicator
+        return discordNode
     }()
     
     lazy var githubNode : ASTextCellNode = {
-        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
-        licensesNode.text = "View project on Github"
-        licensesNode.accessoryType = .disclosureIndicator
-        return licensesNode
+        let githubNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        githubNode.text = "View project on Github"
+        githubNode.accessoryType = .disclosureIndicator
+        return githubNode
     }()
     
     lazy var sonosNode : ASTextCellNode = {
@@ -112,7 +119,7 @@ extension SettingsViewController {
         case .bugReporting:
             return 1
         case .credits:
-            return 5
+            return 6
         case .count:
             fatalError()
         }
@@ -175,8 +182,10 @@ extension SettingsViewController {
             case 2:
                 n = websiteNode
             case 3:
-                n = githubNode
+                n = discordNode
             case 4:
+                n = githubNode
+            case 5:
                 n = sonosNode
             default:
                 fatalError()
@@ -242,9 +251,12 @@ extension SettingsViewController {
                 let url = URL(string: "https://relisten.net")!
                 navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
             case 3:
-                let url = URL(string: "https://github.com/relistennet/relisten-ios")!
+                let url = URL(string: "https://discord.gg/u8v4The")!
                 navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
             case 4:
+                let url = URL(string: "https://github.com/relistennet/relisten-ios")!
+                navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+            case 5:
                 let url = URL(string: "https://twitter.com/relistenapp/status/1017138507956084736")!
                 navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
             case 0:

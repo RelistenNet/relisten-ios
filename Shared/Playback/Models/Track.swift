@@ -21,7 +21,11 @@ public class Track : Codable, Hashable {
         case downloading
         case downloaded
     }
-    
+  
+    private enum CodingKeys: String, CodingKey {
+        case originalJson
+    }
+
     public let showInfo : CompleteShowInformation
 
     // Note: This should be a complete passthrough for SourceTrack so that the properties are visible on Track.
@@ -85,6 +89,18 @@ public class Track : Codable, Hashable {
         showInfo = CompleteShowInformation(source: source, show: sourceShow, artist: artist)
     }
     
+    public convenience required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let data = try values.decode(Data.self, forKey: .originalJson)
+        
+        try self.init(SwJSON(data: data))
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(toData(), forKey: .originalJson)
+    }
+    
     public var hashValue: Int {
         return mp3_url.hashValue ^ showInfo.hashValue
     }
@@ -107,5 +123,9 @@ public class Track : Codable, Hashable {
         j["artist"] = showInfo.artist.originalJSON
         
         return j
+    }
+    
+    public func toData() throws -> Data {
+        return try originalJSON.rawData()
     }
 }

@@ -234,49 +234,11 @@ public class OfflineSource: Object, HasSourceAndShow {
     }
 }
 
+/*
 public struct PlaybackRestoration : Codable {
     public let queue: [UUID] = [] // track UUIDs
     public let active: UUID? = nil // active track UUID
     public let playbackPosition: TimeInterval? = nil // position in active track
     public let playbackState: Track.PlaybackState = .notActive
 }
-
-public struct OfflineSourceMetadata : Codable, Hashable {
-    public var hashValue: Int {
-        return completeShowInformation.hashValue
-    }
-    
-    public static func == (lhs: OfflineSourceMetadata, rhs: OfflineSourceMetadata) -> Bool {
-        return lhs.completeShowInformation == rhs.completeShowInformation
-    }
-    
-    public var year: String {
-        let yearEnd = completeShowInformation.show.display_date.index(completeShowInformation.show.display_date.startIndex, offsetBy: 4)
-        return String(completeShowInformation.show.display_date[..<yearEnd])
-    }
-    
-    public var show: Show {
-        return completeShowInformation.show
-    }
-    
-    public var source: SourceFull {
-        return completeShowInformation.source
-    }
-    
-    public var artist: Artist {
-        return completeShowInformation.artist
-    }
-    
-    public let completeShowInformation: CompleteShowInformation
-    
-    public let dateAdded: Date
-    
-    public static func from(track: Track) -> OfflineSourceMetadata {
-        return self.init(completeShowInformation: track.showInfo, dateAdded: Date())
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case completeShowInformation
-        case dateAdded
-    }
-}
+ */

@@ -697,32 +697,6 @@ extension Artist {
     }
 }
 
-extension OfflineSourceMetadata {
-    public var carPlayIdentifier : String {
-        get {
-            return "live.relisten.offlinesource.\(self.hashValue)"
-        }
-    }
-    
-    public func asMPContentItem() -> MPContentItem {
-        let contentItem = MPContentItem(identifier: self.carPlayIdentifier)
-        contentItem.title = self.show.display_date
-        if let venueName = self.show.venue?.name {
-            contentItem.subtitle = "\(self.artist.name) - \(venueName)"
-        } else {
-            contentItem.subtitle = self.artist.name
-        }
-        contentItem.isContainer = true
-        contentItem.isPlayable = false
-        
-        if CarPlayController.albumArtEnabled {
-            contentItem.artwork = MPMediaItemArtwork(forShow: self.show)
-        }
-        
-        return contentItem
-    }
-}
-
 extension CompleteShowInformation {
     public var carPlayIdentifier : String {
         get {

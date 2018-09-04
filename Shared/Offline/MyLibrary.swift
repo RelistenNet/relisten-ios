@@ -155,8 +155,12 @@ extension MyLibrary {
             recentShow.created_at = Date()
             recentShow.updated_at = Date()
             
-            try! realm.write {
-                realm.add(recentShow)
+            do {
+                try realm.write {
+                    realm.add(recentShow)
+                }
+            } catch {
+                LogError("Error importing recently played show to Realm \(showInfo): \(error)")
             }
         }
         
@@ -249,8 +253,12 @@ extension MyLibrary : DownloadManagerDataSource {
         trackMeta.file_size.value = Int(fileSize)
         trackMeta.created_at = Date()
         
-        try! realm.write {
-            realm.add(trackMeta)
+        do {
+            try realm.write {
+                realm.add(trackMeta)
+            }
+        } catch {
+            LogError("Error adding downloaded track \(track) to Realm: \(error)")
         }
         
         addOfflineSourceInfoForDownloadedTrack(track)
@@ -308,15 +316,19 @@ extension MyLibrary : DownloadManagerDataSource {
         let offlineSourceQuery = realm.object(ofType: OfflineSource.self, forPrimaryKey: track.showInfo.source.uuid.uuidString)
         
         if offlineSourceQuery == nil {
-            try! realm.write {
-                let sourceMeta = OfflineSource()
-                sourceMeta.show_uuid = track.showInfo.show.uuid.uuidString
-                sourceMeta.source_uuid = track.showInfo.source.uuid.uuidString
-                sourceMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
-                sourceMeta.year_uuid = track.showInfo.show.year.uuid.uuidString
-                sourceMeta.created_at = Date()
-                
-                realm.add(sourceMeta)
+            do {
+                try realm.write {
+                    let sourceMeta = OfflineSource()
+                    sourceMeta.show_uuid = track.showInfo.show.uuid.uuidString
+                    sourceMeta.source_uuid = track.showInfo.source.uuid.uuidString
+                    sourceMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
+                    sourceMeta.year_uuid = track.showInfo.show.year.uuid.uuidString
+                    sourceMeta.created_at = Date()
+                    
+                    realm.add(sourceMeta)
+                }
+            } catch {
+                LogError("Error adding offline source for track in Realm \(track): \(error)")
             }
         }
     }

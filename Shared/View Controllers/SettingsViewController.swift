@@ -224,16 +224,10 @@ extension SettingsViewController {
             }
         case .credits:
             switch indexPath.row {
-            case 1:
-                fallthrough
-            case 2:
-                fallthrough
-            case 3:
-                return true
             case 0:
-                fallthrough
-            default:
                 return false
+            default:
+                return true
             }
         default:
             return false

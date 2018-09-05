@@ -403,8 +403,11 @@ extension PlaybackController : AGAudioPlayerLoggingDelegate {
         LogError(line)
         
         let err = NSError(domain: "net.relisten.ios", code: 54, userInfo: [
-            // current track, queue, bass assertion
-            "assertion": line
+            "assertion": line,
+            "currentItemURL": player.currentItem?.playbackURL.absoluteString ?? "no url",
+            "currentQueueURLs": player.queue.properQueue(forShuffleEnabled: player.shuffle).map({ $0.playbackURL.absoluteString }),
+            "currentQueueUUIDs": player.queue.properQueue(forShuffleEnabled: player.shuffle).map({ ($0 as! SourceTrackAudioItem).track.uuid.uuidString }),
+            "playbackPosition": player.elapsed
         ])
         
         Crashlytics.sharedInstance().recordError(err)

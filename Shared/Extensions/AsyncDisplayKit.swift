@@ -10,34 +10,39 @@ import Foundation
 
 import AsyncDisplayKit
 
-public func RelistenAttributedString(_ string: String, font: UIFont, color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> NSAttributedString {
+public func RelistenAttributedString(_ string: String, font: UIFont, color: UIColor? = nil, alignment: NSTextAlignment? = nil, scale: CGFloat = 1.0, weight: FontWeight = .Regular) -> NSAttributedString {
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.alignment = alignment ?? NSTextAlignment.left
     
+    var scaledFont = font
+    if scale != 1.0 || weight != .Regular {
+        scaledFont = font.font(scaledBy: scale, withDifferentWeight: weight)
+    }
+    
     return NSAttributedString(string: string, attributes: [
-        NSAttributedStringKey.font: font,
+        NSAttributedStringKey.font: scaledFont,
         NSAttributedStringKey.foregroundColor: color ?? UIColor.darkText,
         NSAttributedStringKey.paragraphStyle: paragraphStyle
         ])
 }
 
-public func RelistenAttributedString(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> NSAttributedString {
-    return RelistenAttributedString(string, font: UIFont.preferredFont(forTextStyle: textStyle), color: color, alignment: alignment)
+public func RelistenAttributedString(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil, scale: CGFloat = 1.0, weight: FontWeight = .Regular) -> NSAttributedString {
+    return RelistenAttributedString(string, font: UIFont.preferredFont(forTextStyle: textStyle), color: color, alignment: alignment, scale: scale, weight: weight)
 }
 
 extension ASTextNode {
-    public convenience init(_ string: String, font: UIFont, color: UIColor? = nil, alignment: NSTextAlignment? = nil) {
+    public convenience init(_ string: String, font: UIFont, color: UIColor? = nil, alignment: NSTextAlignment? = nil, scale: CGFloat = 1.0, weight: FontWeight = .Regular) {
         self.init()
         
         maximumNumberOfLines = 0
-        attributedText = RelistenAttributedString(string, font: font, color: color, alignment: alignment)
+        attributedText = RelistenAttributedString(string, font: font, color: color, alignment: alignment, scale: scale, weight: weight)
     }
     
-    public convenience init(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) {
+    public convenience init(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil, scale: CGFloat = 1.0, weight: FontWeight = .Regular) {
         self.init()
         
         maximumNumberOfLines = 0
-        attributedText = RelistenAttributedString(string, textStyle: textStyle, color: color, alignment: alignment)
+        attributedText = RelistenAttributedString(string, textStyle: textStyle, color: color, alignment: alignment, scale: scale, weight: weight)
     }
 }
 

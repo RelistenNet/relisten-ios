@@ -8,19 +8,20 @@
 
 import UIKit
 
-import LayoutKit
+import AsyncDisplayKit
 import SafariServices
 import Siesta
 
-public class ReviewsViewController : RelistenTableViewController<[SourceReview]> {
+public class ReviewsViewController : RelistenAsyncTableViewController<[SourceReview]> {
     let source: SourceFull
     let artist: Artist
+    var reviews: [SourceReview] = []
     
     public required init(reviewsForSource source: SourceFull, byArtist artist: Artist) {
         self.source = source
         self.artist = artist
         
-        super.init(useCache: true, refreshOnAppear: false)
+        super.init(useCache: true, refreshOnAppear: true)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -35,24 +36,32 @@ public class ReviewsViewController : RelistenTableViewController<[SourceReview]>
         super.viewDidLoad()
         
         title = source.review_count.pluralize("Review", "Reviews")
-        cellDefaultBackgroundColor = UIColor.white
     }
     
     open override var resource: Resource? { get { return api.reviews(forSource: source, byArtist: artist) } }
     
-    public override func render(forData: [SourceReview]) {
-        layout {
-            return self.buildLayout(forData)
+    public override func dataChanged(_ data: [SourceReview]) {
+        reviews = data
+    }
+    
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return 1
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return reviews.count
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        guard indexPath.row >= 0, indexPath.row < reviews.count else {
+            return { ASCellNode() }
         }
-    }
-    
-    public func buildLayout(_ reviews: [SourceReview]) -> [Section<[Layout]>] {
-        let reviewLayouts = reviews.map({ ReviewLayout(review: $0, forArtist: artist) })
         
-        return [ LayoutsAsSingleSection(items: reviewLayouts) ]
+        let review = reviews[indexPath.row]
+        return { ReviewLayout(review: review, forArtist: self.artist) }
     }
     
-    public override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+    func tableNode(_ tableNode: ASTableNode, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
     }
 }

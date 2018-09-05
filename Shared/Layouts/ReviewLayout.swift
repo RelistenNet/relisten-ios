@@ -8,10 +8,10 @@
 
 import UIKit
 
-import LayoutKit
+import AsyncDisplayKit
 import AXRatingView
 
-public class ReviewLayout: InsetLayout<UIView> {
+public class ReviewLayout: ASCellNode {
     public static var dateFormatter: DateFormatter = {
         let d = DateFormatter()
         d.dateStyle = .long
@@ -20,101 +20,83 @@ public class ReviewLayout: InsetLayout<UIView> {
     }()
     
     public init(review: SourceReview, forArtist artist: Artist) {
-        var verticalStack: [Layout] = []
-        
-        if artist.features.review_titles {
-            let titleLabel = LabelLayout(
-                text: review.title ?? "(no title given)",
-                font: UIFont.preferredFont(forTextStyle: .headline).font(scaledBy: 1.0, withDifferentWeight: .Bold),
-                numberOfLines: 0,
-                alignment: .fillLeading,
-                flexibility: .inflexible,
-                viewReuseId: "reviewTitle",
-                config: nil
-            )
-            
-            verticalStack.append(titleLabel)
+        if artist.features.review_titles, let reviewTitle = review.title {
+            self.titleNode = ASTextNode(reviewTitle, textStyle: .headline, weight: .Bold)
+        } else {
+            self.titleNode = nil
         }
         
-        var horizStack: [Layout] = []
+        if let reviewAuthor = review.author {
+            let scale : CGFloat = artist.features.review_titles ? 0.8 : 1.0
+            self.authorNode = ASTextNode(reviewAuthor, textStyle: .body, scale: scale, weight: .Bold)
+        } else {
+            self.authorNode = nil
+        }
         
-        let authorLabel = LabelLayout(
-            text: review.author ?? "(no author given)",
-            font: UIFont.preferredFont(forTextStyle: .body).font(scaledBy: artist.features.review_titles ? 0.8 : 1.0, withDifferentWeight: .Bold),
-            numberOfLines: 0,
-            alignment: .fillLeading,
-            flexibility: .flexible,
-            viewReuseId: "reviewAuthor",
-            config: nil
-        )
-        
-        let dateLabel = LabelLayout(
-            text: ReviewLayout.dateFormatter.string(from: review.updated_at),
-            font: UIFont.preferredFont(forTextStyle: .caption1),
-            numberOfLines: 0,
-            alignment: .fillLeading,
-            flexibility: .flexible,
-            viewReuseId: "reviewDate",
-            config: nil
-        )
-        
-        horizStack.append(StackLayout(
-            axis: .vertical,
-            spacing: 4,
-            sublayouts: [
-                authorLabel,
-                dateLabel
-            ]
-        ))
+        self.dateNode = ASTextNode(ReviewLayout.dateFormatter.string(from: review.updated_at), textStyle: .caption1)
         
         if artist.features.reviews_have_ratings, let userRating = review.rating {
-            let ratingView = SizeLayout<AXRatingView>(
-                width: RatingViewStubBounds.size.width,
-                height: RatingViewStubBounds.size.height,
-                alignment: .centerTrailing,
-                flexibility: .inflexible,
-                viewReuseId: "sourceRating")
-            { (rating: AXRatingView) in
-                rating.isUserInteractionEnabled = false
-                rating.value = Float(userRating) / 10.0 * 5.0
-            }
-            
-            horizStack.append(ratingView)
+            self.ratingNode = ASTextNode(String(format: "%.2f ★", Double(userRating) / 10.0 * 5.0), textStyle: .subheadline)
+        } else {
+            self.ratingNode = nil
         }
         
-        verticalStack.append(StackLayout(
-            axis: .horizontal,
-            sublayouts: horizStack
-        ))
+        self.review = ASTextNode(review.review, textStyle: .body)
         
-        /*
-        let review = TextViewLayout(
-            attributedText: review.review.convertHtml(),
-            layoutAlignment: .fillLeading,
-            flexibility: .inflexible,
-            viewReuseId: "review",
-            config: nil
-        )
-        */
-        
-        let review = LabelLayout(
-            text: review.review,
-            font: UIFont.preferredFont(forTextStyle: .body),
-            alignment: .fillLeading,
-            flexibility: .inflexible,
-            viewReuseId: "review",
-            config: nil
-        )
-        
-        verticalStack.append(review)
-        
-        super.init(
-            insets: UIEdgeInsetsMake(12, 16, 12, 16),
-            sublayout: StackLayout(
-                axis: .vertical,
-                spacing: 8,
-                sublayouts: verticalStack
+        super.init()
+    }
+    
+    let titleNode : ASTextNode?
+    let authorNode : ASTextNode?
+    let dateNode : ASTextNode
+    let ratingNode : ASTextNode?
+    let review : ASTextNode
+    
+    public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        let authorAndDateStack = ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 4,
+            justifyContent: .start,
+            alignItems: .end,
+            children: ArrayNoNils(
+                authorNode,
+                dateNode
             )
         )
+        authorAndDateStack.style.alignSelf = .stretch
+        
+        let authorAndRatingStack = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 4,
+            justifyContent: .start,
+            alignItems: .center,
+            children: ArrayNoNils(
+                authorAndDateStack,
+                SpacerNode(),
+                ratingNode
+            )
+        )
+        authorAndRatingStack.style.alignSelf = .stretch
+        
+        let reviewStack = ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 8,
+            justifyContent: .start,
+            alignItems: .start,
+            children: ArrayNoNils(
+                titleNode,
+                authorAndRatingStack,
+                review
+            )
+        )
+        reviewStack.style.alignSelf = .stretch
+        
+        let l = ASInsetLayoutSpec(
+            insets: UIEdgeInsetsMake(12, 16, 12, 16),
+            child: reviewStack
+        )
+        l.style.alignSelf = .stretch
+
+        return l
     }
 }

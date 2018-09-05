@@ -58,7 +58,7 @@ open class RelistenBaseAsyncTableViewController : ASViewController<ASDisplayNode
     // MARK: TableView "dataSource" and "delegate"
 }
 
-open class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewController {
+open class RelistenAsyncTableViewController<TData> : RelistenBaseAsyncTableViewController {
     public let statusOverlay = RelistenResourceStatusOverlay()
     
     open var resource: Resource? { get { return nil } }

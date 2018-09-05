@@ -105,7 +105,8 @@ public protocol FavoritedItem {
 }
 
 public class FavoritedArtist : Object, FavoritedItem, HasArtist {
-    @objc public dynamic var uuid: String!
+    @objc public dynamic var uuid: String! = UUID().uuidString
+    
     @objc public dynamic var created_at: Date!
 
     @objc public dynamic var artist_uuid: String! { get { return uuid }}
@@ -116,7 +117,8 @@ public class FavoritedArtist : Object, FavoritedItem, HasArtist {
 }
 
 public class FavoritedShow: Object, FavoritedItem, HasShow {
-    @objc public dynamic var uuid: String!
+    @objc public dynamic var uuid: String! = UUID().uuidString
+    
     @objc public dynamic var created_at: Date!
     @objc public dynamic var show_date: Date!
     @objc public dynamic var artist_uuid: String!
@@ -133,7 +135,8 @@ public class FavoritedShow: Object, FavoritedItem, HasShow {
 }
 
 public class FavoritedSource: Object, FavoritedItem, HasSourceAndShow {
-    @objc public dynamic var uuid: String!
+    @objc public dynamic var uuid: String! = UUID().uuidString
+    
     @objc public dynamic var created_at: Date!
     @objc public dynamic var artist_uuid: String!
     @objc public dynamic var show_uuid: String!
@@ -151,7 +154,8 @@ public class FavoritedSource: Object, FavoritedItem, HasSourceAndShow {
 }
 
 public class FavoritedTrack: Object, FavoritedItem, HasTrackSourceAndShow {
-    @objc public dynamic var uuid: String!
+    @objc public dynamic var uuid: String! = UUID().uuidString
+    
     @objc public dynamic var created_at: Date!
     @objc public dynamic var show_uuid: String!
     @objc public dynamic var source_uuid: String!

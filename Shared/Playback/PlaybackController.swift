@@ -11,6 +11,7 @@ import Foundation
 import AGAudioPlayer
 import Observable
 import StoreKit
+import Crashlytics
 
 extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
@@ -400,5 +401,12 @@ extension PlaybackController : AGAudioPlayerLoggingDelegate {
     
     public func audioPlayer(_ audioPlayer: AGAudioPlayer, loggedErrorLine line: String) {
         LogError(line)
+        
+        let err = NSError(domain: "net.relisten.ios", code: 54, userInfo: [
+            // current track, queue, bass assertion
+            "assertion": line
+        ])
+        
+        Crashlytics.sharedInstance().recordError(err)
     }
 }

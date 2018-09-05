@@ -144,6 +144,7 @@ public class SourceDetailsNode : ASCellNode {
         if !isDetails {
             DispatchQueue.main.async {
                 self.favoriteButton.currentlyFavorited = MyLibrary.shared.isFavorite(show: show, byArtist: artist)
+                self.favoriteButton.isUserInteractionEnabled = false
                 self.favoriteButton.normalColor = UIColor.black
                 self.setupNonDetailObservers()
             }
@@ -221,6 +222,7 @@ public class SourceDetailsNode : ASCellNode {
                 isAvailableOffline ? offlineNode : nil,
                 showNameNode,
                 SpacerNode(),
+                isDetails ? nil : (self.favoriteButton.currentlyFavorited ? favoriteButton : nil),
                 isDetails ? nil : sbdNode,
                 isDetails ? nil : remasterNode,
                 ratingStack
@@ -265,8 +267,7 @@ public class SourceDetailsNode : ASCellNode {
             alignItems: .center,
             children: ArrayNoNils(
                 updateDateNode,
-                SpacerNode(),
-                favoriteButton
+                SpacerNode()
                 )
             )
             updateDate.style.alignSelf = .stretch
@@ -300,10 +301,10 @@ extension SourceDetailsNode : FavoriteButtonDelegate {
     public var favoriteButtonAccessibilityLabel : String { get { return "Favorite Source" } }
     
     public func didFavorite(currentlyFavorited : Bool) {
-        if currentlyFavorited {
-            MyLibrary.shared.favoriteSource(show: self.completeShowInformation)
-        } else {
-            let _ = MyLibrary.shared.unfavoriteSource(show: self.completeShowInformation)
-        }
+//        if currentlyFavorited {
+//            MyLibrary.shared.favoriteSource(show: self.completeShowInformation)
+//        } else {
+//            let _ = MyLibrary.shared.unfavoriteSource(show: self.completeShowInformation)
+//        }
     }
 }

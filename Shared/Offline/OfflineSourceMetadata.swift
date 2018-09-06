@@ -11,19 +11,19 @@ import Foundation
 import RealmSwift
 
 @objc public protocol HasArtist {
-    @objc var artist_uuid: String! { get }
+    @objc var artist_uuid: String { get }
 }
 
 @objc public protocol HasShow : HasArtist {
-    @objc var show_uuid: String! { get }
+    @objc var show_uuid: String { get }
 }
 
 @objc public protocol HasSourceAndShow : HasShow {
-    @objc var source_uuid: String! { get }
+    @objc var source_uuid: String { get }
 }
 
 @objc public protocol HasTrackSourceAndShow : HasSourceAndShow {
-    @objc var track_uuid: String! { get }
+    @objc var track_uuid: String { get }
 }
 
 public extension HasArtist {
@@ -104,24 +104,24 @@ public protocol FavoritedItem {
     var created_at: Date! { get set }
 }
 
-public class FavoritedArtist : Object, FavoritedItem, HasArtist {
-    @objc public dynamic var uuid: String!
-    @objc public dynamic var created_at: Date!
+public class RelistenRealmObject : Object, FavoritedItem {
+    @objc public dynamic var uuid: String = UUID().uuidString
+    @objc public dynamic var created_at: Date = Date()
+}
 
-    @objc public dynamic var artist_uuid: String! { get { return uuid }}
+public class FavoritedArtist : RelistenRealmObject, HasArtist {
+    @objc public dynamic var artist_uuid: String { get { return uuid }}
     
     public override static func primaryKey() -> String? {
         return "uuid"
     }
 }
 
-public class FavoritedShow: Object, FavoritedItem, HasShow {
-    @objc public dynamic var uuid: String!
-    @objc public dynamic var created_at: Date!
-    @objc public dynamic var show_date: Date!
-    @objc public dynamic var artist_uuid: String!
+public class FavoritedShow: RelistenRealmObject, HasShow {
+    @objc public dynamic var show_date: Date
+    @objc public dynamic var artist_uuid: String
     
-    @objc public dynamic var show_uuid: String! { get { return uuid }}
+    @objc public dynamic var show_uuid: String { get { return uuid }}
     
     public override static func primaryKey() -> String? {
         return "uuid"
@@ -132,14 +132,12 @@ public class FavoritedShow: Object, FavoritedItem, HasShow {
     }
 }
 
-public class FavoritedSource: Object, FavoritedItem, HasSourceAndShow {
-    @objc public dynamic var uuid: String!
-    @objc public dynamic var created_at: Date!
-    @objc public dynamic var artist_uuid: String!
-    @objc public dynamic var show_uuid: String!
-    @objc public dynamic var show_date: Date!
+public class FavoritedSource: RelistenRealmObject, HasSourceAndShow {
+    @objc public dynamic var artist_uuid: String
+    @objc public dynamic var show_uuid: String
+    @objc public dynamic var show_date: Date
 
-    @objc public dynamic var source_uuid: String! { get { return uuid }}
+    @objc public dynamic var source_uuid: String { get { return uuid }}
     
     public override static func primaryKey() -> String? {
         return "uuid"
@@ -150,14 +148,12 @@ public class FavoritedSource: Object, FavoritedItem, HasSourceAndShow {
     }
 }
 
-public class FavoritedTrack: Object, FavoritedItem, HasTrackSourceAndShow {
-    @objc public dynamic var uuid: String!
-    @objc public dynamic var created_at: Date!
-    @objc public dynamic var show_uuid: String!
-    @objc public dynamic var source_uuid: String!
-    @objc public dynamic var artist_uuid: String!
+public class FavoritedTrack: RelistenRealmObject, HasTrackSourceAndShow {
+    @objc public dynamic var show_uuid: String
+    @objc public dynamic var source_uuid: String
+    @objc public dynamic var artist_uuid: String
 
-    @objc public dynamic var track_uuid: String! { get { return uuid }}
+    @objc public dynamic var track_uuid: String { get { return uuid }}
 
     public override static func primaryKey() -> String? {
         return "uuid"
@@ -168,16 +164,12 @@ public class FavoritedTrack: Object, FavoritedItem, HasTrackSourceAndShow {
     }
 }
 
-public class RecentlyPlayedTrack: Object, HasTrackSourceAndShow {
-    @objc public dynamic var uuid: String! = UUID().uuidString
-    
-    @objc public dynamic var show_uuid: String!
-    @objc public dynamic var source_uuid: String!
-    @objc public dynamic var track_uuid: String!
-    @objc public dynamic var artist_uuid: String!
-
-    @objc public dynamic var created_at: Date!
-    @objc public dynamic var updated_at: Date!
+public class RecentlyPlayedTrack: RelistenRealmObject, HasTrackSourceAndShow {
+    @objc public dynamic var show_uuid: String
+    @objc public dynamic var source_uuid: String
+    @objc public dynamic var track_uuid: String
+    @objc public dynamic var artist_uuid: String
+    @objc public dynamic var updated_at: Date
 
     public override static func primaryKey() -> String? {
         return "uuid"
@@ -197,11 +189,11 @@ public class RecentlyPlayedTrack: Object, HasTrackSourceAndShow {
 }
 
 public class OfflineTrack: Object, HasTrackSourceAndShow {
-    @objc public dynamic var track_uuid: String!
-    @objc public dynamic var source_uuid: String!
-    @objc public dynamic var show_uuid: String!
-    @objc public dynamic var artist_uuid: String!
-    @objc public dynamic var created_at: Date!
+    @objc public dynamic var track_uuid: String
+    @objc public dynamic var source_uuid: String
+    @objc public dynamic var show_uuid: String
+    @objc public dynamic var artist_uuid: String
+    @objc public dynamic var created_at: Date
     
     // default value because objc enums can't be !'d
     @objc public dynamic var state: OfflineTrackState = .unknown
@@ -219,11 +211,11 @@ public class OfflineTrack: Object, HasTrackSourceAndShow {
 }
 
 public class OfflineSource: Object, HasSourceAndShow {
-    @objc public dynamic var source_uuid: String!
-    @objc public dynamic var show_uuid: String!
-    @objc public dynamic var artist_uuid: String!
-    @objc public dynamic var year_uuid: String!
-    @objc public dynamic var created_at: Date!
+    @objc public dynamic var source_uuid: String
+    @objc public dynamic var show_uuid: String
+    @objc public dynamic var artist_uuid: String
+    @objc public dynamic var year_uuid: String
+    @objc public dynamic var created_at: Date
 
     public override static func primaryKey() -> String? {
         return "source_uuid"

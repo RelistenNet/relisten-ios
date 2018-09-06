@@ -388,8 +388,10 @@ extension DownloadManager : MZDownloadManagerDelegate {
         // notificationBar.display(withMessage: "Restoring \(downloadModel.count) downloads", completion: nil)
     }
     
-    private func fileToActualBytes(_ file: (size: Float, unit: String)) -> Float {
+    private func fileToActualBytes(_ file: (size: Float, unit: String)) -> UInt64 {
         let multiplier: Float
+        
+        if file.size < 0 { return 0 }
         
         switch file.unit {
         case "GB":
@@ -402,7 +404,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
             multiplier = 1
         }
         
-        return file.size * multiplier
+        return UInt64(file.size * multiplier)
     }
     
     public func downloadRequestStarted(_ downloadModel: MZDownloadModel, index: Int) {
@@ -420,7 +422,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
         if let t = self.trackForDownloadModel(downloadModel) {
             var fileSize : UInt64 = 0
             if let file = downloadModel.file {
-                fileSize = UInt64(fileToActualBytes(file))
+                fileSize = fileToActualBytes(file)
             }
             dataSource?.offlineTrackFinishedDownloading(t, withSize: fileSize)
 
@@ -459,7 +461,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
             if didReplaceFile {
                 var fileSize : UInt64 = 0
                 if let file = downloadModel.file {
-                    fileSize = UInt64(fileToActualBytes(file))
+                    fileSize = fileToActualBytes(file)
                 }
                 dataSource?.offlineTrackFinishedDownloading(t, withSize: fileSize)
             } else {

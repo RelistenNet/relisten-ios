@@ -23,7 +23,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         didSet {
             DispatchQueue.main.async {
                 // based on: https://github.com/TextureGroup/Texture/issues/108#issuecomment-298416171
-                if self.shows.count > 0 {
+                if self.shows.count > 0, self.collectionNode.numberOfSections > 0 {
                     // [node layoutThatFits:element.constrainedSize].size.height;
                     let nodeCount = self.collectionNode.numberOfItems(inSection: 0)
                     

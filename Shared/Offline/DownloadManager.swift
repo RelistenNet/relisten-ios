@@ -418,7 +418,11 @@ extension DownloadManager : MZDownloadManagerDelegate {
         LogDebug("Finished downloading: \(downloadModel)")
         
         if let t = self.trackForDownloadModel(downloadModel) {
-            dataSource?.offlineTrackFinishedDownloading(t, withSize: UInt64(fileToActualBytes(downloadModel.file!)))
+            var fileSize : UInt64 = 0
+            if let file = downloadModel.file {
+                fileSize = UInt64(fileToActualBytes(file))
+            }
+            dataSource?.offlineTrackFinishedDownloading(t, withSize: fileSize)
 
             eventTrackFinishedDownloading.raise(t)
             

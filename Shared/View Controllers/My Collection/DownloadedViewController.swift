@@ -55,12 +55,12 @@ class DownloadedViewController: ShowListViewController<[CompleteShowInformation]
         super.relayoutIfContainsTracks(tracks)
     }
     
-    override func extractShowsAndSource(forData: [CompleteShowInformation]) -> [ShowWithSingleSource] {
-        return forData.map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
+    override func extractShowsAndSource(forData data: [CompleteShowInformation]) -> [ShowWithSingleSource] {
+        return data.map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
     }
     
     func loadOffline() -> [CompleteShowInformation] {
-        return MyLibrary.shared.offline.sources.asCompleteShows()
+        return MyLibrary.shared.offline.sources(byArtist: artist).asCompleteShows()
     }
     
     // This subclass has to re-implement this method because Texture tries to perform an Obj-C respondsToSelctor: check and it's not finding the methods if they just exist on the superclass with the argument label names (numberOfSectionsIn: does exist though)

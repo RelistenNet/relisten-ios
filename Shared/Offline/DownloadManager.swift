@@ -457,7 +457,11 @@ extension DownloadManager : MZDownloadManagerDelegate {
         
         if let t = trackForDownloadModel(downloadModel) {
             if didReplaceFile {
-                dataSource?.offlineTrackFinishedDownloading(t, withSize: UInt64(fileToActualBytes(downloadModel.file!)))
+                var fileSize : UInt64 = 0
+                if let file = downloadModel.file {
+                    fileSize = UInt64(fileToActualBytes(file))
+                }
+                dataSource?.offlineTrackFinishedDownloading(t, withSize: fileSize)
             } else {
                 dataSource?.offlineTrackFailedDownloading(t, error: error)
             }

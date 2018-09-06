@@ -13,7 +13,7 @@ def apply_pods
   pod 'ChameleonFramework'
   pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger"
   pod 'Crashlytics'
-  pod 'DownloadButton'
+  pod 'DownloadButton', :git => "https://github.com/farktronix/DownloadButton"
   pod 'EDColor'
   pod 'Fabric'
   pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git"

@@ -16,6 +16,13 @@ import Observable
 
 import RealmSwift
 
+public struct DownloadError : Error {
+    let reason : String
+    public init(_ reason : String = "") {
+        self.reason = reason
+    }
+}
+
 func MD5(_ string: String) -> String? {
     let length = Int(CC_MD5_DIGEST_LENGTH)
     var digest = [UInt8](repeating: 0, count: length)
@@ -416,16 +423,52 @@ extension DownloadManager : MZDownloadManagerDelegate {
         }
     }
     
+    func responseHasExpectedContentType(_ downloadModel: MZDownloadModel) -> Bool {
+        if let headerFields = (downloadModel.task?.response as? HTTPURLResponse)?.allHeaderFields {
+            let contentTypeHeaders = headerFields.filter({
+                if let (header, _) = $0 as? (String, Any) {
+                    return header.lowercased() == "content-type"
+                }
+                return false
+            })
+            
+            if let (_, contentType) = contentTypeHeaders.first as? (AnyHashable, String) {
+                if contentType.lowercased().hasPrefix("audio") {
+                    return true
+                } else {
+                    LogWarn("Content type \(contentType) is not what was expected. Treating download of \(downloadModel.fileURL) as an error")
+                    return false
+                }
+            }
+        }
+        
+        // We're intentionally being loose here. If the server was nice enough to return content-type then we'll enforce that it's an audio type.
+        // Otherwise, let's just let it slide and hope for the best, since it would be a shame to incorrectly drop downloads because the server didn't return
+        //  a content-type header.
+        return true
+    }
+    
     public func downloadRequestFinished(_ downloadModel: MZDownloadModel, index: Int) {
         LogDebug("Finished downloading: \(downloadModel)")
         
+        var error : Error? = nil
+        
+        // Check the content type to make sure we didn't get an error page
+        if !responseHasExpectedContentType(downloadModel) {
+            error = DownloadError("Content type is not what was expected. Treating download of \(downloadModel.fileURL) as an error")
+        }
+        
         if let t = self.trackForDownloadModel(downloadModel) {
-            var fileSize : UInt64 = 0
-            if let file = downloadModel.file {
-                fileSize = fileToActualBytes(file)
+            if error == nil {
+                var fileSize : UInt64 = 0
+                if let file = downloadModel.file {
+                    fileSize = fileToActualBytes(file)
+                }
+                dataSource?.offlineTrackFinishedDownloading(t, withSize: fileSize)
+            } else {
+                dataSource?.offlineTrackFailedDownloading(t, error: error)
             }
-            dataSource?.offlineTrackFinishedDownloading(t, withSize: fileSize)
-
+                
             eventTrackFinishedDownloading.raise(t)
             
             self.removeTrackForDownloadModel(downloadModel)

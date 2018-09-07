@@ -17,19 +17,13 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     public static let shared = CarPlayController()
     public static let albumArtEnabled = false
     
-    private let dataSource : CarPlayDataSource
+    private lazy var dataSource : CarPlayDataSource = {
+        return CarPlayDataSource(delegate: self)
+    }()
     
     private var disposal = Disposal()
     
     // MARK: Setup
-    
-    public override init() {
-        dataSource = CarPlayDataSource(delegate: nil)
-        
-        super.init()
-        
-        dataSource.delegate = self
-    }
     
     public func setup() {
         MPPlayableContentManager.shared().delegate = self;

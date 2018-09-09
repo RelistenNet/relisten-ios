@@ -131,6 +131,10 @@ public class RelistenApp {
         }
     }
     
+    public func migrateDatabases() {
+        MyLibrary.migrateRealmDatabase()
+    }
+    
     public func setupThirdPartyDependencies() {
         #if targetEnvironment(simulator)
         if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {

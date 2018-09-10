@@ -131,12 +131,7 @@ public class MyLibrary {
                     // And will update the schema on disk automatically
                     
                     // Clear out anything with a nil value
-                    self.removeObjectsWithoutRequiredProperties(ofType: FavoritedShow.className(), properties: ["show_date", "artist_uuid"], migration: migration)
-                    self.removeObjectsWithoutRequiredProperties(ofType: FavoritedSource.className(), properties: ["artist_uuid", "show_uuid", "show_date"], migration: migration)
-                    self.removeObjectsWithoutRequiredProperties(ofType: FavoritedTrack.className(), properties: ["artist_uuid", "show_uuid", "source_uuid"], migration: migration)
-                    self.removeObjectsWithoutRequiredProperties(ofType: RecentlyPlayedTrack.className(), properties: ["artist_uuid", "show_uuid", "source_uuid", "track_uuid", "updated_at"], migration: migration)
-                    self.removeObjectsWithoutRequiredProperties(ofType: OfflineTrack.className(), properties: ["track_uuid", "artist_uuid", "show_uuid", "source_uuid", "created_at", "state"], migration: migration)
-                    self.removeObjectsWithoutRequiredProperties(ofType: OfflineSource.className(), properties: ["source_uuid", "artist_uuid", "show_uuid", "year_uuid", "created_at"], migration: migration)
+                    self.removeObjectsWithoutRequiredProperties(migration: migration)
                 }
         })
         
@@ -144,16 +139,49 @@ public class MyLibrary {
         Realm.Configuration.defaultConfiguration = config
     }
     
-    private class func removeObjectsWithoutRequiredProperties(ofType type : String, properties : [String], migration: Migration) {
-        migration.enumerateObjects(ofType: type) { oldObject, newObject in
-            if let oldObject = oldObject {
-                for property in properties {
-                    if oldObject[property] == nil || oldObject[property] as? String == "" {
-                        LogDebug("Removing \(type) object from the database because property \(property) is nil. Full object was \(oldObject)")
-                        migration.delete(oldObject)
-                        break
+    private class func removeObjectsWithoutRequiredProperties(migration: Migration) {
+        // If a property is changed from nullable to required, auto-migration automatically sets a fixed value (for Strings, an empty string "" is set).
+        // To handle this we need to grab the properties from the old object and copy them to the new one
+        // https://github.com/realm/realm-cocoa/issues/4348#issuecomment-261874485
+        // Iterate through all of the classes in the database
+        for objectSchema in migration.oldSchema.objectSchema {
+            LogDebug("Migrating class \(objectSchema.className)")
+            let className = objectSchema.className
+            
+            if let oldSchema = migration.oldSchema[className],
+                let newSchema = migration.newSchema[className] {
+                
+                var newPropertiesByName : [String : Property] = [:]
+                for property in newSchema.properties {
+                    newPropertiesByName[property.name] = property
+                }
+                
+                // Migrate all of the objects for each class
+                migration.enumerateObjects(ofType: className) { oldObject, newObject in
+                    if let oldObject = oldObject,
+                       let newObject = newObject {
+                        for oldProperty in oldSchema.properties {
+                            // Check if the property has changed from optional to required.
+                            if let newProperty = newPropertiesByName[oldProperty.name],
+                               (oldProperty.isOptional && !newProperty.isOptional) {
+                                // If it has changed, make sure it wasn't nil before
+                                if oldObject[oldProperty.name] == nil ||
+                                   oldObject[oldProperty.name] as? String == "" {
+                                    LogWarn("Found object of type \(className) with a nil property for \(oldProperty.name). Deleting that object to clean up the database. Take a good look at this object 'cause it's the last time you're gonna see it! \(oldObject)")
+                                    migration.delete(newObject)
+                                    // We're done with this object so return from the block and handle the next object
+                                    return
+                                }
+                                // Copy the property over from the old schema
+                                newObject[oldProperty.name] = oldObject[oldProperty.name]
+                            }
+                        }
+                    } else {
+                        LogWarn("Couldn't get an old or new object for class \(className)")
                     }
                 }
+            } else {
+                LogWarn("Couldn't get the old or new schemas")
             }
         }
     }

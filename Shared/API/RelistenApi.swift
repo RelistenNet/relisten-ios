@@ -322,6 +322,19 @@ public class _RelistenApi {
             .resource("shows")
             .child("recently-performed")
     }
+    
+    public func play(_ track: SourceTrack) -> Resource {
+        return service
+            .resource("live")
+            .child("play")
+    }
+    
+    public func recordPlay(_ track: SourceTrack) -> Request {
+        return play(track).request(.post, json: [
+            "track_id": track.id,
+            "app_type": "ios"
+        ])
+    }
 }
 
 func json(from object:Any) -> String? {

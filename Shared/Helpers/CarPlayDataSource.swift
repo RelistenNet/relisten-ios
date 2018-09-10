@@ -108,7 +108,7 @@ class CarPlayDataSource {
             MyLibrary.shared.favorites.artists.observeWithValue { [weak self] (favArtists, changes) in
                 guard let s = self else { return }
                 
-                let ids = Array(favArtists.map({ $0.artist.id }))
+                let ids = Array(favArtists.map({ $0.artist }).filter({ $0 != nil }).map({ $0!.id }))
                 
                 s.queue.async {
                     s.reloadFavoriteArtistIds(artistIds: ids)

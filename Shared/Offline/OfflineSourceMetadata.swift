@@ -10,6 +10,7 @@ import Foundation
 
 import RealmSwift
 import Realm
+import Crashlytics
 
 @objc public protocol HasArtist {
     @objc var artist_uuid: String { get }
@@ -28,17 +29,31 @@ import Realm
 }
 
 public extension HasArtist {
-    public var artist: ArtistWithCounts {
+    public var artist: ArtistWithCounts? {
         get {
-            return try! RelistenCacher.shared.artistBackingCache.object(forKey: artist_uuid)
+            do {
+                return try RelistenCacher.shared.artistBackingCache.object(forKey: artist_uuid)
+            } catch {
+                Crashlytics.sharedInstance().recordError(error, withAdditionalUserInfo: ["artist_uuid": artist_uuid])
+                LogError("Error fetching from cache artist with UUID=\(artist_uuid): \(error)")
+            }
+            
+            return nil
         }
     }
 }
 
 public extension HasShow {
-    public var show: ShowWithSources {
+    public var show: ShowWithSources? {
         get {
-            return try! RelistenCacher.shared.showBackingCache.object(forKey: show_uuid)
+            do {
+                return try RelistenCacher.shared.showBackingCache.object(forKey: show_uuid)
+            } catch {
+                Crashlytics.sharedInstance().recordError(error, withAdditionalUserInfo: ["show_uuid": show_uuid])
+                LogError("Error fetching from cache show with UUID=\(show_uuid): \(error)")
+            }
+            
+            return nil
         }
     }
 }
@@ -46,15 +61,14 @@ public extension HasShow {
 public extension HasSourceAndShow {
     public var source: SourceFull? {
         get {
-            return show.sources.first(where: { $0.uuid.uuidString == source_uuid })
+            return show?.sources.first(where: { $0.uuid.uuidString == source_uuid })
         }
     }
     
     public var completeShowInformation: CompleteShowInformation? {
         get {
-            let show = self.show
-            if let source = show.sources.first(where: { $0.uuid.uuidString == source_uuid }) {
-                return CompleteShowInformation(source: source, show: show, artist: artist)
+            if let show = self.show, let art = artist, let source = show.sources.first(where: { $0.uuid.uuidString == source_uuid }) {
+                return CompleteShowInformation(source: source, show: show, artist: art)
             }
             return nil
         }

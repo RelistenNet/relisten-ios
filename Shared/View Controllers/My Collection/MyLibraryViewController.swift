@@ -56,7 +56,7 @@ class MyLibraryViewController: ShowListViewController<Results<FavoritedSource>> 
     }
     
     override func extractShowsAndSource(forData: Results<FavoritedSource>) -> [ShowWithSingleSource] {
-        return forData.map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
+        return forData.asCompleteShows().map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
     }
     
     func loadMyShows() -> Results<FavoritedSource> {

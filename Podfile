@@ -6,6 +6,7 @@ def apply_pods
   use_frameworks!
   inhibit_all_warnings!
 
+  pod 'PathKit'
   pod 'AXRatingView'
   pod 'ActionKit'
   pod 'CWStatusBarNotification'

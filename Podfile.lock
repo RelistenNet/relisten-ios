@@ -42,6 +42,7 @@ PODS:
   - NAKPlaybackIndicatorView (0.1.1)
   - NapySlider (0.3.4)
   - Observable (1.3.3)
+  - PathKit (0.9.1)
   - PINCache (3.0.1-beta.6):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
     - PINCache/Core (= 3.0.1-beta.6)
@@ -111,6 +112,7 @@ DEPENDENCIES:
   - NAKPlaybackIndicatorView
   - NapySlider (from `../NapySlider`)
   - Observable (from `https://github.com/alecgorge/Observable.git`)
+  - PathKit
   - PinpointKit
   - PinpointKit/ScreenshotDetector
   - RealmSwift
@@ -144,6 +146,7 @@ SPEC REPOS:
     - LicensesViewController
     - MarqueeLabel
     - NAKPlaybackIndicatorView
+    - PathKit
     - PINCache
     - PINOperation
     - PinpointKit
@@ -239,6 +242,7 @@ SPEC CHECKSUMS:
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
   NapySlider: 3da4746561f0bbfe4d287bff27e0aa083598bca4
   Observable: 360b0132cef970a50bc69611df7fcbda46e91c34
+  PathKit: 7dcba9f0150afb67e0a520c49707a2cbc8e95937
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
   PinpointKit: d1196cba6acc77fb76af50155f816228f03eaa9c
@@ -256,6 +260,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: 058f3b988a557c817b69aba507319ab5d24bfea7
+PODFILE CHECKSUM: 87eb1c6696886501a0ab9fe22c75ec803c425986
 
 COCOAPODS: 1.5.3

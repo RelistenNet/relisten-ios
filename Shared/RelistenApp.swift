@@ -24,6 +24,8 @@ public protocol RelistenAppDelegate {
 public class RelistenApp {
     public static let sharedApp = RelistenApp(delegate: RelistenDummyAppDelegate())
     
+    public let launchScreenBounds: CGRect
+    
     public let shakeToReportBugEnabled = Observable<Bool>(true)
     
     public var delegate : RelistenAppDelegate
@@ -91,6 +93,7 @@ public class RelistenApp {
     var disposal = Disposal()
     public init(delegate: RelistenAppDelegate) {
         MyLibrary.migrateRealmDatabase()
+        self.launchScreenBounds = UIScreen.main.bounds
 
         if let enableBugReporting = UserDefaults.standard.object(forKey: bugReportingKey) as! Bool? {
             shakeToReportBugEnabled.value = enableBugReporting

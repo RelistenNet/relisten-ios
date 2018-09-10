@@ -327,13 +327,12 @@ public class _RelistenApi {
         return service
             .resource("live")
             .child("play")
+            .withParam("app_type", "ios")
+            .withParam("track_id", String(track.id))
     }
     
     public func recordPlay(_ track: SourceTrack) -> Request {
-        return play(track).request(.post, json: [
-            "track_id": track.id,
-            "app_type": "ios"
-        ])
+        return play(track).request(.post)
     }
 }
 

@@ -507,6 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				7C449EB21D5A4F4300750D54 /* PhishODUITests */,
+				433A44002132728F0059D251 /* PhishOD.entitlements */,
 				7C449EAA1D5A4F4300750D54 /* Info.plist */,
 				7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */,
 				7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */,
@@ -665,14 +666,12 @@
 		7C8EF1041D5A49C200004B5C = {
 			isa = PBXGroup;
 			children = (
-				433A44002132728F0059D251 /* PhishOD.entitlements */,
 				7C449EBC1D5A511C00750D54 /* Apps */,
 				7C449EBD1D5A513300750D54 /* Shared */,
 				43524AD92114DFC700DC70CD /* RelistenTests */,
 				FBC463F999487576B5C823F4 /* Frameworks */,
 				C4F5A2683057A5DAFFCCFB82 /* Pods */,
 				7C8EF10E1D5A49C300004B5C /* Products */,
-				7C31551020BF3E0100F07622 /* Relisten.entitlements */,
 			);
 			sourceTree = "<group>";
 		};
@@ -695,6 +694,7 @@
 				7C8044051E6E57F800BA946E /* Layouts */,
 				7CD78D181E6C6BDD001D097D /* View Controllers */,
 				7C8EF1241D5A49C300004B5C /* RelistenUITests */,
+				7C31551020BF3E0100F07622 /* Relisten.entitlements */,
 				7C8EF11C1D5A49C300004B5C /* Info.plist */,
 				7C8EF1101D5A49C300004B5C /* RLAppDelegate.swift */,
 				7C8EF1171D5A49C300004B5C /* RLAssets.xcassets */,
@@ -1946,7 +1946,7 @@
 			baseConfigurationReference = 8739CDA8EF95D1EB0C751761 /* Pods-PhishOD.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
-				CODE_SIGN_ENTITLEMENTS = PhishOD.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Apps/PhishOD/PhishOD.entitlements;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1963,7 +1963,7 @@
 			baseConfigurationReference = F199D81BECAC074CFA1DBE22 /* Pods-PhishOD.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
-				CODE_SIGN_ENTITLEMENTS = PhishOD.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Apps/PhishOD/PhishOD.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
@@ -2124,7 +2124,7 @@
 			baseConfigurationReference = EEF13FC8FABCBBC9FD61F35C /* Pods-Relisten.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Relisten App Icon";
-				CODE_SIGN_ENTITLEMENTS = Relisten.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Apps/Relisten/Relisten.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -2143,7 +2143,7 @@
 			baseConfigurationReference = A82930F25AEEDCD2C5F101AD /* Pods-Relisten.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Relisten App Icon";
-				CODE_SIGN_ENTITLEMENTS = Relisten.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Apps/Relisten/Relisten.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;

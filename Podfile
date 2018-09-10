@@ -14,6 +14,7 @@ def apply_pods
   pod 'ChameleonFramework'
   pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger"
   pod 'Crashlytics'
+  pod 'CSwiftV', :git => "https://github.com/UberJason/CSwiftV.git" # Needed for RealmConverter until PR https://github.com/Daniel1of1/CSwiftV/pull/38 is accepted
   pod 'DownloadButton', :git => "https://github.com/farktronix/DownloadButton"
   pod 'EDColor'
   pod 'Fabric'
@@ -28,6 +29,7 @@ def apply_pods
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'
   pod 'RealmSwift'
+  pod 'RealmConverter', :git => "https://github.com/farktronix/realm-cocoa-converter.git"
   pod 'SDCloudUserDefaults'
   pod 'SINQ'
   pod 'SVProgressHUD'

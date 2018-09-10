@@ -16,6 +16,7 @@ PODS:
   - CleanroomLogger (6.0.2)
   - Crashlytics (3.10.7):
     - Fabric (~> 1.7.11)
+  - CSwiftV (0.0.5)
   - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.2)
   - DWURecyclingAlert (1.0.2)
@@ -65,6 +66,12 @@ PODS:
   - Realm (3.8.0):
     - Realm/Headers (= 3.8.0)
   - Realm/Headers (3.8.0)
+  - RealmConverter (0.5.1):
+    - CSwiftV
+    - PathKit
+    - Realm (~> 3.8.0)
+    - SSZipArchive
+    - TGSpreadsheetWriter
   - RealmSwift (3.8.0):
     - Realm (= 3.8.0)
   - Reveal-SDK (17)
@@ -77,6 +84,7 @@ PODS:
     - Siesta/Core
   - SimulatorStatusMagic (2.2)
   - SINQ (0.7.0)
+  - SSZipArchive (2.1.4)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (4.1.0)
   - Texture (2.7):
@@ -97,6 +105,7 @@ DEPENDENCIES:
   - ChameleonFramework
   - CleanroomLogger (from `https://github.com/farktronix/CleanroomLogger`)
   - Crashlytics
+  - CSwiftV (from `https://github.com/UberJason/CSwiftV.git`)
   - CWStatusBarNotification
   - DownloadButton (from `https://github.com/farktronix/DownloadButton`)
   - DWURecyclingAlert
@@ -115,6 +124,7 @@ DEPENDENCIES:
   - PathKit
   - PinpointKit
   - PinpointKit/ScreenshotDetector
+  - RealmConverter (from `https://github.com/farktronix/realm-cocoa-converter.git`)
   - RealmSwift
   - Reveal-SDK
   - SDCloudUserDefaults
@@ -158,6 +168,7 @@ SPEC REPOS:
     - SDWebImage
     - SimulatorStatusMagic
     - SINQ
+    - SSZipArchive
     - SVProgressHUD
     - SwiftyJSON
     - Texture
@@ -169,6 +180,8 @@ EXTERNAL SOURCES:
     :path: "../BASSGaplessAudioPlayer"
   CleanroomLogger:
     :git: https://github.com/farktronix/CleanroomLogger
+  CSwiftV:
+    :git: https://github.com/UberJason/CSwiftV.git
   DownloadButton:
     :git: https://github.com/farktronix/DownloadButton
   FastImageCache:
@@ -183,6 +196,8 @@ EXTERNAL SOURCES:
     :path: "../NapySlider"
   Observable:
     :git: https://github.com/alecgorge/Observable.git
+  RealmConverter:
+    :git: https://github.com/farktronix/realm-cocoa-converter.git
   Siesta:
     :git: https://github.com/bustoutsolutions/siesta.git
   Wormholy:
@@ -192,6 +207,9 @@ CHECKOUT OPTIONS:
   CleanroomLogger:
     :commit: e68286255bf79290dc206b46aecaef6438834bba
     :git: https://github.com/farktronix/CleanroomLogger
+  CSwiftV:
+    :commit: 1da904d79156c7580465084dbd4490b78125bc3c
+    :git: https://github.com/UberJason/CSwiftV.git
   DownloadButton:
     :commit: 04f2b09ba3ce18f273e997cd28db6ac0c1ca3d85
     :git: https://github.com/farktronix/DownloadButton
@@ -207,6 +225,9 @@ CHECKOUT OPTIONS:
   Observable:
     :commit: afd5d63e9c6e544681b3bd6d25973f160a5d01a3
     :git: https://github.com/alecgorge/Observable.git
+  RealmConverter:
+    :commit: 039c296e89450585ee0ae5d081998fff557c3f67
+    :git: https://github.com/farktronix/realm-cocoa-converter.git
   Siesta:
     :commit: ecf8cbda2c797c52e8634e7317ec51837992d958
     :git: https://github.com/bustoutsolutions/siesta.git
@@ -224,6 +245,7 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: f165bae4f3c9a15a22ec2fad9b0826f27fb047d5
   Crashlytics: ccaac42660eb9351b9960c0d66106b0bcf99f4fa
+  CSwiftV: 2560532e2e5b04d95c36b0f49a8dc745071fa525
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 0a9848f9c13f34a488939b7244e8043feb94be3c
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
@@ -248,6 +270,7 @@ SPEC CHECKSUMS:
   PinpointKit: d1196cba6acc77fb76af50155f816228f03eaa9c
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   Realm: 3fdae59de78838064e9f77638d7cdb7b8cff9dc8
+  RealmConverter: 910266d4dc96e8f33be7bb7a4918ad80d88a8006
   RealmSwift: c990518b800e106d1f77099d3a4648c3b100337d
   Reveal-SDK: a6df49f47319bd19a110c960c498af32df72c0af
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
@@ -255,11 +278,12 @@ SPEC CHECKSUMS:
   Siesta: 867050feecf44d163f83272d9fc21553319c6dc0
   SimulatorStatusMagic: 0389a805fa8bd001e2977c4046730bdbd6642861
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
+  SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: 87eb1c6696886501a0ab9fe22c75ec803c425986
+PODFILE CHECKSUM: ab07ecf465a430c800e4ef747b63c8940799645a
 
 COCOAPODS: 1.5.3

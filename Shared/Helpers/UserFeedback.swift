@@ -10,6 +10,7 @@ import Foundation
 import PinpointKit
 import CWStatusBarNotification
 import Realm
+import RealmConverter
 
 public class UserFeedback  {
     static public let shared = UserFeedback()
@@ -112,7 +113,7 @@ class RelistenLogCollector : LogCollector {
                     do {
                         try fm.removeItem(atPath: tempDir)
                     } catch {
-                        LogError("Caugh error: \(error)")
+                        LogError("Caught error: \(error)")
                         LogError("Could not clean up \(tempDir)")
                     }
                 }

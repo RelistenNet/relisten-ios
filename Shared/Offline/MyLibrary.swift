@@ -197,6 +197,9 @@ extension MyLibrary {
             realm.add(recentShow)
         }
         
+        RelistenApi.recordPlay(track.sourceTrack)
+            .onFailure({ LogError("Failed to record play (perhaps you are offline?): \($0)")})
+        
         return true
     }
     

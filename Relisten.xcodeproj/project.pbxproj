@@ -119,6 +119,7 @@
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
 		7B38C27DC32DC3C13586FC48 /* Pods_RelistenShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */; };
+		7C11B271214719C100D9D78D /* LinkUpstreamNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */; };
 		7C31550E20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
 		7C31550F20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
 		7C31554920C2D21800F07622 /* ArtistCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554820C2D21800F07622 /* ArtistCellNode.swift */; };
@@ -259,6 +260,7 @@
 		7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenSourceModels.swift; sourceTree = "<group>"; };
 		7C03A4C31E621836006F2912 /* ApiCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCache.swift; sourceTree = "<group>"; };
 		7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenModelCachable.swift; sourceTree = "<group>"; };
+		7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinkUpstreamNode.swift; path = Layouts/LinkUpstreamNode.swift; sourceTree = "<group>"; };
 		7C13704320B5FE6200710E90 /* UInt64+HumanizeBytes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UInt64+HumanizeBytes.swift"; path = "Extensions/UInt64+HumanizeBytes.swift"; sourceTree = "<group>"; };
 		7C13704620B62C2D00710E90 /* MyLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibrary.swift; sourceTree = "<group>"; };
 		7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyLibrary+DiskUsage.swift"; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 				43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */,
 				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 				7C31553920C2081A00F07622 /* YearNode.swift */,
+				7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */,
 			);
 			name = DisplayNodes;
 			sourceTree = "<group>";
@@ -1722,6 +1725,7 @@
 				43B53463210922CE00DE9B1F /* AppColors.swift in Sources */,
 				43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */,
 				433A44092133B43A0059D251 /* ManageOfflineMusicNode.swift in Sources */,
+				7C11B271214719C100D9D78D /* LinkUpstreamNode.swift in Sources */,
 				43B53423210922CE00DE9B1F /* SourceTrackAudioItem.swift in Sources */,
 				4330E73F2120E72200329ED7 /* LegacyPhishODImporter.swift in Sources */,
 				43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */,

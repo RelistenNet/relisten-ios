@@ -50,7 +50,7 @@ public class ShowCellNode : ASCellNode {
         venueNode.maximumNumberOfLines = 0
         
 //        ratingNode = AXRatingViewNode(value: show.avg_rating / 10.0)
-        ratingTextNode = ASTextNode(String(format: "%.2f ★", show.avg_rating / 10.0 * 5.0), textStyle: .caption1)
+        ratingTextNode = show.avg_rating == 0.0 ? nil : ASTextNode(String(format: "%.2f ★", show.avg_rating / 10.0 * 5.0), textStyle: .caption1)
         
         var metaText = "\(show.avg_duration == nil ? "" : show.avg_duration!.humanize())"
         if !useCellLayout {
@@ -122,7 +122,7 @@ public class ShowCellNode : ASCellNode {
     public let artistNode: ASTextNode?
     public let showNode: ASTextNode
 //    public let ratingNode: AXRatingViewNode
-    public let ratingTextNode: ASTextNode
+    public let ratingTextNode: ASTextNode?
     
     public let venueNode: ASTextNode
     public let metaNode: ASTextNode
@@ -179,7 +179,10 @@ public class ShowCellNode : ASCellNode {
         
         if show.avg_rating > 0.0 {
             metaStack.append(SpacerNode())
-            metaStack.append(ratingTextNode)
+            
+            if let r = ratingTextNode {
+                metaStack.append(r)
+            }
         }
         
         let vs = ASStackLayoutSpec(

@@ -162,9 +162,7 @@ public class LegacyImporter : NSObject {
         
         completionGroup.notify(queue: DispatchQueue.global(qos: .background)) {
             self.debug("Import for recently played shows is complete")
-            if error == nil {
-                self.cleanupLegacyFiles()
-            }
+            self.cleanupLegacyFiles()
             completion(error)
         }
     }
@@ -233,7 +231,9 @@ public class LegacyImporter : NSObject {
     private func cleanupLegacyFiles() {
         do {
             try fm.removeItem(atPath: persistedObjectsPath)
-        } catch { }
+        } catch {
+            self.debug("Error removing legacy files at path \(persistedObjectsPath): \(error)")
+        }
     }
 
     // MARK: Helpers

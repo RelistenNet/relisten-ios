@@ -669,8 +669,7 @@
 				7C8B5CDF2146BD1800B646C5 /* CSVDataExporter.swift */,
 				7C8B5CE02146BD1800B646C5 /* DataExporter.swift */,
 			);
-			name = RealmExporter;
-			path = "../../../../Downloads/realm-cocoa-converter-master/RealmConverter/RealmExporter";
+			path = RealmExporter;
 			sourceTree = "<group>";
 		};
 		7C8EF1041D5A49C200004B5C = {

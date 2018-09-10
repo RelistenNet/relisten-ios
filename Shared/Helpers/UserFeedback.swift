@@ -19,7 +19,10 @@ public class UserFeedback  {
     var currentNotification : CWStatusBarNotification?
     
     public init() {
-        let feedbackConfig = FeedbackConfiguration(recipients: ["ios@relisten.net"])
+        let versionString = "Relisten \(RelistenApp.sharedApp.appVersion) (\(RelistenApp.sharedApp.appBuildVersion))"
+        var feedbackConfig = FeedbackConfiguration(recipients: ["ios@relisten.net"])
+        feedbackConfig.title = "[Bug Report: \(versionString)]"
+        feedbackConfig.body = "\n\n\nConfiguration Information (Please don't delete):\n\t\(versionString)\n\tCrash log identifier \(RelistenApp.sharedApp.crashlyticsUserIdentifier)"
         let config = Configuration(logCollector: RelistenLogCollector(), feedbackConfiguration: feedbackConfig)
         pinpointKit = PinpointKit(configuration: config)
     }

@@ -9,6 +9,7 @@
 import Foundation
 import PinpointKit
 import CWStatusBarNotification
+import Realm
 
 public class UserFeedback  {
     static public let shared = UserFeedback()
@@ -89,7 +90,50 @@ class RelistenLogCollector : LogCollector {
             LogWarn("Error enumerating downloaded tracks: \(error)")
         }
         
-        // TODO: Dump the database
+        let group = DispatchGroup()
+        group.enter()
+      
+        // Force a new thread so that Realm doesn't try to reuse an instance which errors out
+        // becuase no other instances use `dynamic = true`
+        let realmThread = Thread {
+            do {
+                let config = RLMRealmConfiguration()
+                config.dynamic = true
+                
+                let realm = try RLMRealm.init(configuration: config)
+                let exporter = CSVDataExporter(realm: realm)
+                
+                let tempDir = try self.createTemporaryDirectoy().path
+                
+                defer {
+                    do {
+                        try fm.removeItem(atPath: tempDir)
+                    } catch {
+                        LogError("Caugh error: \(error)")
+                        LogError("Could not clean up \(tempDir)")
+                    }
+                }
+                
+                try exporter.export(toFolderAtPath: tempDir)
+                
+                let csvs = try fm.contentsOfDirectory(atPath: tempDir)
+                
+                for csvFile in csvs {
+                    let data = try String(contentsOfFile: tempDir + "/" + csvFile, encoding: .utf8)
+                    retval.append("======= Realm Table Dump (\(csvFile)) =======")
+                    retval.append(contentsOf: data.components(separatedBy: .newlines))
+                    retval.append("======= End Realm Table Dump (\(csvFile)) =======\n\n")
+                }
+            } catch {
+                LogWarn("Unable to dump Realm tables: \(error)")
+            }
+            
+            group.leave()
+        }
+        
+        realmThread.start()
+        
+        group.wait()
         
         // Grab the latest log file
         autoreleasepool {
@@ -106,5 +150,12 @@ class RelistenLogCollector : LogCollector {
         }
         
         return retval
+    }
+    
+    func createTemporaryDirectoy() throws -> URL{
+        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+        
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+        return url
     }
 }

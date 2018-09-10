@@ -90,6 +90,8 @@ public class RelistenApp {
     
     var disposal = Disposal()
     public init(delegate: RelistenAppDelegate) {
+        MyLibrary.migrateRealmDatabase()
+
         if let enableBugReporting = UserDefaults.standard.object(forKey: bugReportingKey) as! Bool? {
             shakeToReportBugEnabled.value = enableBugReporting
         }
@@ -129,10 +131,6 @@ public class RelistenApp {
             // Initialize CarPlay
             CarPlayController.shared.setup()
         }
-    }
-    
-    public func migrateDatabases() {
-        MyLibrary.migrateRealmDatabase()
     }
     
     public func setupThirdPartyDependencies() {

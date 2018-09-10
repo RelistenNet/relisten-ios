@@ -15,25 +15,31 @@ import Observable
 
 import RealmSwift
 
+func ReadonlyRealmObjects<Element: Object>(_ type: Element.Type) -> Results<Element> {
+    let config = Realm.Configuration.defaultConfiguration
+//    config.objectTypes = [type]
+    
+    let realm = try! Realm(configuration: config)
+    
+    return realm.objects(type)
+}
+
 public class MyLibraryFavorites {
     public var artists: Results<FavoritedArtist> {
         get {
-            let realm = try! Realm()
-            return realm.objects(FavoritedArtist.self)
+            return ReadonlyRealmObjects(FavoritedArtist.self)
         }
     }
     
     public var shows: Results<FavoritedShow> {
         get {
-            let realm = try! Realm()
-            return realm.objects(FavoritedShow.self)
+            return ReadonlyRealmObjects(FavoritedShow.self)
         }
     }
     
     public var sources: Results<FavoritedSource> {
         get {
-            let realm = try! Realm()
-            return realm.objects(FavoritedSource.self)
+            return ReadonlyRealmObjects(FavoritedSource.self)
         }
     }
     
@@ -44,8 +50,7 @@ public class MyLibraryFavorites {
     
     public var tracks: Results<FavoritedTrack> {
         get {
-            let realm = try! Realm()
-            return realm.objects(FavoritedTrack.self)
+            return ReadonlyRealmObjects(FavoritedTrack.self)
         }
     }
 }
@@ -55,8 +60,7 @@ public typealias FullOfflineSource = (show: ShowWithSources, source: SourceFull,
 public class MyLibraryOffline {
     public var sources: Results<OfflineSource> {
         get {
-            let realm = try! Realm()
-            return realm.objects(OfflineSource.self)
+            return ReadonlyRealmObjects(OfflineSource.self)
         }
     }
     
@@ -67,8 +71,7 @@ public class MyLibraryOffline {
     
     public var tracks: Results<OfflineTrack> {
         get {
-            let realm = try! Realm()
-            return realm.objects(OfflineTrack.self)
+            return ReadonlyRealmObjects(OfflineTrack.self)
         }
     }
 }
@@ -76,9 +79,7 @@ public class MyLibraryOffline {
 public class MyLibraryRecentlyPlayed {
     public var shows: Results<RecentlyPlayedTrack> {
         get {
-            let realm = try! Realm()
-            return realm
-                .objects(RecentlyPlayedTrack.self)
+            return ReadonlyRealmObjects(RecentlyPlayedTrack.self)
                 .sorted(by: [SortDescriptor(keyPath: "show_uuid", ascending: true), SortDescriptor(keyPath: "updated_at", ascending: false)])
                 .sorted(byKeyPath: "updated_at", ascending: false)
                 .distinct(by: ["show_uuid"])
@@ -93,9 +94,7 @@ public class MyLibraryRecentlyPlayed {
     
     public var tracks: Results<RecentlyPlayedTrack> {
         get {
-            let realm = try! Realm()
-            return realm
-                .objects(RecentlyPlayedTrack.self)
+            return ReadonlyRealmObjects(RecentlyPlayedTrack.self)
                 .sorted(byKeyPath: "updated_at", ascending: false)
         }
     }
@@ -267,9 +266,7 @@ extension MyLibrary {
 
 extension MyLibrary : DownloadManagerDataSource {
     public func nextTrackToDownload() -> Track? {
-        let realm = try! Realm()
-        
-        return realm.objects(OfflineTrack.self)
+        return ReadonlyRealmObjects(OfflineTrack.self)
             .filter("state == %d", OfflineTrackState.downloadQueued.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
             .first?
@@ -277,9 +274,7 @@ extension MyLibrary : DownloadManagerDataSource {
     }
     
     public func tracksToDownload(_ count : Int) -> [Track]? {
-        let realm = try! Realm()
-        
-        let objects = realm.objects(OfflineTrack.self)
+        let objects = ReadonlyRealmObjects(OfflineTrack.self)
             .filter("state == %d", OfflineTrackState.downloadQueued.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
         
@@ -287,9 +282,7 @@ extension MyLibrary : DownloadManagerDataSource {
     }
     
     public func currentlyDownloadingTracks() -> [Track]? {
-        let realm = try! Realm()
-        
-        let objects = realm.objects(OfflineTrack.self)
+        let objects = ReadonlyRealmObjects(OfflineTrack.self)
             .filter("state == %d", OfflineTrackState.downloading.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
         

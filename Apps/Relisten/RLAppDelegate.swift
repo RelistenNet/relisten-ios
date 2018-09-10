@@ -44,7 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         LogDebug("🔊🔊🔊 Relisten is launching 🔊🔊🔊")
         RelistenApp.sharedApp.delegate = self
-        RelistenApp.sharedApp.migrateDatabases()
         
         // cannot be in the shared library :/ https://stackoverflow.com/questions/20495064/how-to-integrate-crashlytics-with-static-library
         Fabric.with([Crashlytics.self])

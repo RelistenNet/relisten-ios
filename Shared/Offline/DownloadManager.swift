@@ -89,9 +89,11 @@ public class DownloadManager {
     private let queue : ReentrantDispatchQueue = ReentrantDispatchQueue(label: "live.relisten.ios.mp3-offline.queue")
     private var backingDownloadManager : MZDownloadManager?
     lazy var downloadManager: MZDownloadManager = {
-        queue.sync {
-            if (backingDownloadManager == nil) {
-                backingDownloadManager = MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self)
+        if (backingDownloadManager == nil) {
+            queue.sync {
+                if (backingDownloadManager == nil) {
+                    backingDownloadManager = MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self)
+                }
             }
         }
         return backingDownloadManager!

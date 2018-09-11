@@ -18,7 +18,7 @@ protocol CarPlayDataSourceDelegate : class {
 
 protocol Lockable {
     var locked : Bool { get set }
-    var delegate : CarPlayDataSourceDelegate? { get set }
+    var delegate : CarPlayDataSourceDelegate { get set }
 }
 
 class LockableDataItem<T> : Lockable {
@@ -31,9 +31,9 @@ class LockableDataItem<T> : Lockable {
                 if self.locked {
                     self._updatedBackingItem = newValue
                 } else {
-                    self.delegate?.carPlayDataSourceWillUpdate()
+                    self.delegate.carPlayDataSourceWillUpdate()
                     self._backingItem = newValue
-                    self.delegate?.carPlayDataSourceDidUpdate()
+                    self.delegate.carPlayDataSourceDidUpdate()
                 }
             }
         }
@@ -46,16 +46,16 @@ class LockableDataItem<T> : Lockable {
             dispatchPrecondition(condition: .onQueue(queue))
             self._locked = newValue
             if !self._locked, let update = self._updatedBackingItem {
-                self.delegate?.carPlayDataSourceWillUpdate()
+                self.delegate.carPlayDataSourceWillUpdate()
                 self._backingItem = update
-                self.delegate?.carPlayDataSourceDidUpdate()
+                self.delegate.carPlayDataSourceDidUpdate()
             }
         }
     }
     
     private var queue : DispatchQueue
-    public weak var delegate : CarPlayDataSourceDelegate?
-    public init(_ item : T, queue: DispatchQueue, delegate : CarPlayDataSourceDelegate?) {
+    public unowned var delegate : CarPlayDataSourceDelegate
+    public init(_ item : T, queue: DispatchQueue, delegate : CarPlayDataSourceDelegate) {
         _backingItem = item
         self.queue = queue
         self.delegate = delegate
@@ -63,7 +63,7 @@ class LockableDataItem<T> : Lockable {
 }
 
 class CarPlayDataSource {
-    weak var delegate : CarPlayDataSourceDelegate? {
+    unowned var delegate : CarPlayDataSourceDelegate {
         didSet {
             for var item in lockableDataItems {
                 item.delegate = delegate
@@ -74,7 +74,7 @@ class CarPlayDataSource {
     private var disposal = Disposal()
     private let queue = DispatchQueue(label: "net.relisten.CarPlay.DataSource")
     
-    public init(delegate: CarPlayDataSourceDelegate? = nil) {
+    public init(delegate: CarPlayDataSourceDelegate) {
         _recentlyPlayedShows = LockableDataItem<[CompleteShowInformation]>([], queue: queue, delegate: delegate)
         _favoriteShowsByArtist = LockableDataItem<[Artist : [CompleteShowInformation]]>([:], queue: queue, delegate: delegate)
         _offlineShowsByArtist = LockableDataItem<[Artist : [CompleteShowInformation]]>([:], queue: queue, delegate: delegate)

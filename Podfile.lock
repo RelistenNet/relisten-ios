@@ -43,7 +43,7 @@ PODS:
   - NAKPlaybackIndicatorView (0.1.1)
   - NapySlider (0.3.4)
   - Observable (1.3.3)
-  - PathKit (0.9.1)
+  - PathKit (0.9.2)
   - PINCache (3.0.1-beta.6):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
     - PINCache/Core (= 3.0.1-beta.6)
@@ -264,7 +264,7 @@ SPEC CHECKSUMS:
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
   NapySlider: 3da4746561f0bbfe4d287bff27e0aa083598bca4
   Observable: 360b0132cef970a50bc69611df7fcbda46e91c34
-  PathKit: 7dcba9f0150afb67e0a520c49707a2cbc8e95937
+  PathKit: 273f59a38e3218eb95abd9f6a61730a8bcfd2f06
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
   PinpointKit: d1196cba6acc77fb76af50155f816228f03eaa9c
@@ -284,6 +284,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
 
-PODFILE CHECKSUM: ab07ecf465a430c800e4ef747b63c8940799645a
+PODFILE CHECKSUM: d77553961188656427a7e936f2a39ab0e1201515
 
 COCOAPODS: 1.5.3

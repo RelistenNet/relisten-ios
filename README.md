@@ -24,3 +24,5 @@ $ cd relisten-ios
 $ ./setup.sh
 $ open Relisten.xcworkspace
 ```
+
+If you're looking for a place to help out we tag good starter bugs with the [Help Wanted](https://github.com/RelistenNet/relisten-ios/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) tag. Feel free to grab an issue and send a PR with a fix.

@@ -70,6 +70,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
             LogDebug("Relisten import completed")
         }
         
+        if launchOptions != nil,
+           let url = launchOptions![.url] as? URL {
+            self.handleURL(url: url)
+        }
+        
         return true
     }
 
@@ -99,86 +104,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 }
 
 extension AppDelegate {
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-            let url = userActivity.webpageURL!
+    func handleURL(url : URL) {
+        // https://relisten.net/grateful-dead/1967/02/12/smokestack-lightning?source=87690
+        
+        LogDebug("Handling URL \(url)...")
+        let parts = url.pathComponents
+        
+        let artistsVc = rootNavigationController.viewControllers.first! as! ArtistsViewController
+        var vcs: [UIViewController] = [ artistsVc ]
+        
+        guard let artists = artistsVc.latestData else {
+            LogWarn("Couldn't get the artists from the artists view controller. Failing to handle URL \(url)")
+            return
+        }
+        
+        var artist: ArtistWithCounts! = nil
+        
+        if parts.count >= 2 {
+            // specific artist
             
-            // https://relisten.net/grateful-dead/1967/02/12/smokestack-lightning?source=87690
+            artist = artists.first(where: { $0.slug == parts[1] })
             
-            let parts = url.pathComponents
+            vcs.append(ArtistViewController(artist: artist))
+        }
+        
+        func doneMakingViewControllers() {
+            SVProgressHUD.dismiss()
             
-            let artistsVc = rootNavigationController.viewControllers.first! as! ArtistsViewController
-            var vcs: [UIViewController] = [ artistsVc ]
+            rootNavigationController.setViewControllers(vcs, animated: false)
+        }
+        
+        if parts.count >= 3 {
+            vcs.append(YearsViewController(artist: artist))
             
-            guard let artists = artistsVc.latestData else {
-                return true
-            }
-            
-            var artist: ArtistWithCounts! = nil
-            
-            if parts.count >= 2 {
-                // specific artist
+            // year only
+            if parts.count < 5 {
                 
-                artist = artists.first(where: { $0.slug == parts[1] })
+                let res = RelistenApi.years(byArtist: artist)
                 
-                vcs.append(ArtistViewController(artist: artist))
-            }
-            
-            func doneMakingViewControllers() {
-                SVProgressHUD.dismiss()
-                
-                rootNavigationController.setViewControllers(vcs, animated: false)
-            }
-            
-            if parts.count >= 3 {
-                vcs.append(YearsViewController(artist: artist))
-                
-                // year only
-                if parts.count < 5 {
-                    
-                    let res = RelistenApi.years(byArtist: artist)
-                    
-                    SVProgressHUD.show()
-                    res.addObserver(owner: self) { (res, event) in
-                        if let years: [Year] = res.typedContent(), let yearObj = years.filter({ $0.year == parts[2] }).first {
-                            vcs.append(YearViewController(artist: artist, year: yearObj))
-                            
-                            res.removeObservers(ownedBy: self)
-                            
-                            doneMakingViewControllers()
-                        }
-                    }
-                    res.load()
-                }
-            }
-            else {
-                doneMakingViewControllers()
-            }
-            
-            if parts.count >= 5 {
-                let res = RelistenApi.show(onDate: parts[2] + "-" + parts[3] + "-" + parts[4], byArtist: artist)
-
                 SVProgressHUD.show()
                 res.addObserver(owner: self) { (res, event) in
-                    if let show: ShowWithSources = res.typedContent() {
-                        vcs.append(YearViewController(artist: artist, year: show.year))
-                        vcs.append(SourcesViewController(artist: artist, show: show))
-                        
-                        if let queryString = url.query?.split(separator: "&") {
-                            var sourceId: Int? = nil
-                            
-                            for param in queryString {
-                                let kvs = String(param).split(separator: "=")
-                                
-                                if let f = kvs.first, String(f) == "source", let l = kvs.last {
-                                    sourceId = Int(String(l))
-                                }
-                            }
-                            
-                            if let sourceId = sourceId, let source = show.sources.filter({ $0.id == sourceId }).first {
-                                vcs.append(SourceViewController(artist: artist, show: show, source: source))
-                            }
-                        }
+                    if let years: [Year] = res.typedContent(), let yearObj = years.filter({ $0.year == parts[2] }).first {
+                        vcs.append(YearViewController(artist: artist, year: yearObj))
                         
                         res.removeObservers(ownedBy: self)
                         
@@ -187,9 +154,51 @@ extension AppDelegate {
                 }
                 res.load()
             }
+        }
+        else {
+            doneMakingViewControllers()
+        }
+        
+        if parts.count >= 5 {
+            let res = RelistenApi.show(onDate: parts[2] + "-" + parts[3] + "-" + parts[4], byArtist: artist)
             
-            LogDebug("Handled URL \(url.absoluteString)")
-            //handle url
+            SVProgressHUD.show()
+            res.addObserver(owner: self) { (res, event) in
+                if let show: ShowWithSources = res.typedContent() {
+                    vcs.append(YearViewController(artist: artist, year: show.year))
+                    vcs.append(SourcesViewController(artist: artist, show: show))
+                    
+                    if let queryString = url.query?.split(separator: "&") {
+                        var sourceId: Int? = nil
+                        
+                        for param in queryString {
+                            let kvs = String(param).split(separator: "=")
+                            
+                            if let f = kvs.first, String(f) == "source", let l = kvs.last {
+                                sourceId = Int(String(l))
+                            }
+                        }
+                        
+                        if let sourceId = sourceId, let source = show.sources.filter({ $0.id == sourceId }).first {
+                            vcs.append(SourceViewController(artist: artist, show: show, source: source))
+                        }
+                    }
+                    
+                    res.removeObservers(ownedBy: self)
+                    
+                    doneMakingViewControllers()
+                }
+            }
+            res.load()
+        }
+        
+        LogDebug("Handled URL \(url.absoluteString)")
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+           let url = userActivity.webpageURL {
+            self.handleURL(url: url)
         }
         return true
     }

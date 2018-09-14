@@ -115,6 +115,8 @@
 		43CBE11521093D01003FAF51 /* Phish.json in Resources */ = {isa = PBXBuildFile; fileRef = 43CBE11421093C9B003FAF51 /* Phish.json */; };
 		43D53C2E21365A65008B407D /* LastFMScrobbler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D53C2D21365A65008B407D /* LastFMScrobbler.swift */; };
 		43D53C3021366F59008B407D /* LastFMAccountNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D53C2F21366F59008B407D /* LastFMAccountNode.swift */; };
+		43FABAAE214C115D00E43A22 /* RelistenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CC465E214C104800925CA5 /* RelistenUITests.swift */; };
+		43FABAAF214C12EE00E43A22 /* XCUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436D1AB62138659700FA41D5 /* XCUITest.swift */; };
 		592F993E30E42746880EE7E4 /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */; };
 		6123837185584F1DD90F0965 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */; };
 		7B38C27DC32DC3C13586FC48 /* Pods_RelistenShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */; };
@@ -135,8 +137,10 @@
 		7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */; };
 		7C9FC1EF211A184300A8579B /* VisualActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FC1EE211A184300A8579B /* VisualActivityViewController.swift */; };
 		7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */; };
+		8FEADD095B34AD76963313FE /* Pods_RelistenScreenshots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78D4BB20F87635ACF508F25D /* Pods_RelistenScreenshots.framework */; };
 		AC66B4F5C4BD9C01138EEBB8 /* Pods_PhishOD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */; };
 		CC04E2FFA276A84027E27D73 /* Pods_RelistenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD98604195220F1A82FB9F0 /* Pods_RelistenUITests.framework */; };
+		FA110CCEB85D473B25BFB4C5 /* Pods_RelistenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD98604195220F1A82FB9F0 /* Pods_RelistenUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +171,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 43B5340F2109226F00DE9B1F;
 			remoteInfo = RelistenShared;
+		};
+		43CC4661214C104800925CA5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C8EF1051D5A49C200004B5C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7C8EF10C1D5A49C200004B5C;
+			remoteInfo = Relisten;
 		};
 		7C449EB01D5A4F4300750D54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -241,14 +252,19 @@
 		43B534102109226F00DE9B1F /* libRelistenShared.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRelistenShared.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43CBE10F2109296A003FAF51 /* RelistenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenApp.swift; sourceTree = "<group>"; };
 		43CBE11421093C9B003FAF51 /* Phish.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Phish.json; sourceTree = "<group>"; };
+		43CC465C214C104800925CA5 /* RelistenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		43CC465E214C104800925CA5 /* RelistenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenUITests.swift; sourceTree = "<group>"; };
 		43D53C2D21365A65008B407D /* LastFMScrobbler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LastFMScrobbler.swift; path = Helpers/LastFMScrobbler.swift; sourceTree = "<group>"; };
 		43D53C2F21366F59008B407D /* LastFMAccountNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LastFMAccountNode.swift; path = Layouts/LastFMAccountNode.swift; sourceTree = "<group>"; };
 		43EF8D6720F01A41002FF970 /* CarPlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayController.swift; path = "View Controllers/CarPlayController.swift"; sourceTree = "<group>"; };
 		43EF8D6920F099DC002FF970 /* CREDITS */ = {isa = PBXFileReference; lastKnownFileType = text; name = CREDITS; path = ../LicenseGenerator/Artwork/CREDITS; sourceTree = "<group>"; };
 		4768B6B0073CD79A919BDF7F /* Pods-RelistenShared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenShared.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenShared/Pods-RelistenShared.release.xcconfig"; sourceTree = "<group>"; };
+		56A0D4C55A9B586F5891A198 /* Pods-RelistenScreenshots.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenScreenshots.release.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenScreenshots/Pods-RelistenScreenshots.release.xcconfig"; sourceTree = "<group>"; };
 		598F180A3FF5C77C80A0099E /* Pods_Relisten.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Relisten.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3DAE0BE91F9DD1D3300EE2 /* Pods-PhishODUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6F3810D491596EAF77383988 /* Pods-RelistenScreenshots.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenScreenshots.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenScreenshots/Pods-RelistenScreenshots.debug.xcconfig"; sourceTree = "<group>"; };
 		74ABE39157492B09F7AB0CDB /* Pods-PhishODUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.release.xcconfig"; sourceTree = "<group>"; };
+		78D4BB20F87635ACF508F25D /* Pods_RelistenScreenshots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RelistenScreenshots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenApi.swift; sourceTree = "<group>"; };
 		7C03A4B91E60FB66006F2912 /* RelistenModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenModels.swift; sourceTree = "<group>"; };
 		7C03A4BB1E60FFD2006F2912 /* RelistenJsonUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenJsonUtils.swift; sourceTree = "<group>"; };
@@ -364,6 +380,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43CC4659214C104800925CA5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA110CCEB85D473B25BFB4C5 /* Pods_RelistenUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7C449E991D5A4F4200750D54 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -395,6 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC04E2FFA276A84027E27D73 /* Pods_RelistenUITests.framework in Frameworks */,
+				8FEADD095B34AD76963313FE /* Pods_RelistenScreenshots.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +455,8 @@
 			children = (
 				438B523D214C0D8B002A0E29 /* Screenshots */,
 				43524ADA2114DFC700DC70CD /* RelistenTests.swift */,
+				43CC465E214C104800925CA5 /* RelistenUITests.swift */,
+				436D1AB62138659700FA41D5 /* XCUITest.swift */,
 				43524ADC2114DFC700DC70CD /* Info.plist */,
 			);
 			path = RelistenTests;
@@ -439,7 +466,6 @@
 			isa = PBXGroup;
 			children = (
 				7CAAF42921334AD7009A03D9 /* RelistenScreenshots.swift */,
-				436D1AB62138659700FA41D5 /* XCUITest.swift */,
 				7CAAF42721334A9F009A03D9 /* SnapshotHelper.swift */,
 			);
 			path = Screenshots;
@@ -686,6 +712,7 @@
 				7C449EAF1D5A4F4300750D54 /* PhishODUITests.xctest */,
 				43B534102109226F00DE9B1F /* libRelistenShared.a */,
 				43524AD82114DFC700DC70CD /* RelistenTests.xctest */,
+				43CC465C214C104800925CA5 /* RelistenUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -811,6 +838,8 @@
 				74ABE39157492B09F7AB0CDB /* Pods-PhishODUITests.release.xcconfig */,
 				F2C92D744AC05BD2FF4DA8A4 /* Pods-RelistenShared.debug.xcconfig */,
 				4768B6B0073CD79A919BDF7F /* Pods-RelistenShared.release.xcconfig */,
+				6F3810D491596EAF77383988 /* Pods-RelistenScreenshots.debug.xcconfig */,
+				56A0D4C55A9B586F5891A198 /* Pods-RelistenScreenshots.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -823,6 +852,7 @@
 				2B81717E4288DE2572EA4592 /* Pods_PhishOD.framework */,
 				D617822FEB1CFA53522EC981 /* Pods_PhishODUITests.framework */,
 				276C04B5A0EE492E22C68940 /* Pods_RelistenShared.framework */,
+				78D4BB20F87635ACF508F25D /* Pods_RelistenScreenshots.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -866,6 +896,26 @@
 			productName = RelistenShared;
 			productReference = 43B534102109226F00DE9B1F /* libRelistenShared.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		43CC465B214C104800925CA5 /* RelistenUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43CC4665214C104800925CA5 /* Build configuration list for PBXNativeTarget "RelistenUITests" */;
+			buildPhases = (
+				E5FDF9CDB833AE4B17EF14DC /* [CP] Check Pods Manifest.lock */,
+				43CC4658214C104800925CA5 /* Sources */,
+				43CC4659214C104800925CA5 /* Frameworks */,
+				43CC465A214C104800925CA5 /* Resources */,
+				6E489EADB30E68D8400F27C0 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				43CC4662214C104800925CA5 /* PBXTargetDependency */,
+			);
+			name = RelistenUITests;
+			productName = RelistenUITests;
+			productReference = 43CC465C214C104800925CA5 /* RelistenUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		7C449E9B1D5A4F4200750D54 /* PhishOD */ = {
 			isa = PBXNativeTarget;
@@ -970,6 +1020,12 @@
 						DevelopmentTeam = HT7ELV3Q35;
 						ProvisioningStyle = Automatic;
 					};
+					43CC465B214C104800925CA5 = {
+						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = HT7ELV3Q35;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 7C8EF10C1D5A49C200004B5C;
+					};
 					7C449E9B1D5A4F4200750D54 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HT7ELV3Q35;
@@ -1030,12 +1086,20 @@
 				7C449EAE1D5A4F4300750D54 /* PhishODUITests */,
 				43B5340F2109226F00DE9B1F /* RelistenShared */,
 				43524AD72114DFC700DC70CD /* RelistenTests */,
+				43CC465B214C104800925CA5 /* RelistenUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		43524AD62114DFC700DC70CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43CC465A214C104800925CA5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1257,6 +1321,112 @@
 			showEnvVarsInLog = 0;
 		};
 		6E0C4BD2A830197D5957F3C2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-RelistenScreenshots/Pods-RelistenScreenshots-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AGAudioPlayer/AGAudioPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework",
+				"${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework",
+				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
+				"${BUILT_PRODUCTS_DIR}/CSwiftV/CSwiftV.framework",
+				"${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework",
+				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
+				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
+				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
+				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
+				"${BUILT_PRODUCTS_DIR}/FaveButton/FaveButton.framework",
+				"${BUILT_PRODUCTS_DIR}/Interpolate/Interpolate.framework",
+				"${BUILT_PRODUCTS_DIR}/KASlideShow/KASlideShow.framework",
+				"${BUILT_PRODUCTS_DIR}/KissXML/KissXML.framework",
+				"${BUILT_PRODUCTS_DIR}/LastFm/LastFm.framework",
+				"${BUILT_PRODUCTS_DIR}/LayoutKit/LayoutKit.framework",
+				"${BUILT_PRODUCTS_DIR}/LicensesViewController/LicensesViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/MZDownloadManager/MZDownloadManager.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/NapySlider/NapySlider.framework",
+				"${BUILT_PRODUCTS_DIR}/Observable/Observable.framework",
+				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
+				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
+				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
+				"${BUILT_PRODUCTS_DIR}/PathKit/PathKit.framework",
+				"${BUILT_PRODUCTS_DIR}/PinpointKit/PinpointKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-17/iOS/RevealServer.framework",
+				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
+				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Siesta/Siesta.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Texture/AsyncDisplayKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Wormholy/Wormholy.framework",
+				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AGAudioPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXRatingView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CSwiftV.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CWStatusBarNotification.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanroomLogger.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FaveButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interpolate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KASlideShow.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KissXML.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LastFm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LayoutKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LicensesViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZDownloadManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NAKPlaybackIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NapySlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Observable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PathKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PinpointKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmConverter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDCloudUserDefaults.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SINQ.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siesta.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AsyncDisplayKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Wormholy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimulatorStatusMagic.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RelistenScreenshots/Pods-RelistenScreenshots-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6E489EADB30E68D8400F27C0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1523,7 +1693,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RelistenUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-RelistenScreenshots-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1632,6 +1802,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Relisten/Pods-Relisten-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5FDF9CDB833AE4B17EF14DC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RelistenUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1753,6 +1941,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43CC4658214C104800925CA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43FABAAF214C12EE00E43A22 /* XCUITest.swift in Sources */,
+				43FABAAE214C115D00E43A22 /* RelistenUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7C449E981D5A4F4200750D54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1812,6 +2009,11 @@
 			isa = PBXTargetDependency;
 			target = 43B5340F2109226F00DE9B1F /* RelistenShared */;
 			targetProxy = 43B5341A2109228E00DE9B1F /* PBXContainerItemProxy */;
+		};
+		43CC4662214C104800925CA5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7C8EF10C1D5A49C200004B5C /* Relisten */;
+			targetProxy = 43CC4661214C104800925CA5 /* PBXContainerItemProxy */;
 		};
 		7C449EB11D5A4F4300750D54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1926,6 +2128,56 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Shared/RelistenShared-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		43CC4663214C104800925CA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0263F8B06570DBB1399A78F /* Pods-RelistenUITests.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HT7ELV3Q35;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = RelistenTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e5ce8479-e098-414a-b633-4429ad7bf61a";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Relisten;
+			};
+			name = Debug;
+		};
+		43CC4664214C104800925CA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HT7ELV3Q35;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = RelistenTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e5ce8479-e098-414a-b633-4429ad7bf61a";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Relisten;
 			};
 			name = Release;
 		};
@@ -2147,7 +2399,7 @@
 		};
 		7C8EF12E1D5A49C300004B5C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0263F8B06570DBB1399A78F /* Pods-RelistenUITests.debug.xcconfig */;
+			baseConfigurationReference = 6F3810D491596EAF77383988 /* Pods-RelistenScreenshots.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
@@ -2162,7 +2414,7 @@
 		};
 		7C8EF12F1D5A49C300004B5C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 862FFDD760C11125F0D3CC56 /* Pods-RelistenUITests.release.xcconfig */;
+			baseConfigurationReference = 56A0D4C55A9B586F5891A198 /* Pods-RelistenScreenshots.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
@@ -2192,6 +2444,15 @@
 			buildConfigurations = (
 				43B534142109227000DE9B1F /* Debug */,
 				43B534152109227000DE9B1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43CC4665214C104800925CA5 /* Build configuration list for PBXNativeTarget "RelistenUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43CC4663214C104800925CA5 /* Debug */,
+				43CC4664214C104800925CA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

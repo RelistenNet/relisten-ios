@@ -22,7 +22,7 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "NO">
@@ -79,9 +79,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7C8EF1201D5A49C300004B5C"
-            BuildableName = "RelistenScreenshots.xctest"
-            BlueprintName = "RelistenScreenshots"
+            BlueprintIdentifier = "7C8EF10C1D5A49C200004B5C"
+            BuildableName = "Relisten.app"
+            BlueprintName = "Relisten"
             ReferencedContainer = "container:Relisten.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -94,15 +94,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7C8EF10C1D5A49C200004B5C"
-            BuildableName = "Relisten.app"
-            BlueprintName = "Relisten"
-            ReferencedContainer = "container:Relisten.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

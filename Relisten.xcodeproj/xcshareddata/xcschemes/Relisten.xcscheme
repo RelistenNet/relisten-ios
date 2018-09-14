@@ -32,16 +32,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7C8EF1201D5A49C300004B5C"
-               BuildableName = "RelistenScreenshots.xctest"
-               BlueprintName = "RelistenScreenshots"
-               ReferencedContainer = "container:Relisten.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "43524AD72114DFC700DC70CD"
                BuildableName = "RelistenTests.xctest"
                BlueprintName = "RelistenTests"
@@ -52,9 +42,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "438B5231214C0D74002A0E29"
-               BuildableName = "RelistenScreenshots.xctest"
-               BlueprintName = "RelistenScreenshots"
+               BlueprintIdentifier = "43CC465B214C104800925CA5"
+               BuildableName = "RelistenUITests.xctest"
+               BlueprintName = "RelistenUITests"
                ReferencedContainer = "container:Relisten.xcodeproj">
             </BuildableReference>
          </TestableReference>

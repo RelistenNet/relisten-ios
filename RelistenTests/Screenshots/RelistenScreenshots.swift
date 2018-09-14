@@ -1,15 +1,17 @@
 //
-//  RelistenUiTests.swift
-//  RelistenUITests
+//  RelistenScreenshots.swift
+//  RelistenScreenshots
 //
 //  Created by Alec Gorge on 8/26/18.
 //  Copyright © 2018 Alec Gorge. All rights reserved.
 //
 
 import XCTest
+#if targetEnvironment(simulator)
 import SimulatorStatusMagic
+#endif
 
-class RelistenUiTests: XCTestCase {
+class RelistenScreenshots: XCTestCase {
     var app: XCUIApplication!
     
     override func setUp() {
@@ -19,8 +21,10 @@ class RelistenUiTests: XCTestCase {
         app = XCUIApplication()
         setupSnapshot(app)
         app.launch()
-        
+
+#if targetEnvironment(simulator)
         SDStatusBarManager.sharedInstance().enableOverrides()
+#endif
         
         continueAfterFailure = true
     }
@@ -29,10 +33,12 @@ class RelistenUiTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
         
+#if targetEnvironment(simulator)
         SDStatusBarManager.sharedInstance().disableOverrides()
+#endif
     }
     
-    func testExample() {
+    func testScreenshots() {
         let tablesQuery = app.tables
         
         tablesQuery.staticTexts["Grateful Dead"].firstMatch.tap()
@@ -90,10 +96,5 @@ class RelistenUiTests: XCTestCase {
         snapshot("2_artists")
         
         app.terminate()
-
-        
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
-    
 }

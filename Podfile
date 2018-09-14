@@ -85,6 +85,11 @@ target 'RelistenUITests' do
   pod 'SimulatorStatusMagic'
 end
 
+target 'RelistenScreenshots' do
+  apply_pods
+  pod 'SimulatorStatusMagic'
+end
+
 post_install do |installer|
   # Added to work around https://github.com/TextureGroup/Texture/issues/969
   texture = installer.pods_project.targets.find { |target| target.name == 'Texture' }

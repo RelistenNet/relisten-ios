@@ -32,6 +32,7 @@ public class LinkUpstreamNode : ASCellNode {
         
         automaticallyManagesSubnodes = true
         accessoryType = .disclosureIndicator
+        accessibilityLabel = "Credits"
     }
     
     let titleNode: ASTextNode

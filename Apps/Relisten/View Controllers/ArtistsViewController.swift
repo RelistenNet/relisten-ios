@@ -67,6 +67,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         resourceRecentlyUpdated.loadFromCacheThenUpdate()
         
         let settingsItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain, target: self, action: #selector(presentSettings(_:)))
+        settingsItem.accessibilityLabel = "Settings"
         self.navigationItem.rightBarButtonItem = settingsItem
     }
     

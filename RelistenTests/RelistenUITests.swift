@@ -29,8 +29,149 @@ class RelistenUITests: XCTestCase {
     }
     
     func testNoSmokeComesOut() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        //var cell : XCUIElement
+        let app = XCUIApplication()
+        let tablesQuery = app.tables
+        
+        // SettingsViewController
+        app.navigationBars.firstMatch.buttons["Settings"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        // Favorite/Unfavorite an artist
+        let favoriteArtistButton = XCUIApplication().tables.children(matching: .cell).element(boundBy: 0).buttons["Favorite Artist"]
+        favoriteArtistButton.tap()
+        favoriteArtistButton.tap()
+        
+        // ArtistViewController
+        tablesQuery.staticTexts["Grateful Dead"].firstMatch.tap()
+        
+        tablesQuery.buttons["everything"].tap()
+        
+        // YearsViewController
+        tablesQuery.buttons["years"].tap()
+        
+        // YearViewController
+        tablesQuery.cells.staticTexts["1966"].tap()
+        
+        // SourcesViewController
+        tablesQuery.staticTexts["1966-01-08"].tap()
+        
+        // SourceViewController
+        tablesQuery.staticTexts["Source 1 of 3"].tap()
+        
+        // Play a track
+        tablesQuery.staticTexts["King Bee"].tap()
+
+        // View full player, then close it
+        app.buttons["Open Full Player"].tap()
+        app.buttons["Shuffle"].firstMatch.tap()
+        app.buttons["Loop"].tap()
+        app.buttons["Previous"].tap()
+        app.buttons["Next"].tap()
+        app.buttons["Close Full Player"].tap()
+
+        // Pause playback
+        app.buttons["Pause"].tap()
+
+        // Favorite/unfavorite
+        let favoriteShowButton = tablesQuery/*@START_MENU_TOKEN@*/.buttons["Favorite Show"]/*[[".cells.buttons[\"Favorite Show\"]",".buttons[\"Favorite Show\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        favoriteShowButton.tap()
+        favoriteShowButton.tap()
+
+        // Share
+        app.buttons["Share"].tap()
+        app.buttons["Cancel"].tap()
+
+        // Mini player dots
+        app.buttons["Mini Dots"].tap()
+        app.buttons["Cancel"].tap()
+
+        // Credits (SFSafariViewController)
+        let table = tablesQuery.element(boundBy: 1)
+        table.swipeUp()
+        table.swipeUp()
+        table.swipeUp()
+        table.staticTexts["View on archive.org"].tap()
+        app.buttons["Done"].tap()
+        table.swipeDown()
+        table.swipeDown()
+        table.swipeDown()
+        
+        // SourceDetailsViewController
+        tablesQuery.staticTexts["See details, taper notes, reviews & more ›"].tap()
+        
+        // LongTextViewController
+        tablesQuery.staticTexts["Taper Notes"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        // ReviewsViewController
+        tablesQuery.staticTexts["Ratings"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        // VenueViewController
+        tablesQuery.staticTexts["Fillmore Auditorium"].tap()
+        
+        // Back to ArtistViewController
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        // SongsViewController
+        tablesQuery.buttons["songs"].tap()
+        
+        // SongsViewController
+        tablesQuery.staticTexts["Alabama Getaway"].tap()
+        
+        // Back to ArtistViewController
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        // VenuesViewController
+        tablesQuery.buttons["venues"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        
+        tablesQuery.buttons["discover"].tap() 
+        // TopShowsViewController
+        tablesQuery.buttons["top"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        // Random Show
+        tablesQuery.buttons["random"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        
+        tablesQuery.buttons["recent"].tap()
+        // RecentlyPerformedViewController
+        tablesQuery.buttons["performed"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        // RecentlyAddedViewController
+        tablesQuery.buttons["updated"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        
+        tablesQuery.buttons["my shows"].tap()
+        // MyLibraryViewController
+        tablesQuery.buttons["my favorites"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        // MyRecentlyPlayedViewController
+        tablesQuery.buttons["my recents"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        // DownloadedViewController
+        tablesQuery.buttons["downloaded"].tap()
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
+        
+        app.navigationBars.firstMatch.buttons.firstMatch.tap()
     }
     
+    func testRecording() {
+        
+        
+    }
 }

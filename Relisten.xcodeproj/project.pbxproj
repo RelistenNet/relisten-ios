@@ -236,6 +236,7 @@
 		43524AD82114DFC700DC70CD /* RelistenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43524ADA2114DFC700DC70CD /* RelistenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenTests.swift; sourceTree = "<group>"; };
 		43524ADC2114DFC700DC70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4359D31A214D940C00974631 /* FreshInstall-Relisten4010.xcappdata */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "FreshInstall-Relisten4010.xcappdata"; sourceTree = "<group>"; };
 		436D1AB62138659700FA41D5 /* XCUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITest.swift; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
 		43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPropertiesForShowNode.swift; path = Layouts/UserPropertiesForShowNode.swift; sourceTree = "<group>"; };
@@ -453,6 +454,7 @@
 		43524AD92114DFC700DC70CD /* RelistenTests */ = {
 			isa = PBXGroup;
 			children = (
+				4359D319214D935D00974631 /* Test Data */,
 				438B523D214C0D8B002A0E29 /* Screenshots */,
 				43524ADA2114DFC700DC70CD /* RelistenTests.swift */,
 				43CC465E214C104800925CA5 /* RelistenUITests.swift */,
@@ -460,6 +462,14 @@
 				43524ADC2114DFC700DC70CD /* Info.plist */,
 			);
 			path = RelistenTests;
+			sourceTree = "<group>";
+		};
+		4359D319214D935D00974631 /* Test Data */ = {
+			isa = PBXGroup;
+			children = (
+				4359D31A214D940C00974631 /* FreshInstall-Relisten4010.xcappdata */,
+			);
+			path = "Test Data";
 			sourceTree = "<group>";
 		};
 		438B523D214C0D8B002A0E29 /* Screenshots */ = {

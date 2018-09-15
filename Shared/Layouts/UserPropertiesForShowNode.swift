@@ -37,14 +37,17 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         shareButton = ASButtonNode()
         // TODO: Use a proper share icon
         shareButton.setImage(#imageLiteral(resourceName: "share"), for: .normal)
+        shareButton.accessibilityLabel = "Share"
         
         downloadText = ASTextNode("Download", textStyle: .footnote)
         downloadButton = ASButtonNode()
         downloadButton.setImage(#imageLiteral(resourceName: "download-outline"), for: .normal)
+        downloadButton.accessibilityLabel = "Download Show"
         
         deleteButton = ASButtonNode()
         deleteButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
         deleteButton.isHidden = true
+        deleteButton.accessibilityLabel = "Delete Downloaded Show"
         
         super.init()
         

@@ -140,6 +140,7 @@ public class SourceDetailsNode : ASCellNode {
         automaticallyManagesSubnodes = true
         accessoryType = isDetails ? .none : .disclosureIndicator
         favoriteButton.delegate = self
+        accessibilityLabel = "Source Details"
         
         if !isDetails {
             DispatchQueue.main.async {

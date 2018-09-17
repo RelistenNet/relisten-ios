@@ -653,6 +653,7 @@
 				4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */,
 				43A035D0210D255700C087DD /* FavoriteButtonNode.swift */,
 				7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */,
+				7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */,
 				7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */,
 				7C31552120BFC55900F07622 /* ReviewLayout.swift */,
 				7C31552720C0A08300F07622 /* ShareCellLayout.swift */,
@@ -668,7 +669,6 @@
 				43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */,
 				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 				7C31553920C2081A00F07622 /* YearNode.swift */,
-				7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */,
 			);
 			name = DisplayNodes;
 			sourceTree = "<group>";

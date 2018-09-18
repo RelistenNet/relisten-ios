@@ -284,6 +284,7 @@ public class RecentlyPlayedTrack: RelistenRealmObject, HasTrackSourceAndShow {
     @objc public dynamic var source_uuid: String = "BAD_VALUE"
     @objc public dynamic var track_uuid: String = "BAD_VALUE"
     @objc public dynamic var updated_at: Date = Date()
+    @objc public dynamic var past_halfway: Bool = false
     
     public init(uuid: String? = nil, artist_uuid: String, show_uuid: String, source_uuid: String, track_uuid: String) {
         self.artist_uuid = artist_uuid

@@ -115,11 +115,12 @@ public class MyLibrary {
     private init() {
     }
     
+    // MARK: Migration
     public class func migrateRealmDatabase() {
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
             // version (if you've never set a schema version before, the version is 0).
-            schemaVersion: 1,
+            schemaVersion: 2,
             
             // Set the block which will be called automatically when opening a Realm with
             // a schema version lower than the one set above
@@ -131,6 +132,10 @@ public class MyLibrary {
                     
                     // Clear out anything with a nil value
                     self.removeObjectsWithoutRequiredProperties(migration: migration)
+                }
+                if (oldSchemaVersion < 2) {
+                    // Add past_halfway to RecentlyPlayedTrack
+                    // No need to do anything here, as Realm should handle this migration for us.
                 }
         })
         
@@ -188,17 +193,25 @@ public class MyLibrary {
 
 // MARK: Recently Played
 extension MyLibrary {
-    public func trackWasPlayed(_ track: Track) -> Bool {
+    public func trackWasPlayed(_ track: Track, pastHalfway: Bool = false) -> Bool {
         let realm = try! Realm()
         
-        let recentShow = RecentlyPlayedTrack(withTrack: track)
-        
-        try! realm.write {
-            realm.add(recentShow)
+        // Check for an existing recently played track that hasn't passed halfway and update it
+        if pastHalfway,
+           let existingRecentShow = realm.objects(RecentlyPlayedTrack.self).filter("track_uuid == %@", track.uuid.uuidString)
+                .sorted(byKeyPath: "updated_at", ascending: false).first {
+            try! realm.write {
+                existingRecentShow.past_halfway = pastHalfway
+                existingRecentShow.updated_at = Date()
+            }
+        } else {
+            // Create a new entry for this track
+            let recentShow = RecentlyPlayedTrack(withTrack: track)
+            
+            try! realm.write {
+                realm.add(recentShow)
+            }
         }
-        
-        RelistenApi.recordPlay(track.sourceTrack)
-            .onFailure({ LogError("Failed to record play (perhaps you are offline?): \($0)")})
         
         return true
     }

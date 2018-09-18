@@ -302,27 +302,29 @@ public class PlaybackMinibarShrinker: NSObject, UINavigationControllerDelegate {
 
 extension PlaybackController : AGAudioPlayerViewControllerDelegate {
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, trackChangedState audioItem: AGAudioItem?) {
-        let completeInfo = (audioItem as? SourceTrackAudioItem)?.track
+        guard let completeInfo = (audioItem as? SourceTrackAudioItem)?.track else { return }
 
+        let _ = MyLibrary.shared.trackWasPlayed(completeInfo)
+        
         eventTrackPlaybackChanged.raise(completeInfo)
         observeCurrentTrack.value = completeInfo
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, changedTrackTo audioItem: AGAudioItem?) {
-        let completeInfo = (audioItem as? SourceTrackAudioItem)?.track
+        guard let completeInfo = (audioItem as? SourceTrackAudioItem)?.track else { return }
 
         eventTrackPlaybackStarted.raise(completeInfo)
         observeCurrentTrack.value = completeInfo
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedDotsForAudioItem audioItem: AGAudioItem) {
-        let completeInfo = (audioItem as! SourceTrackAudioItem).track
+        guard let completeInfo = (audioItem as? SourceTrackAudioItem)?.track else { return }
         
         TrackActions.showActionOptions(fromViewController: agAudio, inView: agAudio.uiMiniButtonDots, forTrack: completeInfo)
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedPlusForAudioItem audioItem: AGAudioItem) {
-        let completeInfo = (audioItem as! SourceTrackAudioItem).track
+        guard let completeInfo = (audioItem as? SourceTrackAudioItem)?.track else { return }
 
         let a = UIAlertController(
             title: "Favorite \(completeInfo.showInfo.show.display_date)?",
@@ -340,11 +342,14 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, passedHalfWayFor audioItem: AGAudioItem) {
-        let completeInfo = (audioItem as! SourceTrackAudioItem).track
+        guard let completeInfo = (audioItem as? SourceTrackAudioItem)?.track else { return }
         
-        let _ = MyLibrary.shared.trackWasPlayed(completeInfo)
+        let _ = MyLibrary.shared.trackWasPlayed(completeInfo, pastHalfway: true)
         eventTrackWasPlayed.raise(completeInfo)
         trackWasPlayed.value = completeInfo
+        
+        RelistenApi.recordPlay(completeInfo.sourceTrack)
+            .onFailure({ LogError("Failed to record play (perhaps you are offline?): \($0)")})
         
         if RelistenApp.sharedApp.launchCount > 2 {
             // If the app has been launched at least three full times and the user is halfway through a song they probably like the app.

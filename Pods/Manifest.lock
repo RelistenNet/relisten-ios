@@ -119,7 +119,7 @@ DEPENDENCIES:
   - LicensesViewController (from `https://github.com/tsukisa/LicenseGenerator-iOS.git`)
   - MZDownloadManager (from `https://github.com/alecgorge/MZDownloadManager.git`)
   - NAKPlaybackIndicatorView
-  - NapySlider (from `../NapySlider`)
+  - NapySlider
   - Observable (from `https://github.com/alecgorge/Observable.git`)
   - PathKit
   - PinpointKit
@@ -155,6 +155,7 @@ SPEC REPOS:
     - LayoutKit
     - MarqueeLabel
     - NAKPlaybackIndicatorView
+    - NapySlider
     - PathKit
     - PINCache
     - PINOperation
@@ -194,8 +195,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/tsukisa/LicenseGenerator-iOS.git
   MZDownloadManager:
     :git: https://github.com/alecgorge/MZDownloadManager.git
-  NapySlider:
-    :path: "../NapySlider"
   Observable:
     :git: https://github.com/alecgorge/Observable.git
   RealmConverter:
@@ -262,7 +261,7 @@ SPEC CHECKSUMS:
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   MZDownloadManager: 8e9f186b2e804ffaeaf782c0cd3e22f27625cb7b
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
-  NapySlider: cb16a0911f5e0d6e2bc778e89052f5503b8e556b
+  NapySlider: 52be4efab746c967437fefc98c4ca508edbdf306
   Observable: 360b0132cef970a50bc69611df7fcbda46e91c34
   PathKit: 273f59a38e3218eb95abd9f6a61730a8bcfd2f06
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
@@ -284,6 +283,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: f9d21d7d9f1d029bb1ae47f0f2da3bed854969b5
 
-PODFILE CHECKSUM: e7b176733248a1099d102348c19ef07ff974b97a
+PODFILE CHECKSUM: 1e9bb3916cd4ba8102b0a9b59fabc7fd8ad407f2
 
 COCOAPODS: 1.5.3

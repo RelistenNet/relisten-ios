@@ -25,6 +25,7 @@ def apply_pods
   pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"
   pod 'MZDownloadManager', :git => "https://github.com/alecgorge/MZDownloadManager.git"
   pod 'NAKPlaybackIndicatorView'
+  pod 'NapySlider'
   pod 'Observable', :git => "https://github.com/alecgorge/Observable.git"
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'
@@ -40,12 +41,10 @@ def apply_pods
  
   # Development pods (checked out locally)
   if ENV['TRAVIS']
-      pod 'NapySlider', :path => 'TravisPods/NapySlider'
       pod 'BASSGaplessAudioPlayer', :path => 'TravisPods/BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => 'TravisPods/AGAudioPlayer'
       pod 'FaveButton', :path => 'TravisPods/fave-button'
   else
-      pod 'NapySlider', :path => '../NapySlider'
       pod 'BASSGaplessAudioPlayer', :path => '../BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
       pod 'FaveButton', :path => '../fave-button'

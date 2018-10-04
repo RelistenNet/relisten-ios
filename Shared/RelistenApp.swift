@@ -147,8 +147,6 @@ public class RelistenApp {
     public func setupAppearance(_ viewController: UINavigationController? = nil) {
         let _ = RatingViewStubBounds
         
-        UIApplication.shared.statusBarStyle = .lightContent
-        
         UINavigationBar.appearance().barTintColor = AppColors.primary
         UINavigationBar.appearance().backgroundColor = AppColors.textOnPrimary
         UINavigationBar.appearance().tintColor = AppColors.textOnPrimary

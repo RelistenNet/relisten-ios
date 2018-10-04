@@ -438,7 +438,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
                 if contentType.lowercased().hasPrefix("audio") {
                     return true
                 } else {
-                    LogWarn("Content type \(contentType) is not what was expected. Treating download of \(downloadModel.fileURL) as an error")
+                    LogWarn("Content type \(contentType) is not what was expected. Treating download of \(downloadModel.fileURL ?? "[unkown URL]") as an error")
                     return false
                 }
             }
@@ -457,7 +457,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
         
         // Check the content type to make sure we didn't get an error page
         if !responseHasExpectedContentType(downloadModel) {
-            error = DownloadError("Content type is not what was expected. Treating download of \(downloadModel.fileURL) as an error")
+            error = DownloadError("Content type is not what was expected. Treating download of \(downloadModel.fileURL ?? "[unkown URL]") as an error")
         }
         
         if let t = self.trackForDownloadModel(downloadModel) {

@@ -1,6 +1,6 @@
 PODS:
-  - ActionKit (2.3.2)
-  - AGAudioPlayer (0.8.0):
+  - ActionKit (2.4.0)
+  - AGAudioPlayer (0.8.1):
     - BASSGaplessAudioPlayer
     - BCColor
     - Interpolate
@@ -9,22 +9,22 @@ PODS:
   - AXRatingView (1.0.6)
   - BASSGaplessAudioPlayer (0.0.1)
   - BCColor (0.2)
-  - Cache (5.1.0)
+  - Cache (5.2.0)
   - ChameleonFramework (2.1.0):
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - CleanroomLogger (6.0.2)
-  - Crashlytics (3.10.7):
-    - Fabric (~> 1.7.11)
+  - Crashlytics (3.10.8):
+    - Fabric (~> 1.7.12)
   - CSwiftV (0.0.5)
   - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.2)
   - DWURecyclingAlert (1.0.2)
   - EDColor (1.0.1)
-  - Fabric (1.7.11)
+  - Fabric (1.7.12)
   - FastImageCache (1.5.1)
   - FaveButton (2.0.4)
-  - Interpolate (1.0.0)
+  - Interpolate (1.2.1)
   - KASlideShow (3.0.0):
     - SDWebImage (~> 3.8)
   - KissXML (5.0.3):
@@ -36,12 +36,12 @@ PODS:
     - KissXML (~> 5.0.3)
   - LayoutKit (9.0.0)
   - LicensesViewController (0.6.5)
-  - MarqueeLabel (3.1.6):
-    - MarqueeLabel/ObjC (= 3.1.6)
-  - MarqueeLabel/ObjC (3.1.6)
+  - MarqueeLabel (3.2.0):
+    - MarqueeLabel/ObjC (= 3.2.0)
+  - MarqueeLabel/ObjC (3.2.0)
   - MZDownloadManager (3.4)
   - NAKPlaybackIndicatorView (0.1.1)
-  - NapySlider (0.3.4)
+  - NapySlider (0.3.5)
   - Observable (1.3.3)
   - PathKit (0.9.2)
   - PINCache (3.0.1-beta.6):
@@ -74,19 +74,19 @@ PODS:
     - TGSpreadsheetWriter
   - RealmSwift (3.8.0):
     - Realm (= 3.8.0)
-  - Reveal-SDK (17)
+  - Reveal-SDK (18)
   - SDCloudUserDefaults (1.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - Siesta/Core (1.4.1)
-  - Siesta/UI (1.4.1):
+  - Siesta/Core (1.4.2)
+  - Siesta/UI (1.4.2):
     - Siesta/Core
   - SimulatorStatusMagic (2.2)
   - SINQ (0.7.0)
   - SSZipArchive (2.1.4)
   - SVProgressHUD (2.2.5)
-  - SwiftyJSON (4.1.0)
+  - SwiftyJSON (4.2.0)
   - Texture (2.7):
     - Texture/PINRemoteImage (= 2.7)
   - Texture/Core (2.7)
@@ -94,7 +94,7 @@ PODS:
     - PINRemoteImage/iOS (= 3.0.0-beta.13)
     - PINRemoteImage/PINCache
     - Texture/Core
-  - Wormholy (1.1.3)
+  - Wormholy (1.2.0)
 
 DEPENDENCIES:
   - ActionKit
@@ -116,7 +116,7 @@ DEPENDENCIES:
   - KASlideShow
   - LastFm (from `https://github.com/farktronix/LastFm.git`)
   - LayoutKit
-  - LicensesViewController
+  - LicensesViewController (from `https://github.com/tsukisa/LicenseGenerator-iOS.git`)
   - MZDownloadManager (from `https://github.com/alecgorge/MZDownloadManager.git`)
   - NAKPlaybackIndicatorView
   - NapySlider (from `../NapySlider`)
@@ -135,7 +135,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwiftyJSON
   - Texture
-  - Wormholy (from `https://github.com/pmusolino/Wormholy.git`)
+  - Wormholy
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -153,7 +153,6 @@ SPEC REPOS:
     - KASlideShow
     - KissXML
     - LayoutKit
-    - LicensesViewController
     - MarqueeLabel
     - NAKPlaybackIndicatorView
     - PathKit
@@ -172,6 +171,7 @@ SPEC REPOS:
     - SVProgressHUD
     - SwiftyJSON
     - Texture
+    - Wormholy
 
 EXTERNAL SOURCES:
   AGAudioPlayer:
@@ -190,6 +190,8 @@ EXTERNAL SOURCES:
     :path: "../fave-button"
   LastFm:
     :git: https://github.com/farktronix/LastFm.git
+  LicensesViewController:
+    :git: https://github.com/tsukisa/LicenseGenerator-iOS.git
   MZDownloadManager:
     :git: https://github.com/alecgorge/MZDownloadManager.git
   NapySlider:
@@ -200,8 +202,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/farktronix/realm-cocoa-converter.git
   Siesta:
     :git: https://github.com/bustoutsolutions/siesta.git
-  Wormholy:
-    :git: https://github.com/pmusolino/Wormholy.git
 
 CHECKOUT OPTIONS:
   CleanroomLogger:
@@ -219,6 +219,9 @@ CHECKOUT OPTIONS:
   LastFm:
     :commit: 19725dec9bdb91026b7ba808d5c61adb1afef9bb
     :git: https://github.com/farktronix/LastFm.git
+  LicensesViewController:
+    :commit: 1781a8421602eb1b04e74b6fa07f81f97981cec2
+    :git: https://github.com/tsukisa/LicenseGenerator-iOS.git
   MZDownloadManager:
     :commit: 68c2c4b68c5e417bb9fb695ee6e014ff535d7e4e
     :git: https://github.com/alecgorge/MZDownloadManager.git
@@ -226,43 +229,40 @@ CHECKOUT OPTIONS:
     :commit: afd5d63e9c6e544681b3bd6d25973f160a5d01a3
     :git: https://github.com/alecgorge/Observable.git
   RealmConverter:
-    :commit: 039c296e89450585ee0ae5d081998fff557c3f67
+    :commit: bb393be86a38a402c66239f80f5cc600003a6b68
     :git: https://github.com/farktronix/realm-cocoa-converter.git
   Siesta:
-    :commit: ecf8cbda2c797c52e8634e7317ec51837992d958
+    :commit: b13dad7cb2bfca15fa4450e19cd23d04b8378049
     :git: https://github.com/bustoutsolutions/siesta.git
-  Wormholy:
-    :commit: 50ceb490fcfe99116b0a08c78e7d7a640c8176ad
-    :git: https://github.com/pmusolino/Wormholy.git
 
 SPEC CHECKSUMS:
-  ActionKit: cf7ca5781f4a43342384d872105fadd58985f416
-  AGAudioPlayer: 2044b1fa402341b646b16b2e2e6d851ddadb70db
+  ActionKit: 1e1b696b6e1a54e7999d8c0f1d7176b2fee2fa4d
+  AGAudioPlayer: 4bffbc2180ef1b930f6cc60aae37d806bd1263cc
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 5547414722926aaa7d1116557f5208df57b0caab
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
-  Cache: 7737c595aae7d94c7c0feca2c887288624e3b07e
+  Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: f165bae4f3c9a15a22ec2fad9b0826f27fb047d5
-  Crashlytics: ccaac42660eb9351b9960c0d66106b0bcf99f4fa
+  Crashlytics: 058dc1ba579f6c100bc60a6878703779bff383c4
   CSwiftV: 2560532e2e5b04d95c36b0f49a8dc745071fa525
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 0a9848f9c13f34a488939b7244e8043feb94be3c
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
-  Fabric: f233c9492b3bbc1f04e3882986740f7988a58edb
+  Fabric: d7387db9a31aadff63b147a4b91d982c53afaa4f
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
   FaveButton: e26220c69725ca00f08d7494edb5765c3eaef8c7
-  Interpolate: cd0ab81375ff3ec7d9e6023e032f4a29f53df4ad
+  Interpolate: c786b88ad860c7110d606ae2776fad616e2b3724
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
   KissXML: d19dd6dc65e0dc721ba92b3077b8ebdd240f1c1e
   LastFm: a624fa250bbda5950fccbd068ea7950dcba2da1f
   LayoutKit: 867d9c5c237552be78c9c0cf0d9f5ca2bf5f704c
   LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
-  MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
+  MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   MZDownloadManager: 8e9f186b2e804ffaeaf782c0cd3e22f27625cb7b
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
-  NapySlider: 3da4746561f0bbfe4d287bff27e0aa083598bca4
+  NapySlider: cb16a0911f5e0d6e2bc778e89052f5503b8e556b
   Observable: 360b0132cef970a50bc69611df7fcbda46e91c34
   PathKit: 273f59a38e3218eb95abd9f6a61730a8bcfd2f06
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
@@ -272,18 +272,18 @@ SPEC CHECKSUMS:
   Realm: 3fdae59de78838064e9f77638d7cdb7b8cff9dc8
   RealmConverter: 910266d4dc96e8f33be7bb7a4918ad80d88a8006
   RealmSwift: c990518b800e106d1f77099d3a4648c3b100337d
-  Reveal-SDK: a6df49f47319bd19a110c960c498af32df72c0af
+  Reveal-SDK: cce79388da3fd0bbb6ae19d769b906cfc3a33a89
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  Siesta: 867050feecf44d163f83272d9fc21553319c6dc0
+  Siesta: 337a9c39c9b78bba904286310c86562a886efdab
   SimulatorStatusMagic: 0389a805fa8bd001e2977c4046730bdbd6642861
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
-  Wormholy: 39a9487ce44afbda62eb3af2dba42b4303d0a6b8
+  Wormholy: f9d21d7d9f1d029bb1ae47f0f2da3bed854969b5
 
-PODFILE CHECKSUM: 33f61d2965a2cc8430a9d681245424e2b457d50d
+PODFILE CHECKSUM: e7b176733248a1099d102348c19ef07ff974b97a
 
 COCOAPODS: 1.5.3

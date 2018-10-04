@@ -219,7 +219,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         vert.style.alignSelf = .stretch
 
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(8, 16, 8, 16),
+            insets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16),
             child: vert
         )
         l.style.alignSelf = .stretch

@@ -109,7 +109,7 @@ public class ReviewLayout: InsetLayout<UIView> {
         verticalStack.append(review)
         
         super.init(
-            insets: UIEdgeInsetsMake(12, 16, 12, 16),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16),
             sublayout: StackLayout(
                 axis: .vertical,
                 spacing: 8,

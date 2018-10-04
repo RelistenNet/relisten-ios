@@ -241,7 +241,7 @@ public class ShowCellNode : ASCellNode {
         //            }
         
         let i = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(12, 16, 12, 16),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16),
             child: s
         )
         i.style.alignSelf = .stretch

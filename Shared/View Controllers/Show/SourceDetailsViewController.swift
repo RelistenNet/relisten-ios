@@ -43,7 +43,7 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
         
         var section: [Layout] = []
         
-        let insets = UIEdgeInsetsMake(12, 16, 12, 32)
+        let insets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 32)
         
         if let venue = show.correctVenue(withFallback: source.venue) {
             section.append(VenueLayoutWithMap(venue: venue, forArtist: artist))

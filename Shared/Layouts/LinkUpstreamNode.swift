@@ -48,13 +48,13 @@ public class LinkUpstreamNode : ASCellNode {
             children: ArrayNoNils(
                 titleNode,
                 linkNode,
-                descriptionNode == nil ? nil : ASInsetLayoutSpec(insets: UIEdgeInsetsMake(4, 0, 0, 0), child: descriptionNode!)
+                descriptionNode == nil ? nil : ASInsetLayoutSpec(insets: UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0), child: descriptionNode!)
             )
         )
         stack.style.alignSelf = .stretch
         
         let i = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(12, 16, 12, 32),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 32),
             child: stack
         )
         i.style.alignSelf = .stretch

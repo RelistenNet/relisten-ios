@@ -15,13 +15,13 @@ public func RelistenAttributedString(_ string: String, font: UIFont, color: UICo
     paragraphStyle.alignment = alignment ?? NSTextAlignment.left
     
     return NSAttributedString(string: string, attributes: [
-        NSAttributedStringKey.font: font,
-        NSAttributedStringKey.foregroundColor: color ?? UIColor.darkText,
-        NSAttributedStringKey.paragraphStyle: paragraphStyle
+        NSAttributedString.Key.font: font,
+        NSAttributedString.Key.foregroundColor: color ?? UIColor.darkText,
+        NSAttributedString.Key.paragraphStyle: paragraphStyle
         ])
 }
 
-public func RelistenAttributedString(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> NSAttributedString {
+public func RelistenAttributedString(_ string: String, textStyle: UIFont.TextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) -> NSAttributedString {
     return RelistenAttributedString(string, font: UIFont.preferredFont(forTextStyle: textStyle), color: color, alignment: alignment)
 }
 
@@ -33,7 +33,7 @@ extension ASTextNode {
         attributedText = RelistenAttributedString(string, font: font, color: color, alignment: alignment)
     }
     
-    public convenience init(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) {
+    public convenience init(_ string: String, textStyle: UIFont.TextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil) {
         self.init()
         
         maximumNumberOfLines = 0

@@ -75,7 +75,7 @@ class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, A
         fatalError("init(coder:) has not been implemented")
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style) {
         fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
     }
     

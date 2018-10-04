@@ -119,7 +119,7 @@ public class VenueLayoutWithMap : InsetLayout<UIView> {
                     mapView.addAnnotation(annotation)
                     
                     // 5km x 5km
-                    let viewRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, 5000, 5000)
+                    let viewRegion = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
                     mapView.setRegion(viewRegion, animated: animated)
                 }
                 

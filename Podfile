@@ -22,7 +22,7 @@ def apply_pods
   pod 'KASlideShow'
   pod 'LayoutKit'
   pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git"
-  pod 'LicensesViewController'
+  pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"
   pod 'MZDownloadManager', :git => "https://github.com/alecgorge/MZDownloadManager.git"
   pod 'NAKPlaybackIndicatorView'
   pod 'Observable', :git => "https://github.com/alecgorge/Observable.git"
@@ -53,7 +53,7 @@ def apply_pods
 
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']
-  pod 'Wormholy', :configurations => ['Debug'], :git => "https://github.com/pmusolino/Wormholy.git"
+  pod 'Wormholy', :configurations => ['Debug']
   pod 'DWURecyclingAlert', :configurations => ['Debug']
 
   # Currently unused pods (but they might be used in the future)

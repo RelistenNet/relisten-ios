@@ -25,7 +25,7 @@ public class SoundboardIndicatorNode: ASDisplayNode {
     let sbdNode: ASTextNode
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASInsetLayoutSpec(insets: UIEdgeInsetsMake(2, 2, 2, 2), child: sbdNode)
+        return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2), child: sbdNode)
     }
 }
 
@@ -44,7 +44,7 @@ public class SmallSoundboardIndicatorNode: ASDisplayNode {
     let sbdNode: ASTextNode
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASInsetLayoutSpec(insets: UIEdgeInsetsMake(1, 1, 1, 1), child: sbdNode)
+        return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1), child: sbdNode)
     }
 }
 
@@ -63,7 +63,7 @@ public class RemasterIndicatorNode: ASDisplayNode {
     let sbdNode: ASTextNode
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASInsetLayoutSpec(insets: UIEdgeInsetsMake(2, 2, 2, 2), child: sbdNode)
+        return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2), child: sbdNode)
     }
 }
 

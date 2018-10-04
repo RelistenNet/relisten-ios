@@ -151,7 +151,7 @@ public class RelistenApp {
         UINavigationBar.appearance().backgroundColor = AppColors.textOnPrimary
         UINavigationBar.appearance().tintColor = AppColors.textOnPrimary
         UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary]
         
         UIToolbar.appearance().backgroundColor = AppColors.primary
         UIToolbar.appearance().tintColor = AppColors.textOnPrimary
@@ -159,7 +159,7 @@ public class RelistenApp {
         UIButton.appearance().tintColor = AppColors.primary
         UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = AppColors.textOnPrimary
         
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary], for: .normal)
         
         UISegmentedControl.appearance().tintColor = AppColors.primary
         UITabBar.appearance().tintColor = AppColors.primary

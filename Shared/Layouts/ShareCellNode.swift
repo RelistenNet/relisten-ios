@@ -24,7 +24,7 @@ public class ShareCellNode : ASCellNode {
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(12, 16, 12, 16),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16),
             child: shareNode
         )
     }

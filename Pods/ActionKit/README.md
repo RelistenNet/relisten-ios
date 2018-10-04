@@ -40,14 +40,14 @@ button.addControlEvent(.touchUpInside) { (control: UIControl) in
  ActionKit is available through [CocoaPods](http://cocoapods.org). To install
  it, simply add the following line to your Podfile:
  
-    pod 'ActionKit', '~> 2.3.1'
+    pod 'ActionKit', '~> 2.4.0'
 
 ### Carthage
 
 - 1. Add the following to your *Cartfile*:
 
 ```
-    github "ActionKit/ActionKit" == 2.3.1
+    github "ActionKit/ActionKit" == 2.4.0
 ``` 
    
 - 2. Run `carthage update`
@@ -69,12 +69,6 @@ ActionKit extends target-action functionality by providing easy to use methods t
 ## Examples
 
 See the [examples wiki](EXAMPLES.md)
-
-## FAQ
-
-#### Does ActionKit work with Xcode 9's new build system?
-
-Yes, but you need to do 1 extra step. Thank you @phucnm for the help, he said he only removed Info.plist from Compile Sources in Build Phases settings, and that allowed ActionKit to function on the new build system.
 
 ## Changelog
 

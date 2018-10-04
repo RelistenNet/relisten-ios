@@ -1,6 +1,6 @@
 {
   "name": "AGAudioPlayer",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "summary": "Gapless-playback + UI",
   "homepage": "https://github.com/alecgorge/AGAudioPlayer",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/alecgorge/AGAudioPlayer.git",
-    "tag": "0.8.0"
+    "tag": "0.8.1"
   },
   "social_media_url": "https://twitter.com/alecgorge",
   "platforms": {
@@ -17,6 +17,7 @@
     "osx": "10.11"
   },
   "requires_arc": true,
+  "swift_version": "4.2",
   "source_files": "AGAudioPlayer/**/*.{h,m,swift}",
   "ios": {
     "frameworks": "MediaPlayer"

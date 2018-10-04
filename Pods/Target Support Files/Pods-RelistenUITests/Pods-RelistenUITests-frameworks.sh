@@ -177,7 +177,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Realm/Realm.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework"
-  install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer-17/iOS/RevealServer.framework"
+  install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer-18/iOS/RevealServer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework"

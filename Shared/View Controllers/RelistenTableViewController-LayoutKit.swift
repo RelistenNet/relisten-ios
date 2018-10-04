@@ -66,12 +66,12 @@ open class RelistenBaseTableViewController : UIViewController, ResourceObserver 
     public var isCurrentlyScrolling: Bool = false
     public var needsRenderAfterScrollingFinishes: Bool = false
     
-    public var tableViewStyle: UITableViewStyle
+    public var tableViewStyle: UITableView.Style
     public var cellDefaultBackgroundColor: UIColor = UIColor.clear
     
     public var disposal = Disposal()
     
-    public init(style: UITableViewStyle = .plain) {
+    public init(style: UITableView.Style = .plain) {
         tableViewStyle = style
         
         super.init(nibName: nil, bundle: nil)
@@ -149,7 +149,7 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
     public let useCache: Bool
     public var refreshOnAppear: Bool
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         self.useCache = useCache
         self.refreshOnAppear = refreshOnAppear
         

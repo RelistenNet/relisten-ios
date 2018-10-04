@@ -20,7 +20,7 @@ open class RelistenBaseAsyncTableViewController : ASViewController<ASDisplayNode
     
     public var disposal = Disposal()
     
-    public init(style: UITableViewStyle = .plain) {
+    public init(style: UITableView.Style = .plain) {
         let tableNode = ASTableNode(style: style)
         
         self.tableNode = tableNode
@@ -66,7 +66,7 @@ open class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewContr
     public let useCache: Bool
     public var refreshOnAppear: Bool
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         self.useCache = useCache
         self.refreshOnAppear = refreshOnAppear
         

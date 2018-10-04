@@ -66,7 +66,7 @@ public class TrackStatusCellNode : ASCellNode {
         actionButtonNode?.setImage(UIImage(named: "dots"), for: .normal)
         
         let padding = (44.0 - actionButtonNode!.bounds.size.height)/2.0
-        actionButtonNode?.hitTestSlop = UIEdgeInsetsMake(-padding, 0, -padding, 0)
+        actionButtonNode?.hitTestSlop = UIEdgeInsets(top: -padding, left: 0, bottom: -padding, right: 0)
         
         super.init()
 
@@ -197,7 +197,7 @@ public class TrackStatusCellNode : ASCellNode {
         nowPlayingNode.style.minSize = CGSize(width: 12, height: 12)
         
         let nowPlayingInset = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(0, 0, 0, 12),
+            insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12),
             child: nowPlayingNode
         )
 
@@ -219,7 +219,7 @@ public class TrackStatusCellNode : ASCellNode {
         horiz.style.flexGrow = 1.0
         
         let inset = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(8, 16, 8, 16),
+            insets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16),
             child: horiz
         )
         inset.style.alignSelf = .stretch

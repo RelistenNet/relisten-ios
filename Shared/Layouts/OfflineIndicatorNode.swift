@@ -51,7 +51,7 @@ public class OfflineDownloadingIndicatorNode : ASImageNode {
             self.view.alpha = 1.0
             UIView.animate(withDuration: 1.0,
                            delay: 0,
-                           options: [UIViewAnimationOptions.autoreverse, UIViewAnimationOptions.repeat],
+                           options: [UIView.AnimationOptions.autoreverse, UIView.AnimationOptions.repeat],
                            animations: {
                             self.view.alpha = 0.0
                            },

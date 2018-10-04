@@ -29,7 +29,7 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     

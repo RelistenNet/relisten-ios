@@ -26,7 +26,7 @@ public class BugReportingSettingsNode : ASCellNode {
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let descInset = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(0, 0, 0, 64),
+            insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 64),
             child: bugReportingDescription
         )
         descInset.style.alignSelf = .stretch
@@ -44,7 +44,7 @@ public class BugReportingSettingsNode : ASCellNode {
         vert.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(12, 16, 12, 16),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16),
             child: vert
         )
         l.style.alignSelf = .stretch

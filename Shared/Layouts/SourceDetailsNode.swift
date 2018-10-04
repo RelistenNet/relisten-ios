@@ -289,7 +289,7 @@ public class SourceDetailsNode : ASCellNode {
         vert?.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(16, 16, 16, isDetails ? 16 : 8),
+            insets: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: isDetails ? 16 : 8),
             child: vert!
         )
         l.style.alignSelf = .stretch

@@ -99,8 +99,8 @@ open class RelistenResourceStatusOverlay: UIView, ResourceObserver
         {
             addSubview(containerView)
             containerView.frame = bounds
-            containerView.autoresizingMask = [UIViewAutoresizing.flexibleWidth,
-                                              UIViewAutoresizing.flexibleHeight]
+            containerView.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth,
+                                              UIView.AutoresizingMask.flexibleHeight]
         }
 
         showSuccess()

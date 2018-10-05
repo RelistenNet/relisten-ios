@@ -139,6 +139,8 @@
 				2BB6FC531CB124EB00B45B82 /* Frameworks */,
 				2BB6FC541CB124EB00B45B82 /* Headers */,
 				2BB6FC551CB124EB00B45B82 /* Resources */,
+				2ADBEBFCD5D67296B5DB1598 /* Tailor */,
+				2BF2DB99206C3B1D00C87E79 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -180,11 +182,11 @@
 				TargetAttributes = {
 					2BB6FC561CB124EB00B45B82 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1000;
 					};
 					2BB6FC601CB124EB00B45B82 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -225,6 +227,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2ADBEBFCD5D67296B5DB1598 /* Tailor */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Tailor;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if hash tailor 2>/dev/null; then\n  tailor\nelse\n  echo \"warning: Please install Tailor from https://tailor.sh\"\nfi";
+		};
 		2B731D4D1CB1272B00B4E648 /* Generate Licenses Plist */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -238,6 +254,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./credits.py -s \"$SRCROOT/Tests/Resources\" -o \"$SRCROOT/Tests/Resources/Credits.plist\"";
+		};
+		2BF2DB99206C3B1D00C87E79 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -397,8 +427,7 @@
 				PRODUCT_NAME = LicensesViewController;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -418,8 +447,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.relaunch.LicensesViewController;
 				PRODUCT_NAME = LicensesViewController;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -431,8 +459,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.relaunch.LicensesViewControllerTests;
 				PRODUCT_NAME = LicensesViewControllerTests;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -444,8 +471,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.relaunch.LicensesViewControllerTests;
 				PRODUCT_NAME = LicensesViewControllerTests;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

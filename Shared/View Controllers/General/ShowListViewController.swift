@@ -35,7 +35,7 @@ public class ShowListViewController<T> : RelistenAsyncTableViewController<T> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
@@ -203,7 +203,7 @@ public class ShowListViewController<T> : RelistenAsyncTableViewController<T> {
                 rebuildShowMappings()
             }
             
-            if tourSections {
+            if tourSections, section >= 0, section < showsByTour?.count ?? 0 {
                 if let r = showsByTour?[section].showWithSource.count {
                     retval = r
                 }
@@ -221,7 +221,9 @@ public class ShowListViewController<T> : RelistenAsyncTableViewController<T> {
                 rebuildShowMappings()
             }
             
-            if tourSections {
+            if tourSections,
+               indexPath.section >= 0, indexPath.section < showsByTour?.count ?? 0,
+               indexPath.row >= 0, indexPath.row < showsByTour?[indexPath.section].showWithSource.count ?? 0 {
                 showWithSource = showsByTour?[indexPath.section].showWithSource[indexPath.row]
             } else {
                 showWithSource = showsWithSources?[indexPath.row]
@@ -238,7 +240,9 @@ public class ShowListViewController<T> : RelistenAsyncTableViewController<T> {
                 rebuildShowMappings()
             }
             
-            if tourSections, let tourName = showsByTour?[section].tourName {
+            if tourSections,
+               section >= 0, section < showsByTour?.count ?? 0,
+               let tourName = showsByTour?[section].tourName {
                 title = tourName
             }
         }

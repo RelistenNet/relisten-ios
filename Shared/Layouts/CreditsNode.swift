@@ -55,16 +55,16 @@ public class CreditsNode : ASCellNode {
         paragraphStyle.alignment = .center
         paragraphStyle.lineSpacing = 3.0
         
-        let fullStringAttributes: [NSAttributedStringKey : Any] = [NSAttributedStringKey.font : UIFont(descriptor: fontDescriptor, size: 0.0),
-                                                                   NSAttributedStringKey.paragraphStyle : paragraphStyle]
+        let fullStringAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font : UIFont(descriptor: fontDescriptor, size: 0.0),
+                                                                   NSAttributedString.Key.paragraphStyle : paragraphStyle]
         
         attributedString.setAttributes(fullStringAttributes, range: NSMakeRange(0, attributedString.string.count))
         
-        let linkAttributes : [NSAttributedStringKey : Any] = [NSAttributedStringKey.foregroundColor : AppColors.primary,
-                                                              NSAttributedStringKey.font : UIFont(descriptor: boldFontDescriptor!, size: 0.0),
+        let linkAttributes : [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor : AppColors.primary,
+                                                              NSAttributedString.Key.font : UIFont(descriptor: boldFontDescriptor!, size: 0.0),
                                                               // For some reason underlineStyle isn't being respected, so I'm just setting the underline to clear
-                                                              NSAttributedStringKey.underlineColor : UIColor.clear,
-                                                              NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleNone.rawValue]
+                                                              NSAttributedString.Key.underlineColor : UIColor.clear,
+                                                              NSAttributedString.Key.underlineStyle : []]
         
         attributedString.addLink(link: URL(string: "https://alecgorge.com")!, string: "Alec Gorge", attributes: linkAttributes)
         attributedString.addLink(link: URL(string: "https://rkas.net")!, string: "Jacob Farkas", attributes: linkAttributes)

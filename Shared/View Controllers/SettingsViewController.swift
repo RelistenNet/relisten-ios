@@ -49,35 +49,35 @@ public class SettingsViewController : RelistenBaseAsyncTableViewController {
     }()
     
     lazy var licensesNode : ASTextCellNode = {
-        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        let licensesNode = ASTextCellNode(attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         licensesNode.text = "Acknowledgements"
         licensesNode.accessoryType = .disclosureIndicator
         return licensesNode
     }()
     
     lazy var websiteNode : ASTextCellNode = {
-        let websiteNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        let websiteNode = ASTextCellNode(attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         websiteNode.text = "Desktop listening with relisten.net"
         websiteNode.accessoryType = .disclosureIndicator
         return websiteNode
     }()
     
     lazy var discordNode : ASTextCellNode = {
-        let discordNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        let discordNode = ASTextCellNode(attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         discordNode.text = "Discuss Relisten on Discord"
         discordNode.accessoryType = .disclosureIndicator
         return discordNode
     }()
     
     lazy var githubNode : ASTextCellNode = {
-        let githubNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        let githubNode = ASTextCellNode(attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         githubNode.text = "View project on Github"
         githubNode.accessoryType = .disclosureIndicator
         return githubNode
     }()
     
     lazy var sonosNode : ASTextCellNode = {
-        let licensesNode = ASTextCellNode(attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
+        let licensesNode = ASTextCellNode(attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body)], insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         licensesNode.text = "Use Relisten on Sonos"
         licensesNode.accessoryType = .disclosureIndicator
         return licensesNode
@@ -134,8 +134,8 @@ extension SettingsViewController {
             case 0:
                 let cell = ASTextCellNode(
                     attributes: [
-                        NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body),
-                        NSAttributedStringKey.foregroundColor : UIColor.darkGray
+                        NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body),
+                        NSAttributedString.Key.foregroundColor : UIColor.darkGray
                     ],
                     insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
                 )
@@ -152,7 +152,7 @@ extension SettingsViewController {
                 n = cell
             case 1:
                 let cell = ASTextCellNode(
-                    attributes: [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body)],
+                    attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .body)],
                     insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
                 )
                 
@@ -224,16 +224,10 @@ extension SettingsViewController {
             }
         case .credits:
             switch indexPath.row {
-            case 1:
-                fallthrough
-            case 2:
-                fallthrough
-            case 3:
-                return true
             case 0:
-                fallthrough
-            default:
                 return false
+            default:
+                return true
             }
         default:
             return false

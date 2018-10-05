@@ -31,7 +31,7 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
         }
     }
     
-    open let faveButtonNode: ASDisplayNode
+    public let faveButtonNode: ASDisplayNode
     
     open var disposal = Disposal()
     

@@ -41,7 +41,7 @@ public class UpstreamSourceLayout : InsetLayout<UIView> {
         )
         
         super.init(
-            insets: UIEdgeInsetsMake(12, 16, 12, 32),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 32),
             viewReuseId: "upstream",
             sublayout: stack
         )
@@ -85,12 +85,12 @@ public class LinkLayout : InsetLayout<UIView> {
             sublayouts: [
                 titleLabel,
                 linkLabel,
-                InsetLayout(insets: UIEdgeInsetsMake(8, 0, 0, 0), sublayout: descriptionLabel)
+                InsetLayout(insets: UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0), sublayout: descriptionLabel)
             ]
         )
         
         super.init(
-            insets: UIEdgeInsetsMake(12, 16, 12, 32),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 32),
             viewReuseId: "link",
             sublayout: stack
         )

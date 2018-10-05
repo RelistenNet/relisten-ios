@@ -51,17 +51,17 @@ extension String {
         let regularFont = UIFont.preferredFont(forTextStyle: .subheadline)
         let boldFont = regularFont.font(scaledBy: 1.0, withDifferentWeight: .Bold)
         
-        mut.addAttribute(NSAttributedStringKey.font, value: boldFont, range: NSMakeRange(0, prefix.count))
-        mut.addAttribute(NSAttributedStringKey.font, value: regularFont, range: NSMakeRange(prefix.count, text == nil ? 0 : text!.count))
+        mut.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(0, prefix.count))
+        mut.addAttribute(NSAttributedString.Key.font, value: regularFont, range: NSMakeRange(prefix.count, text == nil ? 0 : text!.count))
         
         return mut
     }
 }
 
 extension NSMutableAttributedString {
-    func addLink(link : URL, string: String, attributes: [NSAttributedStringKey : Any] = [:]) {
+    func addLink(link : URL, string: String, attributes: [NSAttributedString.Key : Any] = [:]) {
         var mAttributes = attributes
-        mAttributes[NSAttributedStringKey.link] = link
+        mAttributes[NSAttributedString.Key.link] = link
         if let range = self.string.range(of: string) {
             self.addAttributes(mAttributes, range: NSRange(range, in: self.string))
         }

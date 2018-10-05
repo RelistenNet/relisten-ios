@@ -67,6 +67,7 @@ class ArtistsViewController: RelistenAsyncTableViewController<[ArtistWithCounts]
         resourceRecentlyUpdated.loadFromCacheThenUpdate()
         
         let settingsItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain, target: self, action: #selector(presentSettings(_:)))
+        settingsItem.accessibilityLabel = "Settings"
         self.navigationItem.rightBarButtonItem = settingsItem
     }
     
@@ -74,7 +75,7 @@ class ArtistsViewController: RelistenAsyncTableViewController<[ArtistWithCounts]
         fatalError("init(coder:) has not been implemented")
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style) {
         fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
     }
     
@@ -106,45 +107,9 @@ class ArtistsViewController: RelistenAsyncTableViewController<[ArtistWithCounts]
         library.favorites.artists.observeWithValue { [weak self] artists, changes in
             guard let s = self else { return }
 
-            let previousFavoriteCount = s.favoriteArtists.count
-            s.favoriteArtists = Array(artists.map({ UUID(uuidString: $0.artist_uuid)! }))
-
-            let newFavoriteCount = s.favoriteArtists.count
-
-            if s.favoriteArtists.count == 0 {
-                s.resourceRecentlyPerformed = nil
-                s.recentlyPerformedShows = []
-                s.recentlyPerformedNode.shows = []
-            }
-            else {
-                s.resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtists: s.favoriteArtists)
-                s.resourceRecentlyPerformed?.addObserver(s)
-                s.resourceRecentlyPerformed?.loadFromCacheThenUpdate()
-            }
-            
-            switch changes {
-            case .initial:
-                s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
-            case .update(_, let deletions, let insertions, let modifications):
-                s.tableNode.performBatch(animated: true, updates: {
-                    s.tableNode.insertRows(at: insertions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
-                                           with: .automatic)
-                    s.tableNode.deleteRows(at: deletions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue)}),
-                                           with: .automatic)
-                    s.tableNode.reloadRows(at: modifications.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
-                                           with: .automatic)
-                    
-                    if previousFavoriteCount == 0, newFavoriteCount > 0 {
-                        s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
-                    }
-                }, completion: nil)
-            case .error(let error):
-                fatalError(error.localizedDescription)
-            }
+            s.reloadFavoriteArtists(artists: artists, changes: changes)
         }.dispose(to: &disposal)
         
-//        favoriteArtists = Array(library.favorites.artists.map({ UUID(uuidString: $0.artist_uuid)! }))
-
         library.recent.shows.observeWithValue { [weak self] recentlyPlayed, changes in
             guard let s = self else { return }
             
@@ -215,6 +180,53 @@ class ArtistsViewController: RelistenAsyncTableViewController<[ArtistWithCounts]
             
             self.recentShowsNode.shows = recentShows
             self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+        }
+    }
+    
+    private func reloadFavoriteArtists(artists: Results<FavoritedArtist>, changes: RealmCollectionChange<Results<FavoritedArtist>>) {
+        DispatchQueue.main.async { [weak self] in
+            guard let s = self else { return }
+            
+            let previousFavoriteCount = s.favoriteArtists.count
+            let localFavoriteArtists = Array(artists.compactMap({ UUID(uuidString: $0.artist_uuid) }))
+            
+            let newFavoriteCount = localFavoriteArtists.count
+            
+            switch changes {
+            case .initial:
+                s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
+            case .update(_, let deletions, let insertions, let modifications):
+                s.tableNode.performBatch(animated: true, updates: {
+                    s.tableNode.insertRows(at: insertions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
+                                           with: .automatic)
+                    s.tableNode.deleteRows(at: deletions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue)}),
+                                           with: .automatic)
+                    s.tableNode.reloadRows(at: modifications.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
+                                           with: .automatic)
+                    
+                    s.favoriteArtists = localFavoriteArtists
+                    
+                    if newFavoriteCount == 0 {
+                        s.tableNode.deleteRows(at: (0..<s.recentlyPerformedShows.count).map( { IndexPath(row: $0, section: Sections.recentlyPerformed.rawValue) }), with: .automatic)
+                        s.tableNode.reloadSections(IndexSet(integer: Sections.recentlyPerformed.rawValue), with: .automatic)
+                        
+                        s.resourceRecentlyPerformed = nil
+                        s.recentlyPerformedShows = []
+                        s.recentlyPerformedNode.shows = []
+                    }
+                    else {
+                        s.resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtists: s.favoriteArtists)
+                        s.resourceRecentlyPerformed?.addObserver(s)
+                        s.resourceRecentlyPerformed?.loadFromCacheThenUpdate()
+                    }
+                    
+                    if previousFavoriteCount == 0, newFavoriteCount > 0 {
+                        s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
+                    }
+                }, completion: nil)
+            case .error(let error):
+                fatalError(error.localizedDescription)
+            }
         }
     }
     

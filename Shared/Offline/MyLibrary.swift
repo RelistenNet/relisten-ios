@@ -15,25 +15,31 @@ import Observable
 
 import RealmSwift
 
+func ReadonlyRealmObjects<Element: Object>(_ type: Element.Type) -> Results<Element> {
+    let config = Realm.Configuration.defaultConfiguration
+//    config.objectTypes = [type]
+    
+    let realm = try! Realm(configuration: config)
+    
+    return realm.objects(type)
+}
+
 public class MyLibraryFavorites {
     public var artists: Results<FavoritedArtist> {
         get {
-            let realm = try! Realm()
-            return realm.objects(FavoritedArtist.self)
+            return ReadonlyRealmObjects(FavoritedArtist.self)
         }
     }
     
     public var shows: Results<FavoritedShow> {
         get {
-            let realm = try! Realm()
-            return realm.objects(FavoritedShow.self)
+            return ReadonlyRealmObjects(FavoritedShow.self)
         }
     }
     
     public var sources: Results<FavoritedSource> {
         get {
-            let realm = try! Realm()
-            return realm.objects(FavoritedSource.self)
+            return ReadonlyRealmObjects(FavoritedSource.self)
         }
     }
     
@@ -44,8 +50,7 @@ public class MyLibraryFavorites {
     
     public var tracks: Results<FavoritedTrack> {
         get {
-            let realm = try! Realm()
-            return realm.objects(FavoritedTrack.self)
+            return ReadonlyRealmObjects(FavoritedTrack.self)
         }
     }
 }
@@ -55,8 +60,7 @@ public typealias FullOfflineSource = (show: ShowWithSources, source: SourceFull,
 public class MyLibraryOffline {
     public var sources: Results<OfflineSource> {
         get {
-            let realm = try! Realm()
-            return realm.objects(OfflineSource.self)
+            return ReadonlyRealmObjects(OfflineSource.self)
         }
     }
     
@@ -67,8 +71,7 @@ public class MyLibraryOffline {
     
     public var tracks: Results<OfflineTrack> {
         get {
-            let realm = try! Realm()
-            return realm.objects(OfflineTrack.self)
+            return ReadonlyRealmObjects(OfflineTrack.self)
         }
     }
 }
@@ -76,9 +79,7 @@ public class MyLibraryOffline {
 public class MyLibraryRecentlyPlayed {
     public var shows: Results<RecentlyPlayedTrack> {
         get {
-            let realm = try! Realm()
-            return realm
-                .objects(RecentlyPlayedTrack.self)
+            return ReadonlyRealmObjects(RecentlyPlayedTrack.self)
                 .sorted(by: [SortDescriptor(keyPath: "show_uuid", ascending: true), SortDescriptor(keyPath: "updated_at", ascending: false)])
                 .sorted(byKeyPath: "updated_at", ascending: false)
                 .distinct(by: ["show_uuid"])
@@ -93,9 +94,7 @@ public class MyLibraryRecentlyPlayed {
     
     public var tracks: Results<RecentlyPlayedTrack> {
         get {
-            let realm = try! Realm()
-            return realm
-                .objects(RecentlyPlayedTrack.self)
+            return ReadonlyRealmObjects(RecentlyPlayedTrack.self)
                 .sorted(byKeyPath: "updated_at", ascending: false)
         }
     }
@@ -115,24 +114,103 @@ public class MyLibrary {
     
     private init() {
     }
+    
+    // MARK: Migration
+    public class func migrateRealmDatabase() {
+        let config = Realm.Configuration(
+            // Set the new schema version. This must be greater than the previously used
+            // version (if you've never set a schema version before, the version is 0).
+            schemaVersion: 2,
+            
+            // Set the block which will be called automatically when opening a Realm with
+            // a schema version lower than the one set above
+            migrationBlock: { migration, oldSchemaVersion in
+                // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                if (oldSchemaVersion < 1) {
+                    // Realm will automatically detect new properties and removed properties
+                    // And will update the schema on disk automatically
+                    
+                    // Clear out anything with a nil value
+                    self.removeObjectsWithoutRequiredProperties(migration: migration)
+                }
+                if (oldSchemaVersion < 2) {
+                    // Add past_halfway to RecentlyPlayedTrack
+                    // No need to do anything here, as Realm should handle this migration for us.
+                }
+        })
+        
+        // Tell Realm to use this new configuration object for the default Realm
+        Realm.Configuration.defaultConfiguration = config
+    }
+    
+    private class func removeObjectsWithoutRequiredProperties(migration: Migration) {
+        // If a property is changed from nullable to required, auto-migration automatically sets a fixed value (for Strings, an empty string "" is set).
+        // To handle this we need to grab the properties from the old object and copy them to the new one
+        // https://github.com/realm/realm-cocoa/issues/4348#issuecomment-261874485
+        // Iterate through all of the classes in the database
+        for objectSchema in migration.oldSchema.objectSchema {
+            LogDebug("Migrating class \(objectSchema.className)")
+            let className = objectSchema.className
+            
+            if let oldSchema = migration.oldSchema[className],
+                let newSchema = migration.newSchema[className] {
+                
+                var newPropertiesByName : [String : Property] = [:]
+                for property in newSchema.properties {
+                    newPropertiesByName[property.name] = property
+                }
+                
+                // Migrate all of the objects for each class
+                migration.enumerateObjects(ofType: className) { oldObject, newObject in
+                    if let oldObject = oldObject,
+                       let newObject = newObject {
+                        for oldProperty in oldSchema.properties {
+                            // Check if the property has changed from optional to required.
+                            if let newProperty = newPropertiesByName[oldProperty.name],
+                               (oldProperty.isOptional && !newProperty.isOptional) {
+                                // If it has changed, make sure it wasn't nil before
+                                if oldObject[oldProperty.name] == nil ||
+                                   oldObject[oldProperty.name] as? String == "" {
+                                    LogWarn("Found object of type \(className) with a nil property for \(oldProperty.name). Deleting that object to clean up the database. Take a good look at this object 'cause it's the last time you're gonna see it! \(oldObject)")
+                                    migration.delete(newObject)
+                                    // We're done with this object so return from the block and handle the next object
+                                    return
+                                }
+                                // Copy the property over from the old schema
+                                newObject[oldProperty.name] = oldObject[oldProperty.name]
+                            }
+                        }
+                    } else {
+                        LogWarn("Couldn't get an old or new object for class \(className)")
+                    }
+                }
+            } else {
+                LogWarn("Couldn't get the old or new schemas")
+            }
+        }
+    }
 }
 
 // MARK: Recently Played
 extension MyLibrary {
-    public func trackWasPlayed(_ track: Track) -> Bool {
+    public func trackWasPlayed(_ track: Track, pastHalfway: Bool = false) -> Bool {
         let realm = try! Realm()
         
-        let recentShow = RecentlyPlayedTrack()
-        recentShow.show_uuid = track.showInfo.show.uuid.uuidString
-        recentShow.source_uuid = track.showInfo.source.uuid.uuidString
-        recentShow.artist_uuid = track.showInfo.artist.uuid.uuidString
-        recentShow.track_uuid = track.sourceTrack.uuid.uuidString
-        
-        recentShow.created_at = Date()
-        recentShow.updated_at = Date()
-        
-        try! realm.write {
-            realm.add(recentShow)
+        // Check for an existing recently played track that hasn't passed halfway and update it
+        if pastHalfway,
+           let existingRecentShow = realm.objects(RecentlyPlayedTrack.self).filter("track_uuid == %@", track.uuid.uuidString)
+                .sorted(byKeyPath: "updated_at", ascending: false).first {
+            try! realm.write {
+                existingRecentShow.past_halfway = pastHalfway
+                existingRecentShow.updated_at = Date()
+            }
+        } else {
+            // Create a new entry for this track
+            let recentShow = RecentlyPlayedTrack(withTrack: track)
+            
+            try! realm.write {
+                realm.add(recentShow)
+            }
         }
         
         return true
@@ -146,15 +224,7 @@ extension MyLibrary {
         if existingFavoritedShow == nil,
            let trackUUID = showInfo.source.tracksFlattened.first?.uuid.uuidString
         {
-            let recentShow = RecentlyPlayedTrack()
-            recentShow.show_uuid = showInfo.show.uuid.uuidString
-            recentShow.source_uuid = showInfo.source.uuid.uuidString
-            recentShow.artist_uuid = showInfo.artist.uuid.uuidString
-            recentShow.track_uuid = trackUUID
-            
-            recentShow.created_at = Date()
-            recentShow.updated_at = Date()
-            
+            let recentShow = RecentlyPlayedTrack(withShowInfo: showInfo, trackUUID: trackUUID)
             do {
                 try realm.write {
                     realm.add(recentShow)
@@ -212,9 +282,7 @@ extension MyLibrary {
 
 extension MyLibrary : DownloadManagerDataSource {
     public func nextTrackToDownload() -> Track? {
-        let realm = try! Realm()
-        
-        return realm.objects(OfflineTrack.self)
+        return ReadonlyRealmObjects(OfflineTrack.self)
             .filter("state == %d", OfflineTrackState.downloadQueued.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
             .first?
@@ -222,9 +290,7 @@ extension MyLibrary : DownloadManagerDataSource {
     }
     
     public func tracksToDownload(_ count : Int) -> [Track]? {
-        let realm = try! Realm()
-        
-        let objects = realm.objects(OfflineTrack.self)
+        let objects = ReadonlyRealmObjects(OfflineTrack.self)
             .filter("state == %d", OfflineTrackState.downloadQueued.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
         
@@ -232,9 +298,7 @@ extension MyLibrary : DownloadManagerDataSource {
     }
     
     public func currentlyDownloadingTracks() -> [Track]? {
-        let realm = try! Realm()
-        
-        let objects = realm.objects(OfflineTrack.self)
+        let objects = ReadonlyRealmObjects(OfflineTrack.self)
             .filter("state == %d", OfflineTrackState.downloading.rawValue)
             .sorted(byKeyPath: "created_at", ascending: true)
         
@@ -244,15 +308,7 @@ extension MyLibrary : DownloadManagerDataSource {
     public func importDownloadedTrack(_ track : Track, withSize fileSize: UInt64) {
         let realm = try! Realm()
         
-        let trackMeta = OfflineTrack()
-        trackMeta.track_uuid = track.sourceTrack.uuid.uuidString
-        trackMeta.show_uuid = track.showInfo.show.uuid.uuidString
-        trackMeta.source_uuid = track.showInfo.source.uuid.uuidString
-        trackMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
-        trackMeta.state = .downloaded
-        trackMeta.file_size.value = Int(fileSize)
-        trackMeta.created_at = Date()
-        
+        let trackMeta = OfflineTrack(withTrack: track, state: .downloaded, fileSize: Int(fileSize))
         do {
             try realm.write {
                 realm.add(trackMeta)
@@ -273,14 +329,7 @@ extension MyLibrary : DownloadManagerDataSource {
                 offlineTrack.state = .downloadQueued
             }
         } else {
-            let trackMeta = OfflineTrack()
-            trackMeta.track_uuid = track.sourceTrack.uuid.uuidString
-            trackMeta.show_uuid = track.showInfo.show.uuid.uuidString
-            trackMeta.source_uuid = track.showInfo.source.uuid.uuidString
-            trackMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
-            trackMeta.state = .downloadQueued
-            trackMeta.created_at = Date()
-        
+            let trackMeta = OfflineTrack(withTrack: track, state: .downloadQueued)
             try! realm.write {
                 realm.add(trackMeta)
             }
@@ -318,13 +367,7 @@ extension MyLibrary : DownloadManagerDataSource {
         if offlineSourceQuery == nil {
             do {
                 try realm.write {
-                    let sourceMeta = OfflineSource()
-                    sourceMeta.show_uuid = track.showInfo.show.uuid.uuidString
-                    sourceMeta.source_uuid = track.showInfo.source.uuid.uuidString
-                    sourceMeta.artist_uuid = track.showInfo.artist.uuid.uuidString
-                    sourceMeta.year_uuid = track.showInfo.show.year.uuid.uuidString
-                    sourceMeta.created_at = Date()
-                    
+                    let sourceMeta = OfflineSource(withTrack: track)
                     realm.add(sourceMeta)
                 }
             } catch {
@@ -412,14 +455,7 @@ extension MyLibrary {
         let favoritedSourceQuery = realm.object(ofType: FavoritedSource.self, forPrimaryKey: show.source.uuid.uuidString)
         let existingFavoriteSource = favoritedSourceQuery
         if existingFavoriteSource == nil {
-            let favoritedSource = FavoritedSource()
-            favoritedSource.artist_uuid = show.artist.uuid.uuidString
-            favoritedSource.show_date = show.show.date
-            favoritedSource.uuid = show.source.uuid.uuidString
-            favoritedSource.show_uuid = show.show.uuid.uuidString
-            
-            favoritedSource.created_at = Date()
-            
+            let favoritedSource = FavoritedSource(withShowInfo: show)
             try! realm.write {
                 realm.add(favoritedSource)
             }
@@ -445,10 +481,7 @@ extension MyLibrary {
     public func favoriteArtist(artist: ArtistWithCounts) {
         let realm = try! Realm()
         
-        let favoritedArtist = FavoritedArtist()
-        favoritedArtist.uuid = artist.uuid.uuidString
-        favoritedArtist.created_at = Date()
-        
+        let favoritedArtist = FavoritedArtist(artist_uuid: artist.uuid.uuidString)
         try! realm.write {
             realm.add(favoritedArtist)
         }
@@ -487,5 +520,34 @@ public extension MyLibrary {
 
     public func isFavorite(track: SourceTrack) -> Bool {
         return favorites.tracks.filter("uuid == %@", track.uuid.uuidString).count > 0
+    }
+}
+
+// MARK: Realm Object Helpers
+extension RecentlyPlayedTrack {
+    public convenience init(withUUID uuid: String? = nil, withTrack track: Track) {
+        self.init(uuid: uuid, artist_uuid: track.showInfo.artist.uuid.uuidString, show_uuid: track.showInfo.show.uuid.uuidString, source_uuid: track.showInfo.source.uuid.uuidString, track_uuid: track.sourceTrack.uuid.uuidString)
+    }
+    
+    public convenience init(withUUID uuid: String? = nil, withShowInfo showInfo: CompleteShowInformation, trackUUID: String) {
+        self.init(uuid: uuid, artist_uuid: showInfo.artist.uuid.uuidString, show_uuid: showInfo.show.uuid.uuidString, source_uuid: showInfo.source.uuid.uuidString, track_uuid: trackUUID)
+    }
+}
+
+extension FavoritedSource {
+    public convenience init(withUUID uuid: String? = nil, withShowInfo showInfo: CompleteShowInformation) {
+        self.init(source_uuid: showInfo.source.uuid.uuidString, artist_uuid: showInfo.artist.uuid.uuidString, show_uuid: showInfo.show.uuid.uuidString, show_date: showInfo.show.date)
+    }
+}
+
+extension OfflineTrack {
+    public convenience init(withTrack track: Track, state: OfflineTrackState? = nil, fileSize: Int? = nil) {
+        self.init(track_uuid: track.sourceTrack.uuid.uuidString, artist_uuid: track.showInfo.artist.uuid.uuidString, show_uuid: track.showInfo.show.uuid.uuidString, source_uuid: track.showInfo.source.uuid.uuidString, state: state, file_size: fileSize)
+    }
+}
+
+extension OfflineSource {
+    public convenience init(withTrack track: Track) {
+        self.init(source_uuid: track.showInfo.source.uuid.uuidString, artist_uuid: track.showInfo.artist.uuid.uuidString, show_uuid: track.showInfo.show.uuid.uuidString, year_uuid: track.showInfo.show.year.uuid.uuidString)
     }
 }

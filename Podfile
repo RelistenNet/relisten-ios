@@ -6,6 +6,7 @@ def apply_pods
   use_frameworks!
   inhibit_all_warnings!
 
+  pod 'PathKit'
   pod 'AXRatingView'
   pod 'ActionKit'
   pod 'CWStatusBarNotification'
@@ -13,20 +14,23 @@ def apply_pods
   pod 'ChameleonFramework'
   pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger"
   pod 'Crashlytics'
-  pod 'DownloadButton'
+  pod 'CSwiftV', :git => "https://github.com/UberJason/CSwiftV.git" # Needed for RealmConverter until PR https://github.com/Daniel1of1/CSwiftV/pull/38 is accepted
+  pod 'DownloadButton', :git => "https://github.com/farktronix/DownloadButton"
   pod 'EDColor'
   pod 'Fabric'
   pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git"
   pod 'KASlideShow'
   pod 'LayoutKit'
   pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git"
-  pod 'LicensesViewController'
+  pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"
   pod 'MZDownloadManager', :git => "https://github.com/alecgorge/MZDownloadManager.git"
   pod 'NAKPlaybackIndicatorView'
+  pod 'NapySlider'
   pod 'Observable', :git => "https://github.com/alecgorge/Observable.git"
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'
   pod 'RealmSwift'
+  pod 'RealmConverter', :git => "https://github.com/farktronix/realm-cocoa-converter.git"
   pod 'SDCloudUserDefaults'
   pod 'SINQ'
   pod 'SVProgressHUD'
@@ -37,12 +41,10 @@ def apply_pods
  
   # Development pods (checked out locally)
   if ENV['TRAVIS']
-      pod 'NapySlider', :path => 'TravisPods/NapySlider'
       pod 'BASSGaplessAudioPlayer', :path => 'TravisPods/BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => 'TravisPods/AGAudioPlayer'
       pod 'FaveButton', :path => 'TravisPods/fave-button'
   else
-      pod 'NapySlider', :path => '../NapySlider'
       pod 'BASSGaplessAudioPlayer', :path => '../BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
       pod 'FaveButton', :path => '../fave-button'
@@ -50,7 +52,7 @@ def apply_pods
 
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']
-  pod 'Wormholy', :configurations => ['Debug'], :git => "https://github.com/pmusolino/Wormholy.git"
+  pod 'Wormholy', :configurations => ['Debug']
   pod 'DWURecyclingAlert', :configurations => ['Debug']
 
   # Currently unused pods (but they might be used in the future)
@@ -78,6 +80,11 @@ target 'Relisten' do
 end
 
 target 'RelistenUITests' do
+  apply_pods
+  pod 'SimulatorStatusMagic'
+end
+
+target 'RelistenScreenshots' do
   apply_pods
   pod 'SimulatorStatusMagic'
 end

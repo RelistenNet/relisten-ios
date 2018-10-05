@@ -17,19 +17,22 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     public static let shared = CarPlayController()
     public static let albumArtEnabled = false
     
-    private let dataSource : CarPlayDataSource
+    private let queue : ReentrantDispatchQueue = ReentrantDispatchQueue(label: "live.relisten.ios.carplay.queue")
+    private var backingDataSource : CarPlayDataSource?
+    private lazy var dataSource : CarPlayDataSource = {
+        if (backingDataSource == nil) {
+            queue.sync {
+                if (backingDataSource == nil) {
+                    backingDataSource = CarPlayDataSource(delegate: self)
+                }
+            }
+        }
+        return backingDataSource!
+    }()
     
     private var disposal = Disposal()
     
     // MARK: Setup
-    
-    public override init() {
-        dataSource = CarPlayDataSource(delegate: nil)
-        
-        super.init()
-        
-        dataSource.delegate = self
-    }
     
     public func setup() {
         MPPlayableContentManager.shared().delegate = self;

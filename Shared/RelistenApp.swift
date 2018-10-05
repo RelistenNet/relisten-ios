@@ -24,6 +24,8 @@ public protocol RelistenAppDelegate {
 public class RelistenApp {
     public static let sharedApp = RelistenApp(delegate: RelistenDummyAppDelegate())
     
+    public let launchScreenBounds: CGRect
+    
     public let shakeToReportBugEnabled = Observable<Bool>(true)
     
     public var delegate : RelistenAppDelegate
@@ -90,6 +92,9 @@ public class RelistenApp {
     
     var disposal = Disposal()
     public init(delegate: RelistenAppDelegate) {
+        MyLibrary.migrateRealmDatabase()
+        self.launchScreenBounds = UIScreen.main.bounds
+
         if let enableBugReporting = UserDefaults.standard.object(forKey: bugReportingKey) as! Bool? {
             shakeToReportBugEnabled.value = enableBugReporting
         }
@@ -142,13 +147,11 @@ public class RelistenApp {
     public func setupAppearance(_ viewController: UINavigationController? = nil) {
         let _ = RatingViewStubBounds
         
-        UIApplication.shared.statusBarStyle = .lightContent
-        
         UINavigationBar.appearance().barTintColor = AppColors.primary
         UINavigationBar.appearance().backgroundColor = AppColors.textOnPrimary
         UINavigationBar.appearance().tintColor = AppColors.textOnPrimary
         UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary]
         
         UIToolbar.appearance().backgroundColor = AppColors.primary
         UIToolbar.appearance().tintColor = AppColors.textOnPrimary
@@ -156,7 +159,7 @@ public class RelistenApp {
         UIButton.appearance().tintColor = AppColors.primary
         UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = AppColors.textOnPrimary
         
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary], for: .normal)
         
         UISegmentedControl.appearance().tintColor = AppColors.primary
         UITabBar.appearance().tintColor = AppColors.primary

@@ -24,13 +24,13 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     }()
     public let isPhishOD : Bool = true
     
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         SetupLogging()
         
         return true
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         LogDebug("⭕️⭕️⭕️ PhishOD is launching ⭕️⭕️⭕️")
         RelistenApp.sharedApp.delegate = self
         
@@ -45,7 +45,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         rootNavigationController = RelistenNavigationController(rootViewController: ArtistViewController(artist: loadPhishArtist()))
         
         rootNavigationController.navigationBar.prefersLargeTitles = true
-        rootNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: AppColors.textOnPrimary]
+        rootNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary]
         
         window?.rootViewController = rootNavigationController
         

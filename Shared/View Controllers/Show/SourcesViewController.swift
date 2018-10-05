@@ -40,7 +40,7 @@ public class SourcesViewController: RelistenAsyncTableViewController<ShowWithSou
         super.init(useCache: true, refreshOnAppear: true)
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableViewStyle = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
 

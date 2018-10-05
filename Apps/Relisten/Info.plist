@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.0.0</string>
+	<string>4.0.2</string>
 	<key>CFBundleVersion</key>
-	<string>4008</string>
+	<string>4010</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

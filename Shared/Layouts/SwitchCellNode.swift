@@ -106,7 +106,7 @@ public class SwitchCellNode : ASCellNode {
         stack.style.alignSelf = .stretch
 
         let insets = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(0, 0, 0, 0),
+            insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
             child: stack
         )
         insets.style.alignSelf = .stretch

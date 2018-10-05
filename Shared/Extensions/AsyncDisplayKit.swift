@@ -20,13 +20,13 @@ public func RelistenAttributedString(_ string: String, font: UIFont, color: UICo
     }
     
     return NSAttributedString(string: string, attributes: [
-        NSAttributedStringKey.font: scaledFont,
-        NSAttributedStringKey.foregroundColor: color ?? UIColor.darkText,
-        NSAttributedStringKey.paragraphStyle: paragraphStyle
+        NSAttributedString.Key.font: scaledFont,
+        NSAttributedString.Key.foregroundColor: color ?? UIColor.darkText,
+        NSAttributedString.Key.paragraphStyle: paragraphStyle
         ])
 }
 
-public func RelistenAttributedString(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil, scale: CGFloat = 1.0, weight: FontWeight = .Regular) -> NSAttributedString {
+public func RelistenAttributedString(_ string: String, textStyle: UIFont.TextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil, scale: CGFloat = 1.0, weight: FontWeight = .Regular) -> NSAttributedString {
     return RelistenAttributedString(string, font: UIFont.preferredFont(forTextStyle: textStyle), color: color, alignment: alignment, scale: scale, weight: weight)
 }
 
@@ -38,7 +38,7 @@ extension ASTextNode {
         attributedText = RelistenAttributedString(string, font: font, color: color, alignment: alignment, scale: scale, weight: weight)
     }
     
-    public convenience init(_ string: String, textStyle: UIFontTextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil, scale: CGFloat = 1.0, weight: FontWeight = .Regular) {
+    public convenience init(_ string: String, textStyle: UIFont.TextStyle, color: UIColor? = nil, alignment: NSTextAlignment? = nil, scale: CGFloat = 1.0, weight: FontWeight = .Regular) {
         self.init()
         
         maximumNumberOfLines = 0

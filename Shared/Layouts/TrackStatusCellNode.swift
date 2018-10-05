@@ -24,7 +24,8 @@ public class TrackStatusCellNode : ASCellNode {
     
     var disposal = Disposal()
     
-    var trackQuery: Results<OfflineTrack>!
+    var offlineTrackQuery: Results<OfflineTrack>!
+    var listenedTrackQuery: Results<RecentlyPlayedTrack>!
     
     public init(withTrack track: Track, withHandler handler: TrackStatusActionHandler, usingExplicitTrackNumber: Int? = nil, showingArtistInformation: Bool = false) {
         self.track = track
@@ -39,7 +40,10 @@ public class TrackStatusCellNode : ASCellNode {
         })
         nowPlayingNode.backgroundColor = UIColor.clear
         
-        trackNumberNode = ASTextNode(String(explicitTrackNumber ?? track.track_position), textStyle: .caption1, color: .darkGray)
+        if let _ = MyLibrary.shared.recent.tracks.filter("track_uuid == %@ AND past_halfway == true", self.track.uuid.uuidString).first {
+            hasListened = true
+        }
+        trackNumberNode = ASTextNode(String(explicitTrackNumber ?? track.track_position), textStyle: .caption1, color: hasListened ?  AppColors.primary : .darkGray)
         
         titleNode = ASTextNode(track.title, textStyle: .body)
         titleNode.maximumNumberOfLines = 0
@@ -62,7 +66,7 @@ public class TrackStatusCellNode : ASCellNode {
         actionButtonNode?.setImage(UIImage(named: "dots"), for: .normal)
         
         let padding = (44.0 - actionButtonNode!.bounds.size.height)/2.0
-        actionButtonNode?.hitTestSlop = UIEdgeInsetsMake(-padding, 0, -padding, 0)
+        actionButtonNode?.hitTestSlop = UIEdgeInsets(top: -padding, left: 0, bottom: -padding, right: 0)
         
         super.init()
 
@@ -70,8 +74,8 @@ public class TrackStatusCellNode : ASCellNode {
         automaticallyManagesSubnodes = true
         
         DispatchQueue.main.async {
-            self.trackQuery = MyLibrary.shared.offline.tracks.filter("track_uuid == %@", self.track.uuid.uuidString)
-            self.trackQuery.observeWithValue { [weak self] trackResults, changes in
+            self.offlineTrackQuery = MyLibrary.shared.offline.tracks.filter("track_uuid == %@", self.track.uuid.uuidString)
+            self.offlineTrackQuery.observeWithValue { [weak self] trackResults, changes in
                 guard let s = self else { return }
                 
                 if let track = trackResults.first, track.state != .unknown, track.state != .deleting {
@@ -103,6 +107,17 @@ public class TrackStatusCellNode : ASCellNode {
                     s.setNeedsLayout()
                 }
             }.dispose(to: &self.disposal)
+            
+            
+            self.listenedTrackQuery = MyLibrary.shared.recent.tracks.filter("track_uuid == %@", self.track.uuid.uuidString)
+            self.listenedTrackQuery.observeWithValue { [weak self] trackResults, changes in
+                guard let s = self,
+                      let track = trackResults.first
+                    else { return }
+                
+                s.hasListened = track.past_halfway
+                
+            }.dispose(to: &self.disposal)
         }
         
         PlaybackController.sharedInstance.observeCurrentTrack.observe { [weak self] (current, previous) in
@@ -132,7 +147,7 @@ public class TrackStatusCellNode : ASCellNode {
     }
     
     public let nowPlayingNode: ASDisplayNode
-    public let trackNumberNode: ASTextNode
+    public var trackNumberNode: ASTextNode!
     public let titleNode: ASTextNode
     public let artistInfoNode: ASTextNode?
     public let durationNode: ASTextNode?
@@ -145,6 +160,12 @@ public class TrackStatusCellNode : ASCellNode {
     var downloadState : Track.DownloadState = .none {
         didSet {
             downloadProgressNode.state = downloadState
+        }
+    }
+    var hasListened : Bool = false {
+        didSet {
+            trackNumberNode = ASTextNode(String(explicitTrackNumber ?? track.track_position), textStyle: .caption1, color: hasListened ? AppColors.primary : .darkGray)
+            self.setNeedsDisplay()
         }
     }
 
@@ -176,7 +197,7 @@ public class TrackStatusCellNode : ASCellNode {
         nowPlayingNode.style.minSize = CGSize(width: 12, height: 12)
         
         let nowPlayingInset = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(0, 0, 0, 12),
+            insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12),
             child: nowPlayingNode
         )
 
@@ -198,7 +219,7 @@ public class TrackStatusCellNode : ASCellNode {
         horiz.style.flexGrow = 1.0
         
         let inset = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(8, 16, 8, 16),
+            insets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16),
             child: horiz
         )
         inset.style.alignSelf = .stretch

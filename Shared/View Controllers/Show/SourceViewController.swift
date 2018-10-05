@@ -9,6 +9,7 @@
 import Foundation
 
 import UIKit
+import SafariServices
 
 import Siesta
 import AsyncDisplayKit
@@ -81,12 +82,16 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
     
     // MARK: UITableViewDelegate
     func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return 1 + source.sets.count
+        return 2 + source.sets.count
     }
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 2
+        }
+        
+        if section == 1 + source.sets.count {
+            return source.links.count
         }
         
         return source.sets[section - 1].tracks.count
@@ -104,6 +109,13 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
             else if indexPath.row == 1 {
                 return { UserPropertiesForShowNode(source: source, inShow: show, artist: artist, viewController: self) }
             }
+        }
+        
+        if indexPath.section == 1 + source.sets.count {
+            let link = source.links[indexPath.row]
+            let upstreamSource = artist.upstream_sources.first(where: { $0.upstream_source_id == link.upstream_source_id })
+            
+            return { LinkUpstreamNode(forLink: link, fromUpstreamSource: upstreamSource?.upstream_source) }
         }
         
         let sourceTrack = source.sets[indexPath.section - 1].tracks[indexPath.row]
@@ -134,6 +146,13 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
             }
         }
         
+        if indexPath.section == 1 + source.sets.count {
+            let link = source.links[indexPath.row]
+            
+            navigationController?.present(SFSafariViewController(url: URL(string: link.url)!), animated: true, completion: nil)
+            return
+        }
+        
         if indexPath.section > 0 {
             TrackActions.play(
                 trackAtIndexPath: IndexPath(row: indexPath.row, section: indexPath.section - 1),
@@ -146,6 +165,10 @@ public class SourceViewController: RelistenBaseAsyncTableViewController {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard section != 0 else {
             return nil
+        }
+        
+        if section == 1 + source.sets.count {
+            return "Data/Source Credits"
         }
         
         return self.artist.features.sets ? source.sets[section - 1].name : "Tracks"

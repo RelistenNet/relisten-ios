@@ -37,14 +37,17 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         shareButton = ASButtonNode()
         // TODO: Use a proper share icon
         shareButton.setImage(#imageLiteral(resourceName: "share"), for: .normal)
+        shareButton.accessibilityLabel = "Share"
         
         downloadText = ASTextNode("Download", textStyle: .footnote)
         downloadButton = ASButtonNode()
         downloadButton.setImage(#imageLiteral(resourceName: "download-outline"), for: .normal)
+        downloadButton.accessibilityLabel = "Download Show"
         
         deleteButton = ASButtonNode()
         deleteButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
         deleteButton.isHidden = true
+        deleteButton.accessibilityLabel = "Delete Downloaded Show"
         
         super.init()
         
@@ -216,7 +219,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         vert.style.alignSelf = .stretch
 
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(8, 16, 8, 16),
+            insets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16),
             child: vert
         )
         l.style.alignSelf = .stretch

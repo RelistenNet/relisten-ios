@@ -30,7 +30,7 @@ public class ShareCellLayout : InsetLayout<UIView> {
         )
         
         super.init(
-            insets: UIEdgeInsetsMake(12, 16, 12, 32),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 32),
             alignment: .fill,
             viewReuseId: "shareCell",
             sublayout: stack,

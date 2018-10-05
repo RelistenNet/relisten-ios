@@ -9,6 +9,8 @@
 import Foundation
 import PinpointKit
 import CWStatusBarNotification
+import Realm
+import RealmConverter
 
 public class UserFeedback  {
     static public let shared = UserFeedback()
@@ -18,7 +20,10 @@ public class UserFeedback  {
     var currentNotification : CWStatusBarNotification?
     
     public init() {
-        let feedbackConfig = FeedbackConfiguration(recipients: ["ios@relisten.net"])
+        let versionString = "Relisten \(RelistenApp.sharedApp.appVersion) (\(RelistenApp.sharedApp.appBuildVersion))"
+        var feedbackConfig = FeedbackConfiguration(recipients: ["ios@relisten.net"])
+        feedbackConfig.title = "[Bug Report: \(versionString)]"
+        feedbackConfig.body = "\n\n\n[Please write a brief description of the problem you're seeing above this line]\n\n\nConfiguration Information (Please don't delete):\n\t\(versionString)\n\tCrash log identifier \(RelistenApp.sharedApp.crashlyticsUserIdentifier)"
         let config = Configuration(logCollector: RelistenLogCollector(), feedbackConfiguration: feedbackConfig)
         pinpointKit = PinpointKit(configuration: config)
     }
@@ -89,7 +94,50 @@ class RelistenLogCollector : LogCollector {
             LogWarn("Error enumerating downloaded tracks: \(error)")
         }
         
-        // TODO: Dump the database
+        let group = DispatchGroup()
+        group.enter()
+      
+        // Force a new thread so that Realm doesn't try to reuse an instance which errors out
+        // becuase no other instances use `dynamic = true`
+        let realmThread = Thread {
+            do {
+                let config = RLMRealmConfiguration()
+                config.dynamic = true
+                
+                let realm = try RLMRealm.init(configuration: config)
+                let exporter = CSVDataExporter(realm: realm)
+                
+                let tempDir = try self.createTemporaryDirectoy().path
+                
+                defer {
+                    do {
+                        try fm.removeItem(atPath: tempDir)
+                    } catch {
+                        LogError("Caught error: \(error)")
+                        LogError("Could not clean up \(tempDir)")
+                    }
+                }
+                
+                try exporter.export(toFolderAtPath: tempDir)
+                
+                let csvs = try fm.contentsOfDirectory(atPath: tempDir)
+                
+                for csvFile in csvs {
+                    let data = try String(contentsOfFile: tempDir + "/" + csvFile, encoding: .utf8)
+                    retval.append("======= Realm Table Dump (\(csvFile)) =======")
+                    retval.append(contentsOf: data.components(separatedBy: .newlines))
+                    retval.append("======= End Realm Table Dump (\(csvFile)) =======\n\n")
+                }
+            } catch {
+                LogWarn("Unable to dump Realm tables: \(error)")
+            }
+            
+            group.leave()
+        }
+        
+        realmThread.start()
+        
+        group.wait()
         
         // Grab the latest log file
         autoreleasepool {
@@ -106,5 +154,12 @@ class RelistenLogCollector : LogCollector {
         }
         
         return retval
+    }
+    
+    func createTemporaryDirectoy() throws -> URL{
+        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+        
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+        return url
     }
 }

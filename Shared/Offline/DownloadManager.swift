@@ -92,7 +92,11 @@ public class DownloadManager {
         if (backingDownloadManager == nil) {
             queue.sync {
                 if (backingDownloadManager == nil) {
-                    backingDownloadManager = MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self)
+                    let sessionConfiguration = MZDownloadManager.defaultSessionConfiguration(identifier: "live.relisten.ios.mp3-offline")
+                    sessionConfiguration.timeoutIntervalForRequest = 60.0
+                    sessionConfiguration.timeoutIntervalForResource = 60.0 * 60.0 * 24
+                    sessionConfiguration.httpMaximumConnectionsPerHost = 3
+                    backingDownloadManager = MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self, sessionConfiguration: sessionConfiguration)
                 }
             }
         }

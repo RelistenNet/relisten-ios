@@ -22,7 +22,7 @@ def apply_pods
   pod 'LayoutKit'
   pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git" # Waiting on https://github.com/gangverk/LastFm/pull/20
   pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"
-  pod 'MZDownloadManager', :git => "https://github.com/alecgorge/MZDownloadManager.git" # Fix some possible nil dereferences and limit the maximum connections
+  pod 'MZDownloadManager', :git => 'https://github.com/farktronix/MZDownloadManager' # Waiting on https://github.com/mzeeshanid/MZDownloadManager/pull/77
   pod 'NAKPlaybackIndicatorView'
   pod 'NapySlider'
   pod 'Observable', :git => "https://github.com/alecgorge/Observable.git" # Adds thread safety. This should be submitted upstream as a PR

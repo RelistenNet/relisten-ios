@@ -117,7 +117,7 @@ DEPENDENCIES:
   - LastFm (from `https://github.com/farktronix/LastFm.git`)
   - LayoutKit
   - LicensesViewController (from `https://github.com/tsukisa/LicenseGenerator-iOS.git`)
-  - MZDownloadManager (from `https://github.com/alecgorge/MZDownloadManager.git`)
+  - MZDownloadManager (from `https://github.com/farktronix/MZDownloadManager`)
   - NAKPlaybackIndicatorView
   - NapySlider
   - Observable (from `https://github.com/alecgorge/Observable.git`)
@@ -194,7 +194,7 @@ EXTERNAL SOURCES:
   LicensesViewController:
     :git: https://github.com/tsukisa/LicenseGenerator-iOS.git
   MZDownloadManager:
-    :git: https://github.com/alecgorge/MZDownloadManager.git
+    :git: https://github.com/farktronix/MZDownloadManager
   Observable:
     :git: https://github.com/alecgorge/Observable.git
   RealmConverter:
@@ -222,8 +222,8 @@ CHECKOUT OPTIONS:
     :commit: 1781a8421602eb1b04e74b6fa07f81f97981cec2
     :git: https://github.com/tsukisa/LicenseGenerator-iOS.git
   MZDownloadManager:
-    :commit: 68c2c4b68c5e417bb9fb695ee6e014ff535d7e4e
-    :git: https://github.com/alecgorge/MZDownloadManager.git
+    :commit: e2d1632398917614a7c70c1011c23930a1b6b9be
+    :git: https://github.com/farktronix/MZDownloadManager
   Observable:
     :commit: fab070fb05ae4376c5d09efa313b9e1e617f2838
     :git: https://github.com/alecgorge/Observable.git
@@ -283,6 +283,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: f9d21d7d9f1d029bb1ae47f0f2da3bed854969b5
 
-PODFILE CHECKSUM: 64ac08a045a72c53eb6bda98a6eb2c47ba1f06d0
+PODFILE CHECKSUM: 8d909dab9df40a0a1820cd5854767f472288fc1d
 
 COCOAPODS: 1.5.3

@@ -111,11 +111,12 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
     }
     
     // MARK: FaveButtonDelegate
+    public func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
+    }
+    
     public func instantCallback(_ faveButton: FaveButton, didSelected selected: Bool) {
-        _currentlyFavorited = !_currentlyFavorited
-        if let delegate = delegate {
-            delegate.didFavorite(currentlyFavorited : _currentlyFavorited)
-        }
+        _currentlyFavorited = selected
+        delegate?.didFavorite(currentlyFavorited : _currentlyFavorited)
     }
     
     private static func color(_ rgbColor: Int) -> UIColor{
@@ -137,9 +138,6 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
     
     public func faveButtonDotColors(_ faveButton: FaveButton) -> [DotColors]?{
         return colors
-    }
-    
-    public func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
     }
 }
 

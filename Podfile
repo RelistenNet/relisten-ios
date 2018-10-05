@@ -18,7 +18,7 @@ def apply_pods
   pod 'EDColor'
   pod 'Fabric'
   pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git" # The new official fork
-  pod 'FaveButton'
+  pod 'FaveButton', :git => "https://github.com/farktronix/fave-button.git" # Waiting on https://github.com/xhamr/fave-button/pull/42
   pod 'KASlideShow'
   pod 'LayoutKit'
   pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git" # Waiting on https://github.com/gangverk/LastFm/pull/20

@@ -60,7 +60,7 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
     }
     
     public override init() {
-        faveButtonNode = ASDisplayNode(viewBlock: { FaveButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32)) })
+        faveButtonNode = ASDisplayNode(viewBlock: { FaveButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32), faveIconNormal: FavoriteButtonNode.image) })
         
         super.init()
         
@@ -86,7 +86,6 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
         super.didLoad()
         
         if let button = faveButtonNode.view as? FaveButton {
-            button.setImage(FavoriteButtonNode.image, for: .normal)
             if let d = delegate {
                 button.accessibilityLabel = d.favoriteButtonAccessibilityLabel
             } else {
@@ -94,8 +93,6 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
             }
             
             button.delegate = self
-            
-            button.applyInit()
             
             button.setSelected(selected: currentlyFavorited, animated: false)
             
@@ -114,11 +111,12 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
     }
     
     // MARK: FaveButtonDelegate
+    public func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
+    }
+    
     public func instantCallback(_ faveButton: FaveButton, didSelected selected: Bool) {
-        _currentlyFavorited = !_currentlyFavorited
-        if let delegate = delegate {
-            delegate.didFavorite(currentlyFavorited : _currentlyFavorited)
-        }
+        _currentlyFavorited = selected
+        delegate?.didFavorite(currentlyFavorited : _currentlyFavorited)
     }
     
     private static func color(_ rgbColor: Int) -> UIColor{
@@ -140,9 +138,6 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
     
     public func faveButtonDotColors(_ faveButton: FaveButton) -> [DotColors]?{
         return colors
-    }
-    
-    public func faveButton(_ faveButton: FaveButton, didSelected selected: Bool) {
     }
 }
 

@@ -23,7 +23,7 @@ PODS:
   - EDColor (1.0.1)
   - Fabric (1.7.13)
   - FastImageCache (1.5.1)
-  - FaveButton (3.0.0)
+  - FaveButton (3.0.1)
   - Interpolate (1.2.1)
   - KASlideShow (3.0.0):
     - SDWebImage (~> 3.8)
@@ -112,7 +112,7 @@ DEPENDENCIES:
   - EDColor
   - Fabric
   - FastImageCache (from `https://github.com/mallorypaine/FastImageCache.git`)
-  - FaveButton (from `../fave-button`)
+  - FaveButton (from `https://github.com/farktronix/fave-button.git`)
   - KASlideShow
   - LastFm (from `https://github.com/farktronix/LastFm.git`)
   - LayoutKit
@@ -188,7 +188,7 @@ EXTERNAL SOURCES:
   FastImageCache:
     :git: https://github.com/mallorypaine/FastImageCache.git
   FaveButton:
-    :path: "../fave-button"
+    :git: https://github.com/farktronix/fave-button.git
   LastFm:
     :git: https://github.com/farktronix/LastFm.git
   LicensesViewController:
@@ -215,6 +215,9 @@ CHECKOUT OPTIONS:
   FastImageCache:
     :commit: a196da2ef8646ad310f696e64f675e9a942d2ea9
     :git: https://github.com/mallorypaine/FastImageCache.git
+  FaveButton:
+    :commit: 3555e0d248115cee26a490a7d248fe7515fc16dc
+    :git: https://github.com/farktronix/fave-button.git
   LastFm:
     :commit: 19725dec9bdb91026b7ba808d5c61adb1afef9bb
     :git: https://github.com/farktronix/LastFm.git
@@ -251,7 +254,7 @@ SPEC CHECKSUMS:
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
   Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
-  FaveButton: f130f5eb281d98e74eeab0eb06c081a9673486f0
+  FaveButton: 496e8356260b9a18e6ed20ad9d1421118096fb56
   Interpolate: c786b88ad860c7110d606ae2776fad616e2b3724
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
   KissXML: d19dd6dc65e0dc721ba92b3077b8ebdd240f1c1e
@@ -283,6 +286,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: f9d21d7d9f1d029bb1ae47f0f2da3bed854969b5
 
-PODFILE CHECKSUM: 8d909dab9df40a0a1820cd5854767f472288fc1d
+PODFILE CHECKSUM: 6ba438d49de86a6e5dbd4beef29fb97d826e3a41
 
 COCOAPODS: 1.5.3

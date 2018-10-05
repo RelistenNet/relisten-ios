@@ -14,16 +14,16 @@ PODS:
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - CleanroomLogger (6.0.2)
-  - Crashlytics (3.10.8):
-    - Fabric (~> 1.7.12)
+  - Crashlytics (3.10.9):
+    - Fabric (~> 1.7.13)
   - CSwiftV (0.0.5)
   - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.2)
   - DWURecyclingAlert (1.0.2)
   - EDColor (1.0.1)
-  - Fabric (1.7.12)
+  - Fabric (1.7.13)
   - FastImageCache (1.5.1)
-  - FaveButton (2.0.4)
+  - FaveButton (3.0.0)
   - Interpolate (1.2.1)
   - KASlideShow (3.0.0):
     - SDWebImage (~> 3.8)
@@ -52,10 +52,10 @@ PODS:
   - PINCache/Core (3.0.1-beta.6):
     - PINOperation (~> 1.1.0)
   - PINOperation (1.1.1)
-  - PinpointKit (1.2.0):
-    - PinpointKit/Core (= 1.2.0)
-  - PinpointKit/Core (1.2.0)
-  - PinpointKit/ScreenshotDetector (1.2.0)
+  - PinpointKit (1.3.0):
+    - PinpointKit/Core (= 1.3.0)
+  - PinpointKit/Core (1.3.0)
+  - PinpointKit/ScreenshotDetector (1.3.0)
   - PINRemoteImage/Core (3.0.0-beta.13):
     - PINOperation
   - PINRemoteImage/iOS (3.0.0-beta.13):
@@ -82,7 +82,7 @@ PODS:
   - Siesta/Core (1.4.2)
   - Siesta/UI (1.4.2):
     - Siesta/Core
-  - SimulatorStatusMagic (2.2)
+  - SimulatorStatusMagic (2.3)
   - SINQ (0.7.0)
   - SSZipArchive (2.1.4)
   - SVProgressHUD (2.2.5)
@@ -225,7 +225,7 @@ CHECKOUT OPTIONS:
     :commit: 68c2c4b68c5e417bb9fb695ee6e014ff535d7e4e
     :git: https://github.com/alecgorge/MZDownloadManager.git
   Observable:
-    :commit: afd5d63e9c6e544681b3bd6d25973f160a5d01a3
+    :commit: fab070fb05ae4376c5d09efa313b9e1e617f2838
     :git: https://github.com/alecgorge/Observable.git
   RealmConverter:
     :commit: bb393be86a38a402c66239f80f5cc600003a6b68
@@ -243,15 +243,15 @@ SPEC CHECKSUMS:
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: f165bae4f3c9a15a22ec2fad9b0826f27fb047d5
-  Crashlytics: 058dc1ba579f6c100bc60a6878703779bff383c4
+  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
   CSwiftV: 2560532e2e5b04d95c36b0f49a8dc745071fa525
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 0a9848f9c13f34a488939b7244e8043feb94be3c
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
-  Fabric: d7387db9a31aadff63b147a4b91d982c53afaa4f
+  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
-  FaveButton: e26220c69725ca00f08d7494edb5765c3eaef8c7
+  FaveButton: f130f5eb281d98e74eeab0eb06c081a9673486f0
   Interpolate: c786b88ad860c7110d606ae2776fad616e2b3724
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
   KissXML: d19dd6dc65e0dc721ba92b3077b8ebdd240f1c1e
@@ -262,11 +262,11 @@ SPEC CHECKSUMS:
   MZDownloadManager: 8e9f186b2e804ffaeaf782c0cd3e22f27625cb7b
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
   NapySlider: 52be4efab746c967437fefc98c4ca508edbdf306
-  Observable: 360b0132cef970a50bc69611df7fcbda46e91c34
+  Observable: d8a6ed00d87087dd169012a0f92214fe5a15debd
   PathKit: 273f59a38e3218eb95abd9f6a61730a8bcfd2f06
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
-  PinpointKit: d1196cba6acc77fb76af50155f816228f03eaa9c
+  PinpointKit: 8ef42ed810a95aaced0462b532e0224a67afb72d
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   Realm: 3fdae59de78838064e9f77638d7cdb7b8cff9dc8
   RealmConverter: 910266d4dc96e8f33be7bb7a4918ad80d88a8006
@@ -275,7 +275,7 @@ SPEC CHECKSUMS:
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Siesta: 337a9c39c9b78bba904286310c86562a886efdab
-  SimulatorStatusMagic: 0389a805fa8bd001e2977c4046730bdbd6642861
+  SimulatorStatusMagic: 631fe6e4195a8a8d587ad8744af9015126526cc2
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
@@ -283,6 +283,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: f9d21d7d9f1d029bb1ae47f0f2da3bed854969b5
 
-PODFILE CHECKSUM: 1e9bb3916cd4ba8102b0a9b59fabc7fd8ad407f2
+PODFILE CHECKSUM: 64ac08a045a72c53eb6bda98a6eb2c47ba1f06d0
 
 COCOAPODS: 1.5.3

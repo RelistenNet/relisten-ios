@@ -18,6 +18,7 @@ def apply_pods
   pod 'EDColor'
   pod 'Fabric'
   pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git" # The new official fork
+  pod 'FaveButton'
   pod 'KASlideShow'
   pod 'LayoutKit'
   pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git" # Waiting on https://github.com/gangverk/LastFm/pull/20
@@ -43,11 +44,9 @@ def apply_pods
   if ENV['TRAVIS']
       pod 'BASSGaplessAudioPlayer', :path => 'TravisPods/BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => 'TravisPods/AGAudioPlayer'
-      pod 'FaveButton', :path => 'TravisPods/fave-button'
   else
       pod 'BASSGaplessAudioPlayer', :path => '../BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
-      pod 'FaveButton', :path => '../fave-button'
   end
 
   # Debug Pods

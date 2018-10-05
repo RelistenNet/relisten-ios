@@ -35,8 +35,8 @@ public class SourceDetailsNode : ASCellNode {
         
         favoriteButton = FavoriteButtonNode()
         
-        ratingTextNode = (!artist.features.reviews && !artist.features.ratings) ? nil : ASTextNode(String(format: "%.2f ★", source.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
-//        self.ratingNode = AXRatingViewNode(value: source.avg_rating / 10.0)
+//        ratingTextNode = (!artist.features.reviews && !artist.features.ratings) ? nil : ASTextNode(String(format: "%.2f ★", source.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
+        self.ratingNode = AXRatingViewNode(value: source.avg_rating / 10.0)
         self.locationNode = ASTextNode(source.venue?.location ?? show.venue?.location ?? "", textStyle: .subheadline, color: AppColors.mutedText)
         
         var metaText = "\(source.duration == nil ? "" : source.duration!.humanize())"
@@ -181,14 +181,14 @@ public class SourceDetailsNode : ASCellNode {
     
     public let showNameNode: ASTextNode
     public let favoriteButton : FavoriteButtonNode
-//    public let ratingNode: AXRatingViewNode
+    public let ratingNode: AXRatingViewNode
 //    public let ratingCountNode: ASTextNode
     public let locationNode: ASTextNode
     public let metaNode: ASTextNode
     public let detailsNode: ASTextNode
     public let updateDateNode : ASTextNode
     public let artworkNode: ASImageNode
-    public let ratingTextNode: ASTextNode?
+//    public let ratingTextNode: ASTextNode?
     
     public let sourcePeopleNode: ASStackLayoutSpec?
     public let sourceNode: ASTextNode?
@@ -207,8 +207,8 @@ public class SourceDetailsNode : ASCellNode {
             alignItems: .end,
             children: ArrayNoNils(
 //                isDetails ? nil : ratingCountNode,
-//                ratingNode
-                ratingTextNode
+//                ratingTextNode
+                ratingNode
             )
         )
         

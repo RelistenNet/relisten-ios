@@ -9,7 +9,6 @@
 import UIKit
 
 import AsyncDisplayKit
-import AXRatingView
 
 public class ReviewLayout: ASCellNode {
     public static var dateFormatter: DateFormatter = {
@@ -36,7 +35,7 @@ public class ReviewLayout: ASCellNode {
         self.dateNode = ASTextNode(ReviewLayout.dateFormatter.string(from: review.updated_at), textStyle: .caption1)
         
         if artist.features.reviews_have_ratings, let userRating = review.rating {
-            self.ratingNode = ASTextNode(String(format: "%.2f ★", Double(userRating) / 10.0 * 5.0), textStyle: .subheadline)
+            self.ratingNode = AXRatingViewNode(value: Float(userRating) / 10.0)
         } else {
             self.ratingNode = nil
         }
@@ -44,12 +43,15 @@ public class ReviewLayout: ASCellNode {
         self.review = ASTextNode(review.review, textStyle: .body)
         
         super.init()
+        
+        automaticallyManagesSubnodes = true
+        accessoryType = .none
     }
     
     let titleNode : ASTextNode?
     let authorNode : ASTextNode?
     let dateNode : ASTextNode
-    let ratingNode : ASTextNode?
+    let ratingNode : AXRatingViewNode?
     let review : ASTextNode
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -57,7 +59,7 @@ public class ReviewLayout: ASCellNode {
             direction: .vertical,
             spacing: 4,
             justifyContent: .start,
-            alignItems: .end,
+            alignItems: .start,
             children: ArrayNoNils(
                 authorNode,
                 dateNode

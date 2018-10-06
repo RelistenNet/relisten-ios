@@ -81,7 +81,7 @@ class VenuesViewController: RelistenAsyncTableViewController<[VenueWithShowCount
     
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         if let venue = venueForIndexPath(indexPath) {
-            return { VenueNode(venue: venue) }
+            return { VenueNode(venue: venue, forArtist: self.artist) }
         } else {
             return { ASCellNode() }
         }

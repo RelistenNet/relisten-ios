@@ -79,7 +79,6 @@ public class VenueNode : ASCellNode {
     
     func addCoordinatesToMapView() {
         if haveLoadedMapCoordinates { return }
-        
         haveLoadedMapCoordinates = true
         
         if self.artist?.features.venue_coords != nil,
@@ -144,10 +143,10 @@ public class VenueNode : ASCellNode {
         venueInfo.style.alignSelf = .stretch
         
         let venueAndCount = ASStackLayoutSpec(
-            direction: .vertical,
+            direction: .horizontal,
             spacing: 0,
             justifyContent: .spaceBetween,
-            alignItems: .start,
+            alignItems: .center,
             children: ArrayNoNils(
                 venueInfo,
                 showCountNode

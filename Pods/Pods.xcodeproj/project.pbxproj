@@ -14698,6 +14698,41 @@
 			};
 			name = Release;
 		};
+		04F76CCB3AF749DBF735EDDD720DAAD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C29A292CA56935DD1A87E98BD4F014F /* MZDownloadManager.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/MZDownloadManager/MZDownloadManager-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MZDownloadManager/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MZDownloadManager/MZDownloadManager.modulemap";
+				PRODUCT_MODULE_NAME = MZDownloadManager;
+				PRODUCT_NAME = MZDownloadManager;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		05A7A295EEDEB2337C414BDF5B9B17A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A0CAD3A7C5E477CE4A2EBD4A14AF68F6 /* CleanroomLogger.xcconfig */;
@@ -16669,6 +16704,39 @@
 			};
 			name = Release;
 		};
+		9DC6F55153A629563AA498140A61CDF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C29A292CA56935DD1A87E98BD4F014F /* MZDownloadManager.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/MZDownloadManager/MZDownloadManager-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MZDownloadManager/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MZDownloadManager/MZDownloadManager.modulemap";
+				PRODUCT_MODULE_NAME = MZDownloadManager;
+				PRODUCT_NAME = MZDownloadManager;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		9E23778742F9E47298CE1A0CB6BC4828 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AE75E3477083965C3619A8DFE97C867E /* DownloadButton.xcconfig */;
@@ -17706,41 +17774,6 @@
 			};
 			name = Release;
 		};
-		E1EE0436FFD3EA127AB6E154D0801AB4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C29A292CA56935DD1A87E98BD4F014F /* MZDownloadManager.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/MZDownloadManager/MZDownloadManager-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MZDownloadManager/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MZDownloadManager/MZDownloadManager.modulemap";
-				PRODUCT_MODULE_NAME = MZDownloadManager;
-				PRODUCT_NAME = MZDownloadManager;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		E64C7FC33423A22EF3A9D1D12F0397CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 64D77923DB0A2726C756026C14C6DCE5 /* NapySlider.xcconfig */;
@@ -18164,39 +18197,6 @@
 			};
 			name = Release;
 		};
-		FE07E2432A096E3F9D2AB58A72D0C433 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C29A292CA56935DD1A87E98BD4F014F /* MZDownloadManager.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/MZDownloadManager/MZDownloadManager-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MZDownloadManager/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MZDownloadManager/MZDownloadManager.modulemap";
-				PRODUCT_MODULE_NAME = MZDownloadManager;
-				PRODUCT_NAME = MZDownloadManager;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -18311,8 +18311,8 @@
 		2F7A501F7E043A1DD65393B88DD0C6ED /* Build configuration list for PBXNativeTarget "MZDownloadManager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FE07E2432A096E3F9D2AB58A72D0C433 /* Debug */,
-				E1EE0436FFD3EA127AB6E154D0801AB4 /* Release */,
+				9DC6F55153A629563AA498140A61CDF0 /* Debug */,
+				04F76CCB3AF749DBF735EDDD720DAAD5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

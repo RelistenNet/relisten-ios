@@ -64,7 +64,7 @@ public class CreditsNode : ASCellNode {
                                                               NSAttributedString.Key.font : UIFont(descriptor: boldFontDescriptor!, size: 0.0),
                                                               // For some reason underlineStyle isn't being respected, so I'm just setting the underline to clear
                                                               NSAttributedString.Key.underlineColor : UIColor.clear,
-                                                              NSAttributedString.Key.underlineStyle : []]
+                                                              NSAttributedString.Key.underlineStyle : 0]
         
         attributedString.addLink(link: URL(string: "https://alecgorge.com")!, string: "Alec Gorge", attributes: linkAttributes)
         attributedString.addLink(link: URL(string: "https://rkas.net")!, string: "Jacob Farkas", attributes: linkAttributes)

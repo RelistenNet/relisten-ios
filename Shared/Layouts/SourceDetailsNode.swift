@@ -72,56 +72,10 @@ public class SourceDetailsNode : ASCellNode {
         }
         
         if artist.features.source_information {
-            var taperName : String? = nil
-            var transferrerName : String? = nil
-            
-            var taperNode : ASTextNode? = nil
-            var transferrerNode : ASTextNode? = nil
-            
-            var sourcePeople : [ASTextNode] = []
-            
-            if let s = source.taper, s.count > 0 {
-                taperName = s
-                
-                taperNode = ASTextNode()
-                taperNode?.attributedText = String.createPrefixedAttributedText(prefix: "Taper: ", taperName)
-            }
-            
-            if let s = source.transferrer, s.count > 0 {
-                transferrerName = s
-                
-                transferrerNode = ASTextNode()
-                transferrerNode?.attributedText = String.createPrefixedAttributedText(prefix: "Transferrer: ", transferrerName)
-            }
-            
-            if let taperNode = taperNode {
-                sourcePeople.append(taperNode)
-            }
-            
-            if let transferrerNode = transferrerNode, transferrerName != taperName {
-                sourcePeople.append(transferrerNode)
-            }
-            
-            sourcePeopleNode = ASStackLayoutSpec(
-                direction: .horizontal,
-                spacing: 8,
-                justifyContent: .start,
-                alignItems: .center,
-                children: sourcePeople
-            )
-            sourcePeopleNode?.flexWrap = .wrap
-            
-            if let s = source.source, s.count > 0 {
-                sourceNode = ASTextNode()
-                sourceNode?.attributedText = String.createPrefixedAttributedText(prefix: "Source: ", source.source)
-            }
-            else {
-                sourceNode = nil
-            }
+            taperInfoNode = TaperInfoNode(source: source)
         }
         else {
-            sourceNode = nil
-            sourcePeopleNode = nil
+            taperInfoNode = nil
         }
         
         detailsNode = ASTextNode("See details, taper notes, reviews & more ›", textStyle: .caption1, color: AppColors.mutedText)
@@ -190,8 +144,7 @@ public class SourceDetailsNode : ASCellNode {
     public let artworkNode: ASImageNode
 //    public let ratingTextNode: ASTextNode?
     
-    public let sourcePeopleNode: ASStackLayoutSpec?
-    public let sourceNode: ASTextNode?
+    public let taperInfoNode : TaperInfoNode?
 
     public let sbdNode: SoundboardIndicatorNode?
     public let remasterNode: RemasterIndicatorNode?
@@ -255,8 +208,7 @@ public class SourceDetailsNode : ASCellNode {
                 children: ArrayNoNils(
                     top,
                     second,
-                    sourcePeopleNode,
-                    sourceNode,
+                    taperInfoNode,
                     detailsNode
                     )
                 )
@@ -280,8 +232,7 @@ public class SourceDetailsNode : ASCellNode {
                 alignItems: .start,
                 children: ArrayNoNils(
                     top,
-                    sourcePeopleNode,
-                    sourceNode,
+                    taperInfoNode,
                     updateDate
                 )
             )

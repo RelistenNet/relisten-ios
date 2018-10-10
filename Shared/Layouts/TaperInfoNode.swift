@@ -11,9 +11,11 @@ import AsyncDisplayKit
 
 public class TaperInfoNode : ASCellNode {
     let source: SourceFull
+    let padLeft: Bool
     
-    public init(source: SourceFull, includeDetails: Bool = false) {
+    public init(source: SourceFull, includeDetails: Bool = false, padLeft: Bool = false) {
         self.source = source
+        self.padLeft = padLeft
         
         var taperName : String? = nil
         
@@ -82,7 +84,7 @@ public class TaperInfoNode : ASCellNode {
         infoStack.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 16),
+            insets: UIEdgeInsets(top: 12, left: padLeft ? 16 : 0, bottom: 12, right: 16),
             child: infoStack
         )
         l.style.alignSelf = .stretch

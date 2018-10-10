@@ -15,15 +15,18 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
     enum Sections: Int, RawRepresentable {
         case venue = 0
         case credits
+        case count
     }
     
-    enum venueSections: Int, RawRepresentable {
+    enum VenueRows: Int, RawRepresentable {
         case venueMap = 0
+        case venueInfo
         case taperInfo
         case taperNotes
         case setlistNotes
         case ratings
         case reviews
+        case count
     }
     
     let artist: Artist
@@ -35,7 +38,28 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
         self.artist = artist
         self.show = show
         self.source = source
-
+        
+        if let venue = show.correctVenue(withFallback: source.venue) {
+            self.venueMap = VenueMapNode(venue: venue, forArtist: artist)
+            self.venueNode = VenueNode(venue: venue, forArtist: artist)
+        } else {
+            self.venueMap = nil
+            self.venueNode = nil
+        }
+        taperInfo = TaperInfoNode(source: source, includeDetails: true, padLeft: true)
+        
+//        let credits = source.links
+//            .compactMap({ link -> LinkLayout? in
+//                if let upstream = artist.upstream_sources.first(where: { $0.upstream_source_id == link.upstream_source_id }),
+//                   let upstreamSource = upstream.upstream_source {
+//                    return LinkLayout(link: link, forUpstreamSource: upstreamSource)
+//                }
+//                return nil
+//            })
+//        if credits.count > 0 {
+//            sections.append(LayoutsAsSingleSection(items: credits, title: "Credits"))
+//        }
+        
         super.init(style: .grouped)
         
         self.tableNode.view.separatorStyle = .singleLine
@@ -56,8 +80,84 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
         title = "Source Details"
     }
     
-//    public let venueNode: VenueNode?
-//    public let taperInfo: TaperInfoNode?
+    public let venueMap: VenueMapNode?
+    public let venueNode: VenueNode?
+    public let taperInfo: TaperInfoNode?
+}
+
+// MARK: ASTableDataSource
+extension SourceDetailsViewController {
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return Sections.count.rawValue
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        switch Sections(rawValue: section)! {
+        case .venue:
+            return 3
+        case .credits:
+            return 1
+        case .count:
+            fatalError()
+        }
+    }
+    
+    public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+        var n: ASCellNode = ASCellNode()
+        
+        guard indexPath.section >= 0, indexPath.section < Sections.count.rawValue else {
+            return ASCellNode()
+        }
+        
+        switch Sections(rawValue: indexPath.section)! {
+        case .venue:
+            guard indexPath.row >= 0, indexPath.row < VenueRows.count.rawValue else {
+                return ASCellNode()
+            }
+            switch VenueRows(rawValue: indexPath.row)! {
+            case .venueMap:
+                if let venueMap = venueMap {
+                    n = venueMap
+                }
+            case .venueInfo:
+                if let venueNode = venueNode {
+                    n = venueNode
+                }
+            case .taperInfo:
+                if let taperInfo = taperInfo {
+                    n = taperInfo
+                }
+            default:
+                break
+            }
+        case .credits:
+            switch indexPath.row {
+            default:
+                break
+            }
+        case .count:
+            fatalError()
+        }
+        
+        return n
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch Sections(rawValue: section)! {
+        case .venue:
+            return nil
+        case .credits:
+            return "Credits"
+        case .count:
+            fatalError()
+        }
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        // TODO
+    }
+}
+
 //
 //    func buildLayout() -> [Section<[Layout]>] {
 //        var sections: [Section<[Layout]>] = []
@@ -340,4 +440,3 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
 //            navigationController?.present(SFSafariViewController(url: URL(string: link.url)!), animated: true, completion: nil)
 //        }
 //    }
-}

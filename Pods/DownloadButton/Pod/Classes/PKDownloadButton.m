@@ -10,32 +10,20 @@
 #import "PKMacros.h"
 #import "NSLayoutConstraint+PKDownloadButton.h"
 #import "UIImage+PKDownloadButton.h"
-#import "UIColor+PKDownloadButton.h"
 #import "PKPendingView.h"
-#import "UIButton+PKDownloadButton.h"
-
-static NSDictionary *DefaultTitleAttributes() {
-    return @{ NSForegroundColorAttributeName : [UIColor defaultDwonloadButtonBlueColor],
-              NSFontAttributeName : [UIFont systemFontOfSize:14.f]};
-}
-
-static NSDictionary *HighlitedTitleAttributes() {
-    return @{ NSForegroundColorAttributeName : [UIColor whiteColor],
-              NSFontAttributeName : [UIFont systemFontOfSize:14.f]};
-}
 
 @interface PKDownloadButton ()
 
-@property (nonatomic, weak) UIButton *startDownloadButton;
+@property (nonatomic, weak) PKBorderedButton *startDownloadButton;
 @property (nonatomic, weak) PKStopDownloadButton *stopDownloadButton;
-@property (nonatomic, weak) UIButton *downloadedButton;
+@property (nonatomic, weak) PKBorderedButton *downloadedButton;
 @property (nonatomic, weak) PKPendingView *pendingView;
 
 @property (nonatomic, strong) NSMutableArray *stateViews;
 
-- (UIButton *)createStartDownloadButton;
+- (PKBorderedButton *)createStartDownloadButton;
 - (PKStopDownloadButton *)createStopDownloadButton;
-- (UIButton *)createDownloadedButton;
+- (PKBorderedButton *)createDownloadedButton;
 - (PKPendingView *)createPendingView;
 
 - (void)currentButtonTapped:(id)sender;
@@ -51,6 +39,7 @@ static PKDownloadButton *CommonInit(PKDownloadButton *self) {
         [self addConstraints:[self createConstraints]];
         
         self.state = kPKDownloadButtonState_StartDownload;
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -73,6 +62,7 @@ static PKDownloadButton *CommonInit(PKDownloadButton *self) {
             break;
         case kPKDownloadButtonState_Pending:
             self.pendingView.hidden = NO;
+            [self.pendingView startSpin];
             break;
         case kPKDownloadButtonState_Downloading:
             self.stopDownloadButton.hidden = NO;
@@ -97,17 +87,58 @@ static PKDownloadButton *CommonInit(PKDownloadButton *self) {
     return CommonInit([super initWithFrame:frame]);
 }
 
+- (void)tintColorDidChange {
+	[super tintColorDidChange];
+	
+    [self updateButton:self.startDownloadButton title:[self.startDownloadButton titleForState:UIControlStateNormal] font:self.startDownloadButton.titleLabel.font];
+	[self updateButton:self.downloadedButton title:[self.downloadedButton titleForState:UIControlStateNormal] font:self.downloadedButton.titleLabel.font];
+}
+
+
+#pragma mark - appearance
+
+-(void)updateStartDownloadButtonText:(NSString *)title {
+    [self updateButton:self.startDownloadButton title:title];
+}
+
+-(void)updateDownloadedButtonText:(NSString *)title {
+    [self updateButton:self.downloadedButton title:title];
+}
+
+
+-(void)updateStartDownloadButtonText:(NSString *)title font:(UIFont *)font {
+    [self updateButton:self.startDownloadButton title:title font: font];
+}
+
+-(void)updateDownloadedButtonText:(NSString *)title font:(UIFont *)font {
+    [self updateButton:self.downloadedButton title:title font: font];
+}
+
+
+- (void)updateButton:(UIButton *)button title:(NSString *)title {
+    [self updateButton:button title:title font:[UIFont systemFontOfSize:14.f]];
+}
+
+- (void)updateButton:(UIButton *)button title:(NSString *)title font:(UIFont *)font {
+    if (title == nil) {
+        title = @"";
+    }
+    
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:self.tintColor forState:UIControlStateNormal];
+    [button setTitleColor:UIColor.whiteColor forState:UIControlStateHighlighted];
+    
+    button.titleLabel.font = font;
+}
+
 #pragma mark - private methods
 
-- (UIButton *)createStartDownloadButton {
-    UIButton *startDownloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
+- (PKBorderedButton *)createStartDownloadButton {
+    PKBorderedButton *startDownloadButton = [PKBorderedButton buttonWithType:UIButtonTypeCustom];
     [startDownloadButton configureDefaultAppearance];
     
-    NSAttributedString *title = [[NSAttributedString alloc] initWithString:@"DOWNLOAD" attributes:DefaultTitleAttributes()];
-    [startDownloadButton setAttributedTitle:title forState:UIControlStateNormal];
-    NSAttributedString *highlitedTitle = [[NSAttributedString alloc] initWithString:@"DOWNLOAD" attributes:HighlitedTitleAttributes()];
-    [startDownloadButton setAttributedTitle:highlitedTitle forState:UIControlStateHighlighted];
-    
+	[self updateButton:startDownloadButton title:@"DOWNLOAD"];
+	
     [startDownloadButton addTarget:self
                             action:@selector(currentButtonTapped:)
                   forControlEvents:UIControlEventTouchUpInside];
@@ -121,13 +152,11 @@ static PKDownloadButton *CommonInit(PKDownloadButton *self) {
     return stopDownloadButton;
 }
 
-- (UIButton *)createDownloadedButton {
-    UIButton *downloadedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    NSAttributedString *title = [[NSAttributedString alloc] initWithString:@"REMOVE" attributes:DefaultTitleAttributes()];
-    [downloadedButton setAttributedTitle:title forState:UIControlStateNormal];
-    NSAttributedString *highlitedTitle = [[NSAttributedString alloc] initWithString:@"REMOVE" attributes:HighlitedTitleAttributes()];
-    [downloadedButton setAttributedTitle:highlitedTitle forState:UIControlStateHighlighted];
+- (PKBorderedButton *)createDownloadedButton {
+    PKBorderedButton *downloadedButton = [PKBorderedButton buttonWithType:UIButtonTypeCustom];
     [downloadedButton configureDefaultAppearance];
+
+	[self updateButton:downloadedButton title:@"REMOVE"];
     
     [downloadedButton addTarget:self
                          action:@selector(currentButtonTapped:)
@@ -149,7 +178,7 @@ static PKDownloadButton *CommonInit(PKDownloadButton *self) {
 - (void)createSubviews {
     self.stateViews = (__bridge_transfer NSMutableArray *)CFArrayCreateMutable(nil, 0, nil);
     
-    UIButton *startDownloadButton = [self createStartDownloadButton];
+    PKBorderedButton *startDownloadButton = [self createStartDownloadButton];
     startDownloadButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:startDownloadButton];
     self.startDownloadButton = startDownloadButton;
@@ -161,7 +190,7 @@ static PKDownloadButton *CommonInit(PKDownloadButton *self) {
     self.stopDownloadButton = stopDownloadButton;
     [self.stateViews addObject:stopDownloadButton];
     
-    UIButton *downloadedButton = [self createDownloadedButton];
+    PKBorderedButton *downloadedButton = [self createDownloadedButton];
     downloadedButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:downloadedButton];
     self.downloadedButton = downloadedButton;

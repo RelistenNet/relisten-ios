@@ -193,7 +193,7 @@ public:
 
     enum HandshakeType { client, server };
 
-    util::Logger* logger;
+    util::Logger* logger = nullptr;
 
     Stream(Socket&, Context&, HandshakeType);
     ~Stream() noexcept;

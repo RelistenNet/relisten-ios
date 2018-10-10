@@ -20,7 +20,7 @@ public class YearNode : ASCellNode {
         self.year = year
         
         self.yearNameNode = ASTextNode(year.year, textStyle: .headline)
-        self.ratingTextNode = ASTextNode(String(format: "%.2f ★", year.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
+        self.ratingTextNode = year.avg_rating == 0.0 ? nil : ASTextNode(String(format: "%.2f ★", year.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
 //        self.ratingNode = AXRatingViewNode(value: year.avg_rating / 10.0)
         self.showsNode = ASTextNode(year.show_count.pluralize("show", "shows"), textStyle: .caption1)
         self.sourceNode = ASTextNode(year.source_count.pluralize("recording", "recordings"), textStyle: .caption1)
@@ -46,7 +46,7 @@ public class YearNode : ASCellNode {
     
     public let yearNameNode: ASTextNode
 //    public let ratingNode: AXRatingViewNode
-    public let ratingTextNode: ASTextNode
+    public let ratingTextNode: ASTextNode?
     public let showsNode: ASTextNode
     public let sourceNode: ASTextNode
     public let offlineNode: OfflineIndicatorNode = OfflineIndicatorNode()
@@ -59,10 +59,10 @@ public class YearNode : ASCellNode {
             spacing: 0,
             justifyContent: .spaceBetween,
             alignItems: .center,
-            children: [
+            children: ArrayNoNils(
                 yearNameNode,
                 ratingTextNode
-            ]
+            )
         )
         top.style.alignSelf = .stretch
         
@@ -88,7 +88,7 @@ public class YearNode : ASCellNode {
         vert.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(8, 16, 8, 8),
+            insets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 8),
             child: vert
         )
         l.style.alignSelf = .stretch

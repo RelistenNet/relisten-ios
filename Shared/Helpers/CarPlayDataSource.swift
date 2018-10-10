@@ -18,7 +18,7 @@ protocol CarPlayDataSourceDelegate : class {
 
 protocol Lockable {
     var locked : Bool { get set }
-    var delegate : CarPlayDataSourceDelegate? { get set }
+    var delegate : CarPlayDataSourceDelegate { get set }
 }
 
 class LockableDataItem<T> : Lockable {
@@ -31,9 +31,9 @@ class LockableDataItem<T> : Lockable {
                 if self.locked {
                     self._updatedBackingItem = newValue
                 } else {
-                    self.delegate?.carPlayDataSourceWillUpdate()
+                    self.delegate.carPlayDataSourceWillUpdate()
                     self._backingItem = newValue
-                    self.delegate?.carPlayDataSourceDidUpdate()
+                    self.delegate.carPlayDataSourceDidUpdate()
                 }
             }
         }
@@ -46,16 +46,16 @@ class LockableDataItem<T> : Lockable {
             dispatchPrecondition(condition: .onQueue(queue))
             self._locked = newValue
             if !self._locked, let update = self._updatedBackingItem {
-                self.delegate?.carPlayDataSourceWillUpdate()
+                self.delegate.carPlayDataSourceWillUpdate()
                 self._backingItem = update
-                self.delegate?.carPlayDataSourceDidUpdate()
+                self.delegate.carPlayDataSourceDidUpdate()
             }
         }
     }
     
     private var queue : DispatchQueue
-    public weak var delegate : CarPlayDataSourceDelegate?
-    public init(_ item : T, queue: DispatchQueue, delegate : CarPlayDataSourceDelegate?) {
+    public unowned var delegate : CarPlayDataSourceDelegate
+    public init(_ item : T, queue: DispatchQueue, delegate : CarPlayDataSourceDelegate) {
         _backingItem = item
         self.queue = queue
         self.delegate = delegate
@@ -63,7 +63,7 @@ class LockableDataItem<T> : Lockable {
 }
 
 class CarPlayDataSource {
-    weak var delegate : CarPlayDataSourceDelegate? {
+    unowned var delegate : CarPlayDataSourceDelegate {
         didSet {
             for var item in lockableDataItems {
                 item.delegate = delegate
@@ -74,60 +74,65 @@ class CarPlayDataSource {
     private var disposal = Disposal()
     private let queue = DispatchQueue(label: "net.relisten.CarPlay.DataSource")
     
-    public init(delegate: CarPlayDataSourceDelegate? = nil) {
-        self.delegate = delegate
-        
+    public init(delegate: CarPlayDataSourceDelegate) {
         _recentlyPlayedShows = LockableDataItem<[CompleteShowInformation]>([], queue: queue, delegate: delegate)
         _favoriteShowsByArtist = LockableDataItem<[Artist : [CompleteShowInformation]]>([:], queue: queue, delegate: delegate)
         _offlineShowsByArtist = LockableDataItem<[Artist : [CompleteShowInformation]]>([:], queue: queue, delegate: delegate)
         _sortedArtistsWithFavorites = LockableDataItem<[ArtistWithCounts]>([], queue: queue, delegate: delegate)
         lockableDataItems = [_recentlyPlayedShows, _favoriteShowsByArtist, _offlineShowsByArtist, _sortedArtistsWithFavorites]
+        
+        self.delegate = delegate
 
-        MyLibrary.shared.recent.shows.observeWithValue { [weak self] (recentlyPlayed, changes) in
-            guard let s = self else { return }
+        // Realm requires that these observers are set up inside a runloop, so we have to do this on the main queue
+        DispatchQueue.main.async {
+            MyLibrary.shared.recent.shows.observeWithValue { [weak self] (recentlyPlayed, changes) in
+                guard let s = self else { return }
 
-            let tracks = recentlyPlayed.asTracks()
+                let tracks = recentlyPlayed.asTracks()
+                
+                s.queue.async {
+                    s.reloadRecentTracks(tracks: tracks)
+                }
+            }.dispose(to: &self.disposal)
             
-            s.queue.async {
-                s.reloadRecentTracks(tracks: tracks)
-            }
-        }.dispose(to: &disposal)
-        
-        MyLibrary.shared.offline.sources.observeWithValue { [weak self] (offline, changes) in
-            guard let s = self else { return }
+            MyLibrary.shared.offline.sources.observeWithValue { [weak self] (offline, changes) in
+                guard let s = self else { return }
+                
+                let shows = offline.asCompleteShows()
+                
+                s.queue.async {
+                    s.reloadOfflineSources(shows: shows)
+                }
+            }.dispose(to: &self.disposal)
             
-            let shows = offline.asCompleteShows()
+            MyLibrary.shared.favorites.artists.observeWithValue { [weak self] (favArtists, changes) in
+                guard let s = self else { return }
+                
+                let ids = Array(favArtists.map({ $0.artist }).filter({ $0 != nil }).map({ $0!.id }))
+                
+                s.queue.async {
+                    s.reloadFavoriteArtistIds(artistIds: ids)
+                }
+            }.dispose(to: &self.disposal)
             
-            s.queue.async {
-                s.reloadOfflineSources(shows: shows)
-            }
-        }.dispose(to: &disposal)
-        
-        MyLibrary.shared.favorites.artists.observeWithValue { [weak self] (favArtists, changes) in
-            guard let s = self else { return }
+            MyLibrary.shared.favorites.sources.observeWithValue { [weak self] (favoriteShows, changes) in
+                guard let s = self else { return }
+                
+                let favs = favoriteShows.asCompleteShows()
+                
+                s.queue.async {
+                    s.reloadFavorites(shows: favs)
+                }
+            }.dispose(to: &self.disposal)
             
-            let ids = Array(favArtists.map({ $0.artist.id }))
-            
-            s.queue.async {
-                s.reloadFavoriteArtistIds(artistIds: ids)
-            }
-        }.dispose(to: &disposal)
-        
-        MyLibrary.shared.favorites.sources.observeWithValue { [weak self] (favoriteShows, changes) in
-            guard let s = self else { return }
-            
-            let favs = favoriteShows.asCompleteShows()
-            
-            s.queue.async {
-                s.reloadFavorites(shows: favs)
-            }
-        }.dispose(to: &disposal)
-        
-        loadArtists()
+            self.loadArtists()
+        }
     }
     
     deinit {
-        RelistenApi.artists().removeObservers(ownedBy: self)
+        DispatchQueue.main.async {
+            RelistenApi.artists().removeObservers(ownedBy: self)
+        }
     }
     
     private func loadArtists() {

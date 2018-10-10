@@ -162,9 +162,7 @@ public class LegacyImporter : NSObject {
         
         completionGroup.notify(queue: DispatchQueue.global(qos: .background)) {
             self.debug("Import for recently played shows is complete")
-            if error == nil {
-                self.cleanupLegacyFiles()
-            }
+            self.cleanupLegacyFiles()
             completion(error)
         }
     }
@@ -233,7 +231,9 @@ public class LegacyImporter : NSObject {
     private func cleanupLegacyFiles() {
         do {
             try fm.removeItem(atPath: persistedObjectsPath)
-        } catch { }
+        } catch {
+            self.debug("Error removing legacy files at path \(persistedObjectsPath): \(error)")
+        }
     }
 
     // MARK: Helpers
@@ -252,7 +252,7 @@ public class LegacyImporter : NSObject {
     
     func deleteDirectoryIfEmpty(_ path : String) {
         do {
-            if try fm.contentsOfDirectory(atPath: path).count == 0 {
+            if fm.fileExists(atPath: path), try fm.contentsOfDirectory(atPath: path).count == 0 {
                 try fm.removeItem(atPath: path)
             }
         } catch {
@@ -263,6 +263,10 @@ public class LegacyImporter : NSObject {
     func allSubdirsAtPath(_ path : String) -> [String] {
         var retval : [String] = []
         
+        guard fm.fileExists(atPath: path) else {
+            return retval
+        }
+
         do {
             for subdirectory in try fm.contentsOfDirectory(atPath: path) {
                 var isDir : ObjCBool = false

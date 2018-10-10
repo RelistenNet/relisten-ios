@@ -26,7 +26,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
         if (track.playbackState == .paused || track.playbackState == .playing) {
             // 24x16 in total
             let l = InsetLayout(
-                insets: UIEdgeInsetsMake(2, 0, 2, 12),
+                insets: UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 12),
                 sublayout: SizeLayout<NAKPlaybackIndicatorView>(
                     minWidth: 12,
                     maxWidth: nil,
@@ -94,7 +94,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                         imageV.alpha = 1.0
                         UIView.animate(withDuration: 1.0,
                                        delay: 0,
-                                       options: [UIViewAnimationOptions.autoreverse, UIViewAnimationOptions.repeat],
+                                       options: [UIView.AnimationOptions.autoreverse, UIView.AnimationOptions.repeat],
                                        animations: {
                                         imageV.alpha = 0.0
                         },
@@ -175,7 +175,7 @@ public class TrackStatusLayout : InsetLayout<UIView> {
                     l.textColor = .darkGray
             })
             
-            stack.append(InsetLayout(insets: UIEdgeInsetsMake(0, 8, 0, 0), sublayout: label))
+            stack.append(InsetLayout(insets: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), sublayout: label))
         }
         
         let actionButton = ButtonLayout(

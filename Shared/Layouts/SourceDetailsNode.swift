@@ -35,13 +35,13 @@ public class SourceDetailsNode : ASCellNode {
         
         favoriteButton = FavoriteButtonNode()
         
-        ratingTextNode = ASTextNode(String(format: "%.2f ★", source.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
+        ratingTextNode = (!artist.features.reviews && !artist.features.ratings) ? nil : ASTextNode(String(format: "%.2f ★", source.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
 //        self.ratingNode = AXRatingViewNode(value: source.avg_rating / 10.0)
         self.locationNode = ASTextNode(source.venue?.location ?? show.venue?.location ?? "", textStyle: .subheadline, color: AppColors.mutedText)
         
         var metaText = "\(source.duration == nil ? "" : source.duration!.humanize())"
         
-        if isDetails {
+        if isDetails, (artist.features.reviews || artist.features.ratings) {
             metaText += " • "
             metaText += String(source.num_ratings ?? source.num_reviews) + " "
             metaText += source.num_ratings != nil ? "ratings" : "reviews"
@@ -140,10 +140,12 @@ public class SourceDetailsNode : ASCellNode {
         automaticallyManagesSubnodes = true
         accessoryType = isDetails ? .none : .disclosureIndicator
         favoriteButton.delegate = self
+        accessibilityLabel = "Source Details"
         
         if !isDetails {
             DispatchQueue.main.async {
                 self.favoriteButton.currentlyFavorited = MyLibrary.shared.isFavorite(show: show, byArtist: artist)
+                self.favoriteButton.isUserInteractionEnabled = false
                 self.favoriteButton.normalColor = UIColor.black
                 self.setupNonDetailObservers()
             }
@@ -186,7 +188,7 @@ public class SourceDetailsNode : ASCellNode {
     public let detailsNode: ASTextNode
     public let updateDateNode : ASTextNode
     public let artworkNode: ASImageNode
-    public let ratingTextNode: ASTextNode
+    public let ratingTextNode: ASTextNode?
     
     public let sourcePeopleNode: ASStackLayoutSpec?
     public let sourceNode: ASTextNode?
@@ -221,6 +223,7 @@ public class SourceDetailsNode : ASCellNode {
                 isAvailableOffline ? offlineNode : nil,
                 showNameNode,
                 SpacerNode(),
+                isDetails ? nil : (self.favoriteButton.currentlyFavorited ? favoriteButton : nil),
                 isDetails ? nil : sbdNode,
                 isDetails ? nil : remasterNode,
                 ratingStack
@@ -265,8 +268,7 @@ public class SourceDetailsNode : ASCellNode {
             alignItems: .center,
             children: ArrayNoNils(
                 updateDateNode,
-                SpacerNode(),
-                favoriteButton
+                SpacerNode()
                 )
             )
             updateDate.style.alignSelf = .stretch
@@ -287,7 +289,7 @@ public class SourceDetailsNode : ASCellNode {
         vert?.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(16, 16, 16, isDetails ? 16 : 8),
+            insets: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: isDetails ? 16 : 8),
             child: vert!
         )
         l.style.alignSelf = .stretch
@@ -300,10 +302,10 @@ extension SourceDetailsNode : FavoriteButtonDelegate {
     public var favoriteButtonAccessibilityLabel : String { get { return "Favorite Source" } }
     
     public func didFavorite(currentlyFavorited : Bool) {
-        if currentlyFavorited {
-            MyLibrary.shared.favoriteSource(show: self.completeShowInformation)
-        } else {
-            let _ = MyLibrary.shared.unfavoriteSource(show: self.completeShowInformation)
-        }
+//        if currentlyFavorited {
+//            MyLibrary.shared.favoriteSource(show: self.completeShowInformation)
+//        } else {
+//            let _ = MyLibrary.shared.unfavoriteSource(show: self.completeShowInformation)
+//        }
     }
 }

@@ -22,8 +22,10 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     public var shows: [(show: Show, artist: Artist?)] {
         didSet {
             DispatchQueue.main.async {
+                var maxHeight : CGFloat = 103
+                
                 // based on: https://github.com/TextureGroup/Texture/issues/108#issuecomment-298416171
-                if self.shows.count > 0 {
+                if self.shows.count > 0, self.collectionNode.numberOfSections > 0 {
                     // [node layoutThatFits:element.constrainedSize].size.height;
                     let nodeCount = self.collectionNode.numberOfItems(inSection: 0)
                     
@@ -41,12 +43,11 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
                         .max()
                     
                     if let max = maxSize {
-                        self.collectionNode.style.minHeight = ASDimension(unit: .points, value: max)
+                        maxHeight = max
                     }
                 }
-                else {
-                    self.collectionNode.style.minHeight = ASDimension(unit: .points, value: 0)
-                }
+                
+                self.collectionNode.style.minHeight = ASDimension(unit: .points, value: maxHeight)
                 
                 self.collectionNode.setNeedsLayout()
                 

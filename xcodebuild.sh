@@ -12,5 +12,5 @@ command -v xcpretty >/dev/null 2>&1 || {
 }
 
 # bundle exec xcpretty -v
-set -o pipefail && xcodebuild clean build -sdk iphonesimulator -workspace Relisten.xcworkspace -scheme Relisten CODE_SIGNING_REQUIRED=NO # | bundle exec xcpretty -f `xcpretty-travis-formatter`
+set -o pipefail && xcodebuild clean build -sdk iphonesimulator -workspace Relisten.xcworkspace -scheme Relisten CODE_SIGNING_REQUIRED=NO | bundle exec xcpretty -f `xcpretty-travis-formatter`
 

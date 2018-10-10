@@ -68,7 +68,7 @@ public final class FeedbackViewController: UITableViewController {
     }
     
     @available(*, unavailable)
-    override init(style: UITableViewStyle) {
+    override init(style: UITableView.Style) {
         super.init(style: .grouped)
     }
     
@@ -78,12 +78,18 @@ public final class FeedbackViewController: UITableViewController {
     }
     
     // MARK: - UIViewController
+
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        guard let interfaceCustomization = interfaceCustomization else { assertionFailure(); return .default }
+        let appearance = interfaceCustomization.appearance
+        return appearance.statusBarStyle
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.estimatedRowHeight = 100.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         
         // Helps to prevent extra spacing from appearing at the top of the table.
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: .leastNormalMagnitude))
@@ -114,7 +120,10 @@ public final class FeedbackViewController: UITableViewController {
         let appearance = interfaceCustomization.appearance
 
         title = interfaceText.feedbackCollectorTitle
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: appearance.navigationTitleFont]
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: appearance.navigationTitleFont,
+            .foregroundColor: appearance.navigationTitleColor
+        ]
         
         let sendBarButtonItem = UIBarButtonItem(title: interfaceText.feedbackSendButtonTitle, style: .done, target: self, action: #selector(FeedbackViewController.sendButtonTapped))
         sendBarButtonItem.setTitleTextAttributesForAllStates([.font: appearance.feedbackSendButtonFont])

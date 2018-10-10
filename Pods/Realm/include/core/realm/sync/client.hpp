@@ -37,6 +37,19 @@
 namespace realm {
 namespace sync {
 
+/// Supported protocols:
+///
+///      Protocol    URL scheme     Default port
+///     -----------------------------------------------------------------------------------
+///      realm       "realm:"       7800 (80 if Client::Config::enable_default_port_hack)
+///      realm_ssl   "realms:"      7801 (443 if Client::Config::enable_default_port_hack)
+///
+enum class Protocol {
+    realm,
+    realm_ssl
+};
+
+
 class Client {
 public:
     enum class Error;
@@ -61,6 +74,7 @@ public:
         testing
     };
 
+    using port_type = util::network::Endpoint::port_type;
     using RoundtripTimeHandler = void(milliseconds_type roundtrip_time);
 
     // FIXME: The default values for `connect_timeout`, `ping_keepalive_period`,
@@ -266,23 +280,14 @@ public:
     /// by any thread, and by multiple threads concurrently.
     bool wait_for_session_terminations_or_client_stopped();
 
+    /// Returns false if the specified URL is invalid.
+    bool decompose_server_url(const std::string& url, Protocol& protocol, std::string& address,
+                              port_type& port, std::string& path) const;
+
 private:
     class Impl;
     std::unique_ptr<Impl> m_impl;
     friend class Session;
-};
-
-
-/// Supported protocols:
-///
-///      Protocol    URL scheme     Default port
-///     -----------------------------------------------------------------------------------
-///      realm       "realm:"       7800 (80 if Client::Config::enable_default_port_hack)
-///      realm_ssl   "realms:"      7801 (443 if Client::Config::enable_default_port_hack)
-///
-enum class Protocol {
-    realm,
-    realm_ssl
 };
 
 

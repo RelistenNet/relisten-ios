@@ -11,22 +11,27 @@ def apply_pods
   pod 'CWStatusBarNotification'
   pod 'Cache'
   pod 'ChameleonFramework'
-  pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger"
+  pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger" # Needed because the authors refuse to add CocoaPods support https://github.com/emaloney/CleanroomLogger/issues/69
   pod 'Crashlytics'
-  pod 'DownloadButton'
+  pod 'CSwiftV', :git => "https://github.com/UberJason/CSwiftV.git" # Needed for RealmConverter until PR https://github.com/Daniel1of1/CSwiftV/pull/38 is accepted
+  pod 'DownloadButton', :git => "https://github.com/farktronix/DownloadButton" # Temporary fork to fix a progress over/underflow bug
   pod 'EDColor'
   pod 'Fabric'
-  pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git"
+  pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git" # The new official fork
+  pod 'FaveButton', :git => "https://github.com/farktronix/fave-button.git" # Waiting on https://github.com/xhamr/fave-button/pull/42
   pod 'KASlideShow'
   pod 'LayoutKit'
-  pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git"
-  pod 'LicensesViewController'
-  pod 'MZDownloadManager', :git => "https://github.com/alecgorge/MZDownloadManager.git"
+  pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git" # Waiting on https://github.com/gangverk/LastFm/pull/20
+  pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"
+  pod 'MZDownloadManager', :git => 'https://github.com/farktronix/MZDownloadManager' # Waiting on https://github.com/mzeeshanid/MZDownloadManager/pull/78 and https://github.com/mzeeshanid/MZDownloadManager/pull/79
   pod 'NAKPlaybackIndicatorView'
-  pod 'Observable', :git => "https://github.com/alecgorge/Observable.git"
+  pod 'NapySlider'
+  pod 'Observable', :git => "https://github.com/alecgorge/Observable.git" # Adds thread safety. This should be submitted upstream as a PR
+  pod 'PathKit'
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'
   pod 'RealmSwift'
+  pod 'RealmConverter', :git => "https://github.com/farktronix/realm-cocoa-converter.git" # https://github.com/realm/realm-cocoa-converter/pull/56
   pod 'SDCloudUserDefaults'
   pod 'SINQ'
   pod 'SVProgressHUD'
@@ -37,20 +42,16 @@ def apply_pods
  
   # Development pods (checked out locally)
   if ENV['TRAVIS']
-      pod 'NapySlider', :path => 'TravisPods/NapySlider'
       pod 'BASSGaplessAudioPlayer', :path => 'TravisPods/BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => 'TravisPods/AGAudioPlayer'
-      pod 'FaveButton', :path => 'TravisPods/fave-button'
   else
-      pod 'NapySlider', :path => '../NapySlider'
       pod 'BASSGaplessAudioPlayer', :path => '../BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
-      pod 'FaveButton', :path => '../fave-button'
   end
 
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']
-  pod 'Wormholy', :configurations => ['Debug'], :git => "https://github.com/pmusolino/Wormholy.git"
+  pod 'Wormholy', :configurations => ['Debug']
   pod 'DWURecyclingAlert', :configurations => ['Debug']
 
   # Currently unused pods (but they might be used in the future)
@@ -82,16 +83,27 @@ target 'RelistenUITests' do
   pod 'SimulatorStatusMagic'
 end
 
-post_install do |installer|
-  # Added to work around https://github.com/TextureGroup/Texture/issues/969
-  texture = installer.pods_project.targets.find { |target| target.name == 'Texture' }
-  texture.build_configurations.each do |config|
-    config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
-  end
+target 'RelistenScreenshots' do
+  apply_pods
+  pod 'SimulatorStatusMagic'
+end
 
+post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['ENABLE_BITCODE'] = 'NO'
     end
+  end
+
+  # Workaround until this PR is fixed https://github.com/xhamr/fave-button/pull/39
+  favebutton = installer.pods_project.targets.find { |target| target.name == 'FaveButton' }
+  favebutton.build_configurations.each do |config|
+    config.build_settings['SWIFT_VERSION'] = '4.0'
+  end
+  
+  # Workaround until this PR is fixed https://github.com/linkedin/LayoutKit/issues/233
+  layoutkit = installer.pods_project.targets.find { |target| target.name == 'LayoutKit' }
+  layoutkit.build_configurations.each do |config|
+    config.build_settings['SWIFT_VERSION'] = '4.0'
   end
 end

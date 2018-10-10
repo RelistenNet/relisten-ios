@@ -18,7 +18,7 @@ public class ShowCellNode : ASCellNode {
     
     var disposal = Disposal()
     
-    public init(show: Show, withRank: Int? = nil, useCellLayout: Bool = false, showingArtist: SlimArtist? = nil, showUpdateDate : Bool = false, cellTransparency : CGFloat = 1.0) {
+    public init(show: Show, withRank: Int? = nil, useCellLayout: Bool = false, showingArtist: SlimArtist? = nil, showUpdateDate : Bool = false, cellTransparency : CGFloat = 1.0, showingAlbumArt: Bool = true) {
         self.show = show
         artist = showingArtist
         rank = withRank
@@ -50,11 +50,11 @@ public class ShowCellNode : ASCellNode {
         venueNode.maximumNumberOfLines = 0
         
 //        ratingNode = AXRatingViewNode(value: show.avg_rating / 10.0)
-        ratingTextNode = ASTextNode(String(format: "%.2f ★", show.avg_rating / 10.0 * 5.0), textStyle: .caption1)
+        ratingTextNode = show.avg_rating == 0.0 ? nil : ASTextNode(String(format: "%.2f ★", show.avg_rating / 10.0 * 5.0), textStyle: .caption1)
         
         var metaText = "\(show.avg_duration == nil ? "" : show.avg_duration!.humanize())"
         if !useCellLayout {
-            metaText += "\n\(show.source_count.pluralize("recording", "recordings"))"
+            metaText = "\(show.source_count.pluralize("recording", "recordings")) • " + metaText
         }
         
         metaNode = ASTextNode(metaText, textStyle: .caption1, color: nil, alignment: useCellLayout ? nil : NSTextAlignment.right)
@@ -85,8 +85,11 @@ public class ShowCellNode : ASCellNode {
         isAvailableOffline = MyLibrary.shared.isShowAtLeastPartiallyAvailableOffline(self.show)
         
         artworkNode = ASImageNode()
-        artworkNode.style.maxWidth = .init(unit: .points, value: useCellLayout ? 60.0 : 90)
-        artworkNode.style.maxHeight = .init(unit: .points, value: useCellLayout ? 60.0 : 90)
+        
+        let albumArtSize: CGFloat = 53 // 0.2 * RelistenApp.sharedApp.launchScreenBounds.size.width
+        
+        artworkNode.style.maxWidth = .init(unit: .points, value: useCellLayout ? 60.0 : albumArtSize)
+        artworkNode.style.maxHeight = .init(unit: .points, value: useCellLayout ? 60.0 : albumArtSize)
         artworkNode.style.preferredSize = CGSize(width: artworkNode.style.maxWidth.value, height: artworkNode.style.maxHeight.value)
         
         artworkNode.backgroundColor = show.fastImageCacheWrapper().placeholderColor()
@@ -119,7 +122,7 @@ public class ShowCellNode : ASCellNode {
     public let artistNode: ASTextNode?
     public let showNode: ASTextNode
 //    public let ratingNode: AXRatingViewNode
-    public let ratingTextNode: ASTextNode
+    public let ratingTextNode: ASTextNode?
     
     public let venueNode: ASTextNode
     public let metaNode: ASTextNode
@@ -176,7 +179,10 @@ public class ShowCellNode : ASCellNode {
         
         if show.avg_rating > 0.0 {
             metaStack.append(SpacerNode())
-            metaStack.append(ratingTextNode)
+            
+            if let r = ratingTextNode {
+                metaStack.append(r)
+            }
         }
         
         let vs = ASStackLayoutSpec(
@@ -235,7 +241,7 @@ public class ShowCellNode : ASCellNode {
         //            }
         
         let i = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(12, 16, 12, 16),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16),
             child: s
         )
         i.style.alignSelf = .stretch
@@ -286,12 +292,30 @@ public class ShowCellNode : ASCellNode {
             footer?.style.alignSelf = .stretch
         }
         
+        let showWithVenue = ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 4.0,
+            justifyContent: .start,
+            alignItems: .start,
+            children: ArrayNoNils(showAndSBD, venueLayout)
+        )
+        showWithVenue.style.alignSelf = .stretch
+        
+        let showVenueWithArt = ASStackLayoutSpec(
+            direction: .horizontal,
+            spacing: 4.0,
+            justifyContent: .spaceBetween,
+            alignItems: .start,
+            children: ArrayNoNils(showWithVenue, artworkNode)
+        )
+        showVenueWithArt.style.alignSelf = .stretch
+        
         let textStack = ASStackLayoutSpec(
             direction: .vertical,
             spacing: 4.0,
             justifyContent: .start,
             alignItems: .start,
-            children: ArrayNoNils(showAndSBD, venueLayout, ratingAndMeta, footer)
+            children: ArrayNoNils(showVenueWithArt, ratingAndMeta, footer)
         )
         textStack.style.alignSelf = .stretch
         textStack.style.flexShrink = 1.0
@@ -302,7 +326,7 @@ public class ShowCellNode : ASCellNode {
             spacing: 8.0,
             justifyContent: .start,
             alignItems: .start,
-            children: [artworkNode, textStack]
+            children: ArrayNoNils(rankNode, textStack)
         )
         stack.style.alignSelf = .stretch
         stack.style.flexShrink = 1.0

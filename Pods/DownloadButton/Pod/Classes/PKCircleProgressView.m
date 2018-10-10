@@ -7,7 +7,6 @@
 //
 
 #import "PKCircleProgressView.h"
-#import "UIColor+PKDownloadButton.h"
 #import "PKCircleView.h"
 #import "NSLayoutConstraint+PKDownloadButton.h"
 
@@ -91,9 +90,10 @@ static PKCircleProgressView *CommonInit(PKCircleProgressView *self) {
 }
 
 - (void)setProgress:(CGFloat)progress {
-    _progress = progress;
+    // Clamp progress values to between 0.0 and 1.0
+    _progress = MIN(MAX(progress, 0.0), 1.0);
     self.filledLineCircleView.startAngleRadians = self.startAngle;
-    self.filledLineCircleView.endAngleRadians = (self.endAngle - self.startAngle) * progress + self.startAngle;
+    self.filledLineCircleView.endAngleRadians = (self.endAngle - self.startAngle) * _progress + self.startAngle;
     
     [self setNeedsDisplay];
 }

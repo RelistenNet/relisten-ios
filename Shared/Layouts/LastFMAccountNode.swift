@@ -81,15 +81,15 @@ public class LastFMAccountNode : ASCellNode {
             
             let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
             let boldFontDescriptor = fontDescriptor.withSymbolicTraits(.traitBold)
-            let fullStringAttributes: [NSAttributedStringKey : Any] = [NSAttributedStringKey.font : UIFont(descriptor: fontDescriptor, size: 0.0)]
+            let fullStringAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font : UIFont(descriptor: fontDescriptor, size: 0.0)]
             
             loggedInString.setAttributes(fullStringAttributes, range: NSMakeRange(0, loggedInString.string.count))
             
-            let linkAttributes : [NSAttributedStringKey : Any] = [NSAttributedStringKey.foregroundColor : AppColors.primary,
-                                                                  NSAttributedStringKey.font : UIFont(descriptor: boldFontDescriptor!, size: 0.0),
+            let linkAttributes : [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor : AppColors.primary,
+                                                                  NSAttributedString.Key.font : UIFont(descriptor: boldFontDescriptor!, size: 0.0),
                                                                   // For some reason underlineStyle isn't being respected, so I'm just setting the underline to clear
-                                                                  NSAttributedStringKey.underlineColor : UIColor.clear,
-                                                                  NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleNone.rawValue]
+                                                                  NSAttributedString.Key.underlineColor : UIColor.clear,
+                                                                  NSAttributedString.Key.underlineStyle : []]
             
             loggedInString.addLink(link: URL(string: "http://last.fm/user/\(username)")!, string: username, attributes: linkAttributes)
             
@@ -155,7 +155,7 @@ public class LastFMAccountNode : ASCellNode {
         vert.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(12, 16, 12, 16),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16),
             child: vert
         )
         l.style.alignSelf = .stretch

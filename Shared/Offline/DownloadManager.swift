@@ -16,6 +16,13 @@ import Observable
 
 import RealmSwift
 
+public struct DownloadError : Error {
+    let reason : String
+    public init(_ reason : String = "") {
+        self.reason = reason
+    }
+}
+
 func MD5(_ string: String) -> String? {
     let length = Int(CC_MD5_DIGEST_LENGTH)
     var digest = [UInt8](repeating: 0, count: length)
@@ -82,9 +89,15 @@ public class DownloadManager {
     private let queue : ReentrantDispatchQueue = ReentrantDispatchQueue(label: "live.relisten.ios.mp3-offline.queue")
     private var backingDownloadManager : MZDownloadManager?
     lazy var downloadManager: MZDownloadManager = {
-        queue.sync {
-            if (backingDownloadManager == nil) {
-                backingDownloadManager = MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self)
+        if (backingDownloadManager == nil) {
+            queue.sync {
+                if (backingDownloadManager == nil) {
+                    let sessionConfiguration = MZDownloadManager.defaultSessionConfiguration(identifier: "live.relisten.ios.mp3-offline")
+                    sessionConfiguration.timeoutIntervalForRequest = 60.0
+                    sessionConfiguration.timeoutIntervalForResource = 60.0 * 60.0 * 24
+                    sessionConfiguration.httpMaximumConnectionsPerHost = 3
+                    backingDownloadManager = MZDownloadManager(session: "live.relisten.ios.mp3-offline", delegate: self, sessionConfiguration: sessionConfiguration)
+                }
             }
         }
         return backingDownloadManager!
@@ -388,8 +401,10 @@ extension DownloadManager : MZDownloadManagerDelegate {
         // notificationBar.display(withMessage: "Restoring \(downloadModel.count) downloads", completion: nil)
     }
     
-    private func fileToActualBytes(_ file: (size: Float, unit: String)) -> Float {
+    private func fileToActualBytes(_ file: (size: Float, unit: String)) -> UInt64 {
         let multiplier: Float
+        
+        if file.size < 0 { return 0 }
         
         switch file.unit {
         case "GB":
@@ -402,7 +417,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
             multiplier = 1
         }
         
-        return file.size * multiplier
+        return UInt64(file.size * multiplier)
     }
     
     public func downloadRequestStarted(_ downloadModel: MZDownloadModel, index: Int) {
@@ -414,12 +429,52 @@ extension DownloadManager : MZDownloadManagerDelegate {
         }
     }
     
+    func responseHasExpectedContentType(_ downloadModel: MZDownloadModel) -> Bool {
+        if let headerFields = (downloadModel.task?.response as? HTTPURLResponse)?.allHeaderFields {
+            let contentTypeHeaders = headerFields.filter({
+                if let (header, _) = $0 as? (String, Any) {
+                    return header.lowercased() == "content-type"
+                }
+                return false
+            })
+            
+            if let (_, contentType) = contentTypeHeaders.first as? (AnyHashable, String) {
+                if contentType.lowercased().hasPrefix("audio") {
+                    return true
+                } else {
+                    LogWarn("Content type \(contentType) is not what was expected. Treating download of \(downloadModel.fileURL ?? "[unkown URL]") as an error")
+                    return false
+                }
+            }
+        }
+        
+        // We're intentionally being loose here. If the server was nice enough to return content-type then we'll enforce that it's an audio type.
+        // Otherwise, let's just let it slide and hope for the best, since it would be a shame to incorrectly drop downloads because the server didn't return
+        //  a content-type header.
+        return true
+    }
+    
     public func downloadRequestFinished(_ downloadModel: MZDownloadModel, index: Int) {
         LogDebug("Finished downloading: \(downloadModel)")
         
+        var error : Error? = nil
+        
+        // Check the content type to make sure we didn't get an error page
+        if !responseHasExpectedContentType(downloadModel) {
+            error = DownloadError("Content type is not what was expected. Treating download of \(downloadModel.fileURL ?? "[unkown URL]") as an error")
+        }
+        
         if let t = self.trackForDownloadModel(downloadModel) {
-            dataSource?.offlineTrackFinishedDownloading(t, withSize: UInt64(fileToActualBytes(downloadModel.file!)))
-
+            if error == nil {
+                var fileSize : UInt64 = 0
+                if let file = downloadModel.file {
+                    fileSize = fileToActualBytes(file)
+                }
+                dataSource?.offlineTrackFinishedDownloading(t, withSize: fileSize)
+            } else {
+                dataSource?.offlineTrackFailedDownloading(t, error: error)
+            }
+                
             eventTrackFinishedDownloading.raise(t)
             
             self.removeTrackForDownloadModel(downloadModel)
@@ -453,7 +508,11 @@ extension DownloadManager : MZDownloadManagerDelegate {
         
         if let t = trackForDownloadModel(downloadModel) {
             if didReplaceFile {
-                dataSource?.offlineTrackFinishedDownloading(t, withSize: UInt64(fileToActualBytes(downloadModel.file!)))
+                var fileSize : UInt64 = 0
+                if let file = downloadModel.file {
+                    fileSize = fileToActualBytes(file)
+                }
+                dataSource?.offlineTrackFinishedDownloading(t, withSize: fileSize)
             } else {
                 dataSource?.offlineTrackFailedDownloading(t, error: error)
             }

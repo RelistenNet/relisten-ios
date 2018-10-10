@@ -10,7 +10,21 @@ import Foundation
 import AsyncDisplayKit
 
 public class RelistenNavigationController : ASNavigationController {
-    open override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+    override public var preferredStatusBarStyle: UIStatusBarStyle { get { return .lightContent } }
+    
+    public override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
+    }
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake, RelistenApp.sharedApp.shakeToReportBugEnabled.value {
             UserFeedback.shared.requestUserFeedback(from: self)
         }

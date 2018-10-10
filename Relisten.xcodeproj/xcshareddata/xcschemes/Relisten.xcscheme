@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "0940"
-   version = "1.3">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -26,18 +26,26 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "43B5340F2109226F00DE9B1F"
+            BuildableName = "libRelistenShared.a"
+            BlueprintName = "RelistenShared"
+            ReferencedContainer = "container:Relisten.xcodeproj">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "7C8EF10C1D5A49C200004B5C"
+            BuildableName = "Relisten.app"
+            BlueprintName = "Relisten"
+            ReferencedContainer = "container:Relisten.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7C8EF1201D5A49C300004B5C"
-               BuildableName = "RelistenUITests.xctest"
-               BlueprintName = "RelistenUITests"
-               ReferencedContainer = "container:Relisten.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
@@ -47,6 +55,19 @@
                BlueprintName = "RelistenTests"
                ReferencedContainer = "container:Relisten.xcodeproj">
             </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "43CC465B214C104800925CA5"
+               BuildableName = "RelistenUITests.xctest"
+               BlueprintName = "RelistenUITests"
+               ReferencedContainer = "container:Relisten.xcodeproj">
+            </BuildableReference>
+            <DeviceAppData
+               resolvedPath = "../RelistenTests/Test Data/FreshInstall-Relisten4010.xcappdata">
+            </DeviceAppData>
          </TestableReference>
       </Testables>
       <MacroExpansion>

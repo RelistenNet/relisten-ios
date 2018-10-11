@@ -32,6 +32,7 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
     let artist: Artist
     let show: ShowWithSources
     let source: SourceFull
+    let venue: VenueWithShowCount?
     var hasSourceInformation : Bool = false
     
     public required init(artist: Artist, show: ShowWithSources, source: SourceFull) {
@@ -39,7 +40,8 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
         self.show = show
         self.source = source
         
-        if let venue = show.correctVenue(withFallback: source.venue) {
+        venue = show.correctVenue(withFallback: source.venue)
+        if let venue = venue {
             self.venueMap = VenueMapNode(venue: venue, forArtist: artist)
             self.venueNode = VenueNode(venue: venue, forArtist: artist)
         } else {
@@ -48,22 +50,20 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
         }
         taperInfo = TaperInfoNode(source: source, includeDetails: true, padLeft: true)
         
-//        let credits = source.links
-//            .compactMap({ link -> LinkLayout? in
-//                if let upstream = artist.upstream_sources.first(where: { $0.upstream_source_id == link.upstream_source_id }),
-//                   let upstreamSource = upstream.upstream_source {
-//                    return LinkLayout(link: link, forUpstreamSource: upstreamSource)
-//                }
-//                return nil
-//            })
-//        if credits.count > 0 {
-//            sections.append(LayoutsAsSingleSection(items: credits, title: "Credits"))
-//        }
+        creditNodes = source.links.compactMap({ link -> UpstreamSourceNode? in
+                if let upstream = artist.upstream_sources.first(where: { $0.upstream_source_id == link.upstream_source_id }),
+                   let upstreamSource = upstream.upstream_source {
+                    return UpstreamSourceNode(link: link, forUpstreamSource: upstreamSource)
+                }
+                return nil
+            })
         
-        super.init(style: .grouped)
+        super.init()
         
         self.tableNode.view.separatorStyle = .singleLine
         self.tableNode.view.backgroundColor = AppColors.lightGreyBackground
+        
+        title = "Source Details"
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -74,15 +74,10 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = "Source Details"
-    }
-    
     public let venueMap: VenueMapNode?
     public let venueNode: VenueNode?
     public let taperInfo: TaperInfoNode?
+    public let creditNodes: [UpstreamSourceNode]
 }
 
 // MARK: ASTableDataSource
@@ -96,7 +91,7 @@ extension SourceDetailsViewController {
         case .venue:
             return 3
         case .credits:
-            return 1
+            return creditNodes.count
         case .count:
             fatalError()
         }
@@ -131,10 +126,10 @@ extension SourceDetailsViewController {
                 break
             }
         case .credits:
-            switch indexPath.row {
-            default:
-                break
+            guard indexPath.row >= 0, indexPath.row < creditNodes.count else {
+                return ASCellNode()
             }
+            return creditNodes[indexPath.row]
         case .count:
             fatalError()
         }
@@ -154,7 +149,48 @@ extension SourceDetailsViewController {
     }
     
     func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        // TODO
+        guard indexPath.section >= 0, indexPath.section < Sections.count.rawValue else {
+            return
+        }
+        
+        switch Sections(rawValue: indexPath.section)! {
+        case .venue:
+            guard indexPath.row >= 0, indexPath.row < VenueRows.count.rawValue else {
+                return
+            }
+            switch VenueRows(rawValue: indexPath.row)! {
+            case .venueMap, .venueInfo:
+                if let venue = venue {
+                    navigationController?.pushViewController(VenueViewController(artist: artist, venue: venue), animated: true)
+                }
+                break
+                
+            case .taperInfo:
+                break
+                
+            case .taperNotes:
+                break
+            case .setlistNotes:
+                break
+            
+            case .ratings, .reviews:
+                break
+                
+            default:
+                break
+            }
+        case .credits:
+            guard indexPath.row >= 0, indexPath.row < creditNodes.count else {
+                return
+            }
+            let upstreamNode = creditNodes[indexPath.row]
+            if let url = URL(string: upstreamNode.link.url) {
+                navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+            }
+        case .count:
+            fatalError()
+        }
+        tableNode.deselectRow(at: indexPath, animated: true)
     }
 }
 

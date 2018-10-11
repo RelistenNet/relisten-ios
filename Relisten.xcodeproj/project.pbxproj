@@ -37,6 +37,7 @@
 		435911AB21681BD300ACA85F /* VenueNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911AA21681BD300ACA85F /* VenueNode.swift */; };
 		435911AF216C0AFC00ACA85F /* TaperInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911AE216C0AFC00ACA85F /* TaperInfoNode.swift */; };
 		435911B1216DC9D800ACA85F /* VenueMapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911B0216DC9D800ACA85F /* VenueMapNode.swift */; };
+		435911B32170008C00ACA85F /* UpstreamSourceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911B22170008C00ACA85F /* UpstreamSourceNode.swift */; };
 		438B5240214C0E20002A0E29 /* RelistenScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAF42921334AD7009A03D9 /* RelistenScreenshots.swift */; };
 		438B5241214C0E3A002A0E29 /* XCUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436D1AB62138659700FA41D5 /* XCUITest.swift */; };
 		438B5242214C0E3C002A0E29 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAF42721334A9F009A03D9 /* SnapshotHelper.swift */; };
@@ -74,8 +75,6 @@
 		43B53439210922CE00DE9B1F /* SwitchCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553F20C224F500F07622 /* SwitchCellNode.swift */; };
 		43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31554520C2350800F07622 /* TrackStatusCellNode.swift */; };
 		43B5343B210922CE00DE9B1F /* TrackStatusLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */; };
-		43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */; };
-		43B5343D210922CE00DE9B1F /* VenueLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD161F71766E00E936AB /* VenueLayout.swift */; };
 		43B5343E210922CE00DE9B1F /* YearNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553920C2081A00F07622 /* YearNode.swift */; };
 		43B5343F210922CE00DE9B1F /* ShowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E91C1703DD1522098B0957F /* ShowCellNode.swift */; };
 		43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551820BFB71B00F07622 /* LongTextViewController.swift */; };
@@ -240,6 +239,7 @@
 		435911AA21681BD300ACA85F /* VenueNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueNode.swift; path = Layouts/VenueNode.swift; sourceTree = "<group>"; };
 		435911AE216C0AFC00ACA85F /* TaperInfoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaperInfoNode.swift; path = Layouts/TaperInfoNode.swift; sourceTree = "<group>"; };
 		435911B0216DC9D800ACA85F /* VenueMapNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueMapNode.swift; path = Layouts/VenueMapNode.swift; sourceTree = "<group>"; };
+		435911B22170008C00ACA85F /* UpstreamSourceNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpstreamSourceNode.swift; path = Layouts/UpstreamSourceNode.swift; sourceTree = "<group>"; };
 		4359D31A214D940C00974631 /* FreshInstall-Relisten4010.xcappdata */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "FreshInstall-Relisten4010.xcappdata"; sourceTree = "<group>"; };
 		436D1AB62138659700FA41D5 /* XCUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITest.swift; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
@@ -290,7 +290,6 @@
 		7C31551120BFAE6E00F07622 /* SourceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourceDetailsViewController.swift; path = "View Controllers/Show/SourceDetailsViewController.swift"; sourceTree = "<group>"; };
 		7C31551420BFB3DA00F07622 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = String.swift; path = Extensions/String.swift; sourceTree = "<group>"; };
 		7C31551820BFB71B00F07622 /* LongTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LongTextViewController.swift; path = "View Controllers/General/LongTextViewController.swift"; sourceTree = "<group>"; };
-		7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpstreamSourceLayout.swift; path = Layouts/UpstreamSourceLayout.swift; sourceTree = "<group>"; };
 		7C31551E20BFC4C300F07622 /* ReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReviewsViewController.swift; path = "View Controllers/Show/ReviewsViewController.swift"; sourceTree = "<group>"; };
 		7C31552120BFC55900F07622 /* ReviewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReviewLayout.swift; path = Layouts/ReviewLayout.swift; sourceTree = "<group>"; };
 		7C31552420C09D8B00F07622 /* ShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShareHelper.swift; path = Helpers/ShareHelper.swift; sourceTree = "<group>"; };
@@ -333,7 +332,6 @@
 		7C8EF1211D5A49C300004B5C /* RelistenScreenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C9FC1EE211A184300A8579B /* VisualActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VisualActivityViewController.swift; path = Vendor/VisualActivityViewController.swift; sourceTree = "<group>"; };
 		7CA3CD131F71763400E936AB /* VenuesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenuesViewController.swift; path = "View Controllers/Venues/VenuesViewController.swift"; sourceTree = "<group>"; };
-		7CA3CD161F71766E00E936AB /* VenueLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueLayout.swift; path = Layouts/VenueLayout.swift; sourceTree = "<group>"; };
 		7CA94EA71F0A6C74004663F3 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Track.swift; path = Playback/Models/Track.swift; sourceTree = "<group>"; };
 		7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackStatusLayout.swift; path = Layouts/TrackStatusLayout.swift; sourceTree = "<group>"; };
 		7CAAF42721334A9F009A03D9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = RelistenTests/Screenshots/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
@@ -664,9 +662,8 @@
 				435911AE216C0AFC00ACA85F /* TaperInfoNode.swift */,
 				7C31554520C2350800F07622 /* TrackStatusCellNode.swift */,
 				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
-				7C31551B20BFBE9A00F07622 /* UpstreamSourceLayout.swift */,
+				435911B22170008C00ACA85F /* UpstreamSourceNode.swift */,
 				43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */,
-				7CA3CD161F71766E00E936AB /* VenueLayout.swift */,
 				435911AA21681BD300ACA85F /* VenueNode.swift */,
 				435911B0216DC9D800ACA85F /* VenueMapNode.swift */,
 				7C31553920C2081A00F07622 /* YearNode.swift */,
@@ -1926,6 +1923,7 @@
 				43A035D2210D255700C087DD /* FavoriteButtonNode.swift in Sources */,
 				43B53420210922CE00DE9B1F /* TrackActions.swift in Sources */,
 				43B53460210922CE00DE9B1F /* ApiCache.swift in Sources */,
+				435911B32170008C00ACA85F /* UpstreamSourceNode.swift in Sources */,
 				434066AE212FC88900FB1D94 /* UserFeedback.swift in Sources */,
 				43B53444210922CE00DE9B1F /* DownloadedViewController.swift in Sources */,
 				4330E7432121474900329ED7 /* LegacyRelistenImporter.swift in Sources */,
@@ -1938,7 +1936,6 @@
 				43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */,
 				4330E73B2120C61400329ED7 /* LegacyMapper.swift in Sources */,
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
-				43B5343C210922CE00DE9B1F /* UpstreamSourceLayout.swift in Sources */,
 				43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */,
 				430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
@@ -1986,7 +1983,6 @@
 				43B5342A210922CE00DE9B1F /* String.swift in Sources */,
 				43B53459210922CE00DE9B1F /* RelistenModelCachable.swift in Sources */,
 				43B53427210922CE00DE9B1F /* TimeInterval+Humanize.swift in Sources */,
-				43B5343D210922CE00DE9B1F /* VenueLayout.swift in Sources */,
 				43B53421210922CE00DE9B1F /* Track.swift in Sources */,
 				4330E72C211E0CA200329ED7 /* DownloadProgressNode.swift in Sources */,
 				43B53454210922CE00DE9B1F /* DownloadManager.swift in Sources */,

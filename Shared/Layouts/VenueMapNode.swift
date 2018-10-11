@@ -21,22 +21,19 @@ public class VenueMapNode : ASCellNode {
         
         self.venueMap = ASMapNode()
         self.venueMap.isLiveMap = true
+        self.venueMap.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 180.0)
         
         super.init()
         
         automaticallyManagesSubnodes = true
         accessoryType = .none
         
-        self.venueMap.onDidLoad {[weak self] node in
-            self?.addCoordinatesToMapView()
-        }
+        self.addCoordinatesToMapView()
     }
     
     public let venueMap: ASMapNode
     
     func addCoordinate(_ centerCoordinate: CLLocationCoordinate2D, animated: Bool) {
-        guard self.venueMap.mapView != nil else { return }
-        
         let annotation = MKPointAnnotation()
         annotation.coordinate = centerCoordinate
         

@@ -227,21 +227,6 @@ extension PlaybackController : AGAudioPlayerViewControllerPresentationDelegate {
             self.viewController.viewDidAppear(true)
         }
     }
-    
-    public func setupTableView(_ tableView: UITableView) {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    }
-    
-    public func tableViewCell(forAudioItem: AGAudioItem, atIndex: IndexPath, inTableView: UITableView) -> UITableViewCell {
-        let cell = inTableView.dequeueReusableCell(withIdentifier: "cell", for: atIndex)
-        
-        if let t = forAudioItem as? SourceTrackAudioItem {
-            let v = TrackStatusLayout(withTrack: t.track, withHandler: self)
-            v.arrangement(width: inTableView.bounds.size.width) .makeViews(in: cell.contentView)
-        }
-        
-        return UITableViewCell()
-    }
 }
 
 extension PlaybackController : TrackStatusActionHandler {

@@ -15,10 +15,6 @@ import ActionKit
 import Cache
 import SwiftyJSON
 
-public protocol TrackStatusActionHandler : class {
-    func trackButtonTapped(_ button: UIButton, forTrack track: Track)
-}
-
 public class TrackStatusLayout : InsetLayout<UIView> {
     public init(withTrack track: Track, withHandler handler: TrackStatusActionHandler, usingExplicitTrackNumber: Int? = nil, showingArtistInformation: Bool = false) {
         var stack : [Layout] = []

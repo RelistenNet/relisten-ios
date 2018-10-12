@@ -1,5 +1,5 @@
 //
-//  ReviewLayout.swift
+//  ReviewCellNode.swift
 //  Relisten
 //
 //  Created by Alec Gorge on 5/31/18.
@@ -10,7 +10,7 @@ import UIKit
 
 import AsyncDisplayKit
 
-public class ReviewLayout: ASCellNode {
+public class ReviewCellNode: ASCellNode {
     public static var dateFormatter: DateFormatter = {
         let d = DateFormatter()
         d.dateStyle = .long
@@ -32,7 +32,7 @@ public class ReviewLayout: ASCellNode {
             self.authorNode = nil
         }
         
-        self.dateNode = ASTextNode(ReviewLayout.dateFormatter.string(from: review.updated_at), textStyle: .caption1)
+        self.dateNode = ASTextNode(ReviewCellNode.dateFormatter.string(from: review.updated_at), textStyle: .caption1)
         
         if artist.features.reviews_have_ratings, let userRating = review.rating {
             self.ratingNode = AXRatingViewNode(value: Float(userRating) / 10.0)

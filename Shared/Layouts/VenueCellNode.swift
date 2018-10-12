@@ -1,5 +1,5 @@
 //
-//  VenueNode.swift
+//  VenueCellNode.swift
 //  RelistenShared
 //
 //  Created by Jacob Farkas on 10/5/18.
@@ -10,7 +10,7 @@ import Foundation
 import AsyncDisplayKit
 import MapKit
 
-public class VenueNode : ASCellNode {
+public class VenueCellNode : ASCellNode {
     public let venue: VenueWithShowCount
     public let artist: Artist?
     
@@ -65,7 +65,7 @@ public class VenueNode : ASCellNode {
         venueAndCount.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 8),
+            insets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 0),
             child: venueAndCount
         )
         l.style.alignSelf = .stretch

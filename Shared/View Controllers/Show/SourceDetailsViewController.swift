@@ -11,6 +11,12 @@ import UIKit
 import AsyncDisplayKit
 import SafariServices
 
+public struct SourceDetailsNodeCell {
+    let cell: ASCellNode
+    var shouldHighlight: Bool = true
+    let action: (() -> Void)?
+}
+
 public class SourceDetailsViewController : RelistenBaseAsyncTableViewController {
     enum Sections: Int, RawRepresentable {
         case venue = 0
@@ -33,37 +39,102 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
     let show: ShowWithSources
     let source: SourceFull
     let venue: VenueWithShowCount?
-    var hasSourceInformation : Bool = false
+    
+    var venueNodes: [SourceDetailsNodeCell] = []
+    let creditNodes: [UpstreamSourceNode]
     
     public required init(artist: Artist, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
         self.show = show
         self.source = source
+        self.venue = show.correctVenue(withFallback: source.venue)
         
-        venue = show.correctVenue(withFallback: source.venue)
-        if let venue = venue {
-            self.venueMap = VenueMapNode(venue: venue, forArtist: artist)
-            self.venueNode = VenueNode(venue: venue, forArtist: artist)
-        } else {
-            self.venueMap = nil
-            self.venueNode = nil
-        }
-        taperInfo = TaperInfoNode(source: source, includeDetails: true, padLeft: true)
-        
-        creditNodes = source.links.compactMap({ link -> UpstreamSourceNode? in
-                if let upstream = artist.upstream_sources.first(where: { $0.upstream_source_id == link.upstream_source_id }),
-                   let upstreamSource = upstream.upstream_source {
-                    return UpstreamSourceNode(link: link, forUpstreamSource: upstreamSource)
-                }
-                return nil
-            })
+        self.creditNodes = source.links.compactMap({ link -> UpstreamSourceNode? in
+            if let upstream = artist.upstream_sources.first(where: { $0.upstream_source_id == link.upstream_source_id }),
+                let upstreamSource = upstream.upstream_source {
+                return UpstreamSourceNode(link: link, forUpstreamSource: upstreamSource)
+            }
+            return nil
+        })
         
         super.init()
         
+        if let venue = venue {
+            let mapNode = VenueMapCellNode(venue: venue, forArtist: artist)
+            let mapCell = SourceDetailsNodeCell(cell: mapNode, shouldHighlight: true) { [weak self] in
+                guard let s = self else { return }
+                s.navigationController?.pushViewController(VenueViewController(artist: s.artist, venue: venue), animated: true)
+                
+            }
+            venueNodes.append(mapCell)
+            
+            let venueNode = VenueCellNode(venue: venue, forArtist: artist)
+            let venueCell = SourceDetailsNodeCell(cell: venueNode, shouldHighlight: true) { [weak self] in
+                guard let s = self else { return }
+                s.navigationController?.pushViewController(VenueViewController(artist: s.artist, venue: venue), animated: true)
+                
+            }
+            venueNodes.append(venueCell)
+        }
+        
+        let taperInfoNode = TaperInfoNode(source: source, includeDetails: true, padLeft: true)
+        taperInfoNode.accessoryType = .disclosureIndicator
+        if taperInfoNode.hasAnyInfo {
+            let taperCell = SourceDetailsNodeCell(cell: taperInfoNode, shouldHighlight: false, action: nil)
+            venueNodes.append(taperCell)
+        }
+        
+        if artist.features.taper_notes, let notes = source.taper_notes, notes.count > 0 {
+            let cell = ASTextCellNode("Taper Notes", textStyle: .body)
+            cell.accessoryType = .disclosureIndicator
+            let taperNotesCell = SourceDetailsNodeCell(cell: cell, shouldHighlight: true) { [weak self] in
+                guard let s = self else { return }
+                let vc = LongTextViewController(text: notes, withFont: UIFont(name: "Courier", size: 14.0)!)
+                vc.title = "Taper Notes"
+                
+                s.navigationController?.pushViewController(vc, animated: true)
+            }
+            venueNodes.append(taperNotesCell)
+        }
+        
+        if artist.features.descriptions, let desc = source.description {
+            let trimmed = desc.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).convertHtml()
+            let cell = ASTextCellNode("Description / Setlist Notes", textStyle: .body)
+            cell.accessoryType = .disclosureIndicator
+            let setlistNotesCell = SourceDetailsNodeCell(cell: cell, shouldHighlight: true) { [weak self] in
+                guard let s = self else { return }
+                let vc = LongTextViewController(attributedText: trimmed)
+                vc.title = "Setlist Notes"
+                
+                s.navigationController?.pushViewController(vc, animated: true)
+            }
+            venueNodes.append(setlistNotesCell)
+        }
+        
+        if artist.features.ratings,
+            let numRatings = source.num_ratings,
+            numRatings > 0 {
+            let ratingsCell = SourceDetailsNodeCell(cell: CompactReviewCellNode(averageRating: source.avg_rating, numRatings: source.num_ratings), shouldHighlight: true) { [weak self] in
+                guard let s = self else { return }
+                    let vc = ReviewsViewController(reviewsForSource: s.source, byArtist: s.artist)
+                    s.navigationController?.pushViewController(vc, animated: true)
+            }
+            venueNodes.append(ratingsCell)
+        }
+        
+        if artist.features.reviews, source.num_reviews > 0 {
+            let cell = ASTextCellNode(source.review_count.pluralize("Review", "Reviews"), textStyle: .body)
+            cell.accessoryType = .disclosureIndicator
+            let ratingsCell = SourceDetailsNodeCell(cell: cell, shouldHighlight: true) { [weak self] in
+                guard let s = self else { return }
+                let vc = ReviewsViewController(reviewsForSource: s.source, byArtist: s.artist)
+                s.navigationController?.pushViewController(vc, animated: true)
+            }
+            venueNodes.append(ratingsCell)
+        }
+        
         self.tableNode.view.separatorStyle = .singleLine
         self.tableNode.view.backgroundColor = AppColors.lightGreyBackground
-        
-        title = "Source Details"
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -73,11 +144,6 @@ public class SourceDetailsViewController : RelistenBaseAsyncTableViewController 
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
-    
-    public let venueMap: VenueMapNode?
-    public let venueNode: VenueNode?
-    public let taperInfo: TaperInfoNode?
-    public let creditNodes: [UpstreamSourceNode]
 }
 
 // MARK: ASTableDataSource
@@ -89,7 +155,7 @@ extension SourceDetailsViewController {
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .venue:
-            return 3
+            return venueNodes.count
         case .credits:
             return creditNodes.count
         case .count:
@@ -98,35 +164,22 @@ extension SourceDetailsViewController {
     }
     
     public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
-        var n: ASCellNode = ASCellNode()
-        
         guard indexPath.section >= 0, indexPath.section < Sections.count.rawValue else {
+            LogError("Index for section out of bounds: \(indexPath)")
             return ASCellNode()
         }
         
         switch Sections(rawValue: indexPath.section)! {
         case .venue:
-            guard indexPath.row >= 0, indexPath.row < VenueRows.count.rawValue else {
+            guard indexPath.row >= 0, indexPath.row < venueNodes.count else {
+                LogError("Index for venue cell out of bounds: \(indexPath)")
                 return ASCellNode()
             }
-            switch VenueRows(rawValue: indexPath.row)! {
-            case .venueMap:
-                if let venueMap = venueMap {
-                    n = venueMap
-                }
-            case .venueInfo:
-                if let venueNode = venueNode {
-                    n = venueNode
-                }
-            case .taperInfo:
-                if let taperInfo = taperInfo {
-                    n = taperInfo
-                }
-            default:
-                break
-            }
+            
+            return venueNodes[indexPath.row].cell
         case .credits:
             guard indexPath.row >= 0, indexPath.row < creditNodes.count else {
+                LogError("Index for credits cell out of bounds: \(indexPath)")
                 return ASCellNode()
             }
             return creditNodes[indexPath.row]
@@ -134,7 +187,7 @@ extension SourceDetailsViewController {
             fatalError()
         }
         
-        return n
+        fatalError()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -150,37 +203,23 @@ extension SourceDetailsViewController {
     
     func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section >= 0, indexPath.section < Sections.count.rawValue else {
+            LogError("Index for section out of bounds: \(indexPath)")
             return
         }
         
         switch Sections(rawValue: indexPath.section)! {
         case .venue:
-            guard indexPath.row >= 0, indexPath.row < VenueRows.count.rawValue else {
+            guard indexPath.row >= 0, indexPath.row < venueNodes.count else {
+                LogError("Index for venue cell out of bounds: \(indexPath)")
                 return
             }
-            switch VenueRows(rawValue: indexPath.row)! {
-            case .venueMap, .venueInfo:
-                if let venue = venue {
-                    navigationController?.pushViewController(VenueViewController(artist: artist, venue: venue), animated: true)
-                }
-                break
-                
-            case .taperInfo:
-                break
-                
-            case .taperNotes:
-                break
-            case .setlistNotes:
-                break
-            
-            case .ratings, .reviews:
-                break
-                
-            default:
-                break
+            let venueNodeCell = venueNodes[indexPath.row]
+            if let action = venueNodeCell.action {
+                action()
             }
         case .credits:
             guard indexPath.row >= 0, indexPath.row < creditNodes.count else {
+                LogError("Index for credits cell out of bounds: \(indexPath)")
                 return
             }
             let upstreamNode = creditNodes[indexPath.row]
@@ -192,287 +231,19 @@ extension SourceDetailsViewController {
         }
         tableNode.deselectRow(at: indexPath, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        switch Sections(rawValue: indexPath.section)! {
+        case .venue:
+            guard indexPath.row >= 0, indexPath.row < venueNodes.count else {
+                LogError("Index for venue cell out of bounds: \(indexPath)")
+                return false
+            }
+            return venueNodes[indexPath.row].shouldHighlight
+        case .credits:
+            return true
+        default:
+            return false
+        }
+    }
 }
-
-//
-//    func buildLayout() -> [Section<[Layout]>] {
-//        var sections: [Section<[Layout]>] = []
-//
-//        var section: [Layout] = []
-//
-//        let insets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 32)
-//
-//        if let venue = show.correctVenue(withFallback: source.venue) {
-//            section.append(VenueLayoutWithMap(venue: venue, forArtist: artist))
-//        }
-//
-//        if artist.features.source_information {
-//            var sourceInfo : [LabelLayout] = [] as! [LabelLayout]
-//
-//            // (Farkas) This spacer is a bad hack, but I figure this code is all getting converted to AsyncDisplayKit soon so I didn't want to waste time finding a better fix
-//            let spacer = LabelLayout(
-//                    text: " ",
-//                    font: UIFont.preferredFont(forTextStyle: .body),
-//                    alignment: .fill,
-//                    flexibility: .inflexible,
-//                    viewReuseId: "text",
-//                    config: nil
-//                )
-//
-//            if let s = source.taper, s.count > 0 {
-//                let taperLabel = LabelLayout(
-//                    attributedText: String.createPrefixedAttributedText(prefix: "Taper: ", s),
-//                    font: UIFont.preferredFont(forTextStyle: .body),
-//                    alignment: .fill,
-//                    flexibility: .inflexible,
-//                    viewReuseId: "text",
-//                    config: nil
-//                )
-//                if sourceInfo.count > 0 {
-//                    sourceInfo.append(spacer)
-//                }
-//                sourceInfo.append(taperLabel)
-//            }
-//
-//
-//            if let s = source.transferrer, s.count > 0 {
-//                let transferrerLabel = LabelLayout(
-//                    attributedText: String.createPrefixedAttributedText(prefix: "Transferrer: ", s),
-//                    font: UIFont.preferredFont(forTextStyle: .body),
-//                    alignment: .fill,
-//                    flexibility: .inflexible,
-//                    viewReuseId: "text",
-//                    config: nil
-//                )
-//                if sourceInfo.count > 0 {
-//                    sourceInfo.append(spacer)
-//                }
-//                sourceInfo.append(transferrerLabel)
-//            }
-//
-//            if let s = source.source, s.count > 0 {
-//                let sourceLabel = LabelLayout(
-//                    attributedText: String.createPrefixedAttributedText(prefix: "Source: ", s),
-//                    font: UIFont.preferredFont(forTextStyle: .body),
-//                    alignment: .fill,
-//                    flexibility: .inflexible,
-//                    viewReuseId: "text",
-//                    config: nil
-//                )
-//                if sourceInfo.count > 0 {
-//                    sourceInfo.append(spacer)
-//                }
-//                sourceInfo.append(sourceLabel)
-//            }
-//
-//            if let s = source.lineage, s.count > 0 {
-//                let lineageLabel = LabelLayout(
-//                    attributedText: String.createPrefixedAttributedText(prefix: "Lineage: ", s),
-//                    font: UIFont.preferredFont(forTextStyle: .body),
-//                    alignment: .fill,
-//                    flexibility: .inflexible,
-//                    viewReuseId: "text",
-//                    config: nil
-//                )
-//                if sourceInfo.count > 0 {
-//                    sourceInfo.append(spacer)
-//                }
-//                sourceInfo.append(lineageLabel)
-//            }
-//
-//            if sourceInfo.count > 0 {
-//                hasSourceInformation = true
-//                let stack = StackLayout(
-//                        axis: .vertical,
-//                        sublayouts: sourceInfo
-//                )
-//
-//                section.append(InsetLayout(insets: insets, sublayout: stack))
-//            }
-//        }
-//
-//        if artist.features.taper_notes, let notes = source.taper_notes, notes.count > 0 {
-//            let label = LabelLayout(
-//                text: "Taper Notes",
-//                font: UIFont.preferredFont(forTextStyle: .body),
-//                alignment: .fill,
-//                flexibility: .inflexible,
-//                viewReuseId: "text",
-//                config: nil
-//            )
-//
-//            section.append(InsetLayout(insets: insets, sublayout: label))
-//        }
-//
-//        if artist.features.descriptions, let _ = source.description {
-//            let label = LabelLayout(
-//                text: "Description / Setlist Notes",
-//                font: UIFont.preferredFont(forTextStyle: .body),
-//                alignment: .fill,
-//                flexibility: .inflexible,
-//                viewReuseId: "text",
-//                config: nil
-//            )
-//
-//            section.append(InsetLayout(insets: insets, sublayout: label))
-//
-//            /*
-//            let taperNotes = TextViewLayout(
-//                attributedText: desc.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).convertHtml(),
-//                layoutAlignment: .fill,
-//                flexibility: .inflexible,
-//                viewReuseId: "description",
-//                config: { textView in
-//                    textView.dataDetectorTypes = .link
-//                }
-//            )
-//
-//            sections.append(LayoutsAsSingleSection(items: [InsetLayout(inset: 16.0, sublayout: taperNotes)], title: "Description / Setlist Notes"))
-//            */
-//        }
-//
-//        if artist.features.ratings {
-//            let label = LabelLayout(
-//                text: "Ratings",
-//                font: UIFont.preferredFont(forTextStyle: .body),
-//                alignment: .centerLeading,
-//                flexibility: .inflexible,
-//                viewReuseId: "text",
-//                config: nil
-//            )
-//
-//            var baseText = String(format: "%.2f/10.00", source.avg_rating)
-//
-//            if let numRatings = source.num_ratings {
-//                baseText += String(format: " (%d ratings)", numRatings)
-//            }
-//
-//            let rating = LabelLayout(
-//                text: baseText,
-//                font: UIFont.preferredFont(forTextStyle: .body),
-//                alignment: .centerTrailing,
-//                flexibility: .flexible,
-//                viewReuseId: "pullRight"
-//            )
-//
-//            section.append(InsetLayout(insets: insets, sublayout: StackLayout(
-//                axis: .horizontal,
-//                sublayouts: [label, rating]
-//            )))
-//        }
-//
-//        if artist.features.reviews {
-//            let label = LabelLayout(
-//                text: source.review_count.pluralize("Review", "Reviews"),
-//                font: UIFont.preferredFont(forTextStyle: .body),
-//                alignment: .fill,
-//                flexibility: .inflexible,
-//                viewReuseId: "text",
-//                config: nil
-//            )
-//
-//            section.append(InsetLayout(insets: insets, sublayout: label))
-//        }
-//
-//        sections.append(LayoutsAsSingleSection(items: section))
-//
-//        let credits = source.links
-//            .compactMap({ link -> LinkLayout? in
-//                if let upstream = artist.upstream_sources.first(where: { $0.upstream_source_id == link.upstream_source_id }),
-//                   let upstreamSource = upstream.upstream_source {
-//                    return LinkLayout(link: link, forUpstreamSource: upstreamSource)
-//                }
-//                return nil
-//            })
-//
-//        if credits.count > 0 {
-//            sections.append(LayoutsAsSingleSection(items: credits, title: "Credits"))
-//        }
-//
-//        return sections
-//    }
-//
-//    public override func tableView(_ tableView: UITableView, cell: UITableViewCell, forRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = super.tableView(tableView, cell: cell, forRowAt: indexPath)
-//
-//        if !(hasSourceInformation && indexPath.row == 1) {
-//            cell.accessoryType = .disclosureIndicator
-//        }
-//
-//        return cell
-//    }
-//
-//    public override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-//        if hasSourceInformation, indexPath.row == 1 {
-//            return false
-//        }
-//        return true
-//    }
-//
-//    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//
-//        if indexPath.section == 0 {
-//            var matchingRows = 0
-//
-//            if let venue = show.correctVenue(withFallback: source.venue) {
-//                if indexPath.row == matchingRows {
-//                    navigationController?.pushViewController(VenueViewController(artist: artist, venue: venue), animated: true)
-//
-//                    return
-//                }
-//            }
-//
-//            if hasSourceInformation {
-//                matchingRows += 1
-//            }
-//
-//            if artist.features.taper_notes, let notes = source.taper_notes, notes.count > 0 {
-//                matchingRows += 1
-//
-//                if indexPath.row == matchingRows {
-//                    let vc = LongTextViewController(text: notes, withFont: UIFont(name: "Courier", size: 14.0)!)
-//                    vc.title = "Taper Notes"
-//
-//                    navigationController?.pushViewController(vc, animated: true)
-//                }
-//            }
-//
-//            if artist.features.descriptions, let desc = source.description {
-//                matchingRows += 1
-//
-//                if indexPath.row == matchingRows {
-//                    let trimmed = desc.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-//                    let vc = LongTextViewController(attributedText: trimmed.convertHtml())
-//                    vc.title = "Setlist Notes"
-//
-//                    navigationController?.pushViewController(vc, animated: true)
-//                }
-//            }
-//
-//            if artist.features.ratings {
-//                matchingRows += 1
-//
-//                if indexPath.row == matchingRows {
-//                    let vc = ReviewsViewController(reviewsForSource: source, byArtist: artist)
-//
-//                    navigationController?.pushViewController(vc, animated: true)
-//                }
-//            }
-//
-//            if artist.features.reviews {
-//                matchingRows += 1
-//
-//                if indexPath.row == matchingRows {
-//                    let vc = ReviewsViewController(reviewsForSource: source, byArtist: artist)
-//
-//                    navigationController?.pushViewController(vc, animated: true)
-//                }
-//            }
-//        }
-//        else if indexPath.section == 1 {
-//            let link = source.links[indexPath.row]
-//
-//            navigationController?.present(SFSafariViewController(url: URL(string: link.url)!), animated: true, completion: nil)
-//        }
-//    }

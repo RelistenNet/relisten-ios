@@ -58,7 +58,7 @@ public class ReviewsViewController : RelistenAsyncTableViewController<[SourceRev
         }
         
         let review = reviews[indexPath.row]
-        return { ReviewLayout(review: review, forArtist: self.artist) }
+        return { ReviewCellNode(review: review, forArtist: self.artist) }
     }
     
     func tableNode(_ tableNode: ASTableNode, shouldHighlightRowAt indexPath: IndexPath) -> Bool {

@@ -12,6 +12,12 @@ import AsyncDisplayKit
 public class TaperInfoNode : ASCellNode {
     let source: SourceFull
     let padLeft: Bool
+    var hasAnyInfo: Bool { get {
+        return taperNode != nil ||
+               transferrerNode != nil ||
+               sourceNode != nil ||
+               lineageNode != nil
+    }}
     
     public init(source: SourceFull, includeDetails: Bool = false, padLeft: Bool = false) {
         self.source = source

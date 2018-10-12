@@ -1,5 +1,5 @@
 //
-//  VenueMapNode.swift
+//  VenueMapCellNode.swift
 //  RelistenShared
 //
 //  Created by Jacob Farkas on 10/9/18.
@@ -10,7 +10,7 @@ import Foundation
 import AsyncDisplayKit
 import MapKit
 
-public class VenueMapNode : ASCellNode {
+public class VenueMapCellNode : ASCellNode {
     public let venue: VenueWithShowCount
     public let artist: Artist?
     var haveLoadedMapCoordinates : Bool = false

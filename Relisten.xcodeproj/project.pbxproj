@@ -34,10 +34,11 @@
 		43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43524ADA2114DFC700DC70CD /* RelistenTests.swift */; };
 		43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		435911A72168178700ACA85F /* SongNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911A62168178700ACA85F /* SongNode.swift */; };
-		435911AB21681BD300ACA85F /* VenueNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911AA21681BD300ACA85F /* VenueNode.swift */; };
+		435911AB21681BD300ACA85F /* VenueCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911AA21681BD300ACA85F /* VenueCellNode.swift */; };
 		435911AF216C0AFC00ACA85F /* TaperInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911AE216C0AFC00ACA85F /* TaperInfoNode.swift */; };
-		435911B1216DC9D800ACA85F /* VenueMapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911B0216DC9D800ACA85F /* VenueMapNode.swift */; };
+		435911B1216DC9D800ACA85F /* VenueMapCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911B0216DC9D800ACA85F /* VenueMapCellNode.swift */; };
 		435911B32170008C00ACA85F /* UpstreamSourceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911B22170008C00ACA85F /* UpstreamSourceNode.swift */; };
+		435911B521705CC300ACA85F /* CompactReviewCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911B421705CC300ACA85F /* CompactReviewCellNode.swift */; };
 		438B5240214C0E20002A0E29 /* RelistenScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAF42921334AD7009A03D9 /* RelistenScreenshots.swift */; };
 		438B5241214C0E3A002A0E29 /* XCUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436D1AB62138659700FA41D5 /* XCUITest.swift */; };
 		438B5242214C0E3C002A0E29 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAAF42721334A9F009A03D9 /* SnapshotHelper.swift */; };
@@ -69,7 +70,7 @@
 		43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553320C2076C00F07622 /* AXRatingViewNode.swift */; };
 		43B53430210922CE00DE9B1F /* HorizontalShowCollectionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */; };
 		43B53431210922CE00DE9B1F /* OfflineIndicatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */; };
-		43B53432210922CE00DE9B1F /* ReviewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552120BFC55900F07622 /* ReviewLayout.swift */; };
+		43B53432210922CE00DE9B1F /* ReviewCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552120BFC55900F07622 /* ReviewCellNode.swift */; };
 		43B53436210922CE00DE9B1F /* SourceFeatureIndicatorNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553020C2074300F07622 /* SourceFeatureIndicatorNodes.swift */; };
 		43B53437210922CE00DE9B1F /* SourceDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553C20C2199500F07622 /* SourceDetailsNode.swift */; };
 		43B53439210922CE00DE9B1F /* SwitchCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31553F20C224F500F07622 /* SwitchCellNode.swift */; };
@@ -236,10 +237,11 @@
 		43524ADA2114DFC700DC70CD /* RelistenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenTests.swift; sourceTree = "<group>"; };
 		43524ADC2114DFC700DC70CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		435911A62168178700ACA85F /* SongNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongNode.swift; path = Layouts/SongNode.swift; sourceTree = "<group>"; };
-		435911AA21681BD300ACA85F /* VenueNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueNode.swift; path = Layouts/VenueNode.swift; sourceTree = "<group>"; };
+		435911AA21681BD300ACA85F /* VenueCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueCellNode.swift; path = Layouts/VenueCellNode.swift; sourceTree = "<group>"; };
 		435911AE216C0AFC00ACA85F /* TaperInfoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaperInfoNode.swift; path = Layouts/TaperInfoNode.swift; sourceTree = "<group>"; };
-		435911B0216DC9D800ACA85F /* VenueMapNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueMapNode.swift; path = Layouts/VenueMapNode.swift; sourceTree = "<group>"; };
+		435911B0216DC9D800ACA85F /* VenueMapCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueMapCellNode.swift; path = Layouts/VenueMapCellNode.swift; sourceTree = "<group>"; };
 		435911B22170008C00ACA85F /* UpstreamSourceNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpstreamSourceNode.swift; path = Layouts/UpstreamSourceNode.swift; sourceTree = "<group>"; };
+		435911B421705CC300ACA85F /* CompactReviewCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompactReviewCellNode.swift; path = Layouts/CompactReviewCellNode.swift; sourceTree = "<group>"; };
 		4359D31A214D940C00974631 /* FreshInstall-Relisten4010.xcappdata */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "FreshInstall-Relisten4010.xcappdata"; sourceTree = "<group>"; };
 		436D1AB62138659700FA41D5 /* XCUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITest.swift; sourceTree = "<group>"; };
 		4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CompleteShowInformation.swift; path = Playback/Models/CompleteShowInformation.swift; sourceTree = "<group>"; };
@@ -291,7 +293,7 @@
 		7C31551420BFB3DA00F07622 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = String.swift; path = Extensions/String.swift; sourceTree = "<group>"; };
 		7C31551820BFB71B00F07622 /* LongTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LongTextViewController.swift; path = "View Controllers/General/LongTextViewController.swift"; sourceTree = "<group>"; };
 		7C31551E20BFC4C300F07622 /* ReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReviewsViewController.swift; path = "View Controllers/Show/ReviewsViewController.swift"; sourceTree = "<group>"; };
-		7C31552120BFC55900F07622 /* ReviewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReviewLayout.swift; path = Layouts/ReviewLayout.swift; sourceTree = "<group>"; };
+		7C31552120BFC55900F07622 /* ReviewCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReviewCellNode.swift; path = Layouts/ReviewCellNode.swift; sourceTree = "<group>"; };
 		7C31552420C09D8B00F07622 /* ShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShareHelper.swift; path = Helpers/ShareHelper.swift; sourceTree = "<group>"; };
 		7C31552A20C206BA00F07622 /* Numeric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Numeric.swift; path = Extensions/Numeric.swift; sourceTree = "<group>"; };
 		7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OfflineIndicatorNode.swift; path = Layouts/OfflineIndicatorNode.swift; sourceTree = "<group>"; };
@@ -653,7 +655,8 @@
 				7C31553620C2079200F07622 /* HorizontalShowCollectionCellNode.swift */,
 				7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */,
 				7C31552D20C2072D00F07622 /* OfflineIndicatorNode.swift */,
-				7C31552120BFC55900F07622 /* ReviewLayout.swift */,
+				7C31552120BFC55900F07622 /* ReviewCellNode.swift */,
+				435911B421705CC300ACA85F /* CompactReviewCellNode.swift */,
 				8E91C1703DD1522098B0957F /* ShowCellNode.swift */,
 				435911A62168178700ACA85F /* SongNode.swift */,
 				7C31553C20C2199500F07622 /* SourceDetailsNode.swift */,
@@ -664,8 +667,8 @@
 				7CA94EAA1F0A6D09004663F3 /* TrackStatusLayout.swift */,
 				435911B22170008C00ACA85F /* UpstreamSourceNode.swift */,
 				43A035CF210D255700C087DD /* UserPropertiesForShowNode.swift */,
-				435911AA21681BD300ACA85F /* VenueNode.swift */,
-				435911B0216DC9D800ACA85F /* VenueMapNode.swift */,
+				435911AA21681BD300ACA85F /* VenueCellNode.swift */,
+				435911B0216DC9D800ACA85F /* VenueMapCellNode.swift */,
 				7C31553920C2081A00F07622 /* YearNode.swift */,
 			);
 			name = DisplayNodes;
@@ -1954,6 +1957,7 @@
 				43B53429210922CE00DE9B1F /* UInt64+HumanizeBytes.swift in Sources */,
 				43B53463210922CE00DE9B1F /* AppColors.swift in Sources */,
 				43B5343A210922CE00DE9B1F /* TrackStatusCellNode.swift in Sources */,
+				435911B521705CC300ACA85F /* CompactReviewCellNode.swift in Sources */,
 				433A44092133B43A0059D251 /* ManageOfflineMusicNode.swift in Sources */,
 				7C11B271214719C100D9D78D /* LinkUpstreamNode.swift in Sources */,
 				43B53423210922CE00DE9B1F /* SourceTrackAudioItem.swift in Sources */,
@@ -1961,7 +1965,7 @@
 				43B5345D210922CE00DE9B1F /* RelistenSourceModels.swift in Sources */,
 				434066B0212FD27800FB1D94 /* RelistenNavigationController.swift in Sources */,
 				43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */,
-				435911AB21681BD300ACA85F /* VenueNode.swift in Sources */,
+				435911AB21681BD300ACA85F /* VenueCellNode.swift in Sources */,
 				433A4404213361E50059D251 /* RelistenTableViewController-LayoutKit.swift in Sources */,
 				43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */,
 				433A4402213361040059D251 /* SettingsViewController.swift in Sources */,
@@ -1974,9 +1978,9 @@
 				430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */,
 				43B53431210922CE00DE9B1F /* OfflineIndicatorNode.swift in Sources */,
 				43B53452210922CE00DE9B1F /* ArtistViewController.swift in Sources */,
-				435911B1216DC9D800ACA85F /* VenueMapNode.swift in Sources */,
+				435911B1216DC9D800ACA85F /* VenueMapCellNode.swift in Sources */,
 				433A440B2133B4B10059D251 /* BugReportingSettingsNode.swift in Sources */,
-				43B53432210922CE00DE9B1F /* ReviewLayout.swift in Sources */,
+				43B53432210922CE00DE9B1F /* ReviewCellNode.swift in Sources */,
 				43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */,
 				43B53442210922CE00DE9B1F /* RecentlyPerformedViewController.swift in Sources */,
 				43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */,

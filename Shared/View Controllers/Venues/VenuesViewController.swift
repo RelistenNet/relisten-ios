@@ -21,6 +21,9 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
         self.artist = artist
         
         super.init(useCache: true, refreshOnAppear: true)
+        
+        self.tableNode.view.sectionIndexColor = AppColors.primary
+        self.tableNode.view.sectionIndexMinimumDisplayRowCount = 4
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,6 +80,10 @@ class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
         }
         
         return venues[section].key
+    }
+    
+    public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return venues.map({ return $0.key })
     }
     
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {

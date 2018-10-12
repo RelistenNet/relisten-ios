@@ -12,7 +12,7 @@ import AsyncDisplayKit
 import SafariServices
 import Siesta
 
-public class ReviewsViewController : RelistenAsyncTableViewController<[SourceReview]> {
+public class ReviewsViewController : RelistenTableViewController<[SourceReview]> {
     let source: SourceFull
     let artist: Artist
     var reviews: [SourceReview] = []

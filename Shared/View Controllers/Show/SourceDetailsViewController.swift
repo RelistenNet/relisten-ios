@@ -17,7 +17,7 @@ public struct SourceDetailsNodeCell {
     let action: (() -> Void)?
 }
 
-public class SourceDetailsViewController : RelistenBaseAsyncTableViewController {
+public class SourceDetailsViewController : RelistenBaseTableViewController {
     enum Sections: Int, RawRepresentable {
         case venue = 0
         case credits

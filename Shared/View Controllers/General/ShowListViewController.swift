@@ -16,7 +16,7 @@ public struct ShowWithSingleSource {
     public let source : SourceFull?
 }
 
-public class ShowListViewController<T> : RelistenAsyncTableViewController<T> {
+public class ShowListViewController<T> : RelistenTableViewController<T> {
     internal let artist: Artist
     internal let showsResource: Resource?
     internal let tourSections: Bool

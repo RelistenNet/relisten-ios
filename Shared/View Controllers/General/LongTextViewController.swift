@@ -11,7 +11,7 @@ import UIKit
 import AsyncDisplayKit
 import SafariServices
 
-public class LongTextViewController : RelistenBaseAsyncTableViewController {
+public class LongTextViewController : RelistenBaseTableViewController {
     public required init(attributedText: NSAttributedString) {
         textNode = ASTextCellNode()
         textNode.textNode.attributedText = attributedText

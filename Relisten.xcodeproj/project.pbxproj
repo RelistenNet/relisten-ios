@@ -21,7 +21,6 @@
 		4330E7412121470C00329ED7 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7402121470C00329ED7 /* Resource.swift */; };
 		4330E7432121474900329ED7 /* LegacyRelistenImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */; };
 		433A4402213361040059D251 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A4401213361040059D251 /* SettingsViewController.swift */; };
-		433A4404213361E50059D251 /* RelistenTableViewController-LayoutKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A4403213361E50059D251 /* RelistenTableViewController-LayoutKit.swift */; };
 		433A44062133AA380059D251 /* CreditsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A44052133AA380059D251 /* CreditsNode.swift */; };
 		433A44092133B43A0059D251 /* ManageOfflineMusicNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A44082133B43A0059D251 /* ManageOfflineMusicNode.swift */; };
 		433A440B2133B4B10059D251 /* BugReportingSettingsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A440A2133B4B10059D251 /* BugReportingSettingsNode.swift */; };
@@ -224,7 +223,6 @@
 		4330E7422121474900329ED7 /* LegacyRelistenImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRelistenImporter.swift; sourceTree = "<group>"; };
 		433A44002132728F0059D251 /* PhishOD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PhishOD.entitlements; sourceTree = "<group>"; };
 		433A4401213361040059D251 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = "View Controllers/SettingsViewController.swift"; sourceTree = "<group>"; };
-		433A4403213361E50059D251 /* RelistenTableViewController-LayoutKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RelistenTableViewController-LayoutKit.swift"; path = "View Controllers/RelistenTableViewController-LayoutKit.swift"; sourceTree = "<group>"; };
 		433A44052133AA380059D251 /* CreditsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreditsNode.swift; path = Layouts/CreditsNode.swift; sourceTree = "<group>"; };
 		433A44082133B43A0059D251 /* ManageOfflineMusicNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManageOfflineMusicNode.swift; path = Layouts/ManageOfflineMusicNode.swift; sourceTree = "<group>"; };
 		433A440A2133B4B10059D251 /* BugReportingSettingsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BugReportingSettingsNode.swift; path = Layouts/BugReportingSettingsNode.swift; sourceTree = "<group>"; };
@@ -809,7 +807,6 @@
 				7CABACC81EDF141E009C5E3B /* Year */,
 				7CABACC71EDF1419009C5E3B /* Show */,
 				7CC0953F1E6C6D580067FD39 /* RelistenTableViewController.swift */,
-				433A4403213361E50059D251 /* RelistenTableViewController-LayoutKit.swift */,
 				7C8044081E6F29A800BA946E /* ArtistViewController.swift */,
 				43EF8D6720F01A41002FF970 /* CarPlayController.swift */,
 				430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */,
@@ -1966,7 +1963,6 @@
 				434066B0212FD27800FB1D94 /* RelistenNavigationController.swift in Sources */,
 				43B5342F210922CE00DE9B1F /* AXRatingViewNode.swift in Sources */,
 				435911AB21681BD300ACA85F /* VenueCellNode.swift in Sources */,
-				433A4404213361E50059D251 /* RelistenTableViewController-LayoutKit.swift in Sources */,
 				43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */,
 				433A4402213361040059D251 /* SettingsViewController.swift in Sources */,
 				43B5344D210922CE00DE9B1F /* SourceViewController.swift in Sources */,

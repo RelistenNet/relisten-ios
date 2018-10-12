@@ -14,7 +14,7 @@ import Siesta
 import AsyncDisplayKit
 import SINQ
 
-public class YearsViewController: RelistenAsyncTableViewController<[Year]> {
+public class YearsViewController: RelistenTableViewController<[Year]> {
     
     private let artist: ArtistWithCounts
     private var years: [Year] = []

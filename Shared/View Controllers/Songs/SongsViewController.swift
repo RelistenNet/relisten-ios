@@ -15,7 +15,7 @@ import AsyncDisplayKit
 import SINQ
 
 // TODO: Combine this with VenuesViewController into something more abstract. The code is practically identical
-class SongsViewController: RelistenAsyncTableViewController<[SongWithShowCount]> {
+class SongsViewController: RelistenTableViewController<[SongWithShowCount]> {
     
     let artist: ArtistWithCounts
     var songs: [Grouping<String, SongWithShowCount>] = []

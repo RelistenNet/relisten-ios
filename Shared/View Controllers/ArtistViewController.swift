@@ -18,7 +18,7 @@ extension Calendar {
     }
 }
 
-public class ArtistViewController : RelistenBaseAsyncTableViewController {
+public class ArtistViewController : RelistenBaseTableViewController {
     enum Sections: Int, RawRepresentable {
         case today = 0
         case recentlyPlayed

@@ -14,7 +14,7 @@ import Siesta
 import AsyncDisplayKit
 import SINQ
 
-public class SourcesViewController: RelistenAsyncTableViewController<ShowWithSources> {
+public class SourcesViewController: RelistenTableViewController<ShowWithSources> {
     
     let artist: Artist
     let show: Show?

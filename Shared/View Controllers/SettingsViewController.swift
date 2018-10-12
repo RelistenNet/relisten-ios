@@ -12,7 +12,7 @@ import LicensesViewController
 import SVProgressHUD
 import SafariServices
 
-public class SettingsViewController : RelistenBaseAsyncTableViewController {
+public class SettingsViewController : RelistenBaseTableViewController {
     enum Sections: Int, RawRepresentable {
         case lastFM = 0
         case downloads

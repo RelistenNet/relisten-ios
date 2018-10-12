@@ -34,7 +34,6 @@ PODS:
     - KissXML/Core
   - LastFm (1.17.0):
     - KissXML (~> 5.0.3)
-  - LayoutKit (10.0.0)
   - LicensesViewController (0.6.5)
   - MarqueeLabel (3.2.0):
     - MarqueeLabel/ObjC (= 3.2.0)
@@ -115,7 +114,6 @@ DEPENDENCIES:
   - FaveButton (from `https://github.com/farktronix/fave-button.git`)
   - KASlideShow
   - LastFm (from `https://github.com/farktronix/LastFm.git`)
-  - LayoutKit
   - LicensesViewController (from `https://github.com/tsukisa/LicenseGenerator-iOS.git`)
   - MZDownloadManager (from `https://github.com/farktronix/MZDownloadManager`)
   - NAKPlaybackIndicatorView
@@ -152,7 +150,6 @@ SPEC REPOS:
     - Interpolate
     - KASlideShow
     - KissXML
-    - LayoutKit
     - MarqueeLabel
     - NAKPlaybackIndicatorView
     - NapySlider
@@ -259,7 +256,6 @@ SPEC CHECKSUMS:
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
   KissXML: d19dd6dc65e0dc721ba92b3077b8ebdd240f1c1e
   LastFm: a624fa250bbda5950fccbd068ea7950dcba2da1f
-  LayoutKit: b6ddc9229bb94c7de07cf7d2f4be35458452ebac
   LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   MZDownloadManager: ba9e3289d28516b1a610228012371fc41ad2f149
@@ -286,6 +282,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: f9d21d7d9f1d029bb1ae47f0f2da3bed854969b5
 
-PODFILE CHECKSUM: 66d5e1e1e8b2c64dce997319f0183e509bd4ccd2
+PODFILE CHECKSUM: 1cee9eb06cf8cf74d37202a7071db9db51d52854
 
 COCOAPODS: 1.5.3

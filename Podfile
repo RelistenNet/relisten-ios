@@ -20,7 +20,6 @@ def apply_pods
   pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git" # The new official fork
   pod 'FaveButton', :git => "https://github.com/farktronix/fave-button.git" # Waiting on https://github.com/xhamr/fave-button/pull/42
   pod 'KASlideShow'
-  pod 'LayoutKit'
   pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git" # Waiting on https://github.com/gangverk/LastFm/pull/20
   pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"
   pod 'MZDownloadManager', :git => 'https://github.com/farktronix/MZDownloadManager' # Waiting on https://github.com/mzeeshanid/MZDownloadManager/pull/78 and https://github.com/mzeeshanid/MZDownloadManager/pull/79
@@ -98,12 +97,6 @@ post_install do |installer|
   # Workaround until this PR is fixed https://github.com/xhamr/fave-button/pull/39
   favebutton = installer.pods_project.targets.find { |target| target.name == 'FaveButton' }
   favebutton.build_configurations.each do |config|
-    config.build_settings['SWIFT_VERSION'] = '4.0'
-  end
-  
-  # Workaround until this PR is fixed https://github.com/linkedin/LayoutKit/issues/233
-  layoutkit = installer.pods_project.targets.find { |target| target.name == 'LayoutKit' }
-  layoutkit.build_configurations.each do |config|
     config.build_settings['SWIFT_VERSION'] = '4.0'
   end
 end

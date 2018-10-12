@@ -121,7 +121,11 @@ public class ArtistViewController : RelistenBaseAsyncTableViewController {
 
         tableNode.view.separatorStyle = .none
         
-        title = artist.name
+        if RelistenApp.sharedApp.isPhishOD {
+            title = RelistenApp.sharedApp.appName
+        } else {
+            title = artist.name
+        }
         
         for res in [resourceToday, resourceRecentlyPerformed, resourceRecentlyUpdated] {
             res.addObserver(self)

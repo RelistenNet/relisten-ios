@@ -12,6 +12,7 @@ import AGAudioPlayer
 import Observable
 import StoreKit
 import Crashlytics
+import AsyncDisplayKit
 
 extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public func trackButtonTapped(_ button: UIButton, forTrack track: Track) {
@@ -352,18 +353,17 @@ extension PlaybackController : AGAudioPlayerViewControllerCellDataSource {
     public func cell(inTableView tableView: UITableView, basedOnCell cell: UITableViewCell, atIndexPath: IndexPath, forPlaybackItem playbackItem: AGAudioItem, isCurrentlyPlaying: Bool) -> UITableViewCell {
         let completeInfo = (playbackItem as! SourceTrackAudioItem).track
         
-        let layout = TrackStatusLayout(
+        let trackNode = TrackStatusCellNode(
             withTrack: completeInfo,
             withHandler: viewController,
             usingExplicitTrackNumber: atIndexPath.row + 1,
             showingArtistInformation: true
         )
-        
-        cellContentViewWidth = cell.contentView.frame.size.width
-        
-        layout
-            .arrangement(width: cellContentViewWidth, height: nil)
-            .makeViews(in: cell.contentView, direction: .leftToRight)
+        trackNode.view.frame = CGRect(x: 0, y: 0, width: cell.frame.width - 64, height: cell.frame.height)
+        for view in cell.contentView.subviews {
+            view.removeFromSuperview()
+        }
+        cell.contentView.addSubview(trackNode.view)
         
         return cell
     }
@@ -371,16 +371,17 @@ extension PlaybackController : AGAudioPlayerViewControllerCellDataSource {
     public func heightForCell(inTableView tableView: UITableView, atIndexPath: IndexPath, forPlaybackItem playbackItem: AGAudioItem, isCurrentlyPlaying: Bool) -> CGFloat {
         let completeInfo = (playbackItem as! SourceTrackAudioItem).track
         
-        let layout = TrackStatusLayout(
+        let trackNode = TrackStatusCellNode(
             withTrack: completeInfo,
             withHandler: viewController,
             usingExplicitTrackNumber: atIndexPath.row + 1,
             showingArtistInformation: true
         )
+        trackNode.displaysAsynchronously = false
+        let sizeRange = ASSizeRange(min: CGSize.zero, max: CGSize(width: UIScreen.main.bounds.size.width, height: CGFloat.greatestFiniteMagnitude))
+        let layout = trackNode.layoutThatFits(sizeRange)
         
-        return layout
-            .arrangement(width: cellContentViewWidth, height: nil)
-            .frame.height
+        return layout.size.height
     }
 }
 

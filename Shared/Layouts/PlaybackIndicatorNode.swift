@@ -28,18 +28,29 @@ public class PlaybackIndicatorNode : ASDisplayNode {
             performOnMainQueueSync {
                 if let indicator = indicatorNode.view as? NAKPlaybackIndicatorView {
                     indicator.state = newValue
+                    self.setNeedsLayout()
                 }
             }
         }
     }
 
     public override init() {
-        indicatorNode = ASDisplayNode(viewBlock: { NAKPlaybackIndicatorView(frame: CGRect(x: 0, y: 0, width: 12, height: 12), style: NAKPlaybackIndicatorViewStyle.default()) })
+        indicatorNode = ASDisplayNode(viewBlock: {
+            NAKPlaybackIndicatorView(frame: CGRect(x: 0, y: 0, width: 12, height: 12), style: NAKPlaybackIndicatorViewStyle.default())
+        })
         
         super.init()
         
         automaticallyManagesSubnodes = true
     }
     
-    
+    open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        indicatorNode.style.layoutPosition = CGPoint(x: 0, y: 0)
+        indicatorNode.style.preferredSize = CGSize(width: 12, height: 12)
+        
+        return ASAbsoluteLayoutSpec(
+            sizing: ASAbsoluteLayoutSpecSizing.sizeToFit,
+            children: [ indicatorNode ]
+        )
+    }
 }

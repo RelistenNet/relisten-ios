@@ -15,7 +15,7 @@ import AsyncDisplayKit
 import SINQ
 
 // TODO: Combine this with VenuesViewController into something more abstract. The code is practically identical
-class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UISearchResultsUpdating {
+class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UISearchResultsUpdating, UISearchBarDelegate {
     
     let artist: ArtistWithCounts
     var allSongs: SinqSequence<SongWithShowCount>?
@@ -35,10 +35,15 @@ class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UIS
         // Setup the Search Controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
+        
+        searchController.searchBar.delegate = self
+        searchController.searchBar.scopeButtonTitles = ["All", "SBD", "Remast", "Downloaded"]
+        
         searchController.searchBar.placeholder = "Search Songs"
         searchController.searchBar.barStyle = .blackTranslucent
         searchController.searchBar.barTintColor = AppColors.primary
         searchController.searchBar.tintColor = AppColors.textOnPrimary
+        
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
@@ -75,7 +80,7 @@ class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UIS
     
     func songForIndexPath(_ indexPath: IndexPath) -> SongWithShowCount? {
         var retval : SongWithShowCount? = nil
-        let curSongs = searchBarIsEmpty() ? songs : filteredSongs
+        let curSongs = isFiltering() ? songs : filteredSongs
         
         if indexPath.section >= 0, indexPath.section < curSongs.count {
             let allSongs = curSongs[indexPath.section].values
@@ -89,7 +94,7 @@ class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UIS
     //MARK: Table Data Source
     
     func numberOfSections(in tableNode: ASTableNode) -> Int {
-        if searchBarIsEmpty() {
+        if isFiltering() {
             return songs.count
         } else {
             return filteredSongs.count
@@ -97,7 +102,7 @@ class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UIS
     }
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        if searchBarIsEmpty() {
+        if isFiltering() {
             return songs[section].values.count()
         } else {
             return filteredSongs[section].values.count()
@@ -109,7 +114,7 @@ class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UIS
             return nil
         }
         
-        if searchBarIsEmpty() {
+        if isFiltering() {
             return songs[section].key
         } else {
             return filteredSongs[section].key
@@ -117,7 +122,7 @@ class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UIS
     }
     
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        if searchBarIsEmpty() {
+        if isFiltering() {
             return songs.map({ return $0.key })
         } else {
             return filteredSongs.map({ return $0.key })
@@ -145,11 +150,18 @@ class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UIS
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
+    func isFiltering() -> Bool {
+        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+        return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+    }
+    
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         let searchTextLC = searchText.lowercased()
         if let allSongs = allSongs {
             filteredSongs = allSongs.filter({ (song) -> Bool in
-                    return song.name.lowercased().contains(searchTextLC)
+                    let stringMatch = song.name.lowercased().contains(searchTextLC)
+                    let scopeMatch = (scope == "All")
+                    return (stringMatch && scopeMatch)
                 }).groupBy({
                     return $0.sortName.groupNameForTableView()
                 })
@@ -165,8 +177,15 @@ class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UIS
     
     //MARK: UISearchResultsUpdating
     public func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
         if let searchText = searchController.searchBar.text {
-            filterContentForSearchText(searchText)
+            filterContentForSearchText(searchText, scope: scope)
         }
+    }
+    
+    //MARK: UISearchBarDelegate
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }

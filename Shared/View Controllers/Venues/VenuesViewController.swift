@@ -25,29 +25,4 @@ class VenuesViewController: GroupedViewController<VenueWithShowCount> {
     
     override func cellNodeBlockForItem(_ item: VenueWithShowCount) -> ASCellNodeBlock { return { VenueCellNode(venue: item, forArtist: self.artist) } }
     override func viewControllerForItem(_ item: VenueWithShowCount) -> UIViewController { return VenueViewController(artist: artist, venue: item) }
-    
-    //MARK: AsyncDisplayKit Stupidity
-    override func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return super.numberOfSections(in: tableNode)
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return super.tableView(tableView, titleForHeaderInSection: section)
-    }
-    
-    override public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return super.sectionIndexTitles(for: tableView)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return super.tableNode(tableNode, numberOfRowsInSection: section)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        return super.tableNode(tableNode, didSelectRowAt: indexPath)
-    }
 }

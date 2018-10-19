@@ -87,7 +87,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
                 return a.key <= b.key
             })
     }
-        
+    
     func filteredItemsForSearchText(_ searchText: String, scope: String = "All") -> [Grouping<String, T>] {
         return sinq(allItems)
             .filter({ (item) -> Bool in
@@ -125,11 +125,11 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     }
     
     //MARK: Table Data Source
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
         return curItems.count
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         let items = curItems
         guard section >= 0, section < items.count else {
             return 0
@@ -138,7 +138,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
         return items[section].values.count()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let items = curItems
         guard section >= 0, section < items.count else {
             return nil
@@ -146,12 +146,12 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
         return items[section].key
     }
     
-    public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+    override public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         let items = curItems
         return items.map({ return $0.key })
     }
     
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         if let item = itemForIndexPath(indexPath) {
             return cellNodeBlockForItem(item)
         } else {
@@ -159,7 +159,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
         }
     }
     
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+    override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
         
         if let item = itemForIndexPath(indexPath) {

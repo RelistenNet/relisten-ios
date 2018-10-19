@@ -56,6 +56,39 @@ open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, AS
     }
     
     // MARK: TableView "dataSource" and "delegate"
+    open func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return 0
+    }
+    
+    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return nil
+    }
+    
+    open func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return nil
+    }
+    
+    open func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    open func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return { return ASCellNode() }
+    }
+    
+    open func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+        return ASCellNode()
+    }
+    
+    open func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+    }
+    
+    open func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    }
+    
+    open func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
 }
 
 open class RelistenTableViewController<TData> : RelistenBaseTableViewController {

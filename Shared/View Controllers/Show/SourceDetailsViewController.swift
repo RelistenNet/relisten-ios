@@ -144,15 +144,13 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
-}
-
-// MARK: ASTableDataSource
-extension SourceDetailsViewController {
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
+    
+    // MARK: ASTableDataSource
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
         return Sections.count.rawValue
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .venue:
             return venueNodes.count
@@ -163,7 +161,7 @@ extension SourceDetailsViewController {
         }
     }
     
-    public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+    override public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
         guard indexPath.section >= 0, indexPath.section < Sections.count.rawValue else {
             LogError("Index for section out of bounds: \(indexPath)")
             return ASCellNode()
@@ -190,7 +188,7 @@ extension SourceDetailsViewController {
         fatalError()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Sections(rawValue: section)! {
         case .venue:
             return nil
@@ -201,7 +199,7 @@ extension SourceDetailsViewController {
         }
     }
     
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+    override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section >= 0, indexPath.section < Sections.count.rawValue else {
             LogError("Index for section out of bounds: \(indexPath)")
             return
@@ -232,7 +230,7 @@ extension SourceDetailsViewController {
         tableNode.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+    override public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         switch Sections(rawValue: indexPath.section)! {
         case .venue:
             guard indexPath.row >= 0, indexPath.row < venueNodes.count else {

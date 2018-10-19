@@ -262,11 +262,11 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     
     // MARK: UITableViewDataSource
     
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
         return Sections.count.rawValue
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .recentlyPlayed:
             return recentlyPlayedTracks.count > 0 ? 1 : 0
@@ -289,7 +289,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         }
     }
     
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         let row = indexPath.row
         
         switch Sections(rawValue: indexPath.section)! {
@@ -326,8 +326,8 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        tableNode.deselectRow(at: indexPath, animated: true)
         
         let row = indexPath.row
         
@@ -349,7 +349,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         }
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Sections(rawValue: section)! {
         case .recentlyPlayed:
             return recentlyPlayedTracks.count > 0 ? "Recently Played" : nil
@@ -377,7 +377,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         }
     }
 
-    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    override public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let show: Show?
         let artist: Artist?
         var source: SourceFull? = nil

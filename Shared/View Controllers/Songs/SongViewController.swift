@@ -44,24 +44,4 @@ class SongViewController: ShowListViewController<SongWithShows> {
     override func extractShowsAndSource(forData: SongWithShows) -> [ShowWithSingleSource] {
         return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil) })
     }
-    
-    override func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return super.numberOfSections(in: tableNode)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return super.tableNode(tableNode, numberOfRowsInSection: section)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return super.tableView(tableView, titleForHeaderInSection: section)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        return super.tableNode(tableNode, didSelectRowAt: indexPath)
-    }
 }

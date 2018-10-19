@@ -12,6 +12,7 @@
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
 		430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */; };
 		4325A45221238FEB00A0414B /* LegacyImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4325A45121238FEB00A0414B /* LegacyImporter.swift */; };
+		432B00E9217A4DA600C36073 /* GroupedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432B00E8217A4DA600C36073 /* GroupedViewController.swift */; };
 		4330E72C211E0CA200329ED7 /* DownloadProgressNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */; };
 		4330E7372120A90400329ED7 /* RelistenLegacyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */; };
 		4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */; };
@@ -213,6 +214,7 @@
 		430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayDataSource.swift; path = Helpers/CarPlayDataSource.swift; sourceTree = "<group>"; };
 		430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReentrantDispatchQueue.swift; path = Extensions/ReentrantDispatchQueue.swift; sourceTree = "<group>"; };
 		4325A45121238FEB00A0414B /* LegacyImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyImporter.swift; sourceTree = "<group>"; };
+		432B00E8217A4DA600C36073 /* GroupedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupedViewController.swift; path = "View Controllers/General/GroupedViewController.swift"; sourceTree = "<group>"; };
 		4330E72B211E0CA200329ED7 /* DownloadProgressNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProgressNode.swift; sourceTree = "<group>"; };
 		4330E7362120A90400329ED7 /* RelistenLegacyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyAPI.swift; sourceTree = "<group>"; };
 		4330E7382120A99200329ED7 /* RelistenLegacyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenLegacyModels.swift; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 			children = (
 				7C31551820BFB71B00F07622 /* LongTextViewController.swift */,
 				43B0472C20FD59D000251046 /* ShowListViewController.swift */,
+				432B00E8217A4DA600C36073 /* GroupedViewController.swift */,
 				430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */,
 				43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */,
 			);
@@ -1908,6 +1911,7 @@
 				43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */,
 				433A44062133AA380059D251 /* CreditsNode.swift in Sources */,
 				43B5341E210922CE00DE9B1F /* YearSorting.swift in Sources */,
+				432B00E9217A4DA600C36073 /* GroupedViewController.swift in Sources */,
 				4330E7412121470C00329ED7 /* Resource.swift in Sources */,
 				435911A72168178700ACA85F /* SongNode.swift in Sources */,
 				43A035D2210D255700C087DD /* FavoriteButtonNode.swift in Sources */,

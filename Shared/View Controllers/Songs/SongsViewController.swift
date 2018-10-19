@@ -6,186 +6,48 @@
 //  Copyright © 2017 Alec Gorge. All rights reserved.
 //
 
-import Foundation
-
 import UIKit
 
 import Siesta
 import AsyncDisplayKit
 import SINQ
 
-// TODO: Combine this with VenuesViewController into something more abstract. The code is practically identical
-class SongsViewController: RelistenTableViewController<[SongWithShowCount]>, UISearchResultsUpdating, UISearchBarDelegate {
-    
-    let artist: ArtistWithCounts
-    var allSongs: SinqSequence<SongWithShowCount>?
-    var songs: [Grouping<String, SongWithShowCount>] = []
-    var filteredSongs: [Grouping<String, SongWithShowCount>] = []
-    
-    let searchController: UISearchController = UISearchController(searchResultsController: nil)
-    
-    public required init(artist: ArtistWithCounts) {
-        self.artist = artist
-        
-        super.init(useCache: true, refreshOnAppear: true)
-        
-        self.tableNode.view.sectionIndexColor = AppColors.primary
-        self.tableNode.view.sectionIndexMinimumDisplayRowCount = 4
-        
-        // Setup the Search Controller
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        
-        searchController.searchBar.delegate = self
-        searchController.searchBar.scopeButtonTitles = ["All", "SBD", "Remast", "Downloaded"]
-        
-        searchController.searchBar.placeholder = "Search Songs"
-        searchController.searchBar.barStyle = .blackTranslucent
-        searchController.searchBar.barTintColor = AppColors.primary
-        searchController.searchBar.tintColor = AppColors.textOnPrimary
-        
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
-    
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
-        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = "Songs"
-    }
+class SongsViewController: GroupedViewController<SongWithShowCount> {
+    override var scopeButtonTitles : [String]? { get { return ["All", "SBD", "Remast", "Downloaded"] } }
+    override var searchPlaceholder : String { get { return "Search Songs" } }
+    override var title: String? { get { return "Songs" } set { } }
     
     override var resource: Resource? { get { return api.songs(byArtist: artist) } }
     
-    public override func dataChanged(_ data: [SongWithShowCount]) {
-        allSongs = sinq(data)
-        if let allSongs = allSongs {
-            songs = allSongs
-                .groupBy({
-                    return $0.sortName.groupNameForTableView()
-                })
-                .toArray()
-                .sorted(by: { (a, b) -> Bool in
-                    return a.key <= b.key
-                })
-        }
+    override func groupNameForItem(_ item: SongWithShowCount) -> String { return item.name.groupNameForTableView() }
+    override func searchStringMatchesItem(_ item: SongWithShowCount, searchText: String) -> Bool { return item.name.lowercased().contains(searchText) }
+    override func scopeMatchesItem(_ item: SongWithShowCount, scope: String) -> Bool { return (scope == "All") }
+    
+    override func cellNodeBlockForItem(_ item: SongWithShowCount) -> ASCellNodeBlock { return { SongNode(song: item) } }
+    override func viewControllerForItem(_ item: SongWithShowCount) -> UIViewController { return SongViewController(artist: artist, song: item) }
+    
+    //MARK: AsyncDisplayKit Stupidity
+    override func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return super.numberOfSections(in: tableNode)
     }
     
-    func songForIndexPath(_ indexPath: IndexPath) -> SongWithShowCount? {
-        var retval : SongWithShowCount? = nil
-        let curSongs = isFiltering() ? songs : filteredSongs
-        
-        if indexPath.section >= 0, indexPath.section < curSongs.count {
-            let allSongs = curSongs[indexPath.section].values
-            if indexPath.row >= 0, indexPath.row < allSongs.count() {
-                retval = allSongs.elementAt(indexPath.row)
-            }
-        }
-        return retval
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return super.tableView(tableView, titleForHeaderInSection: section)
     }
     
-    //MARK: Table Data Source
-    
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        if isFiltering() {
-            return songs.count
-        } else {
-            return filteredSongs.count
-        }
+    override public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return super.sectionIndexTitles(for: tableView)
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {
-            return songs[section].values.count()
-        } else {
-            return filteredSongs[section].values.count()
-        }
+    override func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return super.tableNode(tableNode, numberOfRowsInSection: section)
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard section != 0 else {
-            return nil
-        }
-        
-        if isFiltering() {
-            return songs[section].key
-        } else {
-            return filteredSongs[section].key
-        }
+    override func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
     }
     
-    public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        if isFiltering() {
-            return songs.map({ return $0.key })
-        } else {
-            return filteredSongs.map({ return $0.key })
-        }
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        if let song = songForIndexPath(indexPath) {
-            return { SongNode(song: song) }
-        } else {
-            return { ASCellNode() }
-        }
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        tableNode.deselectRow(at: indexPath, animated: true)
-        
-        if let song = songForIndexPath(indexPath) {
-            navigationController?.pushViewController(SongViewController(artist: artist, song: song), animated: true)
-        }
-    }
-    
-    //MARK: Searching
-    func searchBarIsEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    func isFiltering() -> Bool {
-        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
-        return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
-    }
-    
-    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        let searchTextLC = searchText.lowercased()
-        if let allSongs = allSongs {
-            filteredSongs = allSongs.filter({ (song) -> Bool in
-                    let stringMatch = song.name.lowercased().contains(searchTextLC)
-                    let scopeMatch = (scope == "All")
-                    return (stringMatch && scopeMatch)
-                }).groupBy({
-                    return $0.sortName.groupNameForTableView()
-                })
-                .toArray()
-                .sorted(by: { (a, b) -> Bool in
-                    return a.key <= b.key
-                })
-        } else {
-            filteredSongs = []
-        }
-        tableNode.reloadData()
-    }
-    
-    //MARK: UISearchResultsUpdating
-    public func updateSearchResults(for searchController: UISearchController) {
-        let searchBar = searchController.searchBar
-        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
-        if let searchText = searchController.searchBar.text {
-            filterContentForSearchText(searchText, scope: scope)
-        }
-    }
-    
-    //MARK: UISearchBarDelegate
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+    override func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        return super.tableNode(tableNode, didSelectRowAt: indexPath)
     }
 }

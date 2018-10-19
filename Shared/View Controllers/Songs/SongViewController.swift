@@ -17,7 +17,7 @@ import SINQ
 class SongViewController: ShowListViewController<SongWithShows> {
     let song: Song
     
-    public required init(artist: ArtistWithCounts, song: Song) {
+    public required init(artist: Artist, song: Song) {
         self.song = song
         
         super.init(

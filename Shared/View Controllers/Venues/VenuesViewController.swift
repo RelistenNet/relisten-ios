@@ -12,93 +12,42 @@ import Siesta
 import AsyncDisplayKit
 import SINQ
 
-// TODO: Combine this with SongsViewController into something more abstract. The code is practically identical
-class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
-    let artist: ArtistWithCounts
-    var venues: [Grouping<String, VenueWithShowCount>] = []
-    
-    public required init(artist: ArtistWithCounts) {
-        self.artist = artist
-        
-        super.init(useCache: true, refreshOnAppear: true)
-        
-        self.tableNode.view.sectionIndexColor = AppColors.primary
-        self.tableNode.view.sectionIndexMinimumDisplayRowCount = 4
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
-    
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
-        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = "Venues"
-    }
+class VenuesViewController: GroupedViewController<VenueWithShowCount> {
+    override var scopeButtonTitles : [String]? { get { return ["All", "SBD", "Remast", "Downloaded"] } }
+    override var searchPlaceholder : String { get { return "Search Venues" } }
+    override var title: String? { get { return "Venues" } set { } }
     
     override var resource: Resource? { get { return api.venues(forArtist: artist) } }
     
-    public override func dataChanged(_ data: [VenueWithShowCount]) {
-        venues = sinq(data)
-            .groupBy({
-                return $0.sortName.groupNameForTableView()
-            })
-            .toArray()
-            .sorted(by: { (a, b) -> Bool in
-                return a.key <= b.key
-        })
+    override func groupNameForItem(_ item: VenueWithShowCount) -> String { return item.sortName.groupNameForTableView() }
+    override func searchStringMatchesItem(_ item: VenueWithShowCount, searchText: String) -> Bool { return item.name.lowercased().contains(searchText) }
+    override func scopeMatchesItem(_ item: VenueWithShowCount, scope: String) -> Bool { return (scope == "All") }
+    
+    override func cellNodeBlockForItem(_ item: VenueWithShowCount) -> ASCellNodeBlock { return { VenueCellNode(venue: item, forArtist: self.artist) } }
+    override func viewControllerForItem(_ item: VenueWithShowCount) -> UIViewController { return VenueViewController(artist: artist, venue: item) }
+    
+    //MARK: AsyncDisplayKit Stupidity
+    override func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return super.numberOfSections(in: tableNode)
     }
     
-    func venueForIndexPath(_ indexPath: IndexPath) -> VenueWithShowCount? {
-        var retval : VenueWithShowCount? = nil
-        if indexPath.section >= 0, indexPath.section < venues.count {
-            let allVenues = venues[indexPath.section].values
-            if indexPath.row >= 0, indexPath.row < allVenues.count() {
-                retval = allVenues.elementAt(indexPath.row)
-            }
-        }
-        return retval
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return super.tableView(tableView, titleForHeaderInSection: section)
     }
     
-    //MARK: Table Data Source
-    
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return venues.count
+    override public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return super.sectionIndexTitles(for: tableView)
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return venues[section].values.count()
+    override func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return super.tableNode(tableNode, numberOfRowsInSection: section)
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard section != 0 else {
-            return nil
-        }
-        
-        return venues[section].key
+    override func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
     }
     
-    public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return venues.map({ return $0.key })
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        if let venue = venueForIndexPath(indexPath) {
-            return { VenueCellNode(venue: venue, forArtist: self.artist) }
-        } else {
-            return { ASCellNode() }
-        }
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        tableNode.deselectRow(at: indexPath, animated: true)
-        
-        if let venue = venueForIndexPath(indexPath) {
-            navigationController?.pushViewController(VenueViewController(artist: artist, venue: venue), animated: true)
-        }
+    override func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        return super.tableNode(tableNode, didSelectRowAt: indexPath)
     }
 }

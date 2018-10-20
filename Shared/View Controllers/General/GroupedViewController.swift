@@ -20,6 +20,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     private var filteredItems: [Grouping<String, T>] = []
     
     let searchController: UISearchController = UISearchController(searchResultsController: nil)
+    private let tableUpdateQueue = DispatchQueue(label: "net.relisten.groupedViewController.queue")
     
     public required init(artist: Artist, enableSearch: Bool = true) {
         self.artist = artist
@@ -73,8 +74,14 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     
     //MARK: Refreshing Items
     public override func dataChanged(_ data: [T]) {
-        allItems = data
-        groupedItems = sortAndGroupData(allItems)
+        let grouped = sortAndGroupData(data)
+        tableUpdateQueue.async {
+            self.allItems = data
+            self.groupedItems = grouped
+            DispatchQueue.main.async {
+                self.tableNode.reloadData()
+            }
+        }
     }
     
     func sortAndGroupData(_ data: [T]) -> [Grouping<String, T>] {
@@ -101,8 +108,10 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
             })
     }
     
-    private var curItems : [Grouping<String, T>] { get {
-        // TODO: Lock around this
+    private var curItems : [Grouping<String, T>] {
+        get {
+            dispatchPrecondition(condition: .onQueue(self.tableUpdateQueue))
+            
             if isFiltering() {
                 return filteredItems
             } else {
@@ -112,6 +121,8 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     }
     
     func itemForIndexPath(_ indexPath: IndexPath) -> T? {
+        dispatchPrecondition(condition: .onQueue(self.tableUpdateQueue))
+        
         var retval : T? = nil
         
         let items = curItems
@@ -126,34 +137,57 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     
     //MARK: Table Data Source
     override public func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return curItems.count
+        var count : Int = 0
+        tableUpdateQueue.sync {
+            count = curItems.count
+        }
+        return count
     }
     
     override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        let items = curItems
-        guard section >= 0, section < items.count else {
-            return 0
+        var count : Int = 0
+        tableUpdateQueue.sync {
+            let items = curItems
+            guard section >= 0, section < items.count else {
+                return
+            }
+            count = items[section].values.count()
         }
-        
-        return items[section].values.count()
+        return count
     }
     
     override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let items = curItems
-        guard section >= 0, section < items.count else {
-            return nil
+        var title : String? = nil
+        tableUpdateQueue.sync {
+            let items = curItems
+            guard section >= 0, section < items.count else {
+                return
+            }
+            title = items[section].key
         }
-        return items[section].key
+        return title
     }
     
     override public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        let items = curItems
-        return items.map({ return $0.key })
+        var retval : [String]? = nil
+        tableUpdateQueue.sync {
+            let items = curItems
+            retval = items.map({ return $0.key })
+        }
+        return retval
     }
     
     override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        if let item = itemForIndexPath(indexPath) {
-            return cellNodeBlockForItem(item)
+        var retval : ASCellNodeBlock? = nil
+        
+        tableUpdateQueue.sync {
+            if let item = itemForIndexPath(indexPath) {
+                retval = cellNodeBlockForItem(item)
+            }
+        }
+        
+        if let retval = retval {
+            return retval
         } else {
             return { ASCellNode() }
         }
@@ -162,7 +196,12 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
         
-        if let item = itemForIndexPath(indexPath) {
+        var item : T? = nil
+        tableUpdateQueue.sync {
+            item = itemForIndexPath(indexPath)
+        }
+        
+        if let item = item {
             navigationController?.pushViewController(viewControllerForItem(item), animated: true)
         }
     }
@@ -179,8 +218,12 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         let searchTextLC = searchText.lowercased()
-        filteredItems = filteredItemsForSearchText(searchTextLC, scope: scope)
-        tableNode.reloadData()
+        tableUpdateQueue.async {
+            self.filteredItems = self.filteredItemsForSearchText(searchTextLC, scope: scope)
+            DispatchQueue.main.async {
+                self.tableNode.reloadData()
+            }
+        }
     }
 
     //MARK: UISearchResultsUpdating

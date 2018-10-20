@@ -23,4 +23,9 @@ class SongsViewController: GroupedViewController<SongWithShowCount> {
 
     override func cellNodeBlockForItem(_ item: SongWithShowCount) -> ASCellNodeBlock { return { SongNode(song: item) } }
     override func viewControllerForItem(_ item: SongWithShowCount) -> UIViewController { return SongViewController(artist: artist, song: item) }
+
+    // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
+    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
+    }
 }

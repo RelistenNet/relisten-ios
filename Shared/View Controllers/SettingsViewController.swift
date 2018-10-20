@@ -123,7 +123,7 @@ public class SettingsViewController : RelistenBaseTableViewController {
         }
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+    public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
         var n: ASCellNode
         
         switch Sections(rawValue: indexPath.section)! {

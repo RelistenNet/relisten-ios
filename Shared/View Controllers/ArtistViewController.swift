@@ -258,7 +258,7 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
         }
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         var n: ASCellNode
         
         switch Sections(rawValue: indexPath.section)! {

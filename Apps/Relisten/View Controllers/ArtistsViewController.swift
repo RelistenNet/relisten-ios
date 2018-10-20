@@ -289,7 +289,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         }
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         let row = indexPath.row
         
         switch Sections(rawValue: indexPath.section)! {

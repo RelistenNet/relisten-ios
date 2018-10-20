@@ -72,13 +72,7 @@ open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, AS
         return 0
     }
     
-    open func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return { return ASCellNode() }
-    }
-    
-    open func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
-        return ASCellNode()
-    }
+    // We can't implement nodeBlockForRowAtIndexPath or nodeForRowAtIndexPath because nodeBlockForRowAtIndexPath always takes precedence, so it prevents subclasses from using that method
     
     open func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
     }

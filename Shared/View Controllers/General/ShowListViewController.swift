@@ -267,7 +267,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T> {
         return numberOfRows(in: section)
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return nodeBlockForRow(at: indexPath)
     }
     

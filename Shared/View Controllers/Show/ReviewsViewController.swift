@@ -52,7 +52,7 @@ public class ReviewsViewController : RelistenTableViewController<[SourceReview]>
         return reviews.count
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         guard indexPath.row >= 0, indexPath.row < reviews.count else {
             return { ASCellNode() }
         }

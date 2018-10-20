@@ -161,7 +161,7 @@ public class SourceDetailsViewController : RelistenBaseTableViewController {
         }
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+    public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
         guard indexPath.section >= 0, indexPath.section < Sections.count.rawValue else {
             LogError("Index for section out of bounds: \(indexPath)")
             return ASCellNode()

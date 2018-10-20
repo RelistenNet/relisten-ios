@@ -58,7 +58,7 @@ public class YearsViewController: RelistenTableViewController<[Year]> {
         return years.count
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         let year = years[indexPath.row]
         
         return { YearNode(year: year) }

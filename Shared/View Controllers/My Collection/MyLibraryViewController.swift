@@ -62,4 +62,9 @@ class MyLibraryViewController: ShowListViewController<Results<FavoritedSource>> 
     func loadMyShows() -> Results<FavoritedSource> {
         return MyLibrary.shared.favoritedSourcesPlayedByArtist(artist)
     }
+    
+    // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
+    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
+    }
 }

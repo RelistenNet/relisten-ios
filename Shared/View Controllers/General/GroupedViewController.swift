@@ -184,7 +184,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
         return retval
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         var retval : ASCellNodeBlock? = nil
         
         tableUpdateQueue.sync {

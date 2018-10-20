@@ -179,7 +179,7 @@ public class SourcesViewController: RelistenTableViewController<ShowWithSources>
         return sources.count
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         guard let show = latestData else { return { ASCellNode() } }
         
         let source = sources[indexPath.row]

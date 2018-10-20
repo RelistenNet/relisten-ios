@@ -97,7 +97,7 @@ public class SourceViewController: RelistenBaseTableViewController {
         return source.sets[section - 1].tracks.count
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         let artist = self.artist
         let source = self.source
         let show = self.show

@@ -49,7 +49,7 @@ public class LongTextViewController : RelistenBaseTableViewController {
         return 1
     }
     
-    override public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+    public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
         return textNode
     }
     

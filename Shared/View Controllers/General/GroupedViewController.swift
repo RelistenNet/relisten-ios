@@ -38,6 +38,13 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
             searchController.searchBar.delegate = self
             if let buttonTitles = self.scopeButtonTitles {
                 searchController.searchBar.scopeButtonTitles = buttonTitles
+                searchController.searchBar.showsScopeBar = true
+                let regularFont = UIFont.preferredFont(forTextStyle: .caption1)
+                searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
+                                                                                 NSAttributedString.Key.font: regularFont], for: .normal)
+                let boldFont = regularFont.font(scaledBy: 1.0, withDifferentWeight: .Bold)
+                searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
+                                                                                 NSAttributedString.Key.font: boldFont], for: .selected)
             }
             
             searchController.searchBar.placeholder = self.searchPlaceholder
@@ -98,7 +105,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     func filteredItemsForSearchText(_ searchText: String, scope: String = "All") -> [Grouping<String, T>] {
         return sinq(allItems)
             .filter({ (item) -> Bool in
-                return (self.scopeMatchesItem(item, scope: scope) && self.searchStringMatchesItem(item, searchText: searchText))
+                return ((scope == "All" || self.scopeMatchesItem(item, scope: scope)) && (searchText == "" || self.searchStringMatchesItem(item, searchText: searchText)))
             }).groupBy({
                 return self.groupNameForItem($0)
             })
@@ -213,7 +220,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     
     func isFiltering() -> Bool {
         let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
-        return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
+        return (searchController.isActive && !searchBarIsEmpty()) || searchBarScopeIsFiltering
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
@@ -229,7 +236,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     //MARK: UISearchResultsUpdating
     public func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        let scope = searchBar.scopeButtonTitles?[searchBar.selectedScopeButtonIndex] ?? "All"
         if let searchText = searchController.searchBar.text {
             filterContentForSearchText(searchText, scope: scope)
         }
@@ -239,4 +246,5 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
+    
 }

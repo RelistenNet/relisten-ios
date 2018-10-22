@@ -14,7 +14,7 @@ import AsyncDisplayKit
 import RealmSwift
 import SVProgressHUD
 
-class ArtistsViewController: RelistenAsyncTableController<[ArtistWithCounts]>, ASCollectionDelegate {
+class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, ASCollectionDelegate {
     enum Sections: Int, RawRepresentable {
         case favorited = 0
         case recentlyPlayed

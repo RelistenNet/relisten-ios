@@ -35,8 +35,8 @@ public class SourceDetailsNode : ASCellNode {
         
         favoriteButton = FavoriteButtonNode()
         
-        ratingTextNode = (!artist.features.reviews && !artist.features.ratings) ? nil : ASTextNode(String(format: "%.2f ★", source.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
-//        self.ratingNode = AXRatingViewNode(value: source.avg_rating / 10.0)
+//        ratingTextNode = (!artist.features.reviews && !artist.features.ratings) ? nil : ASTextNode(String(format: "%.2f ★", source.avg_rating / 10.0 * 5.0), textStyle: .subheadline)
+        self.ratingNode = AXRatingViewNode(value: source.avg_rating / 10.0)
         self.locationNode = ASTextNode(source.venue?.location ?? show.venue?.location ?? "", textStyle: .subheadline, color: AppColors.mutedText)
         
         var metaText = "\(source.duration == nil ? "" : source.duration!.humanize())"
@@ -72,56 +72,10 @@ public class SourceDetailsNode : ASCellNode {
         }
         
         if artist.features.source_information {
-            var taperName : String? = nil
-            var transferrerName : String? = nil
-            
-            var taperNode : ASTextNode? = nil
-            var transferrerNode : ASTextNode? = nil
-            
-            var sourcePeople : [ASTextNode] = []
-            
-            if let s = source.taper, s.count > 0 {
-                taperName = s
-                
-                taperNode = ASTextNode()
-                taperNode?.attributedText = String.createPrefixedAttributedText(prefix: "Taper: ", taperName)
-            }
-            
-            if let s = source.transferrer, s.count > 0 {
-                transferrerName = s
-                
-                transferrerNode = ASTextNode()
-                transferrerNode?.attributedText = String.createPrefixedAttributedText(prefix: "Transferrer: ", transferrerName)
-            }
-            
-            if let taperNode = taperNode {
-                sourcePeople.append(taperNode)
-            }
-            
-            if let transferrerNode = transferrerNode, transferrerName != taperName {
-                sourcePeople.append(transferrerNode)
-            }
-            
-            sourcePeopleNode = ASStackLayoutSpec(
-                direction: .horizontal,
-                spacing: 8,
-                justifyContent: .start,
-                alignItems: .center,
-                children: sourcePeople
-            )
-            sourcePeopleNode?.flexWrap = .wrap
-            
-            if let s = source.source, s.count > 0 {
-                sourceNode = ASTextNode()
-                sourceNode?.attributedText = String.createPrefixedAttributedText(prefix: "Source: ", source.source)
-            }
-            else {
-                sourceNode = nil
-            }
+            taperInfoNode = TaperInfoNode(source: source)
         }
         else {
-            sourceNode = nil
-            sourcePeopleNode = nil
+            taperInfoNode = nil
         }
         
         detailsNode = ASTextNode("See details, taper notes, reviews & more ›", textStyle: .caption1, color: AppColors.mutedText)
@@ -181,17 +135,16 @@ public class SourceDetailsNode : ASCellNode {
     
     public let showNameNode: ASTextNode
     public let favoriteButton : FavoriteButtonNode
-//    public let ratingNode: AXRatingViewNode
+    public let ratingNode: AXRatingViewNode
 //    public let ratingCountNode: ASTextNode
     public let locationNode: ASTextNode
     public let metaNode: ASTextNode
     public let detailsNode: ASTextNode
     public let updateDateNode : ASTextNode
     public let artworkNode: ASImageNode
-    public let ratingTextNode: ASTextNode?
+//    public let ratingTextNode: ASTextNode?
     
-    public let sourcePeopleNode: ASStackLayoutSpec?
-    public let sourceNode: ASTextNode?
+    public let taperInfoNode : TaperInfoNode?
 
     public let sbdNode: SoundboardIndicatorNode?
     public let remasterNode: RemasterIndicatorNode?
@@ -207,8 +160,8 @@ public class SourceDetailsNode : ASCellNode {
             alignItems: .end,
             children: ArrayNoNils(
 //                isDetails ? nil : ratingCountNode,
-//                ratingNode
-                ratingTextNode
+//                ratingTextNode
+                ratingNode
             )
         )
         
@@ -255,8 +208,7 @@ public class SourceDetailsNode : ASCellNode {
                 children: ArrayNoNils(
                     top,
                     second,
-                    sourcePeopleNode,
-                    sourceNode,
+                    taperInfoNode,
                     detailsNode
                     )
                 )
@@ -280,8 +232,7 @@ public class SourceDetailsNode : ASCellNode {
                 alignItems: .start,
                 children: ArrayNoNils(
                     top,
-                    sourcePeopleNode,
-                    sourceNode,
+                    taperInfoNode,
                     updateDate
                 )
             )

@@ -8,30 +8,22 @@
 
 import UIKit
 
-import LayoutKit
+import AsyncDisplayKit
 import SafariServices
 
 public class LongTextViewController : RelistenBaseTableViewController {
-    let attributedText: NSAttributedString?
-    
-    let text: String?
-    let font: UIFont?
-    
     public required init(attributedText: NSAttributedString) {
-        self.attributedText = attributedText
-        
-        self.text = nil
-        self.font = nil
+        textNode = ASTextCellNode()
+        textNode.textNode.attributedText = attributedText
+        textNode.textNode.isUserInteractionEnabled = true
         
         super.init(style: .plain)
+        
+        textNode.textNode.delegate = self
     }
     
     public required init(text: String, withFont font: UIFont) {
-        self.attributedText = nil
-        
-        self.text = text
-        self.font = font
-        
+        textNode = ASTextCellNode(text, font: font)
         super.init(style: .plain)
     }
     
@@ -42,60 +34,42 @@ public class LongTextViewController : RelistenBaseTableViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.backgroundColor = UIColor.white
-        tableView.separatorStyle = .none
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
-        render()
+        self.tableNode.view.separatorStyle = .none
+        self.tableNode.view.backgroundColor = UIColor.white
+        self.tableNode.view.tableFooterView = UIView(frame: CGRect.zero)
     }
     
-    func render() {
-        layout {
-            var textLayout: Layout! = nil
-            
-            if let attr = self.attributedText {
-                textLayout = TextViewLayout(
-                    attributedText: attr,
-                    layoutAlignment: .fill,
-                    flexibility: .inflexible,
-                    viewReuseId: "attrText",
-                    config: { textView in
-                        textView.dataDetectorTypes = .link
-                        textView.delegate = self
-                    }
-                )
-            }
-            
-            if let text = self.text, let font = self.font {
-                textLayout = LabelLayout(
-                    text: text,
-                    font: font,
-                    alignment: .fill,
-                    flexibility: .inflexible,
-                    viewReuseId: "text",
-                    config: nil
-                )
-            }
-            
-            return [
-                LayoutsAsSingleSection(items: [InsetLayout(inset: 16, sublayout: textLayout)])
-            ]
-        }
+    let textNode: ASTextCellNode
+    
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return 1
     }
     
-    public override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    public func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+        return textNode
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
     }
 }
 
-extension LongTextViewController : UITextViewDelegate {
-    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        if interaction == .invokeDefaultAction {
-            navigationController?.present(SFSafariViewController(url: URL), animated: true, completion: nil)
-            
-            return false
-        }
-        
+extension LongTextViewController : ASTextNodeDelegate {
+    public func textNode(_ textNode: ASTextNode!, shouldHighlightLinkAttribute attribute: String!, value: Any!, at point: CGPoint) -> Bool {
         return true
+    }
+    
+    public func textNode(_ textNode: ASTextNode!, tappedLinkAttribute attribute: String!, value: Any!, at point: CGPoint, textRange: NSRange) {
+        if let url = value as! URL? {
+            navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+        }
     }
 }

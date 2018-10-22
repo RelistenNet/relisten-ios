@@ -16,6 +16,10 @@ import Observable
 
 import RealmSwift
 
+public protocol TrackStatusActionHandler : class {
+    func trackButtonTapped(_ button: UIButton, forTrack track: Track)
+}
+
 public class TrackStatusCellNode : ASCellNode {
     public let track: Track
     public weak var delegate: TrackStatusActionHandler?
@@ -33,11 +37,8 @@ public class TrackStatusCellNode : ASCellNode {
         self.explicitTrackNumber = usingExplicitTrackNumber
         self.showArtistInformation = showingArtistInformation
         
-        nowPlayingNode = ASDisplayNode(viewBlock: {
-            let np = NAKPlaybackIndicatorView(frame: CGRect(x: 0, y: 0, width: 12, height: 12))
-            np.tintColor = AppColors.primary
-            return np
-        })
+        nowPlayingNode = PlaybackIndicatorNode()
+        nowPlayingNode.tintColor = AppColors.primary
         nowPlayingNode.backgroundColor = UIColor.clear
         
         if let _ = MyLibrary.shared.recent.tracks.filter("track_uuid == %@ AND past_halfway == true", self.track.uuid.uuidString).first {
@@ -146,7 +147,7 @@ public class TrackStatusCellNode : ASCellNode {
         delegate?.trackButtonTapped(sender, forTrack: track)
     }
     
-    public let nowPlayingNode: ASDisplayNode
+    public let nowPlayingNode: PlaybackIndicatorNode
     public var trackNumberNode: ASTextNode!
     public let titleNode: ASTextNode
     public let artistInfoNode: ASTextNode?
@@ -170,15 +171,13 @@ public class TrackStatusCellNode : ASCellNode {
     }
 
     func updateTrackState() {
-        if let nak = nowPlayingNode.view as? NAKPlaybackIndicatorView {
-            switch trackState {
-            case .paused:
-                nak.state = .paused
-            case .playing:
-                nak.state = .playing
-            default:
-                nak.state = .stopped
-            }
+        switch trackState {
+        case .paused:
+            nowPlayingNode.state = .paused
+        case .playing:
+            nowPlayingNode.state = .playing
+        default:
+            nowPlayingNode.state = .stopped
         }
     }
     

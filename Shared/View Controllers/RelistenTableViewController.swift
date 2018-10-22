@@ -13,7 +13,7 @@ import SINQ
 import Observable
 import AsyncDisplayKit
 
-open class RelistenBaseAsyncTableViewController : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
+open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
     public let tableNode: ASTableNode!
     
     public let api = RelistenApi
@@ -58,7 +58,7 @@ open class RelistenBaseAsyncTableViewController : ASViewController<ASDisplayNode
     // MARK: TableView "dataSource" and "delegate"
 }
 
-open class RelistenAsyncTableController<TData> : RelistenBaseAsyncTableViewController {
+open class RelistenTableViewController<TData> : RelistenBaseTableViewController {
     public let statusOverlay = RelistenResourceStatusOverlay()
     
     open var resource: Resource? { get { return nil } }

@@ -37,9 +37,9 @@ public class LastFMAccountNode : ASCellNode {
         
         lastFMPasswordInputNode = ASEditableTextNode()
         lastFMPasswordInputNode.scrollEnabled = false
-        lastFMUsernameInputNode.spellCheckingType = .no
-        lastFMUsernameInputNode.autocorrectionType = .no
-        lastFMUsernameInputNode.autocapitalizationType = .none
+        lastFMPasswordInputNode.spellCheckingType = .no
+        lastFMPasswordInputNode.autocorrectionType = .no
+        lastFMPasswordInputNode.autocapitalizationType = .none
         lastFMPasswordInputNode.maximumLinesToDisplay = 1
         lastFMPasswordInputNode.isSecureTextEntry = true
         lastFMPasswordInputNode.textView.isSecureTextEntry = true

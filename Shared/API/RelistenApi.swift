@@ -254,7 +254,7 @@ public class _RelistenApi {
         return artistResource(byArtist)
             .child("shows")
             .child("recently-added")
-            .withParam("limit", "15")
+            .withParam("previousDays", "60")
     }
     
     public func songs(byArtist: SlimArtist) -> Resource {

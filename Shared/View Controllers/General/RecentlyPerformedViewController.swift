@@ -16,13 +16,13 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]> {
     private let recentShowInterval : TimeInterval = (60 * 60 * 24 * 30 * 3)
     
     public required init(artist: Artist, showsResource: Resource?, tourSections: Bool) {
-        super.init(artist: artist, showsResource: (showsResource != nil) ? showsResource : RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: tourSections)
+        super.init(artist: artist, showsResource: (showsResource != nil) ? showsResource : RelistenApi.recentlyPerformed(byArtist: artist), tourSections: tourSections)
         
         title = "Recently Performed"
     }
     
     public convenience init(artist: Artist) {
-        self.init(artist: artist, showsResource: RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: true)
+        self.init(artist: artist, showsResource: RelistenApi.recentlyPerformed(byArtist: artist), tourSections: true)
     }
     
     public required init?(coder aDecoder: NSCoder) {

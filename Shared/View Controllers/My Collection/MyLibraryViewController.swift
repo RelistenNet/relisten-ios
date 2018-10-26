@@ -14,7 +14,7 @@ import RealmSwift
 
 class MyLibraryViewController: ShowListViewController<Results<FavoritedSource>> {
     public required init(artist: ArtistWithCounts) {
-        super.init(artist: artist, showsResource: nil, tourSections: true)
+        super.init(artist: artist, tourSections: true)
         
         title = "My Library"
         
@@ -25,8 +25,7 @@ class MyLibraryViewController: ShowListViewController<Results<FavoritedSource>> 
 
             let myShows = s.loadMyShows()
             if myShows != s.latestData {
-                s.latestData = myShows
-                s.render()
+                s.loadData(myShows)
             }
         }.dispose(to: &disposal)
     }
@@ -35,24 +34,12 @@ class MyLibraryViewController: ShowListViewController<Results<FavoritedSource>> 
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, tourSections: Bool, enableSearch: Bool) {
         fatalError()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
-    }
-    
-    override func relayoutIfContainsTrack(_ track: Track) {
-        latestData = loadMyShows()
-        
-        super.relayoutIfContainsTrack(track)
-    }
-    
-    override func relayoutIfContainsTracks(_ tracks: [Track]) {
-        latestData = loadMyShows()
-        
-        super.relayoutIfContainsTracks(tracks)
     }
     
     override func extractShowsAndSource(forData: Results<FavoritedSource>) -> [ShowWithSingleSource] {

@@ -12,15 +12,15 @@ import Siesta
 import AsyncDisplayKit
 
 class RecentlyAddedViewController: ShowListViewController<[Show]> {
-    public required init(artist: Artist, showsResource: Resource?, tourSections: Bool) {
-        super.init(artist: artist, showsResource: (showsResource != nil) ? showsResource : RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: tourSections)
+    public required init(artist: Artist, tourSections: Bool, enableSearch: Bool = true) {
+        super.init(artist: artist, tourSections: tourSections, enableSearch: enableSearch)
 
         shouldSortShows = false
         title = "Recently Added"
     }
     
     public convenience init(artist: Artist) {
-        self.init(artist: artist, showsResource: RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: true)
+        self.init(artist: artist, tourSections: true)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -29,6 +29,12 @@ class RecentlyAddedViewController: ShowListViewController<[Show]> {
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
+    }
+    
+    public override var resource: Resource? {
+        get {
+            return RelistenApi.recentlyAddedShows(byArtist: artist)
+        }
     }
     
     override func extractShowsAndSource(forData: [Show]) -> [ShowWithSingleSource] {

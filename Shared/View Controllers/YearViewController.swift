@@ -18,7 +18,7 @@ public class YearViewController: ShowListViewController<YearWithShows> {
     public required init(artist: ArtistWithCounts, year: Year) {
         self.year = year
         
-        super.init(artist: artist, showsResource: RelistenApi.shows(inYear: year, byArtist: artist), tourSections: true)
+        super.init(artist: artist, tourSections: true)
         
         title = year.year
     }
@@ -32,8 +32,14 @@ public class YearViewController: ShowListViewController<YearWithShows> {
         fatalError()
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, tourSections: Bool, enableSearch: Bool) {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
+    }
+    
+    public override var resource: Resource? {
+        get {
+            return RelistenApi.shows(inYear: year, byArtist: artist)
+        }
     }
     
     public override func extractShowsAndSource(forData: YearWithShows) -> [ShowWithSingleSource] {

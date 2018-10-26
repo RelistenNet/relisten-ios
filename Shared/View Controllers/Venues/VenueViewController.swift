@@ -22,7 +22,6 @@ class VenueViewController: ShowListViewController<VenueWithShows> {
         
         super.init(
             artist: artist,
-            showsResource: RelistenApi.shows(atVenue: venue, byArtist: artist),
             tourSections: false
         )
         
@@ -37,8 +36,14 @@ class VenueViewController: ShowListViewController<VenueWithShows> {
         fatalError()
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, tourSections: Bool, enableSearch: Bool) {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
+    }
+    
+    override public var resource: Resource? {
+        get {
+            return RelistenApi.shows(atVenue: venue, byArtist: artist)
+        }
     }
     
     override func extractShowsAndSource(forData:VenueWithShows) -> [ShowWithSingleSource] {

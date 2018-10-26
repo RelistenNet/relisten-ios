@@ -18,7 +18,6 @@ class TopShowsViewController: ShowListViewController<[Show]> {
     public required init(artist: ArtistWithCounts) {
         super.init(
             artist: artist,
-            showsResource: RelistenApi.topShows(byArtist: artist),
             tourSections: false
         )
         
@@ -34,9 +33,15 @@ class TopShowsViewController: ShowListViewController<[Show]> {
         fatalError()
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, tourSections: Bool, enableSearch: Bool) {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
-    }    
+    }
+    
+    public override var resource: Resource? {
+        get {
+            return RelistenApi.topShows(byArtist: artist)
+        }
+    }
         
     override func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
         return { ShowCellNode(show: show, withRank: atIndex.row + 1, useCellLayout: false) }

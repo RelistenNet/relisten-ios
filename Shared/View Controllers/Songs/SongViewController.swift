@@ -22,7 +22,6 @@ class SongViewController: ShowListViewController<SongWithShows> {
         
         super.init(
             artist: artist,
-            showsResource: RelistenApi.shows(withPlayedSong: song, byArtist: artist),
             tourSections: false
         )
         
@@ -37,8 +36,14 @@ class SongViewController: ShowListViewController<SongWithShows> {
         fatalError()
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, tourSections: Bool, enableSearch: Bool) {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
+    }
+    
+    override public var resource: Resource? {
+        get {
+             return RelistenApi.shows(withPlayedSong: song, byArtist: artist)
+        }
     }
     
     override func extractShowsAndSource(forData: SongWithShows) -> [ShowWithSingleSource] {

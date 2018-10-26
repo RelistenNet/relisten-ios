@@ -13,7 +13,7 @@ import AsyncDisplayKit
 
 class DownloadedViewController: ShowListViewController<[CompleteShowInformation]> {
     public required init(artist: ArtistWithCounts) {
-        super.init(artist: artist, showsResource: nil, tourSections: true)
+        super.init(artist: artist, tourSections: true)
         
         refreshOnAppear = true
         title = "Downloaded Shows"
@@ -25,8 +25,7 @@ class DownloadedViewController: ShowListViewController<[CompleteShowInformation]
             
             let offlineSources = os.asCompleteShows()
             if !(offlineSources == s.latestData) {
-                s.latestData = offlineSources
-                s.render()
+                s.loadData(offlineSources)
             }
         }.dispose(to: &disposal)
     }
@@ -35,24 +34,12 @@ class DownloadedViewController: ShowListViewController<[CompleteShowInformation]
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, tourSections: Bool, enableSearch: Bool) {
         fatalError()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
-    }
-    
-    override func relayoutIfContainsTrack(_ track: Track) {
-        latestData = loadOffline()
-        
-        super.relayoutIfContainsTrack(track)
-    }
-    
-    override func relayoutIfContainsTracks(_ tracks: [Track]) {
-        latestData = loadOffline()
-        
-        super.relayoutIfContainsTracks(tracks)
     }
     
     override func extractShowsAndSource(forData data: [CompleteShowInformation]) -> [ShowWithSingleSource] {

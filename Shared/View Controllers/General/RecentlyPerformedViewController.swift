@@ -15,14 +15,14 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]> {
     // Show all shows performed in the last three months
     private let recentShowInterval : TimeInterval = (60 * 60 * 24 * 30 * 3)
     
-    public required init(artist: Artist, showsResource: Resource?, tourSections: Bool) {
-        super.init(artist: artist, showsResource: (showsResource != nil) ? showsResource : RelistenApi.recentlyPerformed(byArtist: artist), tourSections: tourSections)
+    public required init(artist: Artist, tourSections: Bool, enableSearch: Bool = true) {
+        super.init(artist: artist, tourSections: tourSections, enableSearch: enableSearch)
         
         title = "Recently Performed"
     }
     
     public convenience init(artist: Artist) {
-        self.init(artist: artist, showsResource: RelistenApi.recentlyPerformed(byArtist: artist), tourSections: true)
+        self.init(artist: artist, tourSections: true)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -31,6 +31,12 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]> {
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
+    }
+    
+    public override var resource: Resource? {
+        get {
+            return RelistenApi.recentlyPerformed(byArtist: artist)
+        }
     }
     
     override func extractShowsAndSource(forData: [Show]) -> [ShowWithSingleSource] {

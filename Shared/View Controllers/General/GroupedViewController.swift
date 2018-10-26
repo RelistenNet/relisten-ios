@@ -106,7 +106,8 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
         return sinq(allItems)
             .filter({ (item) -> Bool in
                 return ((scope == "All" || self.scopeMatchesItem(item, scope: scope)) && (searchText == "" || self.searchStringMatchesItem(item, searchText: searchText)))
-            }).groupBy({
+            })
+            .groupBy({
                 return self.groupNameForItem($0)
             })
             .toArray()

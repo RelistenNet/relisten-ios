@@ -174,7 +174,9 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
             DispatchQueue.main.async {
                 self.offlineShows = shows
                 self.offlineShowsNode.shows = self.offlineShows.map({ ($0.show, $0.artist) })
-                self.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
+                if self.isFiltering() == false {
+                    self.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
+                }
             }
         }
     }
@@ -184,7 +186,9 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
             DispatchQueue.main.async {
                 self.favoriteShows = shows
                 self.favoritedSourcesNode.shows = self.favoriteShows.map({ ($0.show, $0.artist) })
-                self.tableNode.reloadSections([ Sections.favoritedShows.rawValue ], with: .automatic)
+                if self.isFiltering() == false {
+                    self.tableNode.reloadSections([ Sections.favoritedShows.rawValue ], with: .automatic)
+                }
             }
         }
     }
@@ -196,7 +200,9 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
             let recentShows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: Artist?)]
             
             self.recentShowsNode.shows = recentShows
-            self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+            if self.isFiltering() == false {
+                self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+            }
         }
     }
     
@@ -209,40 +215,42 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
             
             let newFavoriteCount = localFavoriteArtists.count
             
-            switch changes {
-            case .initial:
-                s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
-            case .update(_, let deletions, let insertions, let modifications):
-                s.tableNode.performBatch(animated: true, updates: {
-                    s.tableNode.insertRows(at: insertions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
-                                           with: .automatic)
-                    s.tableNode.deleteRows(at: deletions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue)}),
-                                           with: .automatic)
-                    s.tableNode.reloadRows(at: modifications.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
-                                           with: .automatic)
-                    
-                    s.favoriteArtists = localFavoriteArtists
-                    
-                    if newFavoriteCount == 0 {
-                        s.tableNode.deleteRows(at: (0..<s.recentlyPerformedShows.count).map( { IndexPath(row: $0, section: Sections.recentlyPerformed.rawValue) }), with: .automatic)
-                        s.tableNode.reloadSections(IndexSet(integer: Sections.recentlyPerformed.rawValue), with: .automatic)
+            if s.isFiltering() == false {
+                switch changes {
+                case .initial:
+                    s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
+                case .update(_, let deletions, let insertions, let modifications):
+                    s.tableNode.performBatch(animated: true, updates: {
+                        s.tableNode.insertRows(at: insertions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
+                                               with: .automatic)
+                        s.tableNode.deleteRows(at: deletions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue)}),
+                                               with: .automatic)
+                        s.tableNode.reloadRows(at: modifications.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),
+                                               with: .automatic)
                         
-                        s.resourceRecentlyPerformed = nil
-                        s.recentlyPerformedShows = []
-                        s.recentlyPerformedNode.shows = []
-                    }
-                    else {
-                        s.resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtists: s.favoriteArtists)
-                        s.resourceRecentlyPerformed?.addObserver(s)
-                        s.resourceRecentlyPerformed?.loadFromCacheThenUpdate()
-                    }
-                    
-                    if previousFavoriteCount == 0, newFavoriteCount > 0 {
-                        s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
-                    }
-                }, completion: nil)
-            case .error(let error):
-                fatalError(error.localizedDescription)
+                        s.favoriteArtists = localFavoriteArtists
+                        
+                        if newFavoriteCount == 0 {
+                            s.tableNode.deleteRows(at: (0..<s.recentlyPerformedShows.count).map( { IndexPath(row: $0, section: Sections.recentlyPerformed.rawValue) }), with: .automatic)
+                            s.tableNode.reloadSections(IndexSet(integer: Sections.recentlyPerformed.rawValue), with: .automatic)
+                            
+                            s.resourceRecentlyPerformed = nil
+                            s.recentlyPerformedShows = []
+                            s.recentlyPerformedNode.shows = []
+                        }
+                        else {
+                            s.resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtists: s.favoriteArtists)
+                            s.resourceRecentlyPerformed?.addObserver(s)
+                            s.resourceRecentlyPerformed?.loadFromCacheThenUpdate()
+                        }
+                        
+                        if previousFavoriteCount == 0, newFavoriteCount > 0 {
+                            s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
+                        }
+                    }, completion: nil)
+                case .error(let error):
+                    fatalError(error.localizedDescription)
+                }
             }
         }
     }
@@ -288,12 +296,16 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
                 if resource == self.resourceRecentlyPerformed {
                     self.recentlyPerformedShows = resource.typedContent(ifNone: [])
                     self.recentlyPerformedNode.shows = self.recentlyPerformedShows.map { (show: $0, artist: $0.artist) }
-                    self.tableNode.reloadSections([ Sections.recentlyPerformed.rawValue ], with: .automatic)
+                    if self.isFiltering() == false {
+                        self.tableNode.reloadSections([ Sections.recentlyPerformed.rawValue ], with: .automatic)
+                    }
                 }
                 else if resource == self.resourceRecentlyUpdated {
                     self.allRecentlyUpdatedShows = resource.typedContent(ifNone: [])
                     self.allRecentlyUpdatedNode.shows = self.allRecentlyUpdatedShows.map { (show: $0, artist: $0.artist) }
-                    self.tableNode.reloadSections([ Sections.allRecentlyUpdated.rawValue ], with: .automatic)
+                    if self.isFiltering() == false {
+                        self.tableNode.reloadSections([ Sections.allRecentlyUpdated.rawValue ], with: .automatic)
+                    }
                 }
             }
         }

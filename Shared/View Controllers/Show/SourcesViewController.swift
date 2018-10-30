@@ -165,21 +165,21 @@ public class SourcesViewController: RelistenTableViewController<ShowWithSources>
         }
     }
     
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
         if canSkipIfSingleSource {
             return 0
         }
         return sources.count > 0 ? 1 : 0
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         if canSkipIfSingleSource {
             return 0
         }
         return sources.count
     }
     
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         guard let show = latestData else { return { ASCellNode() } }
         
         let source = sources[indexPath.row]
@@ -188,7 +188,7 @@ public class SourcesViewController: RelistenTableViewController<ShowWithSources>
         return { SourceDetailsNode(source: source, inShow: show, artist: artist, atIndex: indexPath.row, isDetails: false) }
     }
     
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+    override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
         
         guard let show = latestData else { return }

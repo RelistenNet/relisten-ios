@@ -102,15 +102,13 @@ public class SettingsViewController : RelistenBaseTableViewController {
             }
         }.add(to: &disposal)
     }
-}
-
-// MARK: ASTableDataSource
-extension SettingsViewController {
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
+    
+    // MARK: ASTableDataSource
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
         return Sections.count.rawValue
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .lastFM:
             return 2
@@ -198,7 +196,7 @@ extension SettingsViewController {
         return n
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Sections(rawValue: section)! {
         case .lastFM:
             return "last.fm"
@@ -213,7 +211,7 @@ extension SettingsViewController {
         }
     }
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+    override public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         switch Sections(rawValue: indexPath.section)! {
         case .lastFM:
             switch indexPath.row {
@@ -234,7 +232,7 @@ extension SettingsViewController {
         }
     }
     
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+    override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section)! {
         case .credits:
             switch indexPath.row {

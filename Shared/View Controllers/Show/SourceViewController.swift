@@ -81,11 +81,11 @@ public class SourceViewController: RelistenBaseTableViewController {
     }
     
     // MARK: UITableViewDelegate
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 2 + source.sets.count
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 2
         }
@@ -97,7 +97,7 @@ public class SourceViewController: RelistenBaseTableViewController {
         return source.sets[section - 1].tracks.count
     }
     
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         let artist = self.artist
         let source = self.source
         let show = self.show
@@ -125,7 +125,7 @@ public class SourceViewController: RelistenBaseTableViewController {
         return { TrackStatusCellNode(withTrack: track, withHandler: self) }
     }
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+    override public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         // Don't highlight taps on the "my shows"/downloads cells, since they require a tap on the switch
         if indexPath.section == 0, indexPath.row == 1 {
             return false
@@ -134,7 +134,7 @@ public class SourceViewController: RelistenBaseTableViewController {
         }
     }
     
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+    override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 {
@@ -162,7 +162,7 @@ public class SourceViewController: RelistenBaseTableViewController {
         }
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard section != 0 else {
             return nil
         }

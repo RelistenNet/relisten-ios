@@ -6,95 +6,26 @@
 //  Copyright © 2017 Alec Gorge. All rights reserved.
 //
 
-import Foundation
-
 import UIKit
 
 import Siesta
 import AsyncDisplayKit
 import SINQ
 
-// TODO: Combine this with VenuesViewController into something more abstract. The code is practically identical
-class SongsViewController: RelistenTableViewController<[SongWithShowCount]> {
-    
-    let artist: ArtistWithCounts
-    var songs: [Grouping<String, SongWithShowCount>] = []
-    
-    public required init(artist: ArtistWithCounts) {
-        self.artist = artist
-        
-        super.init(useCache: true, refreshOnAppear: true)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
-    
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
-        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = "Songs"
-    }
+class SongsViewController: GroupedViewController<SongWithShowCount> {
+    override var searchPlaceholder : String { get { return "Search Songs" } }
+    override var title: String? { get { return "Songs" } set { } }
     
     override var resource: Resource? { get { return api.songs(byArtist: artist) } }
     
-    public override func dataChanged(_ data: [SongWithShowCount]) {
-        songs = sinq(data)
-            .groupBy({
-                return $0.sortName.groupNameForTableView()
-            })
-            .toArray()
-            .sorted(by: { (a, b) -> Bool in
-                return a.key <= b.key
-        })
-    }
-    
-    func songForIndexPath(_ indexPath: IndexPath) -> SongWithShowCount? {
-        var retval : SongWithShowCount? = nil
-        if indexPath.section >= 0, indexPath.section < songs.count {
-            let allSongs = songs[indexPath.section].values
-            if indexPath.row >= 0, indexPath.row < allSongs.count() {
-                retval = allSongs.elementAt(indexPath.row)
-            }
-        }
-        return retval
-    }
-    
-    //MARK: Table Data Source
-    
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return songs.count
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return songs[section].values.count()
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard section != 0 else {
-            return nil
-        }
-        
-        return songs[section].key
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        if let song = songForIndexPath(indexPath) {
-            return { SongNode(song: song) }
-        } else {
-            return { ASCellNode() }
-        }
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        tableNode.deselectRow(at: indexPath, animated: true)
-        
-        if let song = songForIndexPath(indexPath) {
-            navigationController?.pushViewController(SongViewController(artist: artist, song: song), animated: true)
-        }
+    override func groupNameForItem(_ item: SongWithShowCount) -> String { return item.sortName.groupNameForTableView() }
+    override func searchStringMatchesItem(_ item: SongWithShowCount, searchText: String) -> Bool { return item.name.lowercased().contains(searchText) }
+
+    override func cellNodeBlockForItem(_ item: SongWithShowCount) -> ASCellNodeBlock { return { SongNode(song: item) } }
+    override func viewControllerForItem(_ item: SongWithShowCount) -> UIViewController { return SongViewController(artist: artist, song: item) }
+
+    // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
+    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
     }
 }

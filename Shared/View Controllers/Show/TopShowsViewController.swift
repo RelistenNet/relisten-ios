@@ -18,7 +18,6 @@ class TopShowsViewController: ShowListViewController<[Show]> {
     public required init(artist: ArtistWithCounts) {
         super.init(
             artist: artist,
-            showsResource: RelistenApi.topShows(byArtist: artist),
             tourSections: false
         )
         
@@ -34,9 +33,15 @@ class TopShowsViewController: ShowListViewController<[Show]> {
         fatalError()
     }
     
-    public required init(artist: SlimArtistWithFeatures, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: SlimArtistWithFeatures, tourSections: Bool, enableSearch: Bool) {
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
-    }    
+    }
+    
+    public override var resource: Resource? {
+        get {
+            return RelistenApi.topShows(byArtist: artist)
+        }
+    }
         
     override func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
         return { ShowCellNode(show: show, withRank: atIndex.row + 1, useCellLayout: false) }
@@ -46,23 +51,8 @@ class TopShowsViewController: ShowListViewController<[Show]> {
         return forData.map({ ShowWithSingleSource(show: $0, source: nil) })
     }
     
-    override func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return super.numberOfSections(in: tableNode)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return super.tableNode(tableNode, numberOfRowsInSection: section)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
+    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return super.tableView(tableView, titleForHeaderInSection: section)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        return super.tableNode(tableNode, didSelectRowAt: indexPath)
     }
 }

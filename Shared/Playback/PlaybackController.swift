@@ -51,31 +51,10 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
         viewController.delegate = self
         
         viewController.loadViewIfNeeded()
-        
-        /*
-        RelistenDownloadManager.shared.eventTrackStartedDownloading.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTrack)
-        RelistenDownloadManager.shared.eventTracksQueuedToDownload.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTracks)
-        RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTrack)
-        RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: PlaybackController.relayoutIfContainsTracks)
-         */
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError()
-    }
-    
-    func relayoutIfContainsTrack(_ track: Track) {
-        if let _ = playbackQueue.findSourceTrackAudioItem(forTrack: track) {
-            viewController.tableReloadData()
-        }
-    }
-    
-    func relayoutIfContainsTracks(_ tracks: [Track]) {
-        for track in tracks {
-            if let _ = playbackQueue.findSourceTrackAudioItem(forTrack: track) {
-                viewController.tableReloadData()
-            }
-        }
     }
     
     public func displayMini(on vc: UIViewController, completion: (() -> Void)?) {

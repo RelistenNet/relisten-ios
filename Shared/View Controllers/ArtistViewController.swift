@@ -18,7 +18,7 @@ extension Calendar {
     }
 }
 
-public class ArtistViewController : RelistenBaseTableViewController {
+public class ArtistViewController : RelistenBaseTableViewController, ASCollectionDelegate {
     enum Sections: Int, RawRepresentable {
         case today = 0
         case recentlyPlayed
@@ -238,14 +238,12 @@ public class ArtistViewController : RelistenBaseTableViewController {
     
     var shuffledImageNames: [NSString] = []
     var slider: KASlideShow! = nil
-}
-
-extension ArtistViewController {
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
+    
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
         return Sections.count.rawValue
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .today:
             return todayShows.count > 0 ? 1 : 0
@@ -264,7 +262,7 @@ extension ArtistViewController {
         }
     }
     
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         var n: ASCellNode
         
         switch Sections(rawValue: indexPath.section)! {
@@ -288,7 +286,7 @@ extension ArtistViewController {
         return { n }
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Sections(rawValue: section)! {
         case .today:
             if todayShows.count > 0 {
@@ -312,10 +310,9 @@ extension ArtistViewController {
             fatalError()
         }
     }
-}
-
-extension ArtistViewController : ASCollectionDelegate {
-    public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    
+    //MARK: ASCollectionDelegate
+    override public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         var show: Show!
         var source: SourceFull? = nil
         

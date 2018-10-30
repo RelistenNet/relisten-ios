@@ -16,19 +16,56 @@ public struct ShowWithSingleSource {
     public let source : SourceFull?
 }
 
-public class ShowListViewController<T> : RelistenTableViewController<T> {
+// (farkas) This is real similar to GroupedViewController. I'd love to unify these two classes at some point. 
+public class ShowListViewController<T> : RelistenTableViewController<T>, UISearchResultsUpdating, UISearchBarDelegate {
     internal let artist: Artist
-    internal let showsResource: Resource?
+    
+    var allShows: [ShowWithSingleSource] = []
+    private var groupedShows: [Grouping<String, ShowWithSingleSource>] = []
+    private var filteredShows: [Grouping<String, ShowWithSingleSource>] = []
+    internal let showMappingQueue = DispatchQueue(label: "live.relisten.ShowListViewController.mappingQueue")
+    
+    let searchController: UISearchController = UISearchController(searchResultsController: nil)
+    
+    // TODO: Sort the shows when this value changes and refresh the view
+    var shouldSortShows : Bool = true
     internal let tourSections: Bool
     
-    var shouldSortShows : Bool = true
-    
-    public required init(artist: Artist, showsResource: Resource?, tourSections: Bool) {
+    public required init(artist: Artist, tourSections: Bool, enableSearch: Bool = true) {
         self.artist = artist
-        self.showsResource = showsResource
         self.tourSections = artist.features.tours && tourSections
         
         super.init(useCache: true, refreshOnAppear: true)
+        
+        self.tableNode.view.sectionIndexColor = AppColors.primary
+        self.tableNode.view.sectionIndexMinimumDisplayRowCount = 4
+        
+        if enableSearch {
+            // Setup the Search Controller
+            searchController.searchResultsUpdater = self
+            searchController.obscuresBackgroundDuringPresentation = false
+            
+            searchController.searchBar.delegate = self
+            if let buttonTitles = self.scopeButtonTitles {
+                searchController.searchBar.scopeButtonTitles = buttonTitles
+                searchController.searchBar.showsScopeBar = true
+                let regularFont = UIFont.preferredFont(forTextStyle: .body)
+                searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
+                                                                                 NSAttributedString.Key.font: regularFont], for: .normal)
+                let boldFont = regularFont.font(scaledBy: 1.0, withDifferentWeight: .Bold)
+                searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
+                                                                                 NSAttributedString.Key.font: boldFont], for: .selected)
+            }
+            
+            searchController.searchBar.placeholder = self.searchPlaceholder
+            searchController.searchBar.barStyle = .blackTranslucent
+            searchController.searchBar.backgroundColor = AppColors.primary
+            searchController.searchBar.barTintColor = AppColors.textOnPrimary
+            searchController.searchBar.tintColor = AppColors.textOnPrimary
+            
+            navigationItem.searchController = searchController
+            definesPresentationContext = true
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -39,239 +76,240 @@ public class ShowListViewController<T> : RelistenTableViewController<T> {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
-    public override var resource: Resource? { get { return showsResource } }
+    // MARK: Subclass Overrides
+    public override var resource: Resource? { get { return nil } }
     
     public func extractShowsAndSource(forData: T) -> [ShowWithSingleSource] {
         fatalError("need to override this")
     }
     
-    public override func has(oldData: T, changed: T) -> Bool {
-        let x1 = extractShowsAndSource(forData: oldData)
-        let x2 = extractShowsAndSource(forData: changed)
-        
-        return x1.count != x2.count
-    }
-    
-    public override func render() {
-        showMappingQueue.sync {
-            rebuildShowMappings()
-        }
-        super.render()
-    }
-    
-    // MARK: Relayout
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        /*
-         trackFinishedHandler = RelistenDownloadManager.shared.eventTrackFinishedDownloading.addHandler(target: self, handler: ShowListViewController<T>.relayoutIfContainsTrack)
-         tracksDeletedHandler = RelistenDownloadManager.shared.eventTracksDeleted.addHandler(target: self, handler: ShowListViewController<T>.relayoutIfContainsTracks)
-         */
-    }
-    
     public func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
         return { ShowCellNode(show: show) }
     }
-
-    func relayoutIfContainsTrack(_ track: Track) {
-        showMappingQueue.sync {
-            rebuildShowMappings()
-            
-//            if let showsWithSources = showsWithSources {
-//                if sinq(showsWithSources).any({ $0.show.id == track.showInfo.show.id }) {
-//                    render()
-//                }
-//            }
+    
+    func searchStringMatchesShow(_ show: ShowWithSingleSource, searchText: String) -> Bool {
+        if let venue = show.show.venue {
+            if venue.name.lowercased().contains(searchText) { return true }
+            if let pastName = venue.past_names, pastName.lowercased().contains(searchText) { return true }
+            if venue.location.lowercased().contains(searchText) { return true }
         }
-    }
-
-    func relayoutIfContainsTracks(_ tracks: [Track]) {
-        showMappingQueue.sync {
-            rebuildShowMappings()
-            
-//            if let showsWithSources = showsWithSources {
-//                let trackShowsId = tracks.map({ $0.showInfo.show.id })
-//            
-//                if sinq(showsWithSources).any({ trackShowsId.contains($0.show.id) }) {
-//                    render()
-//                }
-//            }
+        
+        if let tour = show.show.tour {
+            if tour.name.lowercased().contains(searchText) { return true }
         }
+        
+        if let source = show.source {
+            if let taper = source.taper, taper.lowercased().contains(searchText) { return true }
+            if let transferrer = source.transferrer, transferrer.lowercased().contains(searchText) { return true }
+            if source.tracksFlattened.contains(where: { $0.title.lowercased().contains(searchText) }) { return true }
+        }
+        
+        if searchText == "sbd" || searchText == "soundboard" {
+            if show.show.has_soundboard_source { return true }
+        }
+        
+        return false
     }
     
-    // MARK: Preparing Show Info for the DataSource
-    internal var showsByTour: [(tourName: String?, showWithSource: [ShowWithSingleSource])]?
-    internal var showMapping: [IndexPath: ShowWithSingleSource]?
-    internal var showsWithSources: [ShowWithSingleSource]?
-    
-    internal let showMappingQueue = DispatchQueue(label: "live.relisten.ShowListViewController.mappingQueue")
-    
-    private func rebuildShowMappings() {
-        dispatchPrecondition(condition: .onQueue(showMappingQueue))
-        if let d = latestData {
-            let extractedShows = extractShowsAndSource(forData: d)
-            if artist.shouldSortYearsDescending, self.shouldSortShows {
-                showsWithSources = extractedShows.sorted(by: { (showA, showB) in
-                    return (showA.show.date.timeIntervalSince(showB.show.date) > 0)
-                })
-            } else {
-                showsWithSources = extractedShows
+    func scopeMatchesShow(_ show: ShowWithSingleSource, scope: String) -> Bool {
+        if scope == "SBD" {
+            if show.show.has_soundboard_source { return true }
+            if let source = show.source {
+                if source.is_soundboard { return true }
             }
-            buildShowMappingAndTourSections()
+        }
+        
+        return false
+    }
+    
+    var scopeButtonTitles : [String]? { get { return ["All", "SBD"] } }
+    var searchPlaceholder : String { get { return "Search" } }
+    
+    // MARK: Updating Data
+    
+    // Use loadData if you're not loading via the network (for downloaded/favorited/etc views)
+    // (farkas) This is admittedly hacky, and I need to add better locking around reloading of data in RelistenTableViewController in general
+    public func loadData(_ data: T) {
+        let extractedShows = self.extractShowsAndSource(forData: data)
+        let grouped = sortAndGroupShows(extractedShows)
+        showMappingQueue.async {
+            self.latestData = data
+            self.allShows = extractedShows
+            self.groupedShows = grouped
+            DispatchQueue.main.async {
+                self.tableNode.reloadData()
+            }
         }
     }
     
-    private func buildShowMappingAndTourSections() {
-        dispatchPrecondition(condition: .onQueue(showMappingQueue))
-        guard let showsWithSources = showsWithSources else {
-            return
+    public override func dataChanged(_ data: T) {
+        let extractedShows = self.extractShowsAndSource(forData: data)
+        let grouped = sortAndGroupShows(extractedShows)
+        showMappingQueue.async {
+            self.allShows = extractedShows
+            self.groupedShows = grouped
+            DispatchQueue.main.async {
+                self.tableNode.reloadData()
+            }
+        }
+    }
+    
+    func sortAndGroupShows(_ data: [ShowWithSingleSource], searchText: String? = nil, scope: String = "All") -> [Grouping<String, ShowWithSingleSource>] {
+        var sinqData = sinq(data)
+            .filter({ (show) -> Bool in
+                return ((scope == "All" || self.scopeMatchesShow(show, scope: scope)) &&
+                        (searchText == nil || searchText == "" || self.searchStringMatchesShow(show, searchText: searchText!)))
+            })
+        
+        if artist.shouldSortYearsDescending, shouldSortShows {
+            sinqData = sinqData.orderBy({
+                return $0.show.date.timeIntervalSinceReferenceDate
+            })
         }
         
-        var sectionCount = 0
-        
-        showMapping = [:]
+        var groupedData : SinqSequence<Grouping<String, ShowWithSingleSource>>!
         if tourSections {
-            showsByTour = []
+            groupedData = sinqData.groupBy({
+                return $0.show.tour?.name ?? ""
+            })
+        } else {
+            groupedData = sinqData.groupBy({_ in return "" })
         }
         
-        var currentSection: [ShowWithSingleSource] = []
-        
-        for (idx, showWithSource) in showsWithSources.enumerated() {
-            if idx == 0 {
-                let idxP = IndexPath(row: 0, section: 0)
-                
-                currentSection.append(showWithSource)
-                showMapping?[idxP] = showWithSource
-            }
-            else {
-                if tourSections {
-                    let prevShowWithSource = showsWithSources[idx - 1]
-                    
-                    if prevShowWithSource.show.tour_id != showWithSource.show.tour_id {
-                        showsByTour?.append((prevShowWithSource.show.tour?.name, currentSection))
-                        sectionCount += 1
-                        
-                        currentSection = []
-                    }
-                }
-                
-                let idxP = IndexPath(row: currentSection.count, section: sectionCount)
-                showMapping?[idxP] = showWithSource
-                currentSection.append(showWithSource)
-            }
+        return groupedData.toArray()
+            .sorted(by: { (a, b) -> Bool in
+                return a.key <= b.key
+            })
+    }
+    
+    func filteredItemsForSearchText(_ searchText: String, scope: String = "All") -> [Grouping<String, ShowWithSingleSource>] {
+        return sortAndGroupShows(allShows, searchText: searchText, scope: scope)
+    }
+    
+    private var curItems : [Grouping<String, ShowWithSingleSource>] {
+        get {
+            dispatchPrecondition(condition: .onQueue(self.showMappingQueue))
             
-            if tourSections {
-                if idx == showsWithSources.count - 1 {
-                    showsByTour?.append((showWithSource.show.tour?.name, currentSection))
-                }
+            if isFiltering() {
+                return filteredShows
+            } else {
+                return groupedShows
             }
         }
     }
     
     private func showWithSource(at indexPath : IndexPath) -> ShowWithSingleSource? {
-        var showWithSource : ShowWithSingleSource?
+        dispatchPrecondition(condition: .onQueue(self.showMappingQueue))
         
-        showMappingQueue.sync {
-            if showsWithSources == nil {
-                rebuildShowMappings()
-            }
-            
-            showWithSource = showMapping?[indexPath]
-        }
+        var retval : ShowWithSingleSource? = nil
         
-        return showWithSource
-    }
-    
-    private func numberOfSections() -> Int {
-        var retval : Int = 1
-        showMappingQueue.sync {
-            if showsWithSources == nil {
-                rebuildShowMappings()
-            }
-            
-            if tourSections, let r = showsByTour?.count {
-                retval = r
+        let items = curItems
+        if indexPath.section >= 0, indexPath.section < items.count {
+            let allItems = items[indexPath.section].values
+            if indexPath.row >= 0, indexPath.row < allItems.count() {
+                retval = allItems.elementAt(indexPath.row)
             }
         }
         return retval
     }
     
-    private func numberOfRows(in section : Int) -> Int {
-        var retval : Int = 0
+    // MARK: Table Data Source
+    override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        tableNode.deselectRow(at: indexPath, animated: true)
+        
+        var show: ShowWithSingleSource? = nil
         showMappingQueue.sync {
-            if showsWithSources == nil {
-                rebuildShowMappings()
-            }
-            
-            if tourSections, section >= 0, section < showsByTour?.count ?? 0 {
-                if let r = showsByTour?[section].showWithSource.count {
-                    retval = r
-                }
-            } else if let r = showsWithSources?.count {
-                retval = r
-            }
+            show = showWithSource(at: indexPath)
         }
-        return retval
+        if let show = show {
+            let sourcesViewController = SourcesViewController(artist: artist, show: show.show)
+            sourcesViewController.presentIfNecessary(navigationController: navigationController, forSource: show.source)
+        }
     }
     
-    private func nodeBlockForRow(at indexPath: IndexPath) -> ASCellNodeBlock {
-        var showWithSource : ShowWithSingleSource?
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
+        var count : Int = 0
         showMappingQueue.sync {
-            if showsWithSources == nil {
-                rebuildShowMappings()
-            }
-            
-            if tourSections,
-               indexPath.section >= 0, indexPath.section < showsByTour?.count ?? 0,
-               indexPath.row >= 0, indexPath.row < showsByTour?[indexPath.section].showWithSource.count ?? 0 {
-                showWithSource = showsByTour?[indexPath.section].showWithSource[indexPath.row]
-            } else {
-                showWithSource = showsWithSources?[indexPath.row]
-            }
+            count = curItems.count
         }
-        assert(!(showWithSource == nil), "Couldn't find a show for index path \(indexPath) with tour sections = \(tourSections)")
-        return layout(show: showWithSource!.show, atIndex: indexPath)
-     }
+        return count
+    }
     
-    private func titleForHeader(in section: Int) -> String? {
-        var title : String?
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        var count : Int = 0
         showMappingQueue.sync {
-            if showsWithSources == nil {
-                rebuildShowMappings()
+            let items = curItems
+            guard section >= 0, section < items.count else {
+                return
             }
-            
-            if tourSections,
-               section >= 0, section < showsByTour?.count ?? 0,
-               let tourName = showsByTour?[section].tourName {
-                title = tourName
+            count = items[section].values.count()
+        }
+        return count
+    }
+    
+    override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if tourSections == false {
+            return nil
+        }
+        
+        var title : String? = nil
+        showMappingQueue.sync {
+            let items = curItems
+            guard section >= 0, section < items.count else {
+                return
             }
+            title = items[section].values.first().show.tour?.name
         }
         return title
     }
     
-    // MARK: Table Data Source
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        tableNode.deselectRow(at: indexPath, animated: true)
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        var retval : ASCellNodeBlock? = nil
         
-        if let showWithSource = showWithSource(at: indexPath) {
-            let sourcesViewController = SourcesViewController(artist: artist, show: showWithSource.show)
-            sourcesViewController.presentIfNecessary(navigationController: navigationController, forSource: showWithSource.source)
+        showMappingQueue.sync {
+            if let showWithSource = showWithSource(at: indexPath) {
+                retval = layout(show: showWithSource.show, atIndex: indexPath)
+            }
+        }
+        
+        if let retval = retval {
+            return retval
+        } else {
+            return { ASCellNode() }
         }
     }
     
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return numberOfSections()
+    //MARK: Searching
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return numberOfRows(in: section)
+    func isFiltering() -> Bool {
+        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+        return (searchController.isActive && !searchBarIsEmpty()) || searchBarScopeIsFiltering
     }
     
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return nodeBlockForRow(at: indexPath)
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        let searchTextLC = searchText.lowercased()
+        showMappingQueue.async {
+            self.filteredShows = self.filteredItemsForSearchText(searchTextLC, scope: scope)
+            DispatchQueue.main.async {
+                self.tableNode.reloadData()
+            }
+        }
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return titleForHeader(in: section)
+    //MARK: UISearchResultsUpdating
+    public func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles?[searchBar.selectedScopeButtonIndex] ?? "All"
+        if let searchText = searchController.searchBar.text {
+            filterContentForSearchText(searchText, scope: scope)
+        }
+    }
+    
+    //MARK: UISearchBarDelegate
+    public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }

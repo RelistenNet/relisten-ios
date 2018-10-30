@@ -12,86 +12,32 @@ import Siesta
 import AsyncDisplayKit
 import SINQ
 
-// TODO: Combine this with SongsViewController into something more abstract. The code is practically identical
-class VenuesViewController: RelistenTableViewController<[VenueWithShowCount]> {
-    let artist: ArtistWithCounts
-    var venues: [Grouping<String, VenueWithShowCount>] = []
-    
-    public required init(artist: ArtistWithCounts) {
-        self.artist = artist
-        
-        super.init(useCache: true, refreshOnAppear: true)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
-    
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
-        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = "Venues"
-    }
+class VenuesViewController: GroupedViewController<VenueWithShowCount> {
+    override var searchPlaceholder : String { get { return "Search Venues" } }
+    override var title: String? { get { return "Venues" } set { } }
     
     override var resource: Resource? { get { return api.venues(forArtist: artist) } }
     
-    public override func dataChanged(_ data: [VenueWithShowCount]) {
-        venues = sinq(data)
-            .groupBy({
-                return $0.sortName.groupNameForTableView()
-            })
-            .toArray()
-            .sorted(by: { (a, b) -> Bool in
-                return a.key <= b.key
-        })
-    }
-    
-    func venueForIndexPath(_ indexPath: IndexPath) -> VenueWithShowCount? {
-        var retval : VenueWithShowCount? = nil
-        if indexPath.section >= 0, indexPath.section < venues.count {
-            let allVenues = venues[indexPath.section].values
-            if indexPath.row >= 0, indexPath.row < allVenues.count() {
-                retval = allVenues.elementAt(indexPath.row)
-            }
+    override func groupNameForItem(_ item: VenueWithShowCount) -> String { return item.sortName.groupNameForTableView() }
+    override func searchStringMatchesItem(_ item: VenueWithShowCount, searchText: String) -> Bool {
+        if item.name.lowercased().contains(searchText) {
+            return true
         }
-        return retval
-    }
-    
-    //MARK: Table Data Source
-    
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return venues.count
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return venues[section].values.count()
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard section != 0 else {
-            return nil
+        if item.location.lowercased().contains(searchText) {
+            return true
         }
-        
-        return venues[section].key
+        if let pastNames = item.past_names,
+           pastNames.lowercased().contains(searchText) {
+            return true
+        }
+        return false
     }
     
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        if let venue = venueForIndexPath(indexPath) {
-            return { VenueCellNode(venue: venue, forArtist: self.artist) }
-        } else {
-            return { ASCellNode() }
-        }
-    }
-    
-    func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        tableNode.deselectRow(at: indexPath, animated: true)
-        
-        if let venue = venueForIndexPath(indexPath) {
-            navigationController?.pushViewController(VenueViewController(artist: artist, venue: venue), animated: true)
-        }
+    override func cellNodeBlockForItem(_ item: VenueWithShowCount) -> ASCellNodeBlock { return { VenueCellNode(venue: item, forArtist: self.artist) } }
+    override func viewControllerForItem(_ item: VenueWithShowCount) -> UIViewController { return VenueViewController(artist: artist, venue: item) }
+
+    // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
+    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
     }
 }

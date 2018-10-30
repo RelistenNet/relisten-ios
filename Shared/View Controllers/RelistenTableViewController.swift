@@ -56,6 +56,33 @@ open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, AS
     }
     
     // MARK: TableView "dataSource" and "delegate"
+    open func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return 0
+    }
+    
+    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return nil
+    }
+    
+    open func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return nil
+    }
+    
+    open func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    // We can't implement nodeBlockForRowAtIndexPath or nodeForRowAtIndexPath because nodeBlockForRowAtIndexPath always takes precedence, so it prevents subclasses from using that method
+    
+    open func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+    }
+    
+    open func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    }
+    
+    open func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
 }
 
 open class RelistenTableViewController<TData> : RelistenBaseTableViewController {

@@ -15,14 +15,14 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]> {
     // Show all shows performed in the last three months
     private let recentShowInterval : TimeInterval = (60 * 60 * 24 * 30 * 3)
     
-    public required init(artist: Artist, showsResource: Resource?, tourSections: Bool) {
-        super.init(artist: artist, showsResource: (showsResource != nil) ? showsResource : RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: tourSections)
+    public required init(artist: Artist, tourSections: Bool, enableSearch: Bool = true) {
+        super.init(artist: artist, tourSections: tourSections, enableSearch: enableSearch)
         
         title = "Recently Performed"
     }
     
     public convenience init(artist: Artist) {
-        self.init(artist: artist, showsResource: RelistenApi.recentlyAddedShows(byArtist: artist), tourSections: true)
+        self.init(artist: artist, tourSections: true)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -31,6 +31,12 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]> {
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
+    }
+    
+    public override var resource: Resource? {
+        get {
+            return RelistenApi.recentlyPerformed(byArtist: artist)
+        }
     }
     
     override func extractShowsAndSource(forData: [Show]) -> [ShowWithSingleSource] {
@@ -42,25 +48,8 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]> {
         return { ShowCellNode(show: show, showUpdateDate: false) }
     }
     
-    // MARK: Boring Overrides
-    // This subclass has to re-implement this method because Texture tries to perform an Obj-C respondsToSelctor: check and it's not finding the methods if they just exist on the superclass with the argument label names (numberOfSectionsIn: does exist though)
-    override func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return super.numberOfSections(in: tableNode)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return super.tableNode(tableNode, numberOfRowsInSection: section)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
+    override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return super.tableView(tableView, titleForHeaderInSection: section)
-    }
-    
-    override func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-        return super.tableNode(tableNode, didSelectRowAt: indexPath)
     }
 }

@@ -44,15 +44,15 @@ public class ReviewsViewController : RelistenTableViewController<[SourceReview]>
         reviews = data
     }
     
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 1
     }
     
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         return reviews.count
     }
     
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         guard indexPath.row >= 0, indexPath.row < reviews.count else {
             return { ASCellNode() }
         }

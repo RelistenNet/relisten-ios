@@ -2427,16 +2427,10 @@ THE SOFTWARE.
 
 ## Texture
 
-The Texture project was created by Pinterest as a continuation, under a 
-different name and license, of the AsyncDisplayKit codebase originally developed
-by Facebook.  AsyncDisplayKit was originally released by Facebook under a BSD
-license and additional patent grant.  Those BSD and patent licenses govern use
-of code in Texture contributed prior to 4/13/2017 (the original AsyncDisplayKit 
-code), and copies of the licenses are included in the /ASDK-Licenses directory 
-of this source tree for reference.
+The Texture project was created by Pinterest as a continuation, under a different
+name and license, of the AsyncDisplayKit codebase originally developed by Facebook.
 
-All code contributed to Texture after 4/13/2017 is released by Pinterest under
-the Apache License, Version 2.0.
+All code in Texture is covered by the Apache License, Version 2.0.
 
 Apache License
                            Version 2.0, January 2004
@@ -2614,6 +2608,7 @@ Apache License
       of your accepting any such warranty or additional liability.
 
    END OF TERMS AND CONDITIONS
+
 
 ## Wormholy
 

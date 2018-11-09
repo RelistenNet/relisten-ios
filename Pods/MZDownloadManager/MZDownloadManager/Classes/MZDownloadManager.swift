@@ -89,7 +89,7 @@ open class MZDownloadManager: NSObject {
     }
     
     fileprivate func backgroundSession(identifier: String, configuration: URLSessionConfiguration? = nil) -> URLSession {
-        var sessionConfiguration = configuration ?? MZDownloadManager.defaultSessionConfiguration(identifier: identifier)
+        let sessionConfiguration = configuration ?? MZDownloadManager.defaultSessionConfiguration(identifier: identifier)
         assert(identifier == sessionConfiguration.identifier, "Configuration identifiers do not match")
         let session = Foundation.URLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: nil)
         return session
@@ -149,7 +149,7 @@ extension MZDownloadManager {
         
         do {
             var resumeDictionary : AnyObject!
-            resumeDictionary = try PropertyListSerialization.propertyList(from: resumeData!, options: PropertyListSerialization.MutabilityOptions(), format: nil) as AnyObject!
+            resumeDictionary = try PropertyListSerialization.propertyList(from: resumeData!, options: PropertyListSerialization.MutabilityOptions(), format: nil) as AnyObject
             var localFilePath = (resumeDictionary?["NSURLSessionResumeInfoLocalPath"] as? String)
             
             if localFilePath == nil || localFilePath?.count < 1 {
@@ -350,16 +350,16 @@ extension MZDownloadManager: URLSessionDownloadDelegate {
 
 extension MZDownloadManager {
     
-    @objc public func addDownloadTask(_ fileName: String, fileURL: String, destinationPath: String) {
+    @objc public func addDownloadTask(_ fileName: String, request: URLRequest, destinationPath: String) {
         
-        let url = URL(string: fileURL as String)!
-        let request = URLRequest(url: url)
+        let url = request.url!
+        let fileURL = url.absoluteString
         
         let downloadTask = sessionManager.downloadTask(with: request)
         downloadTask.taskDescription = [fileName, fileURL, destinationPath].joined(separator: ",")
         downloadTask.resume()
         
-        debugPrint("session manager:\(sessionManager) url:\(url) request:\(request)")
+        debugPrint("session manager:\(String(describing: sessionManager)) url:\(String(describing: url)) request:\(String(describing: request))")
         
         let downloadModel = MZDownloadModel.init(fileName: fileName, fileURL: fileURL, destinationPath: destinationPath)
         downloadModel.startTime = Date()
@@ -370,8 +370,20 @@ extension MZDownloadManager {
         delegate?.downloadRequestStarted?(downloadModel, index: downloadingArray.count - 1)
     }
     
+    @objc public func addDownloadTask(_ fileName: String, fileURL: String, destinationPath: String) {
+        
+        let url = URL(string: fileURL)!
+        let request = URLRequest(url: url)
+        addDownloadTask(fileName, request: request, destinationPath: destinationPath)
+        
+    }
+    
     @objc public func addDownloadTask(_ fileName: String, fileURL: String) {
         addDownloadTask(fileName, fileURL: fileURL, destinationPath: "")
+    }
+    
+    @objc public func addDownloadTask(_ fileName: String, request: URLRequest) {
+        addDownloadTask(fileName, request: request, destinationPath: "")
     }
     
     @objc public func pauseDownloadTaskAtIndex(_ index: Int) {

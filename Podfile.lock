@@ -14,14 +14,14 @@ PODS:
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - CleanroomLogger (6.0.2)
-  - Crashlytics (3.10.9):
-    - Fabric (~> 1.7.13)
+  - Crashlytics (3.11.1):
+    - Fabric (~> 1.8.1)
   - CSwiftV (0.0.5)
   - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.2)
   - DWURecyclingAlert (1.0.2)
   - EDColor (1.0.1)
-  - Fabric (1.7.13)
+  - Fabric (1.8.2)
   - FastImageCache (1.5.1)
   - FaveButton (3.0.1)
   - Interpolate (1.2.1)
@@ -73,7 +73,7 @@ PODS:
     - TGSpreadsheetWriter
   - RealmSwift (3.8.0):
     - Realm (= 3.8.0)
-  - Reveal-SDK (18)
+  - Reveal-SDK (19)
   - SDCloudUserDefaults (1.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -81,19 +81,28 @@ PODS:
   - Siesta/Core (1.4.2)
   - Siesta/UI (1.4.2):
     - Siesta/Core
-  - SimulatorStatusMagic (2.3)
+  - SimulatorStatusMagic (2.3.2)
   - SINQ (0.7.0)
   - SSZipArchive (2.1.4)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (4.2.0)
   - Texture (2.7):
+    - Texture/AssetsLibrary (= 2.7)
+    - Texture/MapKit (= 2.7)
+    - Texture/Photos (= 2.7)
     - Texture/PINRemoteImage (= 2.7)
+  - Texture/AssetsLibrary (2.7):
+    - Texture/Core
   - Texture/Core (2.7)
+  - Texture/MapKit (2.7):
+    - Texture/Core
+  - Texture/Photos (2.7):
+    - Texture/Core
   - Texture/PINRemoteImage (2.7):
     - PINRemoteImage/iOS (= 3.0.0-beta.13)
     - PINRemoteImage/PINCache
     - Texture/Core
-  - Wormholy (1.2.0)
+  - Wormholy (1.2.1)
 
 DEPENDENCIES:
   - ActionKit
@@ -132,7 +141,7 @@ DEPENDENCIES:
   - SINQ
   - SVProgressHUD
   - SwiftyJSON
-  - Texture
+  - Texture (from `../Texture`)
   - Wormholy
 
 SPEC REPOS:
@@ -168,7 +177,6 @@ SPEC REPOS:
     - SSZipArchive
     - SVProgressHUD
     - SwiftyJSON
-    - Texture
     - Wormholy
 
 EXTERNAL SOURCES:
@@ -198,6 +206,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/farktronix/realm-cocoa-converter.git
   Siesta:
     :git: https://github.com/bustoutsolutions/siesta.git
+  Texture:
+    :path: "../Texture"
 
 CHECKOUT OPTIONS:
   CleanroomLogger:
@@ -222,7 +232,7 @@ CHECKOUT OPTIONS:
     :commit: 1781a8421602eb1b04e74b6fa07f81f97981cec2
     :git: https://github.com/tsukisa/LicenseGenerator-iOS.git
   MZDownloadManager:
-    :commit: 44a7ff3ff17b1d050ce8604d609ffb4ed1d1190d
+    :commit: b502e98ae6864a55fbd21e5eb2a4d982c020c383
     :git: https://github.com/farktronix/MZDownloadManager
   Observable:
     :commit: fab070fb05ae4376c5d09efa313b9e1e617f2838
@@ -243,13 +253,13 @@ SPEC CHECKSUMS:
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: f165bae4f3c9a15a22ec2fad9b0826f27fb047d5
-  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
+  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
   CSwiftV: 2560532e2e5b04d95c36b0f49a8dc745071fa525
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 0a9848f9c13f34a488939b7244e8043feb94be3c
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
-  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
+  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
   FaveButton: 496e8356260b9a18e6ed20ad9d1421118096fb56
   Interpolate: c786b88ad860c7110d606ae2776fad616e2b3724
@@ -270,18 +280,18 @@ SPEC CHECKSUMS:
   Realm: 3fdae59de78838064e9f77638d7cdb7b8cff9dc8
   RealmConverter: 910266d4dc96e8f33be7bb7a4918ad80d88a8006
   RealmSwift: c990518b800e106d1f77099d3a4648c3b100337d
-  Reveal-SDK: cce79388da3fd0bbb6ae19d769b906cfc3a33a89
+  Reveal-SDK: 9f0d2c6c12eb7507921e5454ac165b7aa21140a4
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Siesta: 337a9c39c9b78bba904286310c86562a886efdab
-  SimulatorStatusMagic: 631fe6e4195a8a8d587ad8744af9015126526cc2
+  SimulatorStatusMagic: 0c0e711acef6e70dd8a0710962347635a9cdef24
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
-  Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
-  Wormholy: f9d21d7d9f1d029bb1ae47f0f2da3bed854969b5
+  Texture: 030dd1ddc1523b3d7f4998736929740df6d2a0ee
+  Wormholy: 857e742b37a27cc136559a82e43e5ca2351a1b53
 
-PODFILE CHECKSUM: 1cee9eb06cf8cf74d37202a7071db9db51d52854
+PODFILE CHECKSUM: cc1baa83634d456781cd9ba05db3612a55914e42
 
 COCOAPODS: 1.5.3

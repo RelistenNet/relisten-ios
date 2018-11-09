@@ -125,6 +125,7 @@ checkAndClone NapySlider https://github.com/farktronix/NapySlider.git $podBasePa
 checkAndClone BASSGaplessAudioPlayer https://github.com/alecgorge/gapless-audio-bass-ios.git $podBasePath
 checkAndClone AGAudioPlayer https://github.com/alecgorge/AGAudioPlayer.git $podBasePath
 checkAndClone fave-button https://github.com/alecgorge/fave-button.git $podBasePath
+checkAndClone Texture https://github.com/farktronix/Texture.git $podBasePath
 
 if [[ $shouldInstallPods == 1 ]]; then
     printProgress "Checking for CocoaPods"

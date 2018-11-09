@@ -14,7 +14,7 @@ import AsyncDisplayKit
 import RealmSwift
 import SVProgressHUD
 
-class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, ASCollectionDelegate, UISearchResultsUpdating {
+class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, ASCollectionDelegate, UISearchResultsUpdating, UIViewControllerRestoration {
     enum Sections: Int, RawRepresentable {
         case favorited = 0
         case recentlyPlayed
@@ -112,6 +112,9 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.restorationIdentifier = "net.relisten.ArtistsViewController"
+        self.restorationClass = ArtistsViewController.self
+        
         title = "Relisten"
         
         let cb: Event<Any>.EventHandler = { [weak self] _ in self?.render() }
@@ -152,6 +155,76 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         AppColors_SwitchToRelisten(navigationController)
     }
     
+    // MARK: State Restoration
+    static func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+        let vc = ArtistsViewController()
+        return vc
+    }
+    
+    override open func modelIdentifierForElement(at indexPath: IndexPath, in tableNode: ASTableNode) -> String? {
+        let row = indexPath.row
+        
+        switch Sections(rawValue: indexPath.section)! {
+        case .recentlyPlayed:
+            return "RecentlyPlayedShows"
+        case .availableOffline:
+            return "OfflineShows"
+        case .favoritedShows:
+            return "FavoritedShows"
+        case .recentlyPerformed:
+            return "RecentlyPerformedShows"
+        case .allRecentlyUpdated:
+            return "RecentlyUpdatedShows"
+            
+        case .favorited:
+            let artist = allArtists.first(where: { art in art.uuid == favoriteArtists[row] })!
+            return "FavoritedArtists.\(artist.uuid)"
+        case .featured:
+            let artist = featuredArtists[row]
+            return "FeaturedArtists.\(artist.uuid)"
+        case .all:
+            let artist = allArtists[indexPath.row]
+            return "AllArtists.\(artist.uuid)"
+        case .count:
+            fatalError()
+        }
+    }
+    
+    override open func indexPathForElement(withModelIdentifier identifier: String, in tableNode: ASTableNode) -> IndexPath? {
+        switch identifier {
+        case "RecentlyPlayedShows":
+            return IndexPath(row: 0, section: Sections.recentlyPlayed.rawValue)
+        case "OfflineShows":
+            return IndexPath(row: 0, section: Sections.availableOffline.rawValue)
+        case "FavoritedShows":
+            return IndexPath(row: 0, section: Sections.favoritedShows.rawValue)
+        case "RecentlyPerformedShows":
+            return IndexPath(row: 0, section: Sections.recentlyPerformed.rawValue)
+        case "RecentlyUpdatedShows":
+            return IndexPath(row: 0, section: Sections.allRecentlyUpdated.rawValue)
+        default:
+            // (farkas) TODO: Compute the row from the artist UUID
+            if identifier.hasPrefix("FavoritedArtists") {
+                return IndexPath(row: 0, section: Sections.favorited.rawValue)
+            } else if identifier.hasPrefix("FeaturedArtists") {
+                return IndexPath(row: 0, section: Sections.featured.rawValue)
+            } else if identifier.hasPrefix("AllArtists") {
+                return IndexPath(row: 0, section: Sections.all.rawValue)
+            }
+        }
+        
+        return nil
+    }
+    
+//    override public func encodeRestorableState(with coder: NSCoder) {
+//        super.encodeRestorableState(with: coder)
+//    }
+//
+//    override public func decodeRestorableState(with coder: NSCoder) {
+//        super.decodeRestorableState(with: coder)
+//    }
+    
+    // MARK: Loading Data
     @objc func presentSettings(_ sender: UINavigationBar?) {
         navigationController?.pushViewController(SettingsViewController(), animated: true)
     }

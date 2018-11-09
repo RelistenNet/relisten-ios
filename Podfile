@@ -37,15 +37,16 @@ def apply_pods
   pod 'Siesta/Core', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
-  pod 'Texture'
  
   # Development pods (checked out locally)
   if ENV['TRAVIS']
       pod 'BASSGaplessAudioPlayer', :path => 'TravisPods/BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => 'TravisPods/AGAudioPlayer'
+      pod 'Texture', :path => 'TravisPods/Texture'
   else
       pod 'BASSGaplessAudioPlayer', :path => '../BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
+      pod 'Texture', :path => '../Texture'
   end
 
   # Debug Pods

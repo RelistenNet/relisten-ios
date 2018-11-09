@@ -308,7 +308,7 @@
 		7C31554820C2D21800F07622 /* ArtistCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistCellNode.swift; path = Layouts/ArtistCellNode.swift; sourceTree = "<group>"; };
 		7C31554B20C2D24F00F07622 /* AsyncDisplayKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AsyncDisplayKit.swift; path = Extensions/AsyncDisplayKit.swift; sourceTree = "<group>"; };
 		7C34D853210ED59400813C00 /* RealmNotificationDisposables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RealmNotificationDisposables.swift; path = Helpers/RealmNotificationDisposables.swift; sourceTree = "<group>"; };
-		7C449E9C1D5A4F4200750D54 /* PhishOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhishOD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C449E9C1D5A4F4200750D54 /* Relisten for Phish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Relisten for Phish.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C449E9E1D5A4F4300750D54 /* PHODAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHODAppDelegate.swift; sourceTree = "<group>"; };
 		7C449EA51D5A4F4300750D54 /* PHODAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PHODAssets.xcassets; sourceTree = "<group>"; };
 		7C449EA81D5A4F4300750D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PHODLaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -720,7 +720,7 @@
 			children = (
 				7C8EF10D1D5A49C300004B5C /* Relisten.app */,
 				7C8EF1211D5A49C300004B5C /* RelistenScreenshots.xctest */,
-				7C449E9C1D5A4F4200750D54 /* PhishOD.app */,
+				7C449E9C1D5A4F4200750D54 /* Relisten for Phish.app */,
 				7C449EAF1D5A4F4300750D54 /* PhishODUITests.xctest */,
 				43B534102109226F00DE9B1F /* libRelistenShared.a */,
 				43524AD82114DFC700DC70CD /* RelistenTests.xctest */,
@@ -928,9 +928,9 @@
 			productReference = 43CC465C214C104800925CA5 /* RelistenUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		7C449E9B1D5A4F4200750D54 /* PhishOD */ = {
+		7C449E9B1D5A4F4200750D54 /* Relisten for Phish */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7C449EBA1D5A4F4300750D54 /* Build configuration list for PBXNativeTarget "PhishOD" */;
+			buildConfigurationList = 7C449EBA1D5A4F4300750D54 /* Build configuration list for PBXNativeTarget "Relisten for Phish" */;
 			buildPhases = (
 				4E2725734BA0B73F20F7D6FD /* [CP] Check Pods Manifest.lock */,
 				7C449E981D5A4F4200750D54 /* Sources */,
@@ -944,9 +944,9 @@
 			dependencies = (
 				43B5341B2109228E00DE9B1F /* PBXTargetDependency */,
 			);
-			name = PhishOD;
+			name = "Relisten for Phish";
 			productName = PhishOD;
-			productReference = 7C449E9C1D5A4F4200750D54 /* PhishOD.app */;
+			productReference = 7C449E9C1D5A4F4200750D54 /* Relisten for Phish.app */;
 			productType = "com.apple.product-type.application";
 		};
 		7C449EAE1D5A4F4300750D54 /* PhishODUITests */ = {
@@ -1093,7 +1093,7 @@
 			targets = (
 				7C8EF10C1D5A49C200004B5C /* Relisten */,
 				7C8EF1201D5A49C300004B5C /* RelistenScreenshots */,
-				7C449E9B1D5A4F4200750D54 /* PhishOD */,
+				7C449E9B1D5A4F4200750D54 /* Relisten for Phish */,
 				7C449EAE1D5A4F4300750D54 /* PhishODUITests */,
 				43B5340F2109226F00DE9B1F /* RelistenShared */,
 				43524AD72114DFC700DC70CD /* RelistenTests */,
@@ -2063,7 +2063,7 @@
 		};
 		7C449EB11D5A4F4300750D54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7C449E9B1D5A4F4200750D54 /* PhishOD */;
+			target = 7C449E9B1D5A4F4200750D54 /* Relisten for Phish */;
 			targetProxy = 7C449EB01D5A4F4300750D54 /* PBXContainerItemProxy */;
 		};
 		7C8EF1231D5A49C300004B5C /* PBXTargetDependency */ = {
@@ -2499,7 +2499,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7C449EBA1D5A4F4300750D54 /* Build configuration list for PBXNativeTarget "PhishOD" */ = {
+		7C449EBA1D5A4F4300750D54 /* Build configuration list for PBXNativeTarget "Relisten for Phish" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7C449EB61D5A4F4300750D54 /* Debug */,

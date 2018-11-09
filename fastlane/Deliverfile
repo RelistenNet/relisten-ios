@@ -7,4 +7,4 @@
 # Feel free to remove the following line if you use fastlane (which you should)
 
 app_identifier "com.alecgorge.ios.Listen-to-the-Dead" # The bundle identifier of your app
-username "appstore@getbluepaint.com" # your Apple ID user
+username ENV["APPLE_ID"] || "appstore@getbluepaint.com" # your Apple ID user

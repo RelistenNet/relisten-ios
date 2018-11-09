@@ -1,2 +1,4 @@
-- crash fixes
-- memory leak fixes
+- Search! Most views have a search bar at the top (drag down to expose it)
+- Listening history is saved instantly instead of at the halfway point of a track. (last.fm is still reported at the halfway point)
+- Some of the views have had their backing UI rewritten. Everything should look the same, but please let us know about any bugs or differences you see in the show detail views.
+- Updated a lot of code for latest version of Swift and iOS

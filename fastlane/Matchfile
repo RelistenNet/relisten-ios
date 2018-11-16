@@ -3,7 +3,6 @@ git_url("git@bitbucket.org:relistennet/ios-certificates.git")
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
 app_identifier(["com.alecgorge.ios.Listen-to-the-Dead", "com.alecgorge.Phish-Tracks"])
-username("alec@relisten.net") # Your Apple Developer Portal username
 
 template_name("CarPlay Audio App(Distribution)")
 

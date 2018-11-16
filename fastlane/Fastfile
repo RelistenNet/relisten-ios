@@ -53,6 +53,12 @@ platform :ios do
       template_name: "CarPlay Audio App(Distribution)"
       )
 
+    # Ensure that your git status is not dirty
+    ensure_git_status_clean
+
+    # Increment the build number (not the version number)
+    increment_build_number(bump_type: "minor", xcodeproj: "Relisten.xcodeproj")
+
     build_app(scheme: "Relisten")
 
     current_dir = File.expand_path File.dirname(__FILE__)
@@ -62,6 +68,17 @@ platform :ios do
       changelog: changelog,
       distribute_external: true
     )
+    
+    # Commit the version bump
+    commit_version_bump(xcodeproj: "Relisten.xcodeproj")
+
+    # Add a git tag for this build. This will automatically
+    # use an appropriate git tag name
+    add_git_tag
+
+    # Push the new commit and tag back to your git remote
+    push_to_git_remote
+
   end
 
   lane :upload do
@@ -70,6 +87,12 @@ platform :ios do
       template_name: "CarPlay Audio App(Distribution)"
       )
 
+    # Ensure that your git status is not dirty
+    ensure_git_status_clean
+
+    # Increment the build number (not the version number)
+    increment_build_number(xcodeproj: "Relisten.xcodeproj")
+
     build_app(scheme: "Relisten")
 
     upload_to_app_store(
@@ -77,6 +100,16 @@ platform :ios do
       skip_metadata: true,
       skip_app_version_update: true
     )
+
+    # Commit the version bump
+    commit_version_bump(xcodeproj: "Relisten.xcodeproj")
+
+    # Add a git tag for this build. This will automatically
+    # use an appropriate git tag name
+    add_git_tag
+
+    # Push the new commit and tag back to your git remote
+    push_to_git_remote
   end
 
   lane :screenshots do

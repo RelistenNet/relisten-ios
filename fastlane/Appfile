@@ -1,5 +1,5 @@
 app_identifier "com.alecgorge.ios.Listen-to-the-Dead" # The bundle identifier of your app
-apple_id "appstore@getbluepaint.com" # Your Apple email address
+apple_id ENV["APPLE_ID"] || "appstore@getbluepaint.com" # Your Apple email address
 
 team_id "HT7ELV3Q35"  # Developer Portal Team ID
 

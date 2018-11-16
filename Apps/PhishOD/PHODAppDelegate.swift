@@ -31,7 +31,7 @@ class PHODAppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        LogDebug("⭕️⭕️⭕️ PhishOD is launching ⭕️⭕️⭕️")
+        LogDebug("⭕️⭕️⭕️ Rephishin' is launching ⭕️⭕️⭕️")
         RelistenApp.sharedApp.delegate = self
         
         // cannot be in the shared library :/ https://stackoverflow.com/questions/20495064/how-to-integrate-crashlytics-with-static-library

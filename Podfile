@@ -65,7 +65,7 @@ target 'RelistenShared' do
   apply_pods
 end
 
-target 'PhishOD' do
+target 'Relisten for Phish' do
   apply_pods
 end
 

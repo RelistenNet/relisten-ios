@@ -88,9 +88,11 @@ PODS:
   - SwiftyJSON (4.2.0)
   - Texture (2.7):
     - Texture/AssetsLibrary (= 2.7)
+    - Texture/Core (= 2.7)
     - Texture/MapKit (= 2.7)
     - Texture/Photos (= 2.7)
     - Texture/PINRemoteImage (= 2.7)
+    - Texture/Video (= 2.7)
   - Texture/AssetsLibrary (2.7):
     - Texture/Core
   - Texture/Core (2.7)
@@ -102,7 +104,9 @@ PODS:
     - PINRemoteImage/iOS (= 3.0.0-beta.13)
     - PINRemoteImage/PINCache
     - Texture/Core
-  - Wormholy (1.2.1)
+  - Texture/Video (2.7):
+    - Texture/Core
+  - Wormholy (1.2.2)
 
 DEPENDENCIES:
   - ActionKit
@@ -246,9 +250,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ActionKit: 1e1b696b6e1a54e7999d8c0f1d7176b2fee2fa4d
-  AGAudioPlayer: 4bffbc2180ef1b930f6cc60aae37d806bd1263cc
+  AGAudioPlayer: 0f27e1109124739c2e49339f8cb1611622b75a1a
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
-  BASSGaplessAudioPlayer: 5547414722926aaa7d1116557f5208df57b0caab
+  BASSGaplessAudioPlayer: 5b074495769769192b720c70aa2a60f6f33751f3
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
@@ -289,9 +293,9 @@ SPEC CHECKSUMS:
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
-  Texture: 030dd1ddc1523b3d7f4998736929740df6d2a0ee
-  Wormholy: 857e742b37a27cc136559a82e43e5ca2351a1b53
+  Texture: f6078ef421abe2a15225c846206287343bee0b1c
+  Wormholy: a6e5d2dca1c54fdf22b2681b93975a18c525318a
 
-PODFILE CHECKSUM: cc1baa83634d456781cd9ba05db3612a55914e42
+PODFILE CHECKSUM: 20ddfad822731db5c2c70d8992e4e885ff25b5b5
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.2

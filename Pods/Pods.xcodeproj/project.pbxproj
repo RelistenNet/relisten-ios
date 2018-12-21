@@ -4586,7 +4586,6 @@
 		762B59832FC9FE2BD3BB13A097CFEB50 /* Transformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Transformer.swift; path = Source/Shared/Library/Transformer.swift; sourceTree = "<group>"; };
 		76546AACB9EC3BE1987C3AD83207011A /* qtcreator_dark.min.css */ = {isa = PBXFileReference; includeInIndex = 1; name = qtcreator_dark.min.css; path = Sources/Utils/Highlightr/Assets/styles/qtcreator_dark.min.css; sourceTree = "<group>"; };
 		76567A3A3DE22AFA9EE74F794E9387B0 /* AGDurationHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AGDurationHelper.h; path = AGAudioPlayer/AGDurationHelper.h; sourceTree = "<group>"; };
-		7661A479AA9E7D311BD1AC76EE5C76F8 /* RevealServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevealServer.framework; path = "RevealServer-19/iOS/RevealServer.framework"; sourceTree = "<group>"; };
 		767490303D50625C237BC023BB70F083 /* PINRemoteImageBasicCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageBasicCache.m; path = Source/Classes/PINRemoteImageBasicCache.m; sourceTree = "<group>"; };
 		7695F135883EF34BE768BF495C234115 /* ASTextNode2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ASTextNode2.h; path = Source/ASTextNode2.h; sourceTree = "<group>"; };
 		76B6040D7D3FBD3F67DD8AB6B7CFCFB7 /* PINCachedAnimatedImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINCachedAnimatedImage.m; path = Source/Classes/AnimatedImages/PINCachedAnimatedImage.m; sourceTree = "<group>"; };
@@ -5338,6 +5337,7 @@
 		E0AF7190342C96A8B5E9BD0C79541B19 /* KissXML.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KissXML.modulemap; sourceTree = "<group>"; };
 		E0BA3C47247322540EDCD32E531F206F /* ASMutableElementMap.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ASMutableElementMap.h; path = Source/Private/ASMutableElementMap.h; sourceTree = "<group>"; };
 		E0E3FD7E1E0D23CC10BC323F4C8CC59F /* PINCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PINCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0F5400E40C2CFA53E5ADB3EFE05BB44 /* RevealServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevealServer.framework; path = "RevealServer-20/iOS/RevealServer.framework"; sourceTree = "<group>"; };
 		E0FC469F25845D10B73BE4184C300E47 /* AsyncDisplayKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AsyncDisplayKit.h; path = Source/AsyncDisplayKit.h; sourceTree = "<group>"; };
 		E1A1A0C055AE4B35564CE4662AA40264 /* Storage+Transform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Storage+Transform.swift"; path = "Source/Shared/Storage/Storage+Transform.swift"; sourceTree = "<group>"; };
 		E1B6A2D59536E559827A7C16EB1E044E /* ActionKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ActionKit.modulemap; sourceTree = "<group>"; };
@@ -6565,14 +6565,6 @@
 			path = FastImageCache;
 			sourceTree = "<group>";
 		};
-		31842AB4AF78980D228E325F2E80A384 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7661A479AA9E7D311BD1AC76EE5C76F8 /* RevealServer.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		334FD6AC66E53E15EA207D2627CEF2B0 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -7102,6 +7094,14 @@
 				57032B2B622E217A955E993CC55B8733 /* NSString+DDXML.m */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		8805E65CD437A0A29FE44C99A228ECDC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E0F5400E40C2CFA53E5ADB3EFE05BB44 /* RevealServer.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		89B5EBFC776F70FEF33856EB0FACDFFB /* Pod */ = {
@@ -8012,7 +8012,7 @@
 		D8F7C2AFA8080C3792CBD417548B673B /* Reveal-SDK */ = {
 			isa = PBXGroup;
 			children = (
-				31842AB4AF78980D228E325F2E80A384 /* Frameworks */,
+				8805E65CD437A0A29FE44C99A228ECDC /* Frameworks */,
 				EF1694BCB2E2CC9D2F9EA9C553213B20 /* Support Files */,
 			);
 			name = "Reveal-SDK";

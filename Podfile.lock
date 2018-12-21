@@ -14,14 +14,14 @@ PODS:
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - CleanroomLogger (6.0.2)
-  - Crashlytics (3.11.1):
-    - Fabric (~> 1.8.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - CSwiftV (0.0.5)
   - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.2)
   - DWURecyclingAlert (1.0.2)
   - EDColor (1.0.1)
-  - Fabric (1.8.2)
+  - Fabric (1.9.0)
   - FastImageCache (1.5.1)
   - FaveButton (3.0.1)
   - Interpolate (1.2.1)
@@ -73,7 +73,7 @@ PODS:
     - TGSpreadsheetWriter
   - RealmSwift (3.8.0):
     - Realm (= 3.8.0)
-  - Reveal-SDK (19)
+  - Reveal-SDK (20)
   - SDCloudUserDefaults (1.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -243,13 +243,13 @@ SPEC CHECKSUMS:
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: f165bae4f3c9a15a22ec2fad9b0826f27fb047d5
-  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   CSwiftV: 2560532e2e5b04d95c36b0f49a8dc745071fa525
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 0a9848f9c13f34a488939b7244e8043feb94be3c
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
-  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
   FaveButton: 496e8356260b9a18e6ed20ad9d1421118096fb56
   Interpolate: c786b88ad860c7110d606ae2776fad616e2b3724
@@ -270,7 +270,7 @@ SPEC CHECKSUMS:
   Realm: 3fdae59de78838064e9f77638d7cdb7b8cff9dc8
   RealmConverter: 910266d4dc96e8f33be7bb7a4918ad80d88a8006
   RealmSwift: c990518b800e106d1f77099d3a4648c3b100337d
-  Reveal-SDK: 9f0d2c6c12eb7507921e5454ac165b7aa21140a4
+  Reveal-SDK: 43206a57f575632fd304e85385cc259b5d359e32
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Siesta: 337a9c39c9b78bba904286310c86562a886efdab

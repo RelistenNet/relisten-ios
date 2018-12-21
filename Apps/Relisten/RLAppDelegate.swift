@@ -106,13 +106,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 // MARK: State Restoration
 extension AppDelegate {
     public func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
-        // TODO: Encode the PlaybackController state here
         return true
     }
     
     public func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
         // TODO: If it's been over N hours and the user wasn't playing music, should we go back to the main screen?
         return true
+    }
+    
+    public func application(_ application: UIApplication, willEncodeRestorableStateWith coder: NSCoder) {
+        // TODO: Encode the PlaybackController state here
+    }
+    
+    public func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
+        // TODO: Decode the PlaybackController state here
+        
     }
 }
 

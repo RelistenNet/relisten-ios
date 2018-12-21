@@ -33,16 +33,26 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public let eventTrackPlaybackStarted = Event<Track?>()
     public let eventTrackWasPlayed = Event<Track>()
 
-    public static var window: UIWindow? = nil
+    public var window: UIWindow? = nil
     
-    public static let sharedInstance = PlaybackController()
+    public static var sharedInstance : PlaybackController!
+    
+    public static func setupSharedInstance(withWindow window : UIWindow? = nil) {
+        PlaybackController.sharedInstance = PlaybackController.init(withWindow: window)
+    }
+    
+    public convenience init(withWindow window : UIWindow? = nil) {
+        self.init()
+        
+        self.window = window
+    }
     
     public required override init() {
         playbackQueue = AGAudioPlayerUpNextQueue()
         player = AGAudioPlayer(queue: playbackQueue)
         viewController = AGAudioPlayerViewController(player: player)
         
-        shrinker = PlaybackMinibarShrinker(window: PlaybackController.window, barHeight: viewController.barHeight)
+        shrinker = PlaybackMinibarShrinker(barHeight: viewController.barHeight)
         
         super.init()
         
@@ -53,9 +63,25 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
         viewController.loadViewIfNeeded()
     }
     
+    enum CodingKey:String {
+        case queue = "queue"
+        case player = "player"
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError()
     }
+    
+    public func decodeRestorableState(with coder: NSCoder) {
+        
+    }
+    
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(playbackQueue, forKey: CodingKey.queue.rawValue)
+        aCoder.encode(player, forKey: CodingKey.player.rawValue)
+    }
+    
+    public static var supportsSecureCoding: Bool { get { return true } }
     
     public func displayMini(on vc: UIViewController, completion: (() -> Void)?) {
         if let nav = vc.navigationController {
@@ -70,7 +96,7 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public func hideMini(_ completion: (() -> Void)? = nil) {
         if hasBarBeenAdded {
             UIView.animate(withDuration: 0.3, animations: {
-                if let w = PlaybackController.window {
+                if let w = self.window {
                     self.viewController.view.frame = CGRect(
                         x: 0,
                         y: w.bounds.height,
@@ -103,7 +129,7 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public func dismiss(_ completion: ((Bool) -> Void)? = nil) {
         viewController.switchToMiniPlayer(animated: true)
         UIView.animate(withDuration: 0.3, animations: {
-            if let w = PlaybackController.window {
+            if let w = self.window {
                 self.viewController.view.frame = CGRect(
                     x: 0,
                     y: w.bounds.height - self.viewController.barHeight,
@@ -116,7 +142,7 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     
     public private(set) var hasBarBeenAdded = false
     public func addBarIfNeeded() {
-        if !hasBarBeenAdded, let w = PlaybackController.window {
+        if !hasBarBeenAdded, let w = self.window {
             viewController.viewWillAppear(true)
             
             w.addSubview(viewController.view)
@@ -165,7 +191,7 @@ extension PlaybackController : AGAudioPlayerViewControllerPresentationDelegate {
     }
     
     func fullPlayerDismissProgress(_ progress: CGFloat) {
-        if let w = PlaybackController.window {
+        if let w = self.window {
             
             var vFrame = viewController.view.frame
             
@@ -216,11 +242,9 @@ extension PlaybackController : TrackStatusActionHandler {
 }
 
 public class PlaybackMinibarShrinker: NSObject, UINavigationControllerDelegate {
-    private let window: UIWindow?
     private let barHeight: CGFloat
     
-    public init(window: UIWindow?, barHeight: CGFloat) {
-        self.window = window
+    public init(barHeight: CGFloat) {
         self.barHeight = barHeight
     }
     

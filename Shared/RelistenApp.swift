@@ -114,10 +114,8 @@ public class RelistenApp {
     }
     
     public func sharedSetup() {
-        if let window = delegate.window {
-            PlaybackController.window = window
-        }
-        let _ = PlaybackController.sharedInstance
+        let window = delegate.window
+        PlaybackController.setupSharedInstance(withWindow: window)
         
         DispatchQueue.main.async {
             let _ = DownloadManager.shared

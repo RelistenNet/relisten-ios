@@ -98,7 +98,7 @@ class CarPlayDataSource {
             MyLibrary.shared.offline.sources.observeWithValue { [weak self] (offline, changes) in
                 guard let s = self else { return }
                 
-                let shows = offline.asCompleteShows()
+                let shows = offline.asCompleteShows(toIndex: -1)
                 
                 s.queue.async {
                     s.reloadOfflineSources(shows: shows)
@@ -118,7 +118,7 @@ class CarPlayDataSource {
             MyLibrary.shared.favorites.sources.observeWithValue { [weak self] (favoriteShows, changes) in
                 guard let s = self else { return }
                 
-                let favs = favoriteShows.asCompleteShows()
+                let favs = favoriteShows.asCompleteShows(toIndex: -1)
                 
                 s.queue.async {
                     s.reloadFavorites(shows: favs)

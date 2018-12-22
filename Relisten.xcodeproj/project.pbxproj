@@ -115,6 +115,8 @@
 		43B53463210922CE00DE9B1F /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8044141E6F4B1E00BA946E /* AppColors.swift */; };
 		43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CBE10F2109296A003FAF51 /* RelistenApp.swift */; };
 		43CBE11521093D01003FAF51 /* Phish.json in Resources */ = {isa = PBXBuildFile; fileRef = 43CBE11421093C9B003FAF51 /* Phish.json */; };
+		43D4F1DA21CD967600FD4A72 /* TestDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D4F1D921CD967600FD4A72 /* TestDataGenerator.swift */; };
+		43D4F1DC21CDB44300FD4A72 /* DebugSettingsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D4F1DB21CDB44300FD4A72 /* DebugSettingsNode.swift */; };
 		43D53C2E21365A65008B407D /* LastFMScrobbler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D53C2D21365A65008B407D /* LastFMScrobbler.swift */; };
 		43D53C3021366F59008B407D /* LastFMAccountNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D53C2F21366F59008B407D /* LastFMAccountNode.swift */; };
 		43FABAAE214C115D00E43A22 /* RelistenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CC465E214C104800925CA5 /* RelistenUITests.swift */; };
@@ -263,6 +265,8 @@
 		43CBE11421093C9B003FAF51 /* Phish.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Phish.json; sourceTree = "<group>"; };
 		43CC465C214C104800925CA5 /* RelistenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelistenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43CC465E214C104800925CA5 /* RelistenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenUITests.swift; sourceTree = "<group>"; };
+		43D4F1D921CD967600FD4A72 /* TestDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestDataGenerator.swift; path = Helpers/TestDataGenerator.swift; sourceTree = "<group>"; };
+		43D4F1DB21CDB44300FD4A72 /* DebugSettingsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSettingsNode.swift; sourceTree = "<group>"; };
 		43D53C2D21365A65008B407D /* LastFMScrobbler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LastFMScrobbler.swift; path = Helpers/LastFMScrobbler.swift; sourceTree = "<group>"; };
 		43D53C2F21366F59008B407D /* LastFMAccountNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastFMAccountNode.swift; sourceTree = "<group>"; };
 		43EF8D6720F01A41002FF970 /* CarPlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayController.swift; path = "View Controllers/CarPlayController.swift"; sourceTree = "<group>"; };
@@ -452,6 +456,7 @@
 				433A44052133AA380059D251 /* CreditsNode.swift */,
 				43D53C2F21366F59008B407D /* LastFMAccountNode.swift */,
 				433A44082133B43A0059D251 /* ManageOfflineMusicNode.swift */,
+				43D4F1DB21CDB44300FD4A72 /* DebugSettingsNode.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 				434066AD212FC88900FB1D94 /* UserFeedback.swift */,
 				434066B1212FF37600FB1D94 /* Logging.swift */,
 				43D53C2D21365A65008B407D /* LastFMScrobbler.swift */,
+				43D4F1D921CD967600FD4A72 /* TestDataGenerator.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1890,6 +1896,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43D4F1DC21CDB44300FD4A72 /* DebugSettingsNode.swift in Sources */,
 				43B5341F210922CE00DE9B1F /* Events.swift in Sources */,
 				43A035F3210EEDCA00C087DD /* AlbumArtImageCache.swift in Sources */,
 				43B5345C210922CE00DE9B1F /* RelistenShowModels.swift in Sources */,
@@ -1966,6 +1973,7 @@
 				435911AB21681BD300ACA85F /* VenueCellNode.swift in Sources */,
 				43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */,
 				433A4402213361040059D251 /* SettingsViewController.swift in Sources */,
+				43D4F1DA21CD967600FD4A72 /* TestDataGenerator.swift in Sources */,
 				43B5344D210922CE00DE9B1F /* SourceViewController.swift in Sources */,
 				43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */,
 				43B53430210922CE00DE9B1F /* HorizontalShowCollectionCellNode.swift in Sources */,

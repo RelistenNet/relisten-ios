@@ -18,6 +18,7 @@ public class SettingsViewController : RelistenBaseTableViewController {
         case downloads
         case bugReporting
         case credits
+        case debug
         case count
     }
     
@@ -40,6 +41,10 @@ public class SettingsViewController : RelistenBaseTableViewController {
     
     lazy var manageOfflineMusicNode : ManageOfflineMusicNode = {
         return ManageOfflineMusicNode(viewController: self)
+    }()
+    
+    lazy var debugSettingsNode : DebugSettingsNode = {
+        return DebugSettingsNode()
     }()
     
     let bugReportingNode : BugReportingSettingsNode = BugReportingSettingsNode()
@@ -105,7 +110,11 @@ public class SettingsViewController : RelistenBaseTableViewController {
     
     // MARK: ASTableDataSource
     override public func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return Sections.count.rawValue
+#if DEBUG
+            return Sections.count.rawValue
+#else
+            return Sections.count.rawValue - 1
+#endif
     }
     
     override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
@@ -118,6 +127,12 @@ public class SettingsViewController : RelistenBaseTableViewController {
             return 1
         case .credits:
             return 6
+        case .debug:
+#if DEBUG
+            return 1
+#else
+            return 0
+#endif
         case .count:
             fatalError()
         }
@@ -188,6 +203,8 @@ public class SettingsViewController : RelistenBaseTableViewController {
             default:
                 fatalError()
             }
+        case .debug:
+            n = debugSettingsNode
             
         case .count:
             fatalError()
@@ -204,6 +221,8 @@ public class SettingsViewController : RelistenBaseTableViewController {
             return "Offline Music"
         case .bugReporting:
             return "Bug Reporting"
+        case .debug:
+            return "Debug"
         case .credits:
             return "Credits"
         case .count:

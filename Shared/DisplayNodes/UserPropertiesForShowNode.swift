@@ -167,7 +167,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
         sizeOfDownloadedTracks = sourceSize
         if numberOfTracks > 0 {
             deleteButtonHidden = false
-            let totalNumberOfTracks = source.tracksFlattened.count
+            let totalNumberOfTracks = source.trackCount
             if numberOfTracks == totalNumberOfTracks {
                 downloadButtonImage = #imageLiteral(resourceName: "download-complete")
                 txt = "All \(numberOfTracks) songs downloaded (\(sourceSize.humanizeBytes()))"

@@ -11,6 +11,7 @@ import UIKit
 import Siesta
 import KASlideShow
 import AsyncDisplayKit
+import RealmSwift
 
 extension Calendar {
     static func currentDayOfMonth() -> Int {
@@ -39,7 +40,7 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
     
     private var lastTodayShowsUpdateDay : Int
     
-    public var recentlyPlayedTracks: [Track] = []
+    public var recentlyPlayedTracks: Results<RecentlyPlayedTrack>?
     public var offlineSources: [CompleteShowInformation] = []
     public var favoritedSources: [CompleteShowInformation] = []
     public var todayShows: [ShowWithArtist] = []
@@ -148,10 +149,11 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
             guard let s = self else { return }
             
             DispatchQueue.main.async {
-                s.recentlyPlayedTracks = shows.asTracks()
-                s.recentShowsNode.shows = s.recentlyPlayedTracks.map { (show: $0.showInfo.show, artist: nil) }
-
-                s.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+                s.recentlyPlayedTracks = shows
+                if let showInfos = s.recentlyPlayedTracks?.asTracks().map({ (show: $0.showInfo.show, artist: nil) }) as [(show: Show, artist: Artist?)]? {
+                    s.recentShowsNode.shows = showInfos
+                    s.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+                }
             }
         }.dispose(to: &disposal)
         
@@ -256,7 +258,11 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
         case .offline:
             return offlineSources.count > 0 ? 1 : 0
         case .recentlyPlayed:
-            return recentlyPlayedTracks.count > 0 ? 1 : 0
+            if let recentlyPlayedTracks = recentlyPlayedTracks {
+                return recentlyPlayedTracks.count > 0 ? 1 : 0
+            } else {
+                return 0
+            }
         case .count:
             fatalError()
         }
@@ -296,7 +302,11 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
                 return nil
             }
         case .recentlyPlayed:
-            return recentlyPlayedTracks.count > 0 ? "My Recently Played" : nil
+            if let recentlyPlayedTracks = recentlyPlayedTracks {
+                return recentlyPlayedTracks.count > 0 ? "My Recently Played" : nil
+            } else {
+                return nil
+            }
         case .recentlyUpdated:
             return recentlyUpdatedShows.count > 0 ? "Recently Updated" : nil
         case .recentlyPerformed:
@@ -320,9 +330,10 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
             show = todayShows[indexPath.row]
         }
         else if collectionNode === recentShowsNode.collectionNode {
-            let s = recentlyPlayedTracks[indexPath.row].showInfo
-            show = s.show
-            source = s.source
+            if let s = recentlyPlayedTracks?[indexPath.row].track?.showInfo {
+                show = s.show
+                source = s.source
+            }
         }
         else if collectionNode == recentlyPerformedNode.collectionNode {
             show = recentlyPerformedShows[indexPath.row]

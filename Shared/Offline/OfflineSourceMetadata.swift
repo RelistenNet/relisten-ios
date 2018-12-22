@@ -67,7 +67,9 @@ public extension HasSourceAndShow {
     
     public var completeShowInformation: CompleteShowInformation? {
         get {
-            if let show = self.show, let art = artist, let source = show.sources.first(where: { $0.uuid.uuidString == source_uuid }) {
+            if let show = self.show,
+               let art = artist,
+               let source = show.sources.first(where: { $0.uuid.uuidString == source_uuid }) {
                 return CompleteShowInformation(source: source, show: show, artist: art)
             }
             return nil
@@ -78,16 +80,15 @@ public extension HasSourceAndShow {
 public extension HasTrackSourceAndShow {
     public var sourceTrack: SourceTrack? {
         get {
-            return source?.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid })
+            return source?.track(withUUID: track_uuid)
         }
     }
     
     public var track: Track? {
         get {
-            if let completeShowInformation = completeShowInformation {
-                if let sourceTrack = completeShowInformation.source.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid }) {
-                    return Track(sourceTrack: sourceTrack, showInfo: completeShowInformation)
-                }
+            if let completeShowInformation = completeShowInformation,
+               let sourceTrack = completeShowInformation.source.track(withUUID: track_uuid) {
+                return Track(sourceTrack: sourceTrack, showInfo: completeShowInformation)
             }
             return nil
         }

@@ -101,7 +101,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
         if let source = show.source {
             if let taper = source.taper, taper.lowercased().contains(searchText) { return true }
             if let transferrer = source.transferrer, transferrer.lowercased().contains(searchText) { return true }
-            if source.tracksFlattened.contains(where: { $0.title.lowercased().contains(searchText) }) { return true }
+            if source.containsTrack(where: { $0.title.lowercased().contains(searchText) }) { return true }
         }
         
         if searchText == "sbd" || searchText == "soundboard" {

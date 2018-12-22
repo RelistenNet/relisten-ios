@@ -27,7 +27,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         case count
     }
     
-    public var recentlyPlayedTracks: [Track] = []
+    public var recentlyPlayedTracks: Results<RecentlyPlayedTrack>?
     public var favoriteArtists: [UUID] = []
     public var offlineShows: [CompleteShowInformation] = []
     public var favoriteShows: [CompleteShowInformation] = []
@@ -130,7 +130,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         library.recent.shows.observeWithValue { [weak self] recentlyPlayed, changes in
             guard let s = self else { return }
             
-            s.reloadRecentShows(tracks: recentlyPlayed.asTracks())
+            s.reloadRecentShows(tracks: recentlyPlayed)
         }.dispose(to: &disposal)
 
         library.offline.sources.observeWithValue { [weak self] offlineSources, changes in
@@ -193,15 +193,15 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         }
     }
 
-    private func reloadRecentShows(tracks: [Track]) {
+    private func reloadRecentShows(tracks: Results<RecentlyPlayedTrack>) {
         DispatchQueue.main.async {
             self.recentlyPlayedTracks = tracks
             
-            let recentShows = self.recentlyPlayedTracks.map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: Artist?)]
-            
-            self.recentShowsNode.shows = recentShows
-            if self.isFiltering() == false {
-                self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+            if let recentShows = self.recentlyPlayedTracks?.asTracks().map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: Artist?)]? {
+                self.recentShowsNode.shows = recentShows
+                if self.isFiltering() == false {
+                    self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
+                }
             }
         }
     }
@@ -336,7 +336,11 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         } else {
             switch Sections(rawValue: section)! {
             case .recentlyPlayed:
-                return recentlyPlayedTracks.count > 0 ? 1 : 0
+                if let recentlyPlayedTracks = recentlyPlayedTracks {
+                    return recentlyPlayedTracks.count > 0 ? 1 : 0
+                } else {
+                    return 0
+                }
             case .availableOffline:
                 return offlineShows.count > 0 ? 1 : 0
             case .favorited:
@@ -449,7 +453,11 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         
         switch Sections(rawValue: section)! {
         case .recentlyPlayed:
-            return recentlyPlayedTracks.count > 0 ? "Recently Played" : nil
+            if let recentlyPlayedTracks = recentlyPlayedTracks {
+                return recentlyPlayedTracks.count > 0 ? "Recently Played" : nil
+            } else {
+                return nil
+            }
         case .availableOffline:
             return offlineShows.count > 0 ? "Available Offline" : nil
         case .favorited:
@@ -475,15 +483,16 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     }
 
     override public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        let show: Show?
-        let artist: Artist?
+        var show: Show? = nil
+        var artist: Artist? = nil
         var source: SourceFull? = nil
         
         if collectionNode === recentShowsNode.collectionNode {
-            let s = recentlyPlayedTracks[indexPath.item]
-            show = s.showInfo.show
-            artist = s.showInfo.artist
-            source = s.showInfo.source
+            if let s = recentlyPlayedTracks?[indexPath.item].track?.showInfo {
+                show = s.show
+                artist = s.artist
+                source = s.source
+            }
         }
         else if collectionNode === offlineShowsNode.collectionNode {
             let s = offlineShows[indexPath.item]

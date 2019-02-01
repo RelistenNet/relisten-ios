@@ -173,7 +173,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         if !(shows == offlineShows) {
             DispatchQueue.main.async {
                 self.offlineShows = shows
-                self.offlineShowsNode.shows = self.offlineShows.map({ ($0.show, $0.artist) })
+                self.offlineShowsNode.shows = self.offlineShows.map({ ($0.show, $0.artist, $0.source) })
                 if self.isFiltering() == false {
                     self.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
                 }
@@ -185,7 +185,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         if !(shows == favoriteShows) {
             DispatchQueue.main.async {
                 self.favoriteShows = shows
-                self.favoritedSourcesNode.shows = self.favoriteShows.map({ ($0.show, $0.artist) })
+                self.favoritedSourcesNode.shows = self.favoriteShows.map({ ($0.show, $0.artist, $0.source) })
                 if self.isFiltering() == false {
                     self.tableNode.reloadSections([ Sections.favoritedShows.rawValue ], with: .automatic)
                 }
@@ -197,7 +197,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         DispatchQueue.main.async {
             self.recentlyPlayedTracks = tracks
             
-            if let recentShows = self.recentlyPlayedTracks?.asTracks().map({ ($0.showInfo.show, $0.showInfo.artist) }) as [(show: Show, artist: Artist?)]? {
+            if let recentShows = self.recentlyPlayedTracks?.asTracks().map({ ($0.showInfo.show, $0.showInfo.artist, $0.showInfo.source) }) as [(show: Show, artist: Artist?, source: Source?)]? {
                 self.recentShowsNode.shows = recentShows
                 if self.isFiltering() == false {
                     self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
@@ -295,14 +295,14 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
             DispatchQueue.main.async {
                 if resource == self.resourceRecentlyPerformed {
                     self.recentlyPerformedShows = resource.typedContent(ifNone: [])
-                    self.recentlyPerformedNode.shows = self.recentlyPerformedShows.map { (show: $0, artist: $0.artist) }
+                    self.recentlyPerformedNode.shows = self.recentlyPerformedShows.map { (show: $0, artist: $0.artist, nil) }
                     if self.isFiltering() == false {
                         self.tableNode.reloadSections([ Sections.recentlyPerformed.rawValue ], with: .automatic)
                     }
                 }
                 else if resource == self.resourceRecentlyUpdated {
                     self.allRecentlyUpdatedShows = resource.typedContent(ifNone: [])
-                    self.allRecentlyUpdatedNode.shows = self.allRecentlyUpdatedShows.map { (show: $0, artist: $0.artist) }
+                    self.allRecentlyUpdatedNode.shows = self.allRecentlyUpdatedShows.map { (show: $0, artist: $0.artist, nil) }
                     if self.isFiltering() == false {
                         self.tableNode.reloadSections([ Sections.allRecentlyUpdated.rawValue ], with: .automatic)
                     }
@@ -483,53 +483,25 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     }
 
     override public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        var show: Show? = nil
-        var artist: Artist? = nil
-        var source: SourceFull? = nil
+        var horizontalCollectionNode : HorizontalShowCollectionCellNode? = nil
         
-        if collectionNode === recentShowsNode.collectionNode {
-            if let s = recentlyPlayedTracks?[indexPath.item].track?.showInfo {
-                show = s.show
-                artist = s.artist
-                source = s.source
-            }
-        }
-        else if collectionNode === offlineShowsNode.collectionNode {
-            let s = offlineShows[indexPath.item]
-            show = s.show
-            artist = s.artist
-            source = s.source
-        }
-        else if collectionNode === favoritedSourcesNode.collectionNode {
-            let s = favoriteShows[indexPath.item]
-            show = s.show
-            artist = s.artist
-            source = s.source
-        }
-        else if collectionNode === recentlyPerformedNode.collectionNode {
-            let s = recentlyPerformedShows[indexPath.item]
-            show = s
-            artist = s.artist
-        }
-        else if collectionNode === allRecentlyUpdatedNode.collectionNode {
-            let s = allRecentlyUpdatedShows[indexPath.item]
-            show = s
-            artist = s.artist
-        }
-        else {
-            show = nil
-            artist = nil
+        switch collectionNode {
+        case recentShowsNode.collectionNode:
+            horizontalCollectionNode = recentShowsNode
+        case offlineShowsNode.collectionNode:
+            horizontalCollectionNode = offlineShowsNode
+        case favoritedSourcesNode.collectionNode:
+            horizontalCollectionNode = favoritedSourcesNode
+        case recentlyPerformedNode.collectionNode:
+            horizontalCollectionNode = recentlyPerformedNode
+        case allRecentlyUpdatedNode.collectionNode:
+            horizontalCollectionNode = allRecentlyUpdatedNode
+        default:
+            break
         }
         
-        if let s = show, let a = artist {
-            let sourcesController = SourcesViewController(artist: a, show: s)
-            
-            if let src = source {
-                sourcesController.presentIfNecessary(navigationController: navigationController, forSource: src)
-            }
-            else {
-                sourcesController.presentIfNecessary(navigationController: navigationController)
-            }
+        if let horizontalCollectionNode = horizontalCollectionNode {
+            horizontalCollectionNode.presentSourcesViewController(forIndexPath: indexPath, navigationController: navigationController)
         }
     }
 }

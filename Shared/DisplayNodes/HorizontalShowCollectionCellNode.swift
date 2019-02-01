@@ -19,7 +19,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     var height: CGFloat = 0
     
-    public var shows: [(show: Show, artist: Artist?)] {
+    public var shows: [(show: Show, artist: Artist?, source: Source?)] {
         didSet {
             DispatchQueue.main.async {
                 var maxHeight : CGFloat = 103
@@ -56,7 +56,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         }
     }
     
-    public init(forShows shows: [(show: Show, artist: Artist?)], delegate: ASCollectionDelegate?) {
+    public init(forShows shows: [(show: Show, artist: Artist?, source: Source?)], delegate: ASCollectionDelegate?) {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
@@ -104,6 +104,24 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         let cellTransparency = self.cellTransparency
         
         return { ShowCellNode(show: show.show, withRank: nil, useCellLayout: true, showingArtist: show.artist, cellTransparency: cellTransparency) }
+    }
+    
+    public func presentSourcesViewController(forIndexPath indexPath: IndexPath, navigationController: UINavigationController? = nil) {
+        guard indexPath.item >= 0, indexPath.item < shows.count else {
+            return
+        }
+        
+        let (show, artist, source) = shows[indexPath.item]
+        if let artist = artist {
+            let sourcesController = SourcesViewController(artist: artist, show: show)
+            
+            if let source = source as? SourceFull {
+                sourcesController.presentIfNecessary(navigationController: navigationController, forSource: source)
+            }
+            else {
+                sourcesController.presentIfNecessary(navigationController: navigationController)
+            }
+        }
     }
 }
 

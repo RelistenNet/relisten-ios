@@ -57,7 +57,8 @@ platform :ios do
     ensure_git_status_clean
 
     # Increment the build number (not the version number)
-    increment_build_number(bump_type: "minor", xcodeproj: "Relisten.xcodeproj")
+    increment_version_number(bump_type: "patch", xcodeproj: "Relisten.xcodeproj")
+    increment_build_number(xcodeproj: "Relisten.xcodeproj")
 
     build_app(scheme: "Relisten")
 

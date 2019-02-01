@@ -162,7 +162,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
             })
         
         if artist.shouldSortYearsDescending, shouldSortShows {
-            sinqData = sinqData.orderBy({
+            sinqData = sinqData.orderByDescending({
                 return $0.show.date.timeIntervalSinceReferenceDate
             })
         }

@@ -41,6 +41,12 @@ platform :ios do
       )
   end
 
+  desc "Bumps the minor version number"
+  desc "This is useful if you want to submit a new TestFlight build after releasing a build"
+  lane :bump do
+    increment_version_number(bump_type: "patch", xcodeproj: "Relisten.xcodeproj")
+  end
+
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
@@ -57,7 +63,6 @@ platform :ios do
     ensure_git_status_clean
 
     # Increment the build number (not the version number)
-    increment_version_number(bump_type: "patch", xcodeproj: "Relisten.xcodeproj")
     increment_build_number(xcodeproj: "Relisten.xcodeproj")
 
     build_app(scheme: "Relisten")

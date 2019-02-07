@@ -26,6 +26,13 @@ Runs all the tests
 fastlane ios setup_certs
 ```
 
+### ios bump
+```
+fastlane ios bump
+```
+Bumps the minor version number
+
+This is useful if you want to submit a new TestFlight build after releasing a build
 ### ios beta
 ```
 fastlane ios beta

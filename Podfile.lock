@@ -222,7 +222,7 @@ CHECKOUT OPTIONS:
     :commit: 1781a8421602eb1b04e74b6fa07f81f97981cec2
     :git: https://github.com/tsukisa/LicenseGenerator-iOS.git
   MZDownloadManager:
-    :commit: b502e98ae6864a55fbd21e5eb2a4d982c020c383
+    :commit: f6ff4745e638bafb3ea1236f8d693221e08c8512
     :git: https://github.com/farktronix/MZDownloadManager
   Observable:
     :commit: fab070fb05ae4376c5d09efa313b9e1e617f2838
@@ -282,6 +282,6 @@ SPEC CHECKSUMS:
   Texture: 9d7e38965cf22ccd7cd9c249dd78b3f14e70ab6c
   Wormholy: a6e5d2dca1c54fdf22b2681b93975a18c525318a
 
-PODFILE CHECKSUM: da32ed6885db62efdce5a683e2dc546c0f9f8da1
+PODFILE CHECKSUM: 5b2df6cd03c5ebc74b0524bfa7d053ccaf837d20
 
 COCOAPODS: 1.6.0.beta.2

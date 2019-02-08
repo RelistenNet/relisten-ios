@@ -67,7 +67,9 @@ public extension HasSourceAndShow {
     
     public var completeShowInformation: CompleteShowInformation? {
         get {
-            if let show = self.show, let art = artist, let source = show.sources.first(where: { $0.uuid.uuidString == source_uuid }) {
+            if let show = self.show,
+               let art = artist,
+               let source = show.sources.first(where: { $0.uuid.uuidString == source_uuid }) {
                 return CompleteShowInformation(source: source, show: show, artist: art)
             }
             return nil
@@ -78,16 +80,15 @@ public extension HasSourceAndShow {
 public extension HasTrackSourceAndShow {
     public var sourceTrack: SourceTrack? {
         get {
-            return source?.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid })
+            return source?.track(withUUID: track_uuid)
         }
     }
     
     public var track: Track? {
         get {
-            if let completeShowInformation = completeShowInformation {
-                if let sourceTrack = completeShowInformation.source.tracksFlattened.first(where: { $0.uuid.uuidString == track_uuid }) {
-                    return Track(sourceTrack: sourceTrack, showInfo: completeShowInformation)
-                }
+            if let completeShowInformation = completeShowInformation,
+               let sourceTrack = completeShowInformation.source.track(withUUID: track_uuid) {
+                return Track(sourceTrack: sourceTrack, showInfo: completeShowInformation)
             }
             return nil
         }
@@ -95,18 +96,31 @@ public extension HasTrackSourceAndShow {
 }
 
 public extension Results where Element : HasTrackSourceAndShow {
-    public func asTracks() -> [Track] {
-        return Array(compactMap({ (el: HasTrackSourceAndShow) -> Track? in el.track }))
+    public func asTracks(toIndex index: Int = 20) -> [Track] {
+        return Array(self.array(toIndex: index).compactMap({ (el: HasTrackSourceAndShow) -> Track? in el.track }))
     }
 }
 
 public extension Results where Element : HasSourceAndShow {
-    public func asCompleteShows() -> [CompleteShowInformation] {
-        return Array(compactMap({ (el: HasSourceAndShow) -> CompleteShowInformation? in el.completeShowInformation }))
+    public func asCompleteShows(toIndex index: Int = 20) -> [CompleteShowInformation] {
+        return Array(self.array(toIndex: index).compactMap({ (el: HasSourceAndShow) -> CompleteShowInformation? in el.completeShowInformation }))
     }
 }
 
 public extension Results {
+    public func array(toIndex index: Int = -1) -> [Element] {
+        if index == -1 {
+            return Array(self)
+        } else {
+            var results : [Element] = []
+            let maxResults = Swift.min(index, self.count)
+            for i in (0..<maxResults) {
+                results.append(self[i])
+            }
+            return results
+        }
+    }
+    
     public func observeWithValue(_ block: @escaping (Results<Element>, RealmCollectionChange<Results<Element>>) -> Void) -> NotificationToken {
         return self.observe { changes in
             block(self, changes)

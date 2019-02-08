@@ -38,7 +38,6 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
             searchController.searchBar.delegate = self
             if let buttonTitles = self.scopeButtonTitles {
                 searchController.searchBar.scopeButtonTitles = buttonTitles
-                searchController.searchBar.showsScopeBar = true
                 let regularFont = UIFont.preferredFont(forTextStyle: .caption1)
                 searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
                                                                                  NSAttributedString.Key.font: regularFont], for: .normal)
@@ -46,6 +45,8 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
                 searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
                                                                                  NSAttributedString.Key.font: boldFont], for: .selected)
             }
+            // Hide the scope bar for now- we'll reveal it when the user taps on the search field
+            searchController.searchBar.showsScopeBar = false
             
             searchController.searchBar.placeholder = self.searchPlaceholder
             searchController.searchBar.barStyle = .blackTranslucent
@@ -248,4 +249,9 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
     
+    // This is kind of dumb, but due to some bugs in LayerKit we need to hide the scope bar until the search field is tapped,
+    //  otherwise the scope bars show up while pushing/popping this view controller.
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchController.searchBar.showsScopeBar = true
+    }
 }

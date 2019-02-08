@@ -24,14 +24,7 @@
     "ios": "9.0",
     "tvos": "9.0"
   },
-  "default_subspecs": [
-    "Core",
-    "PINRemoteImage",
-    "Video",
-    "MapKit",
-    "AssetsLibrary",
-    "Photos"
-  ],
+  "default_subspecs": "Core",
   "social_media_url": "https://twitter.com/TextureiOS",
   "libraries": "c++",
   "pod_target_xcconfig": {

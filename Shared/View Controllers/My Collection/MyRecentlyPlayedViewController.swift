@@ -43,7 +43,7 @@ class MyRecentlyPlayedViewController: ShowListViewController<Results<RecentlyPla
     }
     
     override func extractShowsAndSource(forData: Results<RecentlyPlayedTrack>) -> [ShowWithSingleSource] {
-        return forData.asCompleteShows().map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
+        return forData.asCompleteShows(toIndex: -1).map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
     }
     
     func loadMyShows() -> Results<RecentlyPlayedTrack> {

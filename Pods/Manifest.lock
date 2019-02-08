@@ -1,5 +1,5 @@
 PODS:
-  - ActionKit (2.4.0)
+  - ActionKit (2.5.1)
   - AGAudioPlayer (0.8.1):
     - BASSGaplessAudioPlayer
     - BCColor
@@ -14,14 +14,14 @@ PODS:
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - CleanroomLogger (6.0.2)
-  - Crashlytics (3.11.1):
-    - Fabric (~> 1.8.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - CSwiftV (0.0.5)
   - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.2)
   - DWURecyclingAlert (1.0.2)
   - EDColor (1.0.1)
-  - Fabric (1.8.2)
+  - Fabric (1.9.0)
   - FastImageCache (1.5.1)
   - FaveButton (3.0.1)
   - Interpolate (1.2.1)
@@ -43,25 +43,10 @@ PODS:
   - NapySlider (0.3.5)
   - Observable (1.3.3)
   - PathKit (0.9.2)
-  - PINCache (3.0.1-beta.6):
-    - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
-    - PINCache/Core (= 3.0.1-beta.6)
-  - PINCache/Arc-exception-safe (3.0.1-beta.6):
-    - PINCache/Core
-  - PINCache/Core (3.0.1-beta.6):
-    - PINOperation (~> 1.1.0)
-  - PINOperation (1.1.1)
   - PinpointKit (1.3.0):
     - PinpointKit/Core (= 1.3.0)
   - PinpointKit/Core (1.3.0)
   - PinpointKit/ScreenshotDetector (1.3.0)
-  - PINRemoteImage/Core (3.0.0-beta.13):
-    - PINOperation
-  - PINRemoteImage/iOS (3.0.0-beta.13):
-    - PINRemoteImage/Core
-  - PINRemoteImage/PINCache (3.0.0-beta.13):
-    - PINCache (= 3.0.1-beta.6)
-    - PINRemoteImage/Core
   - Realm (3.8.0):
     - Realm/Headers (= 3.8.0)
   - Realm/Headers (3.8.0)
@@ -73,7 +58,7 @@ PODS:
     - TGSpreadsheetWriter
   - RealmSwift (3.8.0):
     - Realm (= 3.8.0)
-  - Reveal-SDK (19)
+  - Reveal-SDK (20)
   - SDCloudUserDefaults (1.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -81,32 +66,15 @@ PODS:
   - Siesta/Core (1.4.2)
   - Siesta/UI (1.4.2):
     - Siesta/Core
-  - SimulatorStatusMagic (2.3.2)
+  - SimulatorStatusMagic (2.4.1)
   - SINQ (0.7.0)
   - SSZipArchive (2.1.4)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (4.2.0)
-  - Texture (2.7):
-    - Texture/AssetsLibrary (= 2.7)
-    - Texture/Core (= 2.7)
-    - Texture/MapKit (= 2.7)
-    - Texture/Photos (= 2.7)
-    - Texture/PINRemoteImage (= 2.7)
-    - Texture/Video (= 2.7)
-  - Texture/AssetsLibrary (2.7):
-    - Texture/Core
   - Texture/Core (2.7)
   - Texture/MapKit (2.7):
     - Texture/Core
-  - Texture/Photos (2.7):
-    - Texture/Core
-  - Texture/PINRemoteImage (2.7):
-    - PINRemoteImage/iOS (= 3.0.0-beta.13)
-    - PINRemoteImage/PINCache
-    - Texture/Core
-  - Texture/Video (2.7):
-    - Texture/Core
-  - Wormholy (1.2.2)
+  - Wormholy (1.2.3)
 
 DEPENDENCIES:
   - ActionKit
@@ -145,7 +113,8 @@ DEPENDENCIES:
   - SINQ
   - SVProgressHUD
   - SwiftyJSON
-  - Texture (from `../Texture`)
+  - Texture/Core (from `../Texture`)
+  - Texture/MapKit (from `../Texture`)
   - Wormholy
 
 SPEC REPOS:
@@ -167,10 +136,7 @@ SPEC REPOS:
     - NAKPlaybackIndicatorView
     - NapySlider
     - PathKit
-    - PINCache
-    - PINOperation
     - PinpointKit
-    - PINRemoteImage
     - Realm
     - RealmSwift
     - Reveal-SDK
@@ -236,7 +202,7 @@ CHECKOUT OPTIONS:
     :commit: 1781a8421602eb1b04e74b6fa07f81f97981cec2
     :git: https://github.com/tsukisa/LicenseGenerator-iOS.git
   MZDownloadManager:
-    :commit: b502e98ae6864a55fbd21e5eb2a4d982c020c383
+    :commit: f6ff4745e638bafb3ea1236f8d693221e08c8512
     :git: https://github.com/farktronix/MZDownloadManager
   Observable:
     :commit: fab070fb05ae4376c5d09efa313b9e1e617f2838
@@ -249,7 +215,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/bustoutsolutions/siesta.git
 
 SPEC CHECKSUMS:
-  ActionKit: 1e1b696b6e1a54e7999d8c0f1d7176b2fee2fa4d
+  ActionKit: 6f4f5fbab3a76aa05e8df8d66145db4fe9e9b8df
   AGAudioPlayer: 0f27e1109124739c2e49339f8cb1611622b75a1a
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 5b074495769769192b720c70aa2a60f6f33751f3
@@ -257,13 +223,13 @@ SPEC CHECKSUMS:
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: f165bae4f3c9a15a22ec2fad9b0826f27fb047d5
-  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   CSwiftV: 2560532e2e5b04d95c36b0f49a8dc745071fa525
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 0a9848f9c13f34a488939b7244e8043feb94be3c
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
-  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
   FaveButton: 496e8356260b9a18e6ed20ad9d1421118096fb56
   Interpolate: c786b88ad860c7110d606ae2776fad616e2b3724
@@ -277,25 +243,22 @@ SPEC CHECKSUMS:
   NapySlider: 52be4efab746c967437fefc98c4ca508edbdf306
   Observable: d8a6ed00d87087dd169012a0f92214fe5a15debd
   PathKit: 273f59a38e3218eb95abd9f6a61730a8bcfd2f06
-  PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
-  PINOperation: a6219e6fc9db9c269eb7a7b871ac193bcf400aac
   PinpointKit: 8ef42ed810a95aaced0462b532e0224a67afb72d
-  PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   Realm: 3fdae59de78838064e9f77638d7cdb7b8cff9dc8
   RealmConverter: 910266d4dc96e8f33be7bb7a4918ad80d88a8006
   RealmSwift: c990518b800e106d1f77099d3a4648c3b100337d
-  Reveal-SDK: 9f0d2c6c12eb7507921e5454ac165b7aa21140a4
+  Reveal-SDK: 43206a57f575632fd304e85385cc259b5d359e32
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Siesta: 337a9c39c9b78bba904286310c86562a886efdab
-  SimulatorStatusMagic: 0c0e711acef6e70dd8a0710962347635a9cdef24
+  SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
-  Texture: f6078ef421abe2a15225c846206287343bee0b1c
-  Wormholy: a6e5d2dca1c54fdf22b2681b93975a18c525318a
+  Texture: 2234d0faa401479dc1ec0d20927e8f899285f071
+  Wormholy: 0222592d5c7a019527911701ba7fd5fe64c798da
 
-PODFILE CHECKSUM: 20ddfad822731db5c2c70d8992e4e885ff25b5b5
+PODFILE CHECKSUM: e48755583922081f6a06100c8a8aadc9e11a1e99
 
-COCOAPODS: 1.6.0.beta.2
+COCOAPODS: 1.6.0

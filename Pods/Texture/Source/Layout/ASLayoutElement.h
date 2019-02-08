@@ -2,17 +2,9 @@
 //  ASLayoutElement.h
 //  Texture
 //
-//  Copyright (c) 2014-present, Facebook, Inc.  All rights reserved.
-//  This source code is licensed under the BSD-style license found in the
-//  LICENSE file in the /ASDK-Licenses directory of this source tree. An additional
-//  grant of patent rights can be found in the PATENTS file in the same directory.
-//
-//  Modifications to this file made after 4/13/2017 are: Copyright (c) 2017-present,
-//  Pinterest, Inc.  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
+//  Copyright (c) Facebook, Inc. and its affiliates.  All rights reserved.
+//  Changes after 4/13/2017 are: Copyright (c) Pinterest, Inc.  All rights reserved.
+//  Licensed under Apache 2.0: http://www.apache.org/licenses/LICENSE-2.0
 //
 
 #import <AsyncDisplayKit/ASLayoutElementPrivate.h>
@@ -22,6 +14,7 @@
 #import <AsyncDisplayKit/ASAbsoluteLayoutElement.h>
 #import <AsyncDisplayKit/ASTraitCollection.h>
 #import <AsyncDisplayKit/ASAsciiArtBoxCreator.h>
+#import <AsyncDisplayKit/ASLocking.h>
 
 @class ASLayout;
 @class ASLayoutSpec;
@@ -32,10 +25,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /** A constant that indicates that the parent's size is not yet determined in a given dimension. */
-extern CGFloat const ASLayoutElementParentDimensionUndefined;
+AS_EXTERN CGFloat const ASLayoutElementParentDimensionUndefined;
 
 /** A constant that indicates that the parent's size is not yet determined in either dimension. */
-extern CGSize const ASLayoutElementParentSizeUndefined;
+AS_EXTERN CGSize const ASLayoutElementParentSizeUndefined;
 
 /** Type of ASLayoutElement  */
 typedef NS_ENUM(NSUInteger, ASLayoutElementType) {
@@ -151,30 +144,30 @@ typedef NS_ENUM(NSUInteger, ASLayoutElementType) {
 
 #pragma mark - ASLayoutElementStyle
 
-extern NSString * const ASLayoutElementStyleWidthProperty;
-extern NSString * const ASLayoutElementStyleMinWidthProperty;
-extern NSString * const ASLayoutElementStyleMaxWidthProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleWidthProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleMinWidthProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleMaxWidthProperty;
 
-extern NSString * const ASLayoutElementStyleHeightProperty;
-extern NSString * const ASLayoutElementStyleMinHeightProperty;
-extern NSString * const ASLayoutElementStyleMaxHeightProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleHeightProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleMinHeightProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleMaxHeightProperty;
 
-extern NSString * const ASLayoutElementStyleSpacingBeforeProperty;
-extern NSString * const ASLayoutElementStyleSpacingAfterProperty;
-extern NSString * const ASLayoutElementStyleFlexGrowProperty;
-extern NSString * const ASLayoutElementStyleFlexShrinkProperty;
-extern NSString * const ASLayoutElementStyleFlexBasisProperty;
-extern NSString * const ASLayoutElementStyleAlignSelfProperty;
-extern NSString * const ASLayoutElementStyleAscenderProperty;
-extern NSString * const ASLayoutElementStyleDescenderProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleSpacingBeforeProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleSpacingAfterProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleFlexGrowProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleFlexShrinkProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleFlexBasisProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleAlignSelfProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleAscenderProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleDescenderProperty;
 
-extern NSString * const ASLayoutElementStyleLayoutPositionProperty;
+AS_EXTERN NSString * const ASLayoutElementStyleLayoutPositionProperty;
 
 @protocol ASLayoutElementStyleDelegate <NSObject>
 - (void)style:(__kindof ASLayoutElementStyle *)style propertyDidChange:(NSString *)propertyName;
 @end
 
-@interface ASLayoutElementStyle : NSObject <ASStackLayoutElement, ASAbsoluteLayoutElement, ASLayoutElementExtensibility, NSLocking>
+@interface ASLayoutElementStyle : NSObject <ASStackLayoutElement, ASAbsoluteLayoutElement, ASLayoutElementExtensibility, ASLocking>
 
 /**
  * @abstract Initializes the layoutElement style with a specified delegate

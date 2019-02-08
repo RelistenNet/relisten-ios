@@ -48,7 +48,6 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
             searchController.searchBar.delegate = self
             if let buttonTitles = self.scopeButtonTitles {
                 searchController.searchBar.scopeButtonTitles = buttonTitles
-                searchController.searchBar.showsScopeBar = true
                 let regularFont = UIFont.preferredFont(forTextStyle: .body)
                 searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
                                                                                  NSAttributedString.Key.font: regularFont], for: .normal)
@@ -56,6 +55,8 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
                 searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
                                                                                  NSAttributedString.Key.font: boldFont], for: .selected)
             }
+            // Hide the scope bar for now- we'll reveal it when the user taps on the search field
+            searchController.searchBar.showsScopeBar = false
             
             searchController.searchBar.placeholder = self.searchPlaceholder
             searchController.searchBar.barStyle = .blackTranslucent
@@ -101,7 +102,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
         if let source = show.source {
             if let taper = source.taper, taper.lowercased().contains(searchText) { return true }
             if let transferrer = source.transferrer, transferrer.lowercased().contains(searchText) { return true }
-            if source.tracksFlattened.contains(where: { $0.title.lowercased().contains(searchText) }) { return true }
+            if source.containsTrack(where: { $0.title.lowercased().contains(searchText) }) { return true }
         }
         
         if searchText == "sbd" || searchText == "soundboard" {
@@ -162,7 +163,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
             })
         
         if artist.shouldSortYearsDescending, shouldSortShows {
-            sinqData = sinqData.orderBy({
+            sinqData = sinqData.orderByDescending({
                 return $0.show.date.timeIntervalSinceReferenceDate
             })
         }
@@ -311,5 +312,11 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
     //MARK: UISearchBarDelegate
     public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+    }
+    
+    // This is kind of dumb, but due to some bugs in LayerKit we need to hide the scope bar until the search field is tapped,
+    //  otherwise the scope bars show up while pushing/popping this view controller.
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchController.searchBar.showsScopeBar = true
     }
 }

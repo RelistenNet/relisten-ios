@@ -22,7 +22,7 @@ def apply_pods
   pod 'KASlideShow'
   pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git" # Waiting on https://github.com/gangverk/LastFm/pull/20
   pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"
-  pod 'MZDownloadManager', :git => 'https://github.com/farktronix/MZDownloadManager' # Waiting on https://github.com/mzeeshanid/MZDownloadManager/pull/78 and https://github.com/mzeeshanid/MZDownloadManager/pull/79
+  pod 'MZDownloadManager', :git => 'https://github.com/farktronix/MZDownloadManager' # Waiting on https://github.com/mzeeshanid/MZDownloadManager/pull/81
   pod 'NAKPlaybackIndicatorView'
   pod 'NapySlider'
   pod 'Observable', :git => "https://github.com/alecgorge/Observable.git" # Adds thread safety. This should be submitted upstream as a PR
@@ -42,11 +42,13 @@ def apply_pods
   if ENV['TRAVIS']
       pod 'BASSGaplessAudioPlayer', :path => 'TravisPods/BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => 'TravisPods/AGAudioPlayer'
-      pod 'Texture', :path => 'TravisPods/Texture'
+      pod 'Texture/Core', :path => 'TravisPods/Texture'
+      pod 'Texture/MapKit', :path => 'TravisPods/Texture'
   else
       pod 'BASSGaplessAudioPlayer', :path => '../BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
-      pod 'Texture', :path => '../Texture'
+      pod 'Texture/Core', :path => '../Texture'
+      pod 'Texture/MapKit', :path => '../Texture'
   end
 
   # Debug Pods

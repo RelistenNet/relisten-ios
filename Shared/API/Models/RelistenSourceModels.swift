@@ -127,6 +127,9 @@ public class SourceFull : Source {
     public let review_count: Int
     public let sets: [SourceSet]
     public let links: [Link]
+    lazy private var sinqSets : SinqSequence<SourceSet> = {
+        return sinq(sets)
+    }()
     
     public required init(json: JSON) throws {
         review_count = json["review_count"].int ?? -1
@@ -136,8 +139,27 @@ public class SourceFull : Source {
         try super.init(json: json)
     }
     
+    // This call can get expensive since it reduces everything to an array. Please try to find an alternative before resorting to this.
     public var tracksFlattened: [SourceTrack] {
-        return sinq(sets).selectMany({ $0.tracks }).toArray()
+        return sinqSets.selectMany({ $0.tracks }).toArray()
+    }
+    
+    public func track(withUUID uuid: String) -> SourceTrack? {
+        return sinqSets.selectMany({ $0.tracks }).first(where: { $0.uuid.uuidString == uuid })
+    }
+    
+    public var trackCount: Int {
+        // Note: SinqSequence.count iterates through every element.
+        // Just getting the count from every array should be much quicker here.
+        var count = 0
+        for set in sets {
+            count += set.tracks.count
+        }
+        return count
+    }
+    
+    public func containsTrack(where predicate: (SourceTrack) -> Bool) -> Bool {
+        return sinqSets.selectMany({ $0.tracks }).contains(where: predicate)
     }
 }
 

@@ -37,7 +37,8 @@ def apply_pods
   pod 'Siesta/Core', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
-  pod 'Texture'
+  pod 'Texture/Core', :git => 'https://github.com/farktronix/Texture.git'
+  pod 'Texture/MapKit', :git => 'https://github.com/farktronix/Texture.git'
  
   # Development pods (checked out locally)
   if ENV['TRAVIS']

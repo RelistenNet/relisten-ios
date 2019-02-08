@@ -2,17 +2,9 @@
 //  ASDataController.h
 //  Texture
 //
-//  Copyright (c) 2014-present, Facebook, Inc.  All rights reserved.
-//  This source code is licensed under the BSD-style license found in the
-//  LICENSE file in the /ASDK-Licenses directory of this source tree. An additional
-//  grant of patent rights can be found in the PATENTS file in the same directory.
-//
-//  Modifications to this file made after 4/13/2017 are: Copyright (c) 2017-present,
-//  Pinterest, Inc.  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
+//  Copyright (c) Facebook, Inc. and its affiliates.  All rights reserved.
+//  Changes after 4/13/2017 are: Copyright (c) Pinterest, Inc.  All rights reserved.
+//  Licensed under Apache 2.0: http://www.apache.org/licenses/LICENSE-2.0
 //
 
 #pragma once
@@ -47,8 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NSUInteger ASDataControllerAnimationOptions;
 
-extern NSString * const ASDataControllerRowNodeKind;
-extern NSString * const ASCollectionInvalidUpdateException;
+AS_EXTERN NSString * const ASDataControllerRowNodeKind;
+AS_EXTERN NSString * const ASCollectionInvalidUpdateException;
 
 /**
  Data source for data controller
@@ -60,7 +52,7 @@ extern NSString * const ASCollectionInvalidUpdateException;
 /**
  Fetch the ASCellNode block for specific index path. This block should return the ASCellNode for the specified index path.
  */
-- (ASCellNodeBlock)dataController:(ASDataController *)dataController nodeBlockAtIndexPath:(NSIndexPath *)indexPath;
+- (ASCellNodeBlock)dataController:(ASDataController *)dataController nodeBlockAtIndexPath:(NSIndexPath *)indexPath shouldAsyncLayout:(BOOL *)shouldAsyncLayout;
 
 /**
  Fetch the number of rows in specific section.
@@ -79,6 +71,18 @@ extern NSString * const ASCollectionInvalidUpdateException;
 - (BOOL)dataController:(ASDataController *)dataController presentedSizeForElement:(ASCollectionElement *)element matchesSize:(CGSize)size;
 
 - (nullable id)dataController:(ASDataController *)dataController nodeModelForItemAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ * Called just after dispatching ASCellNode allocation and layout to the concurrent background queue.
+ * In some cases, for example on the first content load for a screen, it may be desirable to call
+ * -waitUntilAllUpdatesAreProcessed at this point.
+ *
+ * Returning YES will cause the ASDataController to wait on the background queue, and this ensures
+ * that any new / changed cells are in the hierarchy by the very next CATransaction / frame draw.
+ */
+- (BOOL)dataController:(ASDataController *)dataController shouldSynchronouslyProcessChangeSet:(_ASHierarchyChangeSet *)changeSet;
+- (BOOL)dataController:(ASDataController *)dataController shouldEagerlyLayoutNode:(ASCellNode *)node;
+- (BOOL)dataControllerShouldSerializeNodeCreation:(ASDataController *)dataController;
 
 @optional
 
@@ -229,11 +233,6 @@ extern NSString * const ASCollectionInvalidUpdateException;
  */
 @property (nonatomic, readonly) ASEventLog *eventLog;
 #endif
-
-/**
- * @see ASCollectionNode+Beta.h for full documentation.
- */
-@property (nonatomic) BOOL usesSynchronousDataLoading;
 
 /** @name Data Updating */
 

@@ -2,17 +2,9 @@
 //  ASButtonNode.mm
 //  Texture
 //
-//  Copyright (c) 2014-present, Facebook, Inc.  All rights reserved.
-//  This source code is licensed under the BSD-style license found in the
-//  LICENSE file in the /ASDK-Licenses directory of this source tree. An additional
-//  grant of patent rights can be found in the PATENTS file in the same directory.
-//
-//  Modifications to this file made after 4/13/2017 are: Copyright (c) 2017-present,
-//  Pinterest, Inc.  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
+//  Copyright (c) Facebook, Inc. and its affiliates.  All rights reserved.
+//  Changes after 4/13/2017 are: Copyright (c) Pinterest, Inc.  All rights reserved.
+//  Licensed under Apache 2.0: http://www.apache.org/licenses/LICENSE-2.0
 //
 
 #import <AsyncDisplayKit/ASButtonNode.h>
@@ -24,6 +16,7 @@
 #import <AsyncDisplayKit/ASAbsoluteLayoutSpec.h>
 #import <AsyncDisplayKit/ASTextNode.h>
 #import <AsyncDisplayKit/ASImageNode.h>
+#import <AsyncDisplayKit/ASInternalHelpers.h>
 
 @interface ASButtonNode ()
 {
@@ -71,7 +64,7 @@
     _contentVerticalAlignment = ASVerticalAlignmentCenter;
     _contentEdgeInsets = UIEdgeInsetsZero;
     _imageAlignment = ASButtonNodeImageAlignmentBeginning;
-    self.accessibilityTraits = UIAccessibilityTraitButton;
+    self.accessibilityTraits = self.defaultAccessibilityTraits;
   }
   return self;
 }
@@ -122,11 +115,7 @@
 {
   if (self.enabled != enabled) {
     [super setEnabled:enabled];
-    if (enabled) {
-      self.accessibilityTraits = UIAccessibilityTraitButton;
-    } else {
-      self.accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitNotEnabled;
-    }
+    self.accessibilityTraits = self.defaultAccessibilityTraits;
     [self updateButtonContent];
   }
 }
@@ -212,7 +201,7 @@
     _titleNode.attributedText = newTitle;
     [self unlock];
     
-    self.accessibilityLabel = _titleNode.accessibilityLabel;
+    self.accessibilityLabel = self.defaultAccessibilityLabel;
     [self setNeedsLayout];
     return;
   }
@@ -550,6 +539,18 @@
   }
   
   return spec;
+}
+
+- (NSString *)defaultAccessibilityLabel
+{
+  ASLockScopeSelf();
+  return _titleNode.defaultAccessibilityLabel;
+}
+
+- (UIAccessibilityTraits)defaultAccessibilityTraits
+{
+  return self.enabled ? UIAccessibilityTraitButton
+                      : (UIAccessibilityTraitButton | UIAccessibilityTraitNotEnabled);
 }
 
 - (void)layout

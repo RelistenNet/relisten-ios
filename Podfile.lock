@@ -193,7 +193,7 @@ CHECKOUT OPTIONS:
     :commit: a196da2ef8646ad310f696e64f675e9a942d2ea9
     :git: https://github.com/mallorypaine/FastImageCache.git
   FaveButton:
-    :commit: 3555e0d248115cee26a490a7d248fe7515fc16dc
+    :commit: 4d9d68cfb98a9e93b0ed0c72f354e62d13e6758e
     :git: https://github.com/farktronix/fave-button.git
   LastFm:
     :commit: 19725dec9bdb91026b7ba808d5c61adb1afef9bb
@@ -262,6 +262,6 @@ SPEC CHECKSUMS:
   Texture: 2234d0faa401479dc1ec0d20927e8f899285f071
   Wormholy: 0222592d5c7a019527911701ba7fd5fe64c798da
 
-PODFILE CHECKSUM: 6ec197877e0ae46c3107361e83efe8fef8a7415e
+PODFILE CHECKSUM: 4cfdd6742c309431500f49df34951c15cc7a87cb
 
 COCOAPODS: 1.6.0

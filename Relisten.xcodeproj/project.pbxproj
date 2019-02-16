@@ -31,6 +31,7 @@
 		434066AE212FC88900FB1D94 /* UserFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AD212FC88900FB1D94 /* UserFeedback.swift */; };
 		434066B0212FD27800FB1D94 /* RelistenNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */; };
 		434066B2212FF37600FB1D94 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434066B1212FF37600FB1D94 /* Logging.swift */; };
+		434B4F3E2217E7420034E3B5 /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43524ADB2114DFC700DC70CD /* RelistenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43524ADA2114DFC700DC70CD /* RelistenTests.swift */; };
 		43524ADD2114DFC700DC70CD /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		435911A72168178700ACA85F /* SongNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435911A62168178700ACA85F /* SongNode.swift */; };
@@ -394,6 +395,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				434B4F3E2217E7420034E3B5 /* libRelistenShared.a in Frameworks */,
 				BD42C0C8EF1324E039FBA06E /* Pods_RelistenUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

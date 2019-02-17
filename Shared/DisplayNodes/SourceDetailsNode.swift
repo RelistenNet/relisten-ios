@@ -91,6 +91,8 @@ public class SourceDetailsNode : ASCellNode {
         
         super.init()
         
+        self.accessibilityLabel = "Source"
+        
         automaticallyManagesSubnodes = true
         accessoryType = isDetails ? .none : .disclosureIndicator
         favoriteButton.delegate = self

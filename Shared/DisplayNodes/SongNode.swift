@@ -20,6 +20,8 @@ public class SongNode : ASCellNode {
         
         super.init()
         
+        self.accessibilityLabel = "Song"
+        
         automaticallyManagesSubnodes = true
         accessoryType = .disclosureIndicator
     }

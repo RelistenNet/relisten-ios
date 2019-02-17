@@ -32,15 +32,16 @@ class RelistenUITests: XCTestCase {
         //var cell : XCUIElement
         let app = XCUIApplication()
         let tablesQuery = app.tables
+        sleep(2)
         
         // SettingsViewController
         app.navigationBars.firstMatch.buttons["Settings"].tap()
         app.navigationBars.firstMatch.buttons.firstMatch.tap()
         
         // Favorite/Unfavorite an artist
-        let favoriteArtistButton = XCUIApplication().tables.children(matching: .cell).element(boundBy: 0).buttons["Favorite Artist"]
-        favoriteArtistButton.tap()
-        favoriteArtistButton.tap()
+        let deadButton = tablesQuery.children(matching: .cell).containing(NSPredicate(format: "label CONTAINS 'Artist'")).containing(NSPredicate(format: "label CONTAINS 'Grateful Dead'"))
+        deadButton.firstMatch.buttons["Favorite Artist"].tap()
+        deadButton.firstMatch.buttons["Favorite Artist"].tap()
         
         // ArtistViewController
         tablesQuery.staticTexts["Grateful Dead"].firstMatch.tap()
@@ -105,7 +106,7 @@ class RelistenUITests: XCTestCase {
         app.navigationBars.firstMatch.buttons.firstMatch.tap()
         
         // ReviewsViewController
-        tablesQuery.staticTexts["Ratings"].tap()
+        tablesQuery.staticTexts.containing(NSPredicate(format: "label CONTAINS 'Review'")).firstMatch.tap()
         app.navigationBars.firstMatch.buttons.firstMatch.tap()
         
         // VenueViewController
@@ -168,10 +169,5 @@ class RelistenUITests: XCTestCase {
         app.navigationBars.firstMatch.buttons.firstMatch.tap()
         
         app.navigationBars.firstMatch.buttons.firstMatch.tap()
-    }
-    
-    func testRecording() {
-        
-        
     }
 }

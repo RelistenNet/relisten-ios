@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		07E2A05D0362CAFBEEEA980A /* Pods_RelistenScreenshots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86E4D75E11564D9A5E0E9A5 /* Pods_RelistenScreenshots.framework */; };
+		430C03E12218E4CA003C8D4A /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */; };
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
 		430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */; };
@@ -431,6 +432,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				430C03E12218E4CA003C8D4A /* libRelistenShared.a in Frameworks */,
 				07E2A05D0362CAFBEEEA980A /* Pods_RelistenScreenshots.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

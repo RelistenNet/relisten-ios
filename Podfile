@@ -96,10 +96,4 @@ post_install do |installer|
       config.build_settings['ENABLE_BITCODE'] = 'NO'
     end
   end
-
-  # Workaround until this PR is fixed https://github.com/xhamr/fave-button/pull/39
-  favebutton = installer.pods_project.targets.find { |target| target.name == 'FaveButton' }
-  favebutton.build_configurations.each do |config|
-    config.build_settings['SWIFT_VERSION'] = '4.0'
-  end
 end

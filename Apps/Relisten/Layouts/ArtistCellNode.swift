@@ -39,6 +39,8 @@ public class ArtistCellNode : ASCellNode, FavoriteButtonDelegate {
 
         super.init()
         
+        self.accessibilityLabel = "Artist"
+        
         automaticallyManagesSubnodes = true
         accessoryType = .disclosureIndicator
         

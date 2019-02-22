@@ -113,8 +113,8 @@ DEPENDENCIES:
   - SINQ
   - SVProgressHUD
   - SwiftyJSON
-  - Texture/Core (from `../Texture`)
-  - Texture/MapKit (from `../Texture`)
+  - Texture/Core (from `https://github.com/farktronix/Texture.git`)
+  - Texture/MapKit (from `https://github.com/farktronix/Texture.git`)
   - Wormholy
 
 SPEC REPOS:
@@ -177,7 +177,7 @@ EXTERNAL SOURCES:
   Siesta:
     :git: https://github.com/bustoutsolutions/siesta.git
   Texture:
-    :path: "../Texture"
+    :git: https://github.com/farktronix/Texture.git
 
 CHECKOUT OPTIONS:
   CleanroomLogger:
@@ -193,7 +193,7 @@ CHECKOUT OPTIONS:
     :commit: a196da2ef8646ad310f696e64f675e9a942d2ea9
     :git: https://github.com/mallorypaine/FastImageCache.git
   FaveButton:
-    :commit: 3555e0d248115cee26a490a7d248fe7515fc16dc
+    :commit: 4d9d68cfb98a9e93b0ed0c72f354e62d13e6758e
     :git: https://github.com/farktronix/fave-button.git
   LastFm:
     :commit: 19725dec9bdb91026b7ba808d5c61adb1afef9bb
@@ -213,6 +213,9 @@ CHECKOUT OPTIONS:
   Siesta:
     :commit: b13dad7cb2bfca15fa4450e19cd23d04b8378049
     :git: https://github.com/bustoutsolutions/siesta.git
+  Texture:
+    :commit: 7eebd40d2319a1d0117c17fd4e4ed351245ffd6c
+    :git: https://github.com/farktronix/Texture.git
 
 SPEC CHECKSUMS:
   ActionKit: 6f4f5fbab3a76aa05e8df8d66145db4fe9e9b8df
@@ -259,6 +262,6 @@ SPEC CHECKSUMS:
   Texture: 2234d0faa401479dc1ec0d20927e8f899285f071
   Wormholy: 0222592d5c7a019527911701ba7fd5fe64c798da
 
-PODFILE CHECKSUM: e48755583922081f6a06100c8a8aadc9e11a1e99
+PODFILE CHECKSUM: 4cfdd6742c309431500f49df34951c15cc7a87cb
 
 COCOAPODS: 1.6.0

@@ -291,7 +291,10 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
             if s.isFiltering() == false {
                 switch changes {
                 case .initial:
-                    s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
+                    s.tableNode.performBatch(animated: true, updates: {
+                        s.favoriteArtists = localFavoriteArtists
+                        s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
+                    }, completion: nil)
                 case .update(_, let deletions, let insertions, let modifications):
                     s.tableNode.performBatch(animated: true, updates: {
                         s.tableNode.insertRows(at: insertions.map({ IndexPath(row: $0, section: Sections.favorited.rawValue) }),

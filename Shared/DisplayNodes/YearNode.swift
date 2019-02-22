@@ -27,6 +27,8 @@ public class YearNode : ASCellNode {
         
         super.init()
         
+        self.accessibilityLabel = "Year"
+        
         automaticallyManagesSubnodes = true
         accessoryType = .disclosureIndicator
         

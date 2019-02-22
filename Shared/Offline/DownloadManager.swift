@@ -528,7 +528,11 @@ extension DownloadManager : MZDownloadManagerDelegate {
     }
     
     public func downloadRequestDestinationDoestNotExists(_ downloadModel: MZDownloadModel, index: Int, location: URL) {
-        try! FileManager.default.moveItem(atPath: location.path, toPath: downloadModel.destinationPath)
+        do {
+            try FileManager.default.moveItem(atPath: location.path, toPath: downloadModel.destinationPath)
+        } catch {
+            LogError("\(error)")
+        }
     }
 }
 

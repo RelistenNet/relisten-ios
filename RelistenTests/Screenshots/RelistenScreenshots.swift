@@ -58,7 +58,7 @@ class RelistenScreenshots: XCTestCase {
         cell.tap()
         sleep(1)
         
-        cell = tablesQuery.cells.containing(.staticText, identifier: "Source 1 of 16").element
+        cell = tablesQuery.cells.containing(NSPredicate(format: "label CONTAINS 'Source 1 of'")).element
         app.tables.element.scrollToElement(element: cell)
         cell.tap()
         sleep(1)

@@ -97,6 +97,8 @@ public class ShowCellNode : ASCellNode {
         
         super.init()
         
+        self.accessibilityLabel = "Show"
+        
         if cellTransparency == 1.0 {
             self.backgroundColor = UIColor.white
         } else if cellTransparency == 0.0 {

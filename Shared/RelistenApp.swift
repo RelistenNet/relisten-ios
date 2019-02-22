@@ -19,6 +19,8 @@ public protocol RelistenAppDelegate {
     
     var appIcon : UIImage { get }
     var isPhishOD : Bool { get }
+    
+    var isDummyDelegate : Bool { get }
 }
 
 public class RelistenApp {
@@ -27,17 +29,42 @@ public class RelistenApp {
     public let launchScreenBounds: CGRect
     
     public let shakeToReportBugEnabled = Observable<Bool>(true)
+    public var playbackController : PlaybackController! { didSet {
+            if oldValue != nil {
+                playbackController.inheritObservables(fromPlaybackController: oldValue)
+            }
+        }
+    }
     
-    public var delegate : RelistenAppDelegate
-    public lazy var logDirectory : String = {
+    public var delegate : RelistenAppDelegate {
+        didSet {
+            playbackController?.window = delegate.window
+        }
+    }
+    
+    public static let logDirectory : String = {
         return NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                    FileManager.SearchPathDomainMask.userDomainMask,
                                                    true).first! + "/Logs"
     }()
     
-    public lazy var appName : String = {
+    public static let appName : String = {
         guard let retval = Bundle.main.infoDictionary?["CFBundleName"] as? String else {
             return "Relisten"
+        }
+        return retval
+    }()
+    
+    public static let appVersion : String = {
+        guard let retval = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+            return "1.0"
+        }
+        return retval
+    }()
+    
+    public static let appBuildVersion : String = {
+        guard let retval = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else {
+            return "0"
         }
         return retval
     }()
@@ -47,20 +74,6 @@ public class RelistenApp {
             return delegate.appIcon
         }
     }
-    
-    public lazy var appVersion : String = {
-        guard let retval = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
-            return "1.0"
-        }
-        return retval
-    }()
-    
-    public lazy var appBuildVersion : String = {
-        guard let retval = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else {
-            return "0"
-        }
-        return retval
-    }()
     
     public var isPhishOD : Bool  {
         get {
@@ -93,12 +106,13 @@ public class RelistenApp {
     var disposal = Disposal()
     public init(delegate: RelistenAppDelegate) {
         MyLibrary.migrateRealmDatabase()
+        self.delegate = delegate
+        
         self.launchScreenBounds = UIScreen.main.bounds
 
         if let enableBugReporting = UserDefaults.standard.object(forKey: bugReportingKey) as! Bool? {
             shakeToReportBugEnabled.value = enableBugReporting
         }
-        self.delegate = delegate
         
         if let launchCount = UserDefaults.standard.object(forKey: launchCountKey) as! Int? {
             UserDefaults.standard.set(launchCount + 1, forKey: launchCountKey)
@@ -111,11 +125,16 @@ public class RelistenApp {
         shakeToReportBugEnabled.observe { (new, _) in
             UserDefaults.standard.set(new, forKey: self.bugReportingKey)
         }.add(to: &disposal)
+        
+        AppColorObserver.observe { [weak self] (_, _) in
+            DispatchQueue.main.async {
+                self?.setupAppearance()
+            }
+        }.add(to: &disposal)
     }
     
     public func sharedSetup() {
-        let window = delegate.window
-        PlaybackController.setupSharedInstance(withWindow: window)
+        playbackController = PlaybackController(withWindow: delegate.window)
         
         DispatchQueue.main.async {
             let _ = DownloadManager.shared
@@ -142,7 +161,7 @@ public class RelistenApp {
         #endif
     }
     
-    public func setupAppearance(_ viewController: UINavigationController? = nil) {
+    public func setupAppearance() {
         let _ = RatingViewStubBounds
         
         UINavigationBar.appearance().barTintColor = AppColors.primary
@@ -162,20 +181,26 @@ public class RelistenApp {
         UISegmentedControl.appearance().tintColor = AppColors.primary
         UITabBar.appearance().tintColor = AppColors.primary
         
-        if let nav = viewController {
+        
+        if !delegate.isDummyDelegate,
+           let nav = delegate.rootNavigationController {
             nav.navigationBar.barTintColor = AppColors.primary
             nav.navigationBar.backgroundColor = AppColors.primary
             nav.navigationBar.tintColor = AppColors.primary
         }
+        
+        playbackController?.viewController.applyColors(AppColors.playerColors)
     }
 }
 
+public extension RelistenAppDelegate {
+    public var isDummyDelegate : Bool { get { return false } }
+}
+
 public class RelistenDummyAppDelegate : RelistenAppDelegate {
-    public var window: UIWindow? {
-        get {
-            fatalError("An application delegate hasn't been set yet!")
-        }
-    }
+    // The window ivar is requested by the playback controller. It's ok for it to be nil, so let's just return nil here and not complain.
+    public var window: UIWindow? = nil
+    public var isDummyDelegate = true
     
     public var rootNavigationController: RelistenNavigationController! {
         get {

@@ -121,7 +121,7 @@ public class TrackStatusCellNode : ASCellNode {
             }.dispose(to: &self.disposal)
         }
         
-        PlaybackController.sharedInstance.observeCurrentTrack.observe { [weak self] (current, previous) in
+        RelistenApp.sharedApp.playbackController.observeCurrentTrack.observe { [weak self] (current, previous) in
             if let s = self {
                 let prev = s.trackState
                 var newState : Track.PlaybackState = .notActive

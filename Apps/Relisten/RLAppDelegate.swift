@@ -45,7 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         Fabric.with([Crashlytics.self])
         
         RelistenApp.sharedApp.setupThirdPartyDependencies()
-        RelistenApp.sharedApp.setupAppearance()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
@@ -59,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         window?.makeKeyAndVisible()
         
         RelistenApp.sharedApp.sharedSetup()
+        RelistenApp.sharedApp.setupAppearance()
         
         return true
     }

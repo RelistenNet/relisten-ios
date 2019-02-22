@@ -110,10 +110,10 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
     private var av: RelistenMenuView! = nil
     public override func viewDidLoad() {
         if artist.name == "Phish" {
-            AppColors_SwitchToPhishOD(navigationController)
+            AppColors_SwitchToPhishOD()
         }
         else {
-            AppColors_SwitchToRelisten(navigationController)
+            AppColors_SwitchToRelisten()
         }
         
         navigationItem.largeTitleDisplayMode = .always
@@ -123,7 +123,7 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
         tableNode.view.separatorStyle = .none
         
         if RelistenApp.sharedApp.isPhishOD {
-            title = RelistenApp.sharedApp.appName
+            title = RelistenApp.appName
         } else {
             title = artist.name
         }

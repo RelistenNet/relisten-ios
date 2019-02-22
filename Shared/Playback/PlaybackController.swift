@@ -26,28 +26,29 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public let viewController: AGAudioPlayerViewController
     public let shrinker: PlaybackMinibarShrinker
     
-    public let observeCurrentTrack = Observable<Track?>(nil)
-    public let trackWasPlayed = Observable<Track?>(nil)
+    public var observeCurrentTrack : Observable<Track?>
+    public var trackWasPlayed : Observable<Track?>
     
-    public let eventTrackPlaybackChanged = Event<Track?>()
-    public let eventTrackPlaybackStarted = Event<Track?>()
-    public let eventTrackWasPlayed = Event<Track>()
+    public var eventTrackPlaybackChanged : Event<Track?>
+    public var eventTrackPlaybackStarted : Event<Track?>
+    public var eventTrackWasPlayed : Event<Track>
 
     public var window: UIWindow? = nil
-    
-    public static var sharedInstance : PlaybackController!
-    
-    public static func setupSharedInstance(withWindow window : UIWindow? = nil) {
-        PlaybackController.sharedInstance = PlaybackController.init(withWindow: window)
-    }
-    
-    public convenience init(withWindow window : UIWindow? = nil) {
+        
+    public convenience init(withWindow window : UIWindow? = nil, previousPlaybackController: PlaybackController? = nil) {
         self.init()
         
         self.window = window
     }
     
     public required override init() {
+        observeCurrentTrack = Observable<Track?>(nil)
+        trackWasPlayed = Observable<Track?>(nil)
+        
+        eventTrackPlaybackChanged = Event<Track?>()
+        eventTrackPlaybackStarted = Event<Track?>()
+        eventTrackWasPlayed = Event<Track>()
+        
         playbackQueue = AGAudioPlayerUpNextQueue()
         player = AGAudioPlayer(queue: playbackQueue)
         viewController = AGAudioPlayerViewController(player: player)
@@ -61,6 +62,15 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
         viewController.delegate = self
         
         viewController.loadViewIfNeeded()
+    }
+    
+    public func inheritObservables(fromPlaybackController previous: PlaybackController) {
+        self.observeCurrentTrack = previous.observeCurrentTrack
+        self.trackWasPlayed = previous.trackWasPlayed
+    
+        self.eventTrackPlaybackChanged = previous.eventTrackPlaybackChanged
+        self.eventTrackPlaybackStarted = previous.eventTrackPlaybackStarted
+        self.eventTrackWasPlayed = previous.eventTrackWasPlayed
     }
     
     enum CodingKey:String {

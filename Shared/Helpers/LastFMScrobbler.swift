@@ -66,14 +66,14 @@ public class LastFMScrobbler {
         lastFM.username = username
         lastFM.session = sessionKey
         
-        PlaybackController.sharedInstance.eventTrackPlaybackStarted.addHandler({ [weak self] t in
+        RelistenApp.sharedApp.playbackController.eventTrackPlaybackStarted.addHandler({ [weak self] t in
             guard let s = self else { return }
             guard let track = t else { return }
             
             s.trackStartedPlaying(track)
         }).add(to: &disposal)
         
-        PlaybackController.sharedInstance.eventTrackWasPlayed.addHandler({ [weak self] track in
+        RelistenApp.sharedApp.playbackController.eventTrackWasPlayed.addHandler({ [weak self] track in
             guard let s = self else { return }
             
             s.scrobbleTrack(track)

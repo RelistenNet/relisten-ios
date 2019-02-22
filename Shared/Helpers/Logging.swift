@@ -46,7 +46,7 @@ public func SetupLogging() {
     configs.append(XcodeLogConfiguration(debugMode: true))
     #endif
     
-    let logDir = RelistenApp.sharedApp.logDirectory
+    let logDir = RelistenApp.logDirectory
     let rotatingConfig = RotatingLogFileConfiguration(minimumSeverity: severity,
                                                       daysToKeep: 3,
                                                       directoryPath: logDir,

@@ -152,7 +152,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        AppColors_SwitchToRelisten(navigationController)
+        AppColors_SwitchToRelisten()
     }
     
     // MARK: State Restoration

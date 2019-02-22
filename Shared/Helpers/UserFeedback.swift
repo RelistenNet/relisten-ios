@@ -20,7 +20,7 @@ public class UserFeedback  {
     var currentNotification : CWStatusBarNotification?
     
     public init() {
-        let versionString = "Relisten \(RelistenApp.sharedApp.appVersion) (\(RelistenApp.sharedApp.appBuildVersion))"
+        let versionString = "Relisten \(RelistenApp.appVersion) (\(RelistenApp.appBuildVersion))"
         var feedbackConfig = FeedbackConfiguration(recipients: ["ios@relisten.net"])
         feedbackConfig.title = "[Bug Report: \(versionString)]"
         feedbackConfig.body = "\n\n\n[Please write a brief description of the problem you're seeing above this line]\n\n\nConfiguration Information (Please don't delete):\n\t\(versionString)\n\tCrash log identifier \(RelistenApp.sharedApp.crashlyticsUserIdentifier)"
@@ -78,7 +78,7 @@ class RelistenLogCollector : LogCollector {
     public func retrieveLogs() -> [String] {
         var retval : [String] = []
         let fm = FileManager.default
-        let logDir = RelistenApp.sharedApp.logDirectory
+        let logDir = RelistenApp.logDirectory
         
         // List offline tracks
         do {

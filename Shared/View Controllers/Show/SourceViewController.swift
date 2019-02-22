@@ -53,10 +53,10 @@ public class SourceViewController: RelistenBaseTableViewController {
     
     public override func viewDidLoad() {
         if artist.name == "Phish" {
-            AppColors_SwitchToPhishOD(navigationController)
+            AppColors_SwitchToPhishOD()
         }
         else {
-            AppColors_SwitchToRelisten(navigationController)
+            AppColors_SwitchToRelisten()
         }
         
         super.viewDidLoad()

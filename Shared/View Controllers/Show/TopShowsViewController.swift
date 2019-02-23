@@ -15,7 +15,7 @@ import AsyncDisplayKit
 import SINQ
 
 class TopShowsViewController: ShowListViewController<[Show]> {
-    public required init(artist: ArtistWithCounts) {
+    public required init(artist: Artist) {
         super.init(
             artist: artist,
             tourSections: false

@@ -13,7 +13,7 @@ import AsyncDisplayKit
 import RealmSwift
 
 class MyLibraryViewController: ShowListViewController<Results<FavoritedSource>> {
-    public required init(artist: ArtistWithCounts) {
+    public required init(artist: Artist) {
         super.init(artist: artist, tourSections: true)
         
         title = "My Library"

@@ -95,7 +95,7 @@ public class ArtistUpstreamSource : SlimArtistUpstreamSource {
     }
 }
 
-public struct UpstreamSource {
+public struct UpstreamSource: Codable {
     public let id : Int
     public let name : String
     public let url : String
@@ -111,7 +111,7 @@ public struct UpstreamSource {
     }
 }
 
-public struct Features {
+public struct Features: Codable {
     public let id : Int
     public let descriptions : Bool
     public let eras : Bool

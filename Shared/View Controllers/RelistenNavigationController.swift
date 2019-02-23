@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-public class RelistenNavigationController : ASNavigationController, UIViewControllerRestoration {
+public class RelistenNavigationController : ASNavigationController {
     override public var preferredStatusBarStyle: UIStatusBarStyle { get { return .lightContent } }
     
     public override init(rootViewController: UIViewController) {
@@ -28,14 +28,13 @@ public class RelistenNavigationController : ASNavigationController, UIViewContro
         super.viewDidLoad()
         
         self.restorationIdentifier = "net.relisten.RelistenNavigationController"
-        self.restorationClass = RelistenNavigationController.self
     }
     
     //MARK: State Restoration
-    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        let vc = RelistenNavigationController(nibName: nil, bundle: nil)
-        return vc
-    }
+//    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+//        let vc = RelistenNavigationController(nibName: nil, bundle: nil)
+//        return vc
+//    }
     
     //MARK: Wormholy
     open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {

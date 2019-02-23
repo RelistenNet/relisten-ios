@@ -48,7 +48,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        rootNavigationController = RelistenNavigationController(rootViewController: ArtistsViewController())
+        return true
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        if rootNavigationController == nil {
+            rootNavigationController = RelistenNavigationController(rootViewController: ArtistsViewController())
+        }
         
         rootNavigationController.navigationBar.prefersLargeTitles = true
         rootNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary]
@@ -60,10 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         RelistenApp.sharedApp.sharedSetup()
         RelistenApp.sharedApp.setupAppearance()
         
-        return true
-    }
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Import data from pre-4.0 versions of the app
         let relistenImporter = LegacyRelistenImporter()
         relistenImporter.performLegacyImport { (error) in
@@ -121,6 +124,17 @@ extension AppDelegate {
     public func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
         // TODO: Decode the PlaybackController state here
         
+    }
+    
+    public func application(_ application: UIApplication,
+                              viewControllerWithRestorationIdentifierPath identifierComponents: [String],
+                              coder: NSCoder) -> UIViewController? {
+        if let firstIdentifier = identifierComponents.first,
+           firstIdentifier == "net.relisten.RelistenNavigationController" {
+            rootNavigationController = RelistenNavigationController(rootViewController: ArtistsViewController())
+            return rootNavigationController
+        }
+        return nil
     }
 }
 

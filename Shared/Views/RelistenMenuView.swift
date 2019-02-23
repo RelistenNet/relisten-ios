@@ -35,7 +35,7 @@ public enum RelistenMenuItem: Int {
 }
 
 public class RelistenMenuView : UIView {
-    public let artist: ArtistWithCounts
+    public let artist: Artist
     public weak var viewController: UIViewController?
     
     private let size_MenuLineSpacing: CGFloat = 16.0 as CGFloat
@@ -47,7 +47,7 @@ public class RelistenMenuView : UIView {
     private let menuCategories: [RelistenMenuCategory]
     private let menu: [[RelistenMenuItem]]
     
-    public required init(artist: ArtistWithCounts, inViewController vc: UIViewController) {
+    public required init(artist: Artist, inViewController vc: UIViewController) {
         self.artist = artist
         self.viewController = vc
         

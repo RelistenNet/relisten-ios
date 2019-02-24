@@ -48,11 +48,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
+        // (farkas) Yuck. We have to get the standard switch bounds on the main thread, and state restoration means we might try to get it on load which deadlocks with other Texture stuff running on the main thread.
+        SwitchCellNode.loadStandardSwitchBounds()
+        
+        RelistenApp.sharedApp.sharedSetup()
+        
         return true
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        
         if rootNavigationController == nil {
             rootNavigationController = RelistenNavigationController(rootViewController: ArtistsViewController())
         }
@@ -63,8 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         window?.rootViewController = rootNavigationController
         
         window?.makeKeyAndVisible()
-        
-        RelistenApp.sharedApp.sharedSetup()
+        RelistenApp.sharedApp.loadViews()
         RelistenApp.sharedApp.setupAppearance()
         
         // Import data from pre-4.0 versions of the app

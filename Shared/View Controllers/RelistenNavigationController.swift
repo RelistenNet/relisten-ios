@@ -30,12 +30,6 @@ public class RelistenNavigationController : ASNavigationController {
         self.restorationIdentifier = "net.relisten.RelistenNavigationController"
     }
     
-    //MARK: State Restoration
-//    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-//        let vc = RelistenNavigationController(nibName: nil, bundle: nil)
-//        return vc
-//    }
-    
     //MARK: Wormholy
     open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake, RelistenApp.sharedApp.shakeToReportBugEnabled.value {

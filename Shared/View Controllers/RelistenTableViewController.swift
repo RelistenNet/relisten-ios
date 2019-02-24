@@ -13,7 +13,7 @@ import SINQ
 import Observable
 import AsyncDisplayKit
 
-open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver, UIDataSourceModelAssociation {
+open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
     public let tableNode: ASTableNode!
     
     public let api = RelistenApi
@@ -91,13 +91,6 @@ open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, AS
         return nil
     }
     open func indexPathForElement(withModelIdentifier identifier: String, in tableNode: ASTableNode) -> IndexPath? {
-        return nil
-    }
-    
-    open func modelIdentifierForElement(at idx: IndexPath, in view: UIView) -> String? {
-        return nil
-    }
-    open func indexPathForElement(withModelIdentifier identifier: String, in view: UIView) -> IndexPath? {
         return nil
     }
 }

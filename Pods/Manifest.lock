@@ -71,8 +71,8 @@ PODS:
   - SSZipArchive (2.1.4)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (4.2.0)
-  - Texture/Core (2.7)
-  - Texture/MapKit (2.7):
+  - Texture/Core (2.8)
+  - Texture/MapKit (2.8):
     - Texture/Core
   - Wormholy (1.2.3)
 
@@ -113,8 +113,8 @@ DEPENDENCIES:
   - SINQ
   - SVProgressHUD
   - SwiftyJSON
-  - Texture/Core (from `https://github.com/farktronix/Texture.git`)
-  - Texture/MapKit (from `https://github.com/farktronix/Texture.git`)
+  - Texture/Core (from `../Texture`)
+  - Texture/MapKit (from `../Texture`)
   - Wormholy
 
 SPEC REPOS:
@@ -177,7 +177,7 @@ EXTERNAL SOURCES:
   Siesta:
     :git: https://github.com/bustoutsolutions/siesta.git
   Texture:
-    :git: https://github.com/farktronix/Texture.git
+    :path: "../Texture"
 
 CHECKOUT OPTIONS:
   CleanroomLogger:
@@ -213,9 +213,6 @@ CHECKOUT OPTIONS:
   Siesta:
     :commit: b13dad7cb2bfca15fa4450e19cd23d04b8378049
     :git: https://github.com/bustoutsolutions/siesta.git
-  Texture:
-    :commit: 7eebd40d2319a1d0117c17fd4e4ed351245ffd6c
-    :git: https://github.com/farktronix/Texture.git
 
 SPEC CHECKSUMS:
   ActionKit: 6f4f5fbab3a76aa05e8df8d66145db4fe9e9b8df
@@ -259,9 +256,9 @@ SPEC CHECKSUMS:
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
-  Texture: 2234d0faa401479dc1ec0d20927e8f899285f071
+  Texture: 83e34f03666be58a4af0bc708982b594154970d9
   Wormholy: 0222592d5c7a019527911701ba7fd5fe64c798da
 
-PODFILE CHECKSUM: 4cfdd6742c309431500f49df34951c15cc7a87cb
+PODFILE CHECKSUM: 35c19898b16a01e60364bde43d7b16db26f91188
 
 COCOAPODS: 1.6.0

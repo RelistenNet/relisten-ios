@@ -161,7 +161,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         return vc
     }
     
-    override open func modelIdentifierForElement(at indexPath: IndexPath, in tableNode: ASTableNode) -> String? {
+    private func modelIdentifierForElement(at indexPath: IndexPath) -> String? {
         let row = indexPath.row
         
         switch Sections(rawValue: indexPath.section)! {
@@ -190,7 +190,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         }
     }
     
-    override open func indexPathForElement(withModelIdentifier identifier: String, in tableNode: ASTableNode) -> IndexPath? {
+    private func indexPathForElement(withModelIdentifier identifier: String) -> IndexPath? {
         switch identifier {
         case "RecentlyPlayedShows":
             return IndexPath(row: 0, section: Sections.recentlyPlayed.rawValue)
@@ -214,6 +214,14 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         }
         
         return nil
+    }
+    
+    override open func modelIdentifierForElement(at indexPath: IndexPath, in tableNode: ASTableNode) -> String? {
+        return modelIdentifierForElement(at: indexPath)
+    }
+    
+    override open func indexPathForElement(withModelIdentifier identifier: String, in tableNode: ASTableNode) -> IndexPath? {
+        return indexPathForElement(withModelIdentifier: identifier)
     }
     
 //    override public func encodeRestorableState(with coder: NSCoder) {

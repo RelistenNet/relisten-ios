@@ -125,12 +125,6 @@ public class RelistenApp {
         shakeToReportBugEnabled.observe { (new, _) in
             UserDefaults.standard.set(new, forKey: self.bugReportingKey)
         }.add(to: &disposal)
-        
-        AppColorObserver.observe { [weak self] (_, _) in
-            DispatchQueue.main.async {
-                self?.setupAppearance()
-            }
-        }.add(to: &disposal)
     }
     
     public func sharedSetup() {
@@ -151,6 +145,16 @@ public class RelistenApp {
             // Initialize CarPlay
             CarPlayController.shared.setup()
         }
+    }
+    
+    public func loadViews() {
+        AppColorObserver.observe { [weak self] (_, _) in
+            DispatchQueue.main.async {
+                self?.setupAppearance()
+            }
+            }.add(to: &disposal)
+        
+        playbackController.viewDidLoad()
     }
     
     public func setupThirdPartyDependencies() {

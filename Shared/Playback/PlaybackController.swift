@@ -60,8 +60,6 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
         viewController.presentationDelegate = self
         viewController.cellDataSource = self
         viewController.delegate = self
-        
-        viewController.loadViewIfNeeded()
     }
     
     public func inheritObservables(fromPlaybackController previous: PlaybackController) {
@@ -71,6 +69,10 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
         self.eventTrackPlaybackChanged = previous.eventTrackPlaybackChanged
         self.eventTrackPlaybackStarted = previous.eventTrackPlaybackStarted
         self.eventTrackWasPlayed = previous.eventTrackWasPlayed
+    }
+    
+    public func viewDidLoad() {
+        viewController.loadViewIfNeeded()
     }
     
     enum CodingKey:String {

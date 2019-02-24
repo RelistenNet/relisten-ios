@@ -12,7 +12,7 @@ import LicensesViewController
 import SVProgressHUD
 import SafariServices
 
-public class SettingsViewController : RelistenBaseTableViewController {
+public class SettingsViewController : RelistenBaseTableViewController, UIViewControllerRestoration {
     enum Sections: Int, RawRepresentable {
         case lastFM = 0
         case downloads
@@ -24,6 +24,9 @@ public class SettingsViewController : RelistenBaseTableViewController {
     
     public init() {
         super.init()
+        
+        self.restorationIdentifier = "net.relisten.SettingsViewController"
+        self.restorationClass = type(of: self)
         
         self.tableNode.view.separatorStyle = .singleLine
         self.tableNode.view.backgroundColor = AppColors.lightGreyBackground
@@ -367,5 +370,10 @@ public class SettingsViewController : RelistenBaseTableViewController {
         ))
         
         present(err, animated: true, completion: nil)
+    }
+    
+    //MARK: State Restoration
+    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+        return SettingsViewController()
     }
 }

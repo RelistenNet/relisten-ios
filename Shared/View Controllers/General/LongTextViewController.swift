@@ -11,7 +11,7 @@ import UIKit
 import AsyncDisplayKit
 import SafariServices
 
-public class LongTextViewController : RelistenBaseTableViewController {
+public class LongTextViewController : RelistenBaseTableViewController, UIViewControllerRestoration {
     public required init(attributedText: NSAttributedString) {
         textNode = ASTextCellNode()
         textNode.textNode.attributedText = attributedText
@@ -19,12 +19,15 @@ public class LongTextViewController : RelistenBaseTableViewController {
         
         super.init(style: .plain)
         
+        self.restorationIdentifier = "net.relisten.LongTextViewController"
+        self.restorationClass = type(of: self)
+        
         textNode.textNode.delegate = self
     }
     
-    public required init(text: String, withFont font: UIFont) {
-        textNode = ASTextCellNode(text, font: font)
-        super.init(style: .plain)
+    public convenience init(text: String, withFont font: UIFont) {
+        let attributedText = RelistenAttributedString(text, font: font)
+        self.init(attributedText: attributedText)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -59,6 +62,28 @@ public class LongTextViewController : RelistenBaseTableViewController {
     
     override public func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
+    }
+    
+    //MARK: State Restoration
+    enum CodingKeys: String, CodingKey {
+        case text = "text"
+    }
+    
+    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+        if let encodedText = coder.decodeObject(forKey: CodingKeys.text.rawValue) as? NSAttributedString {
+            let vc = LongTextViewController(attributedText: encodedText)
+            return vc
+        }
+        return nil
+    }
+    
+    override public func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        coder.encode(self.textNode.textNode.attributedText, forKey: CodingKeys.text.rawValue)
+    }
+    
+    override public func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
     }
 }
 

@@ -37,18 +37,18 @@ def apply_pods
   pod 'Siesta/Core', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
+
+  # Using a fork of Texture until this lands: https://github.com/TextureGroup/Texture/pull/1354
+  pod 'Texture/Core', :git => 'https://github.com/farktronix/Texture.git'
+  pod 'Texture/MapKit', :git => 'https://github.com/farktronix/Texture.git'
  
   # Development pods (checked out locally)
   if ENV['TRAVIS']
       pod 'BASSGaplessAudioPlayer', :path => 'TravisPods/BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => 'TravisPods/AGAudioPlayer'
-      pod 'Texture/Core', :path => 'TravisPods/Texture'
-      pod 'Texture/MapKit', :path => 'TravisPods/Texture'
   else
       pod 'BASSGaplessAudioPlayer', :path => '../BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => '../AGAudioPlayer'
-      pod 'Texture/Core', :path => '../Texture'
-      pod 'Texture/MapKit', :path => '../Texture'
   end
 
   # Debug Pods

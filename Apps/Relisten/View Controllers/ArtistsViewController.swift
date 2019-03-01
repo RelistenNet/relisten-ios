@@ -224,14 +224,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         return indexPathForElement(withModelIdentifier: identifier)
     }
     
-//    override public func encodeRestorableState(with coder: NSCoder) {
-//        super.encodeRestorableState(with: coder)
-//    }
-//
-//    override public func decodeRestorableState(with coder: NSCoder) {
-//        super.decodeRestorableState(with: coder)
-//    }
-    
     // MARK: Loading Data
     @objc func presentSettings(_ sender: UINavigationBar?) {
         navigationController?.pushViewController(SettingsViewController(), animated: true)

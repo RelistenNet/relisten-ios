@@ -121,11 +121,8 @@ if [[ ! -z ${TRAVIS} || ! -z ${CONTINUOUS_INTEGRATION} ]]; then
     is_ci=1
 fi
 
-checkAndClone NapySlider https://github.com/farktronix/NapySlider.git $podBasePath
 checkAndClone BASSGaplessAudioPlayer https://github.com/alecgorge/gapless-audio-bass-ios.git $podBasePath
 checkAndClone AGAudioPlayer https://github.com/alecgorge/AGAudioPlayer.git $podBasePath
-checkAndClone fave-button https://github.com/alecgorge/fave-button.git $podBasePath
-checkAndClone Texture https://github.com/farktronix/Texture.git $podBasePath
 
 if [[ $shouldInstallPods == 1 ]]; then
     printProgress "Checking for CocoaPods"

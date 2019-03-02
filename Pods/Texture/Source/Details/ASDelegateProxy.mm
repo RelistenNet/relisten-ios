@@ -81,7 +81,7 @@
 }
 
 - (nullable NSIndexPath *)indexPathForElementWithModelIdentifier:(NSString *)identifier inView:(UIView *)view {
-  return [self indexPathForElementWithModelIdentifier:identifier inView:view];
+  return [self _indexPathForElementWithModelIdentifier:identifier inView:view];
 }
 
 @end
@@ -149,7 +149,7 @@
 }
 
 - (nullable NSIndexPath *)indexPathForElementWithModelIdentifier:(NSString *)identifier inView:(UIView *)view {
-  return [self indexPathForElementWithModelIdentifier:identifier inView:view];
+  return [self _indexPathForElementWithModelIdentifier:identifier inView:view];
 }
 
 @end

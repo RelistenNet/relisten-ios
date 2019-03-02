@@ -214,7 +214,7 @@ CHECKOUT OPTIONS:
     :commit: b13dad7cb2bfca15fa4450e19cd23d04b8378049
     :git: https://github.com/bustoutsolutions/siesta.git
   Texture:
-    :commit: e4d6fae660da8bbca061398a56fd49f4debd2806
+    :commit: 4d29d85b09f0fb8063a7c7d2ae9dd7a2347bf5b9
     :git: https://github.com/farktronix/Texture.git
 
 SPEC CHECKSUMS:

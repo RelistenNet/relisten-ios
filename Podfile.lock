@@ -58,7 +58,7 @@ PODS:
     - TGSpreadsheetWriter
   - RealmSwift (3.8.0):
     - Realm (= 3.8.0)
-  - Reveal-SDK (20)
+  - Reveal-SDK (21)
   - SDCloudUserDefaults (1.0.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -71,8 +71,8 @@ PODS:
   - SSZipArchive (2.1.4)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (4.2.0)
-  - Texture/Core (2.7)
-  - Texture/MapKit (2.7):
+  - Texture/Core (2.8)
+  - Texture/MapKit (2.8):
     - Texture/Core
   - Wormholy (1.2.3)
 
@@ -214,12 +214,12 @@ CHECKOUT OPTIONS:
     :commit: b13dad7cb2bfca15fa4450e19cd23d04b8378049
     :git: https://github.com/bustoutsolutions/siesta.git
   Texture:
-    :commit: 7eebd40d2319a1d0117c17fd4e4ed351245ffd6c
+    :commit: e4d6fae660da8bbca061398a56fd49f4debd2806
     :git: https://github.com/farktronix/Texture.git
 
 SPEC CHECKSUMS:
   ActionKit: 6f4f5fbab3a76aa05e8df8d66145db4fe9e9b8df
-  AGAudioPlayer: 0f27e1109124739c2e49339f8cb1611622b75a1a
+  AGAudioPlayer: e749777b0a010ad9bf155c19b845ccf6f589fa5c
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 5b074495769769192b720c70aa2a60f6f33751f3
   BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
@@ -241,7 +241,7 @@ SPEC CHECKSUMS:
   LastFm: a624fa250bbda5950fccbd068ea7950dcba2da1f
   LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
-  MZDownloadManager: ba9e3289d28516b1a610228012371fc41ad2f149
+  MZDownloadManager: 1faf281511aa91bd45f254dd84331e08720d890c
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
   NapySlider: 52be4efab746c967437fefc98c4ca508edbdf306
   Observable: d8a6ed00d87087dd169012a0f92214fe5a15debd
@@ -250,7 +250,7 @@ SPEC CHECKSUMS:
   Realm: 3fdae59de78838064e9f77638d7cdb7b8cff9dc8
   RealmConverter: 910266d4dc96e8f33be7bb7a4918ad80d88a8006
   RealmSwift: c990518b800e106d1f77099d3a4648c3b100337d
-  Reveal-SDK: 43206a57f575632fd304e85385cc259b5d359e32
+  Reveal-SDK: 3523e0eb7c562811c51bb71da6e523a6373702c8
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Siesta: 337a9c39c9b78bba904286310c86562a886efdab
@@ -259,9 +259,9 @@ SPEC CHECKSUMS:
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
-  Texture: 2234d0faa401479dc1ec0d20927e8f899285f071
+  Texture: 83e34f03666be58a4af0bc708982b594154970d9
   Wormholy: 0222592d5c7a019527911701ba7fd5fe64c798da
 
 PODFILE CHECKSUM: 4cfdd6742c309431500f49df34951c15cc7a87cb
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.7.0.beta.1

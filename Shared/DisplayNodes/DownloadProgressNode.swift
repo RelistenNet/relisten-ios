@@ -86,7 +86,8 @@ public class DownloadProgressNode : ASDisplayNode {
             button.downloadedButton.setImage(DownloadProgressNode.buttonImage, for: .normal)
             button.downloadedButton.setTitleColor(AppColors.primary, for: .normal)
             button.downloadedButton.setTitleColor(AppColors.highlight, for: .highlighted)
-            
+            button.downloadedButton.lineWidth = 0
+
             button.stopDownloadButton.tintColor = AppColors.primary
             button.stopDownloadButton.filledLineStyleOuter = true
             

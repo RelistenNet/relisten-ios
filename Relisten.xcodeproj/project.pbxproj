@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		07E2A05D0362CAFBEEEA980A /* Pods_RelistenScreenshots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86E4D75E11564D9A5E0E9A5 /* Pods_RelistenScreenshots.framework */; };
+		3FD2EEBB223ACEA10056C661 /* ArtistsSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2EEBA223ACEA10056C661 /* ArtistsSearchResultsViewController.swift */; };
 		430C03E12218E4CA003C8D4A /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		430D64E2210BA9AC005D7F7A /* RecentlyAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */; };
 		430D64E4210BC10A005D7F7A /* CarPlayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */; };
@@ -214,6 +215,7 @@
 /* Begin PBXFileReference section */
 		0C471715E70DCF832037246C /* Pods-RelistenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RelistenUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		0E4D84C14805824FBE7B5E7B /* Pods-PhishODUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3FD2EEBA223ACEA10056C661 /* ArtistsSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArtistsSearchResultsViewController.swift; path = "View Controllers/ArtistsSearchResultsViewController.swift"; sourceTree = "<group>"; };
 		430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAddedViewController.swift; sourceTree = "<group>"; };
 		430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarPlayDataSource.swift; path = Helpers/CarPlayDataSource.swift; sourceTree = "<group>"; };
 		430D64E5210BE379005D7F7A /* ReentrantDispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReentrantDispatchQueue.swift; path = Extensions/ReentrantDispatchQueue.swift; sourceTree = "<group>"; };
@@ -844,6 +846,7 @@
 			isa = PBXGroup;
 			children = (
 				7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */,
+				3FD2EEBA223ACEA10056C661 /* ArtistsSearchResultsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1983,6 +1986,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FD2EEBB223ACEA10056C661 /* ArtistsSearchResultsViewController.swift in Sources */,
 				7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */,
 				7C8EF1111D5A49C300004B5C /* RLAppDelegate.swift in Sources */,
 				7C31554920C2D21800F07622 /* ArtistCellNode.swift in Sources */,

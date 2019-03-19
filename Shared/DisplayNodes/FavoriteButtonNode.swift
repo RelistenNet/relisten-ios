@@ -40,17 +40,20 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
     open weak var delegate : FavoriteButtonDelegate? = nil
     private var didInitButton : Bool = false
     
+    private var _normalColorShadow : UIColor? = nil
     open var normalColor : UIColor? {
         get {
-            var color : UIColor? = nil
-            performOnMainQueueSync {
-                if let button = faveButtonNode.view as? FaveButton {
-                    color = button.normalColor
+            DispatchQueue.main.async { [weak self] in
+                if let button = self?.faveButtonNode.view as? FaveButton, let s = self {
+                    s._normalColorShadow = button.normalColor
                 }
             }
-            return color
+            
+            return _normalColorShadow
         }
         set {
+            _normalColorShadow = newValue
+            
             DispatchQueue.main.async { [weak self] in
                 if let button = self?.faveButtonNode.view as? FaveButton,
                    let color = newValue {

@@ -13,22 +13,26 @@ import NAKPlaybackIndicatorView
 public class PlaybackIndicatorNode : ASDisplayNode {
     public let indicatorNode: ASDisplayNode
     
+    private var _stateShadow: NAKPlaybackIndicatorViewState = .paused
     public var state: NAKPlaybackIndicatorViewState {
         get {
-            var state: NAKPlaybackIndicatorViewState = .paused
-            performOnMainQueueSync {
-                if let indicator = indicatorNode.view as? NAKPlaybackIndicatorView {
-                    state = indicator.state
+            DispatchQueue.main.async { [weak self] in
+                if let indicator = self?.indicatorNode.view as? NAKPlaybackIndicatorView, let s = self {
+                    let st = indicator.state
+                    s._stateShadow = st
                 }
             }
-            return state
+            
+            return _stateShadow
         }
         
         set {
-            performOnMainQueueSync {
-                if let indicator = indicatorNode.view as? NAKPlaybackIndicatorView {
+            _stateShadow = newValue
+            
+            DispatchQueue.main.async { [weak self] in
+                if let indicator = self?.indicatorNode.view as? NAKPlaybackIndicatorView, let s = self {
                     indicator.state = newValue
-                    self.setNeedsLayout()
+                    s.setNeedsLayout()
                 }
             }
         }

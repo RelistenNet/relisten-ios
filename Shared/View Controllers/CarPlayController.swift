@@ -47,16 +47,20 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         }.add(to: &disposal)
     }
     
-    func carPlayDataSourceWillUpdate() {
-        performOnMainQueueSync({
+    func carPlayDataSourceUpdates(onQueue queue: DispatchQueue, _ updateBlock: @escaping () -> Void) {
+        assert(!Thread.isMainThread)
+        
+        DispatchQueue.main.async {
             MPPlayableContentManager.shared().beginUpdates()
-        })
-    }
-    
-    func carPlayDataSourceDidUpdate() {
-        performOnMainQueueSync {
-            MPPlayableContentManager.shared().endUpdates()
-            MPPlayableContentManager.shared().reloadData()
+            
+            queue.async {
+                updateBlock()
+                
+                DispatchQueue.main.async {
+                    MPPlayableContentManager.shared().endUpdates()
+                    MPPlayableContentManager.shared().reloadData()
+                }
+            }
         }
     }
     
@@ -277,6 +281,8 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     }
     
     private func allArtistItems(at indexPath: IndexPath) -> (ArtistWithCounts?, yearCount: Int?, Year?, showCount: Int?, Show?, CompleteShowInformation?, Track?) {
+        assert(Thread.isMainThread)
+        
         var artist : ArtistWithCounts?
         var yearCount : Int?
         var years : [Year]?
@@ -286,51 +292,49 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         var show : Show?
         var showInfo : CompleteShowInformation?
         var track : Track?
-        let block = {
-            if self.carPlaySection(from: indexPath) == .artists {
-                if indexPath.count > 1 {
-                    artist = self.dataSource.allArtists().objectAtIndexIfInBounds(indexPath[1])
-                    if let artist = artist {
-                        showCount = artist.show_count
+
+        if self.carPlaySection(from: indexPath) == .artists {
+            if indexPath.count > 1 {
+                artist = self.dataSource.allArtists().objectAtIndexIfInBounds(indexPath[1])
+                if let artist = artist {
+                    showCount = artist.show_count
+                    
+                    years = self.dataSource.years(forArtist: artist)
+                    if let y = years {
+                        yearCount = y.count
+                    }
+                }
+            }
+            if let artist = artist {
+                if indexPath.count > 2 {
+                    if let years = years {
+                        year = years.objectAtIndexIfInBounds(indexPath[2])
                         
-                        years = self.dataSource.years(forArtist: artist)
-                        if let y = years {
-                            yearCount = y.count
+                        if let year = year {
+                            shows = self.dataSource.shows(forArtist: artist, inYear: year)
+                            if let shows = shows {
+                                showCount = shows.count
+                            }
                         }
                     }
                 }
-                if let artist = artist {
-                    if indexPath.count > 2 {
-                        if let years = years {
-                            year = years.objectAtIndexIfInBounds(indexPath[2])
-                            
-                            if let year = year {
-                                shows = self.dataSource.shows(forArtist: artist, inYear: year)
-                                if let shows = shows {
-                                    showCount = shows.count
-                                }
-                            }
+                if indexPath.count > 3 {
+                    if let shows = shows {
+                        show = shows.objectAtIndexIfInBounds(indexPath[3])
+                        if let show = show {
+                            showInfo = self.dataSource.completeShow(forArtist: artist, show: show)
                         }
                     }
-                    if indexPath.count > 3 {
-                        if let shows = shows {
-                            show = shows.objectAtIndexIfInBounds(indexPath[3])
-                            if let show = show {
-                                showInfo = self.dataSource.completeShow(forArtist: artist, show: show)
-                            }
-                        }
-                    }
-                    if indexPath.count > 4 {
-                        if let showInfo = showInfo {
-                            if let sourceTrack = showInfo.source.tracksFlattened.objectAtIndexIfInBounds(indexPath[4]) {
-                                track = Track(sourceTrack: sourceTrack, showInfo: showInfo)
-                            }
+                }
+                if indexPath.count > 4 {
+                    if let showInfo = showInfo {
+                        if let sourceTrack = showInfo.source.tracksFlattened.objectAtIndexIfInBounds(indexPath[4]) {
+                            track = Track(sourceTrack: sourceTrack, showInfo: showInfo)
                         }
                     }
                 }
             }
         }
-        performOnMainQueueSync(block)
         return (artist, yearCount, year, showCount, show, showInfo, track)
     }
     

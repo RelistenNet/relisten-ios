@@ -66,7 +66,7 @@ class LegacyMapper {
         
         if let displayDate = legacyShow.displayDate,
             let legacyTrack = legacyTrack {
-            performOnMainQueueSync {
+            DispatchQueue.main.async {
                 RelistenApi.show(onDate: displayDate, byArtist: fullArtist).getLatestDataOrFetchIfNeeded { (latestData, blockError) in
                     self.callbackQueue.async {
                         if let newShow : ShowWithSources = latestData?.typedContent() {
@@ -108,7 +108,7 @@ class LegacyMapper {
         group.enter()
         fetchArtist(artistSlug) { (artist) in
             if let artist = artist {
-                performOnMainQueueSync {
+                DispatchQueue.main.async {
                     RelistenApi.show(onDate: showDate, byArtist: artist).getLatestDataOrFetchIfNeeded { (latestData, blockError) in
                         self.callbackQueue.async {
                             if let newShow : ShowWithSources = latestData?.typedContent() {
@@ -155,7 +155,7 @@ class LegacyMapper {
             return
         }
         
-        performOnMainQueueSync {
+        DispatchQueue.main.async {
             RelistenApi.artists().getLatestDataOrFetchIfNeeded { (latestData, _) in
                 var resultArtist : ArtistWithCounts? = nil
                 if let artists : [ArtistWithCounts] = latestData?.typedContent() {
@@ -174,7 +174,7 @@ class LegacyMapper {
     }
     
     public func fetchSlimArtist(withArtistSlug artistSlug: String, completion : @escaping ((SlimArtistWithFeatures?) -> Void)) {
-        performOnMainQueueSync {
+        DispatchQueue.main.async {
             RelistenApi.artist(withSlug: artistSlug).getLatestDataOrFetchIfNeeded { (latestData, _) in
                 var artist : SlimArtistWithFeatures? = nil
                 if let responseArtist : SlimArtistWithFeatures = latestData?.typedContent() {
@@ -188,7 +188,7 @@ class LegacyMapper {
     public func loadShowInfoForDate(withArtistSlug artistSlug: String, showDate : String, completion : @escaping ((ShowWithSources?) -> Void)) {
         fetchSlimArtist(withArtistSlug: artistSlug) { (artist) in
             if let artist = artist {
-                performOnMainQueueSync {
+                DispatchQueue.main.async {
                     RelistenApi.show(onDate: showDate, byArtist: artist).getLatestDataOrFetchIfNeeded { (latestData, _) in
                         var show : ShowWithSources? = nil
                         if let responseShow : ShowWithSources = latestData?.typedContent() {

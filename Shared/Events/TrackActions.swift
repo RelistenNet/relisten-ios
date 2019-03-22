@@ -32,12 +32,12 @@ public class TrackActions {
         
         a.addAction(UIAlertAction(title: "Play Next", style: .default, handler: { _ in
             let ai = track.toAudioItem()
-            PlaybackController.sharedInstance.playbackQueue.insert(ai, at: UInt(PlaybackController.sharedInstance.player.currentIndex) + UInt(1))
+            RelistenApp.sharedApp.playbackController.playbackQueue.insert(ai, at: UInt(RelistenApp.sharedApp.playbackController.player.currentIndex) + UInt(1))
         }))
         
         a.addAction(UIAlertAction(title: "Add to End of Queue", style: .default, handler: { _ in
             let ai = track.toAudioItem()
-            PlaybackController.sharedInstance.playbackQueue.append(ai)
+            RelistenApp.sharedApp.playbackController.playbackQueue.append(ai)
         }))
         
         a.addAction(UIAlertAction(title: "Go to Show", style: .default, handler: { _ in
@@ -64,8 +64,8 @@ public class TrackActions {
                     popoverController.sourceRect = sourceView.bounds
                 }
                 
-                if PlaybackController.sharedInstance.hasBarBeenAdded {
-                    PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
+                if RelistenApp.sharedApp.playbackController.hasBarBeenAdded {
+                    RelistenApp.sharedApp.playbackController.viewController.present(shareVc, animated: true, completion: nil)
                 }
                 else {
                     vc.present(shareVc, animated: true, completion: nil)
@@ -75,8 +75,8 @@ public class TrackActions {
             a.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
             }))
             
-            if PlaybackController.sharedInstance.hasBarBeenAdded {
-                PlaybackController.sharedInstance.viewController.present(a, animated: true, completion: nil)
+            if RelistenApp.sharedApp.playbackController.hasBarBeenAdded {
+                RelistenApp.sharedApp.playbackController.viewController.present(a, animated: true, completion: nil)
             }
             else {
                 vc.present(a, animated: true, completion: nil)
@@ -111,10 +111,10 @@ public class TrackActions {
     public static func play(trackAtIndex: UInt, inShow info: CompleteShowInformation, fromViewController vc: UIViewController) {
         let items = info.source.toAudioItems(inShow: info.show, byArtist: info.artist)
         
-        PlaybackController.sharedInstance.playbackQueue.clearAndReplace(with: items)
+        RelistenApp.sharedApp.playbackController.playbackQueue.clearAndReplace(with: items)
         
-        PlaybackController.sharedInstance.displayMini(on: vc, completion: nil)
+        RelistenApp.sharedApp.playbackController.displayMini(on: vc, completion: nil)
         
-        PlaybackController.sharedInstance.player.playItem(at: trackAtIndex)
+        RelistenApp.sharedApp.playbackController.player.playItem(at: trackAtIndex)
     }
 }

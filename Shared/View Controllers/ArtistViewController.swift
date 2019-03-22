@@ -19,7 +19,7 @@ extension Calendar {
     }
 }
 
-public class ArtistViewController : RelistenBaseTableViewController, ASCollectionDelegate {
+public class ArtistViewController : RelistenBaseTableViewController, ASCollectionDelegate, UIViewControllerRestoration {
     enum Sections: Int, RawRepresentable {
         case today = 0
         case recentlyPlayed
@@ -32,7 +32,7 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
 
     internal let statusOverlay = RelistenResourceStatusOverlay()
 
-    public let artist: ArtistWithCounts
+    public let artist: Artist
     
     let resourceToday: Resource
     let resourceRecentlyPerformed: Resource
@@ -58,7 +58,7 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
         return SettingsViewController()
     }()
 
-    public required init(artist: ArtistWithCounts) {
+    public required init(artist: Artist) {
         self.artist = artist
         
         recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
@@ -86,6 +86,9 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
         
         super.init()
         
+        self.restorationIdentifier = "net.relisten.ArtistViewController.\(artist.slug)"
+        self.restorationClass = ArtistViewController.self
+        
         recentShowsNode.collectionNode.delegate = self
         todayShowsNode.collectionNode.delegate = self
         recentlyPerformedNode.collectionNode.delegate = self
@@ -110,10 +113,10 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
     private var av: RelistenMenuView! = nil
     public override func viewDidLoad() {
         if artist.name == "Phish" {
-            AppColors_SwitchToPhishOD(navigationController)
+            AppColors_SwitchToPhishOD()
         }
         else {
-            AppColors_SwitchToRelisten(navigationController)
+            AppColors_SwitchToRelisten()
         }
         
         navigationItem.largeTitleDisplayMode = .always
@@ -123,7 +126,7 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
         tableNode.view.separatorStyle = .none
         
         if RelistenApp.sharedApp.isPhishOD {
-            title = RelistenApp.sharedApp.appName
+            title = RelistenApp.appName
         } else {
             title = artist.name
         }
@@ -363,6 +366,36 @@ public class ArtistViewController : RelistenBaseTableViewController, ASCollectio
             vc.presentIfNecessary(navigationController: navigationController)
         }
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case artist = "artist"
+    }
+    
+    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+        // Decode the artist object from the archive and init a new artist view controller with it
+        do {
+            if let artistData = coder.decodeObject(forKey: CodingKeys.artist.rawValue) as? Data {
+                let encodedArtist = try JSONDecoder().decode(Artist.self, from: artistData)
+                let vc = ArtistViewController(artist: encodedArtist)
+                return vc
+            }
+        } catch { }
+        return nil
+    }
+    
+    override public func encodeRestorableState(with coder: NSCoder) {
+        // Encode the artist object so we can re-create an ArtistViewController after state restoration
+        super.encodeRestorableState(with: coder)
+        
+        do {
+            let artistData = try JSONEncoder().encode(self.artist)
+            coder.encode(artistData, forKey: CodingKeys.artist.rawValue)
+        } catch { }
+    }
+    
+    override public func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+    }
 }
 
 // MARK: Phish Slideshow
@@ -398,7 +431,7 @@ extension ArtistViewController : KASlideShowDataSource {
         slider.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         tableNode.view.backgroundView = slider
-        
+//        
         let fog = UIView(frame: view.bounds)
         fog.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         fog.backgroundColor = UIColor.blue.withAlphaComponent(0.4)

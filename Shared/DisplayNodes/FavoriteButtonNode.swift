@@ -51,8 +51,9 @@ open class FavoriteButtonNode : ASDisplayNode, FaveButtonDelegate {
             return color
         }
         set {
-            performOnMainQueueSync {
-                if let button = faveButtonNode.view as? FaveButton, let color = newValue {
+            DispatchQueue.main.async { [weak self] in
+                if let button = self?.faveButtonNode.view as? FaveButton,
+                   let color = newValue {
                     button.normalColor = color
                 }
             }

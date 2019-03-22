@@ -89,8 +89,8 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
             popoverController.sourceRect = shareButton.view.bounds
         }
         
-        if PlaybackController.sharedInstance.hasBarBeenAdded {
-            PlaybackController.sharedInstance.viewController.present(shareVc, animated: true, completion: nil)
+        if RelistenApp.sharedApp.playbackController.hasBarBeenAdded {
+            RelistenApp.sharedApp.playbackController.viewController.present(shareVc, animated: true, completion: nil)
         }
         else {
             self.myViewController?.present(shareVc, animated: true, completion: nil)
@@ -125,8 +125,8 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
             popoverController.sourceRect = deleteButton.view.bounds
         }
         
-        if PlaybackController.sharedInstance.hasBarBeenAdded {
-            PlaybackController.sharedInstance.viewController.present(alertController, animated: true, completion: nil)
+        if RelistenApp.sharedApp.playbackController.hasBarBeenAdded {
+            RelistenApp.sharedApp.playbackController.viewController.present(alertController, animated: true, completion: nil)
         }
         else {
             self.myViewController?.present(alertController, animated: true)

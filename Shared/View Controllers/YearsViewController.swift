@@ -14,22 +14,27 @@ import Siesta
 import AsyncDisplayKit
 import SINQ
 
-public class YearsViewController: RelistenTableViewController<[Year]> {
+public class YearsViewController: RelistenTableViewController<[Year]>, UIViewControllerRestoration {
     
-    private let artist: ArtistWithCounts
+    private let artist: Artist
     private var years: [Year] = []
     
-    public required init(artist: ArtistWithCounts) {
+    public required init(artist: Artist, years: [Year]? = nil) {
         self.artist = artist
+        if let years = years {
+            self.years = years
+        }
         
         super.init(useCache: true, refreshOnAppear: true)
+        
+        self.restorationIdentifier = "net.relisten.YearsViewController.\(artist.slug)"
+        self.restorationClass = YearsViewController.self
     }
     
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
 
-    
     public required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
@@ -69,5 +74,42 @@ public class YearsViewController: RelistenTableViewController<[Year]> {
         
         let vc = YearViewController(artist: artist, year: years[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    //MARK: State restoration
+    enum CodingKeys: String, CodingKey {
+        case artist = "artist"
+        case years = "years"
+    }
+    
+    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+        do {
+            if let artistData = coder.decodeObject(forKey: CodingKeys.artist.rawValue) as? Data {
+                let encodedArtist = try JSONDecoder().decode(Artist.self, from: artistData)
+                var encodedYears : [Year]? = nil
+                if let yearsData = coder.decodeObject(forKey: CodingKeys.years.rawValue) as? Data {
+                    encodedYears = try JSONDecoder().decode([Year].self, from: yearsData)
+                }
+                let vc = YearsViewController(artist: encodedArtist, years: encodedYears)
+                return vc
+            }
+        } catch { }
+        return nil
+    }
+    
+    override public func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        
+        do {
+            let artistData = try JSONEncoder().encode(self.artist)
+            coder.encode(artistData, forKey: CodingKeys.artist.rawValue)
+            
+            let encodedYears = try JSONEncoder().encode(self.years)
+            coder.encode(encodedYears, forKey: CodingKeys.years.rawValue)
+        } catch { }
+    }
+    
+    override public func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
     }
 }

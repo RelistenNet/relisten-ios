@@ -30,10 +30,12 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
     // TODO: Sort the shows when this value changes and refresh the view
     var shouldSortShows : Bool = true
     internal let tourSections: Bool
+    internal let enableSearch: Bool
     
     public required init(artist: Artist, tourSections: Bool, enableSearch: Bool = true) {
         self.artist = artist
         self.tourSections = artist.features.tours && tourSections
+        self.enableSearch = enableSearch
         
         super.init(useCache: true, refreshOnAppear: true)
         
@@ -318,5 +320,30 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
     //  otherwise the scope bars show up while pushing/popping this view controller.
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchController.searchBar.showsScopeBar = true
+    }
+    
+    //MARK: State Restoration
+    enum CodingKeys: String, CodingKey {
+        case artist = "artist"
+        case tourSections = "tourSections"
+        case enableSearch = "enableSearch"
+        case sortShows = "sortShows"
+    }
+    
+    override public func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        
+        do {
+            let encodedArtist = try JSONEncoder().encode(self.artist)
+            coder.encode(encodedArtist, forKey: CodingKeys.artist.rawValue)
+            
+            coder.encode(tourSections, forKey: CodingKeys.tourSections.rawValue)
+            coder.encode(enableSearch, forKey: CodingKeys.enableSearch.rawValue)
+            coder.encode(shouldSortShows, forKey: CodingKeys.sortShows.rawValue)
+        } catch { }
+    }
+    
+    override public func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
     }
 }

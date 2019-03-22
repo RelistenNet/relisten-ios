@@ -19,27 +19,14 @@ import Observable
 // This is pretty ugly and probably too clever for its own good, but it seems to work.
 // Better solutions are gladly welcomed!
 var _standardSwitchBounds : CGRect?
-var StandardSwitchBounds : CGRect {
+public var StandardSwitchBounds : CGRect {
     get {
-        standardSwitchBoundsGroup.wait()
         return _standardSwitchBounds!
     }
     set {
         _standardSwitchBounds = newValue
     }
 }
-// This is the part that's a little weird- fetching the group also fetches the bounds
-let standardSwitchBoundsGroup : DispatchGroup = {
-    let group = DispatchGroup()
-    group.enter()
-    DispatchQueue.main.async {
-        let s = UISwitch()
-        s.sizeToFit()
-        _standardSwitchBounds = s.bounds
-        group.leave()
-    }
-    return group
-}()
 
 public class SwitchCellNode : ASCellNode {
     let observeChecked: Observable<Bool>
@@ -47,11 +34,6 @@ public class SwitchCellNode : ASCellNode {
     var disposal = Disposal()
     
     public init(observeChecked: Observable<Bool>, withLabel label: String) {
-        // Prefetch the standard switch bounds
-        DispatchQueue.global().async {
-            let _ = StandardSwitchBounds
-        }
-        
         self.observeChecked = observeChecked
         
         self.labelNode = ASTextNode(label, textStyle: .body)
@@ -68,6 +50,12 @@ public class SwitchCellNode : ASCellNode {
         super.init()
         
         automaticallyManagesSubnodes = true
+    }
+    
+    public static func loadStandardSwitchBounds() {
+        let s = UISwitch()
+        s.sizeToFit()
+        _standardSwitchBounds = s.bounds
     }
     
     public override func didLoad() {

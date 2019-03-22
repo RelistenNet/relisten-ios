@@ -39,6 +39,9 @@ open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, AS
         super.viewDidLoad()
         
         navigationItem.largeTitleDisplayMode = .always
+        
+        self.restorationIdentifier = "net.relisten.RelistenBaseTableViewController"
+        self.tableNode.view.restorationIdentifier = "net.relisten.RelistenBaseTableViewController.tableView"
     }
     
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -82,6 +85,13 @@ open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, AS
     
     open func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return true
+    }
+    
+    open func modelIdentifierForElement(at idx: IndexPath, in tableNode: ASTableNode) -> String? {
+        return nil
+    }
+    open func indexPathForElement(withModelIdentifier identifier: String, in tableNode: ASTableNode) -> IndexPath? {
+        return nil
     }
 }
 

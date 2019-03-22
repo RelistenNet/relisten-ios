@@ -25,9 +25,9 @@ public class CreditsNode : ASCellNode {
         appIconNode.style.preferredSize = CGSize(width: appIconNode.style.maxWidth.value, height: appIconNode.style.maxHeight.value)
         appIconNode.style.flexShrink = 1.0
         
-        appNameNode = ASTextNode(RelistenApp.sharedApp.appName, textStyle: .headline)
-        appVersionNode = ASTextNode("Version \(RelistenApp.sharedApp.appVersion)", textStyle: .caption1)
-        appBuildVersionNode = ASTextNode(" (build \(RelistenApp.sharedApp.appBuildVersion))", textStyle: .caption1, color: AppColors.mutedText)
+        appNameNode = ASTextNode(RelistenApp.appName, textStyle: .headline)
+        appVersionNode = ASTextNode("Version \(RelistenApp.appVersion)", textStyle: .caption1)
+        appBuildVersionNode = ASTextNode(" (build \(RelistenApp.appBuildVersion))", textStyle: .caption1, color: AppColors.mutedText)
         
         peopleCreditsNode = ASTextNode()
         
@@ -46,7 +46,7 @@ public class CreditsNode : ASCellNode {
     
     public let peopleCreditsNode : ASTextNode
     private func setupPeopleCreditsNode() {
-        let attributedString : NSMutableAttributedString = NSMutableAttributedString(string: "\(RelistenApp.sharedApp.appName) was written by Alec Gorge\nWith help from\nJacob Farkas\nDaniel Saewitz")
+        let attributedString : NSMutableAttributedString = NSMutableAttributedString(string: "\(RelistenApp.appName) was written by Alec Gorge\nWith help from\nJacob Farkas\nDaniel Saewitz")
         
         let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
         let boldFontDescriptor = fontDescriptor.withSymbolicTraits(.traitBold)

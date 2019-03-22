@@ -24,6 +24,13 @@ public class RelistenNavigationController : ASNavigationController {
         super.init(coder: coder)
     }
     
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.restorationIdentifier = "net.relisten.RelistenNavigationController"
+    }
+    
+    //MARK: Wormholy
     open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake, RelistenApp.sharedApp.shakeToReportBugEnabled.value {
             UserFeedback.shared.requestUserFeedback(from: self)

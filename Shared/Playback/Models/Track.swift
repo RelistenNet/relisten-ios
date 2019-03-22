@@ -46,11 +46,11 @@ public class Track : Codable, Hashable {
     public var playbackState : PlaybackState {
         get {
             var isActiveTrack = false
-            if let activeTrack = (PlaybackController.sharedInstance.player.currentItem as? SourceTrackAudioItem)?.track {
+            if let activeTrack = (RelistenApp.sharedApp.playbackController.player.currentItem as? SourceTrackAudioItem)?.track {
                 isActiveTrack = (activeTrack.mp3_url == mp3_url)
             }
             if isActiveTrack {
-                if PlaybackController.sharedInstance.player.isPlaying {
+                if RelistenApp.sharedApp.playbackController.player.isPlaying {
                     return .playing
                 } else {
                     return .paused

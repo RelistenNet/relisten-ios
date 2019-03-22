@@ -214,7 +214,7 @@ CHECKOUT OPTIONS:
     :commit: b13dad7cb2bfca15fa4450e19cd23d04b8378049
     :git: https://github.com/bustoutsolutions/siesta.git
   Texture:
-    :commit: e4d6fae660da8bbca061398a56fd49f4debd2806
+    :commit: 4d29d85b09f0fb8063a7c7d2ae9dd7a2347bf5b9
     :git: https://github.com/farktronix/Texture.git
 
 SPEC CHECKSUMS:
@@ -262,6 +262,6 @@ SPEC CHECKSUMS:
   Texture: 83e34f03666be58a4af0bc708982b594154970d9
   Wormholy: 0222592d5c7a019527911701ba7fd5fe64c798da
 
-PODFILE CHECKSUM: 4cfdd6742c309431500f49df34951c15cc7a87cb
+PODFILE CHECKSUM: 715edd3b1b7d31e7a883c5955aa363736f2e2af6
 
 COCOAPODS: 1.7.0.beta.1

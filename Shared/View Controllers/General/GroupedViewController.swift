@@ -21,9 +21,11 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     
     let searchController: UISearchController = UISearchController(searchResultsController: nil)
     private let tableUpdateQueue = DispatchQueue(label: "net.relisten.groupedViewController.queue")
+    private let enableSearch: Bool
     
     public required init(artist: Artist, enableSearch: Bool = true) {
         self.artist = artist
+        self.enableSearch = enableSearch
         
         super.init(useCache: true, refreshOnAppear: true)
         
@@ -253,5 +255,26 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     //  otherwise the scope bars show up while pushing/popping this view controller.
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchController.searchBar.showsScopeBar = true
+    }
+    
+    //MARK: State Restoration
+    enum CodingKeys: String, CodingKey {
+        case artist = "artist"
+        case enableSearch = "enableSearch"
+    }
+    
+    override public func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        
+        do {
+            let encodedArtist = try JSONEncoder().encode(self.artist)
+            coder.encode(encodedArtist, forKey: CodingKeys.artist.rawValue)
+            
+            coder.encode(enableSearch, forKey: CodingKeys.enableSearch.rawValue)
+        } catch { }
+    }
+    
+    override public func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
     }
 }

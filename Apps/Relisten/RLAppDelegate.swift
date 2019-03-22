@@ -38,10 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         SetupLogging()
         
-        return true
-    }
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         LogDebug("🔊🔊🔊 Relisten is launching 🔊🔊🔊")
         RelistenApp.sharedApp.delegate = self
         
@@ -49,11 +45,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         Fabric.with([Crashlytics.self])
         
         RelistenApp.sharedApp.setupThirdPartyDependencies()
-        RelistenApp.sharedApp.setupAppearance()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-
-        rootNavigationController = RelistenNavigationController(rootViewController: ArtistsViewController())
+        
+        // (farkas) Yuck. We have to get the standard switch bounds on the main thread, and state restoration means we might try to get it on load which deadlocks with other Texture stuff running on the main thread.
+        SwitchCellNode.loadStandardSwitchBounds()
+        
+        RelistenApp.sharedApp.sharedSetup()
+        
+        return true
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        if rootNavigationController == nil {
+            rootNavigationController = RelistenNavigationController(rootViewController: ArtistsViewController())
+        }
         
         rootNavigationController.navigationBar.prefersLargeTitles = true
         rootNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary]
@@ -61,8 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         window?.rootViewController = rootNavigationController
         
         window?.makeKeyAndVisible()
-        
-        RelistenApp.sharedApp.sharedSetup()
+        RelistenApp.sharedApp.loadViews()
+        RelistenApp.sharedApp.setupAppearance()
         
         // Import data from pre-4.0 versions of the app
         let relistenImporter = LegacyRelistenImporter()
@@ -103,6 +109,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
 
 }
 
+// MARK: State Restoration
+extension AppDelegate {
+    public func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+        return true
+    }
+    
+    public func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        // TODO: If it's been over N hours and the user wasn't playing music, should we go back to the main screen?
+        return true
+    }
+    
+    public func application(_ application: UIApplication, willEncodeRestorableStateWith coder: NSCoder) {
+        // TODO: Encode the PlaybackController state here
+    }
+    
+    public func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
+        // TODO: Decode the PlaybackController state here
+        
+    }
+    
+    public func application(_ application: UIApplication,
+                              viewControllerWithRestorationIdentifierPath identifierComponents: [String],
+                              coder: NSCoder) -> UIViewController? {
+        if let firstIdentifier = identifierComponents.first,
+           firstIdentifier == "net.relisten.RelistenNavigationController" {
+            rootNavigationController = RelistenNavigationController(rootViewController: ArtistsViewController())
+            return rootNavigationController
+        }
+        return nil
+    }
+}
+
+// MARK: URL Handling
 extension AppDelegate {
     func handleURL(url : URL) {
         // https://relisten.net/grateful-dead/1967/02/12/smokestack-lightning?source=87690

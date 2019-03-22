@@ -38,7 +38,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         MPPlayableContentManager.shared().delegate = self;
         MPPlayableContentManager.shared().dataSource = self;
         
-        PlaybackController.sharedInstance.observeCurrentTrack.observe { (current, _) in
+        RelistenApp.sharedApp.playbackController.observeCurrentTrack.observe { (current, _) in
             var nowPlayingIdentifiers : [String] = []
             if let current = current {
                 nowPlayingIdentifiers.append(current.carPlayIdentifier)

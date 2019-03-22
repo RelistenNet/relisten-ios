@@ -1,7 +1,5 @@
-- Search! Most views have a search bar at the top (drag down to expose it)
-- Improved app performace for users with large listening histories
-- Some of the views have had their backing UI rewritten. Everything should look the same, but please let us know about any bugs or differences you see in the show detail views.
-- Listening history is saved instantly instead of at the halfway point of a track. (last.fm is still reported at the halfway point)
-- Fixed two of the top crashes in the app
-- Updated a lot of code for latest version of Swift and iOS
-- We're using a new (and not very well tested) version of our UI framework to work around another bug. Let us know if you see any glitches or problems with the UI!
+This build adds the start of State Restoration.  What does that mean for you?
+ - If Relisten is killed in the background it should launch back to the same view you were in before it was killed. This means the app should always resume to the show you were viewing. 
+ - Playback state isn't saved yet, but we're working on it!
+ - State isn't restored if you manually quit the app. This makes it a bit difficult for you to intentionally test this feature (we're able to test it explicitly as developers, so I'm pretty confident in it working 😀). Keep an eye out for Relisten launching to the main screen when you expected otherwise.
+

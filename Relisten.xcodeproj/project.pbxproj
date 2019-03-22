@@ -2199,7 +2199,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
 				CODE_SIGN_ENTITLEMENTS = Apps/PhishOD/PhishOD.entitlements;
-				CURRENT_PROJECT_VERSION = 4100;
+				CURRENT_PROJECT_VERSION = 4101;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2218,7 +2218,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
 				CODE_SIGN_ENTITLEMENTS = Apps/PhishOD/PhishOD.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 4100;
+				CURRENT_PROJECT_VERSION = 4101;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2384,7 +2384,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4100;
+				CURRENT_PROJECT_VERSION = 4101;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2404,7 +2404,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4100;
+				CURRENT_PROJECT_VERSION = 4101;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

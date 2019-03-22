@@ -55,7 +55,7 @@ public protocol ResourceObserver
     var observerIdentity: AnyHashable { get }
     }
 
-struct UniqueObserverIdentity: Hashable
+internal struct UniqueObserverIdentity: Hashable
     {
     private static var idSeq = 0
     private let id: Int
@@ -65,26 +65,18 @@ struct UniqueObserverIdentity: Hashable
         id = UniqueObserverIdentity.idSeq
         UniqueObserverIdentity.idSeq += 1
         }
-
-    static func == (lhs: UniqueObserverIdentity, rhs: UniqueObserverIdentity) -> Bool
-        {
-        return lhs.id == rhs.id
-        }
-
-    var hashValue: Int
-        { return id }
     }
 
-public extension ResourceObserver
+extension ResourceObserver
     {
     /// Does nothing.
-    func resourceRequestProgress(for resource: Resource, progress: Double) { }
+    public func resourceRequestProgress(for resource: Resource, progress: Double) { }
 
     /// Does nothing.
-    func stoppedObserving(resource: Resource) { }
+    public func stoppedObserving(resource: Resource) { }
 
     /// True iff self and other are (1) both objects and (2) are the _same_ object.
-    var observerIdentity: AnyHashable
+    public var observerIdentity: AnyHashable
         {
         if isObject(self)
             { return AnyHashable(ObjectIdentifier(self as AnyObject)) }
@@ -98,7 +90,7 @@ public extension ResourceObserver
 
   See `Resource.addObserver(owner:file:line:closure:)`.
 */
-public typealias ResourceObserverClosure = (Resource, ResourceEvent) -> ()
+public typealias ResourceObserverClosure = (Resource, ResourceEvent) -> Void
 
 /**
   The possible causes of a call to `ResourceObserver.resourceChanged(_:event:)`.
@@ -153,7 +145,7 @@ public enum ResourceEvent
         }
     }
 
-public extension Resource
+extension Resource
     {
     // MARK: - Observing Resources
 

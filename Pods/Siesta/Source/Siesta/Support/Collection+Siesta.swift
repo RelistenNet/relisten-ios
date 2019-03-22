@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal extension Collection
+extension Collection
     {
     // Just for readability
     func any(match predicate: (Iterator.Element) -> Bool) -> Bool
@@ -18,33 +18,16 @@ internal extension Collection
         { return !contains(where: { !predicate($0) }) }
     }
 
-internal extension Array
-    {
-    // Wat? There’s really no in-place counterpart for filter()?
-    mutating func remove(matching predicate: (Iterator.Element) -> Bool)
-        {
-        var dst = startIndex
-        for src in indices
-            {
-            let elem = self[src]
-            if !predicate(elem)
-                {
-                self[dst] = elem
-                dst = dst.advanced(by: 1)
-                }
-            }
-        removeSubrange(dst ..< endIndex)
-        }
-    }
-
-internal extension Dictionary
+extension Dictionary
     {
     static func fromArray<K, V>(_ arrayOfTuples: [(K, V)]) -> [K:V]
         {
+        // swiftlint:disable syntactic_sugar
         var dict = Dictionary<K, V>(minimumCapacity: arrayOfTuples.count)
         for (k, v) in arrayOfTuples
             { dict[k] = v }
         return dict
+        // swiftlint:enable syntactic_sugar
         }
 
     func mapDict<MappedKey, MappedValue>(transform: (Key, Value) -> (MappedKey, MappedValue))
@@ -94,7 +77,7 @@ internal extension Dictionary
         }
     }
 
-internal extension Set
+extension Set
     {
     mutating func filterInPlace(predicate: (Iterator.Element) -> Bool)
         {

@@ -185,7 +185,15 @@ public class RelistenApp {
         UISegmentedControl.appearance().tintColor = AppColors.primary
         UITabBar.appearance().tintColor = AppColors.primary
         
+        let sutf = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+        sutf.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        sutf.tintColor = UIColor.white.withAlphaComponent(0.8)
         
+        let sbbi = UISegmentedControl.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+        
+        sbbi.tintColor = AppColors.textOnPrimary
+        sbbi.backgroundColor = AppColors.primary
+
         if !delegate.isDummyDelegate,
            let nav = delegate.rootNavigationController {
             nav.navigationBar.barTintColor = AppColors.primary

@@ -10,15 +10,17 @@ import AXRatingView
 import AsyncDisplayKit
 import Observable
 
+
+
 public class ShowCellNode : ASCellNode {
-    public let show: Show
+    public let show: ShowCellDataSource
     public let artist: SlimArtist?
     public let rank: Int?
     public let useCellLayout: Bool
     
     var disposal = Disposal()
     
-    public init(show: Show, withRank: Int? = nil, useCellLayout: Bool = false, showingArtist: SlimArtist? = nil, showUpdateDate : Bool = false, cellTransparency : CGFloat = 1.0, showingAlbumArt: Bool = true) {
+    public init(show: ShowCellDataSource, withRank: Int? = nil, useCellLayout: Bool = false, showingArtist: SlimArtist? = nil, showUpdateDate : Bool = false, cellTransparency : CGFloat = 1.0, showingAlbumArt: Bool = true) {
         self.show = show
         artist = showingArtist
         rank = withRank
@@ -34,7 +36,7 @@ public class ShowCellNode : ASCellNode {
         showNode = ASTextNode(show.display_date, textStyle: .headline)
         
         var venueText = " \n "
-        if let v = show.venue {
+        if let v = show.venueDataSource {
             if v.location.count > 0 && useCellLayout {
                 venueText = v.location
             }

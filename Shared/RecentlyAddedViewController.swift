@@ -41,7 +41,7 @@ class RecentlyAddedViewController: ShowListViewController<[Show]>, UIViewControl
     }
     
     override func extractShowsAndSource(forData: [Show]) -> [ShowWithSingleSource] {
-        return forData.map({ ShowWithSingleSource(show: $0, source: nil) })
+        return forData.map({ ShowWithSingleSource(show: $0, source: nil, artist: artist) })
     }
     
     override func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {

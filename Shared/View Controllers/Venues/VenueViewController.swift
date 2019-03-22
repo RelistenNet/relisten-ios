@@ -50,7 +50,7 @@ class VenueViewController: ShowListViewController<VenueWithShows>, UIViewControl
     }
     
     override func extractShowsAndSource(forData:VenueWithShows) -> [ShowWithSingleSource] {
-        return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil) })
+        return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil, artist: artist) })
     }
     
     // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.

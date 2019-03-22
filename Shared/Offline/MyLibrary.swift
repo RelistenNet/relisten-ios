@@ -266,7 +266,7 @@ extension MyLibrary {
         return offline.tracks.filter("artist_uuid == %@ AND state >= %d", artist.uuid.uuidString, OfflineTrackState.downloaded.rawValue).count > 0
     }
     
-    public func isShowAtLeastPartiallyAvailableOffline(_ show: Show) -> Bool {
+    public func isShowAtLeastPartiallyAvailableOffline(_ show: ShowCellDataSource) -> Bool {
         return offline.tracks.filter("show_uuid == %@ AND state >= %d", show.uuid.uuidString, OfflineTrackState.downloaded.rawValue).count > 0
     }
     

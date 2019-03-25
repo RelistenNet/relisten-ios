@@ -194,11 +194,15 @@ public class RelistenApp {
         sbbi.tintColor = AppColors.textOnPrimary
         sbbi.backgroundColor = AppColors.primary
 
-        if !delegate.isDummyDelegate,
-           let nav = delegate.rootNavigationController {
-            nav.navigationBar.barTintColor = AppColors.primary
-            nav.navigationBar.backgroundColor = AppColors.primary
-            nav.navigationBar.tintColor = AppColors.primary
+        if !delegate.isDummyDelegate, let w = delegate.window, let t = w.rootViewController as? UITabBarController {
+            t.viewControllers?.forEach({ tab in
+                if let nav = tab as? UINavigationController {
+                    nav.navigationBar.barTintColor = AppColors.primary
+                    nav.navigationBar.backgroundColor = AppColors.primary
+                    nav.navigationBar.tintColor = AppColors.primary
+                }
+            })
+            t.tabBar.tintColor = AppColors.primary
         }
         
         playbackController?.viewController.applyColors(AppColors.playerColors)

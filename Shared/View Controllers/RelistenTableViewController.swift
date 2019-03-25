@@ -152,11 +152,20 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
         statusOverlay.positionToCoverParent()
     }
     
+    private var lastLoadTime: Date? = nil
+    
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if refreshOnAppear {
-            load()
+        // only do this after 60 minutes
+        if let l = lastLoadTime, refreshOnAppear, (Date().timeIntervalSince1970 - l.timeIntervalSince1970) > 60 * 60 {
+            // don't hit the cache and then the network--go straight to the network
+            LogDebug("---> refreshingOnAppear")
+            resource?.load()
+        }
+        else if lastLoadTime == nil {
+            LogDebug("---> performing initial load")
+            resource?.load()
         }
     }
     
@@ -174,7 +183,7 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
     }
     
     open func dataChanged(_ data: TData) {
-        
+        render()
     }
     
     open override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
@@ -195,20 +204,19 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
             LogDebug("---> data changed")
             
             if let d = latestData {
-                LogDebug("---> not calling dataChanged because latestData is nil")
+                lastLoadTime = Date()
                 dataChanged(d)
             }
-
-            render()
+            else {
+                LogDebug("---> not calling dataChanged because latestData is nil")
+            }
         }
     }
     
     // MARK: Layout & Rendering
     
     open func render() {
-        DispatchQueue.main.async {
-            LogDebug("[render] calling tableNode.reloadData()")
-            self.tableNode.reloadData()
-        }
+        LogDebug("[render] calling tableNode.reloadData()")
+        self.tableNode.reloadData()
     }
 }

@@ -45,6 +45,10 @@ public class YearViewController: ShowListViewController<YearWithShows>, UIViewCo
         }
     }
     
+    public override func has(oldData old: YearWithShows, changed new: YearWithShows) -> Bool {
+        return old.shows.count != new.shows.count || old.year != new.year
+    }
+    
     public override func extractShowsAndSource(forData: YearWithShows) -> [ShowWithSingleSource] {
         return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil, artist: artist) })
     }

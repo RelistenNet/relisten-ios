@@ -16,7 +16,7 @@ class ArtistsSearchResultsViewController: RelistenTableViewController<Any> {
     public var filteredArtists: [ArtistWithCounts] = [] {
         didSet {
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }

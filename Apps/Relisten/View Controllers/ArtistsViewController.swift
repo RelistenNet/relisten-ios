@@ -176,10 +176,10 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     }
     
     override func dataChanged(_ data: [ArtistWithCounts]) {
-        DispatchQueue.main.async {
-            self.allArtists = data
-            self.featuredArtists = data.filter({ $0.featured > 0 })
-        }
+        self.allArtists = data
+        self.featuredArtists = data.filter({ $0.featured > 0 })
+        
+        super.dataChanged(data)
     }
     
     override var resource: Resource? { get { return api.artists() } }
@@ -271,23 +271,19 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
                 return
             }
             
-            DispatchQueue.main.async {
-                if resource == self.resourceRecentlyPerformed {
-                    self.recentlyPerformedShows = resource.typedContent(ifNone: [])
-                    self.recentlyPerformedNode.shows = self.recentlyPerformedShows.map { (show: $0, artist: $0.artist, nil) }
-                    self.tableNode.reloadSections([ Sections.recentlyPerformed.rawValue ], with: .automatic)
-                }
-                else if resource == self.resourceRecentlyUpdated {
-                    self.allRecentlyUpdatedShows = resource.typedContent(ifNone: [])
-                    self.allRecentlyUpdatedNode.shows = self.allRecentlyUpdatedShows.map { (show: $0, artist: $0.artist, nil) }
-                    self.tableNode.reloadSections([ Sections.allRecentlyUpdated.rawValue ], with: .automatic)
-                }
+            if resource == self.resourceRecentlyPerformed {
+                self.recentlyPerformedShows = resource.typedContent(ifNone: [])
+                self.recentlyPerformedNode.shows = self.recentlyPerformedShows.map { (show: $0, artist: $0.artist, nil) }
+                self.render()
+            }
+            else if resource == self.resourceRecentlyUpdated {
+                self.allRecentlyUpdatedShows = resource.typedContent(ifNone: [])
+                self.allRecentlyUpdatedNode.shows = self.allRecentlyUpdatedShows.map { (show: $0, artist: $0.artist, nil) }
+                self.render()
             }
         }
         else {
-            DispatchQueue.main.async {
-                super.resourceChanged(resource, event: event)
-            }
+            super.resourceChanged(resource, event: event)
         }
     }
     

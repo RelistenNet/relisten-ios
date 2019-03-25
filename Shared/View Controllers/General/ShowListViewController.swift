@@ -196,7 +196,7 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
             ds.showListDataChanged(data)
             
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }
@@ -297,7 +297,7 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
             ds.showListFilterTextChanged(searchTextLC, inScope: scope)
             
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }
@@ -533,7 +533,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
             self.allShows = extractedShows
             self.groupedShows = grouped
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }
@@ -545,7 +545,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
             self.allShows = extractedShows
             self.groupedShows = grouped
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }
@@ -690,7 +690,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
         showMappingQueue.async {
             self.filteredShows = self.filteredItemsForSearchText(searchTextLC, scope: scope)
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }

@@ -45,6 +45,7 @@ public class ReviewsViewController : RelistenTableViewController<[SourceReview]>
     
     public override func dataChanged(_ data: [SourceReview]) {
         reviews = data
+        super.dataChanged(data)
     }
     
     override public func numberOfSections(in tableNode: ASTableNode) -> Int {

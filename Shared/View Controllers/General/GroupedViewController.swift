@@ -89,7 +89,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
             self.allItems = data
             self.groupedItems = grouped
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }
@@ -232,7 +232,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
         tableUpdateQueue.async {
             self.filteredItems = self.filteredItemsForSearchText(searchTextLC, scope: scope)
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }

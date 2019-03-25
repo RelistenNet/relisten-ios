@@ -49,6 +49,7 @@ public class YearsViewController: RelistenTableViewController<[Year]>, UIViewCon
     
     public override func dataChanged(_ data: [Year]) {
         years = sortedYears(from: data, for: artist)
+        super.dataChanged(data)
     }
     
     public override func has(oldData: [Year], changed: [Year]) -> Bool {

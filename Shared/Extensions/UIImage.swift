@@ -19,4 +19,20 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return img!
     }
+    
+    func tinted(color: UIColor) -> UIImage? {
+        let image = self.withRenderingMode(.alwaysTemplate)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = color
+        
+        UIGraphicsBeginImageContext(image.size)
+        if let context = UIGraphicsGetCurrentContext() {
+            imageView.layer.render(in: context)
+            let tintedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return tintedImage
+        } else {
+            return self
+        }
+    }
 }

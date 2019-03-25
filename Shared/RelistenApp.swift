@@ -152,7 +152,7 @@ public class RelistenApp {
             DispatchQueue.main.async {
                 self?.setupAppearance()
             }
-            }.add(to: &disposal)
+        }.add(to: &disposal)
         
         playbackController.viewDidLoad()
     }

@@ -25,7 +25,7 @@ class MyLibraryTabViewController: NewShowListRealmViewController<FavoritedSource
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
-    public required init(query: Results<FavoritedSource>, providedArtist artist: ArtistWithCounts?, enableSearch: Bool) {
+    public required init(query: Results<FavoritedSource>, providedArtist artist: ArtistWithCounts?, enableSearch: Bool, tourSections: Bool?, artistSections: Bool?) {
         fatalError("init(query:providedArtist:enableSearch:) has not been implemented")
     }
 
@@ -35,6 +35,14 @@ class MyLibraryTabViewController: NewShowListRealmViewController<FavoritedSource
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
+    }
+    
+    override func titleTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
+        return "No shows favorited yet"
+    }
+    
+    override func descriptionTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
+        return "Tap the heart on any source to start building your library."
     }
 
     // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.

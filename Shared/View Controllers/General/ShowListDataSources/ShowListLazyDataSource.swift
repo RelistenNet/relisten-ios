@@ -41,7 +41,7 @@ public class ShowListLazyDataSourceExtractor : ShowListArrayDataSourceShowExtrac
 public class ShowListLazyDataSource : ShowListArrayDataSource<[ShowSourceArtistUUIDs], ShowSourceArtistUUIDs, ShowListLazyDataSourceExtractor> {
     private let ex: ShowListLazyDataSourceExtractor
     
-    public init(providedArtist: ArtistWithCounts? = nil) {
+    public init(providedArtist: ArtistWithCounts? = nil, tourSections: Bool? = nil, artistSections: Bool? = nil) {
         ex = ShowListLazyDataSourceExtractor(providedArtist: providedArtist)
         
         var sort: ShowSorting = .ascending
@@ -49,6 +49,6 @@ public class ShowListLazyDataSource : ShowListArrayDataSource<[ShowSourceArtistU
             sort = .descending
         }
         
-        super.init(extractor: ex, sort: sort, tourSections: providedArtist != nil, artistSections: providedArtist == nil)
+        super.init(extractor: ex, sort: sort, tourSections: tourSections ?? (providedArtist != nil), artistSections: artistSections ?? (providedArtist == nil))
     }
 }

@@ -21,6 +21,7 @@ PODS:
   - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.2)
   - DWURecyclingAlert (1.0.2)
+  - DZNEmptyDataSet (1.8.1)
   - EDColor (1.0.1)
   - Fabric (1.9.0)
   - FastImageCache (1.5.1)
@@ -91,6 +92,7 @@ DEPENDENCIES:
   - CWStatusBarNotification
   - DownloadButton (from `https://github.com/farktronix/DownloadButton`)
   - DWURecyclingAlert
+  - DZNEmptyDataSet
   - EDColor
   - Fabric
   - FastImageCache (from `https://github.com/mallorypaine/FastImageCache.git`)
@@ -130,6 +132,7 @@ SPEC REPOS:
     - Crashlytics
     - CWStatusBarNotification
     - DWURecyclingAlert
+    - DZNEmptyDataSet
     - EDColor
     - Fabric
     - Interpolate
@@ -235,6 +238,7 @@ SPEC CHECKSUMS:
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 0a9848f9c13f34a488939b7244e8043feb94be3c
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
@@ -266,6 +270,6 @@ SPEC CHECKSUMS:
   Texture: 83e34f03666be58a4af0bc708982b594154970d9
   Wormholy: 0222592d5c7a019527911701ba7fd5fe64c798da
 
-PODFILE CHECKSUM: 20dc9ac05d06db1c803845388cdfade1179de893
+PODFILE CHECKSUM: c1acf90fa836f7dc2be98044ec4074c94d85be53
 
 COCOAPODS: 1.7.0.beta.2

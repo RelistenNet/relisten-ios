@@ -10,6 +10,7 @@ import Foundation
 import Siesta
 import AsyncDisplayKit
 import RealmSwift
+import DZNEmptyDataSet
 
 public struct ShowWithSingleSource {
     public let show : Show
@@ -51,8 +52,8 @@ public protocol ShowListDataSource: class {
 public class NewShowListRealmViewController<T: RealmCollectionValue> : NewShowListViewController<[ShowSourceArtistUUIDs], ShowListLazyDataSource> where T : HasSourceAndShow {
     private let strongDataSource: ShowListLazyDataSource
     
-    public required init(query: Results<T>, providedArtist artist: ArtistWithCounts? = nil, enableSearch: Bool = true) {
-        strongDataSource = ShowListLazyDataSource(providedArtist: artist)
+    public required init(query: Results<T>, providedArtist artist: ArtistWithCounts? = nil, enableSearch: Bool = true, tourSections: Bool? = nil, artistSections: Bool? = nil) {
+        strongDataSource = ShowListLazyDataSource(providedArtist: artist, tourSections: tourSections, artistSections: artistSections)
         super.init(withDataSource: strongDataSource, enableSearch: enableSearch)
         
         query.observe { [weak self] _ in
@@ -99,7 +100,7 @@ public class NewShowListArrayViewController<T> : NewShowListViewController<[T], 
     }
 }
 
-public class NewShowListViewController<T, DataSource: ShowListDataSource> : RelistenTableViewController<T>, UISearchResultsUpdating, UISearchBarDelegate where DataSource.DataType == T {
+public class NewShowListViewController<T, DataSource: ShowListDataSource> : RelistenTableViewController<T>, UISearchResultsUpdating, UISearchBarDelegate, DZNEmptyDataSetSource where DataSource.DataType == T {
     internal let showMappingQueue = DispatchQueue(label: "live.relisten.ShowListViewController.mappingQueue")
     
     let searchController: UISearchController = UISearchController(searchResultsController: nil)
@@ -148,6 +149,13 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableNode.view.emptyDataSetSource = self
+        tableNode.view.tableFooterView = UIView()
+    }
+    
     public override func viewWillAppear(_ animated: Bool) {
         if enableSearch {
             navigationItem.hidesSearchBarWhenScrolling = false
@@ -172,8 +180,8 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
     // MARK: Subclass Overrides
     public override var resource: Resource? { get { return nil } }
     
-    public func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {
-        return { ShowCellNode(show: show) }
+    public func layout(show: ShowWithSingleSource, atIndex: IndexPath) -> ASCellNodeBlock {
+        return { ShowCellNode(show: show.show) }
     }
     
     var scopeButtonTitles : [String]? { get { return ["All", "SBD"] } }
@@ -252,7 +260,7 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
         let filtering = isFiltering()
         showMappingQueue.sync {
             if let showWithSource = ds.showWithSingleSource(at: indexPath, whileFiltering: filtering) {
-                retval = self.layout(show: showWithSource.show, atIndex: indexPath)
+                retval = self.layout(show: showWithSource, atIndex: indexPath)
             }
         }
         
@@ -329,6 +337,56 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
     //  otherwise the scope bars show up while pushing/popping this view controller.
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchController.searchBar.showsScopeBar = true
+    }
+    
+    // MARK: DZNEmptyDataSetDelegate
+
+    // MARK: DZNEmptyDataSetSource
+    public func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
+        return -50.0
+    }
+    
+    public func spaceHeight(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
+        return 22.0
+    }
+    
+    public func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "music")?.tinted(color: .lightGray)
+    }
+    
+    public func titleTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
+        return "No Shows"
+    }
+    
+    public func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString {
+        let text = titleTextForEmptyDataSet(scrollView)
+        
+        let attributes = [
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline),
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+        ]
+        
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    public func descriptionTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
+        return ""
+    }
+    
+    public func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString {
+        let text = descriptionTextForEmptyDataSet(scrollView)
+        
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .byWordWrapping
+        paragraph.alignment = .center
+        
+        let attributes = [
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray,
+            NSAttributedString.Key.paragraphStyle: paragraph
+        ]
+        
+        return NSAttributedString(string: text, attributes: attributes)
     }
     
     //MARK: State Restoration

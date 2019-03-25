@@ -336,11 +336,20 @@ public class ShowCellNode : ASCellNode {
         stack.style.flexShrink = 1.0
         stack.style.flexGrow = 1.0
         
+        let s = ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 4,
+            justifyContent: .start,
+            alignItems: .start,
+            children: ArrayNoNils(artistNode, stack)
+        )
+        s.style.alignSelf = .center
+        
         //        stack.style.width = ASDimensionMake(.fraction, 1.0)
         
         let inset = ASInsetLayoutSpec(
             insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 8),
-            child: stack
+            child: s
         )
         inset.style.alignSelf = .stretch
         inset.style.flexShrink = 1.0

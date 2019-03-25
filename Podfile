@@ -38,6 +38,7 @@ def apply_pods
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
   pod 'CouchbaseLite-Swift', '~> 2.1.1'
+  pod 'DZNEmptyDataSet'
   
   # Using a fork of Texture until this lands: https://github.com/TextureGroup/Texture/pull/1354
   pod 'Texture/Core', :git => 'https://github.com/farktronix/Texture.git'

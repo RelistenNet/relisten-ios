@@ -26,11 +26,13 @@ public class RelistenTabBarController : UITabBarController {
         
         let faves = MyLibraryTabViewController()
         let dl = DownloadedTabViewController()
+        let rec = RecentlyPlayedTabViewController()
         
         setViewControllers([
             firstTabViewController,
-            wrapInNavigation(faves, "My Library", .Favorites),
-            wrapInNavigation(dl, "Downloads", .Downloads)
+            wrapInNavigation(faves, "My Favorites", .Favorites),
+            wrapInNavigation(rec, "My Recents", .Recent),
+            wrapInNavigation(dl, "Downloaded", .Downloads),
         ], animated: false)
     }
     

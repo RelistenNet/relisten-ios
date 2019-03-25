@@ -24,6 +24,7 @@ public enum RelistenMenuItem: Int {
     
     case DiscoverTop
     case DiscoverRandom
+    case DiscoverTodayInHistory
     
     case RecentlyPlayed
     case RecentlyPerformed
@@ -35,7 +36,7 @@ public enum RelistenMenuItem: Int {
 }
 
 public class RelistenMenuView : UIView {
-    public let artist: Artist
+    public let artist: ArtistWithCounts
     public weak var viewController: UIViewController?
     
     private let size_MenuLineSpacing: CGFloat = 16.0 as CGFloat
@@ -47,7 +48,7 @@ public class RelistenMenuView : UIView {
     private let menuCategories: [RelistenMenuCategory]
     private let menu: [[RelistenMenuItem]]
     
-    public required init(artist: Artist, inViewController vc: UIViewController) {
+    public required init(artist: ArtistWithCounts, inViewController vc: UIViewController) {
         self.artist = artist
         self.viewController = vc
         
@@ -66,7 +67,8 @@ public class RelistenMenuView : UIView {
         }
         
         discover.append(.DiscoverRandom)
-        
+        discover.append(.DiscoverTodayInHistory)
+
         menuCategories = [.Everything, .Discover, .Recent, .MyShows]
         
         menu = [
@@ -189,6 +191,9 @@ public class RelistenMenuView : UIView {
         case .DiscoverRandom:
             let sourcesViewController = SourcesViewController(artist: artist)
             sourcesViewController.presentIfNecessary(navigationController: viewController?.navigationController)
+            
+        case .DiscoverTodayInHistory:
+            self.pushViewController(TodayInHistoryViewController(artist: artist))
 
         case .RecentlyPlayed:
             self.pushViewController(MyRecentlyPlayedViewController(artist: artist))
@@ -267,7 +272,8 @@ public class RelistenMenuView : UIView {
             
         case .DiscoverTop: return "top"
         case .DiscoverRandom: return "random"
-            
+        case .DiscoverTodayInHistory: return "today in history"
+
         case .RecentlyPerformed: return "performed"
         case .RecentlyUpdated: return "updated"
             

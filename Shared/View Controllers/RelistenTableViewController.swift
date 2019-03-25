@@ -166,6 +166,10 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
     public var previousData: TData? = nil
     
     open func has(oldData old: TData, changed new: TData) -> Bool {
+        if let oldArray = old as? [Any], let newArray = new as? [Any] {
+            return oldArray.count != newArray.count
+        }
+        
         return true
     }
     
@@ -189,7 +193,12 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
             || (previousData != nil && latestData != nil && self.has(oldData: previousData!, changed: latestData!)
             ) {
             LogDebug("---> data changed")
-            dataChanged(latestData!)
+            
+            if let d = latestData {
+                LogDebug("---> not calling dataChanged because latestData is nil")
+                dataChanged(d)
+            }
+
             render()
         }
     }

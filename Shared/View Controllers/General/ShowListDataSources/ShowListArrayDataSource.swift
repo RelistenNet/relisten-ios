@@ -17,6 +17,27 @@ public protocol ShowListArrayDataSourceShowExtractor: class {
     func extractCellShows(forData: ExtractionTarget) -> [(FullMatchingData, ShowCellDataSource)]
 }
 
+public class ShowListArrayDataSourceDefaultExtractor<T> : ShowListArrayDataSourceShowExtractor where T: Show {
+    public typealias ExtractionTarget = [T]
+    public typealias FullMatchingData = T
+    
+    public let providedArtist: ArtistWithCounts?
+    
+    public init(providedArtist: ArtistWithCounts? = nil) {
+        self.providedArtist = providedArtist
+    }
+    
+    public func extractShowAndSource(forData: ShowCellDataSource, withMatchingData: T) -> ShowWithSingleSource? {
+        let artist = providedArtist ?? forData.artistDataSource
+        
+        return ShowWithSingleSource(show: withMatchingData, source: nil, artist: artist)
+    }
+    
+    public func extractCellShows(forData: [T]) -> [(T, ShowCellDataSource)] {
+        return Array(zip(forData, forData as [ShowCellDataSource]))
+    }
+}
+
 public enum ShowSorting {
     case noSorting
     case ascending

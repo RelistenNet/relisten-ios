@@ -17,7 +17,6 @@ import SVProgressHUD
 class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, ASCollectionDelegate, UISearchResultsUpdating, UIViewControllerRestoration {
     enum Sections: Int, RawRepresentable {
         case favorited = 0
-        case recentlyPlayed
         case featured
         case recentlyPerformed
         case allRecentlyUpdated
@@ -25,7 +24,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         case count
     }
     
-    public var recentlyPlayedTracks: Results<RecentlyPlayedTrack>?
     public var favoriteArtists: [UUID] = []
     public var allRecentlyUpdatedShows: [ShowWithArtist] = []
     public var recentlyPerformedShows: [ShowWithArtist] = []
@@ -33,7 +31,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     public var allArtists: [ArtistWithCounts] = []
     public var featuredArtists: [ArtistWithCounts] = []
     
-    public let recentShowsNode: HorizontalShowCollectionCellNode
     public let recentlyPerformedNode: HorizontalShowCollectionCellNode
     public let allRecentlyUpdatedNode: HorizontalShowCollectionCellNode
     
@@ -46,7 +43,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     private let tableUpdateQueue = DispatchQueue(label: "net.relisten.groupedViewController.queue")
     
     public init() {
-        recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         recentlyPerformedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         allRecentlyUpdatedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         
@@ -56,7 +52,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         
         super.init(useCache: true, refreshOnAppear: true)
         
-        recentShowsNode.collectionNode.delegate = self
         recentlyPerformedNode.collectionNode.delegate = self
         allRecentlyUpdatedNode.collectionNode.delegate = self
         
@@ -106,12 +101,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
             
             s.reloadFavoriteArtists(artists: artists, changes: changes)
         }.dispose(to: &disposal)
-        
-        library.recent.shows.observeWithValue { [weak self] recentlyPlayed, changes in
-            guard let s = self else { return }
-            
-            s.reloadRecentShows(tracks: recentlyPlayed)
-        }.dispose(to: &disposal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -130,8 +119,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         let row = indexPath.row
         
         switch Sections(rawValue: indexPath.section)! {
-        case .recentlyPlayed:
-            return "RecentlyPlayedShows"
         case .recentlyPerformed:
             return "RecentlyPerformedShows"
         case .allRecentlyUpdated:
@@ -153,8 +140,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     
     private func indexPathForElement(withModelIdentifier identifier: String) -> IndexPath? {
         switch identifier {
-        case "RecentlyPlayedShows":
-            return IndexPath(row: 0, section: Sections.recentlyPlayed.rawValue)
         case "RecentlyPerformedShows":
             return IndexPath(row: 0, section: Sections.recentlyPerformed.rawValue)
         case "RecentlyUpdatedShows":
@@ -198,17 +183,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     }
     
     override var resource: Resource? { get { return api.artists() } }
-    
-    private func reloadRecentShows(tracks: Results<RecentlyPlayedTrack>) {
-        DispatchQueue.main.async {
-            self.recentlyPlayedTracks = tracks
-            
-            if let recentShows = self.recentlyPlayedTracks?.asTracks().map({ ($0.showInfo.show, $0.showInfo.artist, $0.showInfo.source) }) as [(show: Show, artist: Artist?, source: Source?)]? {
-                self.recentShowsNode.shows = recentShows
-                self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
-            }
-        }
-    }
     
     private func reloadFavoriteArtists(artists: Results<FavoritedArtist>, changes: RealmCollectionChange<Results<FavoritedArtist>>) {
         DispatchQueue.main.async { [weak self] in
@@ -325,12 +299,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     
     override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
-        case .recentlyPlayed:
-            if let recentlyPlayedTracks = recentlyPlayedTracks {
-                return recentlyPlayedTracks.count > 0 ? 1 : 0
-            } else {
-                return 0
-            }
         case .favorited:
             return allArtists.count == 0 ? 0 : favoriteArtists.count
         case .featured:
@@ -350,9 +318,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         let row = indexPath.row
         
         switch Sections(rawValue: indexPath.section)! {
-        case .recentlyPlayed:
-            let n = recentShowsNode
-            return { n }
         case .recentlyPerformed:
             let n = recentlyPerformedNode
             return { n }
@@ -414,12 +379,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     
     override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Sections(rawValue: section)! {
-        case .recentlyPlayed:
-            if let recentlyPlayedTracks = recentlyPlayedTracks {
-                return recentlyPlayedTracks.count > 0 ? "Recently Played" : nil
-            } else {
-                return nil
-            }
         case .favorited:
             return favoriteArtists.count > 0 ? "Favorite" : nil
         case .featured:
@@ -444,8 +403,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         var horizontalCollectionNode : HorizontalShowCollectionCellNode? = nil
         
         switch collectionNode {
-        case recentShowsNode.collectionNode:
-            horizontalCollectionNode = recentShowsNode
         case recentlyPerformedNode.collectionNode:
             horizontalCollectionNode = recentlyPerformedNode
         case allRecentlyUpdatedNode.collectionNode:

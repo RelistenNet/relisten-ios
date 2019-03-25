@@ -76,6 +76,29 @@ public class NewShowListRealmViewController<T: RealmCollectionValue> : NewShowLi
     }
 }
 
+public class NewShowListArrayViewController<T> : NewShowListViewController<[T], ShowListArrayDataSource<[T], T, ShowListArrayDataSourceDefaultExtractor<T>>> where T: Show {
+    private let strongDataSource: ShowListArrayDataSource<[T], T, ShowListArrayDataSourceDefaultExtractor<T>>
+    private let strongExtractor: ShowListArrayDataSourceDefaultExtractor<T>
+    
+    public required init(providedArtist artist: ArtistWithCounts? = nil, sort: ShowSorting = .descending, tourSections: Bool = true, artistSections: Bool = false, enableSearch: Bool = true) {
+        strongExtractor = ShowListArrayDataSourceDefaultExtractor(providedArtist: artist)
+        strongDataSource = ShowListArrayDataSource(extractor: strongExtractor, sort: sort)
+        super.init(withDataSource: strongDataSource, enableSearch: enableSearch)
+    }
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style) {
+        fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public required init(withDataSource dataSource: ShowListArrayDataSource<[T], T, ShowListArrayDataSourceDefaultExtractor<T>>, enableSearch: Bool) {
+        fatalError("init(withDataSource:enableSearch:) has not been implemented")
+    }
+}
+
 public class NewShowListViewController<T, DataSource: ShowListDataSource> : RelistenTableViewController<T>, UISearchResultsUpdating, UISearchBarDelegate where DataSource.DataType == T {
     internal let showMappingQueue = DispatchQueue(label: "live.relisten.ShowListViewController.mappingQueue")
     
@@ -154,7 +177,7 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
     }
     
     var scopeButtonTitles : [String]? { get { return ["All", "SBD"] } }
-    var searchPlaceholder : String { get { return "Search" } }
+    var searchPlaceholder : String { get { return "Filter" } }
     
     // MARK: Updating Data
     

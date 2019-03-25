@@ -134,6 +134,8 @@
 		7C084C462245410B006418AB /* RelistenCellDataSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C452245410B006418AB /* RelistenCellDataSources.swift */; };
 		7C084C4822458DF4006418AB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C4722458DF4006418AB /* UIImage.swift */; };
 		7C084C4A224592E1006418AB /* DownloadedTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C49224592E1006418AB /* DownloadedTabViewController.swift */; };
+		7C084C4C22492551006418AB /* RecentlyPlayedTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C4B22492551006418AB /* RecentlyPlayedTabViewController.swift */; };
+		7C084C4E22493040006418AB /* TodayInHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C4D22493040006418AB /* TodayInHistoryViewController.swift */; };
 		7C11B271214719C100D9D78D /* LinkUpstreamNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */; };
 		7C31550E20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
 		7C31550F20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
@@ -304,6 +306,8 @@
 		7C084C452245410B006418AB /* RelistenCellDataSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenCellDataSources.swift; sourceTree = "<group>"; };
 		7C084C4722458DF4006418AB /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIImage.swift; path = Extensions/UIImage.swift; sourceTree = "<group>"; };
 		7C084C49224592E1006418AB /* DownloadedTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadedTabViewController.swift; path = "View Controllers/Tabs/DownloadedTabViewController.swift"; sourceTree = "<group>"; };
+		7C084C4B22492551006418AB /* RecentlyPlayedTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyPlayedTabViewController.swift; path = "View Controllers/Tabs/RecentlyPlayedTabViewController.swift"; sourceTree = "<group>"; };
+		7C084C4D22493040006418AB /* TodayInHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TodayInHistoryViewController.swift; path = "View Controllers/General/TodayInHistoryViewController.swift"; sourceTree = "<group>"; };
 		7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkUpstreamNode.swift; sourceTree = "<group>"; };
 		7C13704320B5FE6200710E90 /* UInt64+HumanizeBytes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UInt64+HumanizeBytes.swift"; path = "Extensions/UInt64+HumanizeBytes.swift"; sourceTree = "<group>"; };
 		7C13704620B62C2D00710E90 /* MyLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibrary.swift; sourceTree = "<group>"; };
@@ -542,6 +546,7 @@
 			children = (
 				7C084C3A22419EB3006418AB /* MyLibraryTabViewController.swift */,
 				7C084C49224592E1006418AB /* DownloadedTabViewController.swift */,
+				7C084C4B22492551006418AB /* RecentlyPlayedTabViewController.swift */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -590,6 +595,7 @@
 				432B00E8217A4DA600C36073 /* GroupedViewController.swift */,
 				430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */,
 				43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */,
+				7C084C4D22493040006418AB /* TodayInHistoryViewController.swift */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -1964,6 +1970,7 @@
 				7C084C4A224592E1006418AB /* DownloadedTabViewController.swift in Sources */,
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
 				7C084C3B22419EB3006418AB /* MyLibraryTabViewController.swift in Sources */,
+				7C084C4E22493040006418AB /* TodayInHistoryViewController.swift in Sources */,
 				43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */,
 				430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */,
 				7C084C36224199B4006418AB /* RelistenTabBarController.swift in Sources */,
@@ -2009,6 +2016,7 @@
 				43B53452210922CE00DE9B1F /* ArtistViewController.swift in Sources */,
 				435911B1216DC9D800ACA85F /* VenueMapCellNode.swift in Sources */,
 				433A440B2133B4B10059D251 /* BugReportingSettingsNode.swift in Sources */,
+				7C084C4C22492551006418AB /* RecentlyPlayedTabViewController.swift in Sources */,
 				43B53432210922CE00DE9B1F /* ReviewCellNode.swift in Sources */,
 				43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */,
 				7C084C402242B705006418AB /* ShowListLazyDataSource.swift in Sources */,

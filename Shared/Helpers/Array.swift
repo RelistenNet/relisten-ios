@@ -9,7 +9,7 @@
 import Foundation
 
 public extension Array {
-    @discardableResult public mutating func insertAtBeginning(_ element: Array.Element, ensuringMaxCapacity: Int) -> Array.Element? {
+    @discardableResult mutating func insertAtBeginning(_ element: Array.Element, ensuringMaxCapacity: Int) -> Array.Element? {
         if count >= ensuringMaxCapacity {
             return removeLast()
         }
@@ -19,7 +19,7 @@ public extension Array {
         return nil
     }
     
-    public func objectAtIndexIfInBounds(_ index: Int) -> Array.Element? {
+    func objectAtIndexIfInBounds(_ index: Int) -> Array.Element? {
         if index >= 0, index < self.count {
             return self[index]
         }

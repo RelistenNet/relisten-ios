@@ -46,15 +46,11 @@ public class RelistenObject {
 
 public protocol RelistenUUIDObject : Hashable {
     var uuid: UUID { get }
-    
-    var hashValue: Int { get }
 }
 
 public extension RelistenUUIDObject {
-    var hashValue: Int {
-        get {
-            return uuid.hashValue
-        }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
     }
 }
 

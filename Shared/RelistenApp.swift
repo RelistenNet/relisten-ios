@@ -210,7 +210,7 @@ public class RelistenApp {
 }
 
 public extension RelistenAppDelegate {
-    public var isDummyDelegate : Bool { get { return false } }
+    var isDummyDelegate : Bool { get { return false } }
 }
 
 public class RelistenDummyAppDelegate : RelistenAppDelegate {

@@ -101,8 +101,9 @@ public class Track : Codable, Hashable {
         try container.encode(toData(), forKey: .originalJson)
     }
     
-    public var hashValue: Int {
-        return mp3_url.hashValue ^ showInfo.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(mp3_url)
+        hasher.combine(showInfo)
     }
     
     public static func == (lhs: Track, rhs: Track) -> Bool {

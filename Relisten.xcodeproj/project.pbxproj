@@ -1090,16 +1090,19 @@
 					43524AD72114DFC700DC70CD = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = HT7ELV3Q35;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					43B5340F2109226F00DE9B1F = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = HT7ELV3Q35;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					43CC465B214C104800925CA5 = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = HT7ELV3Q35;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 7C8EF10C1D5A49C200004B5C;
 					};
@@ -1124,6 +1127,7 @@
 					7C8EF10C1D5A49C200004B5C = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HT7ELV3Q35;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1149,6 +1153,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1294,7 +1299,6 @@
 				"${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework",
 				"${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
 				"${BUILT_PRODUCTS_DIR}/CSwiftV/CSwiftV.framework",
 				"${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
@@ -1341,7 +1345,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXRatingView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CSwiftV.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CWStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
@@ -1448,7 +1451,6 @@
 				"${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework",
 				"${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
 				"${BUILT_PRODUCTS_DIR}/CSwiftV/CSwiftV.framework",
 				"${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
@@ -1494,7 +1496,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXRatingView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CSwiftV.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CWStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
@@ -1572,7 +1573,6 @@
 				"${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework",
 				"${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
 				"${BUILT_PRODUCTS_DIR}/CSwiftV/CSwiftV.framework",
 				"${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
@@ -1619,7 +1619,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXRatingView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CSwiftV.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CWStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
@@ -1698,7 +1697,6 @@
 				"${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework",
 				"${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
 				"${BUILT_PRODUCTS_DIR}/CSwiftV/CSwiftV.framework",
 				"${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
@@ -1744,7 +1742,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXRatingView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CSwiftV.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CWStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
@@ -1822,7 +1819,6 @@
 				"${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework",
 				"${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework",
 				"${BUILT_PRODUCTS_DIR}/CSwiftV/CSwiftV.framework",
 				"${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
@@ -1868,7 +1864,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AXRatingView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BASSGaplessAudioPlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BCColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CSwiftV.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CWStatusBarNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
@@ -2289,7 +2284,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
 				CODE_SIGN_ENTITLEMENTS = Apps/PhishOD/PhishOD.entitlements;
-				CURRENT_PROJECT_VERSION = 4100;
+				CURRENT_PROJECT_VERSION = 4101;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2308,7 +2303,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
 				CODE_SIGN_ENTITLEMENTS = Apps/PhishOD/PhishOD.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 4100;
+				CURRENT_PROJECT_VERSION = 4101;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2405,7 +2400,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2458,7 +2453,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2474,7 +2469,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4100;
+				CURRENT_PROJECT_VERSION = 4101;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2494,7 +2489,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4100;
+				CURRENT_PROJECT_VERSION = 4101;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

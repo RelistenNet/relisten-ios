@@ -318,12 +318,6 @@ static NSString * const kReuseIdentifier = @"_ASCollectionReuseIdentifier";
   
   [self _configureCollectionViewLayout:layout];
   
-  if (ASActivateExperimentalFeature(ASExperimentalNewDefaultCellLayoutMode)) {
-    _cellLayoutMode = ASCellLayoutModeSyncForSmallContent;
-  } else {
-    _cellLayoutMode = ASCellLayoutModeNone;
-  }
-  
   return self;
 }
 
@@ -826,9 +820,7 @@ static NSString * const kReuseIdentifier = @"_ASCollectionReuseIdentifier";
 - (nullable NSIndexPath *)indexPathForElementWithModelIdentifier:(NSString *)identifier inView:(UIView *)view {
     if (_asyncDataSourceFlags.modelIdentifierMethods) {
         GET_COLLECTIONNODE_OR_RETURN(collectionNode, nil);
-        NSIndexPath *result = [_asyncDataSource indexPathForElementWithModelIdentifier:identifier inNode:collectionNode];
-        result = [self convertIndexPathToCollectionNode:result];
-        return result;
+        return [_asyncDataSource indexPathForElementWithModelIdentifier:identifier inNode:collectionNode];
     } else {
         return nil;
     }
@@ -1714,7 +1706,8 @@ static NSString * const kReuseIdentifier = @"_ASCollectionReuseIdentifier";
 {
   if (_leadingScreensForBatching != leadingScreensForBatching) {
     _leadingScreensForBatching = leadingScreensForBatching;
-    ASPerformBlockOnMainThread(^{
+    // Push this to the next runloop to be sure the scroll view has the right content size
+    dispatch_async(dispatch_get_main_queue(), ^{
       [self _checkForBatchFetching];
     });
   }
@@ -1913,20 +1906,18 @@ static NSString * const kReuseIdentifier = @"_ASCollectionReuseIdentifier";
   if (ASCellLayoutModeIncludes(ASCellLayoutModeAlwaysAsync)) {
     return NO;
   }
-  if (ASCellLayoutModeIncludes(ASCellLayoutModeSyncForSmallContent)) {
-    // Reload data is expensive, don't block main while doing so.
-    if (changeSet.includesReloadData) {
-      return NO;
-    }
-    // If we have very few ASCellNodes (besides UIKit passthrough ones), match UIKit by blocking.
-    if (changeSet.countForAsyncLayout < 2) {
-      return YES;
-    }
-    CGSize contentSize = self.contentSize;
-    CGSize boundsSize = self.bounds.size;
-    if (contentSize.height <= boundsSize.height && contentSize.width <= boundsSize.width) {
-      return YES;
-    }
+  // Reload data is expensive, don't block main while doing so.
+  if (changeSet.includesReloadData) {
+    return NO;
+  }
+  // If we have very few ASCellNodes (besides UIKit passthrough ones), match UIKit by blocking.
+  if (changeSet.countForAsyncLayout < 2) {
+    return YES;
+  }
+  CGSize contentSize = self.contentSize;
+  CGSize boundsSize = self.bounds.size;
+  if (contentSize.height <= boundsSize.height && contentSize.width <= boundsSize.width) {
+    return YES;
   }
   return NO; // ASCellLayoutModeNone
 }
@@ -2045,7 +2036,13 @@ static NSString * const kReuseIdentifier = @"_ASCollectionReuseIdentifier";
     ASDisplayNodeFailAssert(@"Data controller should not ask for presented size for element that is not presented.");
     return YES;
   }
-  UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
+
+  UICollectionViewLayoutAttributes *attributes;
+  if (element.supplementaryElementKind == nil) {
+    attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
+  } else {
+    attributes = [self layoutAttributesForSupplementaryElementOfKind:element.supplementaryElementKind atIndexPath:indexPath];
+  }
   return CGSizeEqualToSizeWithIn(attributes.size, size, FLT_EPSILON);
 }
 
@@ -2515,9 +2512,7 @@ static NSString * const kReuseIdentifier = @"_ASCollectionReuseIdentifier";
 
 - (NSArray *)accessibilityElements
 {
-  if (!ASActivateExperimentalFeature(ASExperimentalSkipAccessibilityWait)) {
-    [self waitUntilAllUpdatesAreCommitted];
-  }
+  [self waitUntilAllUpdatesAreCommitted];
   return [super accessibilityElements];
 }
 

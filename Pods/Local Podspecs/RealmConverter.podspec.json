@@ -1,6 +1,6 @@
 {
   "name": "RealmConverter",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "license": {
     "type": "Apache-2.0",
     "file": "LICENSE"
@@ -12,13 +12,14 @@
   },
   "source": {
     "git": "https://github.com/realm/realm-cocoa-converter.git",
-    "tag": "0.5.1"
+    "tag": "0.5.2"
   },
   "requires_arc": true,
   "platforms": {
     "osx": "10.9",
     "ios": "10.0"
   },
+  "swift_versions": "5.0",
   "source_files": "RealmConverter/**/*.{swift,h,m,c}",
   "dependencies": {
     "Realm": [

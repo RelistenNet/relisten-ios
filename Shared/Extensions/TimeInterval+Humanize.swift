@@ -29,7 +29,7 @@ let TimeIntervalHumanizeShortFormatter = { () -> DateComponentsFormatter in
 let formatQueue : DispatchQueue = DispatchQueue(label: "live.relisten.ios.dateFormatQueue")
 
 public extension TimeInterval {
-    public func humanize() -> String {
+    func humanize() -> String {
         var returnValue = ""
         formatQueue.sync {
             if(self < 60) {

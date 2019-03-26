@@ -187,8 +187,6 @@ public class SourceDetailsViewController : RelistenBaseTableViewController, UIVi
         case .count:
             fatalError()
         }
-        
-        fatalError()
     }
     
     override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

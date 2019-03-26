@@ -111,8 +111,8 @@ install_dsym() {
 
 # Copies the bcsymbolmap files of a vendored framework
 install_bcsymbolmap() {
-    local bcsymbolmap_path="$1"
-    local destination="${BUILT_PRODUCTS_DIR}"
+    local bcsymbolmap_path = "$1"
+    local destination="${TARGET_BUILD_DIR}"
     echo "rsync --delete -av "${RSYNC_PROTECT_TMP_FILES[@]}" --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "${bcsymbolmap_path}" "${destination}""
     rsync --delete -av "${RSYNC_PROTECT_TMP_FILES[@]}" --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "${bcsymbolmap_path}" "${destination}"
 }
@@ -165,7 +165,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CSwiftV/CSwiftV.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Cache/Cache.framework"
@@ -210,7 +209,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AXRatingView/AXRatingView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ActionKit/ActionKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/BCColor/BCColor.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CSwiftV/CSwiftV.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CWStatusBarNotification/CWStatusBarNotification.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Cache/Cache.framework"

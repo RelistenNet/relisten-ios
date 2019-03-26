@@ -10,10 +10,10 @@ def apply_pods
   pod 'ActionKit'
   pod 'CWStatusBarNotification'
   pod 'Cache'
-  pod 'ChameleonFramework'
+  pod 'ChameleonFramework', :git => "https://github.com/farktronix/Chameleon.git" # https://github.com/viccalexander/Chameleon/pull/234
   pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger" # Needed because the authors refuse to add CocoaPods support https://github.com/emaloney/CleanroomLogger/issues/69
   pod 'Crashlytics'
-  pod 'CSwiftV', :git => "https://github.com/UberJason/CSwiftV.git" # Needed for RealmConverter until PR https://github.com/Daniel1of1/CSwiftV/pull/38 is accepted
+  pod 'CSwiftV', :git => 'https://github.com/farktronix/CSwiftV.git', :branch => 'Swift5' # https://github.com/Daniel1of1/CSwiftV/pull/40
   pod 'DownloadButton', :git => "https://github.com/farktronix/DownloadButton" # Temporary fork to fix a progress over/underflow bug
   pod 'EDColor'
   pod 'Fabric'
@@ -24,7 +24,7 @@ def apply_pods
   pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"
   pod 'MZDownloadManager', :git => 'https://github.com/farktronix/MZDownloadManager' # Waiting on https://github.com/mzeeshanid/MZDownloadManager/pull/81
   pod 'NAKPlaybackIndicatorView'
-  pod 'NapySlider'
+  pod 'NapySlider', :git => "https://github.com/farktronix/NapySlider.git" # https://github.com/seeppp/NapySlider/pull/16
   pod 'Observable', :git => "https://github.com/alecgorge/Observable.git" # Adds thread safety. This should be submitted upstream as a PR
   pod 'PathKit'
   pod 'PinpointKit'
@@ -38,7 +38,9 @@ def apply_pods
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
 
-  # Using a fork of Texture until this lands: https://github.com/TextureGroup/Texture/pull/1354
+  # Using a fork of Texture until these land: 
+  #  https://github.com/TextureGroup/Texture/pull/1354
+  #  https://github.com/TextureGroup/Texture/pull/1425
   pod 'Texture/Core', :git => 'https://github.com/farktronix/Texture.git'
   pod 'Texture/MapKit', :git => 'https://github.com/farktronix/Texture.git'
  
@@ -53,7 +55,8 @@ def apply_pods
 
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']
-  pod 'Wormholy', :configurations => ['Debug']
+  # https://github.com/pmusolino/Wormholy/pull/52
+  pod 'Wormholy', :configurations => ['Debug'], :git => 'https://github.com/iiiCeBlink/Wormholy.git', :branch => 'dev-load'
   pod 'DWURecyclingAlert', :configurations => ['Debug']
 
   # Currently unused pods (but they might be used in the future)

@@ -9,8 +9,10 @@
 import Foundation
 
 public class CompleteShowInformation : Hashable  {
-    public var hashValue: Int {
-        return artist.id.hashValue ^ show.display_date.hashValue ^ source.upstream_identifier.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(artist.id)
+        hasher.combine(show.display_date)
+        hasher.combine(source.upstream_identifier)
     }
     
     public static func == (lhs: CompleteShowInformation, rhs: CompleteShowInformation) -> Bool {

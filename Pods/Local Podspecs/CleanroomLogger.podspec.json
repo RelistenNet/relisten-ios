@@ -1,16 +1,17 @@
 {
   "name": "CleanroomLogger",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "summary": "Extensible Swift-based logging API that is simple, lightweight and performant",
   "homepage": "https://github.com/emaloney/CleanroomLogger",
   "authors": "emaloney",
   "source": {
     "git": "https://github.com/emaloney/CleanroomLogger.git",
-    "tag": "6.0.2"
+    "tag": "6.0.3"
   },
   "platforms": {
     "ios": "9.0"
   },
   "source_files": "Sources/*.swift",
-  "license": "MIT"
+  "license": "MIT",
+  "swift_versions": "5.0"
 }

@@ -1,8 +1,6 @@
 # NapySlider
 A vertical slider UIControl element written in swift
 
-[![Build Status](https://travis-ci.org/seeppp/NapySlider.svg?branch=master)](https://travis-ci.org/seeppp/NapySlider)
-
 ![demo](/exampleImages/napysliderdemo.gif)
 
 ## Howto

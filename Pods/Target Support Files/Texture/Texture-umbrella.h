@@ -11,6 +11,8 @@
 #endif
 
 #import "ASBlockTypes.h"
+#import "ASButtonNode+Private.h"
+#import "ASButtonNode+Yoga.h"
 #import "ASButtonNode.h"
 #import "ASCellNode.h"
 #import "ASCGImageBuffer.h"

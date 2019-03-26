@@ -3662,6 +3662,7 @@
 		3F25BCA65CCE48D180D177FF27115B3D /* RLMSyncCredentials.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RLMSyncCredentials.m; path = Realm/RLMSyncCredentials.m; sourceTree = "<group>"; };
 		3F2E2E0D15C2DEE40CE60478DB1F41E2 /* KissXML-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "KissXML-Info.plist"; sourceTree = "<group>"; };
 		3F4A7A942FCEC1E1624F54197FCD2425 /* DZNEmptyDataSet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DZNEmptyDataSet.framework; path = DZNEmptyDataSet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F4EA2DC7DBD536ADA96CB4B25FE6F9D /* CouchbaseLiteSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchbaseLiteSwift.framework; path = "frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework"; sourceTree = "<group>"; };
 		3F55B9FC04B71F640A6E4D45703117BE /* brg_types.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = brg_types.h; path = SSZipArchive/minizip/aes/brg_types.h; sourceTree = "<group>"; };
 		3FA0C9AA5154219517C0B1A0E35C3119 /* MarqueeLabel-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MarqueeLabel-prefix.pch"; sourceTree = "<group>"; };
 		3FFFDD2A6B7DC82FD0CC6BF3D48371D2 /* prng.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = prng.h; path = SSZipArchive/minizip/aes/prng.h; sourceTree = "<group>"; };
@@ -4255,7 +4256,6 @@
 		AED3D4F6F532DA597DA0BC6348D16B10 /* RLMObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObject.h; path = include/RLMObject.h; sourceTree = "<group>"; };
 		AEED3CD6ED70E6A0CDE9921242F0DE7D /* _ASAsyncTransactionContainer.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = _ASAsyncTransactionContainer.mm; path = Source/Details/Transactions/_ASAsyncTransactionContainer.mm; sourceTree = "<group>"; };
 		AEF003B7EF8C8A48EEF50E70DD1B0B1C /* FastImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FastImageCache.h; path = FastImageCache/FastImageCache/FastImageCache.h; sourceTree = "<group>"; };
-		AEF6DE20191668372437EB8282937316 /* CouchbaseLiteSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CouchbaseLiteSwift.framework; path = iOS/CouchbaseLiteSwift.framework; sourceTree = "<group>"; };
 		AF14C01F1561C001488BF325E2E5B324 /* AsyncDisplayKit+Debug.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = "AsyncDisplayKit+Debug.mm"; path = "Source/Debug/AsyncDisplayKit+Debug.mm"; sourceTree = "<group>"; };
 		AF2A28664F594A61558EAEBC551CF3DA /* RLMRealmUtil.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = RLMRealmUtil.mm; path = Realm/RLMRealmUtil.mm; sourceTree = "<group>"; };
 		AF311ADAC6C51E93532E8C6CED770F0C /* ASCollections.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = ASCollections.mm; path = Source/ASCollections.mm; sourceTree = "<group>"; };
@@ -5315,14 +5315,6 @@
 			path = "../Target Support Files/DZNEmptyDataSet";
 			sourceTree = "<group>";
 		};
-		1116A0E46D3AF81DEBA20E2BA54EFA73 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AEF6DE20191668372437EB8282937316 /* CouchbaseLiteSwift.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		1197C22D4FB6447530DA70E94D95C9B1 /* Texture */ = {
 			isa = PBXGroup;
 			children = (
@@ -6352,7 +6344,7 @@
 		9989A83BBF689BE339732E0EBD315E97 /* CouchbaseLite-Swift */ = {
 			isa = PBXGroup;
 			children = (
-				1116A0E46D3AF81DEBA20E2BA54EFA73 /* Frameworks */,
+				C77B50A00F3CBF42009959C802E87E2A /* Frameworks */,
 				6774070C6B9F40EB030F2D136B3AD179 /* Support Files */,
 			);
 			name = "CouchbaseLite-Swift";
@@ -6819,6 +6811,14 @@
 			);
 			name = CleanroomLogger;
 			path = CleanroomLogger;
+			sourceTree = "<group>";
+		};
+		C77B50A00F3CBF42009959C802E87E2A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F4EA2DC7DBD536ADA96CB4B25FE6F9D /* CouchbaseLiteSwift.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		C7BBC1F49C4AFA5660A62A6E466D0D16 /* RealmSwift */ = {

@@ -37,7 +37,7 @@ def apply_pods
   pod 'Siesta/Core', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
-  pod 'CouchbaseLite-Swift', :git => 'https://github.com/farktronix/couchbase-lite-ios', :branch => 'Swift5', :submodules => true
+  pod 'CouchbaseLite-Swift', :git => 'https://github.com/farktronix/couchbase-lite-ios', :branch => 'Swift5', :submodules => true # https://github.com/couchbase/couchbase-lite-ios/pull/2386
   pod 'DZNEmptyDataSet'
   
 

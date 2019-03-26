@@ -9,7 +9,7 @@
 import Foundation
 
 public extension Numeric {
-    public func pluralize(_ single: String, _ multiple: String) -> String {
+    func pluralize(_ single: String, _ multiple: String) -> String {
         if(self == 1) {
             return "\(self) \(single)"
         }

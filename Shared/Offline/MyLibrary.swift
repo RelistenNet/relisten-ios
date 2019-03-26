@@ -506,19 +506,19 @@ extension MyLibrary {
 
 // MARK: Favorite queries
 public extension MyLibrary {
-    public func isFavorite(artist: SlimArtist) -> Bool {
+    func isFavorite(artist: SlimArtist) -> Bool {
         return favorites.artists.filter("uuid == %@", artist.uuid.uuidString).count > 0
     }
     
-    public func isFavorite(show: ShowWithSources, byArtist: SlimArtist) -> Bool {
+    func isFavorite(show: ShowWithSources, byArtist: SlimArtist) -> Bool {
         return favorites.shows.filter("uuid == %@", show.uuid.uuidString).count > 0
     }
     
-    public func isFavorite(source: SourceFull) -> Bool {
+    func isFavorite(source: SourceFull) -> Bool {
         return favorites.sources.filter("uuid == %@", source.uuid.uuidString).count > 0
     }
 
-    public func isFavorite(track: SourceTrack) -> Bool {
+    func isFavorite(track: SourceTrack) -> Bool {
         return favorites.tracks.filter("uuid == %@", track.uuid.uuidString).count > 0
     }
 }

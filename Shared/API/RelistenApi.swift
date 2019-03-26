@@ -25,7 +25,7 @@ public extension Resource {
     // desired functionality: always send a request but
     // get an immediate result from the cache
     @discardableResult
-    public func loadFromCacheThenUpdate() -> Request? {
+    func loadFromCacheThenUpdate() -> Request? {
         if isLoading {
             return loadIfNeeded()
         }

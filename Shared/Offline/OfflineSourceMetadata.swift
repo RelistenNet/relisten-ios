@@ -29,7 +29,7 @@ import Crashlytics
 }
 
 public extension HasArtist {
-    public var artist: ArtistWithCounts? {
+    var artist: ArtistWithCounts? {
         get {
             do {
                 return try RelistenCacher.shared.artistBackingCache.object(forKey: artist_uuid)
@@ -44,7 +44,7 @@ public extension HasArtist {
 }
 
 public extension HasShow {
-    public var show: ShowWithSources? {
+    var show: ShowWithSources? {
         get {
             do {
                 return try RelistenCacher.shared.showBackingCache.object(forKey: show_uuid)
@@ -59,13 +59,13 @@ public extension HasShow {
 }
 
 public extension HasSourceAndShow {
-    public var source: SourceFull? {
+    var source: SourceFull? {
         get {
             return show?.sources.first(where: { $0.uuid.uuidString == source_uuid })
         }
     }
     
-    public var completeShowInformation: CompleteShowInformation? {
+    var completeShowInformation: CompleteShowInformation? {
         get {
             if let show = self.show,
                let art = artist,
@@ -78,13 +78,13 @@ public extension HasSourceAndShow {
 }
 
 public extension HasTrackSourceAndShow {
-    public var sourceTrack: SourceTrack? {
+    var sourceTrack: SourceTrack? {
         get {
             return source?.track(withUUID: track_uuid)
         }
     }
     
-    public var track: Track? {
+    var track: Track? {
         get {
             if let completeShowInformation = completeShowInformation,
                let sourceTrack = completeShowInformation.source.track(withUUID: track_uuid) {
@@ -96,19 +96,19 @@ public extension HasTrackSourceAndShow {
 }
 
 public extension Results where Element : HasTrackSourceAndShow {
-    public func asTracks(toIndex index: Int = 20) -> [Track] {
+    func asTracks(toIndex index: Int = 20) -> [Track] {
         return Array(self.array(toIndex: index).compactMap({ (el: HasTrackSourceAndShow) -> Track? in el.track }))
     }
 }
 
 public extension Results where Element : HasSourceAndShow {
-    public func asCompleteShows(toIndex index: Int = 20) -> [CompleteShowInformation] {
+    func asCompleteShows(toIndex index: Int = 20) -> [CompleteShowInformation] {
         return Array(self.array(toIndex: index).compactMap({ (el: HasSourceAndShow) -> CompleteShowInformation? in el.completeShowInformation }))
     }
 }
 
 public extension Results {
-    public func array(toIndex index: Int = -1) -> [Element] {
+    func array(toIndex index: Int = -1) -> [Element] {
         if index == -1 {
             return Array(self)
         } else {
@@ -121,7 +121,7 @@ public extension Results {
         }
     }
     
-    public func observeWithValue(_ block: @escaping (Results<Element>, RealmCollectionChange<Results<Element>>) -> Void) -> NotificationToken {
+    func observeWithValue(_ block: @escaping (Results<Element>, RealmCollectionChange<Results<Element>>) -> Void) -> NotificationToken {
         return self.observe { changes in
             block(self, changes)
         }

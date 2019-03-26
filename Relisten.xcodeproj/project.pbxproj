@@ -1041,16 +1041,19 @@
 					43524AD72114DFC700DC70CD = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = HT7ELV3Q35;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					43B5340F2109226F00DE9B1F = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = HT7ELV3Q35;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					43CC465B214C104800925CA5 = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = HT7ELV3Q35;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 7C8EF10C1D5A49C200004B5C;
 					};
@@ -1075,6 +1078,7 @@
 					7C8EF10C1D5A49C200004B5C = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HT7ELV3Q35;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1100,6 +1104,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -2072,6 +2077,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2093,6 +2099,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2112,6 +2119,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Shared/RelistenShared-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2131,6 +2139,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Shared/RelistenShared-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2154,6 +2163,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e5ce8479-e098-414a-b633-4429ad7bf61a";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Relisten;
 			};
@@ -2178,6 +2188,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e5ce8479-e098-414a-b633-4429ad7bf61a";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Relisten;
 			};
@@ -2382,6 +2393,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "f1c3ec75-e1f7-48e4-a22c-206806b1ce66";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.alecgorge.ios.Listen-to-the-Dead";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -2402,6 +2414,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e5ce8479-e098-414a-b633-4429ad7bf61a";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.alecgorge.ios.Listen-to-the-Dead";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

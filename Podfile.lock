@@ -1,14 +1,12 @@
 PODS:
   - ActionKit (2.5.1)
-  - AGAudioPlayer (0.8.1):
+  - AGAudioPlayer (0.8.2):
     - BASSGaplessAudioPlayer
-    - BCColor
     - Interpolate
     - MarqueeLabel
     - NapySlider
   - AXRatingView (1.0.6)
   - BASSGaplessAudioPlayer (0.0.1)
-  - BCColor (0.2)
   - Cache (5.2.0)
   - ChameleonFramework (2.1.0):
     - ChameleonFramework/Default (= 2.1.0)
@@ -35,9 +33,9 @@ PODS:
   - LastFm (1.17.0):
     - KissXML (~> 5.0.3)
   - LicensesViewController (0.6.5)
-  - MarqueeLabel (3.2.0):
-    - MarqueeLabel/ObjC (= 3.2.0)
-  - MarqueeLabel/ObjC (3.2.0)
+  - MarqueeLabel (3.2.1):
+    - MarqueeLabel/ObjC (= 3.2.1)
+  - MarqueeLabel/ObjC (3.2.1)
   - MZDownloadManager (3.5)
   - NAKPlaybackIndicatorView (0.1.1)
   - NapySlider (0.3.5)
@@ -63,8 +61,8 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - Siesta/Core (1.4.2)
-  - Siesta/UI (1.4.2):
+  - Siesta/Core (1.4.3)
+  - Siesta/UI (1.4.3):
     - Siesta/Core
   - SimulatorStatusMagic (2.4.1)
   - SINQ (0.7.0)
@@ -121,7 +119,6 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - ActionKit
     - AXRatingView
-    - BCColor
     - Cache
     - ChameleonFramework
     - Crashlytics
@@ -211,7 +208,7 @@ CHECKOUT OPTIONS:
     :commit: bb393be86a38a402c66239f80f5cc600003a6b68
     :git: https://github.com/farktronix/realm-cocoa-converter.git
   Siesta:
-    :commit: b13dad7cb2bfca15fa4450e19cd23d04b8378049
+    :commit: d8c6fc2bd75e5335dfe0b260e42c1b5fdbc8e729
     :git: https://github.com/bustoutsolutions/siesta.git
   Texture:
     :commit: 4d29d85b09f0fb8063a7c7d2ae9dd7a2347bf5b9
@@ -219,10 +216,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ActionKit: 6f4f5fbab3a76aa05e8df8d66145db4fe9e9b8df
-  AGAudioPlayer: e749777b0a010ad9bf155c19b845ccf6f589fa5c
+  AGAudioPlayer: 26dd2722f8073d3791fd057766364ade3362e246
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 5b074495769769192b720c70aa2a60f6f33751f3
-  BCColor: 2425540cb0da92795b81a1f15b5289a92279c9eb
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: f165bae4f3c9a15a22ec2fad9b0826f27fb047d5
@@ -240,7 +236,7 @@ SPEC CHECKSUMS:
   KissXML: d19dd6dc65e0dc721ba92b3077b8ebdd240f1c1e
   LastFm: a624fa250bbda5950fccbd068ea7950dcba2da1f
   LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
-  MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
+  MarqueeLabel: 2daf039bf916937c8a4c9adfc13577cc5e51b4ce
   MZDownloadManager: 1faf281511aa91bd45f254dd84331e08720d890c
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
   NapySlider: 52be4efab746c967437fefc98c4ca508edbdf306
@@ -253,7 +249,7 @@ SPEC CHECKSUMS:
   Reveal-SDK: 3523e0eb7c562811c51bb71da6e523a6373702c8
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  Siesta: 337a9c39c9b78bba904286310c86562a886efdab
+  Siesta: 83795fdf6a43232d1d2909e1a3dfb92ab5916d26
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322

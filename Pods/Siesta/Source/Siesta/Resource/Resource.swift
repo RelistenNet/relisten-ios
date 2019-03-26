@@ -179,7 +179,7 @@ public final class Resource: NSObject
         DispatchQueue.mainThreadPrecondition()
 
         self.service = service
-        self.url = URL(string: ":")!
+        self.url = URL(string: ":").forceUnwrapped(because: "Foundation considers single colon to be a valid URL")
 
         permanentFailure = RequestError(
             userMessage: NSLocalizedString("Cannot send request with invalid URL", comment: "userMessage"),
@@ -219,7 +219,7 @@ public final class Resource: NSObject
 
       - SeeAlso: `Resource.request(...)`
     */
-    public typealias RequestMutation = (inout URLRequest) -> ()
+    public typealias RequestMutation = (inout URLRequest) -> Void
 
     /**
       Initiates a network request for the given resource.
@@ -387,7 +387,7 @@ public final class Resource: NSObject
             var trackedRequest: Request?
             cacheRequest.onCompletion
                 {
-                _ in self.loadRequests.remove { $0 === trackedRequest }
+                _ in self.loadRequests.removeAll { $0 === trackedRequest }
                 }
 
             // Now we're ready to construct a chained request that will return either a
@@ -524,8 +524,8 @@ public final class Resource: NSObject
         req.onCompletion
             {
             [weak self] _ in
-            self?.allRequests.remove { $0.state == .completed }
-            self?.loadRequests.remove { $0.state == .completed }
+            self?.allRequests.removeAll { $0.state == .completed }
+            self?.loadRequests.removeAll { $0.state == .completed }
             }
         }
 

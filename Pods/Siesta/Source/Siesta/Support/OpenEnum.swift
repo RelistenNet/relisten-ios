@@ -10,7 +10,7 @@ import Foundation
 
 //  A protocol for enum-like types that allow third-party modules to add values.
 /// :nodoc:
-public protocol _OpenEnum: class, Hashable
+public protocol _OpenEnum: AnyObject, Hashable
     {
     }
 
@@ -21,6 +21,6 @@ extension _OpenEnum
         { return lhs === rhs }
 
     /// :nodoc:
-    public var hashValue: Int
-        { return ObjectIdentifier(self).hashValue }
+    public func hash(into hasher: inout Hasher)
+        { hasher.combine(ObjectIdentifier(self)) }
     }

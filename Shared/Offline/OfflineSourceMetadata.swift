@@ -86,7 +86,7 @@ public extension Results where Element : HasTrackSourceAndShow {
         return Array(self.array(toIndex: index).compactMap({ (el: HasTrackSourceAndShow) -> Track? in el.track }))
     }
     
-    public func asTracksLazy() -> LazyMapCollection<LazyFilterCollection<LazyMapCollection<Results<Element>, Track?>>, Track> {
+    func asTracksLazy() -> LazyMapCollection<LazyFilterCollection<LazyMapCollection<Results<Element>, Track?>>, Track> {
         return compactMap({ (el: HasTrackSourceAndShow) -> Track? in el.track })
     }
 }
@@ -96,7 +96,7 @@ public extension Results where Element : HasSourceAndShow {
         return Array(self.array(toIndex: index).compactMap({ (el: HasSourceAndShow) -> CompleteShowInformation? in el.completeShowInformation }))
     }
     
-    public func asCompleteShowsLazy() -> LazyMapCollection<LazyFilterCollection<LazyMapCollection<Results<Element>, CompleteShowInformation?>>, CompleteShowInformation> {
+    func asCompleteShowsLazy() -> LazyMapCollection<LazyFilterCollection<LazyMapCollection<Results<Element>, CompleteShowInformation?>>, CompleteShowInformation> {
         return compactMap({ (el: HasSourceAndShow) -> CompleteShowInformation? in el.completeShowInformation })
     }
 }

@@ -81,7 +81,7 @@ DEPENDENCIES:
   - AGAudioPlayer (from `../AGAudioPlayer`)
   - AXRatingView
   - BASSGaplessAudioPlayer (from `../BASSGaplessAudioPlayer`)
-  - Cache
+  - Cache (from `https://github.com/farktronix/Cache.git`)
   - ChameleonFramework (from `https://github.com/farktronix/Chameleon.git`)
   - CleanroomLogger (from `https://github.com/farktronix/CleanroomLogger`)
   - CouchbaseLite-Swift (from `https://github.com/farktronix/couchbase-lite-ios`, branch `Swift5`)
@@ -123,7 +123,6 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - ActionKit
     - AXRatingView
-    - Cache
     - Crashlytics
     - CWStatusBarNotification
     - DWURecyclingAlert
@@ -153,6 +152,8 @@ EXTERNAL SOURCES:
     :path: "../AGAudioPlayer"
   BASSGaplessAudioPlayer:
     :path: "../BASSGaplessAudioPlayer"
+  Cache:
+    :git: https://github.com/farktronix/Cache.git
   ChameleonFramework:
     :git: https://github.com/farktronix/Chameleon.git
   CleanroomLogger:
@@ -191,6 +192,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/iiiCeBlink/Wormholy.git
 
 CHECKOUT OPTIONS:
+  Cache:
+    :commit: c07bccf220f2f15e52afe8c60c180d441b64ae5a
+    :git: https://github.com/farktronix/Cache.git
   ChameleonFramework:
     :commit: f708430e24834658f4bdb6a81726a4ee489f65e3
     :git: https://github.com/farktronix/Chameleon.git
@@ -198,7 +202,7 @@ CHECKOUT OPTIONS:
     :commit: c30b7ac099f5e245933a8919591adebacaeb4b62
     :git: https://github.com/farktronix/CleanroomLogger
   CouchbaseLite-Swift:
-    :commit: 5bc19b64ea2113ab37dd196f6063a786f51a2bae
+    :commit: 641fb72691aac594129da1e4daf1f45aa546eadc
     :git: https://github.com/farktronix/couchbase-lite-ios
     :submodules: true
   CSwiftV:
@@ -287,6 +291,6 @@ SPEC CHECKSUMS:
   Texture: 3ac8be7a23e3b478fa1f227bf7a4da083806038d
   Wormholy: 0222592d5c7a019527911701ba7fd5fe64c798da
 
-PODFILE CHECKSUM: 769b42abacae56121e8908cbe40fa064975a08e8
+PODFILE CHECKSUM: 26d2d056c617c174308d6dbd23bd06ec1a634c40
 
 COCOAPODS: 1.7.0.beta.2

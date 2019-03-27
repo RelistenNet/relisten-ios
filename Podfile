@@ -9,7 +9,7 @@ def apply_pods
   pod 'AXRatingView'
   pod 'ActionKit'
   pod 'CWStatusBarNotification'
-  pod 'Cache'
+  pod 'Cache', :git => "https://github.com/farktronix/Cache.git" # https://github.com/hyperoslo/Cache/pull/232, https://github.com/hyperoslo/Cache/pull/236
   pod 'ChameleonFramework', :git => "https://github.com/farktronix/Chameleon.git" # https://github.com/viccalexander/Chameleon/pull/234
   pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger" # Needed because the authors refuse to add CocoaPods support https://github.com/emaloney/CleanroomLogger/issues/69
   pod 'Crashlytics'

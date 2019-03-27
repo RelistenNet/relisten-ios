@@ -79,7 +79,7 @@ DEPENDENCIES:
   - AGAudioPlayer (from `../AGAudioPlayer`)
   - AXRatingView
   - BASSGaplessAudioPlayer (from `../BASSGaplessAudioPlayer`)
-  - Cache
+  - Cache (from `https://github.com/farktronix/Cache.git`)
   - ChameleonFramework (from `https://github.com/farktronix/Chameleon.git`)
   - CleanroomLogger (from `https://github.com/farktronix/CleanroomLogger`)
   - Crashlytics
@@ -119,7 +119,6 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - ActionKit
     - AXRatingView
-    - Cache
     - Crashlytics
     - CWStatusBarNotification
     - DWURecyclingAlert
@@ -148,6 +147,8 @@ EXTERNAL SOURCES:
     :path: "../AGAudioPlayer"
   BASSGaplessAudioPlayer:
     :path: "../BASSGaplessAudioPlayer"
+  Cache:
+    :git: https://github.com/farktronix/Cache.git
   ChameleonFramework:
     :git: https://github.com/farktronix/Chameleon.git
   CleanroomLogger:
@@ -182,6 +183,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/iiiCeBlink/Wormholy.git
 
 CHECKOUT OPTIONS:
+  Cache:
+    :commit: c07bccf220f2f15e52afe8c60c180d441b64ae5a
+    :git: https://github.com/farktronix/Cache.git
   ChameleonFramework:
     :commit: f708430e24834658f4bdb6a81726a4ee489f65e3
     :git: https://github.com/farktronix/Chameleon.git
@@ -219,10 +223,10 @@ CHECKOUT OPTIONS:
     :commit: 7898d0979cc4c3927c4e58b6ecf4a46d759c1322
     :git: https://github.com/farktronix/realm-cocoa-converter.git
   Siesta:
-    :commit: d8c6fc2bd75e5335dfe0b260e42c1b5fdbc8e729
+    :commit: 0a33219ea971f972e4c01e62fff0cfa8f79900e6
     :git: https://github.com/bustoutsolutions/siesta.git
   Texture:
-    :commit: ca18fbce720a6014c9316d292df3f900d4febf88
+    :commit: afbd703963ce61c9fb42971727a76f49b5aa39ad
     :git: https://github.com/farktronix/Texture.git
   Wormholy:
     :commit: a6cea043842c14a0a3b9104b5663e70ac53c76c9
@@ -272,6 +276,6 @@ SPEC CHECKSUMS:
   Texture: 3ac8be7a23e3b478fa1f227bf7a4da083806038d
   Wormholy: 0222592d5c7a019527911701ba7fd5fe64c798da
 
-PODFILE CHECKSUM: 3b0ef3566ac65c76f3bb1b3b118ab4deb7596c6e
+PODFILE CHECKSUM: 0c29aa2e7c830691f4ce76e04670faee451b492e
 
-COCOAPODS: 1.7.0.beta.1
+COCOAPODS: 1.7.0.beta.2

@@ -13,7 +13,7 @@ def apply_pods
   pod 'ChameleonFramework', :git => "https://github.com/farktronix/Chameleon.git" # https://github.com/viccalexander/Chameleon/pull/234
   pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger" # Needed because the authors refuse to add CocoaPods support https://github.com/emaloney/CleanroomLogger/issues/69
   pod 'Crashlytics'
-  pod 'CSwiftV', :git => 'https://github.com/farktronix/CSwiftV.git', :branch => 'Swift5' # https://github.com/Daniel1of1/CSwiftV/pull/40
+  pod 'CSwiftV'
   pod 'DownloadButton', :git => "https://github.com/farktronix/DownloadButton" # Temporary fork to fix a progress over/underflow bug
   pod 'EDColor'
   pod 'Fabric'

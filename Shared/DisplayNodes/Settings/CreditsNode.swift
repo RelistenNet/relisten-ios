@@ -75,7 +75,11 @@ public class CreditsNode : ASCellNode {
                                                                     NSAttributedString.Key.foregroundColor: UIColor.lightGray]
 
         let iconCredits = [
-            "Music by Made x Made from the Noun Project"
+            "Music by Made x Made from the Noun Project",
+            "Heart by Jose Dean from the Noun Project",
+            "History by shashank singh from the Noun Project",
+            "cassette tape by Nico Ilk from the Noun Project",
+            "live by Adrien Coquet from the Noun Project",
         ]
         
         attributedString.append(NSAttributedString(string: "\n\nIcon credits:\n" + iconCredits.joined(separator: "\n"), attributes: iconCreditAttributes))

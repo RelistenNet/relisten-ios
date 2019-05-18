@@ -52,6 +52,8 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         
         super.init(useCache: true, refreshOnAppear: true)
         
+        tabBarItem = UITabBarItem(title: "Relisten", image: UIImage(named: "toolbar_relisten"), tag: RelistenTabs.artistsOrPhish.rawValue)
+        
         recentlyPerformedNode.collectionNode.delegate = self
         allRecentlyUpdatedNode.collectionNode.delegate = self
         

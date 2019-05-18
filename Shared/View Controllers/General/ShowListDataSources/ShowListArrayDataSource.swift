@@ -44,6 +44,8 @@ public enum ShowSorting {
     case descending
 }
 
+private typealias Group<K, V> = (key: K, values: [V])
+
 public class ShowListArrayDataSource<T, M, E: ShowListArrayDataSourceShowExtractor> : ShowListDataSource where E.ExtractionTarget == T, E.FullMatchingData == M {
     public typealias DataType = T
     
@@ -63,8 +65,8 @@ public class ShowListArrayDataSource<T, M, E: ShowListArrayDataSourceShowExtract
     }
     
     private var allShows: [(M, ShowCellDataSource)] = []
-    private var groupedShows: [Grouping<String, (M, ShowCellDataSource)>] = []
-    private var filteredShows: [Grouping<String, (M, ShowCellDataSource)>] = []
+    private var groupedShows: [Group<String, (M, ShowCellDataSource)>] = []
+    private var filteredShows: [Group<String, (M, ShowCellDataSource)>] = []
     private var indexTitles: [String]? = nil
     
     // MARK: ShowListDataSource
@@ -106,11 +108,11 @@ public class ShowListArrayDataSource<T, M, E: ShowListArrayDataSourceShowExtract
     }
     
     public func numberOfShows(in section: Int, whileFiltering isFiltering: Bool) -> Int {
-        return items(whileFiltering: isFiltering)[section].values.count()
+        return items(whileFiltering: isFiltering)[section].values.count
     }
     
     public func showWithSingleSource(at indexPath: IndexPath, whileFiltering isFiltering: Bool) -> ShowWithSingleSource? {
-        let ds = items(whileFiltering: isFiltering)[indexPath.section].values.elementAt(indexPath.row)
+        let ds = items(whileFiltering: isFiltering)[indexPath.section].values[indexPath.row]
         
         if let e = extractor {
             return e.extractShowAndSource(forData: ds.1, withMatchingData: ds.0)
@@ -120,7 +122,7 @@ public class ShowListArrayDataSource<T, M, E: ShowListArrayDataSourceShowExtract
     }
     
     public func cellShow(at indexPath: IndexPath, whileFiltering isFiltering: Bool) -> ShowCellDataSource? {
-        return items(whileFiltering: isFiltering)[indexPath.section].values.elementAt(indexPath.row).1
+        return items(whileFiltering: isFiltering)[indexPath.section].values[indexPath.row].1
     }
     
     public func sectionIndexTitles(whileFiltering isFiltering: Bool) -> [String]? {
@@ -131,7 +133,7 @@ public class ShowListArrayDataSource<T, M, E: ShowListArrayDataSourceShowExtract
     
     // MARK: Data Organization
     
-    func sortAndGroupShows(_ data: [(M, ShowCellDataSource)], searchText: String? = nil, scope: String = "All") -> [Grouping<String, (M, ShowCellDataSource)>] {
+    fileprivate func sortAndGroupShows(_ data: [(M, ShowCellDataSource)], searchText: String? = nil, scope: String = "All") -> [Group<String, (M, ShowCellDataSource)>] {
         var sinqData = sinq(data)
             .filter({ (show) -> Bool in
                 return ((scope == "All" || self.scopeMatchesShow(show.1, scope: scope)) &&
@@ -151,28 +153,51 @@ public class ShowListArrayDataSource<T, M, E: ShowListArrayDataSourceShowExtract
             break
         }
         
-        var groupedData : SinqSequence<Grouping<String, (M, ShowCellDataSource)>>
+        var groupedData : [Group<String, (M, ShowCellDataSource)>]
         
         if tourSections {
-            let name2Tour: [String: TourCellDataSource] = sinqData
-                .map({ $0.1.tourDataSource })
-                .filter({ $0 != nil })
-                .toDictionary({ $0!.name }, value: { $0! })
+            groupedData = []
+            var currentGroupKey: String? = nil;
+            var currentGroupValues: [(M, ShowCellDataSource)]? = nil
             
-            groupedData = sinqData
-                .groupBy({ $0.1.tourDataSource?.name ?? "" })
-                .orderBy({ name2Tour[$0.key]!.start_date })
+            sinqData.orderBy({ $0.1.date }).each { d in
+                let show = d.1
+                let tourName = show.tourDataSource?.name ?? ""
+                
+                if currentGroupKey != tourName {
+                    if let currKey = currentGroupKey, let currValue = currentGroupValues {
+                        groupedData.append(Group(key: currKey, values: currValue))
+                        
+                        currentGroupKey = nil
+                        currentGroupValues = nil
+                    }
+                    
+                    currentGroupKey = tourName
+                    currentGroupValues = [d]
+                }
+                else {
+                    currentGroupValues?.append(d)
+                }
+            }
+            
+            if let currKey = currentGroupKey, let currValue = currentGroupValues {
+                groupedData.append(Group(key: currKey, values: currValue))
+            }
         }
         else if artistSections {
             groupedData = sinqData
                 .groupBy({ $0.1.artistDataSource?.name ?? "" })
                 .orderBy({ $0.key })
+                .toArray()
+                .map({ (g) -> Group<String, (M, ShowCellDataSource)> in
+                    Group<String, (M, ShowCellDataSource)>(key: g.key, values: g.values.toArray())
+                })
         }
         else {
-            groupedData = sinqData.groupBy({_ in return "" })
+            groupedData = [Group(key: "", values: sinqData.toArray())]
         }
         
-        return groupedData.toArray()
+        return groupedData
     }
     
     // MARK: Filtering
@@ -211,7 +236,7 @@ public class ShowListArrayDataSource<T, M, E: ShowListArrayDataSourceShowExtract
         return false
     }
     
-    private func items(whileFiltering isFiltering: Bool) -> [Grouping<String, (M, ShowCellDataSource)>] {
+    private func items(whileFiltering isFiltering: Bool) -> [Group<String, (M, ShowCellDataSource)>] {
         if isFiltering {
             return filteredShows
         } else {
@@ -225,8 +250,8 @@ public class ShowListArrayDataSource<T, M, E: ShowListArrayDataSourceShowExtract
         let items = self.items(whileFiltering: isFiltering)
         if indexPath.section >= 0, indexPath.section < items.count {
             let allItems = items[indexPath.section].values
-            if indexPath.row >= 0, indexPath.row < allItems.count() {
-                retval = allItems.elementAt(indexPath.row)
+            if indexPath.row >= 0, indexPath.row < allItems.count {
+                retval = allItems[indexPath.row]
             }
         }
         return retval

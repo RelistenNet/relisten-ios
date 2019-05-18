@@ -153,6 +153,7 @@
 		7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */; };
 		7C9FC1EF211A184300A8579B /* VisualActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FC1EE211A184300A8579B /* VisualActivityViewController.swift */; };
 		7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */; };
+		7CFF0AAF2290BC3E00B30538 /* LiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFF0AAE2290BC3E00B30538 /* LiveViewController.swift */; };
 		8CD3ABF608F9A98A4D985511 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B280390A781CEAC8287228B /* Pods_Relisten.framework */; };
 		B5D3DEB4FF0A6D8D25A7B70B /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BD3F386FC81C9232DD2504 /* Pods_PhishODUITests.framework */; };
 		BD42C0C8EF1324E039FBA06E /* Pods_RelistenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF734EACDCD4B56B21971AFB /* Pods_RelistenUITests.framework */; };
@@ -381,6 +382,7 @@
 		7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RelistenShared-Bridging-Header.h"; sourceTree = "<group>"; };
 		7CCE0DEB1F9BDE4A00041D47 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Events.swift; path = Events/Events.swift; sourceTree = "<group>"; };
 		7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Handler.swift"; sourceTree = "<group>"; };
+		7CFF0AAE2290BC3E00B30538 /* LiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LiveViewController.swift; path = "View Controllers/Tabs/LiveViewController.swift"; sourceTree = "<group>"; };
 		7D0486D76EA028A68FB9CEE1 /* Pods-Relisten for Phish.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Relisten for Phish.release.xcconfig"; path = "Pods/Target Support Files/Pods-Relisten for Phish/Pods-Relisten for Phish.release.xcconfig"; sourceTree = "<group>"; };
 		8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenResourceStatusOverlay.swift; sourceTree = "<group>"; };
 		8E91C1703DD1522098B0957F /* ShowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCellNode.swift; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 				7C084C3A22419EB3006418AB /* MyLibraryTabViewController.swift */,
 				7C084C49224592E1006418AB /* DownloadedTabViewController.swift */,
 				7C084C4B22492551006418AB /* RecentlyPlayedTabViewController.swift */,
+				7CFF0AAE2290BC3E00B30538 /* LiveViewController.swift */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -1304,8 +1307,8 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
@@ -1327,7 +1330,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1456,8 +1459,8 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
@@ -1479,7 +1482,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1578,8 +1581,8 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
@@ -1601,7 +1604,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1702,8 +1705,8 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
@@ -1725,7 +1728,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1824,8 +1827,8 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework",
-				"${PODS_ROOT}/CouchbaseLite-Swift/frameworks/CBL Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
@@ -1847,7 +1850,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1981,6 +1984,7 @@
 				7C084C36224199B4006418AB /* RelistenTabBarController.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
 				43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */,
+				7CFF0AAF2290BC3E00B30538 /* LiveViewController.swift in Sources */,
 				43B53436210922CE00DE9B1F /* SourceFeatureIndicatorNodes.swift in Sources */,
 				43D53C2E21365A65008B407D /* LastFMScrobbler.swift in Sources */,
 				435911AF216C0AFC00ACA85F /* TaperInfoNode.swift in Sources */,

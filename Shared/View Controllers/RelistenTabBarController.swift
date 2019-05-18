@@ -9,11 +9,11 @@
 import UIKit
 
 public enum RelistenTabs : Int, RawRepresentable {
-    case ArtistsOrPhish = 1000
-    case Favorites = 1001
-    case Downloads = 1002
-    case Recent = 1003
-    case Live = 1004
+    case artistsOrPhish = 1000
+    case favorites = 1001
+    case downloads = 1002
+    case recent = 1003
+    case live = 1004
 }
 
 public class RelistenTabBarController : UITabBarController {
@@ -30,9 +30,9 @@ public class RelistenTabBarController : UITabBarController {
         
         setViewControllers([
             firstTabViewController,
-            wrapInNavigation(faves, "My Favorites", .Favorites),
-            wrapInNavigation(rec, "My Recents", .Recent),
-            wrapInNavigation(dl, "Downloaded", .Downloads),
+            wrapInNavigation(faves, "My Favorites", .favorites, UIImage(named: "toolbar_heart")),
+            wrapInNavigation(rec, "My Recents", .recent, UIImage(named: "toolbar_history")),
+            wrapInNavigation(dl, "Downloaded", .downloads, UIImage(named: "toolbar_offline")),
         ], animated: false)
     }
     

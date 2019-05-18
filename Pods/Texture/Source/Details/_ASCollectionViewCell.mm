@@ -110,14 +110,12 @@
     return nil;
   }
 
-  CGPoint pointOnNode = [self.node.view convertPoint:point fromView:self];
-  return [self.node hitTest:pointOnNode withEvent:event];
+  return [self.node hitTest:point withEvent:event];
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(nullable UIEvent *)event
 {
-  CGPoint pointOnNode = [self.node.view convertPoint:point fromView:self];
-  return [self.node pointInside:pointOnNode withEvent:event];
+  return [self.node pointInside:point withEvent:event];
 }
 
 @end

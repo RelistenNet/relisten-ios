@@ -29,7 +29,7 @@ typedef NSMutableDictionary<NSString *, NSMutableDictionary<NSIndexPath *, ASCol
 {
   if (self = [super init]) {
     _sections = [sections mutableCopy];
-    _sectionsOfItems = (ASMutableCollectionElementTwoDimensionalArray *)ASTwoDimensionalArrayDeepMutableCopy(items);
+    _sectionsOfItems = (id)ASTwoDimensionalArrayDeepMutableCopy(items);
     _supplementaryElements = [ASMutableElementMap deepMutableCopyOfElementsDictionary:supplementaryElements];
   }
   return self;

@@ -280,7 +280,7 @@ static UIApplicationState __ApplicationState = UIApplicationStateActive;
   } else {
     if (emptyDisplayRange == YES) {
       displayElements = [NSHashTable hashTableWithOptions:NSHashTableObjectPointerPersonality];
-    } else if (equalDisplayVisible == YES) {
+    } if (equalDisplayVisible == YES) {
       displayElements = visibleElements;
     } else {
       // Calculating only the Display range means the Preload range is either the same as Display or Visible.
@@ -349,36 +349,23 @@ static UIApplicationState __ApplicationState = UIApplicationStateActive;
         }
       }
     } else {
-      // If selfInterfaceState isn't visible, then visibleIndexPaths represents either what /will/ be immediately visible at the
-      // instant we come onscreen, or what /will/ no longer be visible at the instant we come offscreen.
-      // So, preload and display all of those things, but don't waste resources displaying others.
-      //
-      // DO NOT set Visible: even though these elements are in the visible range / "viewport",
-      // our overall container object is itself not yet, or no longer, visible.
-      // The moment it becomes visible, we will run the condition above.
-
-      ASInterfaceState interfaceStateBeforeFix = interfaceState;
+      // If selfInterfaceState isn't visible, then visibleIndexPaths represents what /will/ be immediately visible at the
+      // instant we come onscreen.  So, preload and display all of those things, but don't waste resources preloading yet.
+      // We handle this as a separate case to minimize set operations for offscreen preloading, including containsObject:.
+      
       if ([allCurrentIndexPaths containsObject:indexPath]) {
-        interfaceStateBeforeFix |= ASInterfaceStatePreload;
+        // DO NOT set Visible: even though these elements are in the visible range / "viewport",
+        // our overall container object is itself not visible yet.  The moment it becomes visible, we will run the condition above
+        
+        // Set Layout, Preload
+        interfaceState |= ASInterfaceStatePreload;
+        
         if (rangeMode != ASLayoutRangeModeLowMemory) {
-          interfaceStateBeforeFix |= ASInterfaceStateDisplay;
+          // Add Display.
+          // We might be looking at an indexPath that was previously in-range, but now we need to clear it.
+          // In that case we'll just set it back to MeasureLayout.  Only set Display | Preload if in allCurrentIndexPaths.
+          interfaceState |= ASInterfaceStateDisplay;
         }
-      }
-
-      ASInterfaceState interfaceStateAfterFix = interfaceState;
-      if ([visibleIndexPaths containsObject:indexPath]) {
-        interfaceStateAfterFix |= ASInterfaceStatePreload;
-        if (rangeMode != ASLayoutRangeModeLowMemory) {
-          interfaceStateAfterFix |= ASInterfaceStateDisplay;
-        }
-      } else if ([displayIndexPaths containsObject:indexPath]) {
-        interfaceStateAfterFix |= ASInterfaceStatePreload;
-      }
-
-      if (interfaceStateBeforeFix != interfaceStateAfterFix && ASActivateExperimentalFeature(ASExperimentalFixRangeController)) {
-        interfaceState = interfaceStateAfterFix;
-      } else {
-        interfaceState = interfaceStateBeforeFix;
       }
     }
 

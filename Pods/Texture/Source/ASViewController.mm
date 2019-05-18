@@ -15,8 +15,6 @@
 #import <AsyncDisplayKit/ASTraitCollection.h>
 #import <AsyncDisplayKit/ASRangeControllerUpdateRangeProtocol+Beta.h>
 #import <AsyncDisplayKit/ASInternalHelpers.h>
-#import <AsyncDisplayKit/ASConfigurationInternal.h>
-#import <AsyncDisplayKit/ASExperimentalFeatures.h>
 
 @implementation ASViewController
 {
@@ -100,9 +98,6 @@
 
 - (void)dealloc
 {
-  if (ASActivateExperimentalFeature(ASExperimentalOOMBackgroundDeallocDisable)) {
-    return;
-  }
   ASPerformBackgroundDeallocation(&_node);
 }
 

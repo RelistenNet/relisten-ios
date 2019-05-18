@@ -13,10 +13,8 @@
 #import <AsyncDisplayKit/ASElementMap.h>
 #import <AsyncDisplayKit/ASThread.h>
 
-using AS::MutexLocker;
-
 @implementation ASCollectionLayoutCache {
-  AS::Mutex __instanceLock__;
+  ASDN::Mutex __instanceLock__;
 
   /**
    * The underlying data structure of this cache.
@@ -48,7 +46,7 @@ using AS::MutexLocker;
     return nil;
   }
 
-  MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   return [[_map objectForKey:elements] objectForKey:context];
 }
 
@@ -59,7 +57,7 @@ using AS::MutexLocker;
     return;
   }
 
-  MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   auto innerMap = [_map objectForKey:elements];
   if (innerMap == nil) {
     innerMap = [NSMapTable strongToStrongObjectsMapTable];
@@ -75,13 +73,13 @@ using AS::MutexLocker;
     return;
   }
 
-  MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   [[_map objectForKey:elements] removeObjectForKey:context];
 }
 
 - (void)removeAllLayouts
 {
-  MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   [_map removeAllObjects];
 }
 

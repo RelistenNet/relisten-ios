@@ -32,7 +32,7 @@
 
 @interface ASTextCacheValue : NSObject {
   @package
-  AS::Mutex _m;
+  ASDN::Mutex _m;
   std::deque<std::tuple<CGSize, ASTextLayout *>> _layouts;
 }
 @end
@@ -55,10 +55,10 @@
  */
 static NS_RETURNS_RETAINED ASTextLayout *ASTextNodeCompatibleLayoutWithContainerAndText(ASTextContainer *container, NSAttributedString *text)  {
   static dispatch_once_t onceToken;
-  static AS::Mutex *layoutCacheLock;
+  static ASDN::Mutex *layoutCacheLock;
   static NSCache<NSAttributedString *, ASTextCacheValue *> *textLayoutCache;
   dispatch_once(&onceToken, ^{
-    layoutCacheLock = new AS::Mutex();
+    layoutCacheLock = new ASDN::Mutex();
     textLayoutCache = [[NSCache alloc] init];
   });
 
@@ -71,7 +71,7 @@ static NS_RETURNS_RETAINED ASTextLayout *ASTextNodeCompatibleLayoutWithContainer
   }
 
   // Lock the cache item for the rest of the method. Only after acquiring can we release the NSCache.
-  AS::MutexLocker lock(cacheValue->_m);
+  ASDN::MutexLocker lock(cacheValue->_m);
   layoutCacheLock->unlock();
 
   CGRect containerBounds = (CGRect){ .size = container.size };
@@ -601,41 +601,25 @@ static NSArray *DefaultLinkAttributeNames() {
 
   NSRange visibleRange = layout.visibleRange;
   NSRange clampedRange = NSIntersectionRange(visibleRange, NSMakeRange(0, _attributedText.length));
-  
-  // Search the 9 points of a 44x44 square around the touch until we find a link.
-  // Start from center, then do sides, then do top/bottom, then do corners.
-  static constexpr CGSize kRectOffsets[9] = {
-    { 0, 0 },
-    { -22, 0 }, { 22, 0 },
-    { 0, -22 }, { 0, 22 },
-    { -22, -22 }, { -22, 22 },
-    { 22, -22 }, { 22, 22 }
-  };
-
-  for (const CGSize &offset : kRectOffsets) {
-    const CGPoint testPoint = CGPointMake(point.x + offset.width,
-                                          point.y + offset.height);
-    ASTextPosition *pos = [layout closestPositionToPoint:testPoint];
-    if (!pos || !NSLocationInRange(pos.offset, clampedRange)) {
+  ASTextRange *range = [layout closestTextRangeAtPoint:point];
+  NSRange effectiveRange = NSMakeRange(0, 0);
+  for (__strong NSString *attributeName in self.linkAttributeNames) {
+    id value = [self.attributedText attribute:attributeName atIndex:range.start.offset longestEffectiveRange:&effectiveRange inRange:clampedRange];
+    if (value == nil) {
+      // Didn't find any links specified with this attribute.
       continue;
     }
-    for (NSString *attributeName in _linkAttributeNames) {
-      NSRange effectiveRange = NSMakeRange(0, 0);
-      id value = [_attributedText attribute:attributeName atIndex:pos.offset
-                      longestEffectiveRange:&effectiveRange inRange:clampedRange];
-      if (value == nil) {
-        // Didn't find any links specified with this attribute.
-        continue;
-      }
 
-      // If highlighting, check with delegate first. If not implemented, assume YES.
-      if (highlighting
-          && [_delegate respondsToSelector:@selector(textNode:shouldHighlightLinkAttribute:value:atPoint:)]
-          && ![_delegate textNode:(ASTextNode *)self shouldHighlightLinkAttribute:attributeName
-                            value:value atPoint:point]) {
-        continue;
-      }
+    // If highlighting, check with delegate first. If not implemented, assume YES.
+    id<ASTextNodeDelegate> delegate = self.delegate;
+    if (highlighting
+        && [delegate respondsToSelector:@selector(textNode:shouldHighlightLinkAttribute:value:atPoint:)]
+        && ![delegate textNode:(ASTextNode *)self shouldHighlightLinkAttribute:attributeName value:value atPoint:point]) {
+      value = nil;
+      attributeName = nil;
+    }
 
+    if (value != nil || attributeName != nil) {
       *rangeOut = NSIntersectionRange(visibleRange, effectiveRange);
 
       if (attributeNameOut != NULL) {
@@ -662,12 +646,10 @@ static NSArray *DefaultLinkAttributeNames() {
       
       CTLineRef truncationTokenLine = CTLineCreateWithAttributedString((CFAttributedStringRef)_truncationAttributedText);
       CFIndex truncationTokenLineGlyphCount = truncationTokenLine ? CTLineGetGlyphCount(truncationTokenLine) : 0;
-      CFRelease(truncationTokenLine);
       
       CTLineRef additionalTruncationTokenLine = CTLineCreateWithAttributedString((CFAttributedStringRef)_additionalTruncationMessage);
       CFIndex additionalTruncationTokenLineGlyphCount = additionalTruncationTokenLine ? CTLineGetGlyphCount(additionalTruncationTokenLine) : 0;   
-      CFRelease(additionalTruncationTokenLine);
-
+      
       switch (_textContainer.truncationType) {
         case ASTextTruncationTypeStart: {
           CFIndex composedTruncationTextLineGlyphCount = truncationTokenLineGlyphCount + additionalTruncationTokenLineGlyphCount;
@@ -1249,7 +1231,7 @@ static NSAttributedString *DefaultTruncationAttributedString()
  */
 - (NSAttributedString *)_locked_composedTruncationText
 {
-  ASAssertLocked(__instanceLock__);
+  DISABLED_ASAssertLocked(__instanceLock__);
   if (_composedTruncationText == nil) {
     if (_truncationAttributedText != nil && _additionalTruncationMessage != nil) {
       NSMutableAttributedString *newComposedTruncationString = [[NSMutableAttributedString alloc] initWithAttributedString:_truncationAttributedText];
@@ -1275,7 +1257,7 @@ static NSAttributedString *DefaultTruncationAttributedString()
  */
 - (NSAttributedString *)_locked_prepareTruncationStringForDrawing:(NSAttributedString *)truncationString
 {
-  ASAssertLocked(__instanceLock__);
+  DISABLED_ASAssertLocked(__instanceLock__);
   NSMutableAttributedString *truncationMutableString = [truncationString mutableCopy];
   // Grab the attributes from the full string
   if (_attributedText.length > 0) {

@@ -7,8 +7,6 @@
 //
 
 #import <AsyncDisplayKit/ASDispatch.h>
-#import <AsyncDisplayKit/ASConfigurationInternal.h>
-
 
 // Prefer C atomics in this file because ObjC blocks can't capture C++ atomics well.
 #import <stdatomic.h>
@@ -21,10 +19,6 @@
  */
 void ASDispatchApply(size_t iterationCount, dispatch_queue_t queue, NSUInteger threadCount, NS_NOESCAPE void(^work)(size_t i)) {
   if (threadCount == 0) {
-    if (ASActivateExperimentalFeature(ASExperimentalDispatchApply)) {
-      dispatch_apply(iterationCount, queue, work);
-      return;
-    }
     threadCount = NSProcessInfo.processInfo.activeProcessorCount * 2;
   }
   dispatch_group_t group = dispatch_group_create();

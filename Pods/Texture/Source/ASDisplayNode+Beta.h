@@ -143,14 +143,7 @@ typedef struct {
  * this hook could be called up to 1 + (pJPEGcount * pJPEGrenderCount) times. The render count depends on how many times the downloader calls the
  * progressImage block.
  */
-AS_CATEGORY_IMPLEMENTABLE
-- (void)hierarchyDisplayDidFinish NS_REQUIRES_SUPER;
-
-/**
- * Only called on the root during yoga layout.
- */
-AS_CATEGORY_IMPLEMENTABLE
-- (void)willCalculateLayout:(ASSizeRange)constrainedSize NS_REQUIRES_SUPER;
+- (void)hierarchyDisplayDidFinish;
 
 /**
  * Only ASLayoutRangeModeVisibleOnly or ASLayoutRangeModeLowMemory are recommended.  Default is ASLayoutRangeModeVisibleOnly,

@@ -26,19 +26,19 @@
   // For now there should never be an override of layoutSpecThatFits: and a layoutSpecBlock together.
   ASDisplayNodeAssert(!(_methodOverrides & ASDisplayNodeMethodOverrideLayoutSpecThatFits),
                       @"Nodes with a .layoutSpecBlock must not also implement -layoutSpecThatFits:");
-  AS::MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   _layoutSpecBlock = layoutSpecBlock;
 }
 
 - (ASLayoutSpecBlock)layoutSpecBlock
 {
-  AS::MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   return _layoutSpecBlock;
 }
 
 - (ASLayout *)calculateLayoutLayoutSpec:(ASSizeRange)constrainedSize
 {
-  AS::UniqueLock l(__instanceLock__);
+  ASDN::UniqueLock l(__instanceLock__);
 
   // Manual size calculation via calculateSizeThatFits:
   if (_layoutSpecBlock == NULL && (_methodOverrides & ASDisplayNodeMethodOverrideLayoutSpecThatFits) == 0) {
@@ -82,7 +82,7 @@
 
   // Manually propagate the trait collection here so that any layoutSpec children of layoutSpec will get a traitCollection
   {
-    AS::SumScopeTimer t(_layoutSpecTotalTime, measureLayoutSpec);
+    ASDN::SumScopeTimer t(_layoutSpecTotalTime, measureLayoutSpec);
     ASTraitCollectionPropagateDown(layoutElement, self.primitiveTraitCollection);
   }
 
@@ -93,7 +93,7 @@
 
   // Layout element layout creation
   ASLayout *layout = ({
-    AS::SumScopeTimer t(_layoutComputationTotalTime, measureLayoutComputation);
+    ASDN::SumScopeTimer t(_layoutComputationTotalTime, measureLayoutComputation);
     [layoutElement layoutThatFits:constrainedSize];
   });
   ASDisplayNodeAssertNotNil(layout, @"[ASLayoutElement layoutThatFits:] should never return nil! %@, %@", self, layout);
@@ -117,19 +117,19 @@
 
 - (id<ASLayoutElement>)_locked_layoutElementThatFits:(ASSizeRange)constrainedSize
 {
-  ASAssertLocked(__instanceLock__);
+  DISABLED_ASAssertLocked(__instanceLock__);
 
   BOOL measureLayoutSpec = _measurementOptions & ASDisplayNodePerformanceMeasurementOptionLayoutSpec;
 
   if (_layoutSpecBlock != NULL) {
     return ({
-      AS::MutexLocker l(__instanceLock__);
-      AS::SumScopeTimer t(_layoutSpecTotalTime, measureLayoutSpec);
+      ASDN::MutexLocker l(__instanceLock__);
+      ASDN::SumScopeTimer t(_layoutSpecTotalTime, measureLayoutSpec);
       _layoutSpecBlock(self, constrainedSize);
     });
   } else {
     return ({
-      AS::SumScopeTimer t(_layoutSpecTotalTime, measureLayoutSpec);
+      ASDN::SumScopeTimer t(_layoutSpecTotalTime, measureLayoutSpec);
       [self layoutSpecThatFits:constrainedSize];
     });
   }

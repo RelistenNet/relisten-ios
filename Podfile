@@ -37,15 +37,11 @@ def apply_pods
   pod 'Siesta/Core', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'Siesta/UI', :git => 'https://github.com/bustoutsolutions/siesta.git'
   pod 'SwiftyJSON'
-  pod 'CouchbaseLite-Swift', :git => 'https://github.com/farktronix/couchbase-lite-ios', :branch => 'Swift5', :submodules => true # https://github.com/couchbase/couchbase-lite-ios/pull/2386
+  pod 'CouchbaseLite-Swift'
   pod 'DZNEmptyDataSet'
   
-
-  # Using a fork of Texture until these land: 
-  #  https://github.com/TextureGroup/Texture/pull/1354
-  #  https://github.com/TextureGroup/Texture/pull/1425
-  pod 'Texture/Core', :git => 'https://github.com/farktronix/Texture.git'
-  pod 'Texture/MapKit', :git => 'https://github.com/farktronix/Texture.git'
+  pod 'Texture/Core'
+  pod 'Texture/MapKit'
  
   # Development pods (checked out locally)
   if ENV['TRAVIS']
@@ -58,8 +54,7 @@ def apply_pods
 
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']
-  # https://github.com/pmusolino/Wormholy/pull/52
-  pod 'Wormholy', :configurations => ['Debug'], :git => 'https://github.com/iiiCeBlink/Wormholy.git', :branch => 'dev-load'
+  pod 'Wormholy', :configurations => ['Debug']
   pod 'DWURecyclingAlert', :configurations => ['Debug']
 
   # Currently unused pods (but they might be used in the future)

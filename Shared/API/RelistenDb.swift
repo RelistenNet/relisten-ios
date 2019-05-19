@@ -231,17 +231,30 @@ public class RelistenDb {
         return nil
     }
     
+    private func cellShowsQuery(forUUIDs uuids: [UUID]) -> Query {
+        return QueryBuilder
+            .select(RelistenDbShow.DbKeys.map { SelectResult.property("show." + $0).as($0) })
+            .from(DataSource.database(showsDb))
+            .where(Meta.id.in(uuids.map { Expression.string($0.uuidString) }))
+    }
+    
     public func cellShows(byUUIDs uuids: [UUID]) -> [RelistenDbShow] {
         do {
-            let query = QueryBuilder
-                .select(RelistenDbShow.DbKeys.map { SelectResult.property("show." + $0).as($0) })
-                .from(DataSource.database(showsDb))
-                .where(Meta.id.in(uuids.map { Expression.string($0.uuidString) }))
+            let query = cellShowsQuery(forUUIDs: uuids)
             
             let resultSet = try query.execute()
             let results = resultSet.allResults()
             
-            return try results.map { try RelistenDbShow(fromResult: $0) }
+            let models = try results.map { try RelistenDbShow(fromResult: $0) }
+            
+            // if we are missing some results, try to pull them from the old cache
+            if models.count != uuids.count {
+                let missing = Set(uuids).subtracting(Set(models.map { $0.uuid }))
+                
+                
+            }
+            
+            return models
         } catch {
             logError(error, userInfo: ["show_uuids": uuids.map { $0.uuidString }])
         }

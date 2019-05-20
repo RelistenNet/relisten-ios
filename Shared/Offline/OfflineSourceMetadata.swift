@@ -31,14 +31,7 @@ import Crashlytics
 public extension HasArtist {
     var artist: ArtistWithCounts? {
         get {
-            do {
-                return try RelistenCacher.shared.artistBackingCache.object(forKey: artist_uuid)
-            } catch {
-                Crashlytics.sharedInstance().recordError(error, withAdditionalUserInfo: ["artist_uuid": artist_uuid])
-                LogError("Error fetching from cache artist with UUID=\(artist_uuid): \(error)")
-            }
-            
-            return nil
+            return RelistenCacher.artistFromCache(forUUID: UUID(uuidString: artist_uuid)!)
         }
     }
 }
@@ -46,14 +39,7 @@ public extension HasArtist {
 public extension HasShow {
     var show: ShowWithSources? {
         get {
-            do {
-                return try RelistenCacher.shared.showBackingCache.object(forKey: show_uuid)
-            } catch {
-                Crashlytics.sharedInstance().recordError(error, withAdditionalUserInfo: ["show_uuid": show_uuid])
-                LogError("Error fetching from cache show with UUID=\(show_uuid): \(error)")
-            }
-            
-            return nil
+            return RelistenCacher.showFromCache(forUUID: UUID(uuidString: show_uuid)!)
         }
     }
 }
@@ -99,11 +85,19 @@ public extension Results where Element : HasTrackSourceAndShow {
     func asTracks(toIndex index: Int = 20) -> [Track] {
         return Array(self.array(toIndex: index).compactMap({ (el: HasTrackSourceAndShow) -> Track? in el.track }))
     }
+    
+    func asTracksLazy() -> LazyMapCollection<LazyFilterCollection<LazyMapCollection<Results<Element>, Track?>>, Track> {
+        return compactMap({ (el: HasTrackSourceAndShow) -> Track? in el.track })
+    }
 }
 
 public extension Results where Element : HasSourceAndShow {
     func asCompleteShows(toIndex index: Int = 20) -> [CompleteShowInformation] {
         return Array(self.array(toIndex: index).compactMap({ (el: HasSourceAndShow) -> CompleteShowInformation? in el.completeShowInformation }))
+    }
+    
+    func asCompleteShowsLazy() -> LazyMapCollection<LazyFilterCollection<LazyMapCollection<Results<Element>, CompleteShowInformation?>>, CompleteShowInformation> {
+        return compactMap({ (el: HasSourceAndShow) -> CompleteShowInformation? in el.completeShowInformation })
     }
 }
 

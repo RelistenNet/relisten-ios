@@ -9,14 +9,12 @@
 
 #import <AsyncDisplayKit/ASBasicImageDownloader.h>
 
-#import <Foundation/NSURLSession.h>
 #import <objc/runtime.h>
 
 #import <AsyncDisplayKit/ASBasicImageDownloaderInternal.h>
 #import <AsyncDisplayKit/ASImageContainerProtocolCategories.h>
 #import <AsyncDisplayKit/ASThread.h>
 
-using AS::MutexLocker;
 
 #pragma mark -
 /**
@@ -27,23 +25,10 @@ NSString * const kASBasicImageDownloaderContextCallbackQueue = @"kASBasicImageDo
 NSString * const kASBasicImageDownloaderContextProgressBlock = @"kASBasicImageDownloaderContextProgressBlock";
 NSString * const kASBasicImageDownloaderContextCompletionBlock = @"kASBasicImageDownloaderContextCompletionBlock";
 
-static inline float NSURLSessionTaskPriorityWithImageDownloaderPriority(ASImageDownloaderPriority priority) {
-  switch (priority) {
-    case ASImageDownloaderPriorityPreload:
-      return NSURLSessionTaskPriorityLow;
-
-    case ASImageDownloaderPriorityImminent:
-      return NSURLSessionTaskPriorityDefault;
-
-    case ASImageDownloaderPriorityVisible:
-      return NSURLSessionTaskPriorityHigh;
-  }
-}
-
 @interface ASBasicImageDownloaderContext ()
 {
   BOOL _invalid;
-  AS::RecursiveMutex __instanceLock__;
+  ASDN::RecursiveMutex __instanceLock__;
 }
 
 @property (nonatomic) NSMutableArray *callbackDatas;
@@ -54,19 +39,19 @@ static inline float NSURLSessionTaskPriorityWithImageDownloaderPriority(ASImageD
 
 static NSMutableDictionary *currentRequests = nil;
 
-+ (AS::Mutex *)currentRequestLock
++ (ASDN::Mutex *)currentRequestLock
 {
   static dispatch_once_t onceToken;
-  static AS::Mutex *currentRequestsLock;
+  static ASDN::Mutex *currentRequestsLock;
   dispatch_once(&onceToken, ^{
-    currentRequestsLock = new AS::Mutex();
+    currentRequestsLock = new ASDN::Mutex();
   });
   return currentRequestsLock;
 }
 
 + (ASBasicImageDownloaderContext *)contextForURL:(NSURL *)URL
 {
-  MutexLocker l(*self.currentRequestLock);
+  ASDN::MutexLocker l(*self.currentRequestLock);
   if (!currentRequests) {
     currentRequests = [[NSMutableDictionary alloc] init];
   }
@@ -80,7 +65,7 @@ static NSMutableDictionary *currentRequests = nil;
 
 + (void)cancelContextWithURL:(NSURL *)URL
 {
-  MutexLocker l(*self.currentRequestLock);
+  ASDN::MutexLocker l(*self.currentRequestLock);
   if (currentRequests) {
     [currentRequests removeObjectForKey:URL];
   }
@@ -97,7 +82,7 @@ static NSMutableDictionary *currentRequests = nil;
 
 - (void)cancel
 {
-  MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
 
   NSURLSessionTask *sessionTask = self.sessionTask;
   if (sessionTask) {
@@ -111,19 +96,19 @@ static NSMutableDictionary *currentRequests = nil;
 
 - (BOOL)isCancelled
 {
-  MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   return _invalid;
 }
 
 - (void)addCallbackData:(NSDictionary *)callbackData
 {
-  MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   [self.callbackDatas addObject:callbackData];
 }
 
 - (void)performProgressBlocks:(CGFloat)progress
 {
-  MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   for (NSDictionary *callbackData in self.callbackDatas) {
     ASImageDownloaderProgress progressBlock = callbackData[kASBasicImageDownloaderContextProgressBlock];
     dispatch_queue_t callbackQueue = callbackData[kASBasicImageDownloaderContextCallbackQueue];
@@ -138,7 +123,7 @@ static NSMutableDictionary *currentRequests = nil;
 
 - (void)completeWithImage:(UIImage *)image error:(NSError *)error
 {
-  MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   for (NSDictionary *callbackData in self.callbackDatas) {
     ASImageDownloaderCompletion completionBlock = callbackData[kASBasicImageDownloaderContextCompletionBlock];
     dispatch_queue_t callbackQueue = callbackData[kASBasicImageDownloaderContextCallbackQueue];
@@ -156,7 +141,7 @@ static NSMutableDictionary *currentRequests = nil;
 
 - (NSURLSessionTask *)createSessionTaskIfNecessaryWithBlock:(NSURLSessionTask *(^)())creationBlock {
   {
-    MutexLocker l(__instanceLock__);
+    ASDN::MutexLocker l(__instanceLock__);
 
     if (self.isCancelled) {
       return nil;
@@ -170,7 +155,7 @@ static NSMutableDictionary *currentRequests = nil;
   NSURLSessionTask *newTask = creationBlock();
 
   {
-    MutexLocker l(__instanceLock__);
+    ASDN::MutexLocker l(__instanceLock__);
 
     if (self.isCancelled) {
       return nil;
@@ -253,23 +238,10 @@ static const void *ContextKey() {
 
 #pragma mark ASImageDownloaderProtocol.
 
-- (nullable id)downloadImageWithURL:(NSURL *)URL
-                      callbackQueue:(dispatch_queue_t)callbackQueue
-                   downloadProgress:(nullable ASImageDownloaderProgress)downloadProgress
-                         completion:(ASImageDownloaderCompletion)completion
-{
-  return [self downloadImageWithURL:URL
-                           priority:ASImageDownloaderPriorityImminent // maps to default priority
-                      callbackQueue:callbackQueue
-                   downloadProgress:downloadProgress
-                         completion:completion];
-}
-
-- (nullable id)downloadImageWithURL:(NSURL *)URL
-                           priority:(ASImageDownloaderPriority)priority
-                      callbackQueue:(dispatch_queue_t)callbackQueue
-                   downloadProgress:(ASImageDownloaderProgress)downloadProgress
-                         completion:(ASImageDownloaderCompletion)completion
+- (id)downloadImageWithURL:(NSURL *)URL
+             callbackQueue:(dispatch_queue_t)callbackQueue
+          downloadProgress:(nullable ASImageDownloaderProgress)downloadProgress
+                completion:(ASImageDownloaderCompletion)completion
 {
   ASBasicImageDownloaderContext *context = [ASBasicImageDownloaderContext contextForURL:URL];
 
@@ -294,7 +266,6 @@ static const void *ContextKey() {
     NSURLSessionDownloadTask *task = (NSURLSessionDownloadTask *)[context createSessionTaskIfNecessaryWithBlock:^(){return [_session downloadTaskWithURL:URL];}];
 
     if (task) {
-      task.priority = NSURLSessionTaskPriorityWithImageDownloaderPriority(priority);
       task.originalRequest.asyncdisplaykit_context = context;
 
       // start downloading

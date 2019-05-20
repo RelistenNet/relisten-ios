@@ -12,21 +12,24 @@
 #import <AsyncDisplayKit/ASConfigurationDelegate.h>
 #import <stdatomic.h>
 
-static ASConfigurationManager *ASSharedConfigurationManager;
-static dispatch_once_t ASSharedConfigurationManagerOnceToken;
-
-NS_INLINE ASConfigurationManager *ASConfigurationManagerGet() {
-  dispatch_once(&ASSharedConfigurationManagerOnceToken, ^{
-    ASSharedConfigurationManager = [[ASConfigurationManager alloc] init];
-  });
-  return ASSharedConfigurationManager;
-}
+#define ASGetSharedConfigMgr() (__bridge ASConfigurationManager *)ASConfigurationManager.sharedInstance
 
 @implementation ASConfigurationManager {
   ASConfiguration *_config;
   dispatch_queue_t _delegateQueue;
   BOOL _frameworkInitialized;
   _Atomic(ASExperimentalFeatures) _activatedExperiments;
+}
+
+/// Return CFTypeRef to avoid retain/release on this singleton.
++ (CFTypeRef)sharedInstance
+{
+  static CFTypeRef inst;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    inst = (__bridge_retained CFTypeRef)[[ASConfigurationManager alloc] init];
+  });
+  return inst;
 }
 
 + (ASConfiguration *)defaultConfiguration NS_RETURNS_RETAINED
@@ -93,19 +96,19 @@ NS_INLINE ASConfigurationManager *ASConfigurationManagerGet() {
 // Define this even when !DEBUG, since we may run our tests in release mode.
 + (void)test_resetWithConfiguration:(ASConfiguration *)configuration
 {
-  ASConfigurationManager *inst = ASConfigurationManagerGet();
+  ASConfigurationManager *inst = ASGetSharedConfigMgr();
   inst->_config = configuration ?: [self defaultConfiguration];
   atomic_store(&inst->_activatedExperiments, 0);
 }
 
 @end
 
-BOOL _ASActivateExperimentalFeature(ASExperimentalFeatures feature)
+BOOL ASActivateExperimentalFeature(ASExperimentalFeatures feature)
 {
-  return [ASConfigurationManagerGet() activateExperimentalFeature:feature];
+  return [ASGetSharedConfigMgr() activateExperimentalFeature:feature];
 }
 
 void ASNotifyInitialized()
 {
-  [ASConfigurationManagerGet() frameworkDidInitialize];
+  [ASGetSharedConfigMgr() frameworkDidInitialize];
 }

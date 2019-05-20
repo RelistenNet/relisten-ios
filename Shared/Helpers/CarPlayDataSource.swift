@@ -12,8 +12,7 @@ import Observable
 import Siesta
 
 protocol CarPlayDataSourceDelegate : class {
-    func carPlayDataSourceWillUpdate();
-    func carPlayDataSourceDidUpdate();
+    func carPlayDataSourceUpdates(onQueue queue: DispatchQueue, _ updateBlock: @escaping () -> Void)
 }
 
 protocol Lockable {
@@ -31,9 +30,11 @@ class LockableDataItem<T> : Lockable {
                 if self.locked {
                     self._updatedBackingItem = newValue
                 } else {
-                    self.delegate.carPlayDataSourceWillUpdate()
-                    self._backingItem = newValue
-                    self.delegate.carPlayDataSourceDidUpdate()
+                    self.delegate.carPlayDataSourceUpdates(onQueue: self.queue) { [weak self] in
+                        guard let s = self else { return }
+                        
+                        s._backingItem = newValue
+                    }
                 }
             }
         }
@@ -46,9 +47,11 @@ class LockableDataItem<T> : Lockable {
             dispatchPrecondition(condition: .onQueue(queue))
             self._locked = newValue
             if !self._locked, let update = self._updatedBackingItem {
-                self.delegate.carPlayDataSourceWillUpdate()
-                self._backingItem = update
-                self.delegate.carPlayDataSourceDidUpdate()
+                self.delegate.carPlayDataSourceUpdates(onQueue: queue) { [weak self] in
+                    guard let s = self else { return }
+                    
+                    s._backingItem = update
+                }
             }
         }
     }

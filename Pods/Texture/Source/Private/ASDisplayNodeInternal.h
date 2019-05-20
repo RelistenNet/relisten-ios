@@ -76,10 +76,10 @@ AS_EXTERN NSString * const ASRenderingEngineDidDisplayNodesScheduledBeforeTimest
 
 #define NUM_CLIP_CORNER_LAYERS 4
 
-@interface ASDisplayNode () <_ASTransitionContextCompletionDelegate, CALayerDelegate>
+@interface ASDisplayNode () <_ASTransitionContextCompletionDelegate>
 {
 @package
-  AS::RecursiveMutex __instanceLock__;
+  ASDN::RecursiveMutex __instanceLock__;
 
   _ASPendingState *_pendingViewState;
   ASInterfaceState _pendingInterfaceState;
@@ -164,7 +164,6 @@ AS_EXTERN NSString * const ASRenderingEngineDidDisplayNodesScheduledBeforeTimest
   NSMutableArray<ASDisplayNode *> *_yogaChildren;
   __weak ASDisplayNode *_yogaParent;
   ASLayout *_yogaCalculatedLayout;
-  BOOL _willApplyNextYogaCalculatedLayout;
 #endif
 
   // Automatically manages subnodes

@@ -166,6 +166,10 @@ public class SourcesViewController: RelistenTableViewController<ShowWithSources>
         if shouldReloadTitle {
             updateTitle(forShow: data)
         }
+        
+        if canSkipIfSingleSource {
+            super.dataChanged(data)
+        }
     }
     
     override public func numberOfSections(in tableNode: ASTableNode) -> Int {

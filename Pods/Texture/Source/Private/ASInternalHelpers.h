@@ -12,8 +12,6 @@
 #import <UIKit/UIKit.h>
 
 #import <AsyncDisplayKit/ASBaseDefines.h>
-#import <AsyncDisplayKit/ASDisplayNodeExtras.h>
-#import <AsyncDisplayKit/ASImageProtocols.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -95,22 +93,6 @@ ASDISPLAYNODE_INLINE UIEdgeInsets ASConcatInsets(UIEdgeInsets insetsA, UIEdgeIns
   insetsA.bottom += insetsB.bottom;
   insetsA.right += insetsB.right;
   return insetsA;
-}
-
-ASDISPLAYNODE_INLINE AS_WARN_UNUSED_RESULT ASImageDownloaderPriority ASImageDownloaderPriorityWithInterfaceState(ASInterfaceState interfaceState) {
-  if (ASInterfaceStateIncludesVisible(interfaceState)) {
-    return ASImageDownloaderPriorityVisible;
-  }
-
-  if (ASInterfaceStateIncludesDisplay(interfaceState)) {
-    return ASImageDownloaderPriorityImminent;
-  }
-
-  if (ASInterfaceStateIncludesPreload(interfaceState)) {
-    return ASImageDownloaderPriorityPreload;
-  }
-
-  return ASImageDownloaderPriorityPreload;
 }
 
 @interface NSIndexPath (ASInverseComparison)

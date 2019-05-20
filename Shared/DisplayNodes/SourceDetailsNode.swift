@@ -204,7 +204,7 @@ public class SourceDetailsNode : ASCellNode {
         if isDetails {
                 vert = ASStackLayoutSpec(
                 direction: .vertical,
-                spacing: 8,
+                spacing: 4,
                 justifyContent: .start,
                 alignItems: .start,
                 children: ArrayNoNils(
@@ -229,7 +229,7 @@ public class SourceDetailsNode : ASCellNode {
             
             vert = ASStackLayoutSpec(
                 direction: .vertical,
-                spacing: 8,
+                spacing: 4,
                 justifyContent: .start,
                 alignItems: .start,
                 children: ArrayNoNils(

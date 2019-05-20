@@ -96,16 +96,7 @@ YGAlign yogaAlignSelf(ASStackLayoutAlignSelf alignSelf)
 
 YGFlexDirection yogaFlexDirection(ASStackLayoutDirection direction)
 {
-  switch (direction) {
-    case ASStackLayoutDirectionVertical:
-      return YGFlexDirectionColumn;
-    case ASStackLayoutDirectionVerticalReverse:
-      return YGFlexDirectionColumnReverse;
-    case ASStackLayoutDirectionHorizontal:
-      return YGFlexDirectionRow;
-    case ASStackLayoutDirectionHorizontalReverse:
-      return YGFlexDirectionRowReverse;
-  }
+  return direction == ASStackLayoutDirectionVertical ? YGFlexDirectionColumn : YGFlexDirectionRow;
 }
 
 float yogaFloatForCGFloat(CGFloat value)

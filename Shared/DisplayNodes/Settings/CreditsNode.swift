@@ -49,6 +49,7 @@ public class CreditsNode : ASCellNode {
         let attributedString : NSMutableAttributedString = NSMutableAttributedString(string: "\(RelistenApp.appName) was written by Alec Gorge\nWith help from\nJacob Farkas\nDaniel Saewitz")
         
         let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
+        let smallFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption1)
         let boldFontDescriptor = fontDescriptor.withSymbolicTraits(.traitBold)
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -69,6 +70,19 @@ public class CreditsNode : ASCellNode {
         attributedString.addLink(link: URL(string: "https://alecgorge.com")!, string: "Alec Gorge", attributes: linkAttributes)
         attributedString.addLink(link: URL(string: "https://rkas.net")!, string: "Jacob Farkas", attributes: linkAttributes)
         attributedString.addLink(link: URL(string: "https://saewitz.com")!, string: "Daniel Saewitz", attributes: linkAttributes)
+        
+        let iconCreditAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font : UIFont(descriptor: smallFontDescriptor, size: 0.0),
+                                                                    NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+
+        let iconCredits = [
+            "Music by Made x Made from the Noun Project",
+            "Heart by Jose Dean from the Noun Project",
+            "History by shashank singh from the Noun Project",
+            "cassette tape by Nico Ilk from the Noun Project",
+            "live by Adrien Coquet from the Noun Project",
+        ]
+        
+        attributedString.append(NSAttributedString(string: "\n\nIcon credits:\n" + iconCredits.joined(separator: "\n"), attributes: iconCreditAttributes))
         
         peopleCreditsNode.attributedText = attributedString
         peopleCreditsNode.delegate = self

@@ -96,8 +96,15 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public static var supportsSecureCoding: Bool { get { return true } }
     
     public func displayMini(on vc: UIViewController, completion: (() -> Void)?) {
-        if let nav = vc.navigationController {
-            nav.delegate = shrinker
+        if let t = self.window?.rootViewController as? UITabBarController, let vcs = t.viewControllers {
+            vcs.forEach({ tab in
+                if let nav = tab as? UINavigationController {
+                    nav.delegate = shrinker
+                    if let v = nav.viewControllers.last {
+                        shrinker.fix(viewController: v)
+                    }
+                }
+            })
         }
         
         addBarIfNeeded()
@@ -154,11 +161,12 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     
     public private(set) var hasBarBeenAdded = false
     public func addBarIfNeeded() {
-        if !hasBarBeenAdded, let w = self.window {
+        if !hasBarBeenAdded, let w = self.window, let t = w.rootViewController as? UITabBarController, let v = t.view {
             viewController.viewWillAppear(true)
             
-            w.addSubview(viewController.view)
-            
+            v.addSubview(viewController.view)
+            v.bringSubviewToFront(t.tabBar)
+
             viewController.viewDidAppear(true)
             
             let barHeight = viewController.barHeight
@@ -167,16 +175,16 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
             viewController.view.frame = CGRect(
                 x: 0,
                 y: windowHeight,
-                width: w.bounds.width,
-                height: windowHeight
+                width: v.bounds.width,
+                height: windowHeight + t.view.safeAreaInsets.bottom
             )
             
             UIView.animate(withDuration: 0.3, animations: { 
                 self.viewController.view.frame = CGRect(
                     x: 0,
-                    y: windowHeight - barHeight,
-                    width: w.bounds.width,
-                    height: windowHeight
+                    y: windowHeight - barHeight - t.tabBar.bounds.height + t.view.safeAreaInsets.bottom,
+                    width: v.bounds.width,
+                    height: windowHeight - t.tabBar.bounds.height + t.view.safeAreaInsets.bottom
                 )
             })
             
@@ -203,11 +211,10 @@ extension PlaybackController : AGAudioPlayerViewControllerPresentationDelegate {
     }
     
     func fullPlayerDismissProgress(_ progress: CGFloat) {
-        if let w = self.window {
-            
+        if let w = self.window, let t = w.rootViewController as? UITabBarController {
             var vFrame = viewController.view.frame
             
-            vFrame.origin.y = (w.bounds.height - viewController.barHeight) * progress
+            vFrame.origin.y = (w.bounds.height - viewController.barHeight - t.tabBar.bounds.height + t.view.safeAreaInsets.bottom) * progress
             
             viewController.view.frame = vFrame
             

@@ -86,11 +86,7 @@ typedef struct {
   int setLayoutMargins:1;
   int setPreservesSuperviewLayoutMargins:1;
   int setInsetsLayoutMarginsFromSafeArea:1;
-  int setActions:1;
 } ASPendingStateFlags;
-
-
-static constexpr ASPendingStateFlags kZeroFlags = {0};
 
 @implementation _ASPendingState
 {
@@ -144,7 +140,6 @@ static constexpr ASPendingStateFlags kZeroFlags = {0};
   CGPoint accessibilityActivationPoint;
   UIBezierPath *accessibilityPath;
   UISemanticContentAttribute semanticContentAttribute API_AVAILABLE(ios(9.0), tvos(9.0));
-  NSDictionary<NSString *, id<CAAction>> *actions;
 
   ASPendingStateFlags _flags;
 }
@@ -214,7 +209,6 @@ ASDISPLAYNODE_INLINE void ASPendingStateApplyMetricsToLayer(_ASPendingState *sta
 @synthesize layoutMargins=layoutMargins;
 @synthesize preservesSuperviewLayoutMargins=preservesSuperviewLayoutMargins;
 @synthesize insetsLayoutMarginsFromSafeArea=insetsLayoutMarginsFromSafeArea;
-@synthesize actions=actions;
 
 static CGColorRef blackColorRef = NULL;
 static UIColor *defaultTintColor = nil;
@@ -592,12 +586,6 @@ static UIColor *defaultTintColor = nil;
   _flags.setSemanticContentAttribute = YES;
 }
 
-- (void)setActions:(NSDictionary<NSString *,id<CAAction>> *)actionsArg
-{
-  actions = [actionsArg copy];
-  _flags.setActions = YES;
-}
-
 - (BOOL)isAccessibilityElement
 {
   return isAccessibilityElement;
@@ -929,9 +917,6 @@ static UIColor *defaultTintColor = nil;
   if (flags.setOpaque)
     ASDisplayNodeAssert(layer.opaque == opaque, @"Didn't set opaque as desired");
 
-  if (flags.setActions)
-    layer.actions = actions;
-
   ASPendingStateApplyMetricsToLayer(self, layer);
   
   if (flags.needsLayout)
@@ -951,7 +936,7 @@ static UIColor *defaultTintColor = nil;
    because a different setter would be called.
    */
 
-  unowned CALayer *layer = view.layer;
+  CALayer *layer = view.layer;
 
   ASPendingStateFlags flags = _flags;
   if (__shouldSetNeedsDisplay(layer)) {
@@ -993,9 +978,6 @@ static UIColor *defaultTintColor = nil;
 
   if (flags.setRasterizationScale)
     layer.rasterizationScale = rasterizationScale;
-
-  if (flags.setActions)
-    layer.actions = actions;
 
   if (flags.setClipsToBounds)
     view.clipsToBounds = clipsToBounds;
@@ -1290,7 +1272,7 @@ static UIColor *defaultTintColor = nil;
 
 - (void)clearChanges
 {
-  _flags = kZeroFlags;
+  _flags = (ASPendingStateFlags){ 0 };
 }
 
 - (BOOL)hasSetNeedsLayout
@@ -1305,7 +1287,69 @@ static UIColor *defaultTintColor = nil;
 
 - (BOOL)hasChanges
 {
-  return memcmp(&_flags, &kZeroFlags, sizeof(ASPendingStateFlags));
+  ASPendingStateFlags flags = _flags;
+
+  return (flags.setAnchorPoint
+  || flags.setPosition
+  || flags.setZPosition
+  || flags.setFrame
+  || flags.setBounds
+  || flags.setPosition
+  || flags.setTransform
+  || flags.setSublayerTransform
+  || flags.setContents
+  || flags.setContentsGravity
+  || flags.setContentsRect
+  || flags.setContentsCenter
+  || flags.setContentsScale
+  || flags.setRasterizationScale
+  || flags.setClipsToBounds
+  || flags.setBackgroundColor
+  || flags.setTintColor
+  || flags.setHidden
+  || flags.setAlpha
+  || flags.setCornerRadius
+  || flags.setContentMode
+  || flags.setUserInteractionEnabled
+  || flags.setExclusiveTouch
+  || flags.setShadowOpacity
+  || flags.setShadowOffset
+  || flags.setShadowRadius
+  || flags.setShadowColor
+  || flags.setBorderWidth
+  || flags.setBorderColor
+  || flags.setAutoresizingMask
+  || flags.setAutoresizesSubviews
+  || flags.setNeedsDisplayOnBoundsChange
+  || flags.setAllowsGroupOpacity
+  || flags.setAllowsEdgeAntialiasing
+  || flags.setEdgeAntialiasingMask
+  || flags.needsDisplay
+  || flags.needsLayout
+  || flags.setAsyncTransactionContainer
+  || flags.setOpaque
+  || flags.setSemanticContentAttribute
+  || flags.setLayoutMargins
+  || flags.setPreservesSuperviewLayoutMargins
+  || flags.setInsetsLayoutMarginsFromSafeArea
+  || flags.setIsAccessibilityElement
+  || flags.setAccessibilityLabel
+  || flags.setAccessibilityAttributedLabel
+  || flags.setAccessibilityHint
+  || flags.setAccessibilityAttributedHint
+  || flags.setAccessibilityValue
+  || flags.setAccessibilityAttributedValue
+  || flags.setAccessibilityTraits
+  || flags.setAccessibilityFrame
+  || flags.setAccessibilityLanguage
+  || flags.setAccessibilityElementsHidden
+  || flags.setAccessibilityViewIsModal
+  || flags.setShouldGroupAccessibilityChildren
+  || flags.setAccessibilityIdentifier
+  || flags.setAccessibilityNavigationStyle
+  || flags.setAccessibilityHeaderElements
+  || flags.setAccessibilityActivationPoint
+  || flags.setAccessibilityPath);
 }
 
 - (void)dealloc

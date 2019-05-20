@@ -10,9 +10,9 @@ import Foundation
 import FastImageCache
 
 public class ShowFICWrapper : NSObject, FICEntity {
-    private let show : Show
+    private let show : ShowCellDataSource
     
-    public init(_ show: Show) {
+    public init(_ show: ShowCellDataSource) {
         self.show = show
     }
     
@@ -23,8 +23,8 @@ public class ShowFICWrapper : NSObject, FICEntity {
             return nil
         }
         let queryDictionary : [String : String] = ["date" : show.display_date,
-                                                   "venue" : show.venue?.name ?? "",
-                                                   "location" : show.venue?.location ?? "",
+                                                   "venue" : show.venueDataSource?.name ?? "",
+                                                   "location" : show.venueDataSource?.location ?? "",
                                                    "artistID" : String(show.artist_id)]
         var queryItems : [URLQueryItem] = []
         for (key, value) in queryDictionary {
@@ -52,7 +52,7 @@ public class ShowFICWrapper : NSObject, FICEntity {
     }
 }
 
-extension Show {
+extension ShowCellDataSource {
     public func fastImageCacheWrapper() -> ShowFICWrapper {
         return ShowFICWrapper(self)
     }

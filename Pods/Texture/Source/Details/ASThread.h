@@ -98,10 +98,10 @@ ASDISPLAYNODE_INLINE void _ASUnlockScopeCleanup(id<NSLocking> __strong *lockPtr)
 #include <thread>
 
 // These macros are here for legacy reasons. We may get rid of them later.
-#define ASAssertLocked(m) m.AssertHeld()
-#define ASAssertUnlocked(m) m.AssertNotHeld()
+#define DISABLED_ASAssertLocked(m)
+#define DISABLED_ASAssertUnlocked(m)
 
-namespace AS {
+namespace ASDN {
   
   // Set once in Mutex constructor. Linker fails if this is a member variable. ??
   static bool gMutex_unfair;
@@ -290,6 +290,6 @@ namespace AS {
   typedef std::lock_guard<Mutex> MutexLocker;
   typedef std::unique_lock<Mutex> UniqueLock;
 
-} // namespace AS
+} // namespace ASDN
 
 #endif /* __cplusplus */

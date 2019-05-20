@@ -47,16 +47,20 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         }.add(to: &disposal)
     }
     
-    func carPlayDataSourceWillUpdate() {
-        performOnMainQueueSync({
+    func carPlayDataSourceUpdates(onQueue queue: DispatchQueue, _ updateBlock: @escaping () -> Void) {
+        assert(!Thread.isMainThread)
+        
+        DispatchQueue.main.async {
             MPPlayableContentManager.shared().beginUpdates()
-        })
-    }
-    
-    func carPlayDataSourceDidUpdate() {
-        performOnMainQueueSync {
-            MPPlayableContentManager.shared().endUpdates()
-            MPPlayableContentManager.shared().reloadData()
+            
+            queue.async {
+                updateBlock()
+                
+                DispatchQueue.main.async {
+                    MPPlayableContentManager.shared().endUpdates()
+                    MPPlayableContentManager.shared().reloadData()
+                }
+            }
         }
     }
     
@@ -277,6 +281,7 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
     }
     
     private func allArtistItems(at indexPath: IndexPath) -> (ArtistWithCounts?, yearCount: Int?, Year?, showCount: Int?, Show?, CompleteShowInformation?, Track?) {
+        
         var artist : ArtistWithCounts?
         var yearCount : Int?
         var years : [Year]?
@@ -286,7 +291,9 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
         var show : Show?
         var showInfo : CompleteShowInformation?
         var track : Track?
-        let block = {
+
+        dispatchPrecondition(condition: .notOnQueue(DispatchQueue.main))
+        DispatchQueue.main.sync {
             if self.carPlaySection(from: indexPath) == .artists {
                 if indexPath.count > 1 {
                     artist = self.dataSource.allArtists().objectAtIndexIfInBounds(indexPath[1])
@@ -330,7 +337,6 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
                 }
             }
         }
-        performOnMainQueueSync(block)
         return (artist, yearCount, year, showCount, show, showInfo, track)
     }
     
@@ -590,47 +596,60 @@ public class CarPlayController : NSObject, MPPlayableContentDelegate, MPPlayable
             return
         }
         
-        DispatchQueue.main.async {
-            var request : Request?
-            switch indexPath.count {
-            case 2:
-                switch section {
-                case .artists:
-                    let (artist, _, _, _, _, _, _) = self.allArtistItems(at: indexPath)
-                    if let artist = artist {
+        let group = DispatchGroup()
+        var request : Request?
+        switch indexPath.count {
+        case 2:
+            switch section {
+            case .artists:
+                let (artist, _, _, _, _, _, _) = self.allArtistItems(at: indexPath)
+                if let artist = artist {
+                    group.enter()
+                    DispatchQueue.main.async {
                         request = RelistenApi.years(byArtist: artist).loadFromCacheThenUpdate()
+                        group.leave()
                     }
-                default:
-                    break
-                }
-            case 3:
-                switch section {
-                case .artists:
-                    let (artist, _, year, _, _, _, _) = self.allArtistItems(at: indexPath)
-                    if let artist = artist {
-                        if let year = year {
-                            request = RelistenApi.shows(inYear: year, byArtist: artist).loadFromCacheThenUpdate()
-                        }
-                    }
-                default:
-                    break
-                }
-            case 4:
-                switch section {
-                case .artists:
-                    let (artist, _, _, _, show, _, _) = self.allArtistItems(at: indexPath)
-                    if let artist = artist {
-                        if let show = show {
-                            request = RelistenApi.showWithSources(forShow: show, byArtist: artist).loadFromCacheThenUpdate()
-                        }
-                    }
-                default:
-                    break
                 }
             default:
                 break
             }
-            
+        case 3:
+            switch section {
+            case .artists:
+                let (artist, _, year, _, _, _, _) = self.allArtistItems(at: indexPath)
+                if let artist = artist {
+                    if let year = year {
+                        group.enter()
+                        DispatchQueue.main.async {
+                            request = RelistenApi.shows(inYear: year, byArtist: artist).loadFromCacheThenUpdate()
+                            group.leave()
+                        }
+                    }
+                }
+            default:
+                break
+            }
+        case 4:
+            switch section {
+            case .artists:
+                let (artist, _, _, _, show, _, _) = self.allArtistItems(at: indexPath)
+                if let artist = artist {
+                    if let show = show {
+                        group.enter()
+                        DispatchQueue.main.async {
+                            request = RelistenApi.showWithSources(forShow: show, byArtist: artist).loadFromCacheThenUpdate()
+                            group.leave()
+                        }
+                    }
+                }
+            default:
+                break
+            }
+        default:
+            break
+        }
+        
+        group.notify(queue: DispatchQueue.main) {
             if let request = request {
                 request.onCompletion { (_) in
                     completionHandler(nil)

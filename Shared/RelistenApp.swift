@@ -152,7 +152,7 @@ public class RelistenApp {
             DispatchQueue.main.async {
                 self?.setupAppearance()
             }
-            }.add(to: &disposal)
+        }.add(to: &disposal)
         
         playbackController.viewDidLoad()
     }
@@ -185,12 +185,24 @@ public class RelistenApp {
         UISegmentedControl.appearance().tintColor = AppColors.primary
         UITabBar.appearance().tintColor = AppColors.primary
         
+        let sutf = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+        sutf.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        sutf.tintColor = UIColor.white.withAlphaComponent(0.8)
         
-        if !delegate.isDummyDelegate,
-           let nav = delegate.rootNavigationController {
-            nav.navigationBar.barTintColor = AppColors.primary
-            nav.navigationBar.backgroundColor = AppColors.primary
-            nav.navigationBar.tintColor = AppColors.primary
+        let sbbi = UISegmentedControl.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+        
+        sbbi.tintColor = AppColors.textOnPrimary
+        sbbi.backgroundColor = AppColors.primary
+
+        if !delegate.isDummyDelegate, let w = delegate.window, let t = w.rootViewController as? UITabBarController {
+            t.viewControllers?.forEach({ tab in
+                if let nav = tab as? UINavigationController {
+                    nav.navigationBar.barTintColor = AppColors.primary
+                    nav.navigationBar.backgroundColor = AppColors.primary
+                    nav.navigationBar.tintColor = AppColors.primary
+                }
+            })
+            t.tabBar.tintColor = AppColors.primary
         }
         
         playbackController?.viewController.applyColors(AppColors.playerColors)

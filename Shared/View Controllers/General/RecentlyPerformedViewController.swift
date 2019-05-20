@@ -44,7 +44,7 @@ class RecentlyPerformedViewController: ShowListViewController<[Show]>, UIViewCon
     
     override func extractShowsAndSource(forData: [Show]) -> [ShowWithSingleSource] {
         let filteredShows = forData.filter { return ($0.date.timeIntervalSinceNow > -(recentShowInterval)) }
-        return filteredShows.map({ ShowWithSingleSource(show: $0, source: nil) })
+        return filteredShows.map({ ShowWithSingleSource(show: $0, source: nil, artist: artist) })
     }
     
     override func layout(show: Show, atIndex: IndexPath) -> ASCellNodeBlock {

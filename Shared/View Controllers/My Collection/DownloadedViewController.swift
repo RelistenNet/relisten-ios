@@ -46,7 +46,7 @@ class DownloadedViewController: ShowListViewController<[CompleteShowInformation]
     }
     
     override func extractShowsAndSource(forData data: [CompleteShowInformation]) -> [ShowWithSingleSource] {
-        return data.map({ ShowWithSingleSource(show: $0.show, source: $0.source) })
+        return data.map({ ShowWithSingleSource(show: $0.show, source: $0.source, artist: artist) })
     }
     
     func loadOffline() -> [CompleteShowInformation] {

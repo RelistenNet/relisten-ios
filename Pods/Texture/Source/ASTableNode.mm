@@ -100,7 +100,7 @@
 
 @interface ASTableNode ()
 {
-  AS::RecursiveMutex _environmentStateLock;
+  ASDN::RecursiveMutex _environmentStateLock;
   id<ASBatchFetchingDelegate> _batchFetchingDelegate;
 }
 

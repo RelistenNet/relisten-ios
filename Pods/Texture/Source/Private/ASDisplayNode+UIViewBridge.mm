@@ -34,8 +34,8 @@
 #define DISPLAYNODE_USE_LOCKS 1
 
 #if DISPLAYNODE_USE_LOCKS
-#define _bridge_prologue_read AS::MutexLocker l(__instanceLock__); ASDisplayNodeAssertThreadAffinity(self)
-#define _bridge_prologue_write AS::MutexLocker l(__instanceLock__)
+#define _bridge_prologue_read ASDN::MutexLocker l(__instanceLock__); ASDisplayNodeAssertThreadAffinity(self)
+#define _bridge_prologue_write ASDN::MutexLocker l(__instanceLock__)
 #else
 #define _bridge_prologue_read ASDisplayNodeAssertThreadAffinity(self)
 #define _bridge_prologue_write
@@ -175,7 +175,7 @@ if (shouldApply) { _layer.layerProperty = (layerValueExpr); } else { ASDisplayNo
 
 - (CGFloat)cornerRadius
 {
-  AS::MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   return _cornerRadius;
 }
 
@@ -186,7 +186,7 @@ if (shouldApply) { _layer.layerProperty = (layerValueExpr); } else { ASDisplayNo
 
 - (ASCornerRoundingType)cornerRoundingType
 {
-  AS::MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   return _cornerRoundingType;
 }
 
@@ -944,18 +944,6 @@ if (shouldApply) { _layer.layerProperty = (layerValueExpr); } else { ASDisplayNo
   }
 }
 
-- (NSDictionary<NSString *,id<CAAction>> *)actions
-{
-  _bridge_prologue_read;
-  return _getFromLayer(actions);
-}
-
-- (void)setActions:(NSDictionary<NSString *,id<CAAction>> *)actions
-{
-  _bridge_prologue_write;
-  _setToLayer(actions, actions);
-}
-
 - (void)safeAreaInsetsDidChange
 {
   ASDisplayNodeAssertMainThread();
@@ -985,7 +973,7 @@ if (shouldApply) { _layer.layerProperty = (layerValueExpr); } else { ASDisplayNo
 
 - (BOOL)_locked_insetsLayoutMarginsFromSafeArea
 {
-  ASAssertLocked(__instanceLock__);
+  DISABLED_ASAssertLocked(__instanceLock__);
   if (AS_AVAILABLE_IOS(11.0)) {
     if (!_flags.layerBacked) {
       return _getFromViewOnly(insetsLayoutMarginsFromSafeArea);

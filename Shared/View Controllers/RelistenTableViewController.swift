@@ -152,11 +152,20 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
         statusOverlay.positionToCoverParent()
     }
     
+    private var lastLoadTime: Date? = nil
+    
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if refreshOnAppear {
-            load()
+        // only do this after 60 minutes
+        if let l = lastLoadTime, refreshOnAppear, (Date().timeIntervalSince1970 - l.timeIntervalSince1970) > 60 * 60 {
+            // don't hit the cache and then the network--go straight to the network
+            LogDebug("---> refreshingOnAppear")
+            resource?.load()
+        }
+        else if lastLoadTime == nil {
+            LogDebug("---> performing initial load")
+            resource?.load()
         }
     }
     
@@ -166,11 +175,15 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
     public var previousData: TData? = nil
     
     open func has(oldData old: TData, changed new: TData) -> Bool {
+        if let oldArray = old as? [Any], let newArray = new as? [Any] {
+            return oldArray.count != newArray.count
+        }
+        
         return true
     }
     
     open func dataChanged(_ data: TData) {
-        
+        render()
     }
     
     open override func resourceChanged(_ resource: Resource, event: ResourceEvent) {
@@ -189,17 +202,21 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
             || (previousData != nil && latestData != nil && self.has(oldData: previousData!, changed: latestData!)
             ) {
             LogDebug("---> data changed")
-            dataChanged(latestData!)
-            render()
+            
+            if let d = latestData {
+                lastLoadTime = Date()
+                dataChanged(d)
+            }
+            else {
+                LogDebug("---> not calling dataChanged because latestData is nil")
+            }
         }
     }
     
     // MARK: Layout & Rendering
     
     open func render() {
-        DispatchQueue.main.async {
-            LogDebug("[render] calling tableNode.reloadData()")
-            self.tableNode.reloadData()
-        }
+        LogDebug("[render] calling tableNode.reloadData()")
+        self.tableNode.reloadData()
     }
 }

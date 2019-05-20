@@ -171,31 +171,16 @@ public class _RelistenApi {
             return try ($0.content as JSON).arrayValue.map(SourceReview.init)
         }
         
-        /*
-        service.configure("/user/starred/* /*") {   // Github gives 202 for “starred” and 404 for “not starred.”
-            $0.pipeline[.model].add(               // This custom transformer turns that curious convention into
-                TrueIfResourceFoundTransformer())  // a resource whose content is a simple boolean.
+        artists().addObserver(owner: self) { (res: Resource, e: ResourceEvent) in
+            if case .newData = e, let d: [ArtistWithCounts] = res.latestData?.typedContent() {
+                var a: [String: ArtistWithCounts] = [:]
+                
+                d.forEach({ a[$0.uuid.uuidString] = $0 })
+                
+                RelistenCacher.shared.artists.value = a
+            }
         }
-        */*/*/
- 
-        
-        // Note that you can use Siesta without these sorts of model mappings. By default, Siesta parses JSON, text,
-        // and images based on content type — and a resource will contain whatever the server happened to return, in a
-        // parsed but unstructured form (string, dictionary, etc.). If you prefer to work with raw dictionaries instead
-        // of models (good for rapid prototyping), then no additional transformer config is necessary.
-        //
-        // If you do apply a path-based mapping like the ones above, then any request for that path that does not return
-        // the expected type becomes an error. For example, "/users/foo" _must_ return a JSON response because that's
-        // what the User(json:) expects.
     }
-    
-    // MARK: Endpoints
-    
-    // You can turn your REST API into a nice Swift API using lightweight wrappers that return Siesta resources.
-    //
-    // Note that this class keeps its service private, making these methods the only entry points for the API.
-    // You could also choose to subclass Service, which makes methods like service.resource(…) available to
-    // your whole app. That approach is sometimes better for quick and dirty prototyping.
     
     public func artists() -> Resource {
         return service.resource("/artists")

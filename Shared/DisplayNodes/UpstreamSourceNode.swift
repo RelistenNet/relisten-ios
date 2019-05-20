@@ -34,7 +34,7 @@ public class UpstreamSourceNode : ASCellNode {
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let upstreamInfo = ASStackLayoutSpec(
             direction: .vertical,
-            spacing: 0,
+            spacing: 4,
             justifyContent: .spaceBetween,
             alignItems: .start,
             children: ArrayNoNils(
@@ -46,7 +46,7 @@ public class UpstreamSourceNode : ASCellNode {
         upstreamInfo.style.alignSelf = .stretch
         
         let l = ASInsetLayoutSpec(
-            insets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 8),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 8),
             child: upstreamInfo
         )
         l.style.alignSelf = .stretch

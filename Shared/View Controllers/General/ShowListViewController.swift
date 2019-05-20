@@ -8,15 +8,408 @@
 
 import Foundation
 import Siesta
-import SINQ
 import AsyncDisplayKit
+import RealmSwift
+import DZNEmptyDataSet
 
 public struct ShowWithSingleSource {
     public let show : Show
     public let source : SourceFull?
+    public let artist : Artist?
 }
 
-// (farkas) This is real similar to GroupedViewController. I'd love to unify these two classes at some point. 
+public struct ShowSourceArtistUUIDs {
+    public let showUUID: UUID
+    public let sourceUUID: UUID?
+    public let artistUUID: UUID
+}
+
+extension HasSourceAndShow {
+    func toUUIDs() -> ShowSourceArtistUUIDs {
+        return ShowSourceArtistUUIDs(
+            showUUID: UUID(uuidString: show_uuid)!,
+            sourceUUID: UUID(uuidString: source_uuid)!,
+            artistUUID: UUID(uuidString: artist_uuid)!
+        )
+    }
+}
+
+public protocol ShowListDataSource: class {
+    associatedtype DataType
+    
+    func showListDataChanged(_ data: DataType)
+    func showListFilterTextChanged(_ text: String, inScope scope: String)
+    
+    func title(forSection section: Int, whileFiltering isFiltering: Bool) -> String?
+    func sectionIndexTitles(whileFiltering isFiltering: Bool) -> [String]?
+    func numberOfSections(whileFiltering isFiltering: Bool) -> Int
+    func numberOfShows(in section: Int, whileFiltering isFiltering: Bool) -> Int
+    
+    func cellShow(at indexPath: IndexPath, whileFiltering isFiltering: Bool) -> ShowCellDataSource?
+    func showWithSingleSource(at indexPath: IndexPath, whileFiltering isFiltering: Bool) -> ShowWithSingleSource?
+}
+
+public class NewShowListRealmViewController<T: RealmCollectionValue> : NewShowListViewController<[ShowSourceArtistUUIDs], ShowListLazyDataSource> where T : HasSourceAndShow {
+    private let strongDataSource: ShowListLazyDataSource
+    
+    public required init(query: Results<T>, providedArtist artist: ArtistWithCounts? = nil, enableSearch: Bool = true, tourSections: Bool? = nil, artistSections: Bool? = nil) {
+        strongDataSource = ShowListLazyDataSource(providedArtist: artist, tourSections: tourSections, artistSections: artistSections)
+        super.init(withDataSource: strongDataSource, enableSearch: enableSearch)
+        
+        query.observe { [weak self] _ in
+            let uuids = Array(query).map({ $0.toUUIDs() })
+            
+            // dataChanged reloads the tableview
+            self?.dataChanged(uuids)
+        }.dispose(to: &disposal)
+    }
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style) {
+        fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public required init(withDataSource dataSource: ShowListLazyDataSource, enableSearch: Bool) {
+        fatalError("init(withDataSource:enableSearch:) has not been implemented")
+    }
+}
+
+public class NewShowListArrayViewController<T> : NewShowListViewController<[T], ShowListArrayDataSource<[T], T, ShowListArrayDataSourceDefaultExtractor<T>>> where T: Show {
+    private let strongDataSource: ShowListArrayDataSource<[T], T, ShowListArrayDataSourceDefaultExtractor<T>>
+    private let strongExtractor: ShowListArrayDataSourceDefaultExtractor<T>
+    
+    public required init(providedArtist artist: ArtistWithCounts? = nil, sort: ShowSorting = .descending, tourSections: Bool = true, artistSections: Bool = false, enableSearch: Bool = true) {
+        strongExtractor = ShowListArrayDataSourceDefaultExtractor(providedArtist: artist)
+        strongDataSource = ShowListArrayDataSource(extractor: strongExtractor, sort: sort)
+        super.init(withDataSource: strongDataSource, enableSearch: enableSearch)
+    }
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style) {
+        fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public required init(withDataSource dataSource: ShowListArrayDataSource<[T], T, ShowListArrayDataSourceDefaultExtractor<T>>, enableSearch: Bool) {
+        fatalError("init(withDataSource:enableSearch:) has not been implemented")
+    }
+}
+
+public class NewShowListViewController<T, DataSource: ShowListDataSource> : RelistenTableViewController<T>, UISearchResultsUpdating, UISearchBarDelegate, DZNEmptyDataSetSource where DataSource.DataType == T {
+    internal let showMappingQueue = DispatchQueue(label: "live.relisten.ShowListViewController.mappingQueue")
+    
+    let searchController: UISearchController = UISearchController(searchResultsController: nil)
+    
+    internal let enableSearch: Bool
+    
+    internal weak var dataSource: DataSource? = nil
+    
+    public required init(withDataSource dataSource: DataSource, enableSearch: Bool = true) {
+        self.enableSearch = enableSearch
+        self.dataSource = dataSource
+        
+        super.init(useCache: true, refreshOnAppear: true)
+        
+        self.tableNode.view.sectionIndexColor = AppColors.primary
+        self.tableNode.view.sectionIndexMinimumDisplayRowCount = 4
+        
+        if enableSearch {
+            // Setup the Search Controller
+            searchController.searchResultsUpdater = self
+            searchController.obscuresBackgroundDuringPresentation = true
+            
+            searchController.searchBar.delegate = self
+            if let buttonTitles = self.scopeButtonTitles {
+                searchController.searchBar.scopeButtonTitles = buttonTitles
+            }
+            // Hide the scope bar for now- we'll reveal it when the user taps on the search field
+            searchController.searchBar.showsScopeBar = true
+            
+            searchController.searchBar.placeholder = self.searchPlaceholder
+            searchController.searchBar.barStyle = .default
+            searchController.searchBar.searchBarStyle = .prominent
+            
+            navigationItem.searchController = searchController
+            definesPresentationContext = true
+            
+            searchController.searchBar.sizeToFit()
+        }
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
+        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableNode.view.emptyDataSetSource = self
+        tableNode.view.tableFooterView = UIView()
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        if enableSearch {
+            navigationItem.hidesSearchBarWhenScrolling = false
+        }
+        super.viewWillAppear(animated)
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        if enableSearch {
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
+        super.viewWillAppear(animated)
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        if enableSearch {
+            searchController.isActive = false
+        }
+        super.viewWillDisappear(animated)
+    }
+    
+    // MARK: Subclass Overrides
+    public override var resource: Resource? { get { return nil } }
+    
+    public func layout(show: ShowWithSingleSource, atIndex: IndexPath) -> ASCellNodeBlock {
+        return { ShowCellNode(show: show.show) }
+    }
+    
+    var scopeButtonTitles : [String]? { get { return ["All", "SBD"] } }
+    var searchPlaceholder : String { get { return "Filter" } }
+    
+    // MARK: Updating Data
+    
+    public override func dataChanged(_ data: T) {
+        guard let ds = dataSource else { return }
+
+        showMappingQueue.async {
+            ds.showListDataChanged(data)
+            
+            DispatchQueue.main.async {
+                self.render()
+            }
+        }
+    }
+    
+    // MARK: Table Data Source
+    override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+        tableNode.deselectRow(at: indexPath, animated: true)
+        
+        guard let ds = dataSource else { return }
+        
+        var show: ShowWithSingleSource? = nil
+        let filtering = isFiltering()
+        showMappingQueue.sync {
+            show = ds.showWithSingleSource(at: indexPath, whileFiltering: filtering)
+        }
+        
+        if let s = show, let a = s.artist {
+            let sourcesViewController = SourcesViewController(artist: a, show: s.show)
+            sourcesViewController.presentIfNecessary(navigationController: navigationController, forSource: s.source)
+        }
+    }
+    
+    override public func numberOfSections(in tableNode: ASTableNode) -> Int {
+        guard let ds = dataSource else { return 0 }
+        
+        var count : Int = 0
+        let filtering = isFiltering()
+        showMappingQueue.sync {
+            count = ds.numberOfSections(whileFiltering: filtering)
+        }
+        return count
+    }
+    
+    override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        guard let ds = dataSource else { return 0 }
+
+        var count : Int = 0
+        let filtering = isFiltering()
+        showMappingQueue.sync {
+            count = ds.numberOfShows(in: section, whileFiltering: filtering)
+        }
+        return count
+    }
+    
+    override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let ds = dataSource else { return nil }
+
+        var title : String? = nil
+        let filtering = isFiltering()
+        showMappingQueue.sync {
+            title = ds.title(forSection: section, whileFiltering: filtering)
+        }
+        return title
+    }
+    
+    public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+        guard let ds = dataSource else { return { ASCellNode() } }
+
+        var retval : ASCellNodeBlock? = nil
+        
+        let filtering = isFiltering()
+        showMappingQueue.sync {
+            if let showWithSource = ds.showWithSingleSource(at: indexPath, whileFiltering: filtering) {
+                retval = self.layout(show: showWithSource, atIndex: indexPath)
+            }
+        }
+        
+        if let retval = retval {
+            return retval
+        } else {
+            return { ASCellNode() }
+        }
+    }
+    
+    public override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        guard let ds = dataSource else { return nil }
+
+        let letters = ds.sectionIndexTitles(whileFiltering: isFiltering())
+        return letters
+    }
+    
+    //MARK: Searching
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func isFiltering() -> Bool {
+        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+        return (searchController.isActive && !searchBarIsEmpty()) || searchBarScopeIsFiltering
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        guard let ds = dataSource else { return }
+        
+        let searchTextLC = searchText.lowercased()
+        
+        showMappingQueue.async {
+            ds.showListFilterTextChanged(searchTextLC, inScope: scope)
+            
+            DispatchQueue.main.async {
+                self.render()
+            }
+        }
+    }
+    
+    //MARK: UISearchResultsUpdating
+    public func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles?[searchBar.selectedScopeButtonIndex] ?? "All"
+        if let searchText = searchController.searchBar.text {
+            filterContentForSearchText(searchText, scope: scope)
+        }
+    }
+    
+    public func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchController.searchBar.showsScopeBar = true
+        searchController.searchBar.sizeToFit()
+        return true
+    }
+    
+    public func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        searchController.searchBar.showsScopeBar = true
+        searchController.searchBar.sizeToFit()
+        return true
+    }
+    
+    public func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchController.searchBar.showsScopeBar = true
+        searchController.searchBar.sizeToFit()
+    }
+    
+    //MARK: UISearchBarDelegate
+    public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+    }
+    
+    // This is kind of dumb, but due to some bugs in LayerKit we need to hide the scope bar until the search field is tapped,
+    //  otherwise the scope bars show up while pushing/popping this view controller.
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchController.searchBar.showsScopeBar = true
+    }
+    
+    // MARK: DZNEmptyDataSetDelegate
+
+    // MARK: DZNEmptyDataSetSource
+    public func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
+        return -50.0
+    }
+    
+    public func spaceHeight(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
+        return 22.0
+    }
+    
+    public func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "music")?.tinted(color: .lightGray)
+    }
+    
+    public func titleTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
+        return "No Shows"
+    }
+    
+    public func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString {
+        let text = titleTextForEmptyDataSet(scrollView)
+        
+        let attributes = [
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline),
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+        ]
+        
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    public func descriptionTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
+        return ""
+    }
+    
+    public func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString {
+        let text = descriptionTextForEmptyDataSet(scrollView)
+        
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .byWordWrapping
+        paragraph.alignment = .center
+        
+        let attributes = [
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray,
+            NSAttributedString.Key.paragraphStyle: paragraph
+        ]
+        
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    //MARK: State Restoration
+    enum CodingKeys: String, CodingKey {
+        case dataSource = "dataSource"
+        case enableSearch = "enableSearch"
+    }
+    
+    override public func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        
+        // TODO: implement this
+    }
+    
+    override public func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+    }
+}
+
+
+import SINQ
+
+// (farkas) This is real similar to GroupedViewController. I'd love to unify these two classes at some point.
 public class ShowListViewController<T> : RelistenTableViewController<T>, UISearchResultsUpdating, UISearchBarDelegate {
     internal let artist: Artist
     
@@ -140,7 +533,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
             self.allShows = extractedShows
             self.groupedShows = grouped
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }
@@ -152,7 +545,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
             self.allShows = extractedShows
             self.groupedShows = grouped
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }
@@ -161,7 +554,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
         var sinqData = sinq(data)
             .filter({ (show) -> Bool in
                 return ((scope == "All" || self.scopeMatchesShow(show, scope: scope)) &&
-                        (searchText == nil || searchText == "" || self.searchStringMatchesShow(show, searchText: searchText!)))
+                    (searchText == nil || searchText == "" || self.searchStringMatchesShow(show, searchText: searchText!)))
             })
         
         if artist.shouldSortYearsDescending, shouldSortShows {
@@ -297,7 +690,7 @@ public class ShowListViewController<T> : RelistenTableViewController<T>, UISearc
         showMappingQueue.async {
             self.filteredShows = self.filteredItemsForSearchText(searchTextLC, scope: scope)
             DispatchQueue.main.async {
-                self.tableNode.reloadData()
+                self.render()
             }
         }
     }

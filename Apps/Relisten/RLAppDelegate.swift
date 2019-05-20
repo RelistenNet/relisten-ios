@@ -58,13 +58,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         if rootNavigationController == nil {
-            rootNavigationController = RelistenNavigationController(rootViewController: ArtistsViewController())
+            let artists = ArtistsViewController()
+            let nav = RelistenNavigationController(rootViewController: artists)
+            nav.tabBarItem = artists.tabBarItem
+            
+            rootNavigationController = nav
         }
         
         rootNavigationController.navigationBar.prefersLargeTitles = true
         rootNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary]
         
-        window?.rootViewController = rootNavigationController
+        window?.rootViewController = RelistenTabBarController(rootNavigationController)
         
         window?.makeKeyAndVisible()
         RelistenApp.sharedApp.loadViews()
@@ -134,7 +138,10 @@ extension AppDelegate {
                               coder: NSCoder) -> UIViewController? {
         if let firstIdentifier = identifierComponents.first,
            firstIdentifier == "net.relisten.RelistenNavigationController" {
-            rootNavigationController = RelistenNavigationController(rootViewController: ArtistsViewController())
+            let artists = ArtistsViewController()
+            let nav = RelistenNavigationController(rootViewController: artists)
+            nav.tabBarItem = artists.tabBarItem
+            rootNavigationController = nav
             return rootNavigationController
         }
         return nil

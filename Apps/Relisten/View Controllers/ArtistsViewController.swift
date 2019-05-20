@@ -17,9 +17,6 @@ import SVProgressHUD
 class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, ASCollectionDelegate, UISearchResultsUpdating, UIViewControllerRestoration {
     enum Sections: Int, RawRepresentable {
         case favorited = 0
-        case recentlyPlayed
-        case favoritedShows
-        case availableOffline
         case featured
         case recentlyPerformed
         case allRecentlyUpdated
@@ -27,19 +24,13 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         case count
     }
     
-    public var recentlyPlayedTracks: Results<RecentlyPlayedTrack>?
     public var favoriteArtists: [UUID] = []
-    public var offlineShows: [CompleteShowInformation] = []
-    public var favoriteShows: [CompleteShowInformation] = []
     public var allRecentlyUpdatedShows: [ShowWithArtist] = []
     public var recentlyPerformedShows: [ShowWithArtist] = []
-
+    
     public var allArtists: [ArtistWithCounts] = []
     public var featuredArtists: [ArtistWithCounts] = []
     
-    public let recentShowsNode: HorizontalShowCollectionCellNode
-    public let offlineShowsNode: HorizontalShowCollectionCellNode
-    public let favoritedSourcesNode: HorizontalShowCollectionCellNode
     public let recentlyPerformedNode: HorizontalShowCollectionCellNode
     public let allRecentlyUpdatedNode: HorizontalShowCollectionCellNode
     
@@ -48,25 +39,21 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     
     let searchController: UISearchController!
     private let resultsViewController: ArtistsSearchResultsViewController = ArtistsSearchResultsViewController(useCache: true, refreshOnAppear: true)
-
+    
     private let tableUpdateQueue = DispatchQueue(label: "net.relisten.groupedViewController.queue")
     
     public init() {
-        recentShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
-        offlineShowsNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
-        favoritedSourcesNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         recentlyPerformedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
         allRecentlyUpdatedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
-
+        
         resourceRecentlyUpdated = RelistenApi.recentlyUpdated()
         
         searchController = UISearchController(searchResultsController: resultsViewController)
         
         super.init(useCache: true, refreshOnAppear: true)
         
-        recentShowsNode.collectionNode.delegate = self
-        offlineShowsNode.collectionNode.delegate = self
-        favoritedSourcesNode.collectionNode.delegate = self
+        tabBarItem = UITabBarItem(title: "Relisten", image: UIImage(named: "toolbar_relisten"), tag: RelistenTabs.artistsOrPhish.rawValue)
+        
         recentlyPerformedNode.collectionNode.delegate = self
         allRecentlyUpdatedNode.collectionNode.delegate = self
         
@@ -101,19 +88,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
     }
     
-    /*
-    var hasReloaded: Bool = false
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if !hasReloaded {
-            tableNode.reloadData()
-            
-            hasReloaded = true
-        }
-    }
-     */
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -122,35 +96,12 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         
         title = "Relisten"
         
-        let cb: Event<Any>.EventHandler = { [weak self] _ in self?.render() }
-        
-        DownloadManager.shared.eventTrackFinishedDownloading.addHandler(cb).add(to: &disposal)
-        DownloadManager.shared.eventTracksDeleted.addHandler(cb).add(to: &disposal)
-
         let library = MyLibrary.shared
         
         library.favorites.artists.observeWithValue { [weak self] artists, changes in
             guard let s = self else { return }
-
+            
             s.reloadFavoriteArtists(artists: artists, changes: changes)
-        }.dispose(to: &disposal)
-        
-        library.recent.shows.observeWithValue { [weak self] recentlyPlayed, changes in
-            guard let s = self else { return }
-            
-            s.reloadRecentShows(tracks: recentlyPlayed)
-        }.dispose(to: &disposal)
-
-        library.offline.sources.observeWithValue { [weak self] offlineSources, changes in
-            guard let s = self else { return }
-            
-            s.reloadOfflineSources(shows: offlineSources.asCompleteShows())
-        }.dispose(to: &disposal)
-        
-        library.favorites.sources.observeWithValue{ [weak self] favoriteSources, changes in
-            guard let s = self else { return }
-            
-            s.reloadFavoriteSources(shows: favoriteSources.asCompleteShows())
         }.dispose(to: &disposal)
     }
     
@@ -170,12 +121,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         let row = indexPath.row
         
         switch Sections(rawValue: indexPath.section)! {
-        case .recentlyPlayed:
-            return "RecentlyPlayedShows"
-        case .availableOffline:
-            return "OfflineShows"
-        case .favoritedShows:
-            return "FavoritedShows"
         case .recentlyPerformed:
             return "RecentlyPerformedShows"
         case .allRecentlyUpdated:
@@ -197,12 +142,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     
     private func indexPathForElement(withModelIdentifier identifier: String) -> IndexPath? {
         switch identifier {
-        case "RecentlyPlayedShows":
-            return IndexPath(row: 0, section: Sections.recentlyPlayed.rawValue)
-        case "OfflineShows":
-            return IndexPath(row: 0, section: Sections.availableOffline.rawValue)
-        case "FavoritedShows":
-            return IndexPath(row: 0, section: Sections.favoritedShows.rawValue)
         case "RecentlyPerformedShows":
             return IndexPath(row: 0, section: Sections.recentlyPerformed.rawValue)
         case "RecentlyUpdatedShows":
@@ -239,44 +178,13 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     }
     
     override func dataChanged(_ data: [ArtistWithCounts]) {
-        DispatchQueue.main.async {
-            self.allArtists = data
-            self.featuredArtists = data.filter({ $0.featured > 0 })
-        }
+        self.allArtists = data
+        self.featuredArtists = data.filter({ $0.featured > 0 })
+        
+        super.dataChanged(data)
     }
-
+    
     override var resource: Resource? { get { return api.artists() } }
-    
-    private func reloadOfflineSources(shows: [CompleteShowInformation]) {
-        if !(shows == offlineShows) {
-            DispatchQueue.main.async {
-                self.offlineShows = shows
-                self.offlineShowsNode.shows = self.offlineShows.map({ ($0.show, $0.artist, $0.source) })
-                self.tableNode.reloadSections([ Sections.availableOffline.rawValue ], with: .automatic)
-            }
-        }
-    }
-    
-    private func reloadFavoriteSources(shows: [CompleteShowInformation]) {
-        if !(shows == favoriteShows) {
-            DispatchQueue.main.async {
-                self.favoriteShows = shows
-                self.favoritedSourcesNode.shows = self.favoriteShows.map({ ($0.show, $0.artist, $0.source) })
-                self.tableNode.reloadSections([ Sections.favoritedShows.rawValue ], with: .automatic)
-            }
-        }
-    }
-
-    private func reloadRecentShows(tracks: Results<RecentlyPlayedTrack>) {
-        DispatchQueue.main.async {
-            self.recentlyPlayedTracks = tracks
-            
-            if let recentShows = self.recentlyPlayedTracks?.asTracks().map({ ($0.showInfo.show, $0.showInfo.artist, $0.showInfo.source) }) as [(show: Show, artist: Artist?, source: Source?)]? {
-                self.recentShowsNode.shows = recentShows
-                self.tableNode.reloadSections([ Sections.recentlyPlayed.rawValue ], with: .automatic)
-            }
-        }
-    }
     
     private func reloadFavoriteArtists(artists: Results<FavoritedArtist>, changes: RealmCollectionChange<Results<FavoritedArtist>>) {
         DispatchQueue.main.async { [weak self] in
@@ -342,7 +250,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         let searchTextLC = searchText.lowercased()
         
         resultsViewController.favoriteArtists = favoriteArtists
-
+        
         tableUpdateQueue.async {
             self.resultsViewController.filteredArtists = self.allArtists.filter({ $0.name.lowercased().contains(searchTextLC) })
         }
@@ -365,23 +273,19 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
                 return
             }
             
-            DispatchQueue.main.async {
-                if resource == self.resourceRecentlyPerformed {
-                    self.recentlyPerformedShows = resource.typedContent(ifNone: [])
-                    self.recentlyPerformedNode.shows = self.recentlyPerformedShows.map { (show: $0, artist: $0.artist, nil) }
-                    self.tableNode.reloadSections([ Sections.recentlyPerformed.rawValue ], with: .automatic)
-                }
-                else if resource == self.resourceRecentlyUpdated {
-                    self.allRecentlyUpdatedShows = resource.typedContent(ifNone: [])
-                    self.allRecentlyUpdatedNode.shows = self.allRecentlyUpdatedShows.map { (show: $0, artist: $0.artist, nil) }
-                    self.tableNode.reloadSections([ Sections.allRecentlyUpdated.rawValue ], with: .automatic)
-                }
+            if resource == self.resourceRecentlyPerformed {
+                self.recentlyPerformedShows = resource.typedContent(ifNone: [])
+                self.recentlyPerformedNode.shows = self.recentlyPerformedShows.map { (show: $0, artist: $0.artist, nil) }
+                self.render()
+            }
+            else if resource == self.resourceRecentlyUpdated {
+                self.allRecentlyUpdatedShows = resource.typedContent(ifNone: [])
+                self.allRecentlyUpdatedNode.shows = self.allRecentlyUpdatedShows.map { (show: $0, artist: $0.artist, nil) }
+                self.render()
             }
         }
         else {
-            DispatchQueue.main.async {
-                super.resourceChanged(resource, event: event)
-            }
+            super.resourceChanged(resource, event: event)
         }
     }
     
@@ -393,22 +297,12 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     
     override public func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
-        case .recentlyPlayed:
-            if let recentlyPlayedTracks = recentlyPlayedTracks {
-                return recentlyPlayedTracks.count > 0 ? 1 : 0
-            } else {
-                return 0
-            }
-        case .availableOffline:
-            return offlineShows.count > 0 ? 1 : 0
         case .favorited:
             return allArtists.count == 0 ? 0 : favoriteArtists.count
         case .featured:
             return featuredArtists.count
         case .all:
             return allArtists.count
-        case .favoritedShows:
-            return favoriteShows.count > 0 ? 1 : 0
         case .recentlyPerformed:
             return recentlyPerformedShows.count > 0 ? 1 : 0
         case .allRecentlyUpdated:
@@ -420,35 +314,26 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     
     public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         let row = indexPath.row
-
+        
         switch Sections(rawValue: indexPath.section)! {
-        case .recentlyPlayed:
-            let n = recentShowsNode
-            return { n }
-        case .availableOffline:
-            let n = offlineShowsNode
-            return { n }
-        case .favoritedShows:
-            let n = favoritedSourcesNode
-            return { n }
         case .recentlyPerformed:
             let n = recentlyPerformedNode
             return { n }
         case .allRecentlyUpdated:
             let n = allRecentlyUpdatedNode
             return { n }
-
+            
         case .favorited:
             let artist = allArtists.first(where: { art in art.uuid == favoriteArtists[row] })!
-
+            
             return { ArtistCellNode(artist: artist, withFavoritedArtists: self.favoriteArtists) }
         case .featured:
             let artist = featuredArtists[row]
-
+            
             return { ArtistCellNode(artist: artist, withFavoritedArtists: self.favoriteArtists) }
         case .all:
             let artist = allArtists[indexPath.row]
-
+            
             return { ArtistCellNode(artist: artist, withFavoritedArtists: self.favoriteArtists) }
         case .count:
             fatalError()
@@ -492,14 +377,6 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     
     override public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Sections(rawValue: section)! {
-        case .recentlyPlayed:
-            if let recentlyPlayedTracks = recentlyPlayedTracks {
-                return recentlyPlayedTracks.count > 0 ? "Recently Played" : nil
-            } else {
-                return nil
-            }
-        case .availableOffline:
-            return offlineShows.count > 0 ? "Available Offline" : nil
         case .favorited:
             return favoriteArtists.count > 0 ? "Favorite" : nil
         case .featured:
@@ -510,28 +387,20 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
             }
             
             return "All Artists"
-        case .favoritedShows:
-            return favoriteShows.count > 0 ? "My Favorites" : nil
         case .recentlyPerformed:
             return recentlyPerformedShows.count > 0 ? "Recently by Favorites" : nil
         case .allRecentlyUpdated:
             return allRecentlyUpdatedShows.count > 0 ? "Latest Recordings" : nil
-        
+            
         case .count:
             fatalError()
         }
     }
-
+    
     override public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         var horizontalCollectionNode : HorizontalShowCollectionCellNode? = nil
         
         switch collectionNode {
-        case recentShowsNode.collectionNode:
-            horizontalCollectionNode = recentShowsNode
-        case offlineShowsNode.collectionNode:
-            horizontalCollectionNode = offlineShowsNode
-        case favoritedSourcesNode.collectionNode:
-            horizontalCollectionNode = favoritedSourcesNode
         case recentlyPerformedNode.collectionNode:
             horizontalCollectionNode = recentlyPerformedNode
         case allRecentlyUpdatedNode.collectionNode:

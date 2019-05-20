@@ -32,7 +32,7 @@
 @end
 
 @implementation ASCollectionLayoutState {
-  AS::Mutex __instanceLock__;
+  ASDN::Mutex __instanceLock__;
   CGSize _contentSize;
   ASCollectionLayoutContext *_context;
   NSMapTable<ASCollectionElement *, UICollectionViewLayoutAttributes *> *_elementToLayoutAttributesTable;
@@ -182,7 +182,7 @@ elementToLayoutAttributesTable:[NSMapTable elementToLayoutAttributesTable]];
   CGSize pageSize = _context.viewportSize;
   CGSize contentSize = _contentSize;
 
-  AS::MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   if (_unmeasuredPageToLayoutAttributesTable.count == 0 || CGRectIsNull(rect) || CGRectIsEmpty(rect) || CGSizeEqualToSize(CGSizeZero, contentSize) || CGSizeEqualToSize(CGSizeZero, pageSize)) {
     return nil;
   }

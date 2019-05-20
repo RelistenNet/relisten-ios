@@ -174,12 +174,12 @@ public class Venue : RelistenObject, RelistenUUIDObject {
         latitude = json["latitude"].double
         longitude = json["longitude"].double
         
-        name = try json["name"].string.required()
-        sortName = try json["sortName"].string.required()
+        name = (try json["name"].string.required()).trimmingCharacters(in: .whitespacesAndNewlines)
+        sortName = try json["sortName"].string.required().trimmingCharacters(in: .whitespacesAndNewlines)
         
         slug = try json["slug"].string.required()
         
-        location = try json["location"].string.required()
+        location = try json["location"].string.required().trimmingCharacters(in: .whitespacesAndNewlines)
         
         upstream_identifier = try json["upstream_identifier"].string.required()
         

@@ -125,6 +125,17 @@
 		43FABAAE214C115D00E43A22 /* RelistenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CC465E214C104800925CA5 /* RelistenUITests.swift */; };
 		43FABAAF214C12EE00E43A22 /* XCUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436D1AB62138659700FA41D5 /* XCUITest.swift */; };
 		4A1BB70619516EBFBF62364D /* Pods_Relisten_for_Phish.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506E2150248D6941AA402901 /* Pods_Relisten_for_Phish.framework */; };
+		7C084C36224199B4006418AB /* RelistenTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C35224199B4006418AB /* RelistenTabBarController.swift */; };
+		7C084C3B22419EB3006418AB /* MyLibraryTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C3A22419EB3006418AB /* MyLibraryTabViewController.swift */; };
+		7C084C3E2242B67F006418AB /* ShowListArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C3D2242B67F006418AB /* ShowListArrayDataSource.swift */; };
+		7C084C402242B705006418AB /* ShowListLazyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C3F2242B705006418AB /* ShowListLazyDataSource.swift */; };
+		7C084C422243F1CC006418AB /* RelistenCacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C412243F1CC006418AB /* RelistenCacher.swift */; };
+		7C084C442244444B006418AB /* RelistenDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C432244444B006418AB /* RelistenDb.swift */; };
+		7C084C462245410B006418AB /* RelistenCellDataSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C452245410B006418AB /* RelistenCellDataSources.swift */; };
+		7C084C4822458DF4006418AB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C4722458DF4006418AB /* UIImage.swift */; };
+		7C084C4A224592E1006418AB /* DownloadedTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C49224592E1006418AB /* DownloadedTabViewController.swift */; };
+		7C084C4C22492551006418AB /* RecentlyPlayedTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C4B22492551006418AB /* RecentlyPlayedTabViewController.swift */; };
+		7C084C4E22493040006418AB /* TodayInHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C084C4D22493040006418AB /* TodayInHistoryViewController.swift */; };
 		7C11B271214719C100D9D78D /* LinkUpstreamNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */; };
 		7C31550E20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
 		7C31550F20BEFD4800F07622 /* PhishBackgrounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */; };
@@ -142,6 +153,7 @@
 		7C8EF11B1D5A49C300004B5C /* RLLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C8EF1191D5A49C300004B5C /* RLLaunchScreen.storyboard */; };
 		7C9FC1EF211A184300A8579B /* VisualActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FC1EE211A184300A8579B /* VisualActivityViewController.swift */; };
 		7CC0953D1E6C6D290067FD39 /* ArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0953C1E6C6D290067FD39 /* ArtistsViewController.swift */; };
+		7CFF0AAF2290BC3E00B30538 /* LiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFF0AAE2290BC3E00B30538 /* LiveViewController.swift */; };
 		8CD3ABF608F9A98A4D985511 /* Pods_Relisten.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B280390A781CEAC8287228B /* Pods_Relisten.framework */; };
 		B5D3DEB4FF0A6D8D25A7B70B /* Pods_PhishODUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BD3F386FC81C9232DD2504 /* Pods_PhishODUITests.framework */; };
 		BD42C0C8EF1324E039FBA06E /* Pods_RelistenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF734EACDCD4B56B21971AFB /* Pods_RelistenUITests.framework */; };
@@ -286,6 +298,17 @@
 		7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenSourceModels.swift; sourceTree = "<group>"; };
 		7C03A4C31E621836006F2912 /* ApiCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCache.swift; sourceTree = "<group>"; };
 		7C03A4C61E6218CF006F2912 /* RelistenModelCachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenModelCachable.swift; sourceTree = "<group>"; };
+		7C084C35224199B4006418AB /* RelistenTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RelistenTabBarController.swift; path = "View Controllers/RelistenTabBarController.swift"; sourceTree = "<group>"; };
+		7C084C3A22419EB3006418AB /* MyLibraryTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyLibraryTabViewController.swift; path = "View Controllers/Tabs/MyLibraryTabViewController.swift"; sourceTree = "<group>"; };
+		7C084C3D2242B67F006418AB /* ShowListArrayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListArrayDataSource.swift; path = "View Controllers/General/ShowListDataSources/ShowListArrayDataSource.swift"; sourceTree = "<group>"; };
+		7C084C3F2242B705006418AB /* ShowListLazyDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShowListLazyDataSource.swift; path = "View Controllers/General/ShowListDataSources/ShowListLazyDataSource.swift"; sourceTree = "<group>"; };
+		7C084C412243F1CC006418AB /* RelistenCacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenCacher.swift; sourceTree = "<group>"; };
+		7C084C432244444B006418AB /* RelistenDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenDb.swift; sourceTree = "<group>"; };
+		7C084C452245410B006418AB /* RelistenCellDataSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelistenCellDataSources.swift; sourceTree = "<group>"; };
+		7C084C4722458DF4006418AB /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIImage.swift; path = Extensions/UIImage.swift; sourceTree = "<group>"; };
+		7C084C49224592E1006418AB /* DownloadedTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadedTabViewController.swift; path = "View Controllers/Tabs/DownloadedTabViewController.swift"; sourceTree = "<group>"; };
+		7C084C4B22492551006418AB /* RecentlyPlayedTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentlyPlayedTabViewController.swift; path = "View Controllers/Tabs/RecentlyPlayedTabViewController.swift"; sourceTree = "<group>"; };
+		7C084C4D22493040006418AB /* TodayInHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TodayInHistoryViewController.swift; path = "View Controllers/General/TodayInHistoryViewController.swift"; sourceTree = "<group>"; };
 		7C11B270214719C100D9D78D /* LinkUpstreamNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkUpstreamNode.swift; sourceTree = "<group>"; };
 		7C13704320B5FE6200710E90 /* UInt64+HumanizeBytes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UInt64+HumanizeBytes.swift"; path = "Extensions/UInt64+HumanizeBytes.swift"; sourceTree = "<group>"; };
 		7C13704620B62C2D00710E90 /* MyLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLibrary.swift; sourceTree = "<group>"; };
@@ -359,6 +382,7 @@
 		7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RelistenShared-Bridging-Header.h"; sourceTree = "<group>"; };
 		7CCE0DEB1F9BDE4A00041D47 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Events.swift; path = Events/Events.swift; sourceTree = "<group>"; };
 		7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Handler.swift"; sourceTree = "<group>"; };
+		7CFF0AAE2290BC3E00B30538 /* LiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LiveViewController.swift; path = "View Controllers/Tabs/LiveViewController.swift"; sourceTree = "<group>"; };
 		7D0486D76EA028A68FB9CEE1 /* Pods-Relisten for Phish.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Relisten for Phish.release.xcconfig"; path = "Pods/Target Support Files/Pods-Relisten for Phish/Pods-Relisten for Phish.release.xcconfig"; sourceTree = "<group>"; };
 		8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelistenResourceStatusOverlay.swift; sourceTree = "<group>"; };
 		8E91C1703DD1522098B0957F /* ShowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCellNode.swift; sourceTree = "<group>"; };
@@ -514,8 +538,29 @@
 				7C03A4BD1E61BB4B006F2912 /* RelistenShowModels.swift */,
 				7C03A4C01E61CD70006F2912 /* RelistenSourceModels.swift */,
 				7C4F1BE71F73186500C592BD /* RelistenSongModels.swift */,
+				7C084C452245410B006418AB /* RelistenCellDataSources.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		7C084C3922419E97006418AB /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				7C084C3A22419EB3006418AB /* MyLibraryTabViewController.swift */,
+				7C084C49224592E1006418AB /* DownloadedTabViewController.swift */,
+				7C084C4B22492551006418AB /* RecentlyPlayedTabViewController.swift */,
+				7CFF0AAE2290BC3E00B30538 /* LiveViewController.swift */,
+			);
+			name = Tabs;
+			sourceTree = "<group>";
+		};
+		7C084C3C2242B627006418AB /* ShowListDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				7C084C3D2242B67F006418AB /* ShowListArrayDataSource.swift */,
+				7C084C3F2242B705006418AB /* ShowListLazyDataSource.swift */,
+			);
+			name = ShowListDataSource;
 			sourceTree = "<group>";
 		};
 		7C13704F20B9E8A100710E90 /* Helpers */ = {
@@ -547,11 +592,13 @@
 		7C31551720BFB6F900F07622 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				7C084C3C2242B627006418AB /* ShowListDataSource */,
 				7C31551820BFB71B00F07622 /* LongTextViewController.swift */,
 				43B0472C20FD59D000251046 /* ShowListViewController.swift */,
 				432B00E8217A4DA600C36073 /* GroupedViewController.swift */,
 				430D64E1210BA9AC005D7F7A /* RecentlyAddedViewController.swift */,
 				43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */,
+				7C084C4D22493040006418AB /* TodayInHistoryViewController.swift */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -619,6 +666,8 @@
 				7C03A4C31E621836006F2912 /* ApiCache.swift */,
 				7C03A4B51E60E8B7006F2912 /* RelistenApi.swift */,
 				8E91C126989BDFBA00590F5E /* RelistenResourceStatusOverlay.swift */,
+				7C084C412243F1CC006418AB /* RelistenCacher.swift */,
+				7C084C432244444B006418AB /* RelistenDb.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -713,6 +762,7 @@
 				43A035F0210ED62200C087DD /* Show+FastImageCache.swift */,
 				4330E73C2120E1AC00329ED7 /* StorageAware+Box.swift */,
 				4330E7402121470C00329ED7 /* Resource.swift */,
+				7C084C4722458DF4006418AB /* UIImage.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -817,6 +867,7 @@
 		7CC0953E1E6C6D370067FD39 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7C084C3922419E97006418AB /* Tabs */,
 				7C31551720BFB6F900F07622 /* General */,
 				7C13705320B9FC4000710E90 /* My Collection */,
 				7C4F1BE31F73179F00C592BD /* Songs */,
@@ -829,6 +880,7 @@
 				430D64E3210BC10A005D7F7A /* CarPlayDataSource.swift */,
 				434066AF212FD27800FB1D94 /* RelistenNavigationController.swift */,
 				433A4401213361040059D251 /* SettingsViewController.swift */,
+				7C084C35224199B4006418AB /* RelistenTabBarController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1255,7 +1307,10 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
@@ -1275,7 +1330,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1298,7 +1353,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanroomLogger.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CouchbaseLiteSwift.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/CouchbaseLiteSwift.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
@@ -1401,7 +1459,10 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
@@ -1421,7 +1482,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1443,7 +1504,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanroomLogger.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CouchbaseLiteSwift.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/CouchbaseLiteSwift.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
@@ -1517,7 +1581,10 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
@@ -1537,7 +1604,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1560,7 +1627,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanroomLogger.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CouchbaseLiteSwift.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/CouchbaseLiteSwift.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
@@ -1635,7 +1705,10 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
@@ -1655,7 +1728,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1677,7 +1750,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanroomLogger.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CouchbaseLiteSwift.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/CouchbaseLiteSwift.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
@@ -1751,7 +1827,10 @@
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CleanroomLogger/CleanroomLogger.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework",
+				"${PODS_ROOT}/CouchbaseLite-Swift/iOS/CouchbaseLiteSwift.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/DWURecyclingAlert/DWURecyclingAlert.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/DownloadButton/DownloadButton.framework",
 				"${BUILT_PRODUCTS_DIR}/EDColor/EDColor.framework",
 				"${BUILT_PRODUCTS_DIR}/FastImageCache/FastImageCache.framework",
@@ -1771,7 +1850,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmConverter/RealmConverter.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-21/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-22/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDCloudUserDefaults/SDCloudUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SINQ/SINQ.framework",
@@ -1793,7 +1872,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CleanroomLogger.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CouchbaseLiteSwift.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/CouchbaseLiteSwift.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DWURecyclingAlert.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DownloadButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EDColor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FastImageCache.framework",
@@ -1865,6 +1947,7 @@
 				4330E73D2120E1AC00329ED7 /* StorageAware+Box.swift in Sources */,
 				43B5343E210922CE00DE9B1F /* YearNode.swift in Sources */,
 				4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */,
+				7C084C3E2242B67F006418AB /* ShowListArrayDataSource.swift in Sources */,
 				43B5342C210922CE00DE9B1F /* AsyncDisplayKit.swift in Sources */,
 				43B53425210922CE00DE9B1F /* Array.swift in Sources */,
 				43B5345A210922CE00DE9B1F /* RelistenModels.swift in Sources */,
@@ -1884,6 +1967,7 @@
 				434066AE212FC88900FB1D94 /* UserFeedback.swift in Sources */,
 				43B53444210922CE00DE9B1F /* DownloadedViewController.swift in Sources */,
 				4330E7432121474900329ED7 /* LegacyRelistenImporter.swift in Sources */,
+				7C084C4822458DF4006418AB /* UIImage.swift in Sources */,
 				43B5345B210922CE00DE9B1F /* RelistenArtistModels.swift in Sources */,
 				43B5344F210922CE00DE9B1F /* SourceDetailsViewController.swift in Sources */,
 				43B53424210922CE00DE9B1F /* PlaybackController.swift in Sources */,
@@ -1891,11 +1975,16 @@
 				43B5344B210922CE00DE9B1F /* YearViewController.swift in Sources */,
 				43B5344C210922CE00DE9B1F /* SourcesViewController.swift in Sources */,
 				4330E73B2120C61400329ED7 /* LegacyMapper.swift in Sources */,
+				7C084C4A224592E1006418AB /* DownloadedTabViewController.swift in Sources */,
 				43B5342E210922CE00DE9B1F /* PaddingLabel.swift in Sources */,
+				7C084C3B22419EB3006418AB /* MyLibraryTabViewController.swift in Sources */,
+				7C084C4E22493040006418AB /* TodayInHistoryViewController.swift in Sources */,
 				43A035F1210ED62200C087DD /* Show+FastImageCache.swift in Sources */,
 				430D64E6210BE379005D7F7A /* ReentrantDispatchQueue.swift in Sources */,
+				7C084C36224199B4006418AB /* RelistenTabBarController.swift in Sources */,
 				43B53428210922CE00DE9B1F /* UIControl+Handler.swift in Sources */,
 				43B53462210922CE00DE9B1F /* RelistenResourceStatusOverlay.swift in Sources */,
+				7CFF0AAF2290BC3E00B30538 /* LiveViewController.swift in Sources */,
 				43B53436210922CE00DE9B1F /* SourceFeatureIndicatorNodes.swift in Sources */,
 				43D53C2E21365A65008B407D /* LastFMScrobbler.swift in Sources */,
 				435911AF216C0AFC00ACA85F /* TaperInfoNode.swift in Sources */,
@@ -1922,7 +2011,9 @@
 				43A035D1210D255700C087DD /* UserPropertiesForShowNode.swift in Sources */,
 				433A4402213361040059D251 /* SettingsViewController.swift in Sources */,
 				43D4F1DA21CD967600FD4A72 /* TestDataGenerator.swift in Sources */,
+				7C084C422243F1CC006418AB /* RelistenCacher.swift in Sources */,
 				43B5344D210922CE00DE9B1F /* SourceViewController.swift in Sources */,
+				7C084C442244444B006418AB /* RelistenDb.swift in Sources */,
 				43B53456210922CE00DE9B1F /* MyLibrary.swift in Sources */,
 				43B53430210922CE00DE9B1F /* HorizontalShowCollectionCellNode.swift in Sources */,
 				43B53422210922CE00DE9B1F /* CompleteShowInformation.swift in Sources */,
@@ -1934,8 +2025,10 @@
 				43B53452210922CE00DE9B1F /* ArtistViewController.swift in Sources */,
 				435911B1216DC9D800ACA85F /* VenueMapCellNode.swift in Sources */,
 				433A440B2133B4B10059D251 /* BugReportingSettingsNode.swift in Sources */,
+				7C084C4C22492551006418AB /* RecentlyPlayedTabViewController.swift in Sources */,
 				43B53432210922CE00DE9B1F /* ReviewCellNode.swift in Sources */,
 				43CBE1102109296A003FAF51 /* RelistenApp.swift in Sources */,
+				7C084C402242B705006418AB /* ShowListLazyDataSource.swift in Sources */,
 				43B53442210922CE00DE9B1F /* RecentlyPerformedViewController.swift in Sources */,
 				43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */,
 				43B5342A210922CE00DE9B1F /* String.swift in Sources */,
@@ -1948,6 +2041,7 @@
 				43B53437210922CE00DE9B1F /* SourceDetailsNode.swift in Sources */,
 				43B5344E210922CE00DE9B1F /* TopShowsViewController.swift in Sources */,
 				43B5345F210922CE00DE9B1F /* OfflineSourceMetadata.swift in Sources */,
+				7C084C462245410B006418AB /* RelistenCellDataSources.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2194,7 +2288,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
 				CODE_SIGN_ENTITLEMENTS = Apps/PhishOD/PhishOD.entitlements;
-				CURRENT_PROJECT_VERSION = 4101;
+				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2213,7 +2307,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "PhishOD App Icon";
 				CODE_SIGN_ENTITLEMENTS = Apps/PhishOD/PhishOD.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 4101;
+				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2379,7 +2473,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4101;
+				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2399,7 +2493,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4101;
+				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

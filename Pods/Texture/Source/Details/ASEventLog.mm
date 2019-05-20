@@ -13,7 +13,7 @@
 #import <AsyncDisplayKit/ASObjectDescriptionHelpers.h>
 
 @implementation ASEventLog {
-  AS::RecursiveMutex __instanceLock__;
+  ASDN::RecursiveMutex __instanceLock__;
 
   // The index of the most recent log entry. -1 until first entry.
   NSInteger _eventLogHead;
@@ -61,7 +61,7 @@
                                                       arguments:args];
   va_end(args);
 
-  AS::MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   NSCache *cache = [ASEventLog contentsCache];
   NSMutableArray<ASTraceEvent *> *events = [cache objectForKey:self];
   if (events == nil) {
@@ -87,7 +87,7 @@
     return nil;
   }
 
-  AS::MutexLocker l(__instanceLock__);
+  ASDN::MutexLocker l(__instanceLock__);
   NSUInteger tail = (_eventLogHead + 1);
   NSUInteger count = events.count;
   

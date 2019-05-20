@@ -45,8 +45,12 @@ public class YearViewController: ShowListViewController<YearWithShows>, UIViewCo
         }
     }
     
+    public override func has(oldData old: YearWithShows, changed new: YearWithShows) -> Bool {
+        return old.shows.count != new.shows.count || old.year != new.year
+    }
+    
     public override func extractShowsAndSource(forData: YearWithShows) -> [ShowWithSingleSource] {
-        return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil) })
+        return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil, artist: artist) })
     }
     
     // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.

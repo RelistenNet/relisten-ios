@@ -74,7 +74,7 @@ public class TaperInfoNode : ASCellNode {
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let infoStack = ASStackLayoutSpec(
             direction: .vertical,
-            spacing: 8,
+            spacing: 2,
             justifyContent: .start,
             alignItems: .start,
             children: ArrayNoNils(

@@ -136,6 +136,8 @@ public class SourceDetailsViewController : RelistenBaseTableViewController, UIVi
             venueNodes.append(ratingsCell)
         }
         
+        venueNodes.forEach { if let t = $0.cell as? ASTextCellNode { t.textInsets = UIEdgeInsets(top: 12, left: 15, bottom: 12, right: 15) } }
+
         self.tableNode.view.separatorStyle = .singleLine
         self.tableNode.view.backgroundColor = AppColors.lightGreyBackground
     }

@@ -44,7 +44,7 @@ public class CompactReviewCellNode : ASCellNode {
         stack.style.alignSelf = .stretch
         
         let i = ASInsetLayoutSpec(
-            insets: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 0),
+            insets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 0),
             child: stack
         )
         i.style.alignSelf = .stretch

@@ -243,18 +243,22 @@ public class RelistenDb {
             let query = cellShowsQuery(forUUIDs: uuids)
             
             let resultSet = try query.execute()
-            let results = resultSet.allResults()
-            
-            let models = try results.map { try RelistenDbShow(fromResult: $0) }
+            var results = resultSet.allResults()
             
             // if we are missing some results, try to pull them from the old cache
-            if models.count != uuids.count {
-                let missing = Set(uuids).subtracting(Set(models.map { $0.uuid }))
+            let missing = Set(uuids).subtracting(Set(results.map { UUID(uuidString: $0.string(forKey: "uuid")!)! }))
+
+            if missing.count > 0 {                
+                missing.forEach { let _ = RelistenCacher.showFromCache(forUUID: $0) }
                 
+                let q = self.cellShowsQuery(forUUIDs: Array(missing))
+                let set = try q.execute()
+                let res = set.allResults()
                 
+                results.append(contentsOf: res)
             }
             
-            return models
+            return try results.map { try RelistenDbShow(fromResult: $0) }
         } catch {
             logError(error, userInfo: ["show_uuids": uuids.map { $0.uuidString }])
         }

@@ -1,5 +1,6 @@
 git_url("git@bitbucket.org:relistennet/ios-certificates.git")
 
+team_id("HT7ELV3Q35")
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
 app_identifier(["com.alecgorge.ios.Listen-to-the-Dead", "com.alecgorge.Phish-Tracks"])

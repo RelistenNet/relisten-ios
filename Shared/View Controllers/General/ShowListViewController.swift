@@ -134,6 +134,21 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
             searchController.searchBar.barStyle = .default
             searchController.searchBar.searchBarStyle = .prominent
             
+            if #available(iOS 13.0, *) {
+                let placeholder = NSAttributedString(string: "Search",
+                                                     attributes: [
+                                                        .foregroundColor: UIColor.white.withAlphaComponent(0.80)
+                ])
+                let searchTextField = searchController.searchBar.searchTextField
+                
+                DispatchQueue.global().async {
+                    DispatchQueue.main.async {
+                        searchTextField.leftView?.tintColor = UIColor.white
+                        searchTextField.attributedPlaceholder = placeholder
+                    }
+                }
+            }
+            
             navigationItem.searchController = searchController
             definesPresentationContext = true
             

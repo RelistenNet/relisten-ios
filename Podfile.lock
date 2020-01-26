@@ -230,7 +230,7 @@ SPEC CHECKSUMS:
   BASSGaplessAudioPlayer: 5b074495769769192b720c70aa2a60f6f33751f3
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  CleanroomLogger: 51703da66caaa392436f5ba6cd5b7ae83d1282aa
+  CleanroomLogger: 8de6eb3511ebc6387428c55f69e86822533a588e
   CouchbaseLite-Swift: fc942af766946a7b1efbee2cc9b72ae04ec632e1
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CSwiftV: 8dde426ad2a4f645bdfb513b8aa878d555aeff60
@@ -248,9 +248,9 @@ SPEC CHECKSUMS:
   LastFm: a624fa250bbda5950fccbd068ea7950dcba2da1f
   LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
-  MZDownloadManager: 8c78ecc8f68e0aed845bc767896cb92dc8a4b21d
+  MZDownloadManager: 1faf281511aa91bd45f254dd84331e08720d890c
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
-  NapySlider: 54934403e7ab09c4c97274e4e9c3ea2d694c53a4
+  NapySlider: faba6c6695ca3e2a4e00846eb3e906bc8e896a13
   Observable: d8a6ed00d87087dd169012a0f92214fe5a15debd
   PathKit: 364e0de7fb5adb142aecab4e112187e5548fc4b6
   PinpointKit: 8ef42ed810a95aaced0462b532e0224a67afb72d

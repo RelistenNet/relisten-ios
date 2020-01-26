@@ -23,7 +23,7 @@
   "source_files": "RealmConverter/**/*.{swift,h,m,c}",
   "dependencies": {
     "Realm": [
-      "~> 3.8.0"
+
     ],
     "PathKit": [
 
@@ -41,5 +41,6 @@
 
       ]
     }
-  }
+  },
+  "swift_version": "5.0"
 }

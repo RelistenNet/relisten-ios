@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0940"
+   LastUpgradeVersion = "1130"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -26,10 +26,19 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
       disableMainThreadChecker = "YES"
       codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "7C8EF10C1D5A49C200004B5C"
+            BuildableName = "Relisten.app"
+            BlueprintName = "Relisten"
+            ReferencedContainer = "container:Relisten.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -73,17 +82,6 @@
             </DeviceAppData>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7C8EF10C1D5A49C200004B5C"
-            BuildableName = "Relisten.app"
-            BlueprintName = "Relisten"
-            ReferencedContainer = "container:Relisten.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -105,8 +103,6 @@
             ReferencedContainer = "container:Relisten.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

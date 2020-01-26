@@ -22,6 +22,8 @@
 #import "RLMSyncConfiguration_Private.hpp"
 #import "RLMSyncUser_Private.hpp"
 #import "RLMSyncUtil_Private.hpp"
+
+#import "sync/async_open_task.hpp"
 #import "sync/sync_session.hpp"
 
 using namespace realm;
@@ -80,6 +82,7 @@ using namespace realm;
 
 @interface RLMSyncSession ()
 @property (class, nonatomic, readonly) dispatch_queue_t notificationsQueue;
+@property (atomic, readwrite) RLMSyncConnectionState connectionState;
 @end
 
 @implementation RLMSyncSession
@@ -93,9 +96,25 @@ using namespace realm;
     return queue;
 }
 
-- (instancetype)initWithSyncSession:(std::shared_ptr<SyncSession>)session {
+static RLMSyncConnectionState convertConnectionState(SyncSession::ConnectionState state) {
+    switch (state) {
+        case SyncSession::ConnectionState::Disconnected: return RLMSyncConnectionStateDisconnected;
+        case SyncSession::ConnectionState::Connecting:   return RLMSyncConnectionStateConnecting;
+        case SyncSession::ConnectionState::Connected:    return RLMSyncConnectionStateConnected;
+    }
+}
+
+- (instancetype)initWithSyncSession:(std::shared_ptr<SyncSession> const&)session {
     if (self = [super init]) {
         _session = session;
+        _connectionState = convertConnectionState(session->connection_state());
+        // No need to save the token as RLMSyncSession always outlives the
+        // underlying SyncSession
+        session->register_connection_change_callback([=](auto, auto newState) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.connectionState = convertConnectionState(newState);
+            });
+        });
         return self;
     }
     return nil;
@@ -132,6 +151,18 @@ using namespace realm;
         return RLMSyncSessionStateActive;
     }
     return RLMSyncSessionStateInvalid;
+}
+
+- (void)suspend {
+    if (auto session = _session.lock()) {
+        session->log_out();
+    }
+}
+
+- (void)resume {
+    if (auto session = _session.lock()) {
+        session->revive_if_needed();
+    }
 }
 
 - (BOOL)waitForUploadCompletionOnQueue:(dispatch_queue_t)queue callback:(void(^)(NSError *))callback {
@@ -194,8 +225,7 @@ using namespace realm;
     if (!config) {
         return nil;
     }
-    auto path = SyncManager::shared().path_for_realm(*config->user, config->realm_url());
-    if (auto session = config->user->session_for_on_disk_path(path)) {
+    if (auto session = config->user->session_for_on_disk_path(realm->_realm->config().path)) {
         return [[RLMSyncSession alloc] initWithSyncSession:session];
     }
     return nil;
@@ -216,4 +246,61 @@ using namespace realm;
     return nil;
 }
 
+@end
+
+@implementation RLMAsyncOpenTask {
+    bool _cancel;
+    NSMutableArray<RLMProgressNotificationBlock> *_blocks;
+}
+
+- (void)addProgressNotificationOnQueue:(dispatch_queue_t)queue block:(RLMProgressNotificationBlock)block {
+    auto wrappedBlock = ^(NSUInteger transferred_bytes, NSUInteger transferrable_bytes) {
+        dispatch_async(queue, ^{
+            @autoreleasepool {
+                block(transferred_bytes, transferrable_bytes);
+            }
+        });
+    };
+
+    @synchronized (self) {
+        if (_task) {
+            _task->register_download_progress_notifier(wrappedBlock);
+        }
+        else if (!_cancel) {
+            if (!_blocks) {
+                _blocks = [NSMutableArray new];
+            }
+            [_blocks addObject:wrappedBlock];
+        }
+    }
+}
+
+- (void)addProgressNotificationBlock:(RLMProgressNotificationBlock)block {
+    [self addProgressNotificationOnQueue:dispatch_get_main_queue() block:block];
+}
+
+- (void)cancel {
+    @synchronized (self) {
+        if (_task) {
+            _task->cancel();
+        }
+        else {
+            _cancel = true;
+            _blocks = nil;
+        }
+    }
+}
+
+- (void)setTask:(std::shared_ptr<realm::AsyncOpenTask>)task {
+    @synchronized (self) {
+        _task = task;
+        if (_cancel) {
+            _task->cancel();
+        }
+        for (RLMProgressNotificationBlock block in _blocks) {
+            _task->register_download_progress_notifier(block);
+        }
+        _blocks = nil;
+    }
+}
 @end

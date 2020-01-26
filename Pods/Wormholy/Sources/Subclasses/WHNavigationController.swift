@@ -12,10 +12,30 @@ class WHNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 11.0, *) {
-            self.navigationBar.prefersLargeTitles = true
-            self.navigationItem.largeTitleDisplayMode = .automatic
+        
+        // Always adopt a light interface style.
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
         }
+        
+        //Large titles
+        if #available(iOS 11.0, *) {
+            navigationBar.prefersLargeTitles = true
+            navigationItem.largeTitleDisplayMode = .automatic
+        }
+        
+        // Appearance
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = Colors.Gray.lighestGray
+            navigationBar.standardAppearance = navBarAppearance
+            navigationBar.scrollEdgeAppearance = navBarAppearance
+            navigationBar.tintColor = .blue
+        }
+
     }
 
     override func didReceiveMemoryWarning() {

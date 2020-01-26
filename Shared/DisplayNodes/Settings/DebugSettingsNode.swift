@@ -19,7 +19,7 @@ public class DebugSettingsNode : ASCellNode {
         recentlyPlayedTracksCountNode = ASTextNode("0 recently played tracks", textStyle: .body)
         
         generateRecentlyPlayedNode = ASButtonNode()
-        generateRecentlyPlayedNode.setTitle("Generate 1000 recently played tracks »", with: UIFont.preferredFont(forTextStyle: .body), with: UIColor.flatRed, for: .normal)
+        generateRecentlyPlayedNode.setTitle("Generate 1000 recently played tracks »", with: UIFont.preferredFont(forTextStyle: .body), with: UIColor.flatRed(), for: .normal)
         generateRecentlyPlayedNode.setTitle("Generating tracks...", with: UIFont.preferredFont(forTextStyle: .body), with: AppColors.mutedText, for: .disabled)
         generateRecentlyPlayedNode.isEnabled = true
         

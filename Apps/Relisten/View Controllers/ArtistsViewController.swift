@@ -216,7 +216,14 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
                 s.tableNode.performBatch(animated: true, updates: {
                     s.favoriteArtists = localFavoriteArtists
                     s.resourceRecentlyPerformed?.loadIfNeeded()
+                    //Have favorites on launch?
+                    if MyLibrary.shared.favorites.artists.count > 0 {
+                        s.resourceRecentlyPerformed = RelistenApi.recentlyPerformed(byArtists: s.favoriteArtists)
+                        s.resourceRecentlyPerformed?.addObserver(s)
+                        s.resourceRecentlyPerformed?.loadFromCacheThenUpdate()
+                    }
                     s.tableNode.reloadSections(IndexSet(integer: Sections.favorited.rawValue), with: .automatic)
+                    s.tableNode.reloadSections(IndexSet(integer: Sections.allRecentlyUpdated.rawValue), with: .automatic)
                 }, completion: nil)
             case .update(_, let deletions, let insertions, let modifications):
                 s.tableNode.performBatch(animated: true, updates: {

@@ -1,5 +1,5 @@
 PODS:
-  - ActionKit (2.5.2)
+  - ActionKit (2.5.3)
   - AGAudioPlayer (0.8.2):
     - BASSGaplessAudioPlayer
     - Interpolate
@@ -12,19 +12,19 @@ PODS:
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - CleanroomLogger (6.0.3)
-  - CouchbaseLite-Swift (2.5.1)
-  - Crashlytics (3.13.1):
-    - Fabric (~> 1.10.1)
+  - CouchbaseLite-Swift (2.7.0)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
   - CSwiftV (0.0.9)
   - CWStatusBarNotification (2.3.5)
   - DownloadButton (0.1.2)
   - DWURecyclingAlert (1.0.2)
   - DZNEmptyDataSet (1.8.1)
   - EDColor (1.0.1)
-  - Fabric (1.10.1)
+  - Fabric (1.10.2)
   - FastImageCache (1.5.1)
   - FaveButton (3.0.1)
-  - Interpolate (1.2.1)
+  - Interpolate (1.3.0)
   - KASlideShow (3.0.0):
     - SDWebImage (~> 3.8)
   - KissXML (5.0.3):
@@ -35,7 +35,7 @@ PODS:
   - LastFm (1.17.0):
     - KissXML (~> 5.0.3)
   - LicensesViewController (0.6.5)
-  - MarqueeLabel (4.0.0)
+  - MarqueeLabel (4.0.2)
   - MZDownloadManager (3.5)
   - NAKPlaybackIndicatorView (0.1.1)
   - NapySlider (0.3.6)
@@ -45,34 +45,34 @@ PODS:
     - PinpointKit/Core (= 1.3.0)
   - PinpointKit/Core (1.3.0)
   - PinpointKit/ScreenshotDetector (1.3.0)
-  - Realm (3.8.0):
-    - Realm/Headers (= 3.8.0)
-  - Realm/Headers (3.8.0)
+  - Realm (4.3.1):
+    - Realm/Headers (= 4.3.1)
+  - Realm/Headers (4.3.1)
   - RealmConverter (0.5.2):
     - CSwiftV
     - PathKit
-    - Realm (~> 3.8.0)
+    - Realm
     - SSZipArchive
     - TGSpreadsheetWriter
-  - RealmSwift (3.8.0):
-    - Realm (= 3.8.0)
-  - Reveal-SDK (22)
+  - RealmSwift (4.3.1):
+    - Realm (= 4.3.1)
+  - Reveal-SDK (24)
   - SDCloudUserDefaults (1.0.2)
-  - SDWebImage (3.8.2):
-    - SDWebImage/Core (= 3.8.2)
-  - SDWebImage/Core (3.8.2)
+  - SDWebImage (3.8.3):
+    - SDWebImage/Core (= 3.8.3)
+  - SDWebImage/Core (3.8.3)
   - Siesta/Core (1.4.3)
   - Siesta/UI (1.4.3):
     - Siesta/Core
   - SimulatorStatusMagic (2.4.1)
   - SINQ (0.7.0)
-  - SSZipArchive (2.2.1)
+  - SSZipArchive (2.2.2)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (5.0.0)
   - Texture/Core (2.8.1)
   - Texture/MapKit (2.8.1):
     - Texture/Core
-  - Wormholy (1.4.1)
+  - Wormholy (1.5.1)
 
 DEPENDENCIES:
   - ActionKit
@@ -103,7 +103,7 @@ DEPENDENCIES:
   - PathKit
   - PinpointKit
   - PinpointKit/ScreenshotDetector
-  - RealmConverter (from `https://github.com/farktronix/realm-cocoa-converter.git`)
+  - RealmConverter (from `https://github.com/farktronix/realm-cocoa-converter.git`, branch `RealmVersion`)
   - RealmSwift
   - Reveal-SDK
   - SDCloudUserDefaults
@@ -118,7 +118,7 @@ DEPENDENCIES:
   - Wormholy
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - ActionKit
     - AXRatingView
     - CouchbaseLite-Swift
@@ -177,6 +177,7 @@ EXTERNAL SOURCES:
   Observable:
     :git: https://github.com/alecgorge/Observable.git
   RealmConverter:
+    :branch: RealmVersion
     :git: https://github.com/farktronix/realm-cocoa-converter.git
   Siesta:
     :git: https://github.com/bustoutsolutions/siesta.git
@@ -216,58 +217,58 @@ CHECKOUT OPTIONS:
     :commit: fab070fb05ae4376c5d09efa313b9e1e617f2838
     :git: https://github.com/alecgorge/Observable.git
   RealmConverter:
-    :commit: 15d0d2fc459847a6a7e031566c36bb30bf95dde9
+    :commit: 7fde705b8e1fd78603e275ba865fd5692df7fb8d
     :git: https://github.com/farktronix/realm-cocoa-converter.git
   Siesta:
-    :commit: 0a33219ea971f972e4c01e62fff0cfa8f79900e6
+    :commit: 6f1ee59731b5aed229d02c5d5b2389708cfc49bc
     :git: https://github.com/bustoutsolutions/siesta.git
 
 SPEC CHECKSUMS:
-  ActionKit: cdea709a5803ccb65a8e5980eb1f1c36016e623c
-  AGAudioPlayer: 26dd2722f8073d3791fd057766364ade3362e246
+  ActionKit: c1b6427fd36a0fe2223555679bcc5dea437af5b3
+  AGAudioPlayer: d1c572757f190502712aa2c6bfa74d646022fba6
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 5b074495769769192b720c70aa2a60f6f33751f3
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  CleanroomLogger: 8de6eb3511ebc6387428c55f69e86822533a588e
-  CouchbaseLite-Swift: 89876f4656ef16945aea554127755ee40855af12
-  Crashlytics: 5aa8e90dcbf2f34898b4f5a0037787531246cca0
+  CleanroomLogger: 51703da66caaa392436f5ba6cd5b7ae83d1282aa
+  CouchbaseLite-Swift: fc942af766946a7b1efbee2cc9b72ae04ec632e1
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CSwiftV: 8dde426ad2a4f645bdfb513b8aa878d555aeff60
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 0a9848f9c13f34a488939b7244e8043feb94be3c
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
-  Fabric: f6f21452846788bb44595d73e9909d79d328e617
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
   FaveButton: 496e8356260b9a18e6ed20ad9d1421118096fb56
-  Interpolate: c786b88ad860c7110d606ae2776fad616e2b3724
+  Interpolate: 99edce3f72d84d1b9fdc3f769c775b6ade7f92e9
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
   KissXML: d19dd6dc65e0dc721ba92b3077b8ebdd240f1c1e
   LastFm: a624fa250bbda5950fccbd068ea7950dcba2da1f
   LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
-  MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
-  MZDownloadManager: 1faf281511aa91bd45f254dd84331e08720d890c
+  MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
+  MZDownloadManager: 8c78ecc8f68e0aed845bc767896cb92dc8a4b21d
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
-  NapySlider: faba6c6695ca3e2a4e00846eb3e906bc8e896a13
+  NapySlider: 54934403e7ab09c4c97274e4e9c3ea2d694c53a4
   Observable: d8a6ed00d87087dd169012a0f92214fe5a15debd
   PathKit: 364e0de7fb5adb142aecab4e112187e5548fc4b6
   PinpointKit: 8ef42ed810a95aaced0462b532e0224a67afb72d
-  Realm: 3fdae59de78838064e9f77638d7cdb7b8cff9dc8
-  RealmConverter: 0e76a14a86bfbd03387e815c55409272fe899c82
-  RealmSwift: c990518b800e106d1f77099d3a4648c3b100337d
-  Reveal-SDK: 1385ab77aa15e9a3e21f798c74bd8e94cb54c651
+  Realm: 31dc40934081ef740f60feedc46d88473cbfeb40
+  RealmConverter: 83bf897d3f8163f59a43fdf2ee5ab58e15238877
+  RealmSwift: b5199e9a41f67b99f51acf6874a6166f5fbe93d1
+  Reveal-SDK: 5d7e56b8f018c0a88b3a2c10bf68d598bbd3b071
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  Siesta: 83795fdf6a43232d1d2909e1a3dfb92ab5916d26
+  SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
+  Siesta: c11325f7d1ad2e7af04e475a8598af5dbcac5c10
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
-  SSZipArchive: 8e859da2520142e09166bc9161967db296e9d02f
+  SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
-  Wormholy: f2488b9690976459a3ce6680ec099143724418d8
+  Wormholy: f01b096b449a9fcab864a10f7e5b5693b1225c88
 
-PODFILE CHECKSUM: 790de1113b87a533641090ec6f5a9221e2255471
+PODFILE CHECKSUM: e8d389f905384110cec6e5b2200593913341e929
 
-COCOAPODS: 1.7.0.beta.2
+COCOAPODS: 1.8.4

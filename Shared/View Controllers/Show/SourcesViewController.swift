@@ -64,7 +64,7 @@ public class SourcesViewController: RelistenTableViewController<ShowWithSources>
         // The order from the server is fine, but the two most recently updated sources updated within the last three months should be displayed near the top
         var retval : [SourceFull] = sources
         if sources.count > 1 {
-            var sourcesSortedByUpdate = sources.sorted(by: { return $0.updated_at > $1.updated_at })
+            let sourcesSortedByUpdate = sources.sorted(by: { return $0.updated_at > $1.updated_at })
             var recentSources : [SourceFull] = []
             if -(sourcesSortedByUpdate[0].updated_at.timeIntervalSinceNow) < (60*60*24*30*3) { // Approximately three months
                 recentSources.append(sourcesSortedByUpdate[0])

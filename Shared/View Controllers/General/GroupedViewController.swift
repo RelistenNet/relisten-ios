@@ -55,6 +55,23 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
             searchController.searchBar.backgroundColor = AppColors.primary
             searchController.searchBar.barTintColor = AppColors.textOnPrimary
             searchController.searchBar.tintColor = AppColors.textOnPrimary
+
+            
+            if #available(iOS 13.0, *) {
+                let placeholder = NSAttributedString(string: "Search",
+                                                     attributes: [
+                                                        .foregroundColor: UIColor.white.withAlphaComponent(0.80)
+                ])
+                let searchTextField = searchController.searchBar.searchTextField
+                searchTextField.leftView?.tintColor = UIColor.white
+                
+                DispatchQueue.global().async {
+                    DispatchQueue.main.async {
+                        searchTextField.leftView?.tintColor = UIColor.white
+                        searchTextField.attributedPlaceholder = placeholder
+                    }
+                }
+            }
             
             navigationItem.searchController = searchController
             definesPresentationContext = true

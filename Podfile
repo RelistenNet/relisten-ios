@@ -30,7 +30,7 @@ def apply_pods
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'
   pod 'RealmSwift'
-  pod 'RealmConverter', :git => "https://github.com/farktronix/realm-cocoa-converter.git" # https://github.com/realm/realm-cocoa-converter/pull/56
+  pod 'RealmConverter', :git => "https://github.com/farktronix/realm-cocoa-converter.git", :branch => "RealmVersion" # https://github.com/realm/realm-cocoa-converter/pull/56
   pod 'SDCloudUserDefaults'
   pod 'SINQ'
   pod 'SVProgressHUD'

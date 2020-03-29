@@ -23,117 +23,10 @@
 
 #include <realm/util/features.h>
 #include <realm/util/backtrace.hpp>
-#include <realm/util/optional.hpp>
 
 namespace realm {
-namespace _impl {
 
-class ExceptionWithBacktraceBase {
-public:
-    ExceptionWithBacktraceBase()
-        : m_backtrace(util::Backtrace::capture())
-    {
-    }
-    const util::Backtrace& backtrace() const noexcept
-    {
-        return m_backtrace;
-    }
-    virtual const char* message() const noexcept = 0;
-
-protected:
-    util::Backtrace m_backtrace;
-    mutable util::Optional<std::string> m_message_with_backtrace;
-
-    // Render the message and the backtrace into m_message_with_backtrace. If an
-    // exception is thrown while rendering the message, the message without the
-    // backtrace will be returned.
-    const char* materialize_message() const noexcept;
-};
-
-} // namespace _impl
-
-
-/// Base class for exceptions that record a stack trace of where they were
-/// thrown.
-///
-/// The template argument is expected to be an exception type conforming to the
-/// standard library exception API (`std::exception` and friends).
-///
-/// It is possible to opt in to exception backtraces in two ways, (a) as part of
-/// the exception type, in which case the backtrace will always be included for
-/// all exceptions of that type, or (b) at the call-site of an opaque exception
-/// type, in which case it is up to the throw-site to decide whether a backtrace
-/// should be included.
-///
-/// Example (a):
-/// ```
-///     class MyException : ExceptionWithBacktrace<std::exception> {
-///     public:
-///         const char* message() const noexcept override
-///         {
-///             return "MyException error message";
-///         }
-///     };
-///
-///     ...
-///
-///     try {
-///         throw MyException{};
-///     }
-///     catch (const MyException& ex) {
-///         // Print the backtrace without the message:
-///         std::cerr << ex.backtrace() << "\n";
-///         // Print the exception message and the backtrace:
-///         std::cerr << ex.what() << "\n";
-///         // Print the exception message without the backtrace:
-///         std::cerr << ex.message() << "\n";
-///     }
-/// ```
-///
-/// Example (b):
-/// ```
-///     class MyException : std::exception {
-///     public:
-///         const char* what() const noexcept override
-///         {
-///             return "MyException error message";
-///         }
-///     };
-///
-///     ...
-///
-///     try {
-///         throw ExceptionWithBacktrace<MyException>{};
-///     }
-///     catch (const MyException& ex) {
-///         // Print the exception message and the backtrace:
-///         std::cerr << ex.what() << "\n";
-///     }
-/// ```
-template <class Base = std::runtime_error>
-class ExceptionWithBacktrace : public Base, public _impl::ExceptionWithBacktraceBase {
-public:
-    template <class... Args>
-    inline ExceptionWithBacktrace(Args&&... args)
-        : Base(std::forward<Args>(args)...)
-        , _impl::ExceptionWithBacktraceBase() // backtrace captured here
-    {
-    }
-
-    /// Return the message of the exception, including the backtrace of where
-    /// the exception was thrown.
-    const char* what() const noexcept final
-    {
-        return materialize_message();
-    }
-
-    /// Return the message of the exception without the backtrace. The default
-    /// implementation calls `Base::what()`.
-    const char* message() const noexcept override
-    {
-        return Base::what();
-    }
-};
+using util::ExceptionWithBacktrace;
 
 /// Thrown by various functions to indicate that a specified table does not
 /// exist.
@@ -209,12 +102,25 @@ public:
     /// runtime_error::what() returns the msg provided in the constructor.
 };
 
-
-class SerialisationError : public ExceptionWithBacktrace<std::runtime_error> {
+// SerialisationError intentionally does not inherit ExceptionWithBacktrace
+// because the query-based-sync permissions queries generated on the server
+// use a LinksToNode which is not currently serialisable (this limitation can
+// be lifted in core 6 given stable ids). Coupled with query metrics which
+// serialize all queries, the capturing of the stack for these frequent
+// permission queries shows up in performance profiles.
+class SerialisationError : public std::runtime_error {
 public:
     SerialisationError(const std::string& msg);
     /// runtime_error::what() returns the msg provided in the constructor.
 };
+
+// thrown when a user constructed link path is not a valid input
+class InvalidPathError : public std::runtime_error {
+public:
+    InvalidPathError(const std::string& msg);
+    /// runtime_error::what() returns the msg provided in the constructor.
+};
+
 
 /// The \c LogicError exception class is intended to be thrown only when
 /// applications (or bindings) violate rules that are stated (or ought to have
@@ -406,7 +312,12 @@ inline OutOfDiskSpace::OutOfDiskSpace(const std::string& msg)
 }
 
 inline SerialisationError::SerialisationError(const std::string& msg)
-    : ExceptionWithBacktrace<std::runtime_error>(msg)
+    : std::runtime_error(msg)
+{
+}
+
+inline InvalidPathError::InvalidPathError(const std::string& msg)
+    : runtime_error(msg)
 {
 }
 

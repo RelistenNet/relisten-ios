@@ -294,7 +294,7 @@ public class DownloadManager {
                 
                 var fileSize : UInt64 = 0
                 do {
-                    var attributes = try fm.attributesOfItem(atPath: filePath)
+                    let attributes = try fm.attributesOfItem(atPath: filePath)
                     fileSize = attributes[.size] as! UInt64
                 } catch {
                     LogWarn("Error getting file size for file at \(filePath): \(error)")

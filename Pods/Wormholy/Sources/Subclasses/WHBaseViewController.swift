@@ -13,6 +13,10 @@ class WHBaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Always adopt a light interface style.
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .light
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,5 +74,7 @@ extension UIViewController{
         if motion == .motionShake && Wormholy.shakeEnabled {
             NotificationCenter.default.post(name: fireWormholy, object: nil)
         }
+        
+        next?.motionBegan(motion, with: event)
     }
 }

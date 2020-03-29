@@ -20,7 +20,7 @@ public class ManageOfflineMusicNode : ASCellNode {
         downloadStatsNode = ASTextNode("0 tracks saved offline (0 bytes)", textStyle: .body)
         
         deleteAllDownloadsNode = ASButtonNode()
-        deleteAllDownloadsNode.setTitle("Delete all downloaded tracks »", with: UIFont.preferredFont(forTextStyle: .body), with: UIColor.flatRed, for: .normal)
+        deleteAllDownloadsNode.setTitle("Delete all downloaded tracks »", with: UIFont.preferredFont(forTextStyle: .body), with: UIColor.flatRed(), for: .normal)
         deleteAllDownloadsNode.setTitle("No tracks to delete", with: UIFont.preferredFont(forTextStyle: .body), with: AppColors.mutedText, for: .disabled)
         deleteAllDownloadsNode.isEnabled = false
         

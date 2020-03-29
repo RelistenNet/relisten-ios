@@ -21,8 +21,8 @@ public func RelistenAttributedStringAttributes(_ string: String, font: UIFont, c
     
     return [
         NSAttributedString.Key.font: scaledFont,
-        NSAttributedString.Key.foregroundColor: color ?? UIColor.darkText,
-        NSAttributedString.Key.paragraphStyle: paragraphStyle
+        //NSAttributedString.Key.foregroundColor: color ?? UIColor.darkText,
+        //NSAttributedString.Key.paragraphStyle: paragraphStyle
     ]
 }
 

@@ -11,6 +11,11 @@ import UIKit
 
 public class Wormholy: NSObject
 {
+    @objc public static var blacklistedHosts: [String] {
+        get { return CustomHTTPProtocol.blacklistedHosts }
+        set { CustomHTTPProtocol.blacklistedHosts = newValue }
+    }
+
     @objc public static func swiftyLoad() {
         NotificationCenter.default.addObserver(forName: fireWormholy, object: nil, queue: nil) { (notification) in
             Wormholy.presentWormholyFlow()
@@ -70,6 +75,7 @@ public class Wormholy: NSObject
         }
         let storyboard = UIStoryboard(name: "Flow", bundle: WHBundle.getBundle())
         if let initialVC = storyboard.instantiateInitialViewController(){
+            initialVC.modalPresentationStyle = .fullScreen
             UIViewController.currentViewController()?.present(initialVC, animated: true, completion: nil)
         }
     }

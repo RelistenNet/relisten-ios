@@ -147,11 +147,11 @@ public class RelistenRealmObject : Object, FavoritedItem {
     }
     
     public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        super.init(realm: realm, schema: schema)
+        //super.init(realm: realm, schema: schema)
     }
     
     public required init(value: Any, schema: RLMSchema) {
-        super.init(value: value, schema: schema)
+        //super.init(value: value, schema: schema)
     }
 }
 
@@ -324,7 +324,7 @@ public class RecentlyPlayedTrack: RelistenRealmObject, HasTrackSourceAndShow {
     }
 }
 
-@objc public enum OfflineTrackState : Int {
+@objc public enum OfflineTrackState : Int, RealmEnum {
     case unknown
     case downloadQueued
     case downloading
@@ -376,11 +376,11 @@ public class OfflineTrack: Object, HasTrackSourceAndShow {
     }
     
     public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        super.init(realm: realm, schema: schema)
+//        super.init(realm: realm, schema: schema)
     }
     
     public required init(value: Any, schema: RLMSchema) {
-        super.init(value: value, schema: schema)
+//        super.init(value: value, schema: schema)
     }
 }
 
@@ -418,11 +418,11 @@ public class OfflineSource: Object, HasSourceAndShow {
     }
     
     public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        super.init(realm: realm, schema: schema)
+//        super.init(realm: realm, schema: schema)
     }
     
     public required init(value: Any, schema: RLMSchema) {
-        super.init(value: value, schema: schema)
+//        super.init(value: value, schema: schema)
     }
 }
 

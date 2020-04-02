@@ -60,8 +60,8 @@ PODS:
   - SDWebImage (3.8.3):
     - SDWebImage/Core (= 3.8.3)
   - SDWebImage/Core (3.8.3)
-  - Siesta/Core (1.4.3)
-  - Siesta/UI (1.4.3):
+  - Siesta/Core (1.5.0)
+  - Siesta/UI (1.5.0):
     - Siesta/Core
   - SimulatorStatusMagic (2.4.1)
   - SINQ (0.7.0)
@@ -81,7 +81,7 @@ PODS:
   - Texture/Core (2.8.1)
   - Texture/MapKit (2.8.1):
     - Texture/Core
-  - Wormholy (1.5.1)
+  - Wormholy (1.5.2)
 
 DEPENDENCIES:
   - ActionKit
@@ -269,7 +269,7 @@ SPEC CHECKSUMS:
   Reveal-SDK: 5d7e56b8f018c0a88b3a2c10bf68d598bbd3b071
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
-  Siesta: 83795fdf6a43232d1d2909e1a3dfb92ab5916d26
+  Siesta: c3a5cd60919adabc73b2788c79b7a5c462d8c35a
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
@@ -278,7 +278,7 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
-  Wormholy: f01b096b449a9fcab864a10f7e5b5693b1225c88
+  Wormholy: 3344d3591d78488d957402d51dccfbfafd6f9641
 
 PODFILE CHECKSUM: c35cda6692055f2cf9792d39f0582118119e8bc2
 

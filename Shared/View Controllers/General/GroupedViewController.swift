@@ -51,7 +51,8 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
             searchController.searchBar.showsScopeBar = false
             
             searchController.searchBar.placeholder = self.searchPlaceholder
-            searchController.searchBar.barStyle = .blackTranslucent
+            searchController.searchBar.barStyle = .black
+            searchController.searchBar.isTranslucent = true
             searchController.searchBar.backgroundColor = AppColors.primary
             searchController.searchBar.barTintColor = AppColors.textOnPrimary
             searchController.searchBar.tintColor = AppColors.textOnPrimary

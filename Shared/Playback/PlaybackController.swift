@@ -298,13 +298,13 @@ public class PlaybackMinibarShrinker: NSObject, UINavigationControllerDelegate {
         
         scrollView.contentInset = edges
         
-        edges = scrollView.scrollIndicatorInsets
+        edges = scrollView.verticalScrollIndicatorInsets
         
         if edges.bottom < barHeight {
             edges.bottom += barHeight
         }
         
-        scrollView.scrollIndicatorInsets = edges
+        scrollView.verticalScrollIndicatorInsets = edges
     }
 }
 

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Bust Out Solutions. All rights reserved.
 //
 
-#if os(iOS)
-
 #if !COCOAPODS
     import Siesta
 #endif
@@ -324,5 +322,3 @@ open class ResourceStatusOverlay: UIView, ResourceObserver
             }
         }
     }
-
-#endif // OS(iOS)

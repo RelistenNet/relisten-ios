@@ -27,18 +27,25 @@ platform :ios do
     scan
   end
 
+  lane :local_register_devices do
+    register_devices(
+      devices: {
+        "Alec's iPhone 11 Pro" => "00008030-001944A23E10802E",
+      }
+    ) # Simply provide a list of devices as a Hash
+  end    
+
   lane :setup_certs do
     match(git_url: "git@bitbucket.org:relistennet/ios-certificates.git",
       type: "development",
       template_name: "CarPlay Audio App(Development)", 
-      readonly: true
-      )
+      force_for_new_devices: true
+    )
 
     match(git_url: "git@bitbucket.org:relistennet/ios-certificates.git",
       type: "appstore", 
-      template_name: "CarPlay Audio App(Distribution)", 
-      readonly: true
-      )
+      template_name: "CarPlay Audio App(Distribution)"
+    )
   end
 
   desc "Bumps the minor version number"

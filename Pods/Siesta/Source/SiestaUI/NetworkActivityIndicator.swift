@@ -6,8 +6,6 @@
 //  Copyright © 2016 Bust Out Solutions. All rights reserved.
 //
 
-#if os(iOS)
-
 #if !COCOAPODS
     import Siesta
 #endif
@@ -63,5 +61,3 @@ extension Configuration
             }
         }
     }
-
-#endif // OS(iOS)

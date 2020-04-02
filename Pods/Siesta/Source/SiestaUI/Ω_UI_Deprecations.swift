@@ -9,7 +9,5 @@
 #if !COCOAPODS
     import Siesta
 #endif
-#if os(iOS)
-    import UIKit
-#endif
+import UIKit
 import Foundation

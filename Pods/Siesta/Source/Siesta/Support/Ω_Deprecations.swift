@@ -10,11 +10,9 @@
 
 import Foundation
 
-// Deprecated in 1.3
-
 extension Service
     {
-    @available(*, deprecated, message: "Use `standardTransformers:` instead of `useDefaultTransformers:`. Choices are `[.json, .text, .image]`; use [] for none")
+    @available(*, deprecated: 1.3, message: "Use `standardTransformers:` instead of `useDefaultTransformers:`. Choices are `[.json, .text, .image]`; use [] for none")
     public convenience init(
             baseURL: URLConvertible? = nil,
             useDefaultTransformers: Bool,
@@ -27,30 +25,28 @@ extension Service
         }
     }
 
-// Deprecated in 1.4
-
 extension Request
     {
-    @available(*, deprecated, message: "Replaced by `state` property; check `request.state == .completed`")
-    public var isCompleted: Bool
+    @available(*, deprecated: 1.4, message: "Replaced by `state` property; check `request.state == .completed`")
+    var isCompleted: Bool
         { return state == .completed }
     }
 
-@available(*, deprecated, renamed: "ResponseContentTransformer.InputTypeMismatchAction")
+@available(*, deprecated: 1.4, renamed: "ResponseContentTransformer.InputTypeMismatchAction")
 public typealias InputTypeMismatchAction = ResponseContentTransformer<Any,Any>.InputTypeMismatchAction
 
 
-@available(*, deprecated, renamed: "failedRequest(returning:)")
+@available(*, deprecated: 1.4, renamed: "failedRequest(returning:)")
 extension Resource
     {
     public static func failedRequest(_ error: RequestError) -> Request
         { return failedRequest(returning: error) }
     }
 
-@available(*, deprecated, renamed: "SiestaLog.Category")
+@available(*, deprecated: 1.4, renamed: "SiestaLog.Category")
 public typealias LogCategory = SiestaLog.Category
 
-@available(*, deprecated, renamed: "SiestaLog.messageHandler")
+@available(*, deprecated: 1.4, renamed: "SiestaLog.messageHandler")
 public var logger: (LogCategory, String) -> Void
     {
     get { return SiestaLog.messageHandler }

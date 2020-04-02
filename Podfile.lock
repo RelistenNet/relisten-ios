@@ -12,7 +12,6 @@ PODS:
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
   - CleanroomLogger (6.0.3)
-  - CouchbaseLite-Swift (2.7.0)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - CSwiftV (0.0.9)
@@ -66,6 +65,16 @@ PODS:
     - Siesta/Core
   - SimulatorStatusMagic (2.4.1)
   - SINQ (0.7.0)
+  - SQLite.swift (0.12.2):
+    - SQLite.swift/standard (= 0.12.2)
+  - SQLite.swift/standard (0.12.2)
+  - sqlite3 (3.31.1):
+    - sqlite3/common (= 3.31.1)
+  - sqlite3/common (3.31.1)
+  - sqlite3/json1 (3.31.1):
+    - sqlite3/common
+  - sqlite3/perf-threadsafe (3.31.1):
+    - sqlite3/common
   - SSZipArchive (2.2.2)
   - SVProgressHUD (2.2.5)
   - SwiftyJSON (5.0.0)
@@ -82,7 +91,6 @@ DEPENDENCIES:
   - Cache (from `https://github.com/farktronix/Cache.git`)
   - ChameleonFramework (from `https://github.com/farktronix/Chameleon.git`)
   - CleanroomLogger (from `https://github.com/farktronix/CleanroomLogger`)
-  - CouchbaseLite-Swift
   - Crashlytics
   - CSwiftV
   - CWStatusBarNotification
@@ -107,10 +115,15 @@ DEPENDENCIES:
   - RealmSwift
   - Reveal-SDK
   - SDCloudUserDefaults
-  - Siesta/Core (from `https://github.com/bustoutsolutions/siesta.git`)
-  - Siesta/UI (from `https://github.com/bustoutsolutions/siesta.git`)
+  - Siesta/Core
+  - Siesta/UI
   - SimulatorStatusMagic
   - SINQ
+  - SQLite.swift
+  - sqlite3
+  - sqlite3/common
+  - sqlite3/json1
+  - sqlite3/perf-threadsafe
   - SVProgressHUD
   - SwiftyJSON
   - Texture/Core
@@ -121,7 +134,6 @@ SPEC REPOS:
   trunk:
     - ActionKit
     - AXRatingView
-    - CouchbaseLite-Swift
     - Crashlytics
     - CSwiftV
     - CWStatusBarNotification
@@ -141,8 +153,11 @@ SPEC REPOS:
     - Reveal-SDK
     - SDCloudUserDefaults
     - SDWebImage
+    - Siesta
     - SimulatorStatusMagic
     - SINQ
+    - SQLite.swift
+    - sqlite3
     - SSZipArchive
     - SVProgressHUD
     - SwiftyJSON
@@ -179,8 +194,6 @@ EXTERNAL SOURCES:
   RealmConverter:
     :branch: RealmVersion
     :git: https://github.com/farktronix/realm-cocoa-converter.git
-  Siesta:
-    :git: https://github.com/bustoutsolutions/siesta.git
 
 CHECKOUT OPTIONS:
   Cache:
@@ -219,9 +232,6 @@ CHECKOUT OPTIONS:
   RealmConverter:
     :commit: 7fde705b8e1fd78603e275ba865fd5692df7fb8d
     :git: https://github.com/farktronix/realm-cocoa-converter.git
-  Siesta:
-    :commit: 141292461f40c5b519f584b49639b5b248eb138b
-    :git: https://github.com/bustoutsolutions/siesta.git
 
 SPEC CHECKSUMS:
   ActionKit: c1b6427fd36a0fe2223555679bcc5dea437af5b3
@@ -231,7 +241,6 @@ SPEC CHECKSUMS:
   Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: 51703da66caaa392436f5ba6cd5b7ae83d1282aa
-  CouchbaseLite-Swift: fc942af766946a7b1efbee2cc9b72ae04ec632e1
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CSwiftV: 8dde426ad2a4f645bdfb513b8aa878d555aeff60
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
@@ -260,15 +269,17 @@ SPEC CHECKSUMS:
   Reveal-SDK: 5d7e56b8f018c0a88b3a2c10bf68d598bbd3b071
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
-  Siesta: c11325f7d1ad2e7af04e475a8598af5dbcac5c10
+  Siesta: 83795fdf6a43232d1d2909e1a3dfb92ab5916d26
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SINQ: 64cab7b7c73486da8f4442c25ccdd6ada7e67b95
+  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
+  sqlite3: d72537554fb149ce43ece11a2fe6d42d21b3743f
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
   Wormholy: f01b096b449a9fcab864a10f7e5b5693b1225c88
 
-PODFILE CHECKSUM: e8d389f905384110cec6e5b2200593913341e929
+PODFILE CHECKSUM: c35cda6692055f2cf9792d39f0582118119e8bc2
 
 COCOAPODS: 1.9.1

@@ -69,24 +69,23 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         searchController.obscuresBackgroundDuringPresentation = false
         
         searchController.searchBar.placeholder = "Search Artists"
-        searchController.searchBar.barStyle = .blackTranslucent
+        searchController.searchBar.barStyle = .black
+        searchController.searchBar.isTranslucent = true
         searchController.searchBar.backgroundColor = AppColors.primary
         searchController.searchBar.barTintColor = AppColors.textOnPrimary
         searchController.searchBar.tintColor = AppColors.textOnPrimary
         
         //queue issue fix from: https://stackoverflow.com/questions/58287304/how-to-change-text-color-of-placeholder-in-uisearchbar-ios-13
-        if #available(iOS 13.0, *) {
-            let placeholder = NSAttributedString(string: "Search Artists",
-                                                 attributes: [
-                                                    .foregroundColor: UIColor.white.withAlphaComponent(0.80)
-            ])
-            let searchTextField = searchController.searchBar.searchTextField
-            
-            DispatchQueue.global().async {
-                DispatchQueue.main.async {
-                    searchTextField.leftView?.tintColor = UIColor.white
-                    searchTextField.attributedPlaceholder = placeholder
-                }
+        let placeholder = NSAttributedString(string: "Search Artists",
+                                             attributes: [
+                                                .foregroundColor: AppColors.textOnPrimary.withAlphaComponent(0.80)
+        ])
+        let searchTextField = searchController.searchBar.searchTextField
+        
+        DispatchQueue.global().async {
+            DispatchQueue.main.async {
+                searchTextField.leftView?.tintColor = AppColors.textOnPrimary
+                searchTextField.attributedPlaceholder = placeholder
             }
         }
         

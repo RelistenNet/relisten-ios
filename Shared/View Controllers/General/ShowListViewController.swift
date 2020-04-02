@@ -121,7 +121,7 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
         if enableSearch {
             // Setup the Search Controller
             searchController.searchResultsUpdater = self
-            searchController.obscuresBackgroundDuringPresentation = true
+            searchController.obscuresBackgroundDuringPresentation = false
             
             searchController.searchBar.delegate = self
             if let buttonTitles = self.scopeButtonTitles {
@@ -131,28 +131,17 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
             searchController.searchBar.showsScopeBar = true
             
             searchController.searchBar.placeholder = self.searchPlaceholder
-            searchController.searchBar.barStyle = .default
-            searchController.searchBar.searchBarStyle = .prominent
-            
-            if #available(iOS 13.0, *) {
-                let placeholder = NSAttributedString(string: "Search",
-                                                     attributes: [
-                                                        .foregroundColor: UIColor.white.withAlphaComponent(0.80)
-                ])
-                let searchTextField = searchController.searchBar.searchTextField
-                
-                DispatchQueue.global().async {
-                    DispatchQueue.main.async {
-                        searchTextField.leftView?.tintColor = UIColor.white
-                        searchTextField.attributedPlaceholder = placeholder
-                    }
-                }
-            }
+//            searchController.searchBar.searchBarStyle = .prominent
+            searchController.searchBar.barStyle = .black
+            searchController.searchBar.isTranslucent = true
+            searchController.searchBar.backgroundColor = AppColors.primary
+            searchController.searchBar.barTintColor = AppColors.textOnPrimary
+            searchController.searchBar.tintColor = AppColors.textOnPrimary
+
+            applySearchBarStyle()
             
             navigationItem.searchController = searchController
             definesPresentationContext = true
-            
-            searchController.searchBar.sizeToFit()
         }
     }
     
@@ -174,8 +163,25 @@ public class NewShowListViewController<T, DataSource: ShowListDataSource> : Reli
     public override func viewWillAppear(_ animated: Bool) {
         if enableSearch {
             navigationItem.hidesSearchBarWhenScrolling = false
+            applySearchBarStyle()
         }
         super.viewWillAppear(animated)
+    }
+    
+    func applySearchBarStyle() {
+        let placeholder = NSAttributedString(string: "Search",
+                                             attributes: [
+                                                .foregroundColor: AppColors.textOnPrimary.withAlphaComponent(0.80)
+        ])
+        let searchTextField = searchController.searchBar.searchTextField
+        searchTextField.attributedPlaceholder = placeholder
+
+        DispatchQueue.global().async {
+            DispatchQueue.main.async {
+                searchTextField.leftView?.tintColor = AppColors.textOnPrimary
+                searchTextField.attributedPlaceholder = placeholder
+            }
+        }
     }
     
     public override func viewDidAppear(_ animated: Bool) {

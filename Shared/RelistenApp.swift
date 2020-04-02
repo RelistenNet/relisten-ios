@@ -174,6 +174,17 @@ public class RelistenApp {
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary]
         
+        if #available(iOS 13.0, *) {
+            let coloredAppearance = UINavigationBarAppearance()
+            coloredAppearance.configureWithOpaqueBackground()
+            coloredAppearance.backgroundColor = AppColors.primary
+            coloredAppearance.titleTextAttributes = [.foregroundColor: AppColors.textOnPrimary]
+            coloredAppearance.largeTitleTextAttributes = [.foregroundColor: AppColors.textOnPrimary]
+                   
+            UINavigationBar.appearance().standardAppearance = coloredAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+        }
+        
         UIToolbar.appearance().backgroundColor = AppColors.primary
         UIToolbar.appearance().tintColor = AppColors.textOnPrimary
         
@@ -190,9 +201,14 @@ public class RelistenApp {
         sutf.tintColor = UIColor.white.withAlphaComponent(0.8)
         
         let sbbi = UISegmentedControl.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+
+        sbbi.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.primary], for: .selected)
+        sbbi.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary], for: .normal)
         
         sbbi.tintColor = AppColors.textOnPrimary
         sbbi.backgroundColor = AppColors.primary
+        
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = AppColors.textOnPrimary
 
         if !delegate.isDummyDelegate, let w = delegate.window, let t = w.rootViewController as? UITabBarController {
             t.viewControllers?.forEach({ tab in

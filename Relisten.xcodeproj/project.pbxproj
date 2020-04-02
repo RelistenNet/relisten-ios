@@ -2167,7 +2167,7 @@
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = RelistenTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2188,7 +2188,7 @@
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = RelistenTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2248,7 +2248,7 @@
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = RelistenTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2272,7 +2272,7 @@
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = RelistenTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.relisten.RelistenUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2291,7 +2291,7 @@
 				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.Phish-Tracks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2310,7 +2310,7 @@
 				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.Phish-Tracks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2398,7 +2398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2453,7 +2453,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -2476,6 +2476,7 @@
 				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2496,6 +2497,7 @@
 				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alecgorge.ios.Listen-to-the-Dead";
 				PRODUCT_NAME = "$(TARGET_NAME)";

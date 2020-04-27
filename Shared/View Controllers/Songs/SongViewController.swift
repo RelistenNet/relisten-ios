@@ -14,33 +14,49 @@ import Siesta
 import AsyncDisplayKit
 import SINQ
 
-class SongViewController: ShowListViewController<SongWithShows>, UIViewControllerRestoration {
+class ShowListSongDataSourceExtractor : ShowListWrappedArrayDataSourceExtractor<SongWithShows, Show> {
+    public override func extractShowList(forData wrapper: SongWithShows) -> [Show] {
+        return wrapper.shows
+    }
+}
+
+class SongViewController: NewShowListWrappedArrayViewController<SongWithShows, Show> {
     let song: Song
+    let artist: ArtistWithCounts
     
-    public required init(artist: Artist, song: Song) {
+    public required init(artist: ArtistWithCounts, song: Song) {
         self.song = song
+        self.artist = artist
         
         super.init(
-            artist: artist,
-            tourSections: false
+            extractor: ShowListSongDataSourceExtractor(providedArtist: artist),
+            sort: .ascending,
+            tourSections: false,
+            artistSections: false,
+            enableSearch: true
         )
-        
-        self.restorationIdentifier = "net.relisten.SongViewController.\(artist.slug)"
-        self.restorationClass = type(of: self)
         
         title = song.name
     }
+
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
+    public required init(enableSearch: Bool) {
+        fatalError("init(enableSearch:) has not been implemented")
     }
     
-    public required init(artist: SlimArtistWithFeatures, tourSections: Bool, enableSearch: Bool) {
-        fatalError("init(artist:showsResource:tourSections:) has not been implemented")
+    public required init(extractor: ShowListWrappedArrayDataSourceExtractor<SongWithShows, Show>, sort: ShowSorting = .descending, tourSections: Bool = true, artistSections: Bool = false, enableSearch: Bool = true) {
+        fatalError("init(extractor:sort:tourSections:artistSections:enableSearch:) has not been implemented")
+    }
+    
+    public required init(withDataSource dataSource: ShowListArrayDataSource<SongWithShows, Show, ShowListWrappedArrayDataSourceExtractor<SongWithShows, Show>>, enableSearch: Bool) {
+        fatalError("init(withDataSource:enableSearch:) has not been implemented")
     }
     
     override public var resource: Resource? {
@@ -49,44 +65,8 @@ class SongViewController: ShowListViewController<SongWithShows>, UIViewControlle
         }
     }
     
-    override func extractShowsAndSource(forData: SongWithShows) -> [ShowWithSingleSource] {
-        return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil, artist: artist) })
-    }
-    
     // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
     override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
-    }
-    
-    //MARK: State Restoration
-    enum CodingKeys: String, CodingKey {
-        case song = "song"
-    }
-    
-    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        // Decode the artist object from the archive and init a new artist view controller with it
-        do {
-            if let artistData = coder.decodeObject(forKey: ShowListViewController<YearWithShows>.CodingKeys.artist.rawValue) as? Data,
-                let songData = coder.decodeObject(forKey: CodingKeys.song.rawValue) as? Data {
-                let encodedArtist = try JSONDecoder().decode(Artist.self, from: artistData)
-                let encodedSong = try JSONDecoder().decode(Song.self, from: songData)
-                let vc = SongViewController(artist: encodedArtist, song: encodedSong)
-                return vc
-            }
-        } catch { }
-        return nil
-    }
-    
-    override public func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        
-        do {
-            let encodedSong = try JSONEncoder().encode(self.song)
-            coder.encode(encodedSong, forKey: CodingKeys.song.rawValue)
-        } catch { }
-    }
-    
-    override public func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
     }
 }

@@ -12,6 +12,7 @@ import Siesta
 import SINQ
 import Observable
 import AsyncDisplayKit
+import DZNEmptyDataSet
 
 open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
     public let tableNode: ASTableNode!
@@ -39,9 +40,6 @@ open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, AS
         super.viewDidLoad()
         
         navigationItem.largeTitleDisplayMode = .always
-        
-        self.restorationIdentifier = "net.relisten.RelistenBaseTableViewController"
-        self.tableNode.view.restorationIdentifier = "net.relisten.RelistenBaseTableViewController.tableView"
     }
     
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -95,27 +93,71 @@ open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, AS
     }
 }
 
-open class RelistenTableViewController<TData> : RelistenBaseTableViewController {
+open class RelistenTableViewController<TData> : RelistenBaseTableViewController, UISearchResultsUpdating, UISearchBarDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     public let statusOverlay = RelistenResourceStatusOverlay()
     
     open var resource: Resource? { get { return nil } }
     
     public let useCache: Bool
     public var refreshOnAppear: Bool
+    public let enableSearch: Bool
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
+    open var resultsViewController: UIViewController? { get { return nil } }
+    public var searchController: UISearchController! = nil
+    public let tableUpdateQueue = DispatchQueue(label: "net.relisten.groupedViewController.queue")
+
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool = false) {
         self.useCache = useCache
         self.refreshOnAppear = refreshOnAppear
+        self.enableSearch = enableSearch
         
         super.init(style: style)
+
+        searchController = UISearchController(searchResultsController: resultsViewController)
+
+        self.tableNode.view.sectionIndexColor = AppColors.primary
+        self.tableNode.view.sectionIndexMinimumDisplayRowCount = 4
+        
+        if enableSearch {
+            // Setup the Search Controller
+            searchController.searchResultsUpdater = self
+            searchController.obscuresBackgroundDuringPresentation = false
+            
+            searchController.searchBar.delegate = self
+            if let buttonTitles = self.scopeButtonTitles {
+                searchController.searchBar.scopeButtonTitles = buttonTitles
+            }
+            // Hide the scope bar for now- we'll reveal it when the user taps on the search field
+            searchController.searchBar.showsScopeBar = true
+            
+            searchController.searchBar.placeholder = self.searchPlaceholder
+//            searchController.searchBar.searchBarStyle = .prominent
+            searchController.searchBar.barStyle = .black
+            searchController.searchBar.isTranslucent = true
+            searchController.searchBar.backgroundColor = AppColors.primary
+            searchController.searchBar.barTintColor = AppColors.textOnPrimary
+            searchController.searchBar.tintColor = AppColors.textOnPrimary
+
+            applySearchBarStyle()
+            
+            navigationItem.searchController = searchController
+            definesPresentationContext = true
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("just...don't")
     }
     
+    open var scopeButtonTitles : [String]? { get { return nil } }
+    open var searchPlaceholder : String { get { return "Search" } }
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableNode.view.emptyDataSetSource = self
+        tableNode.view.emptyDataSetDelegate = self
+        tableNode.view.tableFooterView = UIView()
         
         if let res = resource {
             res.addObserver(self)
@@ -146,6 +188,22 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
         }
     }
     
+    func applySearchBarStyle() {
+        let placeholder = NSAttributedString(string: "Search",
+                                             attributes: [
+                                                .foregroundColor: AppColors.textOnPrimary.withAlphaComponent(0.80)
+        ])
+        let searchTextField = searchController.searchBar.searchTextField
+        searchTextField.attributedPlaceholder = placeholder
+
+        DispatchQueue.global().async {
+            DispatchQueue.main.async {
+                searchTextField.leftView?.tintColor = AppColors.textOnPrimary
+                searchTextField.attributedPlaceholder = placeholder
+            }
+        }
+    }
+    
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -155,8 +213,13 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
     private var lastLoadTime: Date? = nil
     
     open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        if enableSearch {
+            navigationItem.hidesSearchBarWhenScrolling = false
+            applySearchBarStyle()
+        }
         
+        super.viewWillAppear(animated)
+
         // only do this after 60 minutes
         if let l = lastLoadTime, refreshOnAppear, (Date().timeIntervalSince1970 - l.timeIntervalSince1970) > 60 * 60 {
             // don't hit the cache and then the network--go straight to the network
@@ -167,6 +230,20 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
             LogDebug("---> performing initial load")
             resource?.load()
         }
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        if enableSearch {
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
+        super.viewWillAppear(animated)
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        if enableSearch {
+            searchController.isActive = false
+        }
+        super.viewWillDisappear(animated)
     }
     
     // MARK: data handling
@@ -219,4 +296,98 @@ open class RelistenTableViewController<TData> : RelistenBaseTableViewController 
         LogDebug("[render] calling tableNode.reloadData()")
         self.tableNode.reloadData()
     }
+    
+    // MARK: DZNEmptyDataSetDelegate
+
+    // MARK: DZNEmptyDataSetSource
+    public func verticalOffset(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
+        return -50.0
+    }
+
+    public func spaceHeight(forEmptyDataSet scrollView: UIScrollView!) -> CGFloat {
+        return 22.0
+    }
+
+    public func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "music")?.tinted(color: .lightGray)
+    }
+
+    public func titleTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
+        return "Nothing Available"
+    }
+
+    public func descriptionTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
+        return ""
+    }
+    
+    public func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
+        return descriptionTextForEmptyDataSet(scrollView).count > 0
+    }
+
+    public func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString {
+        let text = descriptionTextForEmptyDataSet(scrollView)
+        
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .byWordWrapping
+        paragraph.alignment = .center
+        
+        let attributes = [
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray,
+            NSAttributedString.Key.paragraphStyle: paragraph
+        ]
+        
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+     //MARK: Searching
+     public func searchBarIsEmpty() -> Bool {
+         return searchController.searchBar.text?.isEmpty ?? true
+     }
+     
+     public func isFiltering() -> Bool {
+         let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+         return (searchController.isActive && !searchBarIsEmpty()) || searchBarScopeIsFiltering
+     }
+     
+     open func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+         fatalError("this must be overriden if you have enableSearch = true")
+     }
+
+     //MARK: UISearchResultsUpdating
+     public func updateSearchResults(for searchController: UISearchController) {
+         let searchBar = searchController.searchBar
+         let scope = searchBar.scopeButtonTitles?[searchBar.selectedScopeButtonIndex] ?? "All"
+         if let searchText = searchController.searchBar.text {
+             filterContentForSearchText(searchText, scope: scope)
+         }
+     }
+
+     public func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+         searchController.searchBar.showsScopeBar = true
+         searchController.searchBar.sizeToFit()
+         return true
+     }
+
+     public func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+         searchController.searchBar.showsScopeBar = true
+         searchController.searchBar.sizeToFit()
+         return true
+     }
+
+     public func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+         searchController.searchBar.showsScopeBar = true
+         searchController.searchBar.sizeToFit()
+     }
+     
+     //MARK: UISearchBarDelegate
+     public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+     }
+     
+     // This is kind of dumb, but due to some bugs in LayerKit we need to hide the scope bar until the search field is tapped,
+     //  otherwise the scope bars show up while pushing/popping this view controller.
+     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+         searchController.searchBar.showsScopeBar = true
+     }
 }

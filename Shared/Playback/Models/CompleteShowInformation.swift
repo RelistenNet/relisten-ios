@@ -27,9 +27,9 @@ public class CompleteShowInformation : Hashable  {
     
     public let source: SourceFull
     public let show: Show
-    public let artist: Artist
+    public let artist: ArtistWithCounts
   
-    public required init(source: SourceFull, show: Show, artist: Artist) {
+    public required init(source: SourceFull, show: Show, artist: ArtistWithCounts) {
         self.source = source
         self.show = show
         self.artist = artist

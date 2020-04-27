@@ -85,7 +85,7 @@ extension Show {
 }
 
 extension SourceFull {
-    public func toAudioItems(inShow: Show, byArtist: Artist) -> [AGAudioItem] {
+    public func toAudioItems(inShow: Show, byArtist: ArtistWithCounts) -> [AGAudioItem] {
         var items: [AGAudioItem] = []
         
         let showInfo : CompleteShowInformation = CompleteShowInformation(source: self, show: inShow, artist: byArtist)

@@ -17,7 +17,7 @@ public struct SourceDetailsNodeCell {
     let action: (() -> Void)?
 }
 
-public class SourceDetailsViewController : RelistenBaseTableViewController, UIViewControllerRestoration {
+public class SourceDetailsViewController : RelistenBaseTableViewController {
     enum Sections: Int, RawRepresentable {
         case venue = 0
         case credits
@@ -35,7 +35,7 @@ public class SourceDetailsViewController : RelistenBaseTableViewController, UIVi
         case count
     }
     
-    let artist: Artist
+    let artist: ArtistWithCounts
     let show: ShowWithSources
     let source: SourceFull
     let venue: VenueWithShowCount?
@@ -43,7 +43,7 @@ public class SourceDetailsViewController : RelistenBaseTableViewController, UIVi
     var venueNodes: [SourceDetailsNodeCell] = []
     let creditNodes: [UpstreamSourceNode]
     
-    public required init(artist: Artist, show: ShowWithSources, source: SourceFull) {
+    public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
         self.show = show
         self.source = source
@@ -58,9 +58,6 @@ public class SourceDetailsViewController : RelistenBaseTableViewController, UIVi
         })
         
         super.init()
-        
-        self.restorationIdentifier = "net.relisten.SourceDetailsViewController.\(artist.slug).\(show.display_date).\(source.upstream_identifier)"
-        self.restorationClass = type(of: self)
         
         if let venue = venue {
             let mapNode = VenueMapCellNode(venue: venue, forArtist: artist)
@@ -246,47 +243,5 @@ public class SourceDetailsViewController : RelistenBaseTableViewController, UIVi
         default:
             return false
         }
-    }
-    
-    //MARK: State Restoration
-    enum CodingKeys: String, CodingKey {
-        case artist = "artist"
-        case show = "show"
-        case source = "source"
-    }
-    
-    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        // Decode the artist object from the archive and init a new artist view controller with it
-        do {
-            if let artistData = coder.decodeObject(forKey: CodingKeys.artist.rawValue) as? Data,
-               let showData = coder.decodeObject(forKey: CodingKeys.show.rawValue) as? Data,
-               let sourceData = coder.decodeObject(forKey: CodingKeys.source.rawValue) as? Data {
-                let encodedArtist = try JSONDecoder().decode(Artist.self, from: artistData)
-                let encodedShow = try JSONDecoder().decode(ShowWithSources.self, from: showData)
-                let encodedSource = try JSONDecoder().decode(SourceFull.self, from: sourceData)
-                let vc = SourceDetailsViewController(artist: encodedArtist, show: encodedShow, source: encodedSource)
-                return vc
-            }
-        } catch { }
-        return nil
-    }
-    
-    override public func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        
-        do {
-            let encodedArtist = try JSONEncoder().encode(self.artist)
-            coder.encode(encodedArtist, forKey: CodingKeys.artist.rawValue)
-            
-            let encodedShow = try JSONEncoder().encode(self.show)
-            coder.encode(encodedShow, forKey: CodingKeys.show.rawValue)
-            
-            let encodedSource = try JSONEncoder().encode(self.source)
-            coder.encode(encodedSource, forKey: CodingKeys.source.rawValue)
-        } catch { }
-    }
-    
-    override public func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
     }
 }

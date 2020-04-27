@@ -11,7 +11,7 @@ import Foundation
 import AsyncDisplayKit
 import Siesta
 
-class TodayInHistoryViewController: NewShowListArrayViewController<ShowWithArtist>, UIViewControllerRestoration {
+class TodayInHistoryViewController: NewShowListArrayViewController<ShowWithArtist> {
     static var dateFormatter: DateFormatter = {
         let d = DateFormatter()
         d.dateFormat = "MMM d"
@@ -25,9 +25,6 @@ class TodayInHistoryViewController: NewShowListArrayViewController<ShowWithArtis
         
         super.init(providedArtist: artist)
         
-        self.restorationIdentifier = "net.relisten.TodayInHistoryViewController.\(artist.slug)"
-        self.restorationClass = type(of: self)
-        
         title = "Shows on" + TodayInHistoryViewController.dateFormatter.string(from: Date())
     }
     
@@ -35,7 +32,7 @@ class TodayInHistoryViewController: NewShowListArrayViewController<ShowWithArtis
         fatalError("init(coder:) has not been implemented")
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
@@ -45,6 +42,10 @@ class TodayInHistoryViewController: NewShowListArrayViewController<ShowWithArtis
     
     public required init(withDataSource dataSource: ShowListArrayDataSource<[ShowWithArtist], ShowWithArtist, ShowListArrayDataSourceDefaultExtractor<ShowWithArtist>>, enableSearch: Bool) {
         fatalError("init(withDataSource:enableSearch:) has not been implemented")
+    }
+    
+    public required init(enableSearch: Bool = true) {
+        fatalError("init(enableSearch:) has not been implemented")
     }
     
     public override var resource: Resource? {
@@ -62,18 +63,5 @@ class TodayInHistoryViewController: NewShowListArrayViewController<ShowWithArtis
     // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
     override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
-    }
-    
-    //MARK: State Restoration
-    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        // Decode the artist object from the archive and init a new artist view controller with it
-        do {
-            if let artistData = coder.decodeObject(forKey: ShowListViewController<YearWithShows>.CodingKeys.artist.rawValue) as? Data {
-                let encodedArtist = try JSONDecoder().decode(Artist.self, from: artistData)
-                let vc = RecentlyPerformedViewController(artist: encodedArtist)
-                return vc
-            }
-        } catch { }
-        return nil
     }
 }

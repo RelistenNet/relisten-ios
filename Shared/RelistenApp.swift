@@ -174,16 +174,14 @@ public class RelistenApp {
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary]
         
-        if #available(iOS 13.0, *) {
-            let coloredAppearance = UINavigationBarAppearance()
-            coloredAppearance.configureWithOpaqueBackground()
-            coloredAppearance.backgroundColor = AppColors.primary
-            coloredAppearance.titleTextAttributes = [.foregroundColor: AppColors.textOnPrimary]
-            coloredAppearance.largeTitleTextAttributes = [.foregroundColor: AppColors.textOnPrimary]
-                   
-            UINavigationBar.appearance().standardAppearance = coloredAppearance
-            UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
-        }
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithOpaqueBackground()
+        coloredAppearance.backgroundColor = AppColors.primary
+        coloredAppearance.titleTextAttributes = [.foregroundColor: AppColors.textOnPrimary]
+        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: AppColors.textOnPrimary]
+               
+        UINavigationBar.appearance().standardAppearance = coloredAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
         
         UIToolbar.appearance().backgroundColor = AppColors.primary
         UIToolbar.appearance().tintColor = AppColors.textOnPrimary
@@ -216,6 +214,8 @@ public class RelistenApp {
                     nav.navigationBar.barTintColor = AppColors.primary
                     nav.navigationBar.backgroundColor = AppColors.primary
                     nav.navigationBar.tintColor = AppColors.primary
+                    nav.navigationBar.standardAppearance = coloredAppearance
+                    nav.navigationBar.scrollEdgeAppearance = coloredAppearance
                 }
             })
             t.tabBar.tintColor = AppColors.primary

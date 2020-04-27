@@ -11,17 +11,15 @@ import Foundation
 import AsyncDisplayKit
 import RealmSwift
 
-class DownloadedTabViewController: NewShowListRealmViewController<OfflineSource>, UIViewControllerRestoration {
-    public required init() {
-        super.init(query: MyLibrary.shared.offline.sources)
-        
-        self.restorationIdentifier = "net.relisten.DownloadedTabViewController"
-        self.restorationClass = type(of: self)
+class DownloadedTabViewController: NewShowListRealmViewController<OfflineSource> {
+    public required init(_ artist: SlimArtist? = nil) {
+        let offline = MyLibrary.shared.offline
+        super.init(query: artist != nil ? offline.sources(byArtist: artist!) : offline.sources)
         
         title = "Downloaded"
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
@@ -37,6 +35,10 @@ class DownloadedTabViewController: NewShowListRealmViewController<OfflineSource>
         fatalError()
     }
     
+    public required init(enableSearch: Bool) {
+        fatalError("init(enableSearch:) has not been implemented")
+    }
+    
     override func titleTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
         return "Nothing downloaded"
     }
@@ -44,15 +46,9 @@ class DownloadedTabViewController: NewShowListRealmViewController<OfflineSource>
     override func descriptionTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {
         return "Any tracks you download will show up here and will be available to play offline. You can download entire shows or just individual tracks."
     }
-
+    
     // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
     override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
-    }
-    
-    //MARK: State Restoration
-    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        // Decode the artist object from the archive and init a new artist view controller with it
-        return DownloadedTabViewController()
     }
 }

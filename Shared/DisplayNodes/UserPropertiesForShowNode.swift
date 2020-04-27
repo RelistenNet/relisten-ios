@@ -13,7 +13,7 @@ import Observable
 public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     public let source: SourceFull
     public let show: ShowWithSources
-    public let artist: Artist
+    public let artist: ArtistWithCounts
     private lazy var completeShowInformation = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
     
     private var numberOfDownloadedTracks : Int = 0
@@ -25,7 +25,7 @@ public class UserPropertiesForShowNode : ASCellNode, FavoriteButtonDelegate {
     
     private weak var myViewController : UIViewController?
     
-    public init(source: SourceFull, inShow show: ShowWithSources, artist: Artist, viewController: UIViewController? = nil) {
+    public init(source: SourceFull, inShow show: ShowWithSources, artist: ArtistWithCounts, viewController: UIViewController? = nil) {
         self.source = source
         self.show = show
         self.artist = artist

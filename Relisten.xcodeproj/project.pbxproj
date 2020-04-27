@@ -84,9 +84,6 @@
 		43B53440210922CE00DE9B1F /* LongTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31551820BFB71B00F07622 /* LongTextViewController.swift */; };
 		43B53441210922CE00DE9B1F /* ShowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B0472C20FD59D000251046 /* ShowListViewController.swift */; };
 		43B53442210922CE00DE9B1F /* RecentlyPerformedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A6A9A82105954B00EFF3AD /* RecentlyPerformedViewController.swift */; };
-		43B53443210922CE00DE9B1F /* MyLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705420B9FC5400710E90 /* MyLibraryViewController.swift */; };
-		43B53444210922CE00DE9B1F /* DownloadedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705720B9FC7600710E90 /* DownloadedViewController.swift */; };
-		43B53445210922CE00DE9B1F /* MyRecentlyPlayedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */; };
 		43B53446210922CE00DE9B1F /* SongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BE41F7317BE00C592BD /* SongsViewController.swift */; };
 		43B53447210922CE00DE9B1F /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F1BED1F733A0700C592BD /* SongViewController.swift */; };
 		43B53448210922CE00DE9B1F /* VenuesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA3CD131F71763400E936AB /* VenuesViewController.swift */; };
@@ -315,9 +312,6 @@
 		7C13704920B62D9200710E90 /* MyLibrary+DiskUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyLibrary+DiskUsage.swift"; sourceTree = "<group>"; };
 		7C13704C20B677C300710E90 /* TrackActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackActions.swift; path = Events/TrackActions.swift; sourceTree = "<group>"; };
 		7C13705020B9E8B800710E90 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Array.swift; path = Helpers/Array.swift; sourceTree = "<group>"; };
-		7C13705420B9FC5400710E90 /* MyLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyLibraryViewController.swift; path = "View Controllers/My Collection/MyLibraryViewController.swift"; sourceTree = "<group>"; };
-		7C13705720B9FC7600710E90 /* DownloadedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadedViewController.swift; path = "View Controllers/My Collection/DownloadedViewController.swift"; sourceTree = "<group>"; };
-		7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyRecentlyPlayedViewController.swift; path = "View Controllers/My Collection/MyRecentlyPlayedViewController.swift"; sourceTree = "<group>"; };
 		7C1CC2B5604E806CAE10AF2D /* Pods-PhishODUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhishODUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7C1F1A5E1F733ACD009408AA /* VenueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VenueViewController.swift; path = "View Controllers/Venues/VenueViewController.swift"; sourceTree = "<group>"; };
 		7C31550D20BEFD4800F07622 /* PhishBackgrounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = PhishBackgrounds.xcassets; path = Assets/PhishBackgrounds.xcassets; sourceTree = "<group>"; };
@@ -577,16 +571,6 @@
 				43D4F1D921CD967600FD4A72 /* TestDataGenerator.swift */,
 			);
 			name = Helpers;
-			sourceTree = "<group>";
-		};
-		7C13705320B9FC4000710E90 /* My Collection */ = {
-			isa = PBXGroup;
-			children = (
-				7C13705420B9FC5400710E90 /* MyLibraryViewController.swift */,
-				7C13705720B9FC7600710E90 /* DownloadedViewController.swift */,
-				7C13705A20BA399E00710E90 /* MyRecentlyPlayedViewController.swift */,
-			);
-			name = "My Collection";
 			sourceTree = "<group>";
 		};
 		7C31551720BFB6F900F07622 /* General */ = {
@@ -869,7 +853,6 @@
 			children = (
 				7C084C3922419E97006418AB /* Tabs */,
 				7C31551720BFB6F900F07622 /* General */,
-				7C13705320B9FC4000710E90 /* My Collection */,
 				7C4F1BE31F73179F00C592BD /* Songs */,
 				7CA3CD121F71761B00E936AB /* Venues */,
 				7CABACC81EDF141E009C5E3B /* Year */,
@@ -1942,8 +1925,6 @@
 				434066AC212FBE1A00FB1D94 /* Wormholy.swift in Sources */,
 				434066B2212FF37600FB1D94 /* Logging.swift in Sources */,
 				43B53449210922CE00DE9B1F /* VenueViewController.swift in Sources */,
-				43B53443210922CE00DE9B1F /* MyLibraryViewController.swift in Sources */,
-				43B53445210922CE00DE9B1F /* MyRecentlyPlayedViewController.swift in Sources */,
 				4330E73D2120E1AC00329ED7 /* StorageAware+Box.swift in Sources */,
 				43B5343E210922CE00DE9B1F /* YearNode.swift in Sources */,
 				4330E7392120A99200329ED7 /* RelistenLegacyModels.swift in Sources */,
@@ -1965,7 +1946,6 @@
 				43B53460210922CE00DE9B1F /* ApiCache.swift in Sources */,
 				435911B32170008C00ACA85F /* UpstreamSourceNode.swift in Sources */,
 				434066AE212FC88900FB1D94 /* UserFeedback.swift in Sources */,
-				43B53444210922CE00DE9B1F /* DownloadedViewController.swift in Sources */,
 				4330E7432121474900329ED7 /* LegacyRelistenImporter.swift in Sources */,
 				7C084C4822458DF4006418AB /* UIImage.swift in Sources */,
 				43B5345B210922CE00DE9B1F /* RelistenArtistModels.swift in Sources */,

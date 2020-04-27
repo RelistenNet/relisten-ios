@@ -31,8 +31,8 @@ public class ReviewsViewController : RelistenTableViewController<[SourceReview]>
         fatalError("init(coder:) has not been implemented")
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
-        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool = false) {
+        fatalError("init(useCache:refreshOnAppear:style:enableSearch:) has not been implemented")
     }
     
     public override func viewDidLoad() {

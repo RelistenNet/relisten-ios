@@ -194,9 +194,9 @@ public class RelistenMenuView : UIView {
             
         case .DiscoverTodayInHistory:
             self.pushViewController(TodayInHistoryViewController(artist: artist))
-
+            
         case .RecentlyPlayed:
-            self.pushViewController(MyRecentlyPlayedViewController(artist: artist))
+            self.pushViewController(RecentlyPlayedTabViewController(artist))
         
         case .RecentlyPerformed:
             self.pushViewController(RecentlyPerformedViewController(artist: artist))
@@ -205,12 +205,12 @@ public class RelistenMenuView : UIView {
             self.pushViewController(RecentlyAddedViewController(artist: artist))
             
         case .MyShowsLibrary:
-            self.pushViewController(MyLibraryViewController(artist: artist))
+            self.pushViewController(MyLibraryTabViewController(artist))
 
         case .MyShowsPlaylists:
             break
         case .MyShowsDownloaded:
-            self.pushViewController(DownloadedViewController(artist: artist))
+            self.pushViewController(DownloadedTabViewController(artist))
         }
         
     }

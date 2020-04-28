@@ -13,7 +13,7 @@ import KASlideShow
 import AsyncDisplayKit
 import RealmSwift
 
-public class ArtistViewController : RelistenTableViewController<[Year]>, KASlideShowDataSource, UIViewControllerRestoration {
+public class ArtistViewController : RelistenTableViewController<[Year]>, KASlideShowDataSource {
     public let artist: ArtistWithCounts
     private var years: [Year] = []
 
@@ -26,9 +26,6 @@ public class ArtistViewController : RelistenTableViewController<[Year]>, KASlide
         
         super.init(useCache: true, refreshOnAppear: true)
         
-        self.restorationIdentifier = "net.relisten.ArtistViewController.\(artist.slug)"
-        self.restorationClass = ArtistViewController.self
-        
         if RelistenApp.sharedApp.isPhishOD {
             let settingsItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain, target: self, action: #selector(presentSettings(_:)))
             self.navigationItem.rightBarButtonItem = settingsItem
@@ -39,7 +36,7 @@ public class ArtistViewController : RelistenTableViewController<[Year]>, KASlide
         fatalError("NSCoding not supported...like at all.")
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style, enableSearch: Bool) {
         fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
     }
     
@@ -133,36 +130,6 @@ public class ArtistViewController : RelistenTableViewController<[Year]>, KASlide
     
     public override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return years.count > 0 ? "\(years.count) \(years.count > 1 ? "Years" : "Year")" : nil
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case artist = "artist"
-    }
-    
-    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        // Decode the artist object from the archive and init a new artist view controller with it
-        do {
-            if let artistData = coder.decodeObject(forKey: CodingKeys.artist.rawValue) as? Data {
-                let encodedArtist = try JSONDecoder().decode(ArtistWithCounts.self, from: artistData)
-                let vc = ArtistViewController(artist: encodedArtist)
-                return vc
-            }
-        } catch { }
-        return nil
-    }
-    
-    override public func encodeRestorableState(with coder: NSCoder) {
-        // Encode the artist object so we can re-create an ArtistViewController after state restoration
-        super.encodeRestorableState(with: coder)
-        
-        do {
-            let artistData = try JSONEncoder().encode(self.artist)
-            coder.encode(artistData, forKey: CodingKeys.artist.rawValue)
-        } catch { }
-    }
-    
-    override public func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
     }
 
     // MARK: Phish Slideshow

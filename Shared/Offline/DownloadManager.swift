@@ -24,16 +24,14 @@ public struct DownloadError : Error {
 }
 
 func MD5(_ string: String) -> String? {
-    let length = Int(CC_MD5_DIGEST_LENGTH)
-    var digest = [UInt8](repeating: 0, count: length)
-    if let d = string.data(using: String.Encoding.utf8) {
-        let _ = d.withUnsafeBytes { (body: UnsafePointer<UInt8>) in
-            CC_MD5(body, CC_LONG(d.count), &digest)
-        }
+    let data = Data(string.utf8)
+    let hash = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
+        var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+        // remarkably there is no way to disable the warning for this line despite us not using it in a security context...
+        CC_MD5(bytes.baseAddress, CC_LONG(data.count), &hash)
+        return hash
     }
-    return (0..<length).reduce("") {
-        $0 + String(format: "%02x", digest[$1])
-    }
+    return hash.map { String(format: "%02x", $0) }.joined()
 }
 
 public protocol DownloadManagerDataSource : class {
@@ -431,14 +429,14 @@ extension DownloadManager : MZDownloadManagerDelegate {
     
     func responseHasExpectedContentType(_ downloadModel: MZDownloadModel) -> Bool {
         if let headerFields = (downloadModel.task?.response as? HTTPURLResponse)?.allHeaderFields {
-            let contentTypeHeaders = headerFields.filter({
-                if let (header, _) = $0 as? (String, Any) {
+            let contentTypeHeaders = headerFields.filter({ element in
+                if let header = element.key as? String {
                     return header.lowercased() == "content-type"
                 }
                 return false
             })
             
-            if let (_, contentType) = contentTypeHeaders.first as? (AnyHashable, String) {
+            if let contentType = contentTypeHeaders.first?.key as? String {
                 if contentType.lowercased().hasPrefix("audio") {
                     return true
                 } else {

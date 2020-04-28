@@ -9,6 +9,8 @@
 import Foundation
 import SINQ
 
+
+
 public protocol ShowListArrayDataSourceShowExtractor: class {
     associatedtype ExtractionTarget
     associatedtype FullMatchingData
@@ -17,9 +19,15 @@ public protocol ShowListArrayDataSourceShowExtractor: class {
     func extractCellShows(forData: ExtractionTarget) -> [(FullMatchingData, ShowCellDataSource)]
 }
 
-public class ShowListArrayDataSourceDefaultExtractor<T> : ShowListArrayDataSourceShowExtractor where T: Show {
-    public typealias ExtractionTarget = [T]
-    public typealias FullMatchingData = T
+public class ShowListArrayDataSourceDefaultExtractor<T> : ShowListWrappedArrayDataSourceExtractor<[T], T> where T: Show {
+    public override func extractShowList(forData wrapper: [T]) -> [T] {
+        return wrapper
+    }
+}
+
+public class ShowListWrappedArrayDataSourceExtractor<Wrapper, ShowType> : ShowListArrayDataSourceShowExtractor where ShowType: Show {
+    public typealias ExtractionTarget = Wrapper
+    public typealias FullMatchingData = ShowType
     
     public let providedArtist: ArtistWithCounts?
     
@@ -27,14 +35,19 @@ public class ShowListArrayDataSourceDefaultExtractor<T> : ShowListArrayDataSourc
         self.providedArtist = providedArtist
     }
     
-    public func extractShowAndSource(forData: ShowCellDataSource, withMatchingData: T) -> ShowWithSingleSource? {
+    public func extractShowAndSource(forData: ShowCellDataSource, withMatchingData: ShowType) -> ShowWithSingleSource? {
         let artist = providedArtist ?? forData.artistDataSource
         
         return ShowWithSingleSource(show: withMatchingData, source: nil, artist: artist)
     }
     
-    public func extractCellShows(forData: [T]) -> [(T, ShowCellDataSource)] {
-        return Array(zip(forData, forData as [ShowCellDataSource]))
+    public func extractShowList(forData wrapper: Wrapper) -> [ShowType] {
+        fatalError("must be subclassed!")
+    }
+    
+    public func extractCellShows(forData wrapper: Wrapper) -> [(ShowType, ShowCellDataSource)] {
+        let shows = extractShowList(forData: wrapper)
+        return Array(zip(shows, shows as [ShowCellDataSource]))
     }
 }
 

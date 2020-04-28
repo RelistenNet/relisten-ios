@@ -77,7 +77,7 @@ public class LegacyPhishODImporter : LegacyImporter {
         return retval
     }
     
-    private func importOfflineTracks(forShow show : ShowWithSources, artist: Artist) {
+    private func importOfflineTracks(forShow show : ShowWithSources, artist: ArtistWithCounts) {
         var lastURLComponentsToTracks : [String : Track] = [:]
         for source in show.sources {
             let completeShowInfo = CompleteShowInformation(source: source, show: show, artist: artist)

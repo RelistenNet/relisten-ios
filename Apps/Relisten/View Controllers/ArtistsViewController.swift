@@ -14,7 +14,7 @@ import AsyncDisplayKit
 import RealmSwift
 import SVProgressHUD
 
-class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, ASCollectionDelegate, UISearchResultsUpdating, UIViewControllerRestoration {
+class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, ASCollectionDelegate {
     enum Sections: Int, RawRepresentable {
         case favorited = 0
         case featured
@@ -37,10 +37,13 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     public var resourceRecentlyPerformed: Resource? = nil
     public let resourceRecentlyUpdated: Resource
     
-    let searchController: UISearchController!
-    private let resultsViewController: ArtistsSearchResultsViewController = ArtistsSearchResultsViewController(useCache: true, refreshOnAppear: true)
+    public override var resultsViewController: UIViewController? { get { return ArtistsSearchResultsViewController(useCache: true, refreshOnAppear: true) } }
     
-    private let tableUpdateQueue = DispatchQueue(label: "net.relisten.groupedViewController.queue")
+    var artistResults: ArtistsSearchResultsViewController {
+        get {
+            return resultsViewController as! ArtistsSearchResultsViewController
+        }
+    }
     
     public init() {
         recentlyPerformedNode = HorizontalShowCollectionCellNode(forShows: [], delegate: nil)
@@ -48,9 +51,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         
         resourceRecentlyUpdated = RelistenApi.recentlyUpdated()
         
-        searchController = UISearchController(searchResultsController: resultsViewController)
-        
-        super.init(useCache: true, refreshOnAppear: true)
+        super.init(useCache: true, refreshOnAppear: true, style: .plain, enableSearch: true)
         
         tabBarItem = UITabBarItem(title: "Relisten", image: UIImage(named: "toolbar_relisten"), tag: RelistenTabs.artistsOrPhish.rawValue)
         
@@ -69,28 +70,27 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         searchController.obscuresBackgroundDuringPresentation = false
         
         searchController.searchBar.placeholder = "Search Artists"
-        searchController.searchBar.barStyle = .blackTranslucent
+        searchController.searchBar.barStyle = .black
+        searchController.searchBar.isTranslucent = true
         searchController.searchBar.backgroundColor = AppColors.primary
         searchController.searchBar.barTintColor = AppColors.textOnPrimary
         searchController.searchBar.tintColor = AppColors.textOnPrimary
         
         //queue issue fix from: https://stackoverflow.com/questions/58287304/how-to-change-text-color-of-placeholder-in-uisearchbar-ios-13
-        if #available(iOS 13.0, *) {
-            let placeholder = NSAttributedString(string: "Search Artists",
-                                                 attributes: [
-                                                    .foregroundColor: UIColor.white.withAlphaComponent(0.80)
-            ])
-            let searchTextField = searchController.searchBar.searchTextField
-            
-            DispatchQueue.global().async {
-                DispatchQueue.main.async {
-                    searchTextField.leftView?.tintColor = UIColor.white
-                    searchTextField.attributedPlaceholder = placeholder
-                }
+        let placeholder = NSAttributedString(string: "Search Artists",
+                                             attributes: [
+                                                .foregroundColor: AppColors.textOnPrimary.withAlphaComponent(0.80)
+        ])
+        let searchTextField = searchController.searchBar.searchTextField
+        
+        DispatchQueue.global().async {
+            DispatchQueue.main.async {
+                searchTextField.leftView?.tintColor = AppColors.textOnPrimary
+                searchTextField.attributedPlaceholder = placeholder
             }
         }
         
-        resultsViewController.tableNode.delegate = self
+        artistResults.tableNode.delegate = self
         
         navigationItem.searchController = searchController
         definesPresentationContext = true
@@ -100,15 +100,12 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         fatalError("init(coder:) has not been implemented")
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style, enableSearch: Bool) {
         fatalError("init(useCache:refreshOnAppear:style:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.restorationIdentifier = "net.relisten.ArtistsViewController"
-        self.restorationClass = ArtistsViewController.self
         
         title = "Relisten"
         
@@ -261,30 +258,9 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     }
     
     // MARK: Search
-    func searchBarIsEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    func isFiltering() -> Bool {
-        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
-        return (searchController.isActive && !searchBarIsEmpty()) || searchBarScopeIsFiltering
-    }
-    
-    func filterContentForSearchText(_ searchText: String) {
-        let searchTextLC = searchText.lowercased()
-        
-        resultsViewController.favoriteArtists = favoriteArtists
-        
-        tableUpdateQueue.async {
-            self.resultsViewController.filteredArtists = self.allArtists.filter({ $0.name.lowercased().contains(searchTextLC) })
-        }
-    }
-    
-    //MARK: UISearchResultsUpdating
-    public func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            filterContentForSearchText(searchText)
-        }
+    public override func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        artistResults.favoriteArtists = favoriteArtists        
+        self.artistResults.filteredArtists = self.allArtists.filter({ $0.name.lowercased().contains(searchText) })
     }
     
     // MARK: Resource
@@ -367,10 +343,10 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
     override public func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
         tableNode.deselectRow(at: indexPath, animated: true)
         
-        if tableNode == self.resultsViewController.tableNode {
+        if tableNode == self.artistResults.tableNode {
             var artist : ArtistWithCounts? = nil
             tableUpdateQueue.sync {
-                artist = self.resultsViewController.filteredArtists[indexPath.row]
+                artist = self.artistResults.filteredArtists[indexPath.row]
             }
             if let artist = artist {
                 navigationController?.pushViewController(ArtistViewController(artist: artist), animated: true)

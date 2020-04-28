@@ -12,8 +12,9 @@ import AsyncDisplayKit
 import RealmSwift
 
 class MyLibraryTabViewController: NewShowListRealmViewController<FavoritedSource>, UIViewControllerRestoration {
-    public required init() {
-        super.init(query: MyLibrary.shared.favorites.sources)
+    public required init(_ artist: SlimArtist? = nil) {
+        let faves = MyLibrary.shared.favorites
+        super.init(query: artist != nil ? faves.sources(byArtist: artist!) : faves.sources)
         
         self.restorationIdentifier = "net.relisten.MyLibraryTabViewController"
         self.restorationClass = type(of: self)
@@ -21,7 +22,7 @@ class MyLibraryTabViewController: NewShowListRealmViewController<FavoritedSource
         title = "My Library"
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
@@ -35,6 +36,10 @@ class MyLibraryTabViewController: NewShowListRealmViewController<FavoritedSource
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
+    }
+    
+    public required init(enableSearch: Bool) {
+        fatalError("init(enableSearch:) has not been implemented")
     }
     
     override func titleTextForEmptyDataSet(_ scrollView: UIScrollView) -> String {

@@ -13,5 +13,6 @@
   },
   "source_files": "Sources/*.swift",
   "license": "MIT",
-  "swift_versions": "5.0"
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
 }

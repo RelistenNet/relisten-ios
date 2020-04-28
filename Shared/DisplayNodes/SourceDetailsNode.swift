@@ -14,14 +14,14 @@ import Observable
 public class SourceDetailsNode : ASCellNode {
     public let source: SourceFull
     public let show: ShowWithSources
-    public let artist: Artist
+    public let artist: ArtistWithCounts
     public let index: Int
     public let isDetails: Bool
     private lazy var completeShowInformation = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
     
     var disposal = Disposal()
     
-    public init(source: SourceFull, inShow show: ShowWithSources, artist: Artist, atIndex: Int, isDetails: Bool) {
+    public init(source: SourceFull, inShow show: ShowWithSources, artist: ArtistWithCounts, atIndex: Int, isDetails: Bool) {
         self.source = source
         self.show = show
         self.artist = artist

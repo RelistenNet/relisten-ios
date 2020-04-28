@@ -65,8 +65,10 @@ public class ArtistWithCounts : Artist {
     public let source_count: Int
     
     public required init(json: JSON) throws {
-        show_count = try json["show_count"].int.required()
-        source_count = try json["source_count"].int.required()
+        // although these *are* required we can't check for them for backwards compatibility
+        // coming out of the cache
+        show_count = json["show_count"].intValue
+        source_count = json["source_count"].intValue
         
         try super.init(json: json)
     }

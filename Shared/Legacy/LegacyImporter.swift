@@ -170,7 +170,7 @@ public class LegacyImporter : NSObject {
     private func loadRecentlyListenedShowsFromDisk() throws -> [(String, String)] {
         var retval : [(String, String)] = []
         if let historyData = self.loadHistoryData() {
-            let decoder = NSKeyedUnarchiver(forReadingWith: historyData)
+            let decoder = try NSKeyedUnarchiver(forReadingFrom: historyData)
             decoder.setClass(IGShow.self, forClassName: "IGShow")
             decoder.setClass(PHODHistory.self, forClassName: "PHODHistory")
             decoder.setClass(PhishinShow.self, forClassName: "PhishinShow")

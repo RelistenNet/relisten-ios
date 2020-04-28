@@ -16,9 +16,9 @@ import AsyncDisplayKit
 import Observable
 import SINQ
 
-public class SourceViewController: RelistenBaseTableViewController, UIViewControllerRestoration {
+public class SourceViewController: RelistenBaseTableViewController {
     
-    private let artist: Artist
+    private let artist: ArtistWithCounts
     private let show: ShowWithSources
     private let source: SourceFull
     private let idx: Int
@@ -28,7 +28,7 @@ public class SourceViewController: RelistenBaseTableViewController, UIViewContro
 
     private lazy var completeShowInformation = CompleteShowInformation(source: self.source, show: self.show, artist: self.artist)
 
-    public required init(artist: Artist, show: ShowWithSources, source: SourceFull) {
+    public required init(artist: ArtistWithCounts, show: ShowWithSources, source: SourceFull) {
         self.artist = artist
         self.show = show
         self.source = source
@@ -45,9 +45,6 @@ public class SourceViewController: RelistenBaseTableViewController, UIViewContro
         self.idx = idx
         
         super.init()
-        
-        self.restorationIdentifier = "net.relisten.SourceViewController.\(artist.slug).\(show.display_date).\(source.upstream_identifier)"
-        self.restorationClass = type(of: self)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -175,47 +172,6 @@ public class SourceViewController: RelistenBaseTableViewController, UIViewContro
         }
         
         return self.artist.features.sets ? source.sets[section - 1].name : "Tracks"
-    }
-    
-    //MARK: State restoration
-    enum CodingKeys: String, CodingKey {
-        case artist = "artist"
-        case show = "show"
-        case source = "source"
-    }
-    
-    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        do {
-            if let artistData = coder.decodeObject(forKey: CodingKeys.artist.rawValue) as? Data,
-                let showData = coder.decodeObject(forKey: CodingKeys.show.rawValue) as? Data,
-                let sourceData = coder.decodeObject(forKey: CodingKeys.source.rawValue) as? Data {
-                let encodedArtist = try JSONDecoder().decode(Artist.self, from: artistData)
-                let encodedShow = try JSONDecoder().decode(ShowWithSources.self, from: showData)
-                let encodedSource = try JSONDecoder().decode(SourceFull.self, from: sourceData)
-                let vc = SourceViewController(artist: encodedArtist, show: encodedShow, source: encodedSource)
-                return vc
-            }
-        } catch { }
-        return nil
-    }
-    
-    override public func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        
-        do {
-            let artistData = try JSONEncoder().encode(self.artist)
-            coder.encode(artistData, forKey: CodingKeys.artist.rawValue)
-            
-            let encodedShow = try JSONEncoder().encode(self.show)
-            coder.encode(encodedShow, forKey: CodingKeys.show.rawValue)
-            
-            let encodedSource = try JSONEncoder().encode(self.source)
-            coder.encode(encodedSource, forKey: CodingKeys.source.rawValue)
-        } catch { }
-    }
-    
-    override public func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
     }
 }
 

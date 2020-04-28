@@ -12,21 +12,29 @@ import UIKit
 import Siesta
 import AsyncDisplayKit
 
-public class YearViewController: ShowListViewController<YearWithShows>, UIViewControllerRestoration {
+class ShowListYearDataSourceExtractor : ShowListWrappedArrayDataSourceExtractor<YearWithShows, Show> {
+    public override func extractShowList(forData wrapper: YearWithShows) -> [Show] {
+        return wrapper.shows
+    }
+}
+
+public class YearViewController: NewShowListWrappedArrayViewController<YearWithShows, Show> {
     let year: Year
+    let artist: ArtistWithCounts
     
-    public required init(artist: Artist, year: Year) {
+    public required init(artist: ArtistWithCounts, year: Year) {
         self.year = year
+        self.artist = artist
         
-        super.init(artist: artist, tourSections: true)
-        
-        self.restorationIdentifier = "net.relisten.ShowListViewController.\(String(describing: self))"
-        self.restorationClass = type(of: self)
+        super.init(
+            extractor: ShowListYearDataSourceExtractor(providedArtist: artist),
+            tourSections: true
+        )
         
         title = year.year
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
     
@@ -39,53 +47,26 @@ public class YearViewController: ShowListViewController<YearWithShows>, UIViewCo
         fatalError("init(artist:showsResource:tourSections:) has not been implemented")
     }
     
+    public required init(extractor: ShowListWrappedArrayDataSourceExtractor<YearWithShows, Show>, sort: ShowSorting = .descending, tourSections: Bool = true, artistSections: Bool = false, enableSearch: Bool = true) {
+        fatalError("init(extractor:sort:tourSections:artistSections:enableSearch:) has not been implemented")
+    }
+    
+    public required init(withDataSource dataSource: ShowListArrayDataSource<YearWithShows, Show, ShowListWrappedArrayDataSourceExtractor<YearWithShows, Show>>, enableSearch: Bool) {
+        fatalError("init(withDataSource:enableSearch:) has not been implemented")
+    }
+    
+    public required init(enableSearch: Bool) {
+        fatalError("init(enableSearch:) has not been implemented")
+    }
+    
     public override var resource: Resource? {
         get {
-            return RelistenApi.shows(inYear: year, byArtist: artist)
+            return api.shows(inYear: year, byArtist: artist)
         }
-    }
-    
-    public override func has(oldData old: YearWithShows, changed new: YearWithShows) -> Bool {
-        return old.shows.count != new.shows.count || old.year != new.year
-    }
-    
-    public override func extractShowsAndSource(forData: YearWithShows) -> [ShowWithSingleSource] {
-        return forData.shows.map({ ShowWithSingleSource(show: $0, source: nil, artist: artist) })
     }
     
     // This is silly. Texture can't figure out that our subclass implements this method due to some shenanigans with generics and the swift/obj-c bridge, so we have to do this.
     override public func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return super.tableNode(tableNode, nodeBlockForRowAt: indexPath)
-    }
-    
-    //MARK: State Restoration
-    enum CodingKeys: String, CodingKey {
-        case year = "year"
-    }
-    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        // Decode the artist object from the archive and init a new artist view controller with it
-        do {
-            if let artistData = coder.decodeObject(forKey: ShowListViewController<YearWithShows>.CodingKeys.artist.rawValue) as? Data,
-               let yearData = coder.decodeObject(forKey: CodingKeys.year.rawValue) as? Data {
-                let encodedArtist = try JSONDecoder().decode(Artist.self, from: artistData)
-                let encodedYear = try JSONDecoder().decode(Year.self, from: yearData)
-                let vc = YearViewController(artist: encodedArtist, year: encodedYear)
-                return vc
-            }
-        } catch { }
-        return nil
-    }
-    
-    override public func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        
-        do {
-            let encodedYear = try JSONEncoder().encode(self.year)
-            coder.encode(encodedYear, forKey: CodingKeys.year.rawValue)
-        } catch { }
-    }
-    
-    override public func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
     }
 }

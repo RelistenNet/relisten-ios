@@ -128,10 +128,10 @@ public class Show : RelistenObject, RelistenUUIDObject {
 }
 
 public class ShowWithArtist : Show {
-    public let artist: Artist
+    public let artist: ArtistWithCounts
     
     public required init(json: JSON) throws {
-        artist = try Artist(json: json["artist"])
+        artist = try ArtistWithCounts(json: json["artist"])
         
         try super.init(json: json)
     }

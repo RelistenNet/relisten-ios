@@ -14,9 +14,8 @@ import Siesta
 import AsyncDisplayKit
 import SINQ
 
-public class SourcesViewController: RelistenTableViewController<ShowWithSources>, UIViewControllerRestoration {
-    
-    let artist: Artist
+public class SourcesViewController: RelistenTableViewController<ShowWithSources> {
+    let artist: ArtistWithCounts
     let show: Show?
     let isRandom: Bool
     
@@ -31,23 +30,20 @@ public class SourcesViewController: RelistenTableViewController<ShowWithSources>
     var sourceToPresent : SourceFull?
     var canSkipIfSingleSource : Bool
     
-    public required init(artist: Artist, show: Show) {
+    public required init(artist: ArtistWithCounts, show: Show) {
         self.artist = artist
         self.show = show
         self.isRandom = false
         self.canSkipIfSingleSource = false
         
         super.init(useCache: true, refreshOnAppear: true)
-        
-        self.restorationIdentifier = "net.relisten.SourcesViewController.\(artist.slug).\(show.display_date)"
-        self.restorationClass = type(of: self)
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }
 
-    public required init(artist: Artist) {
+    public required init(artist: ArtistWithCounts) {
         self.show = nil
         self.artist = artist
         self.isRandom = true
@@ -202,40 +198,5 @@ public class SourcesViewController: RelistenTableViewController<ShowWithSources>
 
         let vc = SourceViewController(artist: artist, show: show, source: sources[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    //MARK: State restoration
-    enum CodingKeys: String, CodingKey {
-        case artist = "artist"
-        case show = "show"
-    }
-    
-    static public func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        do {
-            if let artistData = coder.decodeObject(forKey: CodingKeys.artist.rawValue) as? Data,
-               let showData = coder.decodeObject(forKey: CodingKeys.show.rawValue) as? Data {
-                let encodedArtist = try JSONDecoder().decode(Artist.self, from: artistData)
-                let encodedShow = try JSONDecoder().decode(Show.self, from: showData)
-                let vc = SourcesViewController(artist: encodedArtist, show: encodedShow)
-                return vc
-            }
-        } catch { }
-        return nil
-    }
-    
-    override public func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        
-        do {
-            let artistData = try JSONEncoder().encode(self.artist)
-            coder.encode(artistData, forKey: CodingKeys.artist.rawValue)
-            
-            let encodedShow = try JSONEncoder().encode(self.show)
-            coder.encode(encodedShow, forKey: CodingKeys.show.rawValue)
-        } catch { }
-    }
-    
-    override public func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
     }
 }

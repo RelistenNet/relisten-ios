@@ -16,5 +16,6 @@
   },
   "swift_versions": "5.0",
   "requires_arc": true,
-  "source_files": "NapySlider/NapySlider.swift"
+  "source_files": "NapySlider/NapySlider.swift",
+  "swift_version": "5.0"
 }

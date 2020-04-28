@@ -12,78 +12,21 @@ import SINQ
 import Siesta
 import AsyncDisplayKit
 
-public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearchResultsUpdating, UISearchBarDelegate {
-    public let artist: Artist
-    
+public class GroupedViewController<ResourceData, T>: RelistenTableViewController<ResourceData> {
     var allItems: [T] = []
     private var groupedItems: [Grouping<String, T>] = []
     private var filteredItems: [Grouping<String, T>] = []
-    
-    let searchController: UISearchController = UISearchController(searchResultsController: nil)
-    private let tableUpdateQueue = DispatchQueue(label: "net.relisten.groupedViewController.queue")
-    private let enableSearch: Bool
-    
-    public required init(artist: Artist, enableSearch: Bool = true) {
-        self.artist = artist
-        self.enableSearch = enableSearch
         
-        super.init(useCache: true, refreshOnAppear: true)
-        
-        self.tableNode.view.sectionIndexColor = AppColors.primary
-        self.tableNode.view.sectionIndexMinimumDisplayRowCount = 4
-        
-        if enableSearch {
-            // Setup the Search Controller
-            searchController.searchResultsUpdater = self
-            searchController.obscuresBackgroundDuringPresentation = false
-            
-            searchController.searchBar.delegate = self
-            if let buttonTitles = self.scopeButtonTitles {
-                searchController.searchBar.scopeButtonTitles = buttonTitles
-                let regularFont = UIFont.preferredFont(forTextStyle: .caption1)
-                searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
-                                                                                 NSAttributedString.Key.font: regularFont], for: .normal)
-                let boldFont = regularFont.font(scaledBy: 1.0, withDifferentWeight: .Bold)
-                searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: AppColors.textOnPrimary,
-                                                                                 NSAttributedString.Key.font: boldFont], for: .selected)
-            }
-            // Hide the scope bar for now- we'll reveal it when the user taps on the search field
-            searchController.searchBar.showsScopeBar = false
-            
-            searchController.searchBar.placeholder = self.searchPlaceholder
-            searchController.searchBar.barStyle = .blackTranslucent
-            searchController.searchBar.backgroundColor = AppColors.primary
-            searchController.searchBar.barTintColor = AppColors.textOnPrimary
-            searchController.searchBar.tintColor = AppColors.textOnPrimary
-
-            
-            if #available(iOS 13.0, *) {
-                let placeholder = NSAttributedString(string: "Search",
-                                                     attributes: [
-                                                        .foregroundColor: UIColor.white.withAlphaComponent(0.80)
-                ])
-                let searchTextField = searchController.searchBar.searchTextField
-                searchTextField.leftView?.tintColor = UIColor.white
-                
-                DispatchQueue.global().async {
-                    DispatchQueue.main.async {
-                        searchTextField.leftView?.tintColor = UIColor.white
-                        searchTextField.attributedPlaceholder = placeholder
-                    }
-                }
-            }
-            
-            navigationItem.searchController = searchController
-            definesPresentationContext = true
-        }
+    public required init(enableSearch: Bool = true) {
+        super.init(useCache: true, refreshOnAppear: true, style: .grouped, enableSearch: enableSearch)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
     
-    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain) {
-        fatalError("init(useCache:refreshOnAppear:) has not been implemented")
+    public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool = false) {
+        fatalError("init(useCache:refreshOnAppear:style:enableSearch:) has not been implemented")
     }
     
     //MARK: Subclasses must implement these
@@ -92,18 +35,24 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     func groupNameForItem(_ item: T) -> String { fatalError("Subclasses must implement groupNameForItem") }
     func searchStringMatchesItem(_ item: T, searchText: String) -> Bool { fatalError("Subclasses must override searchStringMatchesItem") }
     func scopeMatchesItem(_ item: T, scope: String) -> Bool { fatalError("Subclasses must override scopeMatchesItem") }
-    
-    var scopeButtonTitles : [String]? { get { return nil } }
-    var searchPlaceholder : String { get { return "Search" } }
-    
+
     func cellNodeBlockForItem(_ item: T) -> ASCellNodeBlock { fatalError("Subclasses must implement cellNodeBlockForItem") }
     func viewControllerForItem(_ item: T) -> UIViewController { fatalError("Subclasses must implement viewControllerForItem") }
     
+    public func extractShows(_ data: ResourceData) -> [T] {
+        if let arr = data as? [T] {
+            return arr;
+        }
+        
+        fatalError("overrde this to find [T] from ResourceData")
+    }
+ 
     //MARK: Refreshing Items
-    public override func dataChanged(_ data: [T]) {
-        let grouped = sortAndGroupData(data)
+    public override func dataChanged(_ data: ResourceData) {
+        let items = extractShows(data)
+        let grouped = sortAndGroupData(items)
         tableUpdateQueue.async {
-            self.allItems = data
+            self.allItems = items
             self.groupedItems = grouped
             DispatchQueue.main.async {
                 self.render()
@@ -235,16 +184,7 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
     }
     
     //MARK: Searching
-    func searchBarIsEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    func isFiltering() -> Bool {
-        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
-        return (searchController.isActive && !searchBarIsEmpty()) || searchBarScopeIsFiltering
-    }
-    
-    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+    override open func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         let searchTextLC = searchText.lowercased()
         tableUpdateQueue.async {
             self.filteredItems = self.filteredItemsForSearchText(searchTextLC, scope: scope)
@@ -252,46 +192,5 @@ public class GroupedViewController<T>: RelistenTableViewController<[T]>, UISearc
                 self.render()
             }
         }
-    }
-
-    //MARK: UISearchResultsUpdating
-    public func updateSearchResults(for searchController: UISearchController) {
-        let searchBar = searchController.searchBar
-        let scope = searchBar.scopeButtonTitles?[searchBar.selectedScopeButtonIndex] ?? "All"
-        if let searchText = searchController.searchBar.text {
-            filterContentForSearchText(searchText, scope: scope)
-        }
-    }
-    
-    //MARK: UISearchBarDelegate
-    public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
-    }
-    
-    // This is kind of dumb, but due to some bugs in LayerKit we need to hide the scope bar until the search field is tapped,
-    //  otherwise the scope bars show up while pushing/popping this view controller.
-    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchController.searchBar.showsScopeBar = true
-    }
-    
-    //MARK: State Restoration
-    enum CodingKeys: String, CodingKey {
-        case artist = "artist"
-        case enableSearch = "enableSearch"
-    }
-    
-    override public func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        
-        do {
-            let encodedArtist = try JSONEncoder().encode(self.artist)
-            coder.encode(encodedArtist, forKey: CodingKeys.artist.rawValue)
-            
-            coder.encode(enableSearch, forKey: CodingKeys.enableSearch.rawValue)
-        } catch { }
-    }
-    
-    override public func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
     }
 }

@@ -19,7 +19,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
     
     var height: CGFloat = 0
     
-    public var shows: [(show: Show, artist: Artist?, source: Source?)] {
+    public var shows: [(show: Show, artist: ArtistWithCounts?, source: Source?)] {
         didSet {
             DispatchQueue.main.async {
                 var maxHeight : CGFloat = 103
@@ -56,7 +56,7 @@ public class HorizontalShowCollectionCellNode : ASCellNode, ASCollectionDataSour
         }
     }
     
-    public init(forShows shows: [(show: Show, artist: Artist?, source: Source?)], delegate: ASCollectionDelegate?) {
+    public init(forShows shows: [(show: Show, artist: ArtistWithCounts?, source: Source?)], delegate: ASCollectionDelegate?) {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0

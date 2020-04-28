@@ -48,8 +48,8 @@ public class CreditsNode : ASCellNode {
     private func setupPeopleCreditsNode() {
         let attributedString : NSMutableAttributedString = NSMutableAttributedString(string: "\(RelistenApp.appName) was written by Alec Gorge\nWith help from\nJacob Farkas\nDaniel Saewitz")
         
-        let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body)
-        let smallFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption1)
+        let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body).withDesign(.monospaced)!
+        let smallFontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption1).withDesign(.monospaced)!
         let boldFontDescriptor = fontDescriptor.withSymbolicTraits(.traitBold)
         
         let paragraphStyle = NSMutableParagraphStyle()

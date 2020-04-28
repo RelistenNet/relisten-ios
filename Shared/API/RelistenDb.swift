@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CouchbaseLiteSwift
+import SQLite
 import Crashlytics
 import SwiftyJSON
 
@@ -28,38 +28,34 @@ public enum RelistenDbError : Error {
 }
 
 public class RelistenDbVenue: VenueCellDataSource {
-    internal static let DbKeys = ["venue.name", "venue.location", "venue.past_names"]
-    
     public let name: String
     public let location: String
     public let past_names: String?
     
-    public required init?(fromResult d: Result) {
+    public required init?(fromJSON j: JSON) {
         guard
-            let name = d.string(forKey: "venue.name"),
-            let location = d.string(forKey: "venue.location")
+            let name = j["name"].string,
+            let location = j["location"].string
         else {
             return nil
         }
         
         self.name = name
         self.location = location
-        self.past_names = d.string(forKey: "venue.past_names")
+        self.past_names = j["past_names"].string
     }
 }
 
 public class RelistenDbTour: TourCellDataSource {
-    internal static let DbKeys = ["tour.name", "tour.start_date", "tour.end_date"]
-
     public let name: String
     public let start_date: Date
     public let end_date: Date
 
-    public required init?(fromResult d: Result) {
+    public required init?(fromJSON j: JSON) {
         guard
-            let name = d.string(forKey: "tour.name"),
-            let start_date = d.date(forKey: "tour.start_date"),
-            let end_date = d.date(forKey: "tour.end_date")
+            let name = j["name"].string,
+            let start_date = j["start_date"].dateTime,
+            let end_date = j["end_date"].dateTime
         else {
             return nil
         }
@@ -71,11 +67,6 @@ public class RelistenDbTour: TourCellDataSource {
 }
 
 public class RelistenDbShow: ShowCellDataSource {
-    internal static let DbKeys = [
-        "uuid", "artist_id", "display_date", "avg_rating", "avg_duration", "date",
-        "most_recent_source_updated_at", "has_soundboard_source", "source_count"
-    ] + RelistenDbVenue.DbKeys + RelistenDbTour.DbKeys
-    
     public let uuid: UUID
     
     public let artist_id: Int
@@ -93,52 +84,49 @@ public class RelistenDbShow: ShowCellDataSource {
     public let sourceDataSource: SourceCellDataSource?
     public let artistDataSource: ArtistWithCounts?
 
-    public required init(fromResult d: Result) throws {
+    public required init(fromJSON j: JSON) throws {
         guard
-            let uuidStr = d.string(forKey: "uuid"),
-            let uuid = UUID(uuidString: uuidStr),
-            let display_date = d.string(forKey: "display_date"),
-            let date = d.date(forKey: "date"),
-            let most_recent_source_updated_at = d.date(forKey: "most_recent_source_updated_at")
+            let uuid = j["uuid"].uuid,
+            let display_date = j["display_date"].string,
+            let date = j["date"].dateTime,
+            let most_recent_source_updated_at = j["most_recent_source_updated_at"].dateTime
         else {
             throw RelistenDbError.initingFromDocument
         }
         
-        artist_id = d.int(forKey: "artist_id")
-        avg_rating = d.float(forKey: "avg_rating")
-        avg_duration = d.contains(key: "avg_duration") ? d.double(forKey: "avg_duration") : nil
-        has_soundboard_source = d.boolean(forKey: "has_soundboard_source")
-        source_count = d.int(forKey: "source_count")
+        artist_id = try j["artist_id"].int.required()
+        avg_rating = try j["avg_rating"].float.required()
+        avg_duration = j["avg_duration"].double
+        has_soundboard_source = try j["has_soundboard_source"].bool.required()
+        source_count = try j["source_count"].int.required()
         
         self.date = date
         self.uuid = uuid
         self.display_date = display_date
         self.most_recent_source_updated_at = most_recent_source_updated_at
-        self.venueDataSource = RelistenDbVenue(fromResult: d)
-        self.tourDataSource = RelistenDbTour(fromResult: d)
+        self.venueDataSource = RelistenDbVenue(fromJSON: j["venue"])
+        self.tourDataSource = RelistenDbTour(fromJSON: j["tour"])
         self.sourceDataSource = nil
         self.artistDataSource = RelistenCacher.artistFromCache(forId: artist_id)
     }
 }
 
-extension ResultSet {
-    func firstDictionary() -> [String: Any]? {
-        return allResults().first?.toDictionary().values.first as? [String: Any]
-    }
-}
-
 public class RelistenDb {
-    public let artistsDb: CouchbaseLiteSwift.Database
-    public let showsDb: CouchbaseLiteSwift.Database
+    public let artistsTable: SQLite.Table
+    public let showsTable: SQLite.Table
+    public let db: SQLite.Connection
     
     public static let shared = RelistenDb()
 
     private init() {
-        let config = DatabaseConfiguration()
-        config.directory = PersistentCacheDirectory.path
+        let documentsFolder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        db = try! SQLite.Connection(documentsFolder.appendingPathComponent("relisten.sqlite").path)
         
-        artistsDb = try! Database(name: "artists", config: config)
-        showsDb = try! Database(name: "shows", config: config)
+        artistsTable = SQLite.Table("artists")
+        showsTable = SQLite.Table("shows")
+        
+        create(table: artistsTable)
+        create(table: showsTable)
     }
     
     func logError(_ error: Error, userInfo: [String: Any]) {
@@ -146,14 +134,71 @@ public class RelistenDb {
         LogError("Database error (\(error) with user info: \(userInfo)")
     }
     
+    let idColumn = SQLite.Expression<String>("id")
+    let dataColumn = SQLite.Expression<String>("data")
+
+    func jsonExtract<T>(keyPath: String) -> SQLite.Expression<T> where T: SQLite.Binding {
+        return SQLite.Expression("json_extract(\(dataColumn.template), ?)", dataColumn.bindings + ["$." + keyPath])
+    }
+
+    func jsonExtractFilter<T>(keyPath: String, _ value: T) -> SQLite.Expression<Bool?> where T: SQLite.Binding {
+        return SQLite.Expression("json_extract(\(dataColumn.template), ?) = ?", dataColumn.bindings + ["$." + keyPath, value])
+    }
+
+    func create(table: SQLite.Table) {
+        do {
+            try db.run(table.create(ifNotExists: true) { t in
+                t.column(idColumn, primaryKey: true)
+                t.column(dataColumn)
+            })
+        }
+        catch {
+            logError(error, userInfo: ["action": "create_table"])
+        }
+    }
+    
+    func store(table: SQLite.Table, id: String, _ json: [String: Any]) throws {
+        let jsonString = String(data: try JSONSerialization.data(withJSONObject: json), encoding: .utf8)!
+        
+        let insert = table.insert(or: .replace, idColumn <- id, dataColumn <- jsonString)
+        
+        try db.run(insert)
+    }
+    
+    func fetch(table: SQLite.Table, id: String) throws -> JSON? {
+        let query = table.select([idColumn, dataColumn])
+             .filter(idColumn == id)
+             .limit(1)
+        
+        let row = try db.pluck(query)
+        
+        guard let r = row else {
+            return nil
+        }
+        
+        return JSON(parseJSON: r[dataColumn])
+    }
+    
+    func fetch<T>(table: SQLite.Table, keyPath: String, _ value: T) throws -> JSON? where T: SQLite.Binding {
+        let query = table.select([idColumn, dataColumn])
+             .filter(jsonExtractFilter(keyPath: keyPath, value))
+             .limit(1)
+        
+        let row = try db.pluck(query)
+        
+        guard let r = row else {
+            return nil
+        }
+        
+        return JSON(parseJSON: r[dataColumn])
+    }
+    
     public func cache(show: ShowWithSources) {
         do {
             if let a = artist(byId: show.artist_id) {
                 let data = RelistenDbShowDocument(show: show, artist: a).toJSON()
                 
-                let showDoc = MutableDocument(id: show.uuid.uuidString, data: data)
-                
-                try showsDb.saveDocument(showDoc)
+                try store(table: showsTable, id: show.uuid.uuidString, data)
             } else {
                 LogError("Unable to find artist: id=\(show.artist_id)")
             }
@@ -164,12 +209,11 @@ public class RelistenDb {
     
     public func cache(artists: [ArtistWithCounts]) {
         do {
-            try self.artistsDb.inBatch {
+            try db.transaction {
                 for artist in artists {
                     let data = artist.originalJSON.dictionaryObject!
-                    let artistDoc = MutableDocument(id: artist.uuid.uuidString, data: data)
                     
-                    try artistsDb.saveDocument(artistDoc)
+                    try store(table: artistsTable, id: artist.uuid.uuidString, data)
                 }
             }
         } catch {
@@ -179,14 +223,8 @@ public class RelistenDb {
     
     public func artist(byId artist_id: Int) -> ArtistWithCounts? {
         do {
-            let query = QueryBuilder
-                .select(SelectResult.all())
-                .from(DataSource.database(artistsDb))
-                .where(Expression.property("id").equalTo(Expression.int(artist_id)))
-                .limit(Expression.int(1))
-
-            if let doc = try query.execute().firstDictionary() {
-                return try ArtistWithCounts(json: JSON(doc))
+            if let json = try fetch(table: artistsTable, keyPath: "id", artist_id) {
+                return try ArtistWithCounts(json: json)
             }
         } catch {
             logError(error, userInfo: ["artist_id": artist_id])
@@ -197,14 +235,8 @@ public class RelistenDb {
     
     public func artist(byUUID artist_uuid: UUID) -> ArtistWithCounts? {
         do {
-            let query = QueryBuilder
-                .select(SelectResult.all())
-                .from(DataSource.database(artistsDb))
-                .where(Meta.id.equalTo(Expression.string(artist_uuid.uuidString)))
-                .limit(Expression.int(1))
-            
-            if let doc = try query.execute().firstDictionary() {
-                return try ArtistWithCounts(json: JSON(doc))
+            if let json = try fetch(table: artistsTable, id: artist_uuid.uuidString) {
+                return try ArtistWithCounts(json: json)
             }
         } catch {
             logError(error, userInfo: ["artist_uuid": artist_uuid.uuidString])
@@ -215,14 +247,8 @@ public class RelistenDb {
     
     public func show(byUUID show_uuid: UUID) -> ShowWithSources? {
         do {
-            let query = QueryBuilder
-                .select(SelectResult.all())
-                .from(DataSource.database(showsDb))
-                .where(Meta.id.equalTo(Expression.string(show_uuid.uuidString)))
-                .limit(Expression.int(1))
-            
-            if let doc = try query.execute().firstDictionary(), let showDict = doc["show"] {
-                return try ShowWithSources(json: JSON(showDict))
+            if let json = try fetch(table: showsTable, id: show_uuid.uuidString)  {
+                return try ShowWithSources(json: json["show"])
             }
         } catch {
             logError(error, userInfo: ["show_uuid": show_uuid.uuidString])
@@ -231,34 +257,38 @@ public class RelistenDb {
         return nil
     }
     
-    private func cellShowsQuery(forUUIDs uuids: [UUID]) -> Query {
-        return QueryBuilder
-            .select(RelistenDbShow.DbKeys.map { SelectResult.property("show." + $0).as($0) })
-            .from(DataSource.database(showsDb))
-            .where(Meta.id.in(uuids.map { Expression.string($0.uuidString) }))
+    func cellShowsQuery(forUUIDs uuids: [UUID]) -> SQLite.QueryType {
+        let uuidStrs = uuids.map { $0.uuidString }
+        
+        return showsTable
+            .select([idColumn, dataColumn])
+            .filter(uuidStrs.contains(idColumn))
     }
     
     public func cellShows(byUUIDs uuids: [UUID]) -> [RelistenDbShow] {
         do {
             let query = cellShowsQuery(forUUIDs: uuids)
             
-            let resultSet = try query.execute()
-            var results = resultSet.allResults()
+            var results = Array(try db.prepare(query))
             
             // if we are missing some results, try to pull them from the old cache
-            let missing = Set(uuids).subtracting(Set(results.map { UUID(uuidString: $0.string(forKey: "uuid")!)! }))
+            let dbUuids = Set(try results.map { UUID(uuidString: try $0.get(idColumn))! })
+            let missing = Set(uuids).subtracting(dbUuids)
 
-            if missing.count > 0 {                
+            if missing.count > 0 {
+                // this will trigger them to be inserted into the new cache
                 missing.forEach { let _ = RelistenCacher.showFromCache(forUUID: $0) }
                 
-                let q = self.cellShowsQuery(forUUIDs: Array(missing))
-                let set = try q.execute()
-                let res = set.allResults()
+                let q = cellShowsQuery(forUUIDs: Array(missing))
+                let res = Array(try db.prepare(q))
                 
                 results.append(contentsOf: res)
             }
             
-            return try results.map { try RelistenDbShow(fromResult: $0) }
+            return try results.map { row in
+                let json = JSON(parseJSON: row[dataColumn])
+                return try RelistenDbShow(fromJSON: json["show"])
+            }
         } catch {
             logError(error, userInfo: ["show_uuids": uuids.map { $0.uuidString }])
         }

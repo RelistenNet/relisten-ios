@@ -68,12 +68,12 @@ PODS:
   - SQLite.swift (0.12.2):
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
-  - sqlite3 (3.31.1):
-    - sqlite3/common (= 3.31.1)
-  - sqlite3/common (3.31.1)
-  - sqlite3/json1 (3.31.1):
+  - sqlite3 (3.32.3):
+    - sqlite3/common (= 3.32.3)
+  - sqlite3/common (3.32.3)
+  - sqlite3/json1 (3.32.3):
     - sqlite3/common
-  - sqlite3/perf-threadsafe (3.31.1):
+  - sqlite3/perf-threadsafe (3.32.3):
     - sqlite3/common
   - SSZipArchive (2.2.2)
   - SVProgressHUD (2.2.5)
@@ -282,4 +282,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c35cda6692055f2cf9792d39f0582118119e8bc2
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

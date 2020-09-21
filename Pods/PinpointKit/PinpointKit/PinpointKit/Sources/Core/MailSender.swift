@@ -102,7 +102,7 @@ private extension MFMailComposeViewController {
         }
         
         if let body = feedback.configuration.body {
-           setMessageBody(body, isHTML: false)
+           setMessageBody(body.content, isHTML: body.isHTML)
         }
         
         try attach(feedback.screenshot, screenshotFileName: feedback.configuration.screenshotFileName)
@@ -165,6 +165,8 @@ extension MailSender: MFMailComposeViewControllerDelegate {
             succeed(with: .saved)
         case .sent:
             succeed(with: .sent)
+        @unknown default:
+            fail(with: .mailFailed(underlyingError: error))
         }
     }
 }

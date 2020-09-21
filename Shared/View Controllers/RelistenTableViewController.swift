@@ -14,7 +14,7 @@ import Observable
 import AsyncDisplayKit
 import DZNEmptyDataSet
 
-open class RelistenBaseTableViewController : ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
+open class RelistenBaseTableViewController : ASDKViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, ResourceObserver {
     public let tableNode: ASTableNode!
     
     public let api = RelistenApi

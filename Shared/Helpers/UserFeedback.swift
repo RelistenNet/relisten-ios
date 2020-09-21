@@ -23,7 +23,7 @@ public class UserFeedback  {
         let versionString = "Relisten \(RelistenApp.appVersion) (\(RelistenApp.appBuildVersion))"
         var feedbackConfig = FeedbackConfiguration(recipients: ["ios@relisten.net"])
         feedbackConfig.title = "[Bug Report: \(versionString)]"
-        feedbackConfig.body = "\n\n\n[Please write a brief description of the problem you're seeing above this line]\n\n\nConfiguration Information (Please don't delete):\n\t\(versionString)\n\tCrash log identifier \(RelistenApp.sharedApp.crashlyticsUserIdentifier)"
+        feedbackConfig.body = FeedbackConfiguration.Body("\n\n\n[Please write a brief description of the problem you're seeing above this line]\n\n\nConfiguration Information (Please don't delete):\n\t\(versionString)\n\tCrash log identifier \(RelistenApp.sharedApp.crashlyticsUserIdentifier)")
         let config = Configuration(logCollector: RelistenLogCollector(), feedbackConfiguration: feedbackConfig)
         pinpointKit = PinpointKit(configuration: config)
     }
@@ -65,7 +65,7 @@ public class UserFeedback  {
 }
 
 extension UserFeedback : ScreenshotDetectorDelegate {
-    public func screenshotDetector(_ screenshotDetector: ScreenshotDetector, didDetect screenshot: UIImage) {
+    public func screenshotDetector(_ screenshotDetector: ScreenshotDetector, didDetect screenshot: UIImage?) {
         requestUserFeedback(screenshot: screenshot)
     }
     

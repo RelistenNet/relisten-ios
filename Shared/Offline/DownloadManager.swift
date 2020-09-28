@@ -436,7 +436,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
                 return false
             })
             
-            if let contentType = contentTypeHeaders.first?.key as? String {
+            if let contentType = contentTypeHeaders.first?.value as? String {
                 if contentType.lowercased().hasPrefix("audio") {
                     return true
                 } else {

@@ -1,11 +1,13 @@
 language: objective-c
 xcode_workspace: Relisten.xcworkspace
 xcode_scheme: Relisten
-osx_image: xcode12u
+os: osx
+osx_image: xcode12
+xcode_destination: platform=iOS Simulator,OS=13.0,name=iPhone X 
 before_script:
     - ./setup.sh
 script: 
     - ./xcodebuild.sh
 git:
   depth: 3
-rvm: 2.3.5
+rvm: 2.6.6

@@ -1,7 +1,6 @@
 language: objective-c
 xcode_workspace: Relisten.xcworkspace
 xcode_scheme: Relisten
-os: osx
 osx_image: xcode12
 xcode_destination: platform=iOS Simulator,OS=13.0,name=iPhone X 
 before_script:

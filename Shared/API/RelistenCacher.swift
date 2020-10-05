@@ -35,8 +35,8 @@ public class RelistenCacher : ResponseTransformer {
         totalCostLimit: 1024 * 1024 * 25
     )
     
-    public let showBackingCache: Storage<ShowWithSources>
-    public let artistBackingCache: Storage<ArtistWithCounts>
+    public let showBackingCache: Storage<String, ShowWithSources>
+    public let artistBackingCache: Storage<String, ArtistWithCounts>
     
     public static let shared = RelistenCacher()
     

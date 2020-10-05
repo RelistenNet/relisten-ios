@@ -369,7 +369,7 @@ download_common() {
     local versioned_dir="${download_type}-${version}${suffix}"
     if [ -e "$versioned_dir/version.txt" ]; then
         echo "Setting ${version} as the active version"
-        copy_core "$versioned_dir${suffix}"
+        copy_core "$versioned_dir"
         exit 0
     fi
 
@@ -1536,7 +1536,7 @@ x.y.z Release notes (yyyy-MM-dd)
 ### Compatibility
 * File format: Generates Realms with format v11 (Reads and upgrades all previous formats)
 * Realm Object Server: 3.21.0 or later.
-* Realm Studio: 3.12 or later.
+* Realm Studio: 5.0.0 or later.
 * APIs are backwards compatible with all previous releases in the 5.x.y series.
 * Carthage release for Swift is built with Xcode 12.
 

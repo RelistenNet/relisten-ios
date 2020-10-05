@@ -7,7 +7,7 @@ PODS:
     - NapySlider
   - AXRatingView (1.0.6)
   - BASSGaplessAudioPlayer (0.0.1)
-  - Cache (5.2.0)
+  - Cache (6.0.0)
   - ChameleonFramework (2.1.0):
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
@@ -22,7 +22,7 @@ PODS:
   - EDColor (1.0.1)
   - Fabric (1.10.2)
   - FastImageCache (1.5.1)
-  - FaveButton (3.0.1)
+  - FaveButton (3.2.2)
   - Interpolate (1.3.0)
   - KASlideShow (3.0.0):
     - SDWebImage (~> 3.8)
@@ -34,7 +34,7 @@ PODS:
   - LastFm (1.17.0):
     - KissXML (~> 5.0.3)
   - LicensesViewController (0.6.5)
-  - MarqueeLabel (4.0.2)
+  - MarqueeLabel (4.0.3)
   - MZDownloadManager (3.5)
   - NAKPlaybackIndicatorView (0.1.1)
   - NapySlider (0.3.6)
@@ -44,17 +44,17 @@ PODS:
     - PinpointKit/Core (= 1.5.0)
   - PinpointKit/Core (1.5.0)
   - PinpointKit/ScreenshotDetector (1.5.0)
-  - Realm (5.4.2):
-    - Realm/Headers (= 5.4.2)
-  - Realm/Headers (5.4.2)
+  - Realm (5.4.7):
+    - Realm/Headers (= 5.4.7)
+  - Realm/Headers (5.4.7)
   - RealmConverter (0.5.2):
     - CSwiftV
     - PathKit
     - Realm
     - SSZipArchive
     - TGSpreadsheetWriter
-  - RealmSwift (5.4.2):
-    - Realm (= 5.4.2)
+  - RealmSwift (5.4.7):
+    - Realm (= 5.4.7)
   - Reveal-SDK (26)
   - SDCloudUserDefaults (1.0.2)
   - SDWebImage (3.8.3):
@@ -88,7 +88,7 @@ DEPENDENCIES:
   - AGAudioPlayer (from `../AGAudioPlayer`)
   - AXRatingView
   - BASSGaplessAudioPlayer (from `../BASSGaplessAudioPlayer`)
-  - Cache (from `https://github.com/farktronix/Cache.git`)
+  - Cache
   - ChameleonFramework (from `https://github.com/farktronix/Chameleon.git`)
   - CleanroomLogger (from `https://github.com/farktronix/CleanroomLogger`)
   - Crashlytics
@@ -134,6 +134,7 @@ SPEC REPOS:
   trunk:
     - ActionKit
     - AXRatingView
+    - Cache
     - Crashlytics
     - CSwiftV
     - CWStatusBarNotification
@@ -169,8 +170,6 @@ EXTERNAL SOURCES:
     :path: "../AGAudioPlayer"
   BASSGaplessAudioPlayer:
     :path: "../BASSGaplessAudioPlayer"
-  Cache:
-    :git: https://github.com/farktronix/Cache.git
   ChameleonFramework:
     :git: https://github.com/farktronix/Chameleon.git
   CleanroomLogger:
@@ -196,9 +195,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/farktronix/realm-cocoa-converter.git
 
 CHECKOUT OPTIONS:
-  Cache:
-    :commit: c07bccf220f2f15e52afe8c60c180d441b64ae5a
-    :git: https://github.com/farktronix/Cache.git
   ChameleonFramework:
     :commit: f708430e24834658f4bdb6a81726a4ee489f65e3
     :git: https://github.com/farktronix/Chameleon.git
@@ -212,7 +208,7 @@ CHECKOUT OPTIONS:
     :commit: a196da2ef8646ad310f696e64f675e9a942d2ea9
     :git: https://github.com/mallorypaine/FastImageCache.git
   FaveButton:
-    :commit: 4d9d68cfb98a9e93b0ed0c72f354e62d13e6758e
+    :commit: 111f8a114cd6dca373034bad985d6a966fd31b31
     :git: https://github.com/farktronix/fave-button.git
   LastFm:
     :commit: 19725dec9bdb91026b7ba808d5c61adb1afef9bb
@@ -238,34 +234,34 @@ SPEC CHECKSUMS:
   AGAudioPlayer: d1c572757f190502712aa2c6bfa74d646022fba6
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 5b074495769769192b720c70aa2a60f6f33751f3
-  Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CleanroomLogger: 51703da66caaa392436f5ba6cd5b7ae83d1282aa
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   CSwiftV: 8dde426ad2a4f645bdfb513b8aa878d555aeff60
   CWStatusBarNotification: 3d2738b25c3207f60cc50201388d3c96182545ff
   DownloadButton: 0a9848f9c13f34a488939b7244e8043feb94be3c
   DWURecyclingAlert: 02d8ba56b2082c08c6bc2645cc2cc445f307817d
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   EDColor: 91d127cd67d7c1d3862846fb11ef4b3851151bfa
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   FastImageCache: 9defcc791b9db343858b55ab2fadfd0139f5d529
-  FaveButton: 496e8356260b9a18e6ed20ad9d1421118096fb56
+  FaveButton: 4c2ec413f2d31dc3ff50ed36ce0af8bc364160bd
   Interpolate: 99edce3f72d84d1b9fdc3f769c775b6ade7f92e9
   KASlideShow: d737c734ee603ed4fc7de09876d5193192e74ee4
   KissXML: d19dd6dc65e0dc721ba92b3077b8ebdd240f1c1e
   LastFm: a624fa250bbda5950fccbd068ea7950dcba2da1f
   LicensesViewController: 1f2982b1bab8402d3f88e23197957038e8abb907
-  MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
+  MarqueeLabel: a1ea597e347506640a5b00fda9c07b572753f45e
   MZDownloadManager: 8c78ecc8f68e0aed845bc767896cb92dc8a4b21d
   NAKPlaybackIndicatorView: f1468937ae3828ef6e9a50feda0781fdfa67dce8
   NapySlider: 54934403e7ab09c4c97274e4e9c3ea2d694c53a4
   Observable: d8a6ed00d87087dd169012a0f92214fe5a15debd
   PathKit: 364e0de7fb5adb142aecab4e112187e5548fc4b6
   PinpointKit: 8599f60b7cff2b65e52a10293c220b6b81f14839
-  Realm: ced868eb0254f8d33a21c06981355e5aa33bc005
+  Realm: 4bfc08e376b2e30c84ec3200ebe715574da05cc0
   RealmConverter: 83bf897d3f8163f59a43fdf2ee5ab58e15238877
-  RealmSwift: aedc4363150f3c61f91ae0537ed116d2d080a4dd
+  RealmSwift: ed40f371b62e8677141939e05b44a0c1a0a2d965
   Reveal-SDK: 5f94f14aff3d5f2a49f246edcd266fa4472679e9
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
@@ -280,6 +276,6 @@ SPEC CHECKSUMS:
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
   Wormholy: bfc1c8679eefd0edd92638758e21c3961b1b3b50
 
-PODFILE CHECKSUM: c35cda6692055f2cf9792d39f0582118119e8bc2
+PODFILE CHECKSUM: 1b7b66e5d9f364bdc8105707aa3c4c87dd7d5e2a
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0.rc.1

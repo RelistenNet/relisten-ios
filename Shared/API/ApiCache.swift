@@ -17,7 +17,7 @@ let PersistentCacheDirectory = URL(fileURLWithPath: NSSearchPathForDirectoriesIn
                                                                                         true).first! + "/")
 
 protocol RelistenCache : EntityCache {
-    var backingCache: AnyStorageAware<Entity<Any>> {get}
+    var backingCache: AnyStorageAware<String, Entity<Any>> {get}
 }
 
 extension RelistenCache {
@@ -95,7 +95,7 @@ class RelistenJsonCache : RelistenCache {
         totalCostLimit: 1024 * 1024 * 4
     )
     
-    let backingCache: AnyStorageAware<Entity<Any>>
+    let backingCache: AnyStorageAware<String, Entity<Any>>
     
     init() {
         backingCache = try! AnyStorageAware(Storage(

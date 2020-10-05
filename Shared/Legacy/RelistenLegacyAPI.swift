@@ -64,7 +64,7 @@ public class RelistenLegacyAPI {
 }
 
 class RelistenLegacyJSONCache : RelistenCache {
-    let backingCache: AnyStorageAware<Entity<Any>>
+    let backingCache: AnyStorageAware<String, Entity<Any>>
     
     let memoryCacheConfig = MemoryConfig(
         expiry: .never,

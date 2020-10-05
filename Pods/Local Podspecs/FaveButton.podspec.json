@@ -1,9 +1,9 @@
 {
   "name": "FaveButton",
-  "version": "3.0.1",
+  "version": "3.2.2",
   "summary": "Twitter's heart like animated button written in Swift",
   "license": "MIT",
-  "homepage": "https://github.com/xhamr/fave-button",
+  "homepage": "https://github.com/janselv/fave-button",
   "authors": {
     "Jansel Valentin": "jvra16@gmail.com"
   },
@@ -11,8 +11,8 @@
     "ios": "8.0"
   },
   "source": {
-    "git": "https://github.com/xhamr/fave-button.git",
-    "tag": "3.0.1"
+    "git": "https://github.com/janselv/fave-button.git",
+    "tag": "3.2.2"
   },
   "source_files": "Source/**/*.swift",
   "requires_arc": true

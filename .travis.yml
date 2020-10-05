@@ -1,4 +1,4 @@
-language: objective-c
+language: swift
 xcode_workspace: Relisten.xcworkspace
 xcode_scheme: Relisten
 osx_image: xcode12

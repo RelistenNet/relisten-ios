@@ -21,7 +21,15 @@ class MyLibraryTabViewController: NewShowListRealmViewController<FavoritedSource
         
         title = "My Library"
     }
-    
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        searchController.searchBar.backgroundColor = AppColors.primary
+        searchController.searchBar.barTintColor = AppColors.textOnPrimary
+        searchController.searchBar.tintColor = AppColors.textOnPrimary
+    }
+
     public required init(useCache: Bool, refreshOnAppear: Bool, style: UITableView.Style = .plain, enableSearch: Bool) {
         fatalError("init(useCache:refreshOnAppear:) has not been implemented")
     }

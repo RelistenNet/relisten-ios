@@ -16,7 +16,6 @@ public class SettingsViewController : RelistenBaseTableViewController, UIViewCon
     enum Sections: Int, RawRepresentable {
         case lastFM = 0
         case downloads
-        case bugReporting
         case credits
         case debug
         case count
@@ -49,8 +48,7 @@ public class SettingsViewController : RelistenBaseTableViewController, UIViewCon
     lazy var debugSettingsNode : DebugSettingsNode = {
         return DebugSettingsNode()
     }()
-    
-    let bugReportingNode : BugReportingSettingsNode = BugReportingSettingsNode()
+
     
     lazy var creditsNode : CreditsNode = {
         return CreditsNode(viewController: self)
@@ -126,8 +124,6 @@ public class SettingsViewController : RelistenBaseTableViewController, UIViewCon
             return 2
         case .downloads:
             return 1
-        case .bugReporting:
-            return 1
         case .credits:
             return 6
         case .debug:
@@ -187,8 +183,6 @@ public class SettingsViewController : RelistenBaseTableViewController, UIViewCon
             }
         case .downloads:
             n = manageOfflineMusicNode
-        case .bugReporting:
-            n = bugReportingNode
         case .credits:
             switch indexPath.row {
             case 0:
@@ -222,8 +216,6 @@ public class SettingsViewController : RelistenBaseTableViewController, UIViewCon
             return "last.fm"
         case .downloads:
             return "Offline Music"
-        case .bugReporting:
-            return "Bug Reporting"
         case .debug:
             return "Debug"
         case .credits:

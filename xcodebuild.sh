@@ -11,6 +11,7 @@ command -v xcpretty >/dev/null 2>&1 || {
     }
 }
 
+XCODE_ARGS="COMPILER_INDEX_STORE_ENABLE=NO CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES"
+
 # bundle exec xcpretty -v
 set -o pipefail && xcodebuild clean build -sdk iphonesimulator -workspace Relisten.xcworkspace -scheme Relisten COMPILER_INDEX_STORE_ENABLE=NO CODE_SIGNING_REQUIRED=NO | bundle exec xcpretty -f `xcpretty-travis-formatter`
-

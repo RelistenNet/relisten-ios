@@ -8586,7 +8586,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -11192,7 +11192,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 606B26F3D7A8536415D93383CB3E7F10 /* FastImageCache.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11206,7 +11205,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/FastImageCache/FastImageCache-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/FastImageCache/FastImageCache-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/FastImageCache/FastImageCache.modulemap";
 				PRODUCT_MODULE_NAME = FastImageCache;
@@ -11226,7 +11225,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3E0E2D7997676B655DA1D5E0E43B158D /* MarqueeLabel.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11240,7 +11238,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/MarqueeLabel/MarqueeLabel-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel.modulemap";
 				PRODUCT_MODULE_NAME = MarqueeLabel;
@@ -11259,7 +11257,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 45007BC494547B605989419EF7150CCD /* ChameleonFramework.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11273,7 +11270,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/ChameleonFramework/ChameleonFramework-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/ChameleonFramework/ChameleonFramework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/ChameleonFramework/ChameleonFramework.modulemap";
 				PRODUCT_MODULE_NAME = ChameleonFramework;
@@ -11292,7 +11289,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 177BA4C50CCA7A9BFF62B4BD4AEF57C6 /* SSZipArchive.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11305,7 +11301,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SSZipArchive/SSZipArchive-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SSZipArchive/SSZipArchive-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SSZipArchive/SSZipArchive.modulemap";
 				PRODUCT_MODULE_NAME = SSZipArchive;
@@ -11324,7 +11320,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B85BD76D3D7B75202A388B8CE88A2E19 /* SDCloudUserDefaults.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11338,7 +11333,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SDCloudUserDefaults/SDCloudUserDefaults-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SDCloudUserDefaults/SDCloudUserDefaults-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SDCloudUserDefaults/SDCloudUserDefaults.modulemap";
 				PRODUCT_MODULE_NAME = SDCloudUserDefaults;
@@ -11357,7 +11352,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 004B4C305131DE8BC465C2DD62085C96 /* KissXML.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11371,7 +11365,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/KissXML/KissXML-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/KissXML/KissXML-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/KissXML/KissXML.modulemap";
 				PRODUCT_MODULE_NAME = KissXML;
@@ -11391,7 +11385,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E358BAC564CB2218CD8A11202D0DD2E5 /* LicensesViewController.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11405,7 +11398,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/LicensesViewController/LicensesViewController-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/LicensesViewController/LicensesViewController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/LicensesViewController/LicensesViewController.modulemap";
 				PRODUCT_MODULE_NAME = LicensesViewController;
@@ -11424,11 +11417,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3DD75452D46EBC5CE7B359DD54CB2AE4 /* Fabric.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -11440,7 +11432,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DD7A7C781837BEE56818D1D073600C11 /* RealmConverter.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -11455,7 +11446,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/RealmConverter/RealmConverter-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/RealmConverter/RealmConverter-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/RealmConverter/RealmConverter.modulemap";
 				PRODUCT_MODULE_NAME = RealmConverter;
@@ -11474,7 +11465,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CA5F14B78F209E859C6E9C1C3E622ED4 /* Cache.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -11489,7 +11479,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Cache/Cache-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Cache/Cache-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Cache/Cache.modulemap";
 				PRODUCT_MODULE_NAME = Cache;
@@ -11508,7 +11498,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B29A9C6A5D3DA6B3CC69EA85FD652931 /* SDCloudUserDefaults.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11522,7 +11511,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SDCloudUserDefaults/SDCloudUserDefaults-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SDCloudUserDefaults/SDCloudUserDefaults-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SDCloudUserDefaults/SDCloudUserDefaults.modulemap";
 				PRODUCT_MODULE_NAME = SDCloudUserDefaults;
@@ -11542,11 +11531,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B99ABE4E2C39C0C4FE4D6E4DEE241A68 /* CouchbaseLite-Swift.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -11557,11 +11545,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A5E2ABA3F9A78235B8126E1169E7070D /* Crashlytics.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -11572,7 +11559,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DEDFB1377C1B9387BC6992FAEAFC284A /* KASlideShow.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11586,7 +11572,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/KASlideShow/KASlideShow-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/KASlideShow/KASlideShow-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/KASlideShow/KASlideShow.modulemap";
 				PRODUCT_MODULE_NAME = KASlideShow;
@@ -11606,7 +11592,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 368963B8BA01FBE91C6518B5CED265C8 /* RealmSwift.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11620,7 +11605,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/RealmSwift/RealmSwift-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/RealmSwift/RealmSwift-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/RealmSwift/RealmSwift.modulemap";
 				PRODUCT_MODULE_NAME = RealmSwift;
@@ -11640,7 +11625,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E1F3CC12A0E9F516616BA3A09101F337 /* DownloadButton.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11654,7 +11638,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DownloadButton/DownloadButton-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DownloadButton/DownloadButton-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/DownloadButton/DownloadButton.modulemap";
 				PRODUCT_MODULE_NAME = DownloadButton;
@@ -11674,7 +11658,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 942C4F31072B1FD7B331ED1DC1A92E2F /* SDWebImage.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11688,7 +11671,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImage/SDWebImage-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/SDWebImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SDWebImage/SDWebImage.modulemap";
 				PRODUCT_MODULE_NAME = SDWebImage;
@@ -11730,6 +11713,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -11752,7 +11736,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -11768,7 +11752,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EE423610901C9DE7ED5F298C07AC2EB0 /* KASlideShow.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11782,7 +11765,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/KASlideShow/KASlideShow-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/KASlideShow/KASlideShow-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/KASlideShow/KASlideShow.modulemap";
 				PRODUCT_MODULE_NAME = KASlideShow;
@@ -11801,7 +11784,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0FFD018FDA488F4F67E74F6ED62884A8 /* AGAudioPlayer.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -11816,7 +11798,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/AGAudioPlayer/AGAudioPlayer-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/AGAudioPlayer/AGAudioPlayer-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/AGAudioPlayer/AGAudioPlayer.modulemap";
 				PRODUCT_MODULE_NAME = AGAudioPlayer;
@@ -11835,7 +11817,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 80B7A3616B4905B1FDF37F4BC1C4FA01 /* Interpolate.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11849,7 +11830,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Interpolate/Interpolate-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Interpolate/Interpolate-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Interpolate/Interpolate.modulemap";
 				PRODUCT_MODULE_NAME = Interpolate;
@@ -11868,7 +11849,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50A7F56AAA02D45230FC856CCDBFD4C2 /* SQLite.swift.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -11882,7 +11862,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SQLite.swift/SQLite.swift-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SQLite.swift/SQLite.swift.modulemap";
 				PRODUCT_MODULE_NAME = SQLite;
@@ -11907,7 +11887,7 @@
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = DownloadButton;
 				INFOPLIST_FILE = "Target Support Files/DownloadButton/ResourceBundle-DownloadButton-DownloadButton-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = DownloadButton;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -11921,7 +11901,6 @@
 			baseConfigurationReference = 7A3CC735FDDFEFD65F7DCB2B3BB4AD8A /* Pods-RelistenShared.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -11935,7 +11914,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-RelistenShared/Pods-RelistenShared-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-RelistenShared/Pods-RelistenShared.modulemap";
@@ -11956,11 +11935,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6EAD01BAAE9895461C2B19ECF48FE762 /* Reveal-SDK.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -11973,7 +11951,6 @@
 			baseConfigurationReference = 82BA18DFD117F7F1DF23730D96188A29 /* Pods-Relisten.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -11987,7 +11964,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-Relisten/Pods-Relisten-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-Relisten/Pods-Relisten.modulemap";
@@ -12009,7 +11986,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FF4939BF99464F633B50C0D702F6C5AD /* CleanroomLogger.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12023,7 +11999,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/CleanroomLogger/CleanroomLogger-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/CleanroomLogger/CleanroomLogger-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/CleanroomLogger/CleanroomLogger.modulemap";
 				PRODUCT_MODULE_NAME = CleanroomLogger;
@@ -12042,7 +12018,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F303AB090FC392D07E7335445D67113C /* LastFm.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12056,7 +12031,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/LastFm/LastFm-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/LastFm/LastFm-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/LastFm/LastFm.modulemap";
 				PRODUCT_MODULE_NAME = LastFm;
@@ -12076,7 +12051,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 473939A2334DB3289AEF95170F529104 /* MZDownloadManager.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12090,7 +12064,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/MZDownloadManager/MZDownloadManager-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/MZDownloadManager/MZDownloadManager-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/MZDownloadManager/MZDownloadManager.modulemap";
 				PRODUCT_MODULE_NAME = MZDownloadManager;
@@ -12110,7 +12084,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CCA313C57EA5A0DE983BE880D4753303 /* LicensesViewController.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12124,7 +12097,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/LicensesViewController/LicensesViewController-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/LicensesViewController/LicensesViewController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/LicensesViewController/LicensesViewController.modulemap";
 				PRODUCT_MODULE_NAME = LicensesViewController;
@@ -12144,7 +12117,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2B9B8D622E6614256918EB6B7DF74E51 /* LastFm.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12158,7 +12130,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/LastFm/LastFm-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/LastFm/LastFm-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/LastFm/LastFm.modulemap";
 				PRODUCT_MODULE_NAME = LastFm;
@@ -12178,7 +12150,6 @@
 			baseConfigurationReference = F4C9C532F3005676E3AB2EE199A17E6C /* Pods-PhishODUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -12192,7 +12163,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.modulemap";
@@ -12213,7 +12184,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 86FD14DD4457E96517329255C69AD164 /* SDWebImage.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12227,7 +12197,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImage/SDWebImage-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/SDWebImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SDWebImage/SDWebImage.modulemap";
 				PRODUCT_MODULE_NAME = SDWebImage;
@@ -12246,7 +12216,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 30759CB7E2179C32607FF30925094625 /* NAKPlaybackIndicatorView.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12260,7 +12229,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView.modulemap";
 				PRODUCT_MODULE_NAME = NAKPlaybackIndicatorView;
@@ -12280,7 +12249,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 94FD9CB2BF79EDBCE041BF9AEB25EBC3 /* BASSGaplessAudioPlayer.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -12295,7 +12263,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.modulemap";
 				PRODUCT_MODULE_NAME = BASSGaplessAudioPlayer;
@@ -12314,7 +12282,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0BAABF33010DCF0A5CFE4959FF25F73A /* SVProgressHUD.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12328,7 +12295,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SVProgressHUD/SVProgressHUD-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SVProgressHUD/SVProgressHUD-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SVProgressHUD/SVProgressHUD.modulemap";
 				PRODUCT_MODULE_NAME = SVProgressHUD;
@@ -12347,7 +12314,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 010AD020BD2C59A960BBCCFA03D6ACFB /* SwiftyJSON.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12361,7 +12327,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyJSON/SwiftyJSON-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SwiftyJSON/SwiftyJSON-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SwiftyJSON/SwiftyJSON.modulemap";
 				PRODUCT_MODULE_NAME = SwiftyJSON;
@@ -12385,7 +12351,7 @@
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = AGAudioPlayer;
 				INFOPLIST_FILE = "Target Support Files/AGAudioPlayer/ResourceBundle-AGAudioPlayer-AGAudioPlayer-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = AGAudioPlayer;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12398,7 +12364,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 648626FAC2C36F7BAA81DB5CD83C2E28 /* AXRatingView.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12412,7 +12377,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/AXRatingView/AXRatingView-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/AXRatingView/AXRatingView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/AXRatingView/AXRatingView.modulemap";
 				PRODUCT_MODULE_NAME = AXRatingView;
@@ -12431,7 +12396,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 57E3F1D182A2A78720B2EFF69A39B001 /* EDColor.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12445,7 +12409,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/EDColor/EDColor-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/EDColor/EDColor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/EDColor/EDColor.modulemap";
 				PRODUCT_MODULE_NAME = EDColor;
@@ -12466,7 +12430,6 @@
 			baseConfigurationReference = 23F6940E4201A77AD4A3847B2B14BE8B /* Pods-PhishODUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -12480,7 +12443,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-PhishODUITests/Pods-PhishODUITests.modulemap";
@@ -12502,7 +12465,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7D502B8747A51F3D70B7F07114E4F7D7 /* SQLite.swift.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12516,7 +12478,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SQLite.swift/SQLite.swift-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SQLite.swift/SQLite.swift.modulemap";
 				PRODUCT_MODULE_NAME = SQLite;
@@ -12536,7 +12498,6 @@
 			baseConfigurationReference = D4A8B97BA27B0FC2B1ACC5068FAEAA30 /* Pods-RelistenUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -12550,7 +12511,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.modulemap";
@@ -12571,7 +12532,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B29E7674332004D23A9A6C87C96BE08B /* PathKit.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12585,7 +12545,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/PathKit/PathKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/PathKit/PathKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/PathKit/PathKit.modulemap";
 				PRODUCT_MODULE_NAME = PathKit;
@@ -12605,7 +12565,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 30009B109048F7670D5B183364792B6F /* NapySlider.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12619,7 +12578,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/NapySlider/NapySlider-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/NapySlider/NapySlider-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/NapySlider/NapySlider.modulemap";
 				PRODUCT_MODULE_NAME = NapySlider;
@@ -12639,7 +12598,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AD34B5560B7832CBA337FB33527D6649 /* SwiftyJSON.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12653,7 +12611,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyJSON/SwiftyJSON-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SwiftyJSON/SwiftyJSON-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SwiftyJSON/SwiftyJSON.modulemap";
 				PRODUCT_MODULE_NAME = SwiftyJSON;
@@ -12673,7 +12631,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 21AD245ACDE94A5043D005CFD3011B86 /* Realm.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12687,7 +12644,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Realm/Realm-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Realm/Realm-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Realm/Realm.modulemap";
 				PRODUCT_MODULE_NAME = Realm;
@@ -12706,7 +12663,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B1CC7077510BBFA18CE685ECC2058923 /* Siesta.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -12721,7 +12677,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Siesta/Siesta-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Siesta/Siesta-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Siesta/Siesta.modulemap";
 				PRODUCT_MODULE_NAME = Siesta;
@@ -12740,7 +12696,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 74A3680AFD785869F1E22A8FD49FC0AE /* CSwiftV.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12754,7 +12709,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/CSwiftV/CSwiftV-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/CSwiftV/CSwiftV-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/CSwiftV/CSwiftV.modulemap";
 				PRODUCT_MODULE_NAME = CSwiftV;
@@ -12773,7 +12728,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0469669E48161AA672CD273E0D747BF /* Siesta.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -12788,7 +12742,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Siesta/Siesta-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Siesta/Siesta-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Siesta/Siesta.modulemap";
 				PRODUCT_MODULE_NAME = Siesta;
@@ -12808,7 +12762,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 00669DE8EBE5D81B57BA6A408D3FE49F /* Interpolate.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12822,7 +12775,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Interpolate/Interpolate-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Interpolate/Interpolate-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Interpolate/Interpolate.modulemap";
 				PRODUCT_MODULE_NAME = Interpolate;
@@ -12842,7 +12795,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA83F7646CBBB7DF283B3C0D1CF6683A /* NapySlider.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12856,7 +12808,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/NapySlider/NapySlider-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/NapySlider/NapySlider-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/NapySlider/NapySlider.modulemap";
 				PRODUCT_MODULE_NAME = NapySlider;
@@ -12875,7 +12827,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F4FBBC9CC4B52381DD8BB5F4A2435DC /* RealmConverter.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -12890,7 +12841,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/RealmConverter/RealmConverter-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/RealmConverter/RealmConverter-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/RealmConverter/RealmConverter.modulemap";
 				PRODUCT_MODULE_NAME = RealmConverter;
@@ -12910,11 +12861,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E71956B1E6654766C47ADC51F0164AF9 /* Reveal-SDK.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -12925,7 +12875,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 09DFE94A7FACA32B8B300B842D05853B /* FaveButton.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12939,7 +12888,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/FaveButton/FaveButton-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/FaveButton/FaveButton-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/FaveButton/FaveButton.modulemap";
 				PRODUCT_MODULE_NAME = FaveButton;
@@ -12958,7 +12907,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7368F629AA2AC3189D2F05B35862B94C /* FastImageCache.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -12972,7 +12920,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/FastImageCache/FastImageCache-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/FastImageCache/FastImageCache-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/FastImageCache/FastImageCache.modulemap";
 				PRODUCT_MODULE_NAME = FastImageCache;
@@ -12991,7 +12939,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 42BD2FBAD38DA78E45EB3BE9A048B1CC /* DownloadButton.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13005,7 +12952,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DownloadButton/DownloadButton-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DownloadButton/DownloadButton-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/DownloadButton/DownloadButton.modulemap";
 				PRODUCT_MODULE_NAME = DownloadButton;
@@ -13024,7 +12971,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 349DB2780340636756616B232916AFE0 /* Observable.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13038,7 +12984,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Observable/Observable-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Observable/Observable-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Observable/Observable.modulemap";
 				PRODUCT_MODULE_NAME = Observable;
@@ -13058,7 +13004,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 57475EC1FBFB8C5B81E6C247CD10076D /* EDColor.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13072,7 +13017,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/EDColor/EDColor-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/EDColor/EDColor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/EDColor/EDColor.modulemap";
 				PRODUCT_MODULE_NAME = EDColor;
@@ -13091,11 +13036,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8D2360AB460E0415D8C0A5430602976F /* CouchbaseLite-Swift.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -13107,7 +13051,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EFD242A0089FBAB506641D1EF0DF3D0F /* ChameleonFramework.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13121,7 +13064,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/ChameleonFramework/ChameleonFramework-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/ChameleonFramework/ChameleonFramework-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/ChameleonFramework/ChameleonFramework.modulemap";
 				PRODUCT_MODULE_NAME = ChameleonFramework;
@@ -13141,7 +13084,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F057D6F69721B334B3FB11B8530F9299 /* SINQ.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13155,7 +13097,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SINQ/SINQ-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SINQ/SINQ-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SINQ/SINQ.modulemap";
 				PRODUCT_MODULE_NAME = SINQ;
@@ -13174,7 +13116,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0D37BFCE28136E8D8A8E840D7A0F60E6 /* MZDownloadManager.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13188,7 +13129,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/MZDownloadManager/MZDownloadManager-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/MZDownloadManager/MZDownloadManager-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/MZDownloadManager/MZDownloadManager.modulemap";
 				PRODUCT_MODULE_NAME = MZDownloadManager;
@@ -13207,7 +13148,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2BA0ADB59B42B8934BE08ED3C34103B1 /* SINQ.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13221,7 +13161,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SINQ/SINQ-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SINQ/SINQ-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SINQ/SINQ.modulemap";
 				PRODUCT_MODULE_NAME = SINQ;
@@ -13241,7 +13181,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0BA7C1D99A399CBD7CBA23DECD42C437 /* ActionKit.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13255,7 +13194,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/ActionKit/ActionKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/ActionKit/ActionKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/ActionKit/ActionKit.modulemap";
 				PRODUCT_MODULE_NAME = ActionKit;
@@ -13274,7 +13213,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9B762F50AF3CFA68162C08ECC6F1C069 /* NAKPlaybackIndicatorView.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13288,7 +13226,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/NAKPlaybackIndicatorView/NAKPlaybackIndicatorView.modulemap";
 				PRODUCT_MODULE_NAME = NAKPlaybackIndicatorView;
@@ -13307,7 +13245,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E2647513896E920683ECBB9BC3D6C68A /* SVProgressHUD.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13321,7 +13258,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SVProgressHUD/SVProgressHUD-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SVProgressHUD/SVProgressHUD-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SVProgressHUD/SVProgressHUD.modulemap";
 				PRODUCT_MODULE_NAME = SVProgressHUD;
@@ -13346,7 +13283,7 @@
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = AGAudioPlayer;
 				INFOPLIST_FILE = "Target Support Files/AGAudioPlayer/ResourceBundle-AGAudioPlayer-AGAudioPlayer-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = AGAudioPlayer;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13360,7 +13297,6 @@
 			baseConfigurationReference = 512E22E746B12A16909ABC25F9669D04 /* Pods-RelistenUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -13374,7 +13310,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-RelistenUITests/Pods-RelistenUITests.modulemap";
@@ -13396,7 +13332,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB6975D433E92A741D0F9E9FC89FC26A /* MarqueeLabel.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13410,7 +13345,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/MarqueeLabel/MarqueeLabel-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel.modulemap";
 				PRODUCT_MODULE_NAME = MarqueeLabel;
@@ -13430,7 +13365,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F904D8ADDAB2CC4853C3D029DA27FF8D /* PathKit.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13444,7 +13378,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/PathKit/PathKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/PathKit/PathKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/PathKit/PathKit.modulemap";
 				PRODUCT_MODULE_NAME = PathKit;
@@ -13463,11 +13397,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 18ADBDBBA355AC6DA460FF1EA785851A /* Crashlytics.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -13479,7 +13412,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4558D4904F75F7C06658DE1D98FED5C7 /* CSwiftV.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13493,7 +13425,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/CSwiftV/CSwiftV-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/CSwiftV/CSwiftV-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/CSwiftV/CSwiftV.modulemap";
 				PRODUCT_MODULE_NAME = CSwiftV;
@@ -13514,7 +13446,6 @@
 			baseConfigurationReference = DEBC3FEF566C60C62B53E34FE01C4044 /* Pods-RelistenShared.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -13528,7 +13459,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-RelistenShared/Pods-RelistenShared-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-RelistenShared/Pods-RelistenShared.modulemap";
@@ -13550,7 +13481,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CB64EAFD45078A13A217134002E9A489 /* Texture.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13564,7 +13494,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Texture/Texture-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Texture/Texture-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Texture/Texture.modulemap";
 				PRODUCT_MODULE_NAME = AsyncDisplayKit;
@@ -13589,7 +13519,7 @@
 				ENABLE_BITCODE = NO;
 				IBSC_MODULE = DownloadButton;
 				INFOPLIST_FILE = "Target Support Files/DownloadButton/ResourceBundle-DownloadButton-DownloadButton-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = DownloadButton;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13602,7 +13532,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1909A8AFA5C9842F10559DC50B5622B /* SSZipArchive.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13615,7 +13544,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/SSZipArchive/SSZipArchive-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SSZipArchive/SSZipArchive-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SSZipArchive/SSZipArchive.modulemap";
 				PRODUCT_MODULE_NAME = SSZipArchive;
@@ -13635,7 +13564,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9A7CAB2C4EB738E56893C76499DF898A /* DWURecyclingAlert.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13649,7 +13577,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DWURecyclingAlert/DWURecyclingAlert-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DWURecyclingAlert/DWURecyclingAlert-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/DWURecyclingAlert/DWURecyclingAlert.modulemap";
 				PRODUCT_MODULE_NAME = DWURecyclingAlert;
@@ -13669,7 +13597,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 264740651804869593B424EAFAF455EB /* RealmSwift.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13683,7 +13610,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/RealmSwift/RealmSwift-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/RealmSwift/RealmSwift-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/RealmSwift/RealmSwift.modulemap";
 				PRODUCT_MODULE_NAME = RealmSwift;
@@ -13702,7 +13629,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F26C02B9AE5F55A9342DFC81E6149911 /* AXRatingView.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13716,7 +13642,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/AXRatingView/AXRatingView-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/AXRatingView/AXRatingView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/AXRatingView/AXRatingView.modulemap";
 				PRODUCT_MODULE_NAME = AXRatingView;
@@ -13737,7 +13663,6 @@
 			baseConfigurationReference = 14D10492EEBFA64B9AAF46CA17AF6776 /* Pods-Relisten.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -13751,7 +13676,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-Relisten/Pods-Relisten-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-Relisten/Pods-Relisten.modulemap";
@@ -13772,11 +13697,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0C145AD7CCFF91C9A177C42E7B248615 /* Fabric.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -13787,7 +13711,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE25DC946B97CD6ED9B53F211565EB4F /* DZNEmptyDataSet.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13801,7 +13724,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DZNEmptyDataSet/DZNEmptyDataSet-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DZNEmptyDataSet/DZNEmptyDataSet-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/DZNEmptyDataSet/DZNEmptyDataSet.modulemap";
 				PRODUCT_MODULE_NAME = DZNEmptyDataSet;
@@ -13820,7 +13743,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 28BF6FE16C78890F0CEDFF22EF5AD170 /* AGAudioPlayer.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -13835,7 +13757,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/AGAudioPlayer/AGAudioPlayer-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/AGAudioPlayer/AGAudioPlayer-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/AGAudioPlayer/AGAudioPlayer.modulemap";
 				PRODUCT_MODULE_NAME = AGAudioPlayer;
@@ -13855,7 +13777,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D865B676B354C5A038E9A9F434D685B2 /* ActionKit.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13869,7 +13790,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/ActionKit/ActionKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/ActionKit/ActionKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/ActionKit/ActionKit.modulemap";
 				PRODUCT_MODULE_NAME = ActionKit;
@@ -13889,7 +13810,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 69B4FE8FA833CF5668AFDA686644B6C6 /* Realm.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -13903,7 +13823,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Realm/Realm-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Realm/Realm-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Realm/Realm.modulemap";
 				PRODUCT_MODULE_NAME = Realm;
@@ -13945,6 +13865,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -13970,7 +13891,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -13988,7 +13909,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1B97A282193EF08CC7A4E4F96830C102 /* BASSGaplessAudioPlayer.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -14003,7 +13923,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/BASSGaplessAudioPlayer/BASSGaplessAudioPlayer.modulemap";
 				PRODUCT_MODULE_NAME = BASSGaplessAudioPlayer;
@@ -14024,7 +13944,6 @@
 			baseConfigurationReference = 90EE1D39D887D6D3DD5EB46742A3AB9B /* Pods-Relisten for Phish.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -14038,7 +13957,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-Relisten for Phish/Pods-Relisten for Phish-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-Relisten for Phish/Pods-Relisten for Phish.modulemap";
@@ -14060,7 +13979,6 @@
 			baseConfigurationReference = F37E1623AB9744B658AA95B80189E1E1 /* Pods-Relisten for Phish.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -14074,7 +13992,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-Relisten for Phish/Pods-Relisten for Phish-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-Relisten for Phish/Pods-Relisten for Phish.modulemap";
@@ -14096,7 +14014,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B416D81C6AF084C0B9D85FB7DC029FB /* FaveButton.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -14110,7 +14027,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/FaveButton/FaveButton-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/FaveButton/FaveButton-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/FaveButton/FaveButton.modulemap";
 				PRODUCT_MODULE_NAME = FaveButton;
@@ -14130,7 +14047,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C07AF7B59B83506D023C64A55DC21DF0 /* CleanroomLogger.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -14144,7 +14060,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/CleanroomLogger/CleanroomLogger-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/CleanroomLogger/CleanroomLogger-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/CleanroomLogger/CleanroomLogger.modulemap";
 				PRODUCT_MODULE_NAME = CleanroomLogger;
@@ -14164,7 +14080,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 213C5C3B2D0D72F53E925B051324D193 /* KissXML.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -14178,7 +14093,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/KissXML/KissXML-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/KissXML/KissXML-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/KissXML/KissXML.modulemap";
 				PRODUCT_MODULE_NAME = KissXML;
@@ -14197,7 +14112,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B964B55967E6B5477BAA77FB388B97EF /* Observable.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -14211,7 +14125,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Observable/Observable-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Observable/Observable-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Observable/Observable.modulemap";
 				PRODUCT_MODULE_NAME = Observable;
@@ -14230,7 +14144,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0407A9FB165AED0D6C6831283A8BAE87 /* DWURecyclingAlert.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -14244,7 +14157,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DWURecyclingAlert/DWURecyclingAlert-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DWURecyclingAlert/DWURecyclingAlert-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/DWURecyclingAlert/DWURecyclingAlert.modulemap";
 				PRODUCT_MODULE_NAME = DWURecyclingAlert;
@@ -14263,7 +14176,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BB8EF69B5DBCB46C28A55C1EE5CB8178 /* DZNEmptyDataSet.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -14277,7 +14189,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DZNEmptyDataSet/DZNEmptyDataSet-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DZNEmptyDataSet/DZNEmptyDataSet-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/DZNEmptyDataSet/DZNEmptyDataSet.modulemap";
 				PRODUCT_MODULE_NAME = DZNEmptyDataSet;
@@ -14297,7 +14209,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 15BFC88E66824546A4127CA18518797D /* Texture.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -14311,7 +14222,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Texture/Texture-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Texture/Texture-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Texture/Texture.modulemap";
 				PRODUCT_MODULE_NAME = AsyncDisplayKit;
@@ -14330,7 +14241,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 37CCC2F552D7B1C143D0672D0DC390CB /* Cache.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -14345,7 +14255,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/Cache/Cache-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/Cache/Cache-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/Cache/Cache.modulemap";
 				PRODUCT_MODULE_NAME = Cache;

@@ -8,7 +8,6 @@ def apply_pods
 
   pod 'AXRatingView'
   pod 'ActionKit'
-  pod 'CWStatusBarNotification'
   pod 'Cache'
   pod 'ChameleonFramework', :git => "https://github.com/farktronix/Chameleon.git" # https://github.com/viccalexander/Chameleon/pull/234
   pod 'CleanroomLogger', :git => "https://github.com/farktronix/CleanroomLogger" # Needed because the authors refuse to add CocoaPods support https://github.com/emaloney/CleanroomLogger/issues/69
@@ -26,10 +25,7 @@ def apply_pods
   pod 'NAKPlaybackIndicatorView'
   pod 'NapySlider', :git => "https://github.com/farktronix/NapySlider.git" # https://github.com/seeppp/NapySlider/pull/16
   pod 'Observable', :git => "https://github.com/alecgorge/Observable.git" # Adds thread safety. This should be submitted upstream as a PR
-  pod 'PathKit'
-  pod 'PinpointKit'
-  pod 'PinpointKit/ScreenshotDetector'
-  pod 'RealmSwift'
+  pod 'RealmSwift', "5.4.2"
   pod 'RealmConverter', :git => "https://github.com/farktronix/realm-cocoa-converter.git", :branch => "RealmVersion" # https://github.com/realm/realm-cocoa-converter/pull/56
   pod 'SDCloudUserDefaults'
   pod 'SINQ'
@@ -37,12 +33,12 @@ def apply_pods
   pod 'Siesta/Core'
   pod 'Siesta/UI'
   pod 'SwiftyJSON'
-#  pod 'CouchbaseLite-Swift'
+  pod 'CouchbaseLite-Swift'
   pod 'DZNEmptyDataSet'
-  pod 'sqlite3'
-  pod 'sqlite3/common'
-  pod 'sqlite3/perf-threadsafe'
-  pod 'sqlite3/json1'
+#  pod 'sqlite3'
+#  pod 'sqlite3/common'
+#  pod 'sqlite3/perf-threadsafe'
+#  pod 'sqlite3/json1'
   pod 'SQLite.swift'
   
   pod 'Texture/Core'
@@ -59,7 +55,6 @@ def apply_pods
 
   # Debug Pods
   pod 'Reveal-SDK', :configurations => ['Debug']
-  pod 'Wormholy', :configurations => ['Debug']
   pod 'DWURecyclingAlert', :configurations => ['Debug']
 
   # Currently unused pods (but they might be used in the future)
@@ -88,13 +83,8 @@ end
 
 target 'RelistenUITests' do
   apply_pods
-  pod 'SimulatorStatusMagic'
 end
 
-target 'RelistenScreenshots' do
-  apply_pods
-  pod 'SimulatorStatusMagic'
-end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

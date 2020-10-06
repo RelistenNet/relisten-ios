@@ -359,15 +359,6 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
         RelistenApi.recordPlay(completeInfo.sourceTrack)
             .onFailure({ LogError("Failed to record play (perhaps you are offline?): \($0)")})
         
-        if RelistenApp.sharedApp.launchCount > 2 {
-            // If the app has been launched at least three full times and the user is halfway through a song they probably like the app.
-            // Let's ask for a review.
-#if !DEBUG
-            // Don't prompt on debug builds since a request pops up every time for testing
-            LogDebug("⭐️⭐️⭐️⭐️⭐️ Requesting a review. ⭐️⭐️⭐️⭐️⭐️ ")
-            SKStoreReviewController.requestReview()
-#endif
-        }
     }
 }
 

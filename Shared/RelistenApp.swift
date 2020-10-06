@@ -16,18 +16,14 @@ import Crashlytics
 public protocol RelistenAppDelegate {
     var window : UIWindow? { get }
     var rootNavigationController: RelistenNavigationController! { get }
-    
     var appIcon : UIImage { get }
     var isPhishOD : Bool { get }
-    
     var isDummyDelegate : Bool { get }
 }
 
 public class RelistenApp {
     public static let sharedApp = RelistenApp(delegate: RelistenDummyAppDelegate())
-    
     public let launchScreenBounds: CGRect
-    
     public let shakeToReportBugEnabled = Observable<Bool>(true)
     public var playbackController : PlaybackController! { didSet {
             if oldValue != nil {
@@ -35,7 +31,7 @@ public class RelistenApp {
             }
         }
     }
-    
+
     public var delegate : RelistenAppDelegate {
         didSet {
             playbackController?.window = delegate.window
@@ -133,9 +129,6 @@ public class RelistenApp {
         DispatchQueue.main.async {
             let _ = DownloadManager.shared
         }
-        
-        setupWormholy()
-        UserFeedback.shared.setup()
         
         let userIdentifier = self.crashlyticsUserIdentifier
         LogDebug("Setting Crashlytics user identifier to \(userIdentifier)")

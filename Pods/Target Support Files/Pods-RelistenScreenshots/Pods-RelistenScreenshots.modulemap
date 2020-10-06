@@ -1,6 +1,0 @@
-framework module Pods_RelistenScreenshots {
-  umbrella header "Pods-RelistenScreenshots-umbrella.h"
-
-  export *
-  module * { export * }
-}

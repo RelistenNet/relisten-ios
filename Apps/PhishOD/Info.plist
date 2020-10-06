@@ -38,8 +38,6 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To help you easily report bugs to the developer based on the screenshot you just took.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

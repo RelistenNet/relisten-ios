@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         LogDebug("🔊🔊🔊 Relisten is launching 🔊🔊🔊")
         RelistenApp.sharedApp.delegate = self
         
-        // cannot be in the shared library :/ https://stackoverflow.com/questions/20495064/how-to-integrate-crashlytics-with-static-library
+        //TODO remove & migrate to Firebase
         Fabric.with([Crashlytics.self])
         
         RelistenApp.sharedApp.setupThirdPartyDependencies()

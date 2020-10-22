@@ -4,10 +4,6 @@ Relisten is an iOS app for streaming millions of free recordings from the [Inter
 
 ![Relisten Main Screen](Assets/readme-banner.png)
 
-# Beta Testing
-
-[Click Here](https://beta.relisten.live/) to add yourself to the beta testing group for Relisten.
-
 You can join the [Discord Chat](https://discord.gg/u8v4The) to provide feedback on the app or discuss live music in general.
 
 # Development: Getting Started

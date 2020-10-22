@@ -190,7 +190,12 @@ class AlbumArtImageCache : NSObject, FICImageCacheDelegate {
     ]
     
     private func color(year: Int, venue : String?, artistID : String?) -> UIColor {
-        return AlbumArtImageCache.yearColors[abs(year ^ (venue?.hash ?? 1) ^ (artistID?.hash ?? 0)) % AlbumArtImageCache.yearColors.count]
+        let yearColors = AlbumArtImageCache.yearColors
+        let yearColorsCount = yearColors.count
+        let venueHash = venue?.hash ?? 1
+        let artistIDHash = artistID?.hash ?? 0
+        let index = abs(year ^ venueHash ^ artistIDHash) % yearColorsCount
+        return yearColors[index]
     }
 }
 

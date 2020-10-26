@@ -28,7 +28,9 @@ public class RelistenApp {
     
     public let launchScreenBounds: CGRect
     
-    public let shakeToReportBugEnabled = Observable<Bool>(true)
+    @MutableObservable private var pShakeToReportBugEnabled:Bool = true
+    public var shakeToReportBugEnabled:MutableObservable<Bool> { return _pShakeToReportBugEnabled }
+    
     public var playbackController : PlaybackController! { didSet {
             if oldValue != nil {
                 playbackController.inheritObservables(fromPlaybackController: oldValue)
@@ -111,7 +113,7 @@ public class RelistenApp {
         self.launchScreenBounds = UIScreen.main.bounds
 
         if let enableBugReporting = UserDefaults.standard.object(forKey: bugReportingKey) as! Bool? {
-            shakeToReportBugEnabled.value = enableBugReporting
+            pShakeToReportBugEnabled = enableBugReporting
         }
         
         if let launchCount = UserDefaults.standard.object(forKey: launchCountKey) as! Int? {

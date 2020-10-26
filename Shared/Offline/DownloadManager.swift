@@ -53,7 +53,10 @@ public protocol DownloadManagerDataSource : class {
 public class TrackDownload {
     public let track : Track
     public var url : URL { get { return self.track.mp3_url } }
-    public let progress = Observable<Float>(0.0)
+    
+    @MutableObservable private var pProgress:Float = 0.0
+    public var progress:MutableObservable<Float> { return _pProgress }
+    
     public weak var model : MZDownloadModel?
     public var disposal = Disposal()
     
@@ -62,7 +65,7 @@ public class TrackDownload {
     }
     
     public func setProgress(_ progress : Float) {
-        self.progress.value = progress
+        pProgress = progress
     }
 }
 
@@ -377,9 +380,9 @@ public class DownloadManager {
     public func observeProgressForTrack(_ track: Track, observer: @escaping (Float) -> Void) {
         queue.sync {
             if let trackDownload = urlToTrackDownloadMap[track.mp3_url] {
-                trackDownload.progress.observe({ (progress, _) in
+                trackDownload.progress.observe{ (progress, _) in
                     observer(progress)
-                }).add(to: &trackDownload.disposal)
+                }.add(to: &trackDownload.disposal)
             }
         }
     }
@@ -390,7 +393,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
     public func downloadRequestDidUpdateProgress(_ downloadModel: MZDownloadModel, index: Int) {
         queue.sync {
             if let trackDownload = urlToTrackDownloadMap[downloadModel.downloadingURL] {
-                trackDownload.progress.value = downloadModel.progress
+                trackDownload.progress.wrappedValue = downloadModel.progress
             }
         }
     }

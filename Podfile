@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '11.0'
+platform :ios, '14.0'
 
 def apply_pods
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
@@ -24,13 +24,14 @@ def apply_pods
   pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"
   pod 'MZDownloadManager', :git => 'https://github.com/farktronix/MZDownloadManager' # Waiting on https://github.com/mzeeshanid/MZDownloadManager/pull/81
   pod 'NAKPlaybackIndicatorView'
-  pod 'NapySlider', :git => "https://github.com/farktronix/NapySlider.git" # https://github.com/seeppp/NapySlider/pull/16
-  pod 'Observable', :git => "https://github.com/alecgorge/Observable.git" # Adds thread safety. This should be submitted upstream as a PR
+  pod 'NapySlider'
+  pod 'Observable' 
   pod 'PathKit'
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'
-  pod 'RealmSwift'
-  pod 'RealmConverter', :git => "https://github.com/farktronix/realm-cocoa-converter.git", :branch => "RealmVersion" # https://github.com/realm/realm-cocoa-converter/pull/56
+  pod 'Realm' 
+  pod 'RealmSwift' 
+  pod 'RealmConverter', :git => "https://github.com/farktronix/realm-cocoa-converter.git", :branch => "Realm10" # https://github.com/realm/realm-cocoa-converter/pull/56
   pod 'SDCloudUserDefaults'
   pod 'SINQ'
   pod 'SVProgressHUD'
@@ -39,10 +40,10 @@ def apply_pods
   pod 'SwiftyJSON'
 #  pod 'CouchbaseLite-Swift'
   pod 'DZNEmptyDataSet'
-  pod 'sqlite3'
-  pod 'sqlite3/common'
-  pod 'sqlite3/perf-threadsafe'
-  pod 'sqlite3/json1'
+#  pod 'sqlite3'
+#  pod 'sqlite3/common'
+#  pod 'sqlite3/perf-threadsafe'
+#  pod 'sqlite3/json1'
   pod 'SQLite.swift'
   
   pod 'Texture/Core'
@@ -100,6 +101,8 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['ENABLE_BITCODE'] = 'NO'
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64' # https://github.com/realm/realm-cocoa/issues/6685
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
     end
   end
 end

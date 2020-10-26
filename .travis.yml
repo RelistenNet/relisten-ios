@@ -3,10 +3,14 @@ xcode_workspace: Relisten.xcworkspace
 xcode_scheme: Relisten
 os: osx
 osx_image: xcode12.2
-before_script:
-    - ./setup.sh
-script: 
-    - ./xcodebuild.sh
+xcode_scheme: Relisten
+xcode_destination: platform=iOS Simulator,name=iPhone 12 Pro Max
+before_install:
+    - git clone --quiet https://github.com/alecgorge/gapless-audio-bass-ios.git TravisPods/BASSGaplessAudioPlayer
+    - git clone --quiet https://github.com/alecgorge/AGAudioPlayer.git TravisPods/AGAudioPlayer
 git:
   depth: 3
 rvm: 2.6.6
+cache:
+    - cocoapods
+    - bundler

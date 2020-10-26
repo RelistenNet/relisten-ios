@@ -26,8 +26,11 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     public let viewController: AGAudioPlayerViewController
     public let shrinker: PlaybackMinibarShrinker
     
-    public var observeCurrentTrack : Observable<Track?>
-    public var trackWasPlayed : Observable<Track?>
+    @MutableObservable private var pObserveCurrentTrack:Track? = nil
+    public var observeCurrentTrack : Observable<Track?> { return _pObserveCurrentTrack }
+    
+    @MutableObservable private var pTrackWasPlayed:Track? = nil
+    public var trackWasPlayed : Observable<Track?> { return _pTrackWasPlayed }
     
     public var eventTrackPlaybackChanged : Event<Track?>
     public var eventTrackPlaybackStarted : Event<Track?>
@@ -42,9 +45,6 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     }
     
     public required override init() {
-        observeCurrentTrack = Observable<Track?>(nil)
-        trackWasPlayed = Observable<Track?>(nil)
-        
         eventTrackPlaybackChanged = Event<Track?>()
         eventTrackPlaybackStarted = Event<Track?>()
         eventTrackWasPlayed = Event<Track>()
@@ -63,8 +63,8 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     }
     
     public func inheritObservables(fromPlaybackController previous: PlaybackController) {
-        self.observeCurrentTrack = previous.observeCurrentTrack
-        self.trackWasPlayed = previous.trackWasPlayed
+        self._pObserveCurrentTrack = previous.observeCurrentTrack as! MutableObservable<Track?>
+        self._pTrackWasPlayed = previous.trackWasPlayed as! MutableObservable<Track?>
     
         self.eventTrackPlaybackChanged = previous.eventTrackPlaybackChanged
         self.eventTrackPlaybackStarted = previous.eventTrackPlaybackStarted
@@ -315,14 +315,14 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
         let _ = MyLibrary.shared.trackWasPlayed(completeInfo)
         
         eventTrackPlaybackChanged.raise(completeInfo)
-        observeCurrentTrack.value = completeInfo
+        pObserveCurrentTrack = completeInfo
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, changedTrackTo audioItem: AGAudioItem?) {
         guard let completeInfo = (audioItem as? SourceTrackAudioItem)?.track else { return }
 
         eventTrackPlaybackStarted.raise(completeInfo)
-        observeCurrentTrack.value = completeInfo
+        pObserveCurrentTrack = completeInfo
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, pressedDotsForAudioItem audioItem: AGAudioItem) {
@@ -354,7 +354,7 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
         
         let _ = MyLibrary.shared.trackWasPlayed(completeInfo, pastHalfway: true)
         eventTrackWasPlayed.raise(completeInfo)
-        trackWasPlayed.value = completeInfo
+        pTrackWasPlayed = completeInfo
         
         RelistenApi.recordPlay(completeInfo.sourceTrack)
             .onFailure({ LogError("Failed to record play (perhaps you are offline?): \($0)")})

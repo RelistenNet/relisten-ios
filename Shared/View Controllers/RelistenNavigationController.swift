@@ -32,7 +32,7 @@ public class RelistenNavigationController : ASNavigationController {
     
     //MARK: Wormholy
     open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if motion == .motionShake, RelistenApp.sharedApp.shakeToReportBugEnabled.value {
+        if motion == .motionShake, RelistenApp.sharedApp.shakeToReportBugEnabled.wrappedValue {
             UserFeedback.shared.requestUserFeedback(from: self)
         }
     }

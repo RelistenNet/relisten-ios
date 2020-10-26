@@ -75,13 +75,14 @@ public let PhishODAppColors = _AppColors(
 )
 
 public var AppColors = RelistenAppColors
-public let AppColorObserver = Observable<_AppColors>(AppColors)
+// Property wrappers are not allowed in top level code, so we can't do the nice @MutableObservable trick here
+public let AppColorObserver = MutableObservable<_AppColors>(AppColors)
 
 public func AppColors_SwitchToPhishOD() {
     if AppColors != PhishODAppColors {
         AppColors = PhishODAppColors
         
-        AppColorObserver.value = PhishODAppColors
+        AppColorObserver.wrappedValue = PhishODAppColors
     }
 }
 
@@ -89,6 +90,6 @@ public func AppColors_SwitchToRelisten() {
     if AppColors != RelistenAppColors {
         AppColors = RelistenAppColors
         
-        AppColorObserver.value = RelistenAppColors
+        AppColorObserver.wrappedValue = RelistenAppColors
     }
 }

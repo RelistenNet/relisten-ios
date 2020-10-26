@@ -365,6 +365,7 @@ static bool canAggregate(RLMPropertyType type, bool allowDate) {
         case RLMPropertyTypeInt:
         case RLMPropertyTypeFloat:
         case RLMPropertyTypeDouble:
+        case RLMPropertyTypeDecimal128:
             return true;
         case RLMPropertyTypeDate:
             return allowDate;
@@ -512,6 +513,15 @@ static bool canAggregate(RLMPropertyType type, bool allowDate) {
         _backingArray = [NSMutableArray new];
     }
     return [_backingArray objectsAtIndexes:indexes];
+}
+
+- (BOOL)isEqual:(id)object {
+    if (auto array = RLMDynamicCast<RLMArray>(object)) {
+        return !array.realm
+        && ((_backingArray.count == 0 && array->_backingArray.count == 0)
+            || [_backingArray isEqual:array->_backingArray]);
+    }
+    return NO;
 }
 
 - (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath

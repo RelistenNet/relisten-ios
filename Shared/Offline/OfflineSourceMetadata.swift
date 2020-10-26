@@ -142,16 +142,8 @@ public class RelistenRealmObject : Object, FavoritedItem {
     }
     
     // Stupid useless required initializers
-    public required init() {
+    public required override init() {
         super.init()
-    }
-    
-    public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        //super.init(realm: realm, schema: schema)
-    }
-    
-    public required init(value: Any, schema: RLMSchema) {
-        //super.init(value: value, schema: schema)
     }
 }
 
@@ -169,14 +161,6 @@ public class FavoritedArtist : RelistenRealmObject, HasArtist {
     // Stupid useless required initializers
     public required init() {
         super.init()
-    }
-    
-    public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        super.init(realm: realm, schema: schema)
-    }
-    
-    public required init(value: Any, schema: RLMSchema) {
-        super.init(value: value, schema: schema)
     }
 }
 
@@ -203,14 +187,6 @@ public class FavoritedShow: RelistenRealmObject, HasShow {
     // Stupid useless required initializers
     public required init() {
         super.init()
-    }
-    
-    public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        super.init(realm: realm, schema: schema)
-    }
-    
-    public required init(value: Any, schema: RLMSchema) {
-        super.init(value: value, schema: schema)
     }
 }
 
@@ -240,14 +216,6 @@ public class FavoritedSource: RelistenRealmObject, HasSourceAndShow {
     public required init() {
         super.init()
     }
-    
-    public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        super.init(realm: realm, schema: schema)
-    }
-    
-    public required init(value: Any, schema: RLMSchema) {
-        super.init(value: value, schema: schema)
-    }
 }
 
 public class FavoritedTrack: RelistenRealmObject, HasTrackSourceAndShow {
@@ -275,14 +243,6 @@ public class FavoritedTrack: RelistenRealmObject, HasTrackSourceAndShow {
     // Stupid useless required initializers
     public required init() {
         super.init()
-    }
-    
-    public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        super.init(realm: realm, schema: schema)
-    }
-    
-    public required init(value: Any, schema: RLMSchema) {
-        super.init(value: value, schema: schema)
     }
 }
 
@@ -313,14 +273,6 @@ public class RecentlyPlayedTrack: RelistenRealmObject, HasTrackSourceAndShow {
     // Stupid useless required initializers
     public required init() {
         super.init()
-    }
-    
-    public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        super.init(realm: realm, schema: schema)
-    }
-    
-    public required init(value: Any, schema: RLMSchema) {
-        super.init(value: value, schema: schema)
     }
 }
 
@@ -371,16 +323,8 @@ public class OfflineTrack: Object, HasTrackSourceAndShow {
     }
     
     // Stupid useless required initializers
-    public required init() {
+    public required override init() {
         super.init()
-    }
-    
-    public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-//        super.init(realm: realm, schema: schema)
-    }
-    
-    public required init(value: Any, schema: RLMSchema) {
-//        super.init(value: value, schema: schema)
     }
 }
 
@@ -413,16 +357,8 @@ public class OfflineSource: Object, HasSourceAndShow {
     }
     
     // Stupid useless required initializers
-    public required init() {
+    public required override init() {
         super.init()
-    }
-    
-    public required init(realm: RLMRealm, schema: RLMObjectSchema) {
-//        super.init(realm: realm, schema: schema)
-    }
-    
-    public required init(value: Any, schema: RLMSchema) {
-//        super.init(value: value, schema: schema)
     }
 }
 

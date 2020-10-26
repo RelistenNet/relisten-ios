@@ -1,8 +1,8 @@
 language: swift
 xcode_workspace: Relisten.xcworkspace
 xcode_scheme: Relisten
-osx_image: xcode12
-xcode_destination: platform=iOS Simulator,OS=13.0,name=iPhone X 
+os: osx
+osx_image: xcode12.2
 before_script:
     - ./setup.sh
 script: 

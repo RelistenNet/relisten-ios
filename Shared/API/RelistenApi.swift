@@ -177,7 +177,7 @@ public class _RelistenApi {
                 
                 d.forEach({ a[$0.uuid.uuidString] = $0 })
                 
-                RelistenCacher.shared.artists.value = a
+                RelistenCacher.shared.artists.wrappedValue = a
             }
         }
     }

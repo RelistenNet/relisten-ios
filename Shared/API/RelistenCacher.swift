@@ -55,11 +55,12 @@ public class RelistenCacher : ResponseTransformer {
         )
     }
     
-    public let artists = Observable<[String: ArtistWithCounts]>([:])
+    @MutableObservable private var pArtists:[String: ArtistWithCounts] = [:]
+    public var artists:MutableObservable<[String: ArtistWithCounts]> { return _pArtists }
 
     public static func artistFromCache(forId artist_id: Int) -> ArtistWithCounts? {
         guard let a = RelistenDb.shared.artist(byId: artist_id) else {
-            if let a = shared.artists.value.filter({ $1.id == artist_id }).first?.value {
+            if let a = shared.artists.wrappedValue.filter({ $1.id == artist_id }).first?.value {
                 RelistenDb.shared.cache(artists: [a])
                 return a
             }

@@ -29,11 +29,10 @@ public var StandardSwitchBounds : CGRect {
 }
 
 public class SwitchCellNode : ASCellNode {
-    let observeChecked: Observable<Bool>
-    
+    let observeChecked: MutableObservable<Bool>
     var disposal = Disposal()
     
-    public init(observeChecked: Observable<Bool>, withLabel label: String) {
+    public init(observeChecked: MutableObservable<Bool>, withLabel label: String) {
         self.observeChecked = observeChecked
         
         self.labelNode = ASTextNode(label, textStyle: .body)
@@ -75,7 +74,7 @@ public class SwitchCellNode : ASCellNode {
     }
     
     @objc func changeSwitch(_ sw: UISwitch) {
-        observeChecked.value = sw.isOn
+        observeChecked.wrappedValue = sw.isOn
     }
     
     public let labelNode: ASTextNode

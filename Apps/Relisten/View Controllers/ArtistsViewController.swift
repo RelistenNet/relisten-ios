@@ -59,7 +59,7 @@ class ArtistsViewController: RelistenTableViewController<[ArtistWithCounts]>, AS
         allRecentlyUpdatedNode.collectionNode.delegate = self
         
         resourceRecentlyUpdated.addObserver(self)
-        resourceRecentlyUpdated.loadFromCacheThenUpdate()
+        resourceRecentlyUpdated.loadIfNeeded()
         
         let settingsItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain, target: self, action: #selector(presentSettings(_:)))
         settingsItem.accessibilityLabel = "Settings"

@@ -38,12 +38,7 @@ def apply_pods
   pod 'Siesta/Core'
   pod 'Siesta/UI'
   pod 'SwiftyJSON'
-#  pod 'CouchbaseLite-Swift'
   pod 'DZNEmptyDataSet'
-#  pod 'sqlite3'
-#  pod 'sqlite3/common'
-#  pod 'sqlite3/perf-threadsafe'
-#  pod 'sqlite3/json1'
   pod 'SQLite.swift'
   
   pod 'Texture/Core'
@@ -62,12 +57,6 @@ def apply_pods
   pod 'Reveal-SDK', :configurations => ['Debug']
   pod 'Wormholy', :configurations => ['Debug']
   pod 'DWURecyclingAlert', :configurations => ['Debug']
-
-  # Currently unused pods (but they might be used in the future)
-  # pod 'AsyncSwift'
-  # pod 'BFNavigationBarDrawer'
-  # pod 'Reachability'
-  # pod 'SpinnerView'
 
 end
 

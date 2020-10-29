@@ -100,7 +100,7 @@ DEPENDENCIES:
   - MZDownloadManager (from `https://github.com/farktronix/MZDownloadManager`)
   - NAKPlaybackIndicatorView
   - NapySlider
-  - Observable
+  - Observable (from `https://github.com/farktronix/Observable.git`)
   - PathKit
   - PinpointKit
   - PinpointKit/ScreenshotDetector
@@ -138,7 +138,6 @@ SPEC REPOS:
     - MarqueeLabel
     - NAKPlaybackIndicatorView
     - NapySlider
-    - Observable
     - PathKit
     - PinpointKit
     - Realm
@@ -177,6 +176,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/tsukisa/LicenseGenerator-iOS.git
   MZDownloadManager:
     :git: https://github.com/farktronix/MZDownloadManager
+  Observable:
+    :git: https://github.com/farktronix/Observable.git
   RealmConverter:
     :git: https://github.com/farktronix/realm-cocoa-converter.git
 
@@ -205,6 +206,9 @@ CHECKOUT OPTIONS:
   MZDownloadManager:
     :commit: f6ff4745e638bafb3ea1236f8d693221e08c8512
     :git: https://github.com/farktronix/MZDownloadManager
+  Observable:
+    :commit: 7159a9cd67eacf8d49d4ad5f847623017e2ebaba
+    :git: https://github.com/farktronix/Observable.git
   RealmConverter:
     :commit: fc50dd4ad565af96362fc6da84bb44ce6937ed5a
     :git: https://github.com/farktronix/realm-cocoa-converter.git
@@ -255,6 +259,6 @@ SPEC CHECKSUMS:
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
   Wormholy: bfc1c8679eefd0edd92638758e21c3961b1b3b50
 
-PODFILE CHECKSUM: 0177930b2cba8abdee604c65bab6737a6491d923
+PODFILE CHECKSUM: bcd9a9870c6d6a515915037bea253b69475b4d77
 
 COCOAPODS: 1.10.0

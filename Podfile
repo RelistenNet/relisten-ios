@@ -25,7 +25,7 @@ def apply_pods
   pod 'MZDownloadManager', :git => 'https://github.com/farktronix/MZDownloadManager' # Waiting on https://github.com/mzeeshanid/MZDownloadManager/pull/81
   pod 'NAKPlaybackIndicatorView'
   pod 'NapySlider'
-  pod 'Observable' 
+  pod 'Observable', :git => 'https://github.com/farktronix/Observable.git'
   pod 'PathKit'
   pod 'PinpointKit'
   pod 'PinpointKit/ScreenshotDetector'

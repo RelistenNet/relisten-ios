@@ -14,7 +14,7 @@ public final class Disposable {
     
     public let dispose: () -> ()
     
-    public init(_ dispose: @escaping () -> ()) {
+    init(_ dispose: @escaping () -> ()) {
         self.dispose = dispose
     }
     

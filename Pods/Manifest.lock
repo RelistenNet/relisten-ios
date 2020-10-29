@@ -44,17 +44,17 @@ PODS:
     - PinpointKit/Core (= 1.5.0)
   - PinpointKit/Core (1.5.0)
   - PinpointKit/ScreenshotDetector (1.5.0)
-  - Realm (10.1.0):
-    - Realm/Headers (= 10.1.0)
-  - Realm/Headers (10.1.0)
+  - Realm (10.1.1):
+    - Realm/Headers (= 10.1.1)
+  - Realm/Headers (10.1.1)
   - RealmConverter (0.5.3):
     - CSwiftV
     - PathKit
     - Realm (~> 10.0)
     - SSZipArchive
     - TGSpreadsheetWriter
-  - RealmSwift (10.1.0):
-    - Realm (= 10.1.0)
+  - RealmSwift (10.1.1):
+    - Realm (= 10.1.1)
   - Reveal-SDK (26)
   - SDCloudUserDefaults (1.0.2)
   - SDWebImage (3.8.3):
@@ -105,7 +105,7 @@ DEPENDENCIES:
   - PinpointKit
   - PinpointKit/ScreenshotDetector
   - Realm
-  - RealmConverter (from `https://github.com/farktronix/realm-cocoa-converter.git`, branch `Realm10`)
+  - RealmConverter (from `https://github.com/farktronix/realm-cocoa-converter.git`)
   - RealmSwift
   - Reveal-SDK
   - SDCloudUserDefaults
@@ -178,7 +178,6 @@ EXTERNAL SOURCES:
   MZDownloadManager:
     :git: https://github.com/farktronix/MZDownloadManager
   RealmConverter:
-    :branch: Realm10
     :git: https://github.com/farktronix/realm-cocoa-converter.git
 
 CHECKOUT OPTIONS:
@@ -207,7 +206,7 @@ CHECKOUT OPTIONS:
     :commit: f6ff4745e638bafb3ea1236f8d693221e08c8512
     :git: https://github.com/farktronix/MZDownloadManager
   RealmConverter:
-    :commit: aab39bd6ce89e03d9f9da7f9ca925a4ff91605be
+    :commit: fc50dd4ad565af96362fc6da84bb44ce6937ed5a
     :git: https://github.com/farktronix/realm-cocoa-converter.git
 
 SPEC CHECKSUMS:
@@ -240,9 +239,9 @@ SPEC CHECKSUMS:
   Observable: bdfa770fc9d925b997d186b09860a0bcdd6f9690
   PathKit: 364e0de7fb5adb142aecab4e112187e5548fc4b6
   PinpointKit: 8599f60b7cff2b65e52a10293c220b6b81f14839
-  Realm: 100df88a0faf5328f48477427e4b3e1a1598bae3
+  Realm: 784ca1da1453e31a9c9adc14445421a81f316119
   RealmConverter: 763536a2d227b90d4d97a3c1056a81aca3c0ceb5
-  RealmSwift: 725d1c10df64964b04aaa0058c19ce0f4b4c3f5a
+  RealmSwift: cc52fe0dcea56387274dff36e19219e055a3bb84
   Reveal-SDK: 5f94f14aff3d5f2a49f246edcd266fa4472679e9
   SDCloudUserDefaults: cacf733d192160d94364efab8548ae3302615a65
   SDWebImage: a72e880a8fe0f7fc31efe15aaed443c074d2a80c
@@ -256,6 +255,6 @@ SPEC CHECKSUMS:
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
   Wormholy: bfc1c8679eefd0edd92638758e21c3961b1b3b50
 
-PODFILE CHECKSUM: 61fe071031b7af7be2a6b9714da15c3af45f7361
+PODFILE CHECKSUM: e1859d4b848fd8d3b9a8d7073c2ac0036836711e
 
 COCOAPODS: 1.10.0

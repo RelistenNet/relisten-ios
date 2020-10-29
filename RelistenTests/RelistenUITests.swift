@@ -81,7 +81,8 @@ class RelistenUITests: XCTestCase {
 
         // Share
         app.buttons["Share"].tap()
-        app.buttons["Cancel"].tap()
+        // https://stackoverflow.com/questions/58381626/how-to-dismiss-the-uiactivityviewcontroller-during-a-ui-test-with-xcode-11-ios
+        app.otherElements.element(boundBy: 1).buttons.element(boundBy: 0).tap()
 
         // Mini player dots
         app.buttons["Mini Dots"].tap()

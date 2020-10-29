@@ -80,10 +80,18 @@ public class DownloadManager {
         }
     }
     
-    public let eventTrackStartedDownloading = Event<Track>()
-    public let eventTracksQueuedToDownload = Event<[Track]>()
-    public let eventTrackFinishedDownloading = Event<Track>()
-    public let eventTracksDeleted = Event<[Track]>()
+    
+    @MutableObservable private var pEventTracksQueuedToDownload:[Track?] = []
+    public var eventTracksQueuedToDownload : Observable<[Track?]> { return _pEventTracksQueuedToDownload }
+    
+    @MutableObservable private var pEventTrackStartedDownloading:Track? = nil
+    public var eventTrackStartedDownloading : Observable<Track?> { return _pEventTrackStartedDownloading }
+    
+    @MutableObservable private var pEventTrackFinishedDownloading:Track? = nil
+    public var eventTrackFinishedDownloading : Observable<Track?> { return _pEventTrackFinishedDownloading }
+    
+    @MutableObservable private var pEventTracksDeleted:[Track?] = []
+    public var eventTracksDeleted : Observable<[Track?]> { return _pEventTracksDeleted }
 
     fileprivate var urlToTrackDownloadMap: [URL: TrackDownload] = [:]
     
@@ -134,7 +142,7 @@ public class DownloadManager {
                 self.delete(track: track, shouldNotify: false)
             }
             
-            self.eventTracksDeleted.raise(tracks)
+            self.pEventTracksDeleted = tracks
         }
     }
     
@@ -158,7 +166,7 @@ public class DownloadManager {
                     self.dataSource?.offlineTrackWasDeleted(track)
                     
                     if shouldNotify {
-                        self.eventTracksDeleted.raise([track])
+                        self.pEventTracksDeleted = [track]
                     }
                 }
                 catch {
@@ -237,7 +245,7 @@ public class DownloadManager {
             }
         }
         
-        eventTracksQueuedToDownload.raise(queuedTracks)
+        pEventTracksQueuedToDownload = queuedTracks
     }
     
     private func addDownloadTask(_ track: Track) {
@@ -262,7 +270,7 @@ public class DownloadManager {
                     addDownloadTask(track)
                 }
                 
-                eventTracksQueuedToDownload.raise(tracksToDownload)
+                pEventTracksQueuedToDownload = tracksToDownload
             }
         }
     }
@@ -278,7 +286,7 @@ public class DownloadManager {
                 fillDownloadQueue(withTrack: track)
                 
                 if raiseEvent {
-                    eventTracksQueuedToDownload.raise([ track ])
+                    pEventTracksQueuedToDownload = [ track ]
                 }
             }
         }
@@ -304,7 +312,7 @@ public class DownloadManager {
                 try fm.moveItem(atPath: filePath, toPath: track.downloadPath)
                 
                 self.dataSource?.importDownloadedTrack(track, withSize: fileSize)
-                self.eventTrackFinishedDownloading.raise(track)
+                self.pEventTrackFinishedDownloading = track
             } catch {
                 LogWarn("Error importing track: \(error)")
             }
@@ -425,7 +433,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
         LogDebug("Started downloading: \(downloadModel)")
         
         if let t = self.trackForDownloadModel(downloadModel) {
-            eventTrackStartedDownloading.raise(t)
+            pEventTrackStartedDownloading = t
             self.dataSource?.offlineTrackBeganDownloading(t)
         }
     }
@@ -476,7 +484,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
                 dataSource?.offlineTrackFailedDownloading(t, error: error)
             }
                 
-            eventTrackFinishedDownloading.raise(t)
+            pEventTrackFinishedDownloading = t
             
             self.removeTrackForDownloadModel(downloadModel)
         }
@@ -518,7 +526,7 @@ extension DownloadManager : MZDownloadManagerDelegate {
                 dataSource?.offlineTrackFailedDownloading(t, error: error)
             }
             
-            eventTrackFinishedDownloading.raise(t)
+            pEventTrackFinishedDownloading = t
         }
         
         self.removeTrackForDownloadModel(downloadModel)

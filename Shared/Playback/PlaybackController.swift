@@ -32,9 +32,10 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     @MutableObservable private var pTrackWasPlayed:Track? = nil
     public var trackWasPlayed : Observable<Track?> { return _pTrackWasPlayed }
     
-    public var eventTrackPlaybackChanged : Event<Track?>
-    public var eventTrackPlaybackStarted : Event<Track?>
-    public var eventTrackWasPlayed : Event<Track>
+    @MutableObservable private var pEventTrackPlaybackChanged:Track? = nil
+    public var eventTrackPlaybackChanged : Observable<Track?> { return _pEventTrackPlaybackChanged }
+    @MutableObservable private var pEventTrackPlaybackStarted:Track? = nil
+    public var eventTrackPlaybackStarted : Observable<Track?> { return _pEventTrackPlaybackStarted }
 
     public var window: UIWindow? = nil
         
@@ -45,10 +46,6 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
     }
     
     public required override init() {
-        eventTrackPlaybackChanged = Event<Track?>()
-        eventTrackPlaybackStarted = Event<Track?>()
-        eventTrackWasPlayed = Event<Track>()
-        
         playbackQueue = AGAudioPlayerUpNextQueue()
         player = AGAudioPlayer(queue: playbackQueue)
         viewController = AGAudioPlayerViewController(player: player)
@@ -66,9 +63,8 @@ extension AGAudioPlayerViewController : TrackStatusActionHandler {
         self._pObserveCurrentTrack = previous.observeCurrentTrack as! MutableObservable<Track?>
         self._pTrackWasPlayed = previous.trackWasPlayed as! MutableObservable<Track?>
     
-        self.eventTrackPlaybackChanged = previous.eventTrackPlaybackChanged
-        self.eventTrackPlaybackStarted = previous.eventTrackPlaybackStarted
-        self.eventTrackWasPlayed = previous.eventTrackWasPlayed
+        self._pEventTrackPlaybackChanged = previous.eventTrackPlaybackChanged as! MutableObservable<Track?>
+        self._pEventTrackPlaybackStarted = previous.eventTrackPlaybackStarted as! MutableObservable<Track?>
     }
     
     public func viewDidLoad() {
@@ -314,14 +310,14 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
 
         let _ = MyLibrary.shared.trackWasPlayed(completeInfo)
         
-        eventTrackPlaybackChanged.raise(completeInfo)
+        pEventTrackPlaybackChanged = completeInfo
         pObserveCurrentTrack = completeInfo
     }
     
     public func audioPlayerViewController(_ agAudio: AGAudioPlayerViewController, changedTrackTo audioItem: AGAudioItem?) {
         guard let completeInfo = (audioItem as? SourceTrackAudioItem)?.track else { return }
 
-        eventTrackPlaybackStarted.raise(completeInfo)
+        pEventTrackPlaybackStarted = completeInfo
         pObserveCurrentTrack = completeInfo
     }
     
@@ -353,7 +349,6 @@ extension PlaybackController : AGAudioPlayerViewControllerDelegate {
         guard let completeInfo = (audioItem as? SourceTrackAudioItem)?.track else { return }
         
         let _ = MyLibrary.shared.trackWasPlayed(completeInfo, pastHalfway: true)
-        eventTrackWasPlayed.raise(completeInfo)
         pTrackWasPlayed = completeInfo
         
         RelistenApi.recordPlay(completeInfo.sourceTrack)

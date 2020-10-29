@@ -68,18 +68,19 @@ public class LastFMScrobbler {
         lastFM.username = username
         lastFM.session = sessionKey
         
-        RelistenApp.sharedApp.playbackController.eventTrackPlaybackStarted.addHandler({ [weak self] t in
+        RelistenApp.sharedApp.playbackController.eventTrackPlaybackStarted.observe { [weak self] (track, _) in
             guard let s = self else { return }
-            guard let track = t else { return }
+            guard let track = track else { return }
             
             s.trackStartedPlaying(track)
-        }).add(to: &disposal)
+        }.add(to: &disposal)
         
-        RelistenApp.sharedApp.playbackController.eventTrackWasPlayed.addHandler({ [weak self] track in
+        RelistenApp.sharedApp.playbackController.trackWasPlayed.observe { [weak self] (track, _) in
             guard let s = self else { return }
+            guard let track = track else { return }
             
             s.scrobbleTrack(track)
-        }).add(to: &disposal)
+        }.add(to: &disposal)
     }
     
     public func login(username: String, password: String, completion: @escaping (Error?) -> Void) {

@@ -55,7 +55,6 @@
 		43B5341C2109229200DE9B1F /* libRelistenShared.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B534102109226F00DE9B1F /* libRelistenShared.a */; };
 		43B5341D210922A100DE9B1F /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31552420C09D8B00F07622 /* ShareHelper.swift */; };
 		43B5341E210922CE00DE9B1F /* YearSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B047722100049E00251046 /* YearSorting.swift */; };
-		43B5341F210922CE00DE9B1F /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCE0DEB1F9BDE4A00041D47 /* Events.swift */; };
 		43B53420210922CE00DE9B1F /* TrackActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C13704C20B677C300710E90 /* TrackActions.swift */; };
 		43B53421210922CE00DE9B1F /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94EA71F0A6C74004663F3 /* Track.swift */; };
 		43B53422210922CE00DE9B1F /* CompleteShowInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4370C24420EDDD7D00D3358B /* CompleteShowInformation.swift */; };
@@ -374,7 +373,6 @@
 		7CC4EDC11F0AC2F0004CB615 /* PlaybackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaybackController.swift; path = Playback/PlaybackController.swift; sourceTree = "<group>"; };
 		7CC4EDC41F0BE3C8004CB615 /* SourceTrackAudioItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SourceTrackAudioItem.swift; path = Playback/Models/SourceTrackAudioItem.swift; sourceTree = "<group>"; };
 		7CCE0DE91F9BD38B00041D47 /* RelistenShared-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RelistenShared-Bridging-Header.h"; sourceTree = "<group>"; };
-		7CCE0DEB1F9BDE4A00041D47 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Events.swift; path = Events/Events.swift; sourceTree = "<group>"; };
 		7CCE0DEE1F9BE33B00041D47 /* UIControl+Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Handler.swift"; sourceTree = "<group>"; };
 		7CFF0AAE2290BC3E00B30538 /* LiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LiveViewController.swift; path = "View Controllers/Tabs/LiveViewController.swift"; sourceTree = "<group>"; };
 		7D0486D76EA028A68FB9CEE1 /* Pods-Relisten for Phish.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Relisten for Phish.release.xcconfig"; path = "Pods/Target Support Files/Pods-Relisten for Phish/Pods-Relisten for Phish.release.xcconfig"; sourceTree = "<group>"; };
@@ -871,7 +869,6 @@
 		7CCE0DEA1F9BDE3900041D47 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				7CCE0DEB1F9BDE4A00041D47 /* Events.swift */,
 				7C13704C20B677C300710E90 /* TrackActions.swift */,
 			);
 			name = Events;
@@ -1900,7 +1897,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				43D4F1DC21CDB44300FD4A72 /* DebugSettingsNode.swift in Sources */,
-				43B5341F210922CE00DE9B1F /* Events.swift in Sources */,
 				43A035F3210EEDCA00C087DD /* AlbumArtImageCache.swift in Sources */,
 				43B5345C210922CE00DE9B1F /* RelistenShowModels.swift in Sources */,
 				43B5343F210922CE00DE9B1F /* ShowCellNode.swift in Sources */,

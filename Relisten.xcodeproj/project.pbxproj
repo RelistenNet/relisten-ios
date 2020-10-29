@@ -2137,7 +2137,6 @@
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = RelistenTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2162,7 +2161,6 @@
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = RelistenTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2226,7 +2224,6 @@
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = RelistenTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2254,7 +2251,6 @@
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = RelistenTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2277,7 +2273,6 @@
 				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2299,7 +2294,6 @@
 				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/PhishOD/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2491,7 +2485,6 @@
 				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2515,7 +2508,6 @@
 				CURRENT_PROJECT_VERSION = 5001;
 				DEVELOPMENT_TEAM = HT7ELV3Q35;
 				INFOPLIST_FILE = Apps/Relisten/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

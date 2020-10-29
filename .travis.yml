@@ -8,6 +8,8 @@ xcode_destination: platform=iOS Simulator,name=iPhone 12 Pro Max
 before_install:
     - git clone --quiet https://github.com/alecgorge/gapless-audio-bass-ios.git TravisPods/BASSGaplessAudioPlayer
     - git clone --quiet https://github.com/alecgorge/AGAudioPlayer.git TravisPods/AGAudioPlayer
+script:
+    - set -o pipefail && xcodebuild clean build -sdk iphonesimulator -workspace Relisten.xcworkspace -scheme Relisten -destination="platform=iOS Simulator,name=iPhone 12 Pro Max" COMPILER_INDEX_STORE_ENABLE=NO CODE_SIGNING_REQUIRED=NO | xcpretty
 git:
   depth: 3
 rvm: 2.6.6

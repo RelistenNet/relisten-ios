@@ -52,15 +52,4 @@ class RelistenTests: XCTestCase {
         
         self.wait(for: [reentrantExpectation, nonReentrantExpectation], timeout: 1.0)
     }
-    
-    func testPerformOnMainQueueSync() {
-        let expectation = XCTestExpectation(description: "Queue Didn't Block")
-        DispatchQueue.main.async {
-            performOnMainQueueSync() {
-                expectation.fulfill()
-            }
-        }
-        
-        self.wait(for: [expectation], timeout: 1.0)
-    }
 }

@@ -3,7 +3,6 @@ xcode_workspace: Relisten.xcworkspace
 xcode_scheme: Relisten
 os: osx
 osx_image: xcode12.1
-xcode_destination: platform=iOS Simulator,name=iPhone 12 Pro Max
 before_script:
     - ./setup.sh
 script:

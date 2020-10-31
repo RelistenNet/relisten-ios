@@ -115,27 +115,42 @@ done
 
 # Belt and suspenders
 is_ci=0
-if [[ ! -z ${TRAVIS} || ! -z ${CONTINUOUS_INTEGRATION} ]]; then 
+pod_command="pod"
+if [[ ! -z ${CI} ]]; then 
     echo "Running under continuous integration"
-    podBasePath="TravisPods"
+    podBasePath="CIPods"
+    pod_command="bundle exec pod"
     is_ci=1
 fi
 
 checkAndClone BASSGaplessAudioPlayer https://github.com/alecgorge/gapless-audio-bass-ios.git $podBasePath
 checkAndClone AGAudioPlayer https://github.com/alecgorge/AGAudioPlayer.git $podBasePath
 
+printProgress "Checking for Bundler"
+command -v bundler >/dev/null 2>&1 || {
+    gem install bundler
+    command -v bundler > /dev/null 2>&1 || {
+        printFailure "Can't install bundler"
+        exit 1
+    }
+}
+printSuccess
+
+runCmd "bundle update" "Updating bundles"
+
 if [[ $shouldInstallPods == 1 ]]; then
+
     printProgress "Checking for CocoaPods"
-    command -v pod >/dev/null 2>&1 || { 
+    command -v $pod_command >/dev/null 2>&1 || { 
         printFailure
         echo >&2 "Cocoapods is not installed. Please install it from https://cocoapods.org and try again."
         exit 1
     }
     printSuccess
     if [[ $is_ci == 1 ]]; then
-        runCmd "pod install --repo-update" "Installing pods"
+        runCmd "$pod_command install --repo-update" "Installing pods"
     else 
-        runCmd "pod install" "Installing pods"
+        runCmd "$pod_command install" "Installing pods"
     fi
 fi
 

@@ -45,9 +45,9 @@ def apply_pods
   pod 'Texture/MapKit'
  
   # Development pods (checked out locally)
-  if ENV['TRAVIS']
-      pod 'BASSGaplessAudioPlayer', :path => 'TravisPods/BASSGaplessAudioPlayer'
-      pod 'AGAudioPlayer', :path => 'TravisPods/AGAudioPlayer'
+  if ENV['CI']
+      pod 'BASSGaplessAudioPlayer', :path => 'CIPods/BASSGaplessAudioPlayer'
+      pod 'AGAudioPlayer', :path => 'CIPods/AGAudioPlayer'
   else
       pod 'BASSGaplessAudioPlayer', :path => '../BASSGaplessAudioPlayer'
       pod 'AGAudioPlayer', :path => '../AGAudioPlayer'

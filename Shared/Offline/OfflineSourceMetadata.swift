@@ -101,27 +101,6 @@ public extension Results where Element : HasSourceAndShow {
     }
 }
 
-public extension Results {
-    func array(toIndex index: Int = -1) -> [Element] {
-        if index == -1 {
-            return Array(self)
-        } else {
-            var results : [Element] = []
-            let maxResults = Swift.min(index, self.count)
-            for i in (0..<maxResults) {
-                results.append(self[i])
-            }
-            return results
-        }
-    }
-    
-    func observeWithValue(_ block: @escaping (Results<Element>, RealmCollectionChange<Results<Element>>) -> Void) -> NotificationToken {
-        return self.observe { changes in
-            block(self, changes)
-        }
-    }
-}
-
 public protocol FavoritedItem {
     var uuid: String { get set }
     var created_at: Date { get set }

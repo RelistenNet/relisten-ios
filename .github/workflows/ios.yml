@@ -40,3 +40,6 @@ jobs:
       - name: Build
         run: |
           ./xcodebuild.sh
+      - name: Test
+        run: |
+          ./xcodebuild.sh test

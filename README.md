@@ -12,7 +12,7 @@ You can join the [Discord Chat](https://discord.gg/u8v4The) to provide feedback 
 
 # Development: Getting Started
 
-[![Build Status](https://travis-ci.org/RelistenNet/relisten-ios.svg?branch=master)](https://travis-ci.org/RelistenNet/relisten-ios)
+[![Build Status](https://github.com/farktronix/relisten-ios/workflows/iOS%20CI/badge.svg)](https://github.com/farktronix/relisten-ios/actions?query=workflow%3A%22iOS+CI%22)
 
 If you'd like to build Relisten iOS you'll need [Cocoapods](http://cocoapods.org). 
 

@@ -126,18 +126,6 @@ fi
 checkAndClone BASSGaplessAudioPlayer https://github.com/alecgorge/gapless-audio-bass-ios.git $podBasePath
 checkAndClone AGAudioPlayer https://github.com/alecgorge/AGAudioPlayer.git $podBasePath
 
-printProgress "Checking for Bundler"
-command -v bundler >/dev/null 2>&1 || {
-    gem install bundler
-    command -v bundler > /dev/null 2>&1 || {
-        printFailure "Can't install bundler"
-        exit 1
-    }
-}
-printSuccess
-
-runCmd "bundle update" "Updating bundles"
-
 if [[ $shouldInstallPods == 1 ]]; then
 
     printProgress "Checking for CocoaPods"

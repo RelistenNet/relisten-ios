@@ -16,8 +16,10 @@ import AsyncDisplayKit
 import Fabric
 import Crashlytics
 
+import GoogleCast
+
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate, GCKLoggerDelegate {
 
     var window: UIWindow?
     public var rootNavigationController: RelistenNavigationController! = nil
@@ -45,6 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RelistenAppDelegate {
         Fabric.with([Crashlytics.self])
         
         RelistenApp.sharedApp.setupThirdPartyDependencies()
+        
+        // Set up Chromecast support
+        let criteria = GCKDiscoveryCriteria(applicationID: kGCKDefaultMediaReceiverApplicationID)
+        let options = GCKCastOptions(discoveryCriteria: criteria)
+        GCKCastContext.setSharedInstanceWith(options)
+        GCKLogger.sharedInstance().delegate = self
         
         window = UIWindow(frame: UIScreen.main.bounds)
         

@@ -198,6 +198,7 @@ extension PlaybackController : AGAudioPlayerViewControllerPresentationDelegate {
 
     public func fullPlayerDismissRequested(fromProgress: CGFloat) {
         self.viewController.viewWillDisappear(true)
+        self.viewController.switchToMiniPlayer(animated: true)
         
         UIView.animate(withDuration: 0.3, animations: {
             self.fullPlayerDismissProgress(1.0)

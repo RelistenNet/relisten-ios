@@ -2,6 +2,7 @@ PODS:
   - ActionKit (2.5.3)
   - AGAudioPlayer (0.8.2):
     - BASSGaplessAudioPlayer
+    - google-cast-sdk
     - Interpolate
     - MarqueeLabel
     - NapySlider
@@ -228,7 +229,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ActionKit: c1b6427fd36a0fe2223555679bcc5dea437af5b3
-  AGAudioPlayer: d1c572757f190502712aa2c6bfa74d646022fba6
+  AGAudioPlayer: ebb639362e2112c7c561d0a45e418dd35a5835ff
   AXRatingView: b975cd1a11c6c2e76c8999c166e089ed26f54133
   BASSGaplessAudioPlayer: 5b074495769769192b720c70aa2a60f6f33751f3
   Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d

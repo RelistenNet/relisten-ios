@@ -52,7 +52,7 @@ class RelistenUITests: XCTestCase {
         tablesQuery.buttons["years"].tap()
         
         // YearViewController
-        tablesQuery.cells.staticTexts["1966"].tap()
+        tablesQuery.cells.staticTexts["1966"].firstMatch.tap()
         
         // SourcesViewController
         tablesQuery.staticTexts["1966-01-08"].tap()

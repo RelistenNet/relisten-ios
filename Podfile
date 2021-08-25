@@ -19,6 +19,7 @@ def apply_pods
   pod 'Fabric'
   pod 'FastImageCache', :git => "https://github.com/mallorypaine/FastImageCache.git" # The new official fork
   pod 'FaveButton', :git => "https://github.com/farktronix/fave-button.git" # Waiting on https://github.com/xhamr/fave-button/pull/42
+  pod 'google-cast-sdk'
   pod 'KASlideShow'
   pod 'LastFm', :git => "https://github.com/farktronix/LastFm.git" # Waiting on https://github.com/gangverk/LastFm/pull/20
   pod 'LicensesViewController', :git => "https://github.com/tsukisa/LicenseGenerator-iOS.git"

@@ -1,11 +1,10 @@
-git_url("git@bitbucket.org:relistennet/ios-certificates.git")
+git_url("git@github.com:RelistenNet/relisten-ios-certificates.git")
+
+storage_mode("git")
 
 team_id("HT7ELV3Q35")
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
-app_identifier(["com.alecgorge.ios.Listen-to-the-Dead", "com.alecgorge.Phish-Tracks"])
-
+app_identifier(["com.alecgorge.ios.Listen-to-the-Dead"])
+username("appstore@getbluepaint.com")
 template_name("CarPlay Audio App(Distribution)")
-
-# For all available options run `fastlane match --help`
-# Remove the # in the beginning of the line to enable the other options

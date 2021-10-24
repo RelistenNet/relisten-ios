@@ -148,8 +148,8 @@ public class SourceViewController: RelistenBaseTableViewController {
         
         if indexPath.section == 1 + source.sets.count {
             let link = source.links[indexPath.row]
-            
-            navigationController?.present(SFSafariViewController(url: URL(string: link.url)!), animated: true, completion: nil)
+            let secureLink = link.url.replacingOccurrences(of: "http:", with: "https:")
+            navigationController?.present(SFSafariViewController(url: URL(string: secureLink)!), animated: true, completion: nil)
             return
         }
         
